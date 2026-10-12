@@ -18,11 +18,13 @@
 | `.claude/hooks/`, `.claude/settings.json` | 세션 시작 설치·상황 알림, 위험 명령 차단, 고친 파일 즉시 검사, 실패한 채 멈추지 않기 | 완성 |
 | `docs/` | 요구사항, 디자인 의뢰서, 작업 목록, 구조, 엔진 명세, 자료 안내, 화면 설계, 영수증 형식, 결정 기록, 사람 확인 대기열 | 완성 |
 | `src/lib/engine/` | 판단 엔진: 인터뷰 → 장보기 추천 → 재확인 충돌 → 영수증·설계 꾸러미 | 완성, 검사 통과 |
-| `data/` | 씨앗 자료: 질문 14개, 상품 19개, 규칙 38개, 개념 카드 10장, 조사 카드 13장, 레시피 5개, 에러 안내 6개, 골든 사례 16개 | 완성 (진열 상품 16개는 사람 확인 필요) |
+| `data/` | 자료: 질문 16개, 상품 49개(진열 48), 규칙 38개, 개념 카드 20장(그림 포함), 조사 카드 13장, 레시피 5개, 에러 안내 20개, 골든 사례 21개 | 진열 상품 46개는 사람 확인 필요 (`docs/HUMAN.md` C01) |
 | `schemas/`, `scripts/` | 자료 스키마, 자료·골든·품질 바닥선·하네스 검사, 시각 점검·성능 예산 | 완성 |
 | `docs/examples/` | 엔진이 레시피로 만든 실제 영수증과 설계 꾸러미 | 완성 |
 | `src/styles/tokens.css`, `src/assets/mascot/` | 색·글꼴·모션 토큰, 기사님 그림 원본 | 완성 |
-| 화면, 배포, 집계 | Astro 화면, Cloudflare 배포, 익명 집계 | `docs/TASKS.md` 순서대로 구현 |
+| `src/pages/`, `src/components/` | Astro 화면 전부 (홈·첫 수업·인터뷰·장보기·재확인·계산대·공부·개념·진열대·레시피·사전·소개·법 문서), 게임 연출 M1~M8 | 완성, e2e·axe 통과 |
+| `worker/`, `migrations/`, `wrangler.jsonc` | 익명 집계 `/api/event` (Cloudflare Workers + D1) | 로컬 시험 끝, 실제 배포는 사람이 계정 연결 뒤 (`docs/DEPLOY.md`) |
+| `.github/workflows/` | 검사·e2e(`check.yml`), 배포(`deploy.yml`, 계정이 없으면 빌드까지만) | 완성 |
 
 결과물이 어떻게 생겼는지 먼저 보려면 `docs/examples/lunch-page.md`를 여세요.
 

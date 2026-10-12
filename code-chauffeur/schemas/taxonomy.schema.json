@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "taxonomy.schema.json",
+  "title": "태그 분류표",
+  "type": "object",
+  "required": ["version", "tags"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/tagId" },
+          "label": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "phase": { "enum": [1, 2, 3], "description": "이 태그를 쓰기 시작하는 단계. 없으면 1" }
+        }
+      }
+    }
+  }
+}

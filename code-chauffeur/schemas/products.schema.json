@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "products.schema.json",
+  "title": "상품 카드 (진열 상품과 색인 상품)",
+  "type": "object",
+  "required": ["version", "products"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "layer",
+          "summary",
+          "capabilities",
+          "provider",
+          "access",
+          "cost",
+          "serverRegion",
+          "difficulty",
+          "keyExposureRisk",
+          "recommendable",
+          "links",
+          "checkedAt",
+          "needsReview"
+        ],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "name": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "layer": { "enum": ["shelf", "index"], "description": "shelf 진열 상품(쉬운 설명 있음), index 색인 상품(원문 정보만)" },
+          "summary": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "useWhen": { "type": "string", "description": "이럴 때 써요" },
+          "capabilities": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/capability" },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "domains": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^domain\\." },
+            "uniqueItems": true
+          },
+          "topics": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^topic\\." },
+            "uniqueItems": true
+          },
+          "goodFor": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^ai\\." },
+            "uniqueItems": true
+          },
+          "provider": {
+            "type": "object",
+            "required": ["type", "name"],
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "enum": ["official", "community", "unofficial", "generic"],
+                "description": "generic은 특정 회사가 아닌 방식(예: HTML 한 장)"
+              },
+              "name": { "$ref": "defs.schema.json#/$defs/nonEmptyText" }
+            }
+          },
+          "access": {
+            "enum": ["none", "signup", "key", "approval", "account-or-business"],
+            "description": "none 없음, signup 가입만, key 키 발급, approval 승인 필요, account-or-business 계좌·사업자 필요"
+          },
+          "cost": {
+            "type": "object",
+            "required": ["free", "note"],
+            "additionalProperties": false,
+            "properties": {
+              "free": { "type": "boolean", "description": "무료로 시작할 수 있으면 true" },
+              "note": { "$ref": "defs.schema.json#/$defs/nonEmptyText" }
+            }
+          },
+          "freeLimit": { "type": "string" },
+          "realtime": {
+            "enum": ["realtime", "frequent", "daily", "static"],
+            "description": "데이터 상품만. frequent는 하루 여러 번 갱신"
+          },
+          "serverRegion": {
+            "enum": ["none", "local", "kr", "overseas", "selectable", "unknown"],
+            "description": "이용자가 입력한 데이터가 저장되는 곳. none 보관하지 않음, local 이용자 기기, selectable 지역을 고를 수 있음"
+          },
+          "difficulty": { "enum": [1, 2, 3] },
+          "setupMinutes": { "type": "integer", "minimum": 0 },
+          "keyExposureRisk": { "type": "boolean", "description": "비밀 키를 화면 코드에 넣으면 드러나는 상품" },
+          "publicKey": {
+            "type": "boolean",
+            "description": "화면 코드에 넣도록 만든 공개 키(제공처 설정에서 사이트 주소로 사용을 제한). keyExposureRisk와 함께 켤 수 없다"
+          },
+          "recommendable": { "type": "boolean", "description": "false면 추천 표시를 붙이지 않는다 (MCP 서버, 비공식 패키지 등)" },
+          "license": {
+            "type": "object",
+            "required": ["name", "plain"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+              "plain": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+              "url": { "$ref": "defs.schema.json#/$defs/url" }
+            }
+          },
+          "prep": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "lead"],
+              "additionalProperties": false,
+              "properties": {
+                "label": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+                "url": { "$ref": "defs.schema.json#/$defs/url" },
+                "lead": { "enum": ["instant", "hours", "days"], "description": "준비에 걸리는 시간. 오래 걸리는 것부터 안내한다" }
+              }
+            }
+          },
+          "promptFragment": { "type": "string" },
+          "needsConcepts": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/id" },
+            "uniqueItems": true
+          },
+          "stuck": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "related": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/id" },
+            "uniqueItems": true
+          },
+          "links": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["label", "url"],
+              "additionalProperties": false,
+              "properties": {
+                "label": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+                "url": { "$ref": "defs.schema.json#/$defs/url" }
+              }
+            }
+          },
+          "checkedAt": { "$ref": "defs.schema.json#/$defs/yearMonth" },
+          "needsReview": { "type": "boolean", "description": "사람이 원문으로 다시 확인해야 하면 true" },
+          "sources": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/url" }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "capabilities": {
+                  "contains": { "const": "data" }
+                }
+              }
+            },
+            "then": { "required": ["domains", "realtime"] }
+          },
+          {
+            "if": {
+              "properties": {
+                "layer": { "const": "shelf" }
+              }
+            },
+            "then": { "required": ["useWhen", "promptFragment", "needsConcepts", "prep", "setupMinutes"] }
+          }
+        ]
+      }
+    }
+  }
+}

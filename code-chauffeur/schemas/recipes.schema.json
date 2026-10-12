@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "recipes.schema.json",
+  "title": "레시피 (인터뷰 답과 장바구니를 미리 채운 완성 세트)",
+  "type": "object",
+  "required": ["version", "recipes"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "recipes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "summary", "forWho", "answers", "cart"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "title": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "summary": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "forWho": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "answers": {
+            "type": "object",
+            "description": "질문 id → 보기 id. 보이는 질문에 모두 답해야 한다 (검사 스크립트가 확인)",
+            "propertyNames": { "$ref": "defs.schema.json#/$defs/questionId" },
+            "additionalProperties": { "$ref": "defs.schema.json#/$defs/id" }
+          },
+          "cart": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/id" },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "kept": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/conflictId" },
+            "uniqueItems": true,
+            "description": "레시피가 '그대로 두기'로 넘기는 충돌"
+          },
+          "freeText": { "type": "string", "maxLength": 80 }
+        }
+      }
+    }
+  }
+}

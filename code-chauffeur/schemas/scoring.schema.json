@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scoring.schema.json",
+  "title": "추천 점수 설정 (사이트에 공개하는 값)",
+  "type": "object",
+  "required": [
+    "version",
+    "weights",
+    "recommendThreshold",
+    "userLevelByAi",
+    "defaultUserLevel",
+    "phaseSplitDifficulty",
+    "studyRequiredMax",
+    "baseMinutes",
+    "unknownSetupMinutes",
+    "reasonsMax"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domainMatch",
+        "topicMatch",
+        "topicMissed",
+        "aiToolMatch",
+        "freeProduct",
+        "paidWhenBudgetFree",
+        "realtimeMet",
+        "realtimeMissed",
+        "difficultyGap",
+        "providerOfficial",
+        "proxyNeeded",
+        "sharedTool",
+        "localForMe",
+        "localForShared",
+        "accessPenalty"
+      ],
+      "properties": {
+        "domainMatch": { "type": "number" },
+        "topicMatch": { "type": "number" },
+        "topicMissed": { "type": "number", "description": "이용자가 주제를 골랐는데 상품 주제와 다를 때. 음수" },
+        "aiToolMatch": { "type": "number" },
+        "freeProduct": { "type": "number", "description": "무료로 시작할 수 있는 상품에 더한다" },
+        "paidWhenBudgetFree": { "type": "number", "description": "0원만 쓰기로 했는데 유료 상품일 때. 음수" },
+        "realtimeMet": { "type": "number" },
+        "realtimeMissed": { "type": "number" },
+        "difficultyGap": { "type": "number", "description": "|상품 난이도 - 이용자 수준| 에 곱한다. 음수" },
+        "providerOfficial": { "type": "number" },
+        "proxyNeeded": { "type": "number", "description": "장바구니에 키 노출 위험 상품이 있을 때 proxy 기능이 있는 상품에 더한다" },
+        "sharedTool": { "type": "number", "description": "이미 담은 상품이 다른 칸도 맡을 수 있을 때 (도구 수를 줄이는 쪽을 권함)" },
+        "localForMe": { "type": "number" },
+        "localForShared": { "type": "number" },
+        "accessPenalty": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["none", "signup", "key", "approval", "account-or-business"],
+          "properties": {
+            "none": { "type": "number" },
+            "signup": { "type": "number" },
+            "key": { "type": "number" },
+            "approval": { "type": "number" },
+            "account-or-business": { "type": "number" }
+          }
+        }
+      }
+    },
+    "recommendThreshold": { "type": "number" },
+    "userLevelByAi": {
+      "type": "object",
+      "propertyNames": { "pattern": "^ai\\.[a-z0-9-]+$" },
+      "additionalProperties": { "enum": [1, 2, 3] }
+    },
+    "defaultUserLevel": { "enum": [1, 2, 3] },
+    "phaseSplitDifficulty": { "type": "integer", "minimum": 1 },
+    "studyRequiredMax": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "baseMinutes": { "type": "integer", "minimum": 0 },
+    "unknownSetupMinutes": { "type": "integer", "minimum": 0, "description": "setupMinutes가 없는 상품(색인 상품)에 쓰는 값" },
+    "reasonsMax": { "type": "integer", "minimum": 1, "maximum": 5, "description": "추천 이유를 몇 개까지 보여 줄지" }
+  }
+}

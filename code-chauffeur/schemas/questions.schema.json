@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "questions.schema.json",
+  "title": "인터뷰 질문 (적힌 순서대로, 보이는 첫 미응답 질문을 묻는다)",
+  "type": "object",
+  "required": ["version", "questions"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "text", "picture", "options"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/questionId" },
+          "text": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "help": { "type": "string" },
+          "chip": { "type": "string", "description": "'좁혀지는 중' 미리 보기에 쓰는 짧은 이름" },
+          "picture": { "type": "boolean", "description": "true면 그림 보기. 모든 보기에 alt가 있어야 한다" },
+          "showIf": { "$ref": "defs.schema.json#/$defs/condition" },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": ["id", "label", "tags"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "$ref": "defs.schema.json#/$defs/id" },
+                "label": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+                "alt": { "type": "string", "description": "그림 보기의 대체 텍스트" },
+                "isUnknown": { "type": "boolean", "description": "'모르겠어요' 보기. 질문마다 하나" },
+                "tags": {
+                  "type": "object",
+                  "propertyNames": { "$ref": "defs.schema.json#/$defs/tagId" },
+                  "additionalProperties": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "if": {
+          "properties": {
+            "picture": { "const": true }
+          }
+        },
+        "then": {
+          "properties": {
+            "options": {
+              "items": { "required": ["alt"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

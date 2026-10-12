@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sources.schema.json",
+  "title": "출처 대응표 (색인 수집용)",
+  "type": "object",
+  "required": ["version", "sources"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "homepage",
+          "termsUrl",
+          "redistribution",
+          "method",
+          "phase",
+          "categoryMap",
+          "checkedAt",
+          "needsReview"
+        ],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "name": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "homepage": { "$ref": "defs.schema.json#/$defs/url" },
+          "termsUrl": { "$ref": "defs.schema.json#/$defs/url" },
+          "redistribution": {
+            "enum": ["allowed", "metadata-only", "link-only", "unknown"],
+            "description": "allowed 재배포 허용, metadata-only 이름·설명 한 줄 등 목록 정보만, link-only 이름과 링크만, unknown 확인 전(이름과 링크만 쓴다)"
+          },
+          "method": {
+            "$ref": "defs.schema.json#/$defs/nonEmptyText",
+            "description": "공식 목록 API나 RSS 같은 수집 방법. 화면 긁기(스크래핑)는 쓰지 않는다"
+          },
+          "phase": { "enum": [1, 2, 3] },
+          "categoryMap": {
+            "type": "object",
+            "minProperties": 1,
+            "description": "출처의 원래 분류 이름 → 우리 domain 태그",
+            "additionalProperties": { "$ref": "defs.schema.json#/$defs/tagId" }
+          },
+          "fallbackDomain": { "$ref": "defs.schema.json#/$defs/tagId" },
+          "checkedAt": { "$ref": "defs.schema.json#/$defs/yearMonth" },
+          "needsReview": { "type": "boolean" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

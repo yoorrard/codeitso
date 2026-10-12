@@ -1,0 +1,60 @@
+{
+  "id": "case-15",
+  "title": "나만 보는 날씨 위젯 (중간 서버 없이 키 사용)",
+  "note": "혼자 쓰는 앱은 키 노출 충돌을 띄우지 않는 대신, 내 컴퓨터에서만 쓰라는 안전 지시가 붙는다 (D14).",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "me",
+    "q.ai": "chat-free",
+    "q.save": "no",
+    "q.domain": "weather",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.device": "phone",
+    "q.style": "clean"
+  },
+  "cart": ["html-single", "kma-forecast"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.realtime", "q.budget", "q.device", "q.style"],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "kma-forecast",
+        "filledBy": ["kma-forecast"],
+        "score": 4,
+        "runnerUp": null,
+        "reasons": ["domain", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [],
+        "score": 6,
+        "runnerUp": "cloudflare-workers",
+        "reasons": ["aiTool", "budget", "proxy"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [],
+    "safety": ["safety.local-key"],
+    "study": { "required": ["api", "api-key", "env-var"], "all": ["api", "json", "api-key", "env-var"] },
+    "steps": ["slot.screen", "slot.data"],
+    "prep": ["공공데이터포털 가입 후 API 활용 신청 (승인 뒤 키가 동작하기까지 1~2시간)"],
+    "difficulty": 3,
+    "difficultyFirst": 3,
+    "minutes": 100,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

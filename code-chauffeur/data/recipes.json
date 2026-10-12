@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "recipes": [
+    {
+      "id": "lunch-page",
+      "title": "급식 안내 페이지",
+      "summary": "우리 학교 이번 주 급식을 휴대폰에서 바로 보는 페이지",
+      "forWho": "교사, 학생회",
+      "answers": {
+        "q.type": "page",
+        "q.audience": "anyone",
+        "q.ai": "chat-free",
+        "q.save": "no",
+        "q.domain": "education",
+        "q.edu-topic": "meal",
+        "q.realtime": "daily",
+        "q.budget": "free-only",
+        "q.payment": "no",
+        "q.device": "phone",
+        "q.style": "cute"
+      },
+      "cart": ["html-single", "neis-meal", "google-sheets-apps-script"],
+      "freeText": "우리 학교 급식 안내 페이지"
+    },
+    {
+      "id": "trip-form",
+      "title": "체험학습 신청서",
+      "summary": "학생 번호와 참가 여부만 받아 구글 시트에 모으는 신청서",
+      "forWho": "담임 교사",
+      "answers": {
+        "q.type": "form",
+        "q.audience": "few",
+        "q.ai": "chat-free",
+        "q.login": "no",
+        "q.domain": "none",
+        "q.budget": "free-only",
+        "q.personal": "yes-students",
+        "q.payment": "no",
+        "q.device": "phone",
+        "q.style": "clean"
+      },
+      "cart": ["html-single", "google-sheets-apps-script"],
+      "kept": ["conflict.personal-server"],
+      "freeText": "체험학습 참가 신청서"
+    },
+    {
+      "id": "class-quiz",
+      "title": "우리 반 퀴즈",
+      "summary": "단원 복습 문제를 풀고 바로 채점하는 퀴즈 (문제는 목록 파일만 고치면 바뀜)",
+      "forWho": "교사",
+      "answers": {
+        "q.type": "quiz",
+        "q.audience": "few",
+        "q.ai": "chat-free",
+        "q.save": "no",
+        "q.domain": "none",
+        "q.budget": "free-only",
+        "q.payment": "no",
+        "q.device": "phone",
+        "q.style": "cute"
+      },
+      "cart": ["html-single", "github-pages"],
+      "freeText": "우리 반 단원 복습 퀴즈"
+    },
+    {
+      "id": "reading-log",
+      "title": "나만의 독서 기록장",
+      "summary": "읽은 책과 한 줄 감상을 내 휴대폰에 쌓는 기록장",
+      "forWho": "누구나",
+      "answers": {
+        "q.type": "record",
+        "q.audience": "me",
+        "q.ai": "chat-free",
+        "q.domain": "none",
+        "q.budget": "free-only",
+        "q.personal": "no",
+        "q.device": "phone",
+        "q.style": "cute"
+      },
+      "cart": ["html-single", "browser-storage"],
+      "freeText": "나만의 독서 기록장"
+    },
+    {
+      "id": "weather-board",
+      "title": "우리 동네 날씨 현황판",
+      "summary": "기온과 비 소식을 한 화면에 모아 보는 현황판",
+      "forWho": "코딩 에이전트를 써 본 사람",
+      "answers": {
+        "q.type": "board",
+        "q.audience": "few",
+        "q.ai": "agent",
+        "q.save": "no",
+        "q.domain": "weather",
+        "q.notify": "no",
+        "q.realtime": "daily",
+        "q.budget": "free-only",
+        "q.payment": "no",
+        "q.device": "both",
+        "q.style": "clean"
+      },
+      "cart": ["react-vite", "kma-forecast", "cloudflare-workers"],
+      "freeText": "우리 동네 날씨 현황판"
+    }
+  ]
+}

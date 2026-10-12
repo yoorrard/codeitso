@@ -1,0 +1,75 @@
+{
+  "id": "case-10",
+  "title": "공개 주식 시세 페이지 (실시간, 증권사 API)",
+  "note": "시세 재배포·투자 정보 제공 조사 카드와 증권사 키 안전 지시가 붙는다. 난이도 합 7이지만 미룰 칸이 없다.",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "anyone",
+    "q.ai": "agent",
+    "q.save": "no",
+    "q.domain": "finance",
+    "q.realtime": "realtime",
+    "q.budget": "free-only",
+    "q.payment": "no",
+    "q.device": "both",
+    "q.style": "serious"
+  },
+  "cart": ["react-vite", "kis-open-api", "cloudflare-workers"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.realtime",
+      "q.budget",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "react-vite",
+        "filledBy": ["react-vite"],
+        "score": 4,
+        "runnerUp": "html-single",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "kis-open-api",
+        "filledBy": ["kis-open-api"],
+        "score": 3,
+        "runnerUp": "fsc-stock",
+        "reasons": ["domain", "budget", "realtime"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "cloudflare-workers",
+        "filledBy": ["cloudflare-workers"],
+        "score": 7,
+        "runnerUp": "github-pages",
+        "reasons": ["aiTool", "budget", "proxy"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": ["research.finance-redistribution", "research.finance-advice"],
+    "safety": ["safety.proxy-key", "safety.finance-words", "safety.trading-key"],
+    "study": {
+      "required": ["api", "api-key", "env-var"],
+      "all": ["api", "json", "api-key", "env-var", "terminal", "deploy"]
+    },
+    "steps": ["slot.screen", "step.proxy", "slot.data", "slot.host"],
+    "prep": ["한국투자증권 계좌 개설", "Node.js LTS 설치", "KIS Developers 서비스 신청 후 앱 키 발급", "Cloudflare 가입"],
+    "difficulty": 7,
+    "difficultyFirst": 7,
+    "minutes": 200,
+    "split": { "needed": true, "defer": [], "easier": [] }
+  }
+}

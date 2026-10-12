@@ -1,0 +1,50 @@
+{
+  "id": "case-06",
+  "title": "모두 모르겠어요 (가장 무난한 길)",
+  "note": "모르겠어요의 기본값이 안내 페이지·나만·무료 AI 채팅·0원으로 이어진다.",
+  "answers": {
+    "q.type": "unknown",
+    "q.audience": "unknown",
+    "q.ai": "unknown",
+    "q.save": "unknown",
+    "q.domain": "unknown",
+    "q.budget": "unknown",
+    "q.device": "unknown",
+    "q.style": "unknown"
+  },
+  "cart": ["html-single"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.budget", "q.device", "q.style"],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "github-pages",
+        "filledBy": [],
+        "score": 4,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [],
+    "safety": [],
+    "study": { "required": [], "all": [] },
+    "steps": ["slot.screen"],
+    "prep": [],
+    "difficulty": 1,
+    "difficultyFirst": 1,
+    "minutes": 50,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

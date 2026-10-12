@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "errors": [
+    {
+      "id": "command-not-found",
+      "title": "명령을 찾을 수 없어요",
+      "patterns": [
+        "command not found",
+        "is not recognized as (an internal or external command|the name of a cmdlet)",
+        "은\\(는\\) 내부 또는 외부 명령"
+      ],
+      "examples": [
+        "zsh: command not found: npm",
+        "'npm' is not recognized as an internal or external command, operable program or batch file.",
+        "'npm'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다."
+      ],
+      "meaning": "컴퓨터가 그 명령어를 모른다는 뜻이에요. 프로그램이 설치되지 않았거나, 설치한 뒤 터미널을 다시 열지 않았거나, 이름을 잘못 적었을 때 나요.",
+      "causes": ["프로그램(Node.js 등)이 설치되지 않음", "설치한 뒤 터미널을 새로 열지 않음", "명령어 철자가 틀림"],
+      "tryFirst": ["터미널을 닫았다가 다시 열기", "node -v로 Node.js가 설치됐는지 확인하기", "명령어 철자 확인하기"],
+      "askAI": "터미널에 '(에러 붙여 넣기)'가 나왔어. 내 컴퓨터는 (윈도우/맥)이야. 무엇을 설치하거나 확인해야 하는지 순서대로 알려 줘.",
+      "concepts": ["terminal"]
+    },
+    {
+      "id": "http-401",
+      "title": "키가 없거나 틀렸어요 (401)",
+      "patterns": ["\\b401\\b", "unauthorized", "SERVICE[_ ]KEY[_ ]IS[_ ]NOT[_ ]REGISTERED", "ERROR-290"],
+      "examples": ["401 Unauthorized", "SERVICE_KEY_IS_NOT_REGISTERED_ERROR", "ERROR-290 인증키가 유효하지 않습니다."],
+      "meaning": "API가 요청한 사람을 확인하지 못했다는 뜻이에요. 키가 없거나, 틀렸거나, 아직 동작하지 않을 때 나요.",
+      "causes": ["키를 안 넣었거나 앞뒤에 공백이 섞임", "공공데이터포털 키를 받은 직후라 아직 등록 전", "인코딩 키와 디코딩 키를 바꿔 넣음", "환경 변수 이름이 코드와 다름"],
+      "tryFirst": ["키를 다시 복사해 붙여 넣기 (앞뒤 공백 확인)", "공공데이터포털 키라면 1~2시간 뒤 다시 해 보기", "인코딩 키 대신 디코딩 키(또는 그 반대)로 바꿔 보기"],
+      "askAI": "API를 부르니 '(에러 붙여 넣기)'가 나왔어. 키는 (어디에) 넣었어. 키 이름과 넣는 위치가 맞는지 같이 확인해 줘. 키 값 자체는 보여 주지 않을게.",
+      "concepts": ["api-key", "env-var"]
+    },
+    {
+      "id": "cors",
+      "title": "브라우저가 요청을 막았어요 (CORS)",
+      "patterns": ["CORS", "Access-Control-Allow-Origin"],
+      "examples": [
+        "Access to fetch at 'https://api.example.com/data' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+      ],
+      "meaning": "브라우저가 다른 주소의 서버 응답을 막았어요. 그 서버가 브라우저에서 바로 부르는 것을 허락하지 않았다는 뜻이에요.",
+      "causes": ["공공 API처럼 브라우저 호출을 허락하지 않는 서버를 화면 코드에서 바로 부름", "파일을 더블클릭해서 연 상태에서 요청함"],
+      "tryFirst": ["화면 코드에서 바로 부르지 말고 중간 서버(예: Cloudflare Workers)를 거쳐 부르기", "파일을 더블클릭해 열었다면 로컬 서버나 배포한 주소로 열기"],
+      "askAI": "브라우저 콘솔에 '(에러 붙여 넣기)'가 나왔어. 중간 서버를 거쳐 부르도록 코드를 바꾸는 방법을 알려 줘. 키는 중간 서버의 비밀 값으로 둘 거야. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["cors", "api"]
+    },
+    {
+      "id": "module-not-found",
+      "title": "파일이나 패키지를 못 찾아요",
+      "patterns": ["Cannot find module", "Module not found", "ERR_MODULE_NOT_FOUND", "Failed to resolve import"],
+      "examples": [
+        "Error: Cannot find module 'react'",
+        "[vite] Failed to resolve import \"./App.jsx\" from \"src/main.jsx\". Does the file exist?"
+      ],
+      "meaning": "코드가 부르는 파일이나 패키지를 찾지 못했다는 뜻이에요.",
+      "causes": ["패키지를 설치하지 않음 (npm install 안 함)", "파일 이름이나 경로 오타 (대소문자 포함)"],
+      "tryFirst": ["프로젝트 폴더에서 npm install 실행하기", "에러에 나온 파일 이름과 실제 파일 이름을 대소문자까지 비교하기"],
+      "askAI": "'(에러 붙여 넣기)'가 나왔어. 지금 폴더 구조는 (붙여 넣기)야. 무엇이 빠졌는지 알려 줘.",
+      "concepts": ["terminal"]
+    },
+    {
+      "id": "http-404",
+      "title": "주소에 아무것도 없어요 (404)",
+      "patterns": ["\\b404\\b"],
+      "examples": ["GET https://example.com/api/meal 404 (Not Found)"],
+      "meaning": "요청한 주소에 아무것도 없다는 뜻이에요.",
+      "causes": ["주소 오타", "배포가 아직 끝나지 않음", "API 주소가 바뀜"],
+      "tryFirst": ["주소를 브라우저 주소창에 직접 붙여 넣어 열어 보기", "배포 화면에서 배포가 끝났는지 확인하기", "API 문서에서 요청 주소가 바뀌었는지 확인하기"],
+      "askAI": "'(주소)'를 열었더니 404가 나왔어. 배포는 (어디에) 했어. 주소가 맞는지 같이 확인해 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["api", "deploy"]
+    },
+    {
+      "id": "http-429",
+      "title": "너무 많이 불렀어요 (429)",
+      "patterns": ["\\b429\\b", "Too Many Requests", "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS"],
+      "examples": ["429 Too Many Requests", "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR"],
+      "meaning": "짧은 시간에 너무 많이 불러서 막혔어요. 하루 무료 한도를 넘었을 수도 있어요.",
+      "causes": ["화면을 열 때마다 API를 새로 부름", "반복문 안에서 API를 부름", "하루 호출 한도를 넘음"],
+      "tryFirst": ["잠시 기다렸다가 다시 해 보기", "한 번 받은 결과를 저장해 두고 다시 쓰게 고치기", "하루 한도를 공식 문서에서 확인하기"],
+      "askAI": "'(에러 붙여 넣기)'가 나왔어. 같은 결과를 다시 부르지 않게, 받은 결과를 잠시 저장해 두는 방법으로 고쳐 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["free-tier", "api"]
+    }
+  ]
+}

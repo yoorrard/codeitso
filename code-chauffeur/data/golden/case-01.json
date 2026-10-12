@@ -1,0 +1,85 @@
+{
+  "id": "case-01",
+  "title": "급식 안내 페이지 (무료 AI 채팅, 누구나 봄)",
+  "note": "추천을 그대로 담은 기본 경로. 앱스 스크립트가 키를 숨겨 충돌이 없다.",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "anyone",
+    "q.ai": "chat-free",
+    "q.save": "no",
+    "q.domain": "education",
+    "q.edu-topic": "meal",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.payment": "no",
+    "q.device": "phone",
+    "q.style": "cute"
+  },
+  "cart": ["html-single", "neis-meal", "google-sheets-apps-script"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.edu-topic",
+      "q.realtime",
+      "q.budget",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "tags": {
+      "type.page": 1,
+      "audience.public": 1,
+      "ai.chat-free": 1,
+      "domain.education": 1,
+      "need.data": 1,
+      "topic.meal": 1,
+      "budget.free": 1,
+      "device.phone": 1,
+      "style.cute": 1
+    },
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "neis-meal",
+        "filledBy": ["neis-meal"],
+        "score": 7,
+        "runnerUp": "neis-schedule",
+        "reasons": ["domain", "topic", "budget"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": ["google-sheets-apps-script"],
+        "score": 6,
+        "runnerUp": "cloudflare-workers",
+        "reasons": ["aiTool", "budget", "proxy"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [],
+    "safety": ["safety.proxy-key"],
+    "study": { "required": ["api", "api-key", "env-var"], "all": ["api", "json", "api-key", "env-var", "deploy"] },
+    "steps": ["slot.screen", "step.proxy", "slot.data", "slot.host"],
+    "prep": ["교육정보 개방 포털에 로그인해 인증키 발급", "구글 계정"],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 130,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

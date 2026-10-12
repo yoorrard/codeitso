@@ -1,0 +1,65 @@
+{
+  "id": "case-07",
+  "title": "번역 도구 (맞는 상품이 없는 칸을 조사할 것으로)",
+  "note": "번역 분야 상품이 진열대에 없어 외부 데이터 칸이 빈다. 예산이 0원이 아니어도 무료 상품 점수는 그대로다.",
+  "answers": {
+    "q.type": "tool",
+    "q.audience": "few",
+    "q.ai": "chat-paid",
+    "q.save": "no",
+    "q.domain": "language",
+    "q.realtime": "daily",
+    "q.budget": "small",
+    "q.payment": "no",
+    "q.device": "pc",
+    "q.style": "clean"
+  },
+  "cart": ["html-single", "github-pages"],
+  "kept": ["conflict.empty-slot:slot.data"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.realtime",
+      "q.budget",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      { "id": "slot.data", "required": true, "recommended": null, "filledBy": [] },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "github-pages",
+        "filledBy": ["github-pages"],
+        "score": 4,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": ["conflict.empty-slot:slot.data"],
+    "canIssue": true,
+    "research": ["research.empty:slot.data"],
+    "safety": [],
+    "study": { "required": ["deploy"], "all": ["deploy", "git-repo"] },
+    "steps": ["slot.screen", "slot.data", "slot.host"],
+    "prep": ["GitHub 가입"],
+    "difficulty": 3,
+    "difficultyFirst": 3,
+    "minutes": 80,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

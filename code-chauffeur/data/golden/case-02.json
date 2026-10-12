@@ -1,0 +1,73 @@
+{
+  "id": "case-02",
+  "title": "학급 신청서 (학생 정보, 해외 서버 충돌을 그대로 둠)",
+  "note": "앱스 스크립트 하나가 저장과 배포 칸을 함께 맡는다.",
+  "answers": {
+    "q.type": "form",
+    "q.audience": "few",
+    "q.ai": "chat-free",
+    "q.login": "no",
+    "q.domain": "none",
+    "q.budget": "free-only",
+    "q.personal": "yes-students",
+    "q.payment": "no",
+    "q.device": "phone",
+    "q.style": "cute"
+  },
+  "cart": ["html-single", "google-sheets-apps-script"],
+  "kept": ["conflict.personal-server"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.login",
+      "q.domain",
+      "q.budget",
+      "q.personal",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": ["google-sheets-apps-script"],
+        "score": 4,
+        "runnerUp": "supabase",
+        "reasons": ["aiTool", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": ["google-sheets-apps-script"],
+        "score": 6,
+        "runnerUp": "github-pages",
+        "reasons": ["aiTool", "budget", "shared"]
+      }
+    ],
+    "conflicts": ["conflict.personal-server"],
+    "canIssue": true,
+    "research": ["research.privacy-student", "research.privacy-overseas"],
+    "safety": ["safety.form-responses", "safety.personal-minimum", "safety.students"],
+    "study": { "required": ["deploy"], "all": ["deploy"] },
+    "steps": ["slot.screen", "slot.store", "slot.host"],
+    "prep": ["구글 계정"],
+    "difficulty": 3,
+    "difficultyFirst": 3,
+    "minutes": 90,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

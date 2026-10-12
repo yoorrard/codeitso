@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "errors.schema.json",
+  "title": "사전의 에러 안내",
+  "type": "object",
+  "required": ["version", "errors"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "patterns", "examples", "meaning", "causes", "tryFirst", "askAI"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "title": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "patterns": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "minItems": 1,
+            "description": "대소문자 구분 없는 정규식. 하나라도 맞으면 이 항목을 보여 준다"
+          },
+          "examples": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "minItems": 1,
+            "description": "실제 에러 문장 예. 검사 스크립트가 patterns에 맞는지 확인한다"
+          },
+          "meaning": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "causes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "tryFirst": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "askAI": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "concepts": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/id" },
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}

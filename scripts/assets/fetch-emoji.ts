@@ -51,6 +51,28 @@ export const EMOJI: Record<string, string> = {
   'speech-balloon': 'Speech balloon',
   tools: 'Hammer and wrench',
   'magnifying-glass': 'Magnifying glass tilted left',
+  // 인터뷰 그림 보기 (D43, 보기와 그림 짝은 src/lib/option-art.ts)
+  notebook: 'Notebook',
+  clipboard: 'Clipboard',
+  newspaper: 'Newspaper',
+  'ballot-check': 'Check box with check',
+  abacus: 'Abacus',
+  'bar-chart': 'Bar chart',
+  'mobile-phone': 'Mobile phone',
+  busts: 'Busts in silhouette',
+  globe: 'Globe with meridians',
+  'glowing-star': 'Glowing star',
+  desktop: 'Desktop computer',
+  package: 'Package',
+  school: 'School',
+  'chart-up': 'Chart increasing',
+  'sun-cloud': 'Sun behind cloud',
+  bus: 'Bus',
+  'latin-letters': 'Input latin letters',
+  'framed-picture': 'Framed picture',
+  'performing-arts': 'Performing arts',
+  'classical-building': 'Classical building',
+  'artist-palette': 'Artist palette',
 };
 
 function fetchTo(url: string, dest: string): void {

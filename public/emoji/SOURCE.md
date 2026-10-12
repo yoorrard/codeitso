@@ -35,3 +35,24 @@ microsoft/fluentui-emoji @ 1ffb34c752ecf5d402f04cfb4b392c77f57c54bc Ïùò 3D PNGÎ•
 | speech-balloon | Speech balloon |
 | tools | Hammer and wrench |
 | magnifying-glass | Magnifying glass tilted left |
+| notebook | Notebook |
+| clipboard | Clipboard |
+| newspaper | Newspaper |
+| ballot-check | Check box with check |
+| abacus | Abacus |
+| bar-chart | Bar chart |
+| mobile-phone | Mobile phone |
+| busts | Busts in silhouette |
+| globe | Globe with meridians |
+| glowing-star | Glowing star |
+| desktop | Desktop computer |
+| package | Package |
+| school | School |
+| chart-up | Chart increasing |
+| sun-cloud | Sun behind cloud |
+| bus | Bus |
+| latin-letters | Input latin letters |
+| framed-picture | Framed picture |
+| performing-arts | Performing arts |
+| classical-building | Classical building |
+| artist-palette | Artist palette |

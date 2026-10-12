@@ -63,6 +63,7 @@ export default function Masthead({ station, faceSrc, initial }: Props) {
             const reason = g.reason ? ko.locks[g.reason] : ko.locks.generic;
             return (
               <li class={`stop ${state}${i < hereIndex ? ' behind' : ''}`}>
+                {current && <img class="route-car" src="/emoji/taxi.webp" width={28} height={28} alt="" />}
                 {g.open ? (
                   <a href={s.path} aria-current={current ? 'step' : undefined}>
                     <span class="pin">

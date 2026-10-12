@@ -26,6 +26,16 @@
   animation-duration: var(--dur-page);
 }
 
+/* M1: 노선 띠의 차는 페이지를 넘어도 이어진다. 이름이 같은 요소라 브라우저가 옛 정류장에서 새 정류장으로 옮겨 그린다 */
+.route-car {
+  view-transition-name: route-car;
+}
+
+::view-transition-group(route-car) {
+  animation-duration: var(--dur-move);
+  animation-timing-function: var(--ease-in-out);
+}
+
 /* ── 머리말 ─────────────────────────────────────────────── */
 .masthead {
   background: var(--navy);
@@ -151,6 +161,16 @@
     0 0 0 3px var(--navy),
     0 0 0 6px var(--taxi);
   transform: scale(var(--juice-m-scale));
+}
+
+.route-car {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: -6px;
+  inset-inline-start: calc(50% + 10px);
+  inline-size: 26px;
+  block-size: 26px;
+  pointer-events: none;
 }
 
 .stop.current .stop-name {

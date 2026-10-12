@@ -1,0 +1,259 @@
+// 인터뷰 섬 (T08, docs/UX.md 3.3): 한 화면에 질문 하나. 보기 하나하나가 버튼이고 누르면 바로 다음 질문.
+// 이전으로 돌아가 바꾸기, 'n번째 질문', 좁혀지는 중 상자(답 칩·생긴 칸·혹시 이 레시피), 마지막 한 줄 입력, 인터뷰 도장.
+// 계산은 모두 엔진(evaluate·answerChips·matchingRecipes). 화면은 보여 주기만 한다.
+import { useStore } from '@nanostores/preact';
+import { useEffect, useRef, useState } from 'preact/hooks';
+import { ko } from '../copy/ko.ts';
+import { announce } from '../lib/announce.ts';
+import { catalog } from '../lib/data.ts';
+import { answerChips, evaluate, fill, matchingRecipes } from '../lib/engine/index.ts';
+import type { Option, Question } from '../lib/engine/types.ts';
+import { track } from '../lib/events.ts';
+import { useHydrated } from '../lib/hydrated.ts';
+import { josa } from '../lib/josa.ts';
+import { sentences } from '../lib/sentences.ts';
+import { OPTION_ART, SLOT_ART, optionArt } from '../lib/option-art.ts';
+import { $result, updateSession } from '../lib/result.ts';
+import { EMPTY_SESSION, FREE_TEXT_MAX } from '../lib/saved.ts';
+import { sfx } from '../lib/sfx.ts';
+import { $trip, markStampsSeen, patchMeta } from '../lib/store.ts';
+import { Icon } from './Icon.tsx';
+
+const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
+const LINE_MAX = Math.min(80, FREE_TEXT_MAX);
+const STAMP = 'station.interview';
+
+interface Props {
+  /** 기사님 얼굴 그림 주소 (페이지가 빌드 때 만든다) */
+  faceSrc: string;
+}
+
+function StylePreview({ option }: { option: Option }) {
+  const tag = Object.keys(option.tags).find((t) => t.startsWith('style.'));
+  const style = tag ? catalog.data.templates.styles[tag] : undefined;
+  if (!style) return null;
+  const p = style.palette;
+  return (
+    <span
+      class="style-preview"
+      aria-hidden="true"
+      style={{ '--sw-bg': p.background, '--sw-surface': p.surface, '--sw-text': p.text, '--sw-accent': p.accent, '--sw-accent-text': p.accentText, '--sw-radius': style.radius }}
+    >
+      <span class="sw-title" />
+      <span class="sw-line" />
+      <span class="sw-button" />
+    </span>
+  );
+}
+
+function OptionButton({ q, option, picked, onPick }: { q: Question; option: Option; picked: boolean; onPick: (o: Option) => void }) {
+  const art = optionArt(q.id, option.id);
+  const hasArt = q.picture && (art !== null || q.id === 'q.style');
+  return (
+    <li>
+      <button type="button" class={`option${hasArt ? ' option-pic' : ''}${option.isUnknown ? ' option-unknown' : ''}`} aria-pressed={picked} onClick={() => onPick(option)}>
+        {hasArt && (art ? <img src={`/emoji/${art}.webp`} width={64} height={64} alt="" /> : <StylePreview option={option} />)}
+        <span class="option-label">{option.label}</span>
+        {picked && <span class="visually-hidden">({ko.interview.picked})</span>}
+      </button>
+    </li>
+  );
+}
+
+export default function Interview({ faceSrc }: Props) {
+  const ready = useHydrated();
+  const live = useStore($result);
+  const r = ready ? live : FIRST_VISIT;
+  const [pos, setPos] = useState<number | null>(null);
+  const [moved, setMoved] = useState(false);
+  const [bubble, setBubble] = useState(true);
+  const [finished, setFinished] = useState<'none' | 'first' | 'again'>('none');
+  const heading = useRef<HTMLHeadingElement>(null);
+  const narrow = useRef<HTMLDetailsElement>(null);
+
+  const visible = r.interview.visible;
+  const autoPos = r.interview.next ? visible.findIndex((v) => v.id === r.interview.next?.id) : visible.length;
+  const at = Math.min(pos ?? autoPos, visible.length);
+  const q = visible[at];
+
+  // 넓은 화면에서는 좁혀지는 중 상자를 펼쳐 둔다
+  useEffect(() => {
+    if (narrow.current && window.matchMedia('(min-width: 768px)').matches) narrow.current.open = true;
+  }, []);
+
+  // 질문이 바뀌면 질문 제목으로 초점 (처음 열 때는 옮기지 않는다)
+  useEffect(() => {
+    if (moved) heading.current?.focus();
+  }, [at, q?.id, finished, moved]);
+
+  const go = (next: number): void => {
+    setMoved(true);
+    setPos(next);
+  };
+
+  const pick = (option: Option): void => {
+    if (!q) return;
+    const wasEmpty = Object.keys(r.session.answers).length === 0;
+    updateSession((s) => ({ answers: { ...s.answers, [q.id]: option.id } }));
+    if (wasEmpty) {
+      patchMeta({ interviewStartedAt: Date.now() });
+      track('interview_start');
+    }
+    announce(fill(ko.interview.answered, { obj: josa(option.label, 'obj') }));
+    void sfx('tap');
+    setBubble(false);
+    const after = $result.get().interview.visible;
+    const idx = after.findIndex((v) => v.id === q.id);
+    go(idx < 0 ? after.length : idx + 1);
+  };
+
+  const finish = (): void => {
+    if (!r.done) return;
+    const first = !$trip.get().seenStamps.includes(STAMP);
+    markStampsSeen([STAMP]);
+    setFinished(first ? 'first' : 'again');
+    setMoved(true);
+    track('interview_done');
+    announce(`${ko.interview.done} ${ko.common.interviewDone}`);
+    void sfx('stamp');
+  };
+
+  const chips = answerChips(catalog, r.interview);
+  const recipes = matchingRecipes(catalog, r.interview, 2)
+    .map((id) => catalog.data.recipes.recipes.find((x) => x.id === id))
+    .filter((x) => x !== undefined);
+
+  return (
+    <div class="interview">
+      {finished !== 'none' ? (
+        <section class="q-card q-done" key="done" aria-labelledby="q-title">
+          <span class={finished === 'first' ? 'stamp-mark stamp-in' : 'stamp-mark'} aria-hidden="true">
+            <img src="/emoji/station-interview.webp" width={56} height={56} alt="" />
+          </span>
+          <h1 id="q-title" ref={heading} tabIndex={-1}>
+            {ko.common.interviewDone}
+          </h1>
+          <p>{ko.interview.done}</p>
+          <a class="btn btn-primary btn-lg" href="/shop">
+            {ko.interview.goShop}
+          </a>
+        </section>
+      ) : q ? (
+        <section class="q-card" key={q.id} aria-labelledby="q-title">
+          <div class="q-top">
+            {at > 0 && (
+              <button type="button" class="btn btn-quiet" onClick={() => go(at - 1)}>
+                {ko.interview.back}
+              </button>
+            )}
+            <p class="q-no">{fill(ko.interview.questionNo, { n: at + 1 })}</p>
+          </div>
+          {at === 0 && bubble && Object.keys(r.session.answers).length === 0 && (
+            <div class="mascot-line">
+              <img class="face" src={faceSrc} width={40} height={40} alt="" />
+              <p>
+                {sentences(ko.mascot.interview).map((t) => (
+                  <span class="line">{t}</span>
+                ))}
+              </p>
+            </div>
+          )}
+          <h1 id="q-title" ref={heading} tabIndex={-1}>
+            {q.text}
+          </h1>
+          {q.help && <p class="q-help">{q.help}</p>}
+          <ul class={`options${q.picture ? ' options-pic' : ''}`}>
+            {q.options.map((o) => (
+              <OptionButton q={q} option={o} picked={r.interview.answers[q.id] === o.id} onPick={pick} />
+            ))}
+          </ul>
+          {r.interview.answers[q.id] !== undefined && (
+            <button type="button" class="btn" onClick={() => go(at + 1)}>
+              {ko.common.next}
+            </button>
+          )}
+        </section>
+      ) : (
+        <section class="q-card" key="line" aria-labelledby="q-title">
+          <div class="q-top">
+            <button type="button" class="btn btn-quiet" onClick={() => go(visible.length - 1)}>
+              {ko.interview.back}
+            </button>
+          </div>
+          <h1 id="q-title" ref={heading} tabIndex={-1}>
+            <label for="free-line">{ko.interview.lineTitle}</label>
+          </h1>
+          <p class="q-help" id="free-line-hint">
+            {ko.interview.lineHint}
+          </p>
+          <input
+            id="free-line"
+            class="line-input"
+            type="text"
+            maxLength={LINE_MAX}
+            aria-describedby="free-line-hint free-line-count"
+            placeholder={ko.interview.linePlaceholder}
+            value={r.session.freeText ?? ''}
+            onInput={(e) => {
+              const v = (e.currentTarget as HTMLInputElement).value.slice(0, LINE_MAX);
+              updateSession(() => ({ freeText: v }));
+            }}
+          />
+          <p class="line-count" id="free-line-count">
+            {fill(ko.interview.lineCount, { n: (r.session.freeText ?? '').length, max: LINE_MAX })}
+          </p>
+          <button type="button" class="btn btn-primary btn-lg" onClick={finish} disabled={!r.done}>
+            {ko.interview.finish}
+          </button>
+        </section>
+      )}
+
+      <details class="narrowing" ref={narrow}>
+        <summary>
+          <span>{ko.interview.narrowing}</span>
+          <Icon name="expand" />
+        </summary>
+        {chips.length === 0 ? (
+          <p class="q-help">{ko.interview.chipsEmpty}</p>
+        ) : (
+          <ul class="chips">
+            {chips.map((c) => (
+              <li class="chip">
+                <span class="chip-key">{c.chip}</span> {c.label}
+              </li>
+            ))}
+          </ul>
+        )}
+        {r.slots.length > 0 && (
+          <>
+            <h2>{ko.interview.slotsTitle}</h2>
+            <ul class="slot-icons">
+              {r.slots.map((s) => (
+                <li>
+                  <img src={`/emoji/${SLOT_ART[s.slot.id] ?? 'tools'}.webp`} width={32} height={32} alt="" />
+                  <span>{s.slot.label}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        {recipes.length > 0 && (
+          <>
+            <h2>{ko.interview.recipesTitle}</h2>
+            <ul class="maybe-list">
+              {recipes.map((x) => (
+                <li class="maybe flip-in" key={x.id}>
+                  <strong>{x.title}</strong>
+                  <span>{x.summary}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </details>
+    </div>
+  );
+}
+
+/** 시험·다른 화면에서 그림이 있는 질문인지 볼 때 */
+export const PICTURE_QUESTIONS = Object.keys(OPTION_ART);

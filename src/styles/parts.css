@@ -984,3 +984,221 @@
   background: var(--line);
   color: var(--ink-soft);
 }
+
+/* ── 계산대 (T11) ───────────────────────────────────── */
+.receipt {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.receipt h1:focus {
+  outline: none;
+}
+
+.shared-note {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--sky);
+}
+
+.receipt-scene {
+  position: relative;
+}
+
+/* 프린터 틈: 종이가 위에서 아래로 덜컥덜컥 뽑혀 나온다 (M4) */
+.printer {
+  position: relative;
+  overflow: hidden;
+  padding-block-start: var(--space-3);
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: linear-gradient(var(--navy) 0 var(--space-3), transparent var(--space-3));
+}
+
+.paper {
+  position: relative;
+  inline-size: min(100%, 23rem);
+  margin-inline: auto;
+  margin-block-end: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  background: var(--receipt);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  animation: print var(--dur-print) steps(14, end) both;
+}
+
+/* 아래쪽 톱니 가장자리 (찢어 낸 영수증) */
+.paper::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -10px;
+  block-size: 10px;
+  background:
+    linear-gradient(135deg, var(--receipt) 50%, transparent 50%) 0 0 / 16px 10px repeat-x,
+    linear-gradient(225deg, var(--receipt) 50%, transparent 50%) 8px 0 / 16px 10px repeat-x;
+}
+
+@keyframes print {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.r-fixed {
+  font-family: var(--font-receipt);
+}
+
+.r-var {
+  font-family: var(--font-body);
+}
+
+.r-title {
+  text-align: center;
+  font-weight: var(--weight-strong);
+  font-size: var(--text-lg);
+}
+
+.r-center {
+  text-align: center;
+}
+
+.r-rule {
+  border: 0;
+  border-block-start: 2px dashed var(--ink-soft);
+  margin-block: var(--space-2);
+}
+
+.r-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.r-counts {
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+}
+
+.r-items {
+  display: grid;
+  gap: var(--space-1);
+  list-style: none;
+  padding: 0;
+}
+
+.r-items li {
+  display: grid;
+  grid-template-columns: minmax(0, 5.5em) minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.r-slot {
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+}
+
+.r-stamp {
+  justify-self: center;
+  inline-size: max-content;
+  margin: var(--space-3) auto var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 3px double var(--stop);
+  border-radius: var(--radius-sm);
+  color: var(--stop);
+  font-weight: var(--weight-strong);
+  transform: rotate(-6deg);
+  animation: stamp-in var(--dur-stamp) var(--ease-spring) var(--dur-print) both;
+}
+
+.r-footer {
+  font-size: var(--text-sm);
+}
+
+.scene-skip-btn {
+  position: absolute;
+  inset-block-start: var(--space-4);
+  inset-inline-end: 0;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* 탭 */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  border-block-end: 2px solid var(--line);
+}
+
+.tabs [role='tab'] {
+  flex-shrink: 0;
+  min-block-size: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-block-end: 4px solid transparent;
+  background: none;
+  font-weight: var(--weight-strong);
+  color: var(--ink-soft);
+}
+
+.tabs [role='tab'][aria-selected='true'] {
+  color: var(--ink);
+  border-block-end-color: var(--taxi);
+}
+
+.tab-panel {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+}
+
+.tab-panel h2 {
+  font-size: var(--text-lg);
+}
+
+.pack-preview summary {
+  font-weight: var(--weight-strong);
+  color: var(--link);
+}
+
+.pack-pre {
+  max-block-size: 28rem;
+  overflow: auto;
+  margin-block-start: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.concept-links,
+.step-concepts {
+  display: grid;
+  gap: var(--space-1);
+  padding-inline-start: var(--space-5);
+}
+
+.talk-cards {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+}
+
+.receipt-end {
+  font-weight: var(--weight-strong);
+}

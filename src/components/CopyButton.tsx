@@ -9,6 +9,12 @@ interface Props {
   text: string;
   /** 같은 버튼이 여러 개일 때 화면 낭독기가 구별할 이름 (예: '1단계 문장 복사') */
   srLabel?: string;
+  /** 보이는 버튼 글 (기본 '복사') */
+  label?: string;
+  /** 복사한 뒤 알릴 글 (기본 '복사했어요.') */
+  done?: string;
+  onCopied?: () => void;
+  primary?: boolean;
 }
 
 function legacyCopy(text: string): boolean {
@@ -28,7 +34,7 @@ function legacyCopy(text: string): boolean {
   return ok;
 }
 
-export default function CopyButton({ text, srLabel }: Props) {
+export default function CopyButton({ text, srLabel, label, done, onCopied, primary = false }: Props) {
   const [state, setState] = useState<'idle' | 'done' | 'fail'>('idle');
 
   async function copy(): Promise<void> {
@@ -40,15 +46,18 @@ export default function CopyButton({ text, srLabel }: Props) {
       ok = legacyCopy(text);
     }
     setState(ok ? 'done' : 'fail');
-    announce(ok ? ko.common.copied : ko.common.copyFailed);
-    if (ok) void sfx('tap');
+    announce(ok ? (done ?? ko.common.copied) : ko.common.copyFailed);
+    if (ok) {
+      void sfx('tap');
+      onCopied?.();
+    }
   }
 
   return (
     <span class="copy-wrap">
-      <button type="button" class="btn copy-btn" data-state={state} onClick={() => void copy()} aria-label={srLabel}>
+      <button type="button" class={primary ? 'btn btn-primary copy-btn' : 'btn copy-btn'} data-state={state} onClick={() => void copy()} aria-label={srLabel}>
         <Icon name={state === 'done' ? 'check' : 'copy'} />
-        <span aria-hidden={srLabel ? 'true' : undefined}>{state === 'done' ? ko.common.copied : ko.common.copy}</span>
+        <span aria-hidden={srLabel ? 'true' : undefined}>{state === 'done' ? ko.common.copied : (label ?? ko.common.copy)}</span>
       </button>
       {state === 'fail' && <span class="copy-fail">{ko.common.copyFailed}</span>}
     </span>

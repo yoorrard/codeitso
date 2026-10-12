@@ -1,0 +1,14 @@
+---
+// 계산대 /receipt (docs/UX.md 3.6, T11). 공유 상태가 주소에 잠깐 있으므로 이 화면에는 방문 통계 스크립트를 싣지 않는다.
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Receipt from '../components/Receipt.tsx';
+import face from '../assets/mascot/chauffeur-face.png';
+import { ko } from '../copy/ko.ts';
+
+const faceImg = await getImage({ src: face, width: 80, height: 80, format: 'webp' });
+---
+
+<Base title={ko.receipt.pageTitle} station="receipt">
+  <Receipt client:load faceSrc={faceImg.src} />
+</Base>

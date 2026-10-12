@@ -66,7 +66,7 @@
   --space-7: 48px;
   --content-max: 720px;
   --bar-top: 16px; /* 머리말은 붙박이가 아니다 (작은 화면을 덜 가리려고, D41). 초점 받은 요소 위 여백만 */
-  --bar-bottom: 76px; /* 붙박이 아래 진행 막대 높이 (주 버튼 44px + 위아래 여백) */
+  --bar-bottom: calc(4.75rem + env(safe-area-inset-bottom)); /* 붙박이 아래 막대 높이. 글자를 키우면 함께 커지게 rem */
   --shadow: 0 2px 0 rgb(18 27 58 / 0.08), 0 10px 28px rgb(18 27 58 / 0.1);
   --shadow-lift: 0 4px 0 rgb(18 27 58 / 0.1), 0 16px 36px rgb(18 27 58 / 0.14);
 
@@ -75,7 +75,8 @@
   --dur-base: 300ms; /* 보통 UI 전환 */
   --dur-slow: 600ms; /* 숫자 굴러가기 */
   --dur-move: 800ms; /* M1 차 이동 */
-  --dur-door: 800ms; /* M2 차 문 열기 */
+  --dur-door: 350ms; /* M2 차 문 열기 */
+  --dur-drive: 900ms; /* M8 홈 출발 장면에서 차가 달려와 서기까지 (모션 하나 1초 안쪽) */
   --dur-print: 2200ms; /* M4 영수증 출력 상한 */
   --dur-stamp: 250ms; /* 도장 찍기 */
   --dur-scene: 3000ms; /* 공들인 장면 상한 */
@@ -95,6 +96,8 @@
   --juice-s-shake: 2px;
   --juice-m-shake: 3px;
   --juice-l-shake: 4px;
+  --juice-press-scale: 0.97; /* 버튼을 누를 때 살짝 들어감 */
+  --juice-stamp-scale: 1.3; /* 도장이 내려찍히기 전 크기 */
 }
 
 /* linear()를 모르는 브라우저는 스프링 대신 ease-out */
@@ -112,6 +115,7 @@
     --dur-slow: 0ms;
     --dur-move: 0ms;
     --dur-door: 0ms;
+    --dur-drive: 0ms;
     --dur-print: 0ms;
     --dur-stamp: 0ms;
     --dur-scene: 0ms;
@@ -122,6 +126,8 @@
     --juice-s-shake: 0px;
     --juice-m-shake: 0px;
     --juice-l-shake: 0px;
+    --juice-press-scale: 1;
+    --juice-stamp-scale: 1;
   }
 }
 
@@ -132,6 +138,7 @@
   --dur-slow: 0ms;
   --dur-move: 0ms;
   --dur-door: 0ms;
+  --dur-drive: 0ms;
   --dur-print: 0ms;
   --dur-stamp: 0ms;
   --dur-scene: 0ms;
@@ -142,4 +149,6 @@
   --juice-s-shake: 0px;
   --juice-m-shake: 0px;
   --juice-l-shake: 0px;
+  --juice-press-scale: 1;
+  --juice-stamp-scale: 1;
 }

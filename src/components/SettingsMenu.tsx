@@ -15,9 +15,11 @@ const MENU_ID = 'cc-settings';
 
 interface Props {
   progress: Progress;
+  /** 기록을 지운 뒤 화면에 보일 안내 (낭독기 알림과 같은 글) */
+  onCleared: (message: string) => void;
 }
 
-export function SettingsMenu({ progress }: Props) {
+export function SettingsMenu({ progress, onCleared }: Props) {
   const prefs = useStore($prefs);
   const gear = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
@@ -72,7 +74,9 @@ export function SettingsMenu({ progress }: Props) {
       </div>
 
       <dialog ref={tripDialog} class="sheet" aria-labelledby="cc-trip-title" onClose={backToGear}>
-        <h2 id="cc-trip-title">{ko.trip.title}</h2>
+        <h2 id="cc-trip-title" tabIndex={-1} autofocus>
+          {ko.trip.title}
+        </h2>
         <p class="trip-km">
           {ko.trip.km} <strong class="tabular">{progress.km}</strong>
           {ko.board.km}
@@ -89,7 +93,7 @@ export function SettingsMenu({ progress }: Props) {
           <li class={progress.stamps.includes('study.required') ? 'stamp got' : 'stamp'}>
             <img src="/emoji/books.webp" width={40} height={40} alt="" />
             <span>{ko.trip.studyStamp}</span>
-            <span class="stamp-state">{progress.stamps.includes('study.required') ? ko.trip.got : ko.trip.notYet}</span>
+            <span class="stamp-state">{progress.stamps.includes('study.required') ? ko.trip.got : ko.trip.studyHow}</span>
           </li>
         </ul>
         <p>{quizCount > 0 ? fill(ko.trip.quiz, { n: quizCount }) : progress.stamps.length === 0 ? ko.trip.none : ''}</p>
@@ -109,6 +113,7 @@ export function SettingsMenu({ progress }: Props) {
             onClick={() => {
               clearAll();
               announce(ko.settings.cleared);
+              onCleared(ko.settings.cleared);
             }}
           >
             {ko.settings.clearYes}

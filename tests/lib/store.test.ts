@@ -60,13 +60,14 @@ describe('저장소', () => {
     expect(store.$trip.get().seenStamps).toEqual(['station.interview', 'station.shop']);
   });
 
-  it('기록 지우기는 다섯 키를 모두 지우고 남의 키는 그대로 둔다', () => {
+  it('기록 지우기는 진행 기록 네 키를 지우고, 설정과 남의 키는 그대로 둔다', () => {
     store.patchMeta({ lessonDone: true });
     store.$session.set({ answers: { 'q.type': 'page' }, cart: ['x'], kept: [], deferred: [] });
-    store.setPrefs({ sound: true });
+    store.setPrefs({ motion: 'reduce', sound: true });
     store.clearAll();
-    for (const key of Object.values(KEYS)) expect(key in storage).toBe(false);
+    for (const key of [KEYS.session, KEYS.study, KEYS.meta, KEYS.trip]) expect(key in storage).toBe(false);
     expect(storage['other:key']).toBe('그대로');
-    expect(store.$prefs.get()).toEqual({ motion: 'auto', sound: false });
+    expect(store.$prefs.get()).toEqual({ motion: 'reduce', sound: true });
+    expect(KEYS.prefs in storage).toBe(true);
   });
 });

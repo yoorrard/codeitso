@@ -27,7 +27,7 @@ body {
   font-weight: var(--weight-body);
   line-height: var(--leading);
   word-break: keep-all;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere; /* 글자를 크게 키워 낱말이 줄보다 길면 그 안에서라도 끊어 가로 스크롤을 막는다 (WCAG 1.4.10) */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   caret-color: var(--navy);
@@ -128,6 +128,11 @@ kbd,
 samp {
   font-family: var(--font-receipt);
   font-size: 0.95em;
+}
+
+/* hidden 속성은 클래스의 display보다 늘 이긴다 */
+[hidden] {
+  display: none !important;
 }
 
 /* 화면 낭독기에만 들리는 글 */

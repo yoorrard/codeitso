@@ -3,12 +3,17 @@
 // 기사님 자리(mascot 칸)와 화면 낭독기 알림 자리(#cc-live)도 여기 있다. 페이지 사이는 문서 간 View Transitions (D25).
 import '../styles/global.css';
 import '../styles/frame.css';
+import '../styles/parts.css';
 import { getImage } from 'astro:assets';
 import face from '../assets/mascot/chauffeur-face.png';
 import Icon from '../components/Icon.astro';
 import Masthead from '../components/Masthead.tsx';
 import { ko } from '../copy/ko.ts';
 import { LIVE_ID } from '../lib/announce.ts';
+import { catalog } from '../lib/data.ts';
+import { evaluate } from '../lib/engine/index.ts';
+import { mastheadState } from '../lib/masthead-state.ts';
+import { EMPTY_SESSION } from '../lib/saved.ts';
 import type { StationId } from '../lib/stations.ts';
 
 interface Props {
@@ -23,6 +28,8 @@ const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko
 const faceImg = await getImage({ src: face, width: 64, height: 64, format: 'webp' });
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const hasMascot = Astro.slots.has('mascot');
+// 처음 온 사람 기준 머리말 값 (빌드 때 한 번)
+const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {}, {});
 const hasAction = Astro.slots.has('action');
 ---
 
@@ -36,17 +43,25 @@ const hasAction = Astro.slots.has('action');
     <meta name="theme-color" content="#1e2c58" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 --navy 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
     <script is:inline>
-      // 사이트 설정의 '동작 줄이기'를 첫 그림 전에 붙인다. 읽기만 한다 (저장은 src/lib/store.ts).
+      // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게)를 붙인다.
+      // 읽기만 한다 (저장은 src/lib/store.ts).
       try {
         var p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}');
         if (p && p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
+        if (localStorage.getItem('cc:session:v1') || localStorage.getItem('cc:trip:v1')) document.documentElement.setAttribute('data-visit', 'again');
+      } catch (e) {}
+      // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 홈 출발 장면을 짧게 (자주 볼수록 짧게)
+      try {
+        var nav = performance.getEntriesByType('navigation')[0];
+        var sameSite = document.referrer && new URL(document.referrer).origin === location.origin;
+        if (sameSite || (nav && nav.type === 'back_forward')) document.documentElement.setAttribute('data-visit', 'again');
       } catch (e) {}
     </script>
   </head>
   <body>
     <a class="skip-link" href="#main">{ko.layout.skip}</a>
     <header class="masthead on-dark">
-      <Masthead client:load station={station} faceSrc={faceImg.src} />
+      <Masthead client:idle station={station} faceSrc={faceImg.src} initial={initial} />
     </header>
     <main id="main" tabindex="-1" class="stage">
       <slot />
@@ -58,7 +73,7 @@ const hasAction = Astro.slots.has('action');
         </div>
       )
     }
-    <div class="action-bar">
+    <div class="action-bar" role="region" aria-label={ko.layout.actionBar}>
       <div class="action-inner">
         {hasAction && <slot name="action" />}
         <a class="dict-btn" href="/dictionary">

@@ -97,11 +97,13 @@ export function markStampsSeen(ids: string[]): void {
   if (next.length !== t.seenStamps.length) $trip.set({ seenStamps: next });
 }
 
-/** '저장한 기록 지우기': 다섯 키를 모두 지운다 (처음 값으로 돌리면 codec이 키를 지운다) */
+/**
+ * '저장한 기록 지우기': 진행 기록 네 키를 지운다 (처음 값으로 돌리면 codec이 키를 지운다).
+ * 설정(동작 줄이기·효과음)은 기록이 아니라서 남긴다: 멀미 때문에 켠 동작 줄이기가 지우기로 풀리면 안 된다.
+ */
 export function clearAll(): void {
   $session.set(EMPTY_SESSION);
   $study.set({});
   $meta.set(EMPTY_META);
-  $prefs.set(DEFAULT_PREFS);
   $trip.set(EMPTY_TRIP);
 }

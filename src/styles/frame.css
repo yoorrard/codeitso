@@ -16,7 +16,11 @@
   view-transition-name: masthead;
 }
 
-::view-transition-group(masthead),
+/* 머리말은 제자리: 스크롤한 뒤 넘겨도 위에서 미끄러져 내려오지 않게 자리 이동은 하지 않는다 */
+::view-transition-group(masthead) {
+  animation: none;
+}
+
 ::view-transition-old(masthead),
 ::view-transition-new(masthead) {
   animation-duration: var(--dur-page);
@@ -38,7 +42,7 @@
 /* 노선 띠: 정류장 다섯을 잇는 길. 지나온 구간은 금빛 */
 .route ol {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   list-style: none;
   padding: 0;
   position: relative;
@@ -91,9 +95,17 @@
   text-decoration: none;
   font-size: var(--text-sm);
   line-height: var(--leading-tight);
+  text-align: center;
+}
+
+/* 글자를 키우면 '계산/대'처럼 음절에서 끊어서라도 칸 안에 둔다 */
+.stop-name {
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .pin {
+  position: relative;
   display: grid;
   place-items: center;
   inline-size: 50px;
@@ -112,6 +124,26 @@
 
 .stop.done .pin {
   box-shadow: 0 0 0 3px var(--taxi);
+}
+
+/* 마친 정류장: 핀 아래 작은 도장 (색만으로 구별하지 않게) */
+.done-mark {
+  position: absolute;
+  inset-inline-end: -4px;
+  inset-block-end: -4px;
+  display: grid;
+  place-items: center;
+  inline-size: 20px;
+  block-size: 20px;
+  border-radius: var(--radius-pill);
+  background: var(--taxi);
+  color: var(--ink);
+  box-shadow: 0 0 0 2px var(--navy);
+}
+
+.done-mark .icon {
+  inline-size: 14px;
+  block-size: 14px;
 }
 
 .stop.current .pin {
@@ -136,8 +168,8 @@
   opacity: 0.85;
 }
 
-@media (hover: hover) {
-  .stop a:hover .pin {
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion='reduce']) .stop:not(.current) a:hover .pin {
     transform: translateY(-2px);
   }
 }
@@ -153,13 +185,14 @@
 /* 전광판 + 계기판 + 설정 */
 .board-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
   margin-block-start: var(--space-3);
 }
 
 .board {
-  flex: 1;
+  flex: 1 1 12rem;
   min-inline-size: 0;
   display: flex;
   align-items: center;
@@ -180,9 +213,7 @@
   font-family: var(--font-receipt);
   font-weight: var(--weight-strong);
   color: var(--taxi);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .odometer {
@@ -232,6 +263,9 @@
   inset-block-start: var(--space-4);
   inset-inline-end: var(--gutter);
   inline-size: min(320px, calc(100vw - 2 * var(--gutter)));
+  max-block-size: calc(100dvh - 2 * var(--space-4));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   margin: 0;
   padding: var(--space-3);
   border: 0;
@@ -241,7 +275,8 @@
   box-shadow: var(--shadow-lift);
 }
 
-.settings-panel :focus-visible {
+/* 대화 창은 DOM으로는 남색 머리말 안에 있어도 흰 바탕에 그려진다 */
+:is(.settings-panel, .sheet) :focus-visible {
   outline-color: var(--focus);
 }
 
@@ -312,7 +347,7 @@
 }
 
 .sheet::backdrop {
-  background: rgb(18 27 58 / 0.5); /* floor-guard-ignore: --navy-deep의 반투명. CSS 변수로 알파를 바꿀 수 없다 */
+  background: color-mix(in srgb, var(--navy-deep) 55%, transparent);
 }
 
 .sheet h2 {
@@ -396,7 +431,7 @@
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: scale(var(--juice-press-scale));
 }
 
 .btn-primary {
@@ -465,8 +500,9 @@
   outline-color: var(--focus);
 }
 
-/* 아주 낮은 화면(가로로 든 휴대폰, 글자 크게)에서는 아래 막대도 붙박이를 푼다 */
-@media (max-height: 480px) {
+/* 아주 낮은 화면(가로로 든 휴대폰)이나 글자를 크게 키운 좁은 화면에서는 아래 막대도 붙박이를 푼다.
+   미디어 조건의 em은 브라우저 기본 글자 크기를 따르므로 글자를 키우면 같이 커진다 (360px ÷ 32px = 11.25em) */
+@media (max-height: 30em), (max-width: 15em) {
   .action-bar {
     position: static;
   }

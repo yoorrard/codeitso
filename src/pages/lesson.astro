@@ -1,0 +1,51 @@
+---
+// 첫 수업 /lesson (docs/UX.md 3.2, R-11·R-12): AI 채팅에서 웹페이지 한 장 만들기. 문장 세 개를 복사해 차례로 보낸다.
+import Base from '../layouts/Base.astro';
+import CopyButton from '../components/CopyButton.tsx';
+import LessonFinish from '../components/LessonFinish.tsx';
+import Icon from '../components/Icon.astro';
+import { ko } from '../copy/ko.ts';
+import { fill } from '../lib/engine/index.ts';
+
+const L = ko.lesson;
+---
+
+<Base title={L.pageTitle} station="lesson">
+  <h1>{L.title}</h1>
+  <p class="lead">{L.lead}</p>
+  <ol class="lesson-steps">
+    {
+      L.steps.map((step, i) => (
+        <li class="lesson-step">
+          <h2 class="step-title">
+            <span class="step-no">{fill(L.stepLabel, { n: i + 1 })}</span>
+            <span>{step.title}</span>
+            {step.pc && <span class="badge">{L.pc}</span>}
+          </h2>
+          <p class="prompt-box" id={`lesson-prompt-${i + 1}`}>
+            {step.prompt}
+          </p>
+          <CopyButton client:visible text={step.prompt} srLabel={`${fill(L.stepLabel, { n: i + 1 })} ${step.title}: ${ko.common.copy}`} />
+          <p class="step-after">{step.after}</p>
+          <details class="stuck">
+            <summary>
+              <Icon name="help" />
+              <span>{L.stuck}</span>
+            </summary>
+            <ul>
+              {step.stuck.map((t) => (
+                <li>{t}</li>
+              ))}
+            </ul>
+          </details>
+        </li>
+      ))
+    }
+  </ol>
+  <section class="lesson-done" aria-labelledby="lesson-done-title">
+    <h2 id="lesson-done-title">{L.doneTitle}</h2>
+    <p>{L.doneBody}</p>
+    <LessonFinish client:visible />
+  </section>
+  <a slot="action" class="btn" href="/interview">{L.skip}</a>
+</Base>

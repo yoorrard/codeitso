@@ -1,59 +1,355 @@
 ---
-// T01 임시 홈: 빌드 때 엔진이 레시피 하나로 끝까지 도는지, 그림 자산이 실리는지 확인한다. T07에서 진짜 홈으로 바꾼다.
+// 홈 / (docs/UX.md 3.1): 출발 장면(M8 차가 달려와 서고 → M2 문이 열리며 기사님 인사), 두 입구, 첫 수업 권유,
+// 이어서 하기와 여행 기록 미리 보기, 레시피 세 개. 장면은 누르기·Esc·건너뛰기로 끝나고, 동작 줄이기면 정지 그림이다.
 import Base from '../layouts/Base.astro';
-import Emoji from '../components/Emoji.astro';
-import Icon from '../components/Icon.astro';
+import HomeContinue from '../components/HomeContinue.tsx';
 import Mascot from '../components/Mascot.astro';
+import RecipeStart from '../components/RecipeStart.tsx';
+import Car from '../components/scene/Car.astro';
 import { ko } from '../copy/ko.ts';
-import { catalog, data } from '../lib/data.ts';
-import { evaluate } from '../lib/engine/index.ts';
-import { icons } from '../lib/icons.ts';
-import type { IconName } from '../lib/icons.ts';
+import { data } from '../lib/data.ts';
+import { sentences } from '../lib/sentences.ts';
 
-const recipe = data.recipes.recipes[0];
-const r = recipe ? evaluate(catalog, { answers: recipe.answers, cart: recipe.cart, kept: recipe.kept ?? [], deferred: [] }) : null;
-const stationEmoji = ['station-lesson', 'station-interview', 'station-shop', 'station-check', 'station-receipt', 'taxi', 'party-popper', 'warning'];
-const iconNames = Object.keys(icons) as IconName[];
+const H = ko.home;
+const recipes = data.recipes.recipes.slice(0, 3);
 ---
 
 <Base>
-  <h1>{ko.site.slogan}</h1>
-  <p>{ko.site.intro}</p>
-  <h2>{ko.dev.engineCheck}</h2>
-  <p>{ko.dev.engineCheckNote}</p>
-  {
-    r && recipe && (
-      <dl>
-        <dt>{ko.dev.recipe}</dt>
-        <dd>{recipe.title}</dd>
-        <dt>{ko.dev.slots}</dt>
-        <dd>{r.slots.length}</dd>
-        <dt>{ko.dev.conflicts}</dt>
-        <dd>{r.conflicts.length}</dd>
-        <dt>{ko.dev.canIssue}</dt>
-        <dd>{r.canIssue ? ko.dev.yes : ko.dev.no}</dd>
-      </dl>
-    )
-  }
-  <h2>{ko.dev.assetCheck}</h2>
-  <p>{ko.dev.assetCheckNote}</p>
-  <Mascot width={200} alt={ko.mascot.waveAlt} />
-  <p class="row">{stationEmoji.map((id) => <Emoji id={id} size={48} />)}</p>
-  <p class="row icons">{iconNames.map((n) => <Icon name={n} />)}</p>
-  <a slot="action" class="btn btn-primary" href="/interview">{ko.home.build}</a>
+  <section class="hero" aria-labelledby="home-title">
+    <div class="scene" data-scene>
+      <div class="road" aria-hidden="true"><span class="lanes"></span></div>
+      <div class="cast">
+        <img class="stop-sign" src="/emoji/bus-stop.webp" width={56} height={56} alt="" />
+        <div class="car-slot"><Car class="scene-car" /></div>
+        <div class="chauffeur">
+          <p class="bubble" aria-hidden="true">{sentences(ko.mascot.home).map((t) => <span>{t}</span>)}</p>
+          <Mascot width={130} eager />
+        </div>
+      </div>
+      <button type="button" class="scene-skip btn" data-skip hidden>{ko.common.skip}</button>
+    </div>
+    <h1 id="home-title" tabindex="-1">{H.title}</h1>
+    <p class="lead">{H.intro}</p>
+    <p class="fare">{H.fare}</p>
+    <div class="entrances">
+      <a class="btn btn-primary btn-lg" href="/interview">{H.build}</a>
+      <a class="btn btn-lg" href="/shelf">{H.browse}</a>
+    </div>
+    <p class="invite">
+      {H.lessonInvite} <a href="/lesson">{H.lessonGo}</a>
+    </p>
+  </section>
+
+  <HomeContinue client:idle />
+
+  <section class="recipes" aria-labelledby="home-recipes">
+    <h2 id="home-recipes">{H.recipesTitle}</h2>
+    <p>{H.recipesLead}</p>
+    <ul class="card-list">
+      {
+        recipes.map((r) => (
+          <li class="card">
+            <h3>{r.title}</h3>
+            <p class="meta">
+              {H.recipeFor}: {r.forWho}
+            </p>
+            <p>{r.summary}</p>
+            <RecipeStart client:visible recipeId={r.id} />
+          </li>
+        ))
+      }
+    </ul>
+    <p><a href="/recipes">{H.allRecipes}</a></p>
+  </section>
 </Base>
 
+<script>
+  // 장면 건너뛰기: 장면을 누르거나 Esc나 '건너뛰기' 버튼을 누르면 끝 상태로. 동작 줄이기면 버튼을 띄우지 않는다.
+  import { reduced, skipAll, skippable } from '../lib/motion.ts';
+
+  const scene = document.querySelector<HTMLElement>('[data-scene]');
+  const skip = scene?.querySelector<HTMLButtonElement>('[data-skip]');
+  if (scene && skip && !reduced()) {
+    const running = scene.getAnimations({ subtree: true });
+    if (running.length > 0) {
+      skip.hidden = false;
+      const release = skippable(scene);
+      skip.addEventListener('click', () => {
+        skipAll(scene);
+        // 숨는 버튼에 초점이 남지 않게 제목으로 옮긴다
+        document.getElementById('home-title')?.focus();
+      });
+      void Promise.allSettled(running.map((a) => a.finished)).then(() => {
+        if (document.activeElement === skip) document.getElementById('home-title')?.focus();
+        skip.hidden = true;
+        release();
+      });
+    }
+  }
+</script>
+
 <style>
-  :global(.mascot) {
-    display: block;
-    height: auto;
+  .hero {
+    display: grid;
+    gap: var(--space-3);
+    text-align: center;
+    justify-items: center;
   }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
+
+  .hero h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .fare {
+    font-weight: var(--weight-strong);
+  }
+
+  .entrances {
+    display: grid;
     gap: var(--space-2);
+    inline-size: min(100%, 360px);
   }
-  .icons {
-    color: var(--navy);
+
+  .btn-lg {
+    min-block-size: 56px;
+    font-size: var(--text-lg);
+  }
+
+  .invite {
+    color: var(--ink-soft);
+  }
+
+  /* ── 출발 장면 (M8 → M2): 차가 서고(0.9초) → 문이 열리고 → 기사님이 한 걸음 나와 인사 ── */
+  .hero h1:focus {
+    outline: none;
+  }
+
+  .scene {
+    --wait: var(--dur-drive);
+    position: relative;
+    inline-size: 100%;
+    block-size: 230px;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--sky);
+  }
+
+  :global([data-visit='again']) .scene {
+    --wait: 0ms;
+  }
+
+  .road {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 64px;
+    background: var(--road);
+    box-shadow: 0 -6px 0 var(--line);
+  }
+
+  .lanes {
+    position: absolute;
+    inset-inline: 0 -160px;
+    inset-block-start: 50%;
+    block-size: 6px;
+    background: repeating-linear-gradient(90deg, var(--taxi) 0 40px, transparent 40px 80px);
+    animation: lanes var(--dur-drive) var(--ease-out) both;
+  }
+
+  @keyframes lanes {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-160px);
+    }
+  }
+
+  /* 차·표지판·기사님은 가운데 한 무리 (넓은 화면에서도 흩어지지 않게) */
+  .cast {
+    position: absolute;
+    inset: 0;
+    margin-inline: auto;
+    max-inline-size: 440px;
+  }
+
+  /* 정류장 표지판: 좁은 화면에서는 기사님 뒤에 가려져 넓은 화면에서만 */
+  .stop-sign {
+    display: none;
+    position: absolute;
+    inset-inline-start: 58%;
+    inset-block-end: 58px;
+    inline-size: 48px;
+    block-size: 48px;
+    animation: sign-in var(--dur-drive) var(--ease-out) both;
+  }
+
+  @keyframes sign-in {
+    from {
+      transform: translateX(180px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .car-slot {
+    position: absolute;
+    inset-inline-start: 2%;
+    inset-block-end: 20px;
+    inline-size: 60%;
+    animation: drive-in var(--dur-drive) var(--ease-out) both;
+  }
+
+  @keyframes drive-in {
+    from {
+      transform: translateX(-200%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .car-slot :global(.wheel) {
+    animation: spin var(--dur-drive) var(--ease-out) both;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(-540deg);
+    }
+    to {
+      transform: rotate(0);
+    }
+  }
+
+  /* 서는 순간 앞으로 살짝 끄덕 (브레이크) */
+  .car-slot :global(.car-body) {
+    transform-box: fill-box;
+    transform-origin: 80% 100%;
+    animation: brake var(--dur-base) var(--ease-spring) calc(var(--wait) - var(--dur-fast)) both;
+  }
+
+  @keyframes brake {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    40% {
+      transform: rotate(1.5deg);
+    }
+  }
+
+  .car-slot :global(.car-door) {
+    animation: door-open var(--dur-door) var(--ease-out) var(--wait) both;
+  }
+
+  @keyframes door-open {
+    from {
+      transform: rotateY(0);
+    }
+    to {
+      transform: rotateY(-60deg);
+    }
+  }
+
+  .chauffeur {
+    position: absolute;
+    inset-inline-end: 2%;
+    inset-block-end: 6px;
+    inline-size: 130px;
+    animation: step-out var(--dur-base) var(--ease-spring) calc(var(--wait) + var(--dur-fast)) both;
+  }
+
+  /* 문 쪽(왼쪽)에서 손님 쪽으로 한 걸음 나온다 */
+  @keyframes step-out {
+    from {
+      opacity: 0;
+      transform: translateX(-35%) scale(0.92);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .bubble {
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-end: 55%;
+    inline-size: max-content;
+    max-inline-size: 190px;
+    margin-block-end: -36px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius);
+    background: var(--card);
+    box-shadow: var(--shadow);
+    font-weight: var(--weight-strong);
+    text-align: start;
+    transform-origin: 90% 100%;
+    animation: bubble-in var(--dur-fast) var(--ease-out) calc(var(--wait) + var(--dur-base) + var(--dur-fast)) both;
+  }
+
+  .bubble span {
+    display: block;
+  }
+
+  /* 말풍선 꼬리: 기사님 머리 쪽을 가리킨다 */
+  .bubble::after {
+    content: '';
+    position: absolute;
+    inset-inline-end: 14px;
+    inset-block-end: -6px;
+    inline-size: 12px;
+    block-size: 12px;
+    background: var(--card);
+    transform: rotate(45deg);
+  }
+
+  @keyframes bubble-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .scene-skip {
+    position: absolute;
+    inset-block-start: var(--space-2);
+    inset-inline-start: var(--space-2);
+    min-block-size: var(--tap);
+    padding-block: var(--space-1);
+    font-size: var(--text-sm);
+  }
+
+  /* 다시 온 사람: 차는 이미 서 있고 문·기사님·말풍선만 */
+  :global([data-visit='again']) :is(.lanes, .car-slot, .stop-sign),
+  :global([data-visit='again']) .car-slot :global(.wheel) {
+    animation: none;
+  }
+
+  .recipes h2 {
+    font-size: var(--text-xl);
+  }
+
+  @media (min-width: 560px) {
+    .stop-sign {
+      display: block;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .scene {
+      block-size: 260px;
+    }
+
+    .entrances {
+      grid-template-columns: 1fr 1fr;
+      inline-size: min(100%, 520px);
+    }
   }
 </style>

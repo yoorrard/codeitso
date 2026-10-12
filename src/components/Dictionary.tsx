@@ -8,7 +8,7 @@ import { catalog } from '../lib/data.ts';
 import { fill, matchErrors } from '../lib/engine/index.ts';
 import type { ErrorEntry } from '../lib/engine/types.ts';
 import type { DocType, SearchDoc } from '../lib/search-index.ts';
-import { loadSearchIndex } from '../lib/search-index.ts';
+import { getSearchIndex } from '../lib/search-client.ts';
 import CopyButton from './CopyButton.tsx';
 
 const T = catalog.data.templates;
@@ -17,13 +17,6 @@ const LIMIT = 6;
 /** 에러 문장처럼 보이면 사전에 없을 때 질문 틀을 보여 준다 */
 const ERRORISH = new RegExp(['error', 'failed', 'not found', 'denied', 'refused', 'exception', 'undefined', ...ko.dict.errorWords].join('|'), 'i');
 
-let indexPromise: Promise<MiniSearch<SearchDoc>> | null = null;
-function getIndex(): Promise<MiniSearch<SearchDoc>> {
-  indexPromise ??= fetch('/search-index.json')
-    .then((r) => r.text())
-    .then(loadSearchIndex);
-  return indexPromise;
-}
 
 function ErrorCard({ e }: { e: ErrorEntry }) {
   const concepts = (e.concepts ?? []).map((id) => catalog.concept.get(id)).filter((c) => c !== undefined);
@@ -123,7 +116,7 @@ export default function Dictionary({ autoFocus = false }: { autoFocus?: boolean 
   const input = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    void getIndex().then(setIndex);
+    void getSearchIndex().then(setIndex);
     // 섬이 붙기 전에 친 글도 이어받는다
     if (input.current?.value) setQ(input.current.value);
     if (autoFocus) input.current?.focus();

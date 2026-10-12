@@ -2,6 +2,7 @@
 // 상품 목록은 정적 HTML이고, 이 섬은 [data-shelf-item]과 빈 코너([data-shelf-group])의 hidden만 바꾼다.
 // 자바스크립트가 없어도 목록은 모두 보인다. 보이는 상품 수는 누를 때만 화면 낭독기에 알린다.
 import { useRef, useState } from 'preact/hooks';
+import { getSearchIndex, productHits } from '../lib/search-client.ts';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { fill } from '../lib/engine/index.ts';
@@ -29,14 +30,15 @@ function words(el: Element, attr: string): string[] {
   return (el.getAttribute(attr) ?? '').split(' ').filter((w) => w !== '');
 }
 
-/** 정적 목록에 거르기를 적용하고 보이는 상품 수를 돌려준다 */
-function apply(domain: string, cap: string): number {
+/** 정적 목록에 거르기(와 검색 결과)를 적용하고 보이는 상품 수를 돌려준다 */
+function apply(domain: string, cap: string, hits: Set<string> | null): number {
   let shown = 0;
   for (const el of Array.from(document.querySelectorAll<HTMLElement>('[data-shelf-item]'))) {
     const domains = words(el, 'data-domains');
     const okDomain = domain === ALL || (domain === GENERAL ? domains.length === 0 : domains.includes(domain));
     const okCap = cap === ALL || words(el, 'data-caps').includes(cap);
-    el.hidden = !(okDomain && okCap);
+    const okSearch = hits === null || hits.has(el.getAttribute('data-id') ?? '');
+    el.hidden = !(okDomain && okCap && okSearch);
     if (!el.hidden) shown += 1;
   }
   for (const group of Array.from(document.querySelectorAll<HTMLElement>('[data-shelf-group]'))) {
@@ -78,17 +80,36 @@ export default function ShelfFilter({ domains, capabilities, generalArt, total }
   const [domain, setDomain] = useState(ALL);
   const [cap, setCap] = useState(ALL);
   const [shown, setShown] = useState(total);
+  const [query, setQuery] = useState('');
+  const hits = useRef<Set<string> | null>(null);
   const firstDomain = useRef<HTMLButtonElement>(null);
+  const timer = useRef<number | undefined>(undefined);
 
   const choose = (nextDomain: string, nextCap: string): void => {
     setDomain(nextDomain);
     setCap(nextCap);
-    const n = apply(nextDomain, nextCap);
+    const n = apply(nextDomain, nextCap, hits.current);
     setShown(n);
     announce(n === 0 ? ko.shelf.none : fill(ko.shelf.shown, { n }));
   };
 
+  // 검색: 사전과 같은 색인을 처음 칠 때 불러온다. 결과 수는 입력을 멈췄을 때 한 번 알린다
+  const search = (q: string): void => {
+    setQuery(q);
+    const run = (set: Set<string> | null): void => {
+      hits.current = set;
+      const n = apply(domain, cap, set);
+      setShown(n);
+      window.clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => announce(n === 0 ? ko.shelf.none : fill(ko.shelf.shown, { n })), 700);
+    };
+    if (q.trim() === '') run(null);
+    else void getSearchIndex().then((ms) => run(productHits(ms, q.trim())));
+  };
+
   const reset = (): void => {
+    hits.current = null;
+    setQuery('');
     choose(ALL, ALL);
     // 누른 '모두 보기'는 사라지므로 초점을 분야의 '전체'로 옮긴다
     firstDomain.current?.focus();
@@ -99,6 +120,21 @@ export default function ShelfFilter({ domains, capabilities, generalArt, total }
       <h2 id="shelf-filter-title" class="visually-hidden">
         {ko.shelf.filterTitle}
       </h2>
+      <form role="search" class="shelf-search" onSubmit={(e) => e.preventDefault()}>
+        <label for="shelf-q" class="filter-label">
+          {ko.shelf.searchLabel}
+        </label>
+        <input
+          id="shelf-q"
+          class="line-input"
+          type="search"
+          value={query}
+          placeholder={ko.shelf.searchPlaceholder}
+          autocomplete="off"
+          enterkeyhint="search"
+          onInput={(e) => search((e.currentTarget as HTMLInputElement).value)}
+        />
+      </form>
       <Group
         id="shelf-filter-domain"
         label={ko.shelf.domain}

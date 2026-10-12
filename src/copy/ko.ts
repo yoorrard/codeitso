@@ -522,10 +522,12 @@ export const ko = {
     soundOff: '효과음 끄기',
   },
   shelf: {
+    searchLabel: '상품 찾기',
+    searchPlaceholder: '예: 날씨, 급식, 지도…',
     pageTitle: '진열대',
     description: '앱에 쓸 재료(화면, 저장, 외부 데이터, 배포)를 분야와 기능으로 골라 보는 진열대예요.',
     title: '진열대',
-    lead: '앱에 쓸 재료를 진열해 두었어요. 분야와 기능으로 골라 보세요.',
+    lead: '앱에 쓸 재료를 진열해 두었어요. 이름으로 찾거나 분야와 기능으로 골라 보세요.',
     cartNote: '담기는 인터뷰를 마친 뒤 장보기 정류장에서 해요.',
     filterTitle: '골라 보기',
     domain: '분야',

@@ -22,7 +22,7 @@ const caps = p.capabilities.map(capabilityLabel).join(', ');
 const domains = (p.domains ?? []).map(domainLabel).join(', ');
 ---
 
-<li class:list={['card', 'shelf-card', { 'shelf-card-index': !isShelf }]} data-shelf-item data-domains={(p.domains ?? []).join(' ')} data-caps={p.capabilities.join(' ')}>
+<li class:list={['card', 'shelf-card', { 'shelf-card-index': !isShelf }]} data-shelf-item data-id={p.id} data-domains={(p.domains ?? []).join(' ')} data-caps={p.capabilities.join(' ')}>
   <div class="shelf-card-head">
     <Emoji id={productArt(p)} size={40} class="product-thumb" />
     <h3>{isShelf ? <a class="shelf-card-link" href={`/products/${p.id}`}>{p.name}</a> : p.name}</h3>

@@ -1202,3 +1202,232 @@
 .receipt-end {
   font-weight: var(--weight-strong);
 }
+
+/* ── 공부·개념 카드 (T12) ───────────────────────────── */
+.concept {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.concept-summary {
+  font-size: var(--text-lg);
+}
+
+.concept-figure {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--sky);
+}
+
+.card h2 {
+  font-size: var(--text-lg);
+}
+
+.quiz-list {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+}
+
+.quiz-item {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.quiz-q {
+  font-weight: var(--weight-strong);
+}
+
+.option.is-answer {
+  border-color: var(--go);
+  box-shadow: inset 0 0 0 2px var(--go);
+}
+
+.option.is-wrong {
+  border-color: var(--stop);
+  background: var(--card);
+}
+
+.quiz-result {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+
+.quiz-result.ok {
+  background: var(--gold-soft);
+}
+
+.mini-stamp {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 28px;
+  block-size: 28px;
+  margin-inline-start: var(--space-2);
+  border-radius: var(--radius-pill);
+  border: 3px double var(--taxi);
+  color: var(--go);
+  transform: rotate(-8deg);
+}
+
+.read-row {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.study-list {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.study-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: var(--card);
+  min-block-size: var(--tap);
+}
+
+.study-item.read {
+  background: var(--gold-soft);
+}
+
+.study-meta {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+/* 해 보기 모형 */
+.sim {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.sim-fields {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.sim-fields label {
+  display: grid;
+  gap: var(--space-1);
+  font-weight: var(--weight-strong);
+}
+
+.sim-cap {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+  color: var(--ink-soft);
+}
+
+.sim-code {
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--navy-deep);
+  color: var(--on-navy);
+  font-family: var(--font-receipt);
+  font-size: var(--text-sm);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sim-code.json {
+  display: grid;
+  justify-items: start;
+}
+
+.json-row {
+  min-block-size: var(--tap);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+}
+
+.json-row[aria-pressed='true'] {
+  background: var(--navy);
+  outline: 2px solid var(--taxi);
+}
+
+.json-key {
+  color: var(--taxi);
+}
+
+.devtools.leak {
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  border: 2px solid var(--stop);
+}
+
+.leak-note {
+  color: var(--stop);
+  font-weight: var(--weight-strong);
+}
+
+.mono {
+  font-family: var(--font-receipt);
+}
+
+.deploy-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.deploy-steps li {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  background: var(--paper);
+  text-align: center;
+  font-size: var(--text-sm);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.deploy-steps li.on {
+  background: var(--gold-soft);
+  font-weight: var(--weight-strong);
+}
+
+.deploy-no {
+  display: grid;
+  place-items: center;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+/* 개념 이름 링크가 줄 대부분을 차지해 누르기 쉽게 */
+.study-item a {
+  flex: 1 1 8rem;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tap);
+  min-inline-size: var(--tap);
+  font-weight: var(--weight-strong);
+}

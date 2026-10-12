@@ -109,7 +109,7 @@
       "keyExposureRisk": false,
       "recommendable": true,
       "prep": [{ "label": "Cloudflare 가입", "url": "https://dash.cloudflare.com/sign-up", "lead": "instant" }],
-      "promptFragment": "Cloudflare Workers에 배포할 거야. 화면 파일은 정적 파일(assets)로 올리고, API 호출은 Worker 함수에서 하되 키는 wrangler secret으로 넣는다고 보고 코드를 짜 줘.",
+      "promptFragment": "Cloudflare Workers에 배포할 거야. 화면 파일은 정적 파일(assets)로 올리고, 외부 API 호출은 Worker 함수에서 하도록 코드를 짜 줘.",
       "needsConcepts": ["deploy", "terminal"],
       "stuck": ["처음 정한 Worker 이름이 주소에 들어가요 (예: my-app.myname.workers.dev)."],
       "related": ["github-pages", "google-sheets-apps-script"],
@@ -173,7 +173,7 @@
       "keyExposureRisk": false,
       "recommendable": true,
       "prep": [{ "label": "구글 계정", "url": "https://accounts.google.com/signup", "lead": "instant" }],
-      "promptFragment": "구글 앱스 스크립트 웹 앱으로 만들어 줘. 화면은 HtmlService로 보여 주고, 데이터는 구글 시트에 저장하고, 키가 필요하면 스크립트 속성에서 꺼내 쓰게 하고, 배포 설정에서 고를 값도 알려 줘.",
+      "promptFragment": "구글 앱스 스크립트 웹 앱으로 만들어 줘. 화면은 HtmlService로 보여 주고, 저장할 데이터가 있으면 구글 시트에 저장해 줘. 배포 설정에서 고를 값도 알려 줘.",
       "needsConcepts": ["deploy"],
       "stuck": [
         "코드를 고친 뒤에는 '배포 관리'에서 새 버전으로 배포해야 바뀐 내용이 보여요.",

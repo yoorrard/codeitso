@@ -120,7 +120,7 @@
 
 **Cloudflare Workers**
 
-- 지시: Cloudflare Workers에 배포할 거야. 화면 파일은 정적 파일(assets)로 올리고, API 호출은 Worker 함수에서 하되 키는 wrangler secret으로 넣는다고 보고 코드를 짜 줘.
+- 지시: Cloudflare Workers에 배포할 거야. 화면 파일은 정적 파일(assets)로 올리고, 외부 API 호출은 Worker 함수에서 하도록 코드를 짜 줘.
 - 막히기 쉬운 곳: 처음 정한 Worker 이름이 주소에 들어가요 (예: my-app.myname.workers.dev).
 
 **함께 쓸 때 막히기 쉬운 곳**

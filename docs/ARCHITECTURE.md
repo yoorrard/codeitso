@@ -15,8 +15,11 @@
 | 집계 | Worker 함수 `/api/event` + D1 | 날짜별 이벤트 횟수만. 무료 플랜: Worker 요청 하루 10만 건, D1 쓰기 하루 10만 행. |
 | 방문 통계 | Cloudflare Web Analytics | 쿠키 없음. `/receipt`에는 싣지 않는다. |
 | 자동화 | GitHub Actions | 검사·시험·배포, 2단계부터 색인 갱신. 공개 저장소는 무료. |
-| 시험 | Vitest(엔진·자료), Playwright + @axe-core/playwright(화면·접근성) | |
-| 글꼴 | Pretendard(본문), D2Coding(영수증) | 둘 다 OFL. `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
+| 시험 | Vitest(엔진·자료), Playwright 1.56.1 + @axe-core/playwright(화면·접근성) | Playwright는 컨테이너 Chromium에 맞춰 고정 (D33). 시각 점검·예산은 `scripts/qa/` |
+| 글꼴 | Pretendard(본문), `CC Receipt`(영수증·전광판, D2Coding에서 글자를 골라 이름을 바꿈) | 둘 다 OFL. Pretendard는 굵기별 동적 하위 집합, 영수증 글꼴은 유니코드 범위별 조각 (D29). `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
+| 모션 | CSS 전환·키프레임·`@starting-style`·`offset-path`·CSS 3D, 문서 간 View Transitions, 직접 쓴 `src/lib/motion.ts` (약 2KB) | 라이브러리 없음. 계산대 색종이만 `canvas-confetti`(ISC, 4.3KB) 지연 로드 (D25, D26) |
+| 효과음 | `src/lib/sfx.ts` + 켰을 때만 동적 import하는 합성기 | 기본 꺼짐, 소리 파일 없음 (D28) |
+| 아이콘·그림 | Fluent Emoji 3D(MIT) 128px webp는 `public/emoji/`, Phosphor(MIT) SVG는 빌드 때 인라인, 기사님은 `src/assets/mascot/`(Astro `<Picture>`로 크기별 webp·avif), 나머지는 직접 그린 SVG | D27 |
 
 Cloudflare Pages가 아니라 Workers로 가는 이유는 `docs/DECISIONS.md`의 D04.
 
@@ -25,15 +28,20 @@ Cloudflare Pages가 아니라 Workers로 가는 이유는 `docs/DECISIONS.md`의
 ```text
 code-chauffeur/
 ├─ CLAUDE.md                 Claude Code가 매번 읽는 규칙
+├─ .claude/                  규칙(rules), 스킬(skills), 전문가 에이전트(agents), 훅(hooks), settings.json
+├─ THIRD_PARTY_NOTICES.md    가져온 스킬·글꼴·아이콘·라이브러리의 라이선스
 ├─ data/                     자료 (사람이 고치는 곳)
 │  ├─ golden/                추천 회귀 검사 사례
 │  └─ index/                 (T19) 자동 수집 색인. 저장소 기록에는 올리지 않는다
 ├─ schemas/                  자료 스키마
 ├─ scripts/                  검사·예시·색인 스크립트 (Node로 바로 실행)
-│  └─ lib/                   부작용 없는 도우미 (자료 읽기, 골든 비교, 색 대비). 시험에서도 import
+│  ├─ lib/                   부작용 없는 도우미 (자료 읽기, 골든 비교, 색 대비). 시험에서도 import
+│  ├─ guard/                 품질 바닥선(floor-guard), 하네스 앞머리 검사
+│  └─ qa/                    시각 점검(shots), 성능 예산(budget), 정적 서버(serve)
 ├─ src/
 │  ├─ lib/engine/            판단 엔진 (화면과 무관한 순수 함수)
-│  ├─ lib/                   (T05~T06) 자료 싣기, 상태 저장, 공유 링크 / (T18) 집계 보내기 / (T15) 검색
+│  ├─ lib/                   (T05~T06) 자료 싣기, 상태 저장, 공유 링크, 진행(주행 거리·도장) / (T06b) 모션·효과음 / (T18) 집계 보내기 / (T15) 검색
+│  ├─ assets/mascot/         기사님 그림 원본 (소유자 제공)
 │  ├─ components/            (T07~) Astro 컴포넌트와 Preact 섬
 │  ├─ layouts/               (T05) 기본 틀: 도로 지도, 사전 버튼
 │  ├─ pages/                 (T01, T07~) 라우트
@@ -42,7 +50,7 @@ code-chauffeur/
 ├─ tests/                    (T03~) Vitest 시험, tests/fixtures/ 가짜 자료
 ├─ worker/index.ts           (T18) /api/event 집계 함수 (따로 tsconfig)
 ├─ migrations/               (T18) D1 표 만들기 SQL
-├─ public/                   글꼴, 그림, 빌드 때 만든 검색 색인
+├─ public/                   글꼴(fonts/), 3D 그림 문자(emoji/), 빌드 때 만든 검색 색인
 └─ docs/                     문서
 ```
 
@@ -79,10 +87,12 @@ code-chauffeur/
 | `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers, cart, kept, deferred, freeText |
 | `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 정답 맞힌 문제 번호 |
 | `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[] }` 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절) |
-| `cc:prefs:v1` | `{ motion: 'auto' | 'reduce', sound: false }` |
+| `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean }` (효과음 기본 false) |
+| `cc:trip:v1` | `{ seenStamps: string[] }` 이미 장면을 본 도장 id (도장 장면은 처음 한 번만). 주행 거리·도장 자체는 저장하지 않고 계산한다 (D32) |
 
 - 화면은 `Session`을 바꾸고, 결과는 매번 `evaluate(catalog, session)`로 다시 계산한다. 계산 결과를 저장하지 않는다. 저장할 때는 `r.session`(정리된 상태)을 쓴다.
-- '저장한 기록 지우기'는 네 키를 모두 지운다.
+- '저장한 기록 지우기'는 다섯 키를 모두 지운다.
+- 주행 거리와 도장은 `src/lib/progress.ts`가 `Session`, `evaluate()` 결과, `cc:study:v1`에서 매번 계산한다 (순수 함수, 시험 있음). 공유 링크로 연 영수증도 같은 규칙으로 계산된다.
 - 저장 형식을 바꾸면 키의 `v1`을 올리고, 옛 값은 읽어서 옮긴 뒤 지운다.
 
 ## 5. 공유 링크
@@ -206,9 +216,11 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 
 ## 11. 성능 기준
 
-- 첫 화면: 모바일 기준 LCP 2.5초 이하, 자바스크립트 100KB 이하(gzip).
-- 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다.
+- 첫 화면: 모바일 기준 LCP 2.5초 이하, 자바스크립트 100KB 이하(gzip). 다른 페이지는 처음 불러오는 JS 140KB 이하.
+- 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다. 기사님 그림은 화면 크기에 맞는 것 하나만 내려온다 (360w 약 23KB).
+- 나중에 불러오는 묶음(색종이, 선택 3D 장면)은 하나에 200KB 이하. 유휴 시간이나 이용자 행동 뒤에만 불러온다.
 - 영수증 출력 모션은 3초를 넘지 않는다.
+- `npm run qa:budget`이 빌드 결과로 이 기준을 검사한다.
 
 ## 12. 시험과 CI
 
@@ -217,8 +229,12 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 | `npm run validate` | 스키마 + 교차 검사 |
 | `npm run golden` | 추천 회귀 검사 |
 | `npm run typecheck` | 타입 검사 |
-| `npm run check` | 위 세 개 (T02 뒤에는 색 대비 검사도) |
+| `npm run guard` | 품질 바닥선 (토큰 밖 값, 외부 자원, 화면 코드 속 문장, any, 시험 건너뛰기, 엔진 순수성) |
+| `npm run harness` | `.claude/` 스킬·에이전트·규칙 앞머리 검사 |
+| `npm run check` | 위 다섯 개 (T02 뒤에는 색 대비 검사도) |
+| `npm run qa:shots` | 빌드 결과 스크린샷(360·768·1280·동작 줄이기), axe, 가로 스크롤, 작은 버튼, 외부 요청 |
+| `npm run qa:budget` | 성능 예산 |
 | `npm test` (T03) | Vitest: 엔진 단위 시험 + 골든 사례 + 자료 검사 |
 | `npm run e2e` (T20) | Playwright: 주요 흐름 + axe 접근성 |
 
-GitHub Actions는 모든 PR에서 `npm ci && npm run check && npm test && npm run build`를 돌린다. 배포 조건은 9절.
+GitHub Actions(`.github/workflows/check.yml`)는 모든 푸시와 PR에서 `npm ci && npm run check && npm test && npm run build && npm run qa:budget`을 돌린다 (아직 없는 명령은 건너뛴다). T20에서 e2e를 더한다. 배포 조건은 9절.

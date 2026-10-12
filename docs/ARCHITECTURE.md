@@ -37,6 +37,7 @@ code-chauffeur/
 ├─ scripts/                  검사·예시·색인 스크립트 (Node로 바로 실행)
 │  ├─ lib/                   부작용 없는 도우미 (자료 읽기, 골든 비교, 색 대비). 시험에서도 import
 │  ├─ guard/                 품질 바닥선(floor-guard), 하네스 앞머리 검사
+│  ├─ fonts/                 글꼴 만들기 (Pretendard 조각 복사, CC Receipt 하위 집합·이름 바꾸기)
 │  └─ qa/                    시각 점검(shots), 성능 예산(budget), 정적 서버(serve)
 ├─ src/
 │  ├─ lib/engine/            판단 엔진 (화면과 무관한 순수 함수)
@@ -229,6 +230,8 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 | `npm run validate` | 스키마 + 교차 검사 |
 | `npm run golden` | 추천 회귀 검사 |
 | `npm run typecheck` | 타입 검사 |
+| `npm run tokens` | 토큰 대비와 동작 줄이기 검사 |
+| `npm run fonts:check` | 영수증 글꼴에 고정 문구 글자가 다 있는지 (`npm run fonts`로 다시 만듦) |
 | `npm run guard` | 품질 바닥선 (토큰 밖 값, 외부 자원, 화면 코드 속 문장, any, 시험 건너뛰기, 엔진 순수성) |
 | `npm run harness` | `.claude/` 스킬·에이전트·규칙 앞머리 검사 |
 | `npm run check` | 위 다섯 개 (T02 뒤에는 색 대비 검사도) |

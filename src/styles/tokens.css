@@ -1,64 +1,125 @@
-/* 코드쇼퍼 디자인 토큰. 색 대비는 주석의 값으로 확인했다 (WCAG 2.x, 글자 4.5:1 이상).
-   색을 바꾸면 T02의 대비 검사를 다시 돌린다. */
+/* 코드쇼퍼 디자인 토큰. 색은 기사님 그림(남색 제복, 금색 배지)에서 가져왔다 (docs/DESIGN.md 3절, D31).
+   글자색 줄의 '대비:' 주석은 검사가 읽는다: 그 색을 적힌 바탕 위 글자로 쓸 때 필요한 최소 대비 (scripts/check-tokens.ts).
+   색을 바꾸면 npm run check로 대비를 다시 확인한다. 화면 코드는 이 변수만 쓴다. */
 :root {
-  /* 바탕과 글자 */
-  --paper: #fbf8f1; /* 기본 바탕 */
+  /* 바탕과 면 */
+  --paper: #f2f5fa; /* 기본 바탕 (옅은 지도 종이) */
+  --card: #ffffff; /* 카드·창 바탕 */
   --receipt: #ffffff; /* 영수증 종이 */
-  --ink: #1d1b18; /* 기본 글자. paper 위 16.2:1 */
-  --ink-soft: #5b5650; /* 보조 글자, 입력 칸 테두리. paper 위 6.85:1 */
-  --line: #d9d3c7; /* 장식 선만. 입력 칸 테두리에는 쓰지 않는다 */
+  --sky: #dce8f7; /* 옅은 면: 고른 보기, 지나온 구간 바탕 */
+  --line: #d3dbe8; /* 장식 선만. 입력 칸 테두리에는 쓰지 않는다 */
 
-  /* 길과 차 */
-  --road: #2b2d31; /* 도로 지도 바탕. paper색 글자 13:1 */
-  --taxi: #f5b700; /* 강조 채움. 위 글자는 --ink (9.5:1). 글자색으로 쓰지 않는다 */
+  /* 글자 */
+  --ink: #16213f; /* 기본 글자 (남색 먹). 대비: --paper 4.5, --card 4.5, --sky 4.5, --taxi 4.5, --gold-soft 4.5, --caution 4.5 */
+  --ink-soft: #4b5674; /* 보조 글자, 입력 칸 테두리. 대비: --paper 4.5, --card 4.5, --sky 4.5 */
+  --link: #1a56db; /* 링크 글자. 대비: --paper 4.5, --card 4.5 */
 
-  /* 신호 */
-  --go: #1a7a43; /* 해결·완료. 흰 글자 5.4:1, paper 위 글자 5.1:1 */
-  --stop: #c13838; /* 충돌·오류. 흰 글자 5.4:1, paper 위 글자 5.1:1 */
-  --caution: #e07b00; /* 경고 채움. 위 글자는 --ink (5.7:1) */
-  --caution-ink: #9a5200; /* paper 위 경고 글자 5.5:1 */
-  --focus: #1a56db; /* 밝은 바탕의 키보드 초점 테두리 (paper 대비 5.8:1) */
-  --focus-on-dark: #f5b700; /* 어두운 바탕(road)의 초점 테두리 (7.7:1) */
+  /* 브랜드: 제복 남색과 배지 금색 */
+  --navy: #1e2c58; /* 머리말, 전광판, 차 몸체, 주 버튼 바탕 */
+  --navy-deep: #121b3a; /* 도로, 어두운 면 */
+  --road: var(--navy-deep);
+  --on-navy: #f2f5fa; /* 남색 위 글자. 대비: --navy 4.5, --navy-deep 4.5 */
+  --taxi: #f5b700; /* 금색. 밝은 바탕에서는 채움만(위 글자 --ink), 남색 위에서는 글자로도. 대비: --navy 4.5, --navy-deep 4.5 */
+  --gold-soft: #fff1c2; /* 추천 표시 바탕, 지나온 노선 구간 */
+  --teal: #0a7568; /* 지금 위치·지도 핀. 대비: --paper 4.5, --card 4.5 */
 
-  /* 글꼴 (둘 다 OFL. public/fonts에 직접 둔다) */
-  --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  --font-receipt: 'D2Coding', ui-monospace, 'Courier New', monospace;
+  /* 신호 (늘 아이콘 + 글과 함께) */
+  --go: #1a7a43; /* 해결·완료. 대비: --paper 4.5, --card 4.5 */
+  --on-go: #ffffff; /* 대비: --go 4.5 */
+  --stop: #c13838; /* 충돌·오류. 대비: --paper 4.5, --card 4.5 */
+  --on-stop: #ffffff; /* 대비: --stop 4.5 */
+  --caution: #e07b00; /* 경고 채움. 위 글자는 --ink */
+  --caution-ink: #9a5200; /* 밝은 바탕 위 경고 글자. 대비: --paper 4.5, --card 4.5 */
+  --focus: #1a56db; /* 밝은 바탕의 키보드 초점 테두리. 대비: --paper 3, --card 3, --sky 3 */
+  --focus-on-dark: #f5b700; /* 어두운 바탕의 초점 테두리. 대비: --navy 3, --navy-deep 3 */
 
-  /* 글자 크기 (기본 16px 아래로 내리지 않는다) */
+  /* 글꼴 (둘 다 OFL, public/fonts에 직접 둔다. D29) */
+  --font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-receipt: 'CC Receipt', 'Pretendard', ui-monospace, 'Courier New', monospace;
+  --weight-body: 400;
+  --weight-strong: 700;
+  --weight-heading: 800;
+
+  /* 글자 크기 (기본 16px 아래로 내리지 않는다. --text-sm은 보조 정보에만) */
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lg: 1.25rem;
   --text-xl: 1.75rem;
   --text-2xl: 2.25rem;
   --leading: 1.6;
+  --leading-tight: 1.25;
+  --tracking-heading: -0.02em;
 
   /* 모양과 간격 */
   --radius-sm: 8px;
   --radius: 12px;
   --radius-lg: 20px;
+  --radius-pill: 999px;
   --tap: 44px; /* 누르는 곳 최소 크기 */
   --gutter: 16px; /* 화면 양옆 여백 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
   --content-max: 720px;
-  --shadow: 0 2px 0 rgb(29 27 24 / 0.12), 0 8px 24px rgb(29 27 24 / 0.08);
+  --bar-top: 112px; /* 붙박이 머리말(노선 띠 + 전광판) 높이. T05에서 실제 값으로 맞춘다 */
+  --bar-bottom: 76px; /* 붙박이 아래 진행 막대 높이 */
+  --shadow: 0 2px 0 rgb(18 27 58 / 0.08), 0 10px 28px rgb(18 27 58 / 0.1);
+  --shadow-lift: 0 4px 0 rgb(18 27 58 / 0.1), 0 16px 36px rgb(18 27 58 / 0.14);
 
-  /* 모션 (UX.md의 M1~M4) */
-  --dur-fast: 150ms;
-  --dur-base: 300ms;
-  --dur-slow: 600ms;
+  /* 모션 길이 (docs/UX.md 4절. 모션 하나 1초 안쪽, 장면 3초 이하) */
+  --dur-fast: 150ms; /* 누름·작은 상태 변화 */
+  --dur-base: 300ms; /* 보통 UI 전환 */
+  --dur-slow: 600ms; /* 숫자 굴러가기 */
+  --dur-move: 800ms; /* M1 차 이동 */
   --dur-door: 800ms; /* M2 차 문 열기 */
   --dur-print: 2200ms; /* M4 영수증 출력 상한 */
-  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.6, 0, 0.3, 1);
+  --dur-stamp: 250ms; /* 도장 찍기 */
+  --dur-scene: 3000ms; /* 공들인 장면 상한 */
+  --dur-fade: 150ms; /* 바뀐 것을 알려 주는 투명도 전환. 동작 줄이기에서도 남긴다 (D30) */
+
+  /* 곡선: 들어오고 나갈 때 강한 ease-out, 화면 위 이동은 ease-in-out, 도장·도착은 살짝 튀는 스프링 */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: linear(0, 0.101, 0.322, 0.568, 0.783, 0.941, 1.038, 1.085, 1.095, 1.083, 1.061, 1.038, 1.018, 1.004, 0.995, 0.992, 0.991, 0.992, 0.995, 0.997, 1);
+
+  /* 손맛(juice): 드문 순간일수록 크게 */
+  --juice-s-scale: 1.03;
+  --juice-m-scale: 1.06;
+  --juice-l-scale: 1.12;
+  --juice-s-shake: 2px;
+  --juice-m-shake: 3px;
+  --juice-l-shake: 4px;
 }
 
-/* '동작 줄이기'를 켠 사람에게는 움직임 없이 결과만 보여 준다 */
+/* linear()를 모르는 브라우저는 스프링 대신 ease-out */
+@supports not (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: var(--ease-out);
+  }
+}
+
+/* '동작 줄이기': 이동·확대·흔들림은 없애고, 바뀐 것을 알리는 짧은 페이드만 남긴다 (D30) */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-fast: 0ms;
     --dur-base: 0ms;
     --dur-slow: 0ms;
+    --dur-move: 0ms;
     --dur-door: 0ms;
     --dur-print: 0ms;
+    --dur-stamp: 0ms;
+    --dur-scene: 0ms;
+    --juice-s-scale: 1;
+    --juice-m-scale: 1;
+    --juice-l-scale: 1;
+    --juice-s-shake: 0px;
+    --juice-m-shake: 0px;
+    --juice-l-shake: 0px;
   }
 }
 
@@ -67,6 +128,15 @@
   --dur-fast: 0ms;
   --dur-base: 0ms;
   --dur-slow: 0ms;
+  --dur-move: 0ms;
   --dur-door: 0ms;
   --dur-print: 0ms;
+  --dur-stamp: 0ms;
+  --dur-scene: 0ms;
+  --juice-s-scale: 1;
+  --juice-m-scale: 1;
+  --juice-l-scale: 1;
+  --juice-s-shake: 0px;
+  --juice-m-shake: 0px;
+  --juice-l-shake: 0px;
 }

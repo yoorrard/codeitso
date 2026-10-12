@@ -23,7 +23,7 @@
   - 페이지 전환은 Astro `<ClientRouter />`를 쓰지 않고 CSS `@view-transition { navigation: auto }`로 한다 (D25). `@astrojs/preact`가 지원하는 Preact 판을 확인해 고정한다.
 - 완성 확인: `npm run build` 성공, `npm run check` 성공, 정한 버전을 `docs/DECISIONS.md`에 적음.
 
-### [ ] T02 디자인 토큰·글꼴·기본 스타일
+### [x] T02 디자인 토큰·글꼴·기본 스타일
 - 요구: R-09, R-51 · 읽을 것: `docs/DESIGN.md` 3~5절, `docs/UX.md` 5~6절, `src/styles/tokens.css`, 결정 D29~D31
 - 할 일:
   - `tokens.css`를 `docs/DESIGN.md` 3절 색 체계(남색·금색·지도 종이)로 바꾸고, 모션 토큰을 더한다: `--dur-fade`(150ms, 동작 줄이기에서도 유지), 강한 곡선 `--ease-out`·`--ease-in-out`·`--ease-drawer`, 스프링 `--ease-spring`(`linear()`), 손맛 `--juice-s|m|l`, 붙박이 막대 높이 `--bar-top`·`--bar-bottom`. 동작 줄이기(기기·`data-motion`)에서 이동 길이는 0, `--dur-fade`는 유지 (D30).
@@ -210,3 +210,4 @@
 2026-10-12 준비 자율 개발 하네스: 스킬 13개(가져온 8개 포함), 전문가 에이전트 6명, 훅, 품질 바닥선, 시각 점검·예산 (9490b0a)
 2026-10-12 준비 기획 개선: 게임 연출을 1단계로(R-50~R-53, UX 4절, T02b·T06b·T16b), 결정 D22~D34, 자료 논리 수정(D34)
 2026-10-12 T01 Astro 7.3.8 + Preact 10 정적 뼈대, astro check 포함 타입 검사, 빌드 때 엔진 확인용 임시 홈 (D35)
+2026-10-12 T02 남색·금색·지도 종이 토큰과 모션 토큰(스프링·손맛·동작 줄이기 페이드), 대비·동작 줄이기 검사(npm run tokens), Pretendard 3굵기·CC Receipt 직접 싣기(npm run fonts, D37), 기본 스타일

@@ -19,12 +19,12 @@
 
 `next-task`, `verify`, `add-product`, `visual-qa`, `game-motion`과 `.claude/agents/`, `.claude/rules/`, `.claude/hooks/`는 이 저장소에서 쓴 것이다 (MIT).
 
-## 사이트에 실리는 자료 (T02 이후 채운다)
+## 사이트에 실리는 자료
 
 | 자료 | 출처 | 라이선스 | 위치 |
 |---|---|---|---|
-| Pretendard | orioncactus/pretendard (npm `pretendard`) | SIL OFL 1.1 | `public/fonts/pretendard/` + `OFL.txt` |
-| 영수증 글꼴 `CC Receipt` | naver/d2-coding-font (D2Coding)에서 글자를 골라 이름을 바꿈 | SIL OFL 1.1 | `public/fonts/receipt/` + `OFL.txt` |
+| Pretendard 1.3.9 (400·700·800 동적 하위 집합, 고치지 않음) | orioncactus/pretendard (npm `pretendard`) | SIL OFL 1.1 | `public/fonts/pretendard/` + `OFL.txt` |
+| 영수증 글꼴 `CC Receipt` | naver/d2-coding-font VER1.4.0 (D2Coding)에서 글자를 골라 이름을 바꾼 수정본 (`scripts/fonts/build-fonts.ts`) | SIL OFL 1.1 | `public/fonts/receipt/` + `OFL.txt` |
 | 3D 그림 문자 | microsoft/fluentui-emoji (고정 커밋) | MIT | `public/emoji/` + `LICENSE` |
 | UI 아이콘 | phosphor-icons/core | MIT | 빌드 때 인라인 |
 | 색종이 효과 | catdad/canvas-confetti | ISC | npm 의존성 |

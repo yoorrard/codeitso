@@ -1,5 +1,6 @@
 ---
 // T01 임시 홈: 빌드 때 엔진이 레시피 하나로 끝까지 도는지 확인한다. T07에서 지운다.
+import '../styles/global.css';
 import { ko } from '../copy/ko.ts';
 import { catalog, data } from '../lib/data.ts';
 import { evaluate } from '../lib/engine/index.ts';
@@ -16,7 +17,7 @@ const r = recipe ? evaluate(catalog, { answers: recipe.answers, cart: recipe.car
     <title>{ko.site.name}</title>
   </head>
   <body>
-    <main>
+    <main style="padding: var(--gutter); max-width: var(--content-max); margin-inline: auto;">
       <h1>{ko.site.slogan}</h1>
       <p>{ko.site.intro}</p>
       <h2>{ko.dev.engineCheck}</h2>

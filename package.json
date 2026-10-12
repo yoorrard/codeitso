@@ -16,11 +16,20 @@
     "examples": "node scripts/make-examples.ts",
     "explain": "node scripts/explain.ts",
     "typecheck": "tsc -p tsconfig.json",
-    "check": "npm run validate && npm run golden && npm run typecheck"
+    "check": "npm run validate && npm run golden && npm run guard && npm run harness && npm run typecheck",
+    "guard": "node scripts/guard/floor-guard.ts",
+    "qa:shots": "node scripts/qa/shots.ts",
+    "qa:budget": "node scripts/qa/budget.ts",
+    "harness": "node scripts/guard/validate-harness.ts"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.56.1",
     "@types/node": "^22.18.0",
     "ajv": "^8.17.1",
     "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "playwright-core": "1.56.1"
   }
 }

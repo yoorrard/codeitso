@@ -38,7 +38,8 @@
 
 | 명령 | 하는 일 |
 |---|---|
-| `npm run check` | 자료 검사 + 골든 + 품질 바닥선 + 하네스 검사 + 타입 검사. 커밋 전에 반드시 |
+| `npm run check` | 자료 검사 + 골든 + 토큰 + 글꼴 글자 + 품질 바닥선 + 하네스 검사 + 타입 검사 + 단위 시험. 커밋 전에 반드시 |
+| `npm test` / `test:coverage` | Vitest 단위 시험(골든·자료 검사·엔진) / 엔진 시험 범위 보고 (`coverage/`) |
 | `npm run validate` / `validate:release` | 자료 교차 검사 / 배포용 (사람 확인이 남은 진열 상품이 있으면 실패) |
 | `npm run golden` / `golden:print` | 추천 회귀 검사 / 엔진 결과를 골든 모양으로 출력 |
 | `npm run explain -- case-03` | 사례나 레시피 하나의 칸별 점수 풀이 |
@@ -47,7 +48,7 @@
 | `npm run qa:shots -- [라우트]` | 빌드 결과를 360·768·1280px와 동작 줄이기로 찍고 axe·가로 스크롤·작은 버튼·외부 요청 검사 → `.qa/` |
 | `npm run qa:budget` | 성능 예산 (첫 화면 JS, 페이지 그림, 지연 묶음) |
 
-T01·T03 뒤에는 `npm run dev`, `npm run build`, `npm test`, T20 뒤에는 `npm run e2e`가 더해진다. Node 22.18 이상. `.ts` 스크립트를 빌드 없이 바로 실행한다. Playwright는 컨테이너의 Chromium과 맞춘 1.56.1로 고정한다.
+`npm run dev`, `npm run build`도 쓴다. T20 뒤에는 `npm run e2e`가 더해진다. Node 22.18 이상. `.ts` 스크립트를 빌드 없이 바로 실행한다. Playwright는 컨테이너의 Chromium과 맞춘 1.56.1로 고정한다.
 
 ## 폴더
 

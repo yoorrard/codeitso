@@ -235,10 +235,11 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 | `npm run fonts:check` | 영수증 글꼴에 고정 문구 글자가 다 있는지 (`npm run fonts`로 다시 만듦) |
 | `npm run guard` | 품질 바닥선 (토큰 밖 값, 외부 자원, 화면 코드 속 문장, any, 시험 건너뛰기, 엔진 순수성) |
 | `npm run harness` | `.claude/` 스킬·에이전트·규칙 앞머리 검사 |
-| `npm run check` | 위 다섯 개 (T02 뒤에는 색 대비 검사도) |
+| `npm run check` | 위 일곱 개 + `npm test`. 커밋 전과 CI에서 돈다 |
 | `npm run qa:shots` | 빌드 결과 스크린샷(360·768·1280·동작 줄이기), axe, 가로 스크롤, 작은 버튼, 외부 요청 |
 | `npm run qa:budget` | 성능 예산 |
-| `npm test` (T03) | Vitest: 엔진 단위 시험 + 골든 사례 + 자료 검사 |
+| `npm test` | Vitest: 골든 사례 + 자료 검사(망가뜨린 자료를 잡는지) + 엔진·스크립트 단위 시험 (`tests/*.test.ts`) |
+| `npm run test:coverage` | 엔진(`src/lib/engine`) 시험 범위. 줄 기준 90% 이상 (T04부터 문턱으로 막음) |
 | `npm run e2e` (T20) | Playwright: 주요 흐름 + axe 접근성 |
 
-GitHub Actions(`.github/workflows/check.yml`)는 모든 푸시와 PR에서 `npm ci && npm run check && npm test && npm run build && npm run qa:budget`을 돌린다 (아직 없는 명령은 건너뛴다). T20에서 e2e를 더한다. 배포 조건은 9절.
+GitHub Actions(`.github/workflows/check.yml`)는 모든 푸시와 PR에서 `npm ci && npm run check && npm run build && npm run qa:budget`을 돌린다 (`check`에 `npm test`가 들어 있다). T20에서 e2e를 더한다. 배포 조건은 9절.

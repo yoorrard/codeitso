@@ -18,8 +18,11 @@
     "golden:print": "node scripts/check-golden.ts --print",
     "examples": "node scripts/make-examples.ts",
     "explain": "node scripts/explain.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "typecheck": "astro check && tsc -p tsconfig.json",
-    "check": "npm run validate && npm run golden && npm run tokens && npm run fonts:check && npm run guard && npm run harness && npm run typecheck",
+    "check": "npm run validate && npm run golden && npm run tokens && npm run fonts:check && npm run guard && npm run harness && npm run typecheck && npm run test",
     "guard": "node scripts/guard/floor-guard.ts",
     "qa:shots": "node scripts/qa/shots.ts",
     "qa:budget": "node scripts/qa/budget.ts",
@@ -34,17 +37,20 @@
     "@phosphor-icons/core": "2.1.1",
     "@playwright/test": "1.56.1",
     "@types/node": "^22.18.0",
+    "@vitest/coverage-v8": "5.0.3",
     "ajv": "^8.17.1",
     "fontverter": "2.0.0",
     "subset-font": "2.9.0",
-    "typescript": "^5.9.2"
-  },
-  "overrides": {
-    "playwright-core": "1.56.1"
+    "typescript": "^5.9.2",
+    "vitest": "5.0.3"
   },
   "dependencies": {
     "@astrojs/preact": "6.0.6",
     "astro": "7.3.8",
     "preact": "10.29.8"
+  },
+  "overrides": {
+    "playwright-core": "1.56.1",
+    "vitest": "5.0.3"
   }
 }

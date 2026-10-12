@@ -1,9 +1,11 @@
 // Node 전용: data 폴더의 JSON을 읽어 엔진에 넘길 모양으로 묶는다.
 // 화면(Astro)에서는 JSON을 직접 import해서 같은 모양을 만든다.
 import { readdirSync, readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Data } from '../../src/lib/engine/types.ts';
+import { DATA_FILES } from './data-files.ts';
+import type { Sources, ValidationInput } from './validate.ts';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const DATA_DIR = join(ROOT, 'data');
@@ -12,19 +14,7 @@ export function readJson<T = unknown>(path: string): T {
   return JSON.parse(readFileSync(path, 'utf8')) as T;
 }
 
-/** data 폴더 파일 이름 → Data 속성 이름 */
-export const DATA_FILES = {
-  taxonomy: 'taxonomy.json',
-  scoring: 'scoring.json',
-  questions: 'questions.json',
-  rules: 'rules.json',
-  products: 'products.json',
-  concepts: 'concepts.json',
-  researchCards: 'research-cards.json',
-  templates: 'templates.json',
-  recipes: 'recipes.json',
-  errors: 'errors.json',
-} as const;
+export { DATA_FILES } from './data-files.ts';
 
 export function loadData(): Data {
   const out: Record<string, unknown> = {};
@@ -38,4 +28,20 @@ export function goldenFiles(): string[] {
     .filter((f) => f.endsWith('.json'))
     .sort()
     .map((f) => join(dir, f));
+}
+
+/** 자료 검사에 넘길 것을 모두 읽는다 (data, sources, schemas, 골든) */
+export function loadValidationInput(release: boolean, now: Date = new Date()): ValidationInput {
+  const schemaDir = join(ROOT, 'schemas');
+  return {
+    data: loadData(),
+    sources: readJson<Sources>(join(DATA_DIR, 'sources.json')),
+    schemas: readdirSync(schemaDir)
+      .filter((x) => x.endsWith('.schema.json'))
+      .sort()
+      .map((f) => readJson<object>(join(schemaDir, f))),
+    goldens: goldenFiles().map((f) => ({ name: basename(f), value: readJson(f) })),
+    release,
+    thisMonth: `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`,
+  };
 }

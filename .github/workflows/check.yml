@@ -19,11 +19,11 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: 자료·골든·품질 바닥선·하네스·타입 검사
+      - name: 자료·골든·토큰·글꼴·품질 바닥선·하네스·타입 검사와 단위 시험
         run: npm run check
-      - name: 단위 시험 (T03 이후)
-        run: npm run --if-present test
-      - name: 빌드 (T01 이후)
-        run: npm run --if-present build
-      - name: 성능 예산 (빌드가 있을 때)
-        run: if [ -d dist ]; then npm run qa:budget; fi
+      - name: 엔진 시험 범위
+        run: npm run test:coverage
+      - name: 빌드
+        run: npm run build
+      - name: 성능 예산
+        run: npm run qa:budget

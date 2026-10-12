@@ -41,7 +41,7 @@
   - `THIRD_PARTY_NOTICES.md`의 '사이트에 실리는 자료' 표를 실제 파일과 맞춘다.
 - 완성 확인: 페이지 그림 합계 예산 안, 외부 요청 없음, 라이선스 파일이 각 폴더에 있음.
 
-### [ ] T03 시험과 CI
+### [x] T03 시험과 CI
 - 요구: R-56, R-57 · 읽을 것: `docs/ARCHITECTURE.md` 12절
 - 할 일:
   - Vitest와 `@vitest/coverage-v8`를 설치하고 `npm test`를 만든다.
@@ -212,3 +212,4 @@
 2026-10-12 T01 Astro 7.3.8 + Preact 10 정적 뼈대, astro check 포함 타입 검사, 빌드 때 엔진 확인용 임시 홈 (D35)
 2026-10-12 T02 남색·금색·지도 종이 토큰과 모션 토큰(스프링·손맛·동작 줄이기 페이드), 대비·동작 줄이기 검사(npm run tokens), Pretendard 3굵기·CC Receipt 직접 싣기(npm run fonts, D37), 기본 스타일
 2026-10-12 T02b 기사님 정리본과 `Mascot`(avif·webp 1배·2배), Fluent 3D 그림 문자 30개(`Emoji`), Phosphor duotone `Icon`(Astro·Preact), Pretendard 가변 글꼴로 바꿈·CSS 예산 30KB·`<picture>` 예산 셈 고침 (D38)
+2026-10-12 T03 Vitest 5.0.3(npm peer 버그는 overrides로), 골든·자료 검사(망가뜨린 자료 11가지)·명도 대비·글꼴 이름 시험 38개, 자료 검사를 `scripts/lib/validate.ts`로, check에 시험 포함, CI에 시험 범위·빌드·예산 (D39). 엔진 시험 범위 55% → T04

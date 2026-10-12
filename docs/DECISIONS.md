@@ -153,3 +153,8 @@ MCP 서버와 비공식 패키지는 이용자 컴퓨터에서 남의 코드를 
 - 이유: D37의 정적 3굵기는 글꼴 조각 바이트가 적지만, `@font-face` 276개짜리 글꼴 CSS가 gzip 40KB라 첫 화면 그리기를 막는다. 가변 글꼴은 CSS가 13KB이고 요청 수도 1/3이다. 조각 바이트는 늘지만 `font-display: swap`이라 글자를 먼저 보여 주고 나중에 바뀐다. 처음 오는 이용자(교사가 보낸 링크로 한 번 들어오는 사람)가 대부분이라 첫 방문의 그리기 시작이 더 중요하다.
 - 틀렸을 때 비용: 낮음. `scripts/fonts/build-fonts.ts`의 Pretendard 부분만 바꾸면 되돌아간다. 실제 기기 측정(T20)에서 글꼴 바뀜이 거슬리면 대체 글꼴 크기 맞춤(`size-adjust`)을 더한다.
 
+## D39 시험 도구: Vitest 5.0.3, 자료 검사를 부작용 없는 모듈로, check에 단위 시험 포함 (2026-10-12, 자동 결정)
+- 결정: Vitest와 `@vitest/coverage-v8`를 5.0.3으로 고정한다 (5.0.4는 오늘 나온 판이라 쓰지 않음). npm 10.9의 선택 peer 해석 버그(`Cannot read properties of null (reading 'edgesOut')`, 다른 패키지의 `vitest@*` peer가 최신판을 끌어옴)를 피하려고 `package.json`의 `overrides`에 `"vitest": "5.0.3"`을 둔다. 자료 검사 로직은 `scripts/lib/validate.ts`(`validateAll`, 파일 읽기·출력·종료 없음)로 옮기고, `validate-data.ts`는 읽고 출력만 한다. `npm run check` 끝에 `npm test`를 붙여 커밋 전 검사와 CI, 멈춤 검사가 같은 문을 쓴다. CI에서 엔진 시험 범위도 돈다.
+- 이유: 시험이 자료를 일부러 망가뜨려 검사가 잡는지 볼 수 있어야 검사 자체를 믿을 수 있다. 단위 시험은 4초 안쪽이라 매번 돌려도 된다.
+- 틀렸을 때 비용: 낮음. Vitest를 올릴 때 `overrides`의 판도 같이 올린다 (어긋나면 `npm install`이 위 오류로 멈춘다).
+

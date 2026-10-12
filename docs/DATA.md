@@ -11,13 +11,13 @@
 | `rules.json` | 칸·충돌·조사·안전·막힘 규칙 | `rules.schema.json` | 38개 |
 | `scoring.json` | 추천 가중치와 기준값 (사이트에 공개) | `scoring.schema.json` | |
 | `products.json` | 상품 카드 (진열·색인) | `products.schema.json` | 19개 |
-| `concepts.json` | 개념 카드 (공부할 것, 사전) | `concepts.schema.json` | 10장 |
+| `concepts.json` | 개념 카드 (공부할 것, 사전) | `concepts.schema.json` | 20장 |
 | `research-cards.json` | 조사 카드 (조사할 것) | `research-cards.schema.json` | 13장 |
 | `templates.json` | 영수증·꾸러미·카드 문장 틀 | `templates.schema.json` | |
 | `recipes.json` | 레시피 (답 + 장바구니 완성 세트) | `recipes.schema.json` | 5개 |
-| `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 6개 |
+| `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 20개 |
 | `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
-| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 16개 |
+| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 20개 |
 
 공통 정의(id 모양, 조건 문법 등)는 `schemas/defs.schema.json`에 있다.
 
@@ -126,7 +126,9 @@
 ## 9. 에러 안내
 
 - `patterns`: 대소문자 무시 정규식. `examples`: 실제 에러 문장. 예시가 자기 패턴에 맞는지, 다른 항목에도 걸리는지 검사가 확인한다.
-- 키가 찍힐 수 있는 에러(401, CORS, 404, 429)의 `askAI`에는 키를 지우고 붙여 넣는다는 말을 둔다.
+- 키가 찍힐 수 있는 에러(401, 403, 404, 429, 500, CORS, 키 만료, 공공데이터포털 오류 코드, JSON이 아님, 네트워크 실패)의 `askAI`에는 키를 지우고 붙여 넣는다는 말을 둔다.
+- 좁은 항목을 앞에 둔다: `matchErrors`는 파일 순서대로 맞는 것을 모두 돌려준다 (예: SSH 키 거절은 `git-auth-failed`, 파일 권한은 `permission-denied`). 모든 예시가 자기 항목에만 걸리는지 `tests/engine/errors-data.test.ts`가 본다.
+- 위험한 해결(sudo, `chmod 777`, `--force`, `--legacy-peer-deps`)을 권하지 않는다. 필요하면 'AI에게 이유를 먼저 묻기'로 쓴다.
 
 ## 10. 골든 사례
 

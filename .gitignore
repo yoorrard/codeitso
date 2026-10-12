@@ -1,0 +1,29 @@
+# 의존성과 빌드 결과
+node_modules/
+dist/
+.astro/
+coverage/
+
+# 테스트·QA 산출물 (스크린샷·리포트는 저장소에 올리지 않는다)
+test-results/
+playwright-report/
+blob-report/
+.qa/
+
+# 로컬 Cloudflare 개발 상태
+.wrangler/
+.dev.vars
+
+# T19 자동 수집 색인 (GitHub Release 첨부 파일로만 보관)
+data/index/
+
+# 비밀 값과 개인 설정
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+
+# 시스템 파일
+.DS_Store
+Thumbs.db
+*.log

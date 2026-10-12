@@ -9,6 +9,9 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 - [ ] H01 Cloudflare 계정 만들기(무료 플랜) — 미리 보기 배포(T21)에 필요 — T21 — (2026-10-12)
 - [ ] H01b Cloudflare API 토큰을 GitHub 저장소 Secrets에 `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`로 넣기 (T21에서 권한 범위를 안내) — T21 — (2026-10-12)
 - [x] H02 GitHub 저장소 만들고 이 폴더 올리기 — yoorrard/code-chauffeur (2026-10-12)
+- [ ] H08 공공데이터포털(data.go.kr) 회원가입·약관 동의, '공공데이터활용지원센터_목록조회서비스'(15077093, 자동승인) 활용신청, 받은 일반 인증키를 GitHub Secrets `DATA_GO_KR_SERVICE_KEY`에 넣기(인코딩·디코딩 키 중 어느 쪽인지도 적어 주세요) — 색인 수집(T19) — T19 — (2026-10-12)
+- [ ] H09 브라우저로 직접 확인: `https://www.data.go.kr/robots.txt` 내용, 이용정책(https://www.data.go.kr/ugs/selectPortalPolicyView.do)의 "센터의 사전 승인 없이 포털 서비스의 지식재산을 이용하거나 제3자가 이용하게 해서는 안 된다" 조항이 목록(이름·기관·링크)을 우리 사이트에 싣는 일에 걸리는지. 괜찮으면 `data/sources.json`의 `redistribution`을 정해 주세요(지금 `metadata-only`, 확인 전에는 `link-only`로 다룬다) — T19 수집 시작 — T19 — (2026-10-12). 조사 내용은 D51
+- [ ] H10 (선택) 에이전트가 data.go.kr을 직접 확인하게 하려면 클라우드 환경 설정 Network access의 Allowed domains에 `www.data.go.kr`, `api.odcloud.kr`, `infuser.odcloud.kr`를 더하기 — 지금 이 환경에서는 막혀 있어 공식 원문을 검색 색인으로만 확인했다 — T19 — (2026-10-12)
 
 ## 이름·법·학교
 

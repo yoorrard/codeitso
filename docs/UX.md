@@ -186,7 +186,7 @@
 - 기사님(마스코트)은 1단계부터 쓴다. 소유자가 준 그림(`src/assets/mascot/`)만 쓰고, 새 자세는 `docs/HUMAN.md` M02로 요청한다. 쓰는 곳과 움직임은 `docs/DESIGN.md` 6절.
 - 정류장·칸·보상 아이콘은 Fluent Emoji 3D 그림(128px webp), UI 아이콘은 Phosphor SVG (D27).
 - 영수증은 흰 종이(`--receipt`)에 D2Coding, 아래쪽 톱니 모양 가장자리.
-- 그림 보기의 그림은 1단계에서 단순한 선 그림(SVG)으로 시작한다. 그림 설명은 `questions.json`의 `alt`를 따른다.
+- 그림 보기의 그림은 Fluent 3D 그림 문자, '느낌'은 자료의 색 견본이다 (D44). 버튼 안 그림은 장식(`alt=""`)이고 보기 이름이 뜻을 전한다. `questions.json`의 `alt`는 그림만 따로 보일 때 쓴다.
 
 ## 6. 접근성 확인표
 

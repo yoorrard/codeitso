@@ -3,6 +3,7 @@
 import { getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Interview from '../components/Interview.tsx';
+import InterviewAction from '../components/InterviewAction.tsx';
 import face from '../assets/mascot/chauffeur-face.png';
 import { ko } from '../copy/ko.ts';
 
@@ -11,5 +12,5 @@ const faceImg = await getImage({ src: face, width: 80, height: 80, format: 'webp
 
 <Base title={ko.interview.pageTitle} station="interview">
   <Interview client:load faceSrc={faceImg.src} />
-  <a slot="action" class="btn" href="/shelf">{ko.interview.browseOnly}</a>
+  <InterviewAction client:idle slot="action" />
 </Base>

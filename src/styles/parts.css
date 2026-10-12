@@ -349,14 +349,9 @@
   padding: 0;
 }
 
+/* 넓으면 2~4열, 글자를 키워 좁아지면 1열로 */
 .options-pic {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-@media (min-width: 560px) {
-  .options-pic {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
 }
 
 .option {
@@ -397,10 +392,50 @@
   border-style: dashed;
 }
 
+.option {
+  position: relative;
+}
+
+@media (hover: hover) {
+  .option:hover {
+    border-color: var(--navy);
+    background: var(--paper);
+  }
+}
+
 .option[aria-pressed='true'] {
-  border-color: var(--navy);
+  border: 4px solid var(--navy);
   background: var(--gold-soft);
-  box-shadow: inset 0 0 0 2px var(--navy);
+}
+
+.picked-mark {
+  position: absolute;
+  inset-block-start: var(--space-1);
+  inset-inline-end: var(--space-1);
+  display: grid;
+  place-items: center;
+  inline-size: 24px;
+  block-size: 24px;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+/* 고대비 모드: 배경색이 사라져도 고른 보기가 보이게 */
+@media (forced-colors: active) {
+  .option[aria-pressed='true'] {
+    border-color: Highlight;
+  }
+}
+
+/* 이어서 하는 사람: 섬이 붙기 전 첫 질문이 잠깐 보이지 않게 (머리 스크립트가 data-resume을 붙인다) */
+:root[data-resume] .interview:not([data-ready]) > .q-card {
+  visibility: hidden;
+}
+
+.line-form {
+  display: grid;
+  gap: var(--space-2);
 }
 
 /* '느낌' 보기: 자료의 색으로 그린 작은 화면 견본 */

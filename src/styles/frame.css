@@ -31,8 +31,9 @@
   view-transition-name: route-car;
 }
 
+/* 문서 간 전환 중에는 화면을 누를 수 없으므로, 차 이동도 페이지 전환 길이(250ms 안쪽) 안에 끝낸다 */
 ::view-transition-group(route-car) {
-  animation-duration: var(--dur-move);
+  animation-duration: var(--dur-page);
   animation-timing-function: var(--ease-in-out);
 }
 
@@ -166,8 +167,8 @@
 .route-car {
   position: absolute;
   z-index: 2;
-  inset-block-start: -6px;
-  inset-inline-start: calc(50% + 10px);
+  inset-block-start: -10px;
+  inset-inline-end: calc(50% + 14px);
   inline-size: 26px;
   block-size: 26px;
   pointer-events: none;

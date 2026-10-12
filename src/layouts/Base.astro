@@ -48,7 +48,9 @@ const hasAction = Astro.slots.has('action');
       try {
         var p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}');
         if (p && p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
-        if (localStorage.getItem('cc:session:v1') || localStorage.getItem('cc:trip:v1')) document.documentElement.setAttribute('data-visit', 'again');
+        var saved = localStorage.getItem('cc:session:v1');
+        if (saved || localStorage.getItem('cc:trip:v1')) document.documentElement.setAttribute('data-visit', 'again');
+        if (saved && Object.keys(JSON.parse(saved).answers || {}).length > 0) document.documentElement.setAttribute('data-resume', '');
       } catch (e) {}
       // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 홈 출발 장면을 짧게 (자주 볼수록 짧게)
       try {

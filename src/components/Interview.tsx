@@ -2,7 +2,7 @@
 // 이전으로 돌아가 바꾸기, 'n번째 질문', 좁혀지는 중 상자(답 칩·생긴 칸·혹시 이 레시피), 마지막 한 줄 입력, 인터뷰 도장.
 // 계산은 모두 엔진(evaluate·answerChips·matchingRecipes). 화면은 보여 주기만 한다.
 import { useStore } from '@nanostores/preact';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
@@ -12,7 +12,7 @@ import { track } from '../lib/events.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
 import { sentences } from '../lib/sentences.ts';
-import { OPTION_ART, SLOT_ART, optionArt } from '../lib/option-art.ts';
+import { SLOT_ART, optionArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { EMPTY_SESSION, FREE_TEXT_MAX } from '../lib/saved.ts';
 import { sfx } from '../lib/sfx.ts';
@@ -54,7 +54,11 @@ function OptionButton({ q, option, picked, onPick }: { q: Question; option: Opti
       <button type="button" class={`option${hasArt ? ' option-pic' : ''}${option.isUnknown ? ' option-unknown' : ''}`} aria-pressed={picked} onClick={() => onPick(option)}>
         {hasArt && (art ? <img src={`/emoji/${art}.webp`} width={64} height={64} alt="" /> : <StylePreview option={option} />)}
         <span class="option-label">{option.label}</span>
-        {picked && <span class="visually-hidden">({ko.interview.picked})</span>}
+        {picked && (
+          <span class="picked-mark" aria-hidden="true">
+            <Icon name="check" size="18px" />
+          </span>
+        )}
       </button>
     </li>
   );
@@ -65,7 +69,7 @@ export default function Interview({ faceSrc }: Props) {
   const live = useStore($result);
   const r = ready ? live : FIRST_VISIT;
   const [pos, setPos] = useState<number | null>(null);
-  const [moved, setMoved] = useState(false);
+  const moved = useRef(false);
   const [bubble, setBubble] = useState(true);
   const [finished, setFinished] = useState<'none' | 'first' | 'again'>('none');
   const heading = useRef<HTMLHeadingElement>(null);
@@ -73,7 +77,8 @@ export default function Interview({ faceSrc }: Props) {
 
   const visible = r.interview.visible;
   const autoPos = r.interview.next ? visible.findIndex((v) => v.id === r.interview.next?.id) : visible.length;
-  const at = Math.min(pos ?? autoPos, visible.length);
+  // 정상 이동은 처음 안 답한 질문을 넘지 않는다 (기록을 지워 답이 사라져도 빈 질문으로 건너뛰지 않게)
+  const at = Math.min(pos ?? autoPos, autoPos);
   const q = visible[at];
 
   // 넓은 화면에서는 좁혀지는 중 상자를 펼쳐 둔다
@@ -81,13 +86,22 @@ export default function Interview({ faceSrc }: Props) {
     if (narrow.current && window.matchMedia('(min-width: 768px)').matches) narrow.current.open = true;
   }, []);
 
-  // 질문이 바뀌면 질문 제목으로 초점 (처음 열 때는 옮기지 않는다)
+  // 섬이 질문을 옮겼을 때만 질문 제목으로 초점 (처음 열 때·다른 곳에서 바뀔 때는 옮기지 않는다). 그림 전에 옮겨 초점이 비지 않게
+  useLayoutEffect(() => {
+    if (!moved.current) return;
+    moved.current = false;
+    heading.current?.focus();
+  }, [at, q?.id, finished]);
+
+  // 질문마다 페이지 제목도 바꾼다 (WCAG 2.4.2)
   useEffect(() => {
-    if (moved) heading.current?.focus();
-  }, [at, q?.id, finished, moved]);
+    if (!ready) return;
+    const what = finished !== 'none' ? ko.common.interviewDone : q ? `${fill(ko.interview.questionNo, { n: at + 1 })}: ${q.text}` : ko.interview.lineTitle;
+    document.title = fill(ko.interview.docTitle, { what });
+  }, [ready, at, q?.id, finished]);
 
   const go = (next: number): void => {
-    setMoved(true);
+    moved.current = true;
     setPos(next);
   };
 
@@ -111,11 +125,13 @@ export default function Interview({ faceSrc }: Props) {
     if (!r.done) return;
     const first = !$trip.get().seenStamps.includes(STAMP);
     markStampsSeen([STAMP]);
+    moved.current = true;
     setFinished(first ? 'first' : 'again');
-    setMoved(true);
     track('interview_done');
-    announce(`${ko.interview.done} ${ko.common.interviewDone}`);
-    void sfx('stamp');
+    if (first) {
+      announce(ko.interview.done);
+      void sfx('stamp');
+    }
   };
 
   const chips = answerChips(catalog, r.interview);
@@ -124,7 +140,7 @@ export default function Interview({ faceSrc }: Props) {
     .filter((x) => x !== undefined);
 
   return (
-    <div class="interview">
+    <div class="interview" data-ready={ready ? '' : undefined}>
       {finished !== 'none' ? (
         <section class="q-card q-done" key="done" aria-labelledby="q-title">
           <span class={finished === 'first' ? 'stamp-mark stamp-in' : 'stamp-mark'} aria-hidden="true">
@@ -146,7 +162,9 @@ export default function Interview({ faceSrc }: Props) {
                 {ko.interview.back}
               </button>
             )}
-            <p class="q-no">{fill(ko.interview.questionNo, { n: at + 1 })}</p>
+            <p class="q-no" aria-hidden="true">
+              {fill(ko.interview.questionNo, { n: at + 1 })}
+            </p>
           </div>
           {at === 0 && bubble && Object.keys(r.session.answers).length === 0 && (
             <div class="mascot-line">
@@ -159,6 +177,7 @@ export default function Interview({ faceSrc }: Props) {
             </div>
           )}
           <h1 id="q-title" ref={heading} tabIndex={-1}>
+            <span class="visually-hidden">{fill(ko.interview.questionNo, { n: at + 1 })}. </span>
             {q.text}
           </h1>
           {q.help && <p class="q-help">{q.help}</p>}
@@ -186,25 +205,46 @@ export default function Interview({ faceSrc }: Props) {
           <p class="q-help" id="free-line-hint">
             {ko.interview.lineHint}
           </p>
-          <input
-            id="free-line"
-            class="line-input"
-            type="text"
-            maxLength={LINE_MAX}
-            aria-describedby="free-line-hint free-line-count"
-            placeholder={ko.interview.linePlaceholder}
-            value={r.session.freeText ?? ''}
-            onInput={(e) => {
-              const v = (e.currentTarget as HTMLInputElement).value.slice(0, LINE_MAX);
-              updateSession(() => ({ freeText: v }));
+          <form
+            class="line-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              finish();
             }}
-          />
-          <p class="line-count" id="free-line-count">
-            {fill(ko.interview.lineCount, { n: (r.session.freeText ?? '').length, max: LINE_MAX })}
-          </p>
-          <button type="button" class="btn btn-primary btn-lg" onClick={finish} disabled={!r.done}>
-            {ko.interview.finish}
-          </button>
+          >
+            <input
+              id="free-line"
+              name="freeText"
+              class="line-input"
+              type="text"
+              maxLength={LINE_MAX}
+              autocomplete="off"
+              enterkeyhint="done"
+              aria-describedby="free-line-hint free-line-count"
+              placeholder={ko.interview.linePlaceholder}
+              value={r.session.freeText ?? ''}
+              onInput={(e) => {
+                const v = (e.currentTarget as HTMLInputElement).value.slice(0, LINE_MAX);
+                const before = (r.session.freeText ?? '').length;
+                updateSession(() => ({ freeText: v }));
+                if (v.length >= LINE_MAX && before < LINE_MAX) announce(fill(ko.interview.lineFull, { max: LINE_MAX }));
+              }}
+            />
+            <p class="line-count" id="free-line-count">
+              {fill(ko.interview.lineCount, { n: (r.session.freeText ?? '').length, max: LINE_MAX })}
+            </p>
+            {!r.done && (
+              <p class="q-help" id="finish-reason">
+                {ko.interview.finishBlocked}{' '}
+                <button type="button" class="btn btn-quiet" onClick={() => go(autoPos)}>
+                  {ko.interview.toUnanswered}
+                </button>
+              </p>
+            )}
+            <button type="submit" class="btn btn-primary btn-lg" aria-disabled={!r.done} aria-describedby={r.done ? undefined : 'finish-reason'}>
+              {ko.interview.finish}
+            </button>
+          </form>
         </section>
       )}
 
@@ -255,5 +295,3 @@ export default function Interview({ faceSrc }: Props) {
   );
 }
 
-/** 시험·다른 화면에서 그림이 있는 질문인지 볼 때 */
-export const PICTURE_QUESTIONS = Object.keys(OPTION_ART);

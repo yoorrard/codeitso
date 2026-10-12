@@ -1576,3 +1576,83 @@
     }
   }
 }
+
+/* ── 소개·법 문서·바닥글 (T17) ─────────────────────── */
+.prose {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.prose h2 {
+  font-size: var(--text-lg);
+  margin-block-start: var(--space-3);
+}
+
+.prose ul {
+  display: grid;
+  gap: var(--space-2);
+  padding-inline-start: var(--space-5);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.prose table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: var(--radius);
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border-block-end: 1px solid var(--line);
+  text-align: start;
+  vertical-align: top;
+}
+
+.prose thead th {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.prose td.num {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-strong);
+}
+
+.review-banner {
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  border: 2px solid var(--caution);
+  background: var(--gold-soft);
+  font-weight: var(--weight-strong);
+}
+
+.site-footer {
+  max-inline-size: calc(var(--content-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding: var(--space-5) var(--gutter) var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.site-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin-block-start: var(--space-2);
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--tap);
+  min-inline-size: var(--tap);
+}

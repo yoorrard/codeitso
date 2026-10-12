@@ -1,0 +1,79 @@
+---
+// 추천 공식 /about/scoring (R-07, T17): data/scoring.json 값을 빌드 때 그대로 표로. 가중치를 바꾸면 이 페이지도 바뀐다.
+import Base from '../../layouts/Base.astro';
+import { ko } from '../../copy/ko.ts';
+import { data } from '../../lib/data.ts';
+
+const S = ko.scoring;
+const sc = data.scoring;
+const T = data.templates;
+const w = sc.weights as unknown as Record<string, number>;
+const signed = (n: number): string => (n > 0 ? `+${n}` : String(n));
+const tagLabel = (id: string): string => data.taxonomy.tags.find((t) => t.id === id)?.label ?? id;
+---
+
+<Base title={S.pageTitle}>
+  <article class="prose">
+    <h1>{S.title}</h1>
+    <p class="lead">{S.lead}</p>
+    <h2>{S.itemsTitle}</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">{S.colItem}</th><th scope="col">{S.colWhen}</th><th scope="col">{S.colValue}</th></tr></thead>
+        <tbody>
+          {
+            S.items.map((it) => (
+              <tr>
+                <th scope="row">{it.label}</th>
+                <td>{it.when}</td>
+                <td class="num">{signed(w[it.key] ?? 0)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <h2>{S.accessTitle}</h2>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          {
+            Object.entries(sc.weights.accessPenalty).map(([k, v]) => (
+              <tr>
+                <th scope="row">{T.accessLabels[k as keyof typeof T.accessLabels]}</th>
+                <td class="num">{signed(v)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <h2>{S.thresholdTitle}</h2>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th scope="row">{S.threshold}</th><td class="num">{sc.recommendThreshold}</td></tr>
+          <tr><th scope="row">{S.reasonsMax}</th><td class="num">{sc.reasonsMax}</td></tr>
+          <tr><th scope="row">{S.split}</th><td class="num">{sc.phaseSplitDifficulty}</td></tr>
+          <tr><th scope="row">{S.studyMax}</th><td class="num">{sc.studyRequiredMax}</td></tr>
+          <tr><th scope="row">{S.baseMinutes}</th><td class="num">{sc.baseMinutes}</td></tr>
+          <tr><th scope="row">{S.unknownMinutes}</th><td class="num">{sc.unknownSetupMinutes}</td></tr>
+          {
+            Object.entries(sc.userLevelByAi).map(([tag, lv]) => (
+              <tr>
+                <th scope="row">
+                  {S.levels}: {tagLabel(tag)}
+                </th>
+                <td class="num">{lv}</td>
+              </tr>
+            ))
+          }
+          <tr><th scope="row">{S.levels}: {S.defaultLevel}</th><td class="num">{sc.defaultUserLevel}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>{S.tieTitle}</h2>
+    <p>{S.tieBody}</p>
+    <p class="q-help">{S.golden}</p>
+  </article>
+</Base>

@@ -1,0 +1,40 @@
+---
+// 크레딧 /about/credits (T17): THIRD_PARTY_NOTICES.md의 '사이트에 실리는 자료' 표를 빌드 때 그대로 읽어 보여 준다 (한 곳에서만 고친다).
+import Base from '../../layouts/Base.astro';
+import notices from '../../../THIRD_PARTY_NOTICES.md?raw';
+import { ko } from '../../copy/ko.ts';
+
+const C = ko.credits;
+const section = notices.split(/^## /m).find((s) => s.startsWith('사이트에 실리는 자료')) ?? ''; // floor-guard-ignore: 화면 문구가 아니라 THIRD_PARTY_NOTICES.md의 절 제목을 찾는 열쇠
+const rows = section
+  .split('\n')
+  .filter((l) => l.startsWith('|') && !/^\|\s*-/.test(l))
+  .slice(1)
+  .map((l) =>
+    l
+      .slice(1, -1)
+      .split('|')
+      .map((c) => c.trim().replace(/`/g, '')),
+  );
+---
+
+<Base title={C.pageTitle}>
+  <article class="prose">
+    <h1>{C.title}</h1>
+    <p class="lead">{C.lead}</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>{C.cols.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+        <tbody>
+          {
+            rows.map((r) => (
+              <tr>
+                {r.map((c, i) => (i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </article>
+</Base>

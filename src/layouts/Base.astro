@@ -85,6 +85,16 @@ const hasAction = Astro.slots.has('action');
         </a>
       </div>
     </div>
+    <footer class="site-footer" aria-label={ko.footer.label}>
+      <p>{ko.footer.license}</p>
+      <ul>
+        <li><a href="/about">{ko.footer.about}</a></li>
+        <li><a href="/about/scoring">{ko.footer.scoring}</a></li>
+        <li><a href="/about/credits">{ko.footer.credits}</a></li>
+        <li><a href="/legal/privacy">{ko.footer.privacy}</a></li>
+        <li><a href="/legal/notice">{ko.footer.notice}</a></li>
+      </ul>
+    </footer>
     <DictionaryPanel client:idle />
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
   </body>

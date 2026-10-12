@@ -30,7 +30,8 @@
     "harness": "node scripts/guard/validate-harness.ts",
     "tokens": "node scripts/check-tokens.ts",
     "fonts": "node scripts/fonts/build-fonts.ts",
-    "fonts:check": "node scripts/fonts/build-fonts.ts --check"
+    "fonts:check": "node scripts/fonts/build-fonts.ts --check",
+    "e2e": "playwright test"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",

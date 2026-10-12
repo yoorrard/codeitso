@@ -232,3 +232,8 @@ MCP 서버와 비공식 패키지는 이용자 컴퓨터에서 남의 코드를 
 - 제안 (사람이 H08·H09를 마치면 시작): 월 1회 GitHub Actions에서 `scripts/collect-index.ts` — 목록조회서비스로 API 목록을 쪽 단위로 받고(하루 한도보다 훨씬 적게), 분류(`new_category_nm`)를 `categoryMap`으로 옮기고, 링크는 `https://www.data.go.kr/data/{목록 id}/openapi.do` 하나, 설명은 `summary` 한 줄로만. 이용허락범위는 목록개방현황 CSV를 목록 id로 이어 붙여 채우고 못 채우면 '원문 확인'. 응답 칸이 예상과 다르면 실패시켜 마지막 정상 색인(Release 첨부)을 쓴다. 키는 `DATA_GO_KR_SERVICE_KEY` Secret으로만 읽는다.
 - 이유: DATA.md 11절(공식 목록 API·RSS만, 화면 긁기 없음, robots·약관 먼저), R-54·R-58·R-71.
 - 틀렸을 때 비용: 낮음. 아직 코드가 없다. 사람이 막는 조항이 있다고 보면 색인 상품은 지금처럼 손으로 고른 몇 개만 둔다.
+
+## D52 e2e는 빌드 결과를 작은 정적 서버로, 휴대폰 360px 하나로 (2026-10-12, 자동 결정)
+- 결정: Playwright(1.56.1, 이미 설치)로 `tests/e2e/`를 둔다. 서버는 `astro preview` 대신 하네스의 `scripts/qa/serve.ts`(의존성 없음, `/api/event`는 204)로 `dist/`를 띄운다. 프로젝트는 Chromium 360×800 하나다(성능·접근성 기준 화면이 360px이고, 넓은 화면은 `qa:shots`가 본다). 화면 글은 `src/copy/ko.ts`와 엔진 `fill()`로 찾아 문구가 바뀌어도 시험이 따라간다. 알림 자리는 같은 순간의 알림을 이어 붙이므로 알림 확인은 '포함'으로 본다. CI는 빌드·예산 뒤에 `npx playwright install --with-deps chromium`과 `npm run e2e`를 돌리고, 실패하면 `.qa/e2e-results`(흔적 포함)를 7일 올려 둔다.
+- 이유: T20 완성 확인(axe 심각·치명 0, 주요 흐름 통과, 첫 화면 JS 100KB 이하). 하네스와 같은 서버라 배포 서버(끝 빗금 없는 주소)와도 같은 주소 꼴이다.
+- 틀렸을 때 비용: 낮음. 다른 브라우저(WebKit·Firefox)는 프로젝트 하나를 더하면 된다 (CI 시간이 늘어 지금은 넣지 않음).

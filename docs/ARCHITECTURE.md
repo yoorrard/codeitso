@@ -245,6 +245,6 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 | `npm run qa:budget` | 성능 예산 |
 | `npm test` | Vitest: 골든 사례 + 자료 검사(망가뜨린 자료를 잡는지) + 엔진·스크립트 단위 시험 (`tests/*.test.ts`) |
 | `npm run test:coverage` | 엔진(`src/lib/engine`) 시험 범위. 줄 기준 90% 이상 (T04부터 문턱으로 막음) |
-| `npm run e2e` (T20) | Playwright: 주요 흐름 + axe 접근성 |
+| `npm run e2e` | Playwright(`tests/e2e/`, 360px): 레시피 5개로 영수증까지, 키보드만으로 인터뷰, 공유 링크 다시 열기, 사전·진열대 검색, 장면 중간 누르기, 동작 줄이기(기기·사이트) 흐름, 모든 화면 axe(처음 온 사람·진행 있음). 빌드한 `dist/`를 `scripts/qa/serve.ts`로 띄운다 |
 
-GitHub Actions(`.github/workflows/check.yml`)는 모든 푸시와 PR에서 `npm ci && npm run check && npm run build && npm run qa:budget`을 돌린다 (`check`에 `npm test`가 들어 있다). T20에서 e2e를 더한다. 배포 조건은 9절.
+GitHub Actions(`.github/workflows/check.yml`)는 모든 푸시와 PR에서 `npm ci && npm run check && npm run build && npm run qa:budget && npm run e2e`를 돌린다 (`check`에 `npm test`가 들어 있다). 배포 조건은 9절.

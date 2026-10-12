@@ -32,10 +32,10 @@
   - `scripts/check-tokens.ts`: `tokens.css`의 글자/바탕 쌍(주석에 적힌 짝)을 `scripts/lib/contrast.ts`로 검사한다. `npm run check`에 더한다.
 - 완성 확인: 빌드 결과에 외부 글꼴 요청이 없음, 토큰 대비 검사 통과, 동작 줄이기에서 `--dur-fade`만 남음.
 
-### [ ] T02b 그림 자산: 기사님·3D 그림 문자·아이콘
+### [x] T02b 그림 자산: 기사님·3D 그림 문자·아이콘
 - 요구: R-50~R-52 · 읽을 것: `docs/DESIGN.md` 6·8절, 결정 D27 · 먼저: T01
 - 할 일:
-  - 기사님: 원본(`src/assets/mascot/chauffeur-wave.webp`)의 알파를 정리하고(거의 투명한 점 지우기, 거의 불투명한 점 채우기) 그림 테두리에 맞게 잘라 `chauffeur-wave.png`(정리본)를 만든다. 화면에는 Astro `<Picture>`로 360w·720w webp·avif를 싣는다. 그림 자체는 고치지 않는다.
+  - 기사님: 원본(`src/assets/mascot/chauffeur-wave.webp`)의 알파를 정리하고(거의 투명한 점 지우기, 거의 불투명한 점 채우기) 그림 테두리에 맞게 잘라 `chauffeur-wave.png`(정리본)를 만든다. 화면에는 `Mascot` 컴포넌트(Astro `<Picture>`)로 보이는 폭의 1배·2배 avif·webp를 싣는다. 그림 자체는 고치지 않는다.
   - Fluent Emoji 3D: `scripts/assets/fetch-emoji.ts`가 microsoft/fluentui-emoji의 **고정 커밋**에서 쓸 그림(`docs/DESIGN.md` 8절)만 받아 128px webp로 줄여 `public/emoji/`에 두고 `LICENSE`(MIT)를 함께 둔다. 받을 목록과 커밋은 스크립트 안에 적는다.
   - UI 아이콘: Phosphor(`@phosphor-icons/core`) SVG를 빌드 때 인라인하는 `Icon` 컴포넌트 (쓰는 아이콘만).
   - `THIRD_PARTY_NOTICES.md`의 '사이트에 실리는 자료' 표를 실제 파일과 맞춘다.
@@ -211,3 +211,4 @@
 2026-10-12 준비 기획 개선: 게임 연출을 1단계로(R-50~R-53, UX 4절, T02b·T06b·T16b), 결정 D22~D34, 자료 논리 수정(D34)
 2026-10-12 T01 Astro 7.3.8 + Preact 10 정적 뼈대, astro check 포함 타입 검사, 빌드 때 엔진 확인용 임시 홈 (D35)
 2026-10-12 T02 남색·금색·지도 종이 토큰과 모션 토큰(스프링·손맛·동작 줄이기 페이드), 대비·동작 줄이기 검사(npm run tokens), Pretendard 3굵기·CC Receipt 직접 싣기(npm run fonts, D37), 기본 스타일
+2026-10-12 T02b 기사님 정리본과 `Mascot`(avif·webp 1배·2배), Fluent 3D 그림 문자 30개(`Emoji`), Phosphor duotone `Icon`(Astro·Preact), Pretendard 가변 글꼴로 바꿈·CSS 예산 30KB·`<picture>` 예산 셈 고침 (D38)

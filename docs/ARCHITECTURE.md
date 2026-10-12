@@ -16,7 +16,7 @@
 | 방문 통계 | Cloudflare Web Analytics | 쿠키 없음. `/receipt`에는 싣지 않는다. |
 | 자동화 | GitHub Actions | 검사·시험·배포, 2단계부터 색인 갱신. 공개 저장소는 무료. |
 | 시험 | Vitest(엔진·자료), Playwright 1.56.1 + @axe-core/playwright(화면·접근성) | Playwright는 컨테이너 Chromium에 맞춰 고정 (D33). 시각 점검·예산은 `scripts/qa/` |
-| 글꼴 | Pretendard(본문), `CC Receipt`(영수증·전광판, D2Coding에서 글자를 골라 이름을 바꿈) | 둘 다 OFL. Pretendard는 굵기별 동적 하위 집합, 영수증 글꼴은 유니코드 범위별 조각 (D29). `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
+| 글꼴 | Pretendard(본문), `CC Receipt`(영수증·전광판, D2Coding에서 글자를 골라 이름을 바꿈) | 둘 다 OFL. Pretendard는 가변 글꼴 동적 하위 집합(D38), 영수증 글꼴은 고정 문구 글자만 고른 하위 집합 (D29·D37). `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
 | 모션 | CSS 전환·키프레임·`@starting-style`·`offset-path`·CSS 3D, 문서 간 View Transitions, 직접 쓴 `src/lib/motion.ts` (약 2KB) | 라이브러리 없음. 계산대 색종이만 `canvas-confetti`(ISC, 4.3KB) 지연 로드 (D25, D26) |
 | 효과음 | `src/lib/sfx.ts` + 켰을 때만 동적 import하는 합성기 | 기본 꺼짐, 소리 파일 없음 (D28) |
 | 아이콘·그림 | Fluent Emoji 3D(MIT) 128px webp는 `public/emoji/`, Phosphor(MIT) SVG는 빌드 때 인라인, 기사님은 `src/assets/mascot/`(Astro `<Picture>`로 크기별 webp·avif), 나머지는 직접 그린 SVG | D27 |
@@ -218,7 +218,8 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 ## 11. 성능 기준
 
 - 첫 화면: 모바일 기준 LCP 2.5초 이하, 자바스크립트 100KB 이하(gzip). 다른 페이지는 처음 불러오는 JS 140KB 이하.
-- 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다. 기사님 그림은 화면 크기에 맞는 것 하나만 내려온다 (360w 약 23KB).
+- 처음 불러오는 CSS(글꼴 `@font-face` 포함)는 gzip 30KB 이하. CSS는 첫 화면 그리기를 막는다 (D38).
+- 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다. 기사님 그림은 `Mascot` 컴포넌트로 화면 크기에 맞는 avif 하나만 내려온다 (보이는 폭 200px일 때 1배 7KB, 2배 15KB).
 - 나중에 불러오는 묶음(색종이, 선택 3D 장면)은 하나에 200KB 이하. 유휴 시간이나 이용자 행동 뒤에만 불러온다.
 - 영수증 출력 모션은 3초를 넘지 않는다.
 - `npm run qa:budget`이 빌드 결과로 이 기준을 검사한다.

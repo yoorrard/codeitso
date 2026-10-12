@@ -1,0 +1,12 @@
+---
+// 3D 그림 문자 (Fluent Emoji 3D, MIT). public/emoji/<id>.webp. 장식이면 alt=""(기본), 뜻을 전하면 alt.
+interface Props {
+  id: string;
+  size?: number;
+  alt?: string;
+  class?: string;
+}
+const { id, size = 48, alt = '', class: cls } = Astro.props;
+---
+
+<img src={`/emoji/${id}.webp`} width={size} height={size} alt={alt} loading="lazy" decoding="async" class:list={['emoji', cls]} />

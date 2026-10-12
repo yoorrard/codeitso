@@ -95,8 +95,8 @@
 
 ## 8. 아이콘과 그림
 
-- 정류장·칸·상품 분류·보상: Microsoft Fluent Emoji 3D (MIT) 128px webp. 예: 첫 수업 🎓, 인터뷰 🗺️, 장보기 🛒, 재확인 🚦, 계산대 🧾 / 화면 💻, 저장 🗃️, 로그인 🔑, 외부 데이터 📡, 알림 🔔, 배포·공유 🚀. 실제로 쓸 수 있는 그림은 T02b에서 저장소 고정 커밋으로 확인한다.
-- UI 아이콘(닫기, 복사, 뒤로, 소리, 설정): Phosphor (MIT) duotone/fill, 빌드 때 인라인 SVG.
+- 정류장·칸·상품 분류·보상: Microsoft Fluent Emoji 3D (MIT) 128px webp. 예: 첫 수업 🎓, 인터뷰 🗺️, 장보기 🛒, 재확인 🚦, 계산대 🧾 / 화면 💻, 저장 🗃️, 로그인 🔑, 외부 데이터 📡, 알림 🔔, 배포·공유 🚀. 받은 목록은 `public/emoji/SOURCE.md` (고정 커밋 1ffb34c, 30개). 더 필요하면 `scripts/assets/fetch-emoji.ts` 목록에 더한다.
+- UI 아이콘(닫기, 복사, 뒤로, 소리, 설정): Phosphor (MIT) duotone 한 가지 모양, 빌드 때 인라인 SVG. 쓰는 아이콘은 `src/lib/icons.ts`에 등록한다 (D38).
 - 인터뷰 그림 보기·개념 그림·노선도·차: 직접 그린 단순한 SVG (`svg-illustrator`), 토큰 색, 선 굵기 4, 둥근 끝.
 - 크레딧: `/about/credits`에 모든 외부 자산의 라이선스를 적는다 (Fluent MIT, Phosphor MIT, Pretendard·D2Coding OFL, canvas-confetti ISC, ZzFX MIT).
 

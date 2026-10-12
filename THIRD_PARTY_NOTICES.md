@@ -23,10 +23,10 @@
 
 | 자료 | 출처 | 라이선스 | 위치 |
 |---|---|---|---|
-| Pretendard 1.3.9 (400·700·800 동적 하위 집합, 고치지 않음) | orioncactus/pretendard (npm `pretendard`) | SIL OFL 1.1 | `public/fonts/pretendard/` + `OFL.txt` |
+| Pretendard Variable 1.3.9 (가변 글꼴 동적 하위 집합 92조각, 고치지 않음) | orioncactus/pretendard (npm `pretendard`) | SIL OFL 1.1 | `public/fonts/pretendard/` + `OFL.txt` |
 | 영수증 글꼴 `CC Receipt` | naver/d2-coding-font VER1.4.0 (D2Coding)에서 글자를 골라 이름을 바꾼 수정본 (`scripts/fonts/build-fonts.ts`) | SIL OFL 1.1 | `public/fonts/receipt/` + `OFL.txt` |
-| 3D 그림 문자 | microsoft/fluentui-emoji (고정 커밋) | MIT | `public/emoji/` + `LICENSE` |
-| UI 아이콘 | phosphor-icons/core | MIT | 빌드 때 인라인 |
+| 3D 그림 문자 30개 (3D PNG를 128px webp로 줄임) | microsoft/fluentui-emoji (1ffb34c752ecf5d402f04cfb4b392c77f57c54bc), `scripts/assets/fetch-emoji.ts` | MIT | `public/emoji/` + `LICENSE`, 목록 `SOURCE.md` |
+| UI 아이콘 (duotone, 등록한 것만) | phosphor-icons/core 2.1.1 (npm `@phosphor-icons/core`) | MIT | 빌드 때 HTML에 인라인 (`src/lib/icons.ts`), 라이선스는 `node_modules/@phosphor-icons/core/LICENSE`와 `/about/credits` |
 | 색종이 효과 | catdad/canvas-confetti | ISC | npm 의존성 |
 | 효과음 합성 | KilledByAPixel/ZzFX (쓸 경우) | MIT | npm 의존성 |
-| 기사님 그림 | 프로젝트 소유자 제공 | 권리 확인 중 (`docs/HUMAN.md` M01) | `src/assets/mascot/` |
+| 기사님 그림 | 프로젝트 소유자 제공 (원본 `chauffeur-wave.webp`, 알파 정리·자르기만 한 `chauffeur-wave.png`, `scripts/assets/mascot.ts`) | 권리 확인 중 (`docs/HUMAN.md` M01) | `src/assets/mascot/` |

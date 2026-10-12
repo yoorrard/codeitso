@@ -15,5 +15,10 @@ export const ko = {
     canIssue: '영수증 발행 가능',
     yes: '네',
     no: '아니요',
+    assetCheck: '그림 자산 점검',
+    assetCheckNote: '기사님 그림, 3D 그림 문자, UI 아이콘이 이 사이트 안에서만 불러와지는지 보는 임시 칸이에요.',
+  },
+  mascot: {
+    waveAlt: '남색 제복을 입은 기사님이 태블릿을 들고 손을 흔드는 그림',
   },
 } as const;

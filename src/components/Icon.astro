@@ -1,0 +1,15 @@
+---
+// 정적 화면용 아이콘. 섬(Preact) 안에서는 Icon.tsx를 쓴다.
+import { iconSvg } from '../lib/icons.ts';
+import type { IconName } from '../lib/icons.ts';
+
+interface Props {
+  name: IconName;
+  size?: string;
+  /** 아이콘만으로 뜻을 전할 때의 이름 (보통은 비워 두고 옆 글자가 뜻을 전한다) */
+  label?: string;
+}
+const { name, size, label } = Astro.props;
+---
+
+<Fragment set:html={iconSvg(name, size, label)} />

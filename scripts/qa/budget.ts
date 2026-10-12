@@ -1,6 +1,7 @@
 // 성능 예산 검사 (docs/ARCHITECTURE.md 11절): 빌드한 dist/의 페이지마다
 //  - 처음 불러오는 자바스크립트 합계(gzip): 홈 100KB 이하, 다른 페이지 140KB 이하
-//  - 그림·애니메이션 파일 합계: 300KB 이하
+//  - 처음 불러오는 CSS 합계(gzip): 30KB 이하 (CSS는 첫 화면 그리기를 막는다)
+//  - 그림·애니메이션 파일 합계: 300KB 이하 (<picture>와 srcset은 실제로 내려오는 하나만 센다)
 // 나중에 동적으로 불러오는 묶음(예: 지연 3D 장면)은 HTML에 드러나지 않으므로 따로 LAZY_LIMIT으로 본다.
 //   npm run qa:budget
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -12,6 +13,7 @@ const DIST = join(ROOT, 'dist');
 const KB = 1024;
 const HOME_JS = 100 * KB;
 const PAGE_JS = 140 * KB;
+const CSS_LIMIT = 30 * KB;
 const MEDIA = 300 * KB;
 const LAZY_LIMIT = 200 * KB;
 const MEDIA_EXT = new Set(['.png', '.webp', '.avif', '.jpg', '.jpeg', '.gif', '.svg', '.json', '.lottie', '.riv', '.glb', '.mp4', '.webm']);
@@ -91,12 +93,28 @@ for (const html of pages(DIST).sort()) {
   for (const f of js) usedFirst.add(f);
   const jsTotal = [...js].reduce((a, f) => a + gzSize(f), 0) + inline;
 
+  let cssTotal = 0;
+  for (const m of text.matchAll(/<link[^>]*rel="stylesheet"[^>]*href="([^"]+)"/g)) {
+    const f = m[1] ? local(m[1]) : null;
+    if (f) cssTotal += gzSize(f);
+  }
+  for (const m of text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)) cssTotal += gzipSync(Buffer.from(m[1] ?? '')).length;
+
   const media = new Set<string>();
-  for (const m of text.matchAll(/\b(?:src|href|poster|data-src)="([^"]+)"/g)) {
+  // <picture>는 첫 번째 <source>(가장 앞선 형식)의 가장 큰 후보 하나만 센다. 대체 <img>는 그 형식을 모르는 브라우저용이다.
+  const pictures = [...text.matchAll(/<picture\b[\s\S]*?<\/picture>/g)].map((m) => m[0]);
+  for (const pic of pictures) {
+    const first = pic.match(/<source[^>]*\bsrcset="([^"]+)"/)?.[1] ?? pic.match(/<img[^>]*\bsrcset="([^"]+)"/)?.[1];
+    const cands = (first ?? '').split(',').map((c) => c.trim().split(/\s+/)[0] ?? '').filter(Boolean);
+    const biggest = cands.map((c) => local(c)).filter((f): f is string => f !== null).sort((a, b) => rawSize(b) - rawSize(a))[0];
+    if (biggest) media.add(biggest);
+  }
+  const rest = pictures.reduce((t, pic) => t.replace(pic, ''), text);
+  for (const m of rest.matchAll(/\b(?:src|href|poster|data-src)="([^"]+)"/g)) {
     const f = m[1] ? local(m[1]) : null;
     if (f && MEDIA_EXT.has(extname(f).toLowerCase())) media.add(f);
   }
-  for (const m of text.matchAll(/\bsrcset="([^"]+)"/g)) {
+  for (const m of rest.matchAll(/\bsrcset="([^"]+)"/g)) {
     // srcset은 가장 큰 후보 하나만 센다 (실제로는 하나만 내려온다)
     const cands = (m[1] ?? '').split(',').map((c) => c.trim().split(/\s+/)[0] ?? '').filter(Boolean);
     const biggest = cands.map((c) => local(c)).filter((f): f is string => f !== null).sort((a, b) => rawSize(b) - rawSize(a))[0];
@@ -104,9 +122,11 @@ for (const html of pages(DIST).sort()) {
   }
   const mediaTotal = [...media].reduce((a, f) => a + rawSize(f), 0);
   const jsLimit = route === '/' ? HOME_JS : PAGE_JS;
-  const ok = jsTotal <= jsLimit && mediaTotal <= MEDIA;
+  const ok = jsTotal <= jsLimit && cssTotal <= CSS_LIMIT && mediaTotal <= MEDIA;
   if (!ok) failed += 1;
-  rows.push(`${ok ? '✓' : '✗'} ${route.padEnd(28)} JS ${(jsTotal / KB).toFixed(1)}KB/${jsLimit / KB}KB  그림 ${(mediaTotal / KB).toFixed(1)}KB/${MEDIA / KB}KB`);
+  rows.push(
+    `${ok ? '✓' : '✗'} ${route.padEnd(28)} JS ${(jsTotal / KB).toFixed(1)}KB/${jsLimit / KB}KB  CSS ${(cssTotal / KB).toFixed(1)}KB/${CSS_LIMIT / KB}KB  그림 ${(mediaTotal / KB).toFixed(1)}KB/${MEDIA / KB}KB`,
+  );
 }
 
 // 처음에 안 불리는 JS 조각(지연 묶음) 중 가장 큰 것

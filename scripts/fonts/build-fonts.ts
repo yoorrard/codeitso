@@ -16,11 +16,8 @@ const OUT_RECEIPT = join(ROOT, 'public', 'fonts', 'receipt');
 const FONTS_CSS = join(ROOT, 'src', 'styles', 'fonts.css');
 
 const PRETENDARD_VERSION = '1.3.9';
-const PRETENDARD_WEIGHTS: [number, string][] = [
-  [400, 'Regular'],
-  [700, 'Bold'],
-  [800, 'ExtraBold'],
-];
+// 가변 글꼴 동적 하위 집합 (D38): 굵기 45~920을 한 조각에 담는다. 글꼴 CSS가 정적 3굵기의 1/3이라 첫 화면을 덜 막는다.
+const PRETENDARD_FAMILY = 'Pretendard Variable';
 const D2_TAG = 'VER1.4.0';
 const D2_FILES: { weight: number; style: string; file: string; sha256: string }[] = [
   { weight: 400, style: 'Regular', file: 'D2Coding-Regular.ttf', sha256: 'd5f2b6bf5b1826cfbf3734c70582f0cd42ea2e1d6c2636ae681b612bc9c5682f' },
@@ -64,29 +61,27 @@ function buildPretendard(): string {
     execFileSync('npm', ['pack', `pretendard@${PRETENDARD_VERSION}`, '--pack-destination', CACHE], { stdio: 'inherit' });
   }
   const ex = join(CACHE, `pretendard-${PRETENDARD_VERSION}`);
-  if (!existsSync(ex)) {
+  const web = join(ex, 'package', 'dist', 'web', 'variable');
+  if (!existsSync(join(web, 'pretendardvariable-dynamic-subset.css'))) {
     mkdirSync(ex, { recursive: true });
-    execFileSync('tar', ['-xzf', tgz, '-C', ex, 'package/dist/web/static/woff2-dynamic-subset', 'package/dist/web/static/pretendard-dynamic-subset.css', 'package/dist/LICENSE.txt']);
+    execFileSync('tar', ['-xzf', tgz, '-C', ex, 'package/dist/web/variable/woff2-dynamic-subset', 'package/dist/web/variable/pretendardvariable-dynamic-subset.css', 'package/dist/LICENSE.txt']);
   }
-  const web = join(ex, 'package', 'dist', 'web', 'static');
   rmSync(OUT_PRETENDARD, { recursive: true, force: true });
   mkdirSync(OUT_PRETENDARD, { recursive: true });
   copyFileSync(join(ex, 'package', 'dist', 'LICENSE.txt'), join(OUT_PRETENDARD, 'OFL.txt'));
-  const css = readFileSync(join(web, 'pretendard-dynamic-subset.css'), 'utf8');
+  const css = readFileSync(join(web, 'pretendardvariable-dynamic-subset.css'), 'utf8');
   const blocks = css.match(/@font-face\s*\{[^}]*\}/g) ?? [];
   const keep: string[] = [];
   for (const block of blocks) {
-    const weight = Number(block.match(/font-weight:\s*(\d+)/)?.[1]);
-    if (!PRETENDARD_WEIGHTS.some(([w]) => w === weight)) continue;
     const file = block.match(/woff2-dynamic-subset\/([^)]+\.woff2)/)?.[1];
     const range = block.match(/unicode-range:\s*([^;]+);/)?.[1];
     if (!file || !range) continue;
     copyFileSync(join(web, 'woff2-dynamic-subset', file), join(OUT_PRETENDARD, file));
     keep.push(
-      `@font-face {\n  font-family: 'Pretendard';\n  font-style: normal;\n  font-display: swap;\n  font-weight: ${weight};\n  src: url('/fonts/pretendard/${file}') format('woff2');\n  unicode-range: ${range.trim()};\n}`,
+      `@font-face {\n  font-family: '${PRETENDARD_FAMILY}';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 45 920;\n  src: url('/fonts/pretendard/${file}') format('woff2-variations');\n  unicode-range: ${range.trim()};\n}`,
     );
   }
-  console.log(`Pretendard ${PRETENDARD_WEIGHTS.map(([w]) => w).join('·')}: 조각 ${readdirSync(OUT_PRETENDARD).filter((f) => f.endsWith('.woff2')).length}개`);
+  console.log(`${PRETENDARD_FAMILY}: 조각 ${readdirSync(OUT_PRETENDARD).filter((f) => f.endsWith('.woff2')).length}개`);
   return keep.join('\n');
 }
 

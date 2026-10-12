@@ -4,6 +4,14 @@ import '../styles/global.css';
 import { ko } from '../copy/ko.ts';
 import { catalog, data } from '../lib/data.ts';
 import { evaluate } from '../lib/engine/index.ts';
+import Mascot from '../components/Mascot.astro';
+import Icon from '../components/Icon.astro';
+import Emoji from '../components/Emoji.astro';
+import { icons } from '../lib/icons.ts';
+import type { IconName } from '../lib/icons.ts';
+
+const stationEmoji = ['station-lesson', 'station-interview', 'station-shop', 'station-check', 'station-receipt', 'taxi', 'party-popper', 'warning'];
+const iconNames = Object.keys(icons) as IconName[];
 
 const recipe = data.recipes.recipes[0];
 const r = recipe ? evaluate(catalog, { answers: recipe.answers, cart: recipe.cart, kept: recipe.kept ?? [], deferred: [] }) : null;
@@ -36,6 +44,25 @@ const r = recipe ? evaluate(catalog, { answers: recipe.answers, cart: recipe.car
           </dl>
         )
       }
+      <h2>{ko.dev.assetCheck}</h2>
+      <p>{ko.dev.assetCheckNote}</p>
+      <Mascot width={200} alt={ko.mascot.waveAlt} />
+      <p class="row">{stationEmoji.map((id) => <Emoji id={id} size={48} />)}</p>
+      <p class="row icons">{iconNames.map((n) => <Icon name={n} />)}</p>
     </main>
   </body>
+  <style>
+    :global(.mascot) {
+      display: block;
+      height: auto;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .icons {
+      color: var(--navy);
+    }
+  </style>
 </html>

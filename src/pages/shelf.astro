@@ -1,0 +1,66 @@
+---
+// 진열대 /shelf (docs/UX.md 3.8, T13, R-46): 코너(상품의 대표 기능)별 상품 카드와 분야·기능 거르기 섬.
+// 목록은 정적 HTML이라 자바스크립트 없이도 모두 보이고, 거르기 섬은 숨기기·보이기만 한다. 검색창은 T15에서 붙인다.
+// 색인 상품은 상세 페이지 없이 맨 아래 '색인에서 찾은 것'에만 보인다.
+import Base from '../layouts/Base.astro';
+import '../styles/catalog-pages.css';
+import Emoji from '../components/Emoji.astro';
+import Icon from '../components/Icon.astro';
+import ShelfCard from '../components/ShelfCard.astro';
+import ShelfFilter from '../components/ShelfFilter.tsx';
+import { ko } from '../copy/ko.ts';
+import { optionArt } from '../lib/option-art.ts';
+import { capabilityChoices, corners, domainChoices, indexProducts, shelfProducts } from '../lib/shelf.ts';
+
+const S = ko.shelf;
+const everything = [...shelfProducts, ...indexProducts];
+const groups = corners(shelfProducts);
+---
+
+<Base title={S.pageTitle} description={S.description}>
+  <h1>{S.title}</h1>
+  <p class="lead">{S.lead}</p>
+  <p class="shelf-note">
+    <Emoji id="station-shop" size={28} />
+    <span>{S.cartNote}</span>
+  </p>
+  <ShelfFilter
+    client:idle
+    domains={domainChoices(everything)}
+    capabilities={capabilityChoices(everything)}
+    generalArt={optionArt('q.domain', 'none') ?? 'package'}
+    total={everything.length}
+  />
+  {
+    groups.map((g) => (
+      <section class="shelf-corner" data-shelf-group aria-labelledby={`corner-${g.capability}`}>
+        <h2 id={`corner-${g.capability}`} class="corner-sign">
+          <Emoji id={g.art} size={32} />
+          <span>{g.label}</span>
+        </h2>
+        <ul class="card-list shelf-list">
+          {g.products.map((p) => (
+            <ShelfCard product={p} />
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+  {
+    indexProducts.length > 0 && (
+      <section class="shelf-corner shelf-index" data-shelf-group aria-labelledby="corner-index">
+        <h2 id="corner-index" class="corner-sign corner-sign-caution">
+          <Icon name="warning" />
+          <span>{S.indexTitle}</span>
+        </h2>
+        <p class="shelf-index-lead">{S.indexLead}</p>
+        <ul class="card-list shelf-list">
+          {indexProducts.map((p) => (
+            <ShelfCard product={p} />
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  <a slot="action" class="btn btn-primary" href="/interview">{S.goBuild}</a>
+</Base>

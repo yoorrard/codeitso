@@ -9,13 +9,16 @@
     "node": ">=22.18"
   },
   "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
     "validate": "node scripts/validate-data.ts",
     "validate:release": "node scripts/validate-data.ts --release",
     "golden": "node scripts/check-golden.ts",
     "golden:print": "node scripts/check-golden.ts --print",
     "examples": "node scripts/make-examples.ts",
     "explain": "node scripts/explain.ts",
-    "typecheck": "tsc -p tsconfig.json",
+    "typecheck": "astro check && tsc -p tsconfig.json",
     "check": "npm run validate && npm run golden && npm run guard && npm run harness && npm run typecheck",
     "guard": "node scripts/guard/floor-guard.ts",
     "qa:shots": "node scripts/qa/shots.ts",
@@ -23,6 +26,7 @@
     "harness": "node scripts/guard/validate-harness.ts"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.56.1",
     "@types/node": "^22.18.0",
@@ -31,5 +35,10 @@
   },
   "overrides": {
     "playwright-core": "1.56.1"
+  },
+  "dependencies": {
+    "@astrojs/preact": "6.0.6",
+    "astro": "7.3.8",
+    "preact": "10.29.8"
   }
 }

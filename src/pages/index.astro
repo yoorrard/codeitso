@@ -1,0 +1,40 @@
+---
+// T01 임시 홈: 빌드 때 엔진이 레시피 하나로 끝까지 도는지 확인한다. T07에서 지운다.
+import { ko } from '../copy/ko.ts';
+import { catalog, data } from '../lib/data.ts';
+import { evaluate } from '../lib/engine/index.ts';
+
+const recipe = data.recipes.recipes[0];
+const r = recipe ? evaluate(catalog, { answers: recipe.answers, cart: recipe.cart, kept: recipe.kept ?? [], deferred: [] }) : null;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{ko.site.name}</title>
+  </head>
+  <body>
+    <main>
+      <h1>{ko.site.slogan}</h1>
+      <p>{ko.site.intro}</p>
+      <h2>{ko.dev.engineCheck}</h2>
+      <p>{ko.dev.engineCheckNote}</p>
+      {
+        r && recipe && (
+          <dl>
+            <dt>{ko.dev.recipe}</dt>
+            <dd>{recipe.title}</dd>
+            <dt>{ko.dev.slots}</dt>
+            <dd>{r.slots.length}</dd>
+            <dt>{ko.dev.conflicts}</dt>
+            <dd>{r.conflicts.length}</dd>
+            <dt>{ko.dev.canIssue}</dt>
+            <dd>{r.canIssue ? ko.dev.yes : ko.dev.no}</dd>
+          </dl>
+        )
+      }
+    </main>
+  </body>
+</html>

@@ -53,6 +53,10 @@
 - 2차로 미룬 칸의 stepHint 개념이 1차 단계로 옮겨 붙는다 (case-04에서 로그인을 미루면 로그인 개념이 저장 단계로).
 - 영수증·레시피 카드의 난이도는 합계 점수와 말('5 보통')이라 몇 점 만점인지 알 수 없다 (문장 검토, T14). 진열대 카드는 별 3개 기준이다. 바꾸려면 `receipt.ts`의 `difficultyText`와 templates.json, ENGINE.md, `npm run examples`를 함께 고친다.
 
+## 자료
+
+- `conflict.paid-on-free`를 켜는 골든 사례: 지금 자료에 유료 상품(`cost.free: false`)이 없어 켤 수 없다. C02에서 유료 상품이 생기면 '0원만' 답 + 유료 상품 담기 사례를 더한다.
+
 ## 화면
 
 - 개념 카드 그림 10장 (자료의 `figure` 설명대로, svg-illustrator). 지금은 설명 글상자 (D46).

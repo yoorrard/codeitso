@@ -1,0 +1,163 @@
+{
+  "id": "case-19",
+  "title": "반 도서 기록장 (로그인은 아마도)",
+  "note": "도서관 정보나루(data4library)를 처음 쓰는 사례. 로그인을 '아마도'로 답하면 로그인 칸이 필수가 되고, Supabase 하나가 저장·로그인 두 칸을 채운다. 처음에 GitHub Pages를 담으면 키 노출 충돌이 나서 Workers로 바꿔 푼 상태. 난이도 8이라 로그인을 2차로 미루자는 제안이 나온다.",
+  "answers": {
+    "q.type": "record",
+    "q.audience": "few",
+    "q.ai": "unknown",
+    "q.login": "maybe",
+    "q.domain": "book",
+    "q.realtime": "unknown",
+    "q.budget": "unknown",
+    "q.personal": "no",
+    "q.payment": "unknown",
+    "q.device": "phone",
+    "q.style": "cute"
+  },
+  "cart": [
+    "html-single",
+    "supabase",
+    "data4library",
+    "cloudflare-workers"
+  ],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.login",
+      "q.domain",
+      "q.realtime",
+      "q.budget",
+      "q.personal",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": [
+          "html-single"
+        ],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": [
+          "aiTool",
+          "budget"
+        ]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [
+          "supabase"
+        ],
+        "score": 6,
+        "runnerUp": "supabase",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "proxy"
+        ]
+      },
+      {
+        "id": "slot.auth",
+        "required": true,
+        "recommended": "supabase",
+        "filledBy": [
+          "supabase"
+        ],
+        "score": 3,
+        "runnerUp": null,
+        "reasons": [
+          "budget",
+          "shared",
+          "official"
+        ]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "data4library",
+        "filledBy": [
+          "data4library"
+        ],
+        "score": 3,
+        "runnerUp": null,
+        "reasons": [
+          "domain",
+          "budget",
+          "official"
+        ]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [
+          "cloudflare-workers"
+        ],
+        "score": 6,
+        "runnerUp": "cloudflare-workers",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "proxy"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [],
+    "safety": [
+      "safety.proxy-key"
+    ],
+    "study": {
+      "required": [
+        "api",
+        "api-key",
+        "env-var"
+      ],
+      "all": [
+        "api",
+        "json",
+        "api-key",
+        "env-var",
+        "terminal",
+        "deploy",
+        "auth-login"
+      ]
+    },
+    "steps": [
+      "slot.screen",
+      "slot.store",
+      "slot.auth",
+      "step.proxy",
+      "slot.data",
+      "slot.host"
+    ],
+    "prep": [
+      "도서관 정보나루 가입 후 인증키 신청 (관리자 승인 필요)",
+      "Supabase 가입 (GitHub 계정으로도 가능)",
+      "Cloudflare 가입"
+    ],
+    "stuckRules": [
+      "stuck.workers-secret"
+    ],
+    "difficulty": 8,
+    "difficultyFirst": 8,
+    "minutes": 200,
+    "split": {
+      "needed": true,
+      "defer": [
+        "slot.auth"
+      ],
+      "easier": []
+    }
+  }
+}

@@ -188,7 +188,7 @@
 ### [ ] C04 에러 안내 20개
 지금 6개. 후보: EADDRINUSE(포트 사용 중), permission denied, git push rejected, 빌드 실패(타입 오류), 빈 화면(콘솔 에러), 500, 403, 키 만료, npm ERR! ERESOLVE, 공공데이터포털 오류 코드.
 
-### [ ] C05 골든 사례 20개
+### [x] C05 골든 사례 20개
 지금 15개. 새 상품·규칙·분야마다 최소 하나. 기대 결과는 손으로 따져 본 뒤 쓴다.
 
 ## 사람이 할 일 (H)
@@ -236,3 +236,4 @@
 2026-10-12 T20 npm run e2e (Playwright 1.56.1, 360px, dist를 scripts/qa/serve.ts로): 레시피 5개로 영수증·꾸러미 제목, 키보드만으로 인터뷰부터 영수증까지, 공유 링크 다시 열기(읽기 전용·조각 지움·이어 하기), 사전 질문 4개·옆 창 Esc·진열대 검색, 차 이동·영수증 출력 중 누르면 끝, 기기·사이트 동작 줄이기 흐름, axe 18개 화면(처음 온 사람)+6개(진행 있음) 심각·치명 0 — 41개 통과. CI에 e2e와 실패 기록 올리기를 더함. 첫 화면 JS 67.9KB/100KB (D52)
 2026-10-12 T21 준비(사람 단계 남음): 배포 작업(deploy.yml: main·수동, 검사·validate·빌드·예산, 비밀 값 없으면 건너뜀, database_id 확인, 원격 D1 표, wrangler deploy), CSP(Astro 해시)·_headers, '검토 중인 시험판' 띠·noindex·robots, Web Analytics 자리(/receipt 제외), docs/DEPLOY.md, HUMAN H11. 완성 확인은 사람이 계정을 연결한 뒤 (D53)
 2026-10-12 T22 준비(사람 단계 남음): 관찰 시험 안내서 docs/OBSERVATION.md(과제 3개, 관찰할 것 9가지, 기록 양식), 남은 위험 목록 docs/RISKS.md, 정식 배포는 deploy.yml에서 SITE_STAGE=release일 때 validate:release에 묶임(D53). C01 대조표를 HUMAN.md에 채움(진열 상품 16개)
+2026-10-12 C05 골든 사례 16 → 20: case-17 학사일정 알림판(알림 '아마도' → 2차 제안), case-18 나만 보는 시간표(브라우저 저장, local-key 안전 지시), case-19 반 도서 기록장(로그인 '아마도', Supabase가 두 칸, Workers로 키 충돌 해결), case-20 동네 문화 행사(분야 상품 없음, 결제 조사, 충돌 둘로 발행 막힘). 골든에 안 쓰이던 상품 4개와 답 14개를 처음 씀. conflict.paid-on-free는 유료 상품이 생기는 C02 뒤에 사례를 만든다

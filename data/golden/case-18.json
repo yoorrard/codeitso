@@ -1,0 +1,138 @@
+{
+  "id": "case-18",
+  "title": "나만 보는 시간표 (저장은 아마도)",
+  "note": "시간표(neis-timetable)와 브라우저 저장(browser-storage)을 처음 쓰는 사례. 나만 쓰는 페이지라 키가 화면 코드에 있어도 충돌이 아니라 안전 지시(safety.local-key)이고, 배포 칸은 선택이라 비워 둔다. 중간 서버가 없어 CORS 예상 막힘이 붙는다.",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "me",
+    "q.ai": "chat-paid",
+    "q.save": "maybe",
+    "q.domain": "education",
+    "q.edu-topic": "timetable",
+    "q.realtime": "unknown",
+    "q.budget": "small",
+    "q.personal": "unknown",
+    "q.device": "both",
+    "q.style": "bold"
+  },
+  "cart": [
+    "html-single",
+    "browser-storage",
+    "neis-timetable"
+  ],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.edu-topic",
+      "q.realtime",
+      "q.budget",
+      "q.personal",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": [
+          "html-single"
+        ],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": [
+          "aiTool",
+          "budget"
+        ]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [
+          "browser-storage"
+        ],
+        "score": 6,
+        "runnerUp": "browser-storage",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "proxy"
+        ]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "neis-timetable",
+        "filledBy": [
+          "neis-timetable"
+        ],
+        "score": 7,
+        "runnerUp": "neis-meal",
+        "reasons": [
+          "domain",
+          "topic",
+          "budget"
+        ]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [],
+        "score": 6,
+        "runnerUp": "cloudflare-workers",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "proxy"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [
+      "research.privacy-personal"
+    ],
+    "safety": [
+      "safety.local-key",
+      "safety.personal-minimum"
+    ],
+    "study": {
+      "required": [
+        "api",
+        "api-key",
+        "env-var"
+      ],
+      "all": [
+        "api",
+        "json",
+        "api-key",
+        "env-var"
+      ]
+    },
+    "steps": [
+      "slot.screen",
+      "slot.store",
+      "slot.data"
+    ],
+    "prep": [
+      "교육정보 개방 포털에 로그인해 인증키 발급"
+    ],
+    "stuckRules": [
+      "stuck.cors-no-proxy"
+    ],
+    "difficulty": 4,
+    "difficultyFirst": 4,
+    "minutes": 105,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

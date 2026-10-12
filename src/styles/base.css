@@ -41,7 +41,8 @@ h4 {
   font-weight: var(--weight-heading);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-heading);
-  text-wrap: balance;
+  /* balance는 한국어에서 '한 / 번만'처럼 낱말 묶음을 가르기 쉬워 pretty를 쓴다 */
+  text-wrap: pretty;
 }
 
 h1 {

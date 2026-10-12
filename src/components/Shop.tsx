@@ -214,10 +214,11 @@ export default function Shop({ faceSrc }: Props) {
   const required = r.slots.filter((s) => s.slot.required);
   const allRequired = required.length > 0 && required.every((s) => s.filledBy.length > 0);
 
-  // 처음 펼칠 칸: 비어 있는 첫 필수 칸, 없으면 첫 칸
+  // 처음 펼칠 칸: 주소의 ?slot=(재확인의 '바꾸기'), 비어 있는 첫 필수 칸, 첫 칸 순
   useEffect(() => {
     if (!ready || open !== null) return;
-    const first = r.slots.find((s) => s.slot.required && s.filledBy.length === 0) ?? r.slots[0];
+    const asked = new URLSearchParams(window.location.search).get('slot');
+    const first = r.slots.find((s) => s.slot.id === asked) ?? r.slots.find((s) => s.slot.required && s.filledBy.length === 0) ?? r.slots[0];
     if (first) setOpen(first.slot.id);
   }, [ready]);
 

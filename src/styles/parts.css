@@ -500,6 +500,10 @@
   color: var(--ink-soft);
 }
 
+.card .chip {
+  background: var(--paper);
+}
+
 .slot-icons {
   display: flex;
   flex-wrap: wrap;
@@ -797,4 +801,186 @@
   .product-facts dd + dt {
     margin-block-start: var(--space-2);
   }
+}
+
+/* ── 재확인 (T10) ───────────────────────────────────── */
+.check {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.check h2 {
+  font-size: var(--text-lg);
+}
+
+.free-line {
+  font-weight: var(--weight-strong);
+}
+
+.cart-by-slot {
+  display: grid;
+  gap: var(--space-1);
+  padding-inline-start: var(--space-4);
+}
+
+.conflicts {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin-block-start: var(--space-2);
+}
+
+.conflict {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  border-inline-start: 6px solid var(--stop);
+  animation: nudge var(--dur-stamp) var(--ease-out) both;
+}
+
+.conflict.kept,
+.no-conflict {
+  border-inline-start-color: var(--go);
+  animation: none;
+}
+
+.no-conflict {
+  align-items: center;
+  margin-block-start: var(--space-2);
+}
+
+/* 충돌이 처음 보일 때 한 번 살짝 흔들림 (동작 줄이기면 흔들림 0) */
+@keyframes nudge {
+  0%,
+  100% {
+    transform: none;
+  }
+  30% {
+    transform: translateX(var(--juice-s-shake));
+  }
+  60% {
+    transform: translateX(calc(-1 * var(--juice-s-shake)));
+  }
+}
+
+.conflict-body {
+  display: grid;
+  gap: var(--space-2);
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.conflict-status {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-heading);
+  color: var(--stop);
+}
+
+.conflict.kept .conflict-status {
+  color: var(--go);
+}
+
+.conflict-msg {
+  font-weight: var(--weight-strong);
+}
+
+.conflict-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.kept-note {
+  color: var(--go);
+  font-weight: var(--weight-strong);
+}
+
+/* M6 신호등: 빨강 → (노랑) → 초록. 불 하나가 --dur-signal 이상 켜진다 */
+.light {
+  display: grid;
+  gap: 4px;
+  padding: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--navy-deep);
+  flex-shrink: 0;
+}
+
+.lamp {
+  inline-size: 16px;
+  block-size: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+}
+
+.is-red .lamp-red {
+  background: var(--stop);
+}
+
+.is-green .lamp-yellow {
+  animation: lamp-yellow var(--dur-signal) linear both;
+}
+
+.is-green .lamp-green {
+  background: var(--go);
+  animation: lamp-green var(--dur-signal) linear var(--dur-signal) both;
+}
+
+@keyframes lamp-yellow {
+  from,
+  to {
+    background: var(--caution);
+  }
+}
+
+@keyframes lamp-green {
+  from {
+    background: var(--navy);
+  }
+  to {
+    background: var(--go);
+  }
+}
+
+.split-list {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.split-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.mascot-line.plain {
+  background: none;
+  padding: 0;
+}
+
+.issue-wrap {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.issue-reason {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.btn-issue[aria-disabled='true'] {
+  border-color: var(--line);
+  background: var(--line);
+  color: var(--ink-soft);
 }

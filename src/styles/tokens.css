@@ -79,6 +79,7 @@
   --dur-drive: 900ms; /* M8 홈 출발 장면에서 차가 달려와 서기까지 (모션 하나 1초 안쪽) */
   --dur-print: 2200ms; /* M4 영수증 출력 상한 */
   --dur-stamp: 250ms; /* 도장 찍기 */
+  --dur-signal: 350ms; /* M6 신호등 불 하나 (번쩍임 초당 3번 미만) */
   --dur-scene: 3000ms; /* 공들인 장면 상한 */
   --dur-page: 240ms; /* 페이지 전환 (View Transitions, 250ms 안쪽) */
   --dur-fade: 150ms; /* 바뀐 것을 알려 주는 투명도 전환. 동작 줄이기에서도 남긴다 (D30) */
@@ -118,6 +119,7 @@
     --dur-drive: 0ms;
     --dur-print: 0ms;
     --dur-stamp: 0ms;
+    --dur-signal: 0ms;
     --dur-scene: 0ms;
     --dur-page: 0ms;
     --juice-s-scale: 1;
@@ -141,6 +143,7 @@
   --dur-drive: 0ms;
   --dur-print: 0ms;
   --dur-stamp: 0ms;
+  --dur-signal: 0ms;
   --dur-scene: 0ms;
   --dur-page: 0ms;
   --juice-s-scale: 1;

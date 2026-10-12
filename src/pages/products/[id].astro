@@ -1,0 +1,270 @@
+---
+// 상품 상세 /products/[id] (docs/UX.md 3.8, T13, R-46): 진열 상품만 정적으로 만든다 (색인 상품은 페이지가 없다).
+// 카드의 모든 항목과 "이 상품이 들어간 레시피". 섬은 레시피 출발 단추(RecipeStart)뿐이다.
+import Base from '../../layouts/Base.astro';
+import '../../styles/catalog-pages.css';
+import Emoji from '../../components/Emoji.astro';
+import Icon from '../../components/Icon.astro';
+import RecipeStart from '../../components/RecipeStart.tsx';
+import { ko } from '../../copy/ko.ts';
+import { catalog } from '../../lib/data.ts';
+import { badges, fill } from '../../lib/engine/index.ts';
+import type { Product } from '../../lib/engine/index.ts';
+import { capabilityLabel, domainLabel, productArt, recipesWith, shelfProducts } from '../../lib/shelf.ts';
+
+export function getStaticPaths() {
+  return shelfProducts.map((product) => ({ params: { id: product.id }, props: { product } }));
+}
+
+interface Props {
+  product: Product;
+}
+const { product: p } = Astro.props;
+const P = ko.product;
+const T = catalog.data.templates;
+const stars = ko.shop.stars.repeat(p.difficulty) + ko.shop.starsOff.repeat(3 - p.difficulty);
+const concepts = (p.needsConcepts ?? []).map((id) => catalog.concept.get(id)).filter((c) => c !== undefined);
+const related = (p.related ?? []).map((id) => catalog.product.get(id)).filter((r) => r !== undefined);
+const recipes = recipesWith(p.id);
+const domains = (p.domains ?? []).map(domainLabel);
+---
+
+<Base title={p.name} description={p.summary}>
+  <p class="back-link">
+    <a href="/shelf">
+      <Icon name="back" />
+      <span>{P.back}</span>
+    </a>
+  </p>
+  <header class="product-hero">
+    <div class="product-hero-title">
+      <Emoji id={productArt(p)} size={64} />
+      <h1>{p.name}</h1>
+    </div>
+    <p class="lead">{p.summary}</p>
+  </header>
+  <ul class="badge-row">
+    {
+      badges(catalog, p).map((b) => (
+        <li class="badge">{b}</li>
+      ))
+    }
+  </ul>
+  {
+    p.needsReview && (
+      <p class="review-note">
+        <Icon name="warning" />
+        <span>
+          <strong>{P.review}</strong> {P.reviewNote}
+        </span>
+      </p>
+    )
+  }
+
+  <section class="pd-section" aria-labelledby="pd-facts">
+    <h2 id="pd-facts">{P.factsTitle}</h2>
+    <dl class="product-facts">
+      {
+        p.useWhen && (
+          <>
+            <dt>{ko.shop.useWhen}</dt>
+            <dd>{p.useWhen}</dd>
+          </>
+        )
+      }
+      <dt>{ko.shop.cost}</dt>
+      <dd>{p.cost.note}</dd>
+      {
+        p.freeLimit && (
+          <>
+            <dt>{ko.shop.freeLimit}</dt>
+            <dd>{p.freeLimit}</dd>
+          </>
+        )
+      }
+      <dt>{ko.shop.difficulty}</dt>
+      <dd>
+        <span aria-hidden="true" class="stars">{stars}</span>
+        <span class="visually-hidden">{fill(ko.shop.difficultyText, { n: p.difficulty })}</span>
+      </dd>
+      <dt>{P.capabilities}</dt>
+      <dd>{p.capabilities.map(capabilityLabel).join(', ')}</dd>
+      {
+        domains.length > 0 && (
+          <>
+            <dt>{P.domains}</dt>
+            <dd>{domains.join(', ')}</dd>
+          </>
+        )
+      }
+    </dl>
+  </section>
+
+  <section class="pd-section" aria-labelledby="pd-more">
+    <h2 id="pd-more">{P.detailsTitle}</h2>
+    <dl class="product-facts">
+      <dt>{ko.shop.provider}</dt>
+      <dd>{p.provider.name} ({ko.shop.providerWords[p.provider.type]})</dd>
+      <dt>{ko.shop.access}</dt>
+      <dd>{T.accessLabels[p.access]}</dd>
+      {
+        p.realtime && (
+          <>
+            <dt>{ko.shop.realtime}</dt>
+            <dd>{ko.shop.realtimeWords[p.realtime]}</dd>
+          </>
+        )
+      }
+      <dt>{ko.shop.keyRisk}</dt>
+      <dd>{p.keyExposureRisk ? ko.shop.keyRiskYes : ko.shop.keyRiskNo}</dd>
+      {
+        p.publicKey && (
+          <>
+            <dt>{P.publicKey}</dt>
+            <dd>{P.publicKeyNote}</dd>
+          </>
+        )
+      }
+      {
+        p.license && (
+          <>
+            <dt>{ko.shop.license}</dt>
+            <dd>
+              {p.license.name}: {p.license.plain}
+              {p.license.url && (
+                <>
+                  {' '}
+                  <a href={p.license.url} target="_blank" rel="noopener noreferrer">
+                    {P.licenseLink}
+                    <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+                  </a>
+                </>
+              )}
+            </dd>
+          </>
+        )
+      }
+      {
+        p.prep && p.prep.length > 0 && (
+          <>
+            <dt>{P.prep}</dt>
+            <dd>
+              <ul class="link-list">
+                {p.prep.map((item) => {
+                  const text = fill(P.prepLead, { label: item.label, lead: T.leadLabels[item.lead] });
+                  return (
+                    <li>
+                      {item.url ? (
+                        <a href={item.url} target="_blank" rel="noopener noreferrer">
+                          {text}
+                          <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+                        </a>
+                      ) : (
+                        text
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </dd>
+          </>
+        )
+      }
+      {
+        concepts.length > 0 && (
+          <>
+            <dt>{ko.shop.concepts}</dt>
+            <dd>
+              <ul class="link-list">
+                {concepts.map((c) => (
+                  <li>
+                    <a href={`/concepts/${c.id}`}>{c.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </>
+        )
+      }
+      {
+        related.length > 0 && (
+          <>
+            <dt>{P.related}</dt>
+            <dd>
+              <ul class="link-list">
+                {related.map((r) => (
+                  <li>{r.layer === 'shelf' ? <a href={`/products/${r.id}`}>{r.name}</a> : r.name}</li>
+                ))}
+              </ul>
+            </dd>
+          </>
+        )
+      }
+    </dl>
+  </section>
+
+  {
+    p.promptFragment && (
+      <section class="pd-section" aria-labelledby="pd-fragment">
+        <h2 id="pd-fragment">{ko.shop.fragment}</h2>
+        <p class="q-help">{P.fragmentLead}</p>
+        <p class="fragment">{p.promptFragment}</p>
+      </section>
+    )
+  }
+
+  {
+    p.stuck && p.stuck.length > 0 && (
+      <section class="pd-section" aria-labelledby="pd-stuck">
+        <h2 id="pd-stuck">{ko.shop.stuck}</h2>
+        <ul class="pd-list">
+          {p.stuck.map((t) => (
+            <li>{t}</li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="pd-section" aria-labelledby="pd-links">
+    <h2 id="pd-links">{ko.shop.links}</h2>
+    <ul class="pd-list">
+      {
+        p.links.map((l) => (
+          <li>
+            <a href={l.url} target="_blank" rel="noopener noreferrer">
+              {l.label}
+              <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="pd-checked">{ko.shop.checked}: {p.checkedAt}</p>
+  </section>
+
+  <section class="pd-section" aria-labelledby="pd-recipes">
+    <h2 id="pd-recipes">{P.recipesTitle}</h2>
+    {
+      recipes.length > 0 ? (
+        <ul class="card-list">
+          {recipes.map((r) => (
+            <li class="card">
+              <h3>{r.title}</h3>
+              <p class="meta">
+                {ko.home.recipeFor}: {r.forWho}
+              </p>
+              <p>{r.summary}</p>
+              <RecipeStart client:visible recipeId={r.id} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>{P.recipesNone}</p>
+      )
+    }
+    <p><a href="/recipes">{ko.home.allRecipes}</a></p>
+  </section>
+
+  <a slot="action" class="btn btn-primary" href="/interview">{ko.shelf.goBuild}</a>
+</Base>

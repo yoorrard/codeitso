@@ -1,0 +1,323 @@
+/* 진열대(/shelf)·상품 상세(/products/[id])·레시피(/recipes) 화면 (T13·T14).
+   카드·배지·사실 목록(.card, .badge, .product-facts)은 parts.css의 것을 그대로 쓰고, 여기는 이 세 화면에만 있는 것만 둔다.
+   값은 tokens.css 변수만 쓴다. */
+
+/* ── 진열대: 안내와 거르기 ──────────────────────────────── */
+.stage h1 + .lead + .shelf-note {
+  margin-block-start: var(--space-2);
+}
+
+.shelf-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.shelf-note img {
+  inline-size: 28px;
+  block-size: 28px;
+}
+
+/* 거르기: 360px에서 단추가 한 줄에 셋쯤 들어가게 바탕 상자 없이 화면 폭을 다 쓴다.
+   섬 껍데기(astro-island)는 display: contents라 .stage의 형제 간격이 닿지 않아 여기서 띄운다 */
+.shelf-filter {
+  margin-block-start: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-block: 2px solid var(--line);
+}
+
+.filter-group {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.filter-label {
+  font-weight: var(--weight-heading);
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+/* 거르기 단추: 인터뷰 보기(.option)와 같은 눌림 표시 (테두리 두께·바탕이 함께 바뀐다, 색만으로 전하지 않는다) */
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  padding: var(--space-1) var(--space-2);
+  border: 2px solid var(--ink-soft);
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  font-weight: var(--weight-strong);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.filter-btn img {
+  inline-size: 22px;
+  block-size: 22px;
+}
+
+.filter-btn:active {
+  transform: scale(var(--juice-press-scale));
+}
+
+.filter-btn[aria-pressed='true'] {
+  border-color: var(--navy);
+  background: var(--gold-soft);
+  box-shadow: inset 0 0 0 2px var(--navy);
+}
+
+.shelf-count {
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.shelf-none {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  border: 2px dashed var(--ink-soft);
+}
+
+/* ── 진열대: 코너 (상점 진열대의 칸 이름표 + 선반 판) ─────── */
+.shelf-corner {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.corner-sign {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-4) var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  color: var(--on-navy);
+  font-size: var(--text-lg);
+}
+
+.corner-sign img {
+  inline-size: 32px;
+  block-size: 32px;
+}
+
+/* 선반 판: 카드 줄 아래 굵은 선 */
+.shelf-list {
+  padding-block-end: var(--space-3);
+  border-block-end: 6px solid var(--line);
+}
+
+.shelf-card {
+  position: relative;
+}
+
+.shelf-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.shelf-card-head h3 {
+  min-inline-size: 0;
+}
+
+/* 진열대 카드의 사실 목록은 항목이 짧아 좁은 화면에서도 두 칸으로 둔다 (카드를 낮게) */
+.shelf-card .product-facts {
+  grid-template-columns: max-content 1fr;
+}
+
+.shelf-card .product-facts dd + dt {
+  margin-block-start: 0;
+}
+
+/* 이름 링크가 카드 전체를 덮어 어디를 눌러도 상세로 간다 (카드 안에 다른 누르는 곳이 없다) */
+.shelf-card-link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.shelf-card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.shelf-card:hover .shelf-card-link {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+/* 초점 테두리는 카드 둘레에 (:has를 모르는 브라우저는 링크 글자 둘레에 그대로) */
+@supports selector(:has(*)) {
+  .shelf-card-link:focus-visible {
+    outline: none;
+  }
+
+  .shelf-card:has(.shelf-card-link:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+.shelf-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.shelf-index-lead {
+  color: var(--caution-ink);
+  font-weight: var(--weight-strong);
+}
+
+.corner-sign-caution {
+  padding-inline-start: var(--space-3);
+  background: var(--caution);
+  color: var(--ink);
+}
+
+.shelf-card-index {
+  box-shadow: none;
+  border: 2px dashed var(--caution);
+}
+
+.badge.badge-caution {
+  gap: var(--space-1);
+  background: var(--caution);
+  color: var(--ink);
+}
+
+/* 링크 목록 (원문·개념·준비물·담긴 상품): 한 줄에 하나, 글머리표 없이 */
+.stage .link-list {
+  display: grid;
+  gap: var(--space-1);
+  list-style: none;
+  padding: 0;
+}
+
+/* ── 상품 상세 ──────────────────────────────────────────── */
+.back-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  font-weight: var(--weight-strong);
+}
+
+.stage .back-link + .product-hero {
+  margin-block-start: var(--space-2);
+}
+
+.product-hero {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.product-hero-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.product-hero img {
+  inline-size: 64px;
+  block-size: 64px;
+}
+
+.product-hero h1 {
+  min-inline-size: 0;
+  font-size: var(--text-xl);
+}
+
+.review-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  border-inline-start: 6px solid var(--caution);
+  background: var(--card);
+}
+
+.review-note strong {
+  color: var(--caution-ink);
+}
+
+.pd-section {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.pd-section h2 {
+  font-size: var(--text-lg);
+}
+
+.pd-section > .product-facts {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.pd-list {
+  display: grid;
+  gap: var(--space-2);
+  padding-inline-start: var(--space-5);
+}
+
+/* 꾸러미 지시: 종이 바탕 위에서도 보이게 카드 바탕 (parts.css의 .fragment는 카드 안에서 쓰는 모양) */
+.pd-section .fragment {
+  padding: var(--space-3) var(--space-4);
+  border-inline-start: 6px solid var(--navy);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: var(--text-base);
+}
+
+.pd-checked {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+/* ── 레시피 ─────────────────────────────────────────────── */
+.recipe-card {
+  gap: var(--space-3);
+}
+
+.recipe-card h2 {
+  font-size: var(--text-lg);
+}
+
+.recipe-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.recipe-facts dt {
+  font-weight: var(--weight-strong);
+  color: var(--ink-soft);
+}
+
+.recipe-own {
+  color: var(--ink-soft);
+}

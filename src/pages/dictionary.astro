@@ -1,0 +1,12 @@
+---
+// 사전 전체 화면 /dictionary (docs/UX.md 3.10, T15). 옆 창과 같은 내용.
+import Base from '../layouts/Base.astro';
+import Dictionary from '../components/Dictionary.tsx';
+import { ko } from '../copy/ko.ts';
+---
+
+<Base title={ko.dict.pageTitle}>
+  <h1>{ko.dict.title}</h1>
+  <p class="lead">{ko.dict.lead}</p>
+  <Dictionary client:load />
+</Base>

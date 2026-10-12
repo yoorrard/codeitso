@@ -7,6 +7,7 @@ import '../styles/parts.css';
 import { getImage } from 'astro:assets';
 import face from '../assets/mascot/chauffeur-face.png';
 import Icon from '../components/Icon.astro';
+import DictionaryPanel from '../components/DictionaryPanel.tsx';
 import Masthead from '../components/Masthead.tsx';
 import { ko } from '../copy/ko.ts';
 import { LIVE_ID } from '../lib/announce.ts';
@@ -84,6 +85,7 @@ const hasAction = Astro.slots.has('action');
         </a>
       </div>
     </div>
+    <DictionaryPanel client:idle />
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
   </body>
 </html>

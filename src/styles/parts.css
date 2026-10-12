@@ -1466,3 +1466,113 @@
   min-inline-size: var(--tap);
   font-weight: var(--weight-strong);
 }
+
+/* ── 사전 (T15) ─────────────────────────────────────── */
+.dict {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.dict-label {
+  display: block;
+  font-weight: var(--weight-strong);
+  margin-block-end: var(--space-1);
+}
+
+.dict h3 {
+  font-size: var(--text-base);
+}
+
+.dict-list {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.dict-item {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.dict-item > a,
+.dict-item summary {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tap);
+  font-weight: var(--weight-strong);
+}
+
+.error-card h4 {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  margin-block-start: var(--space-2);
+}
+
+.error-card ul,
+.error-card ol {
+  padding-inline-start: var(--space-5);
+}
+
+/* 사전 옆 창: 휴대폰은 아래에서 올라오고, 넓은 화면은 오른쪽에 붙는다 */
+.dict-sheet {
+  inset: auto 0 0 0;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: 85dvh;
+  margin: 0;
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow-lift);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transition:
+    translate var(--dur-base) var(--ease-drawer),
+    opacity var(--dur-fade) var(--ease-out);
+}
+
+@starting-style {
+  .dict-sheet[open] {
+    translate: 0 100%;
+    opacity: 0;
+  }
+}
+
+.dict-sheet::backdrop {
+  background: color-mix(in srgb, var(--navy-deep) 45%, transparent);
+}
+
+.dict-sheet :focus-visible {
+  outline-color: var(--focus);
+}
+
+.dict-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: var(--space-2);
+}
+
+.dict-sheet-head .icon-btn {
+  color: var(--ink);
+}
+
+@media (min-width: 1024px) {
+  .dict-sheet {
+    inset: 0 0 0 auto;
+    inline-size: 420px;
+    max-block-size: 100dvh;
+    block-size: 100dvh;
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  }
+
+  @starting-style {
+    .dict-sheet[open] {
+      translate: 100% 0;
+    }
+  }
+}

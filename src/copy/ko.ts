@@ -9,6 +9,7 @@ export const ko = {
     description: '바이브코딩이 처음인 사람이 인터뷰에 답하고 재료를 골라 담으면, 자기 AI에게 넘길 설계 꾸러미를 영수증처럼 받아 가는 무료 서비스예요.',
   },
   layout: {
+    stageBanner: '검토 중인 시험판이에요. 내용과 상품 정보가 바뀔 수 있어요.',
     skip: '본문 바로 가기',
     routeLabel: '노선도',
     dictionary: '사전',

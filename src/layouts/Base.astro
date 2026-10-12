@@ -17,6 +17,7 @@ import { mastheadState } from '../lib/masthead-state.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import type { StationId } from '../lib/stations.ts';
 import { STATIONS } from '../lib/stations.ts';
+import { analyticsAllowed, BEACON_TOKEN, STAGE } from '../lib/stage.ts';
 
 interface Props {
   /** 페이지 제목 (사이트 이름은 뒤에 붙는다). 없으면 홈 제목 */
@@ -48,6 +49,7 @@ const stops = STATIONS.map((s) => s.path);
     <meta name="theme-color" content="#1e2c58" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 --navy 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/emoji/taxi.webp" type="image/webp" />
+    {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline define:vars={{ stops }}>
       // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게)를 붙인다.
       // 읽기만 한다 (저장은 src/lib/store.ts).
@@ -88,6 +90,7 @@ const stops = STATIONS.map((s) => s.path);
   <body>
     <a class="skip-link" href="#main">{ko.layout.skip}</a>
     <header class="masthead on-dark">
+      {STAGE === 'preview' && <p class="stage-banner">{ko.layout.stageBanner}</p>}
       <Masthead client:idle station={station} faceSrc={faceImg.src} initial={initial} />
     </header>
     <main id="main" tabindex="-1" class="stage">
@@ -121,6 +124,11 @@ const stops = STATIONS.map((s) => s.path);
     </footer>
     <DictionaryPanel client:idle />
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+    {
+      analyticsAllowed(Astro.url.pathname) && (
+        <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: BEACON_TOKEN })}></script><!-- floor-guard-ignore: 쿠키 없는 Cloudflare Web Analytics, CLAUDE.md 꼭 지킬 것 1의 허용 예외(R-61). 토큰이 있을 때만, 영수증 화면 제외 -->
+      )
+    }
     <script>
       // 모든 장면 건너뛰기 (UX 4절, R-08): 화면 어디든 누르거나 Esc면 돌고 있는 애니메이션(차 이동, 도장, 신호등…)을 끝 상태로.
       // 누른 버튼은 그대로 눌린다 (누르기가 시작될 때 끝내고, 눌림 처리는 그 뒤에 일어난다)

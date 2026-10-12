@@ -193,7 +193,9 @@ ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1;
   - **미리 보기 배포** (T21): main에 합쳐지면 `npm run validate`(개발용)가 통과할 때 배포한다. 모든 화면 위에 "검토 중인 시험판" 띠를 두고, 검색 엔진이 색인하지 않게 `noindex`를 붙인다.
   - **정식 배포** (T22): `npm run validate:release`가 통과해야 한다 (사람 확인이 남은 진열 상품이 없어야 함). 띠와 `noindex`를 뗀다.
 - 배포는 GitHub Actions나 Cloudflare의 Git 연결 중 하나로 한다. 비밀 값(CLOUDFLARE_API_TOKEN 등)은 저장소 설정의 Secrets에만 둔다.
-- 보안 헤더(Content-Security-Policy 등)를 정적 파일에 붙이는 방법은 T21에서 공식 문서로 확인한다. Web Analytics를 쓰면 `static.cloudflareinsights.com`(스크립트)과 `cloudflareinsights.com`(전송)을 허용해야 한다.
+- 보안 헤더 (T21, D53): CSP 본체는 Astro `security.csp`가 페이지마다 `<meta>`로 넣는다(스크립트·스타일 해시, 외부는 `static.cloudflareinsights.com` 스크립트와 `cloudflareinsights.com` 전송만, 인라인 style 속성만 허용). meta로 안 되는 `frame-ancestors`와 `X-Content-Type-Options`·`Referrer-Policy: same-origin`·`Permissions-Policy`·`Cross-Origin-Opener-Policy`·`X-Frame-Options`, `/_astro/*` 오래 두기는 `public/_headers`(Workers가 정적 파일 응답에 적용). e2e `tests/e2e/csp.spec.ts`가 주요 조작에서 CSP 위반 0을 확인한다.
+- 단계: 저장소 변수 `SITE_STAGE`(`preview` 기본 / `release`)가 빌드의 `PUBLIC_STAGE`가 된다 (`src/lib/stage.ts`). 미리 보기는 모든 화면 위 '검토 중인 시험판' 띠, `<meta name="robots" content="noindex, nofollow">`, `robots.txt`의 `Disallow: /`. 방문 통계는 `CF_BEACON_TOKEN`이 있을 때만, `/receipt`를 빼고 싣는다.
+- 배포 작업은 `.github/workflows/deploy.yml`, 사람이 할 일은 `docs/DEPLOY.md`.
 
 ## 10. TypeScript 설정
 

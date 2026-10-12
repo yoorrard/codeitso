@@ -30,6 +30,17 @@
    전환 중에는 화면을 누를 수 없으므로 차 이동을 전환에 싣지 않고, 화면이 바로 눌리는 새 페이지의 CSS 애니메이션으로 한다 */
 
 /* ── 머리말 ─────────────────────────────────────────────── */
+/* 미리 보기 배포의 '검토 중인 시험판' 띠 (D53). 남색 위 금색 글자, 머리말 맨 위 한 줄 */
+.stage-banner {
+  max-inline-size: var(--content-max);
+  margin: 0 auto var(--space-2);
+  padding-block-end: var(--space-1);
+  border-block-end: 1px dashed var(--taxi);
+  color: var(--taxi);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
 .masthead {
   background: var(--navy);
   color: var(--on-navy);

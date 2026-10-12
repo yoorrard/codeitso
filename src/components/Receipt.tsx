@@ -233,9 +233,11 @@ export default function Receipt({ faceSrc }: Props) {
     announce(`${ko.mascot.receipt} ${ko.receipt.stampDone}`);
     void sfx('cheer');
     if (!reduced()) {
+      // 기본 인스턴스는 blob 작업자(worker)를 만들어 CSP(worker-src)에 막히므로, 작업자 없이 도는 인스턴스를 만든다 (D53)
       void import('canvas-confetti').then((m) => {
-        confettiRef.current = m.default;
-        void m.default({ particleCount: 90, spread: 75, startVelocity: 38, ticks: 70, origin: { y: 0.35 }, disableForReducedMotion: true });
+        const fire = m.default.create(undefined, { resize: true, useWorker: false, disableForReducedMotion: true });
+        confettiRef.current = fire;
+        void fire({ particleCount: 90, spread: 75, startVelocity: 38, ticks: 70, origin: { y: 0.35 }, disableForReducedMotion: true });
       });
     }
   };

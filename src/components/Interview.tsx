@@ -8,9 +8,8 @@ import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import { answerChips, evaluate, fill, matchingRecipes } from '../lib/engine/index.ts';
 import type { Option, Question } from '../lib/engine/types.ts';
-import { track } from '../lib/events.ts';
+import { track } from '../lib/track.ts';
 import { useHydrated } from '../lib/hydrated.ts';
-import { josa } from '../lib/josa.ts';
 import { sentences } from '../lib/sentences.ts';
 import { SLOT_ART, optionArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
@@ -113,7 +112,7 @@ export default function Interview({ faceSrc }: Props) {
       patchMeta({ interviewStartedAt: Date.now() });
       track('interview_start');
     }
-    announce(fill(ko.interview.answered, { obj: josa(option.label, 'obj') }));
+    announce(fill(ko.interview.answered, { label: option.label }));
     void sfx('tap');
     setBubble(false);
     const after = $result.get().interview.visible;
@@ -127,7 +126,6 @@ export default function Interview({ faceSrc }: Props) {
     markStampsSeen([STAMP]);
     moved.current = true;
     setFinished(first ? 'first' : 'again');
-    track('interview_done');
     if (first) {
       announce(ko.interview.done);
       void sfx('stamp');

@@ -11,14 +11,15 @@ import { catalog } from '../lib/data.ts';
 import type { EngineResult } from '../lib/engine/index.ts';
 import { conversationCards, evaluate, fill, packFileName, receiptModel, renderPack, renderReceiptText } from '../lib/engine/index.ts';
 import type { Session } from '../lib/engine/types.ts';
-import { track } from '../lib/events.ts';
+import { elapsedBucket, isBucket } from '../lib/event-spec.ts';
+import { stateKey, track } from '../lib/track.ts';
 import { reduced, skipAll, skippable } from '../lib/motion.ts';
 import { $result, commitSession } from '../lib/result.ts';
 import { sentences } from '../lib/sentences.ts';
 import { sfx } from '../lib/sfx.ts';
 import { consumeShareHash, shareUrl } from '../lib/share.ts';
 import { hasProgress, sameSession } from '../lib/stations.ts';
-import { $meta, $session, $trip, markStampsSeen } from '../lib/store.ts';
+import { $meta, $session, $trip, markStampsSeen, patchMeta } from '../lib/store.ts';
 import CopyButton from './CopyButton.tsx';
 import { Icon } from './Icon.tsx';
 
@@ -144,6 +145,7 @@ export default function Receipt({ faceSrc }: Props) {
   const live = useStore($result);
   const meta = useStore($meta);
   const sceneRef = useRef<HTMLDivElement>(null);
+  const confettiRef = useRef<{ reset: () => void } | null>(null);
   const skipRef = useRef<HTMLButtonElement>(null);
   const confirm = useRef<HTMLDialogElement>(null);
   const continueBtn = useRef<HTMLButtonElement>(null);
@@ -155,7 +157,6 @@ export default function Receipt({ faceSrc }: Props) {
     if (read.status === 'broken') setMode({ kind: 'broken' });
     else if (read.status === 'ok') {
       setMode({ kind: 'shared', session: read.session });
-      track('share_open');
     } else setMode({ kind: 'own' });
   }, []);
 
@@ -177,6 +178,20 @@ export default function Receipt({ faceSrc }: Props) {
     });
     return release;
   }, [mode.kind, r.canIssue]);
+
+  // 화면을 누르거나 Esc면(기본 틀의 cc:skip) 색종이도 바로 걷는다
+  useEffect(() => {
+    const stop = (): void => confettiRef.current?.reset();
+    document.addEventListener('cc:skip', stop);
+    return () => document.removeEventListener('cc:skip', stop);
+  }, []);
+
+  // 집계(R-60): 처음 보는 상태의 내 영수증이 화면에 나오면 한 번. 구간은 인터뷰 첫 답부터 걸린 시간
+  const stateId = stateKey(r.session);
+  useEffect(() => {
+    if (mode.kind !== 'own' || !meta.issued || !r.canIssue) return;
+    track('receipt_issued', elapsedBucket(meta.interviewStartedAt, Date.now()), stateId);
+  }, [mode.kind, meta.issued, r.canIssue, stateId]);
 
   if (mode.kind === 'loading') {
     return <p class="q-card">{ko.receipt.loading}</p>;
@@ -215,13 +230,13 @@ export default function Receipt({ faceSrc }: Props) {
     if (shared || !meta.issued || $trip.get().seenStamps.includes(STAMP)) return;
     markStampsSeen([STAMP]);
     setCelebrate(true);
-    track('receipt_issue');
     announce(`${ko.mascot.receipt} ${ko.receipt.stampDone}`);
     void sfx('cheer');
     if (!reduced()) {
-      void import('canvas-confetti').then((m) =>
-        m.default({ particleCount: 90, spread: 75, startVelocity: 38, ticks: 70, origin: { y: 0.35 }, disableForReducedMotion: true }),
-      );
+      void import('canvas-confetti').then((m) => {
+        confettiRef.current = m.default;
+        void m.default({ particleCount: 90, spread: 75, startVelocity: 38, ticks: 70, origin: { y: 0.35 }, disableForReducedMotion: true });
+      });
     }
   };
 
@@ -253,7 +268,6 @@ export default function Receipt({ faceSrc }: Props) {
     a.remove();
     URL.revokeObjectURL(a.href);
     announce(fill(ko.receipt.downloaded, { file }));
-    track('pack_download');
   };
 
   const continueHere = (): void => {
@@ -265,6 +279,8 @@ export default function Receipt({ faceSrc }: Props) {
   const adopt = (): void => {
     if (mode.kind !== 'shared') return;
     commitSession(mode.session);
+    // 공유 링크로 이어 한 상태는 인터뷰 시작 시각이 없다 (발행 집계 구간 none)
+    patchMeta({ interviewStartedAt: undefined });
     setMode({ kind: 'own' });
     announce(ko.receipt.continued);
   };
@@ -364,7 +380,7 @@ export default function Receipt({ faceSrc }: Props) {
           <p>{ko.receipt.packLead}</p>
           <p class="q-help">{saveAs}</p>
           <div class="action-row">
-            <CopyButton text={pack} label={ko.receipt.copyPack} primary onCopied={() => track('pack_copy')} />
+            <CopyButton text={pack} label={ko.receipt.copyPack} primary />
             <button type="button" class="btn" onClick={download}>
               <Icon name="download" />
               <span>{ko.receipt.download}</span>
@@ -425,7 +441,7 @@ export default function Receipt({ faceSrc }: Props) {
                   {ko.receipt.cardWhen}: {c.when}
                 </p>
                 <p class="prompt-box">{c.text}</p>
-                <CopyButton text={c.text} srLabel={`${c.title}: ${ko.common.copy}`} onCopied={() => track('card_copy')} />
+                <CopyButton text={c.text} srLabel={`${c.title}: ${ko.common.copy}`} onCopied={() => isBucket('card_copy', c.id) && track('card_copy', c.id, `${c.id}:${stateId}`)} />
               </li>
             ))}
           </ul>

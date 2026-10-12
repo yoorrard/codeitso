@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "src/**/*", "scripts/**/*", "tests/**/*"],
-  "exclude": ["dist", "worker"],
+  "exclude": ["dist", "worker", "tests/worker"],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",

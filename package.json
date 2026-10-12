@@ -21,7 +21,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "typecheck": "astro check && tsc -p tsconfig.json",
+    "typecheck": "astro check && tsc -p tsconfig.json && npm run typecheck:worker",
+    "typecheck:worker": "wrangler types worker/worker-configuration.d.ts > /dev/null && tsc -p worker/tsconfig.json",
     "check": "npm run validate && npm run golden && npm run tokens && npm run fonts:check && npm run guard && npm run harness && npm run typecheck && npm run test",
     "guard": "node scripts/guard/floor-guard.ts",
     "qa:shots": "node scripts/qa/shots.ts",
@@ -43,7 +44,8 @@
     "fontverter": "2.0.0",
     "subset-font": "2.9.0",
     "typescript": "^5.9.2",
-    "vitest": "5.0.3"
+    "vitest": "5.0.3",
+    "wrangler": "4.141.0"
   },
   "dependencies": {
     "@astrojs/preact": "6.0.6",

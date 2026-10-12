@@ -18,10 +18,10 @@ const LIMIT = 6;
 const ERRORISH = new RegExp(['error', 'failed', 'not found', 'denied', 'refused', 'exception', 'undefined', ...ko.dict.errorWords].join('|'), 'i');
 
 
-function ErrorCard({ e }: { e: ErrorEntry }) {
+function ErrorCard({ e, found = false }: { e: ErrorEntry; found?: boolean }) {
   const concepts = (e.concepts ?? []).map((id) => catalog.concept.get(id)).filter((c) => c !== undefined);
   return (
-    <article class="card error-card" aria-labelledby={`err-${e.id}`}>
+    <article class={found ? 'card error-card flip-in' : 'card error-card'} aria-labelledby={`err-${e.id}`}>
       <h3 id={`err-${e.id}`}>{e.title}</h3>
       <h4>{ko.dict.errorMeaning}</h4>
       <p>{e.meaning}</p>
@@ -113,16 +113,31 @@ function ResultItem({ doc }: { doc: SearchDoc }) {
 export default function Dictionary({ autoFocus = false }: { autoFocus?: boolean }) {
   const [q, setQ] = useState('');
   const [index, setIndex] = useState<MiniSearch<SearchDoc> | null>(null);
+  const [failed, setFailed] = useState(false);
   const input = useRef<HTMLInputElement>(null);
 
+  // 색인을 못 받았으면 다음 입력 때 다시 받아 본다
+  const load = (): void => {
+    getSearchIndex().then(
+      (ms) => {
+        setFailed(false);
+        setIndex(ms);
+      },
+      () => setFailed(true),
+    );
+  };
+
   useEffect(() => {
-    void getSearchIndex().then(setIndex);
+    load();
     // 섬이 붙기 전에 친 글도 이어받는다
     if (input.current?.value) setQ(input.current.value);
     if (autoFocus) input.current?.focus();
   }, []);
 
   const query = q.trim();
+  useEffect(() => {
+    if (query && !index && failed) load();
+  }, [query]);
   const errors = query ? matchErrors(catalog, query) : [];
   const errorIds = new Set(errors.map((e) => `error:${e.id}`));
   const hits = query && index ? index.search(query).filter((h) => !errorIds.has(String(h.id))) : [];
@@ -132,9 +147,10 @@ export default function Dictionary({ autoFocus = false }: { autoFocus?: boolean 
   // 결과 수는 입력을 멈췄을 때 한 번만 알린다
   useEffect(() => {
     if (!query) return;
-    const t = window.setTimeout(() => announce(total > 0 ? fill(ko.dict.count, { n: total }) : ko.dict.empty), 700);
+    const found = errors.length > 0 ? `${ko.dict.errorFound} ` : '';
+    const t = window.setTimeout(() => announce(total > 0 ? `${found}${fill(ko.dict.count, { n: total })}` : ko.dict.empty), 700);
     return () => window.clearTimeout(t);
-  }, [query, total]);
+  }, [query, total, errors.length]);
 
   return (
     <div class="dict">
@@ -154,9 +170,10 @@ export default function Dictionary({ autoFocus = false }: { autoFocus?: boolean 
           onInput={(e) => setQ((e.currentTarget as HTMLInputElement).value)}
         />
       </form>
-      {query && !index && <p class="q-help">{ko.dict.loading}</p>}
-      {errors.map((e) => (
-        <ErrorCard e={e} />
+      {query && !index && <p class="q-help">{failed ? ko.dict.failed : ko.dict.loading}</p>}
+      {/* 게임 순간: 붙여 넣은 에러 문장에 맞는 안내를 찾으면 맨 위 카드가 뒤집혀 나온다 (맞은 안내가 바뀔 때만) */}
+      {errors.map((e, i) => (
+        <ErrorCard key={e.id} e={e} found={i === 0} />
       ))}
       {query && errors.length === 0 && ERRORISH.test(query) && (
         <section class="card">

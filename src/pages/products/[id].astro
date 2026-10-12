@@ -136,7 +136,8 @@ const domains = (p.domains ?? []).map(domainLabel);
                   {' '}
                   <a href={p.license.url} target="_blank" rel="noopener noreferrer">
                     {P.licenseLink}
-                    <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+                    <Icon name="external" size="1em" />
+<span class="visually-hidden"> ({ko.shelf.newTab})</span>
                   </a>
                 </>
               )}
@@ -157,7 +158,8 @@ const domains = (p.domains ?? []).map(domainLabel);
                       {item.url ? (
                         <a href={item.url} target="_blank" rel="noopener noreferrer">
                           {text}
-                          <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+                          <Icon name="external" size="1em" />
+<span class="visually-hidden"> ({ko.shelf.newTab})</span>
                         </a>
                       ) : (
                         text
@@ -234,7 +236,8 @@ const domains = (p.domains ?? []).map(domainLabel);
           <li>
             <a href={l.url} target="_blank" rel="noopener noreferrer">
               {l.label}
-              <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+              <Icon name="external" size="1em" />
+<span class="visually-hidden"> ({ko.shelf.newTab})</span>
             </a>
           </li>
         ))

@@ -7,8 +7,16 @@ let indexPromise: Promise<MiniSearch<SearchDoc>> | null = null;
 
 export function getSearchIndex(): Promise<MiniSearch<SearchDoc>> {
   indexPromise ??= fetch('/search-index.json')
-    .then((r) => r.text())
-    .then(loadSearchIndex);
+    .then((r) => {
+      if (!r.ok) throw new Error(`search-index ${r.status}`);
+      return r.text();
+    })
+    .then(loadSearchIndex)
+    .catch((e: unknown) => {
+      // 실패한 약속을 남겨 두면 망이 돌아와도 그 페이지에서 다시 받지 않으므로 비운다
+      indexPromise = null;
+      throw e;
+    });
   return indexPromise;
 }
 

@@ -75,7 +75,8 @@ for (const [where, block] of reduceBlocks) {
   }
   for (const k of [...values.keys()].filter((x) => x.startsWith('--juice-'))) {
     const set = block.match(new RegExp(`${k}\\s*:\\s*([^;]+);`))?.[1]?.trim();
-    const want = k.endsWith('-scale') ? '1' : '0px';
+    // 크기 배율은 1, 각도(기울기)는 0deg, 나머지(흔들림 거리)는 0px
+    const want = k.endsWith('-scale') ? '1' : k.endsWith('-tilt') ? '0deg' : '0px';
     if (set !== want) errors.push(`${where}: ${k}를 ${want}로 둔다`);
   }
 }

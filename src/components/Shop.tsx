@@ -243,7 +243,14 @@ export default function Shop({ faceSrc }: Props) {
       return;
     }
     const target = inventory.current?.querySelector<HTMLElement>(`[data-slot="${CSS.escape(ranking.slot.id)}"] .inv-icon`);
-    if (from && target) void flip(from, target);
+    // M3: 상자가 칸으로 날아가(--dur-fly) 닿으면 칸이 한 번 통통
+    if (from && target)
+      void flip(from, target, { dur: '--dur-fly' }).then(() => {
+        const slot = target.closest('li');
+        slot?.classList.remove('bump');
+        void slot?.getBoundingClientRect();
+        slot?.classList.add('bump');
+      });
     updateSession((s) => ({ cart: [...s.cart, p.id] }));
     void sfx('add');
     const after = $result.get();
@@ -254,7 +261,7 @@ export default function Shop({ faceSrc }: Props) {
       const first = !$trip.get().seenStamps.includes(STAMP);
       markStampsSeen([STAMP]);
       setStamp(first ? 'first' : 'again');
-      announce(`${ko.shop.stampDone} ${ko.shop.allRequired}`);
+      announce(first ? `${ko.shop.stampDone} ${ko.shop.allRequired}` : ko.shop.allRequired);
       if (first) void sfx('stamp');
     }
   };

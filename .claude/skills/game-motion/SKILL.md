@@ -51,7 +51,7 @@ followPath(el, path: SVGPathElement, from, to, opts) // 노선도 차 이동(M1)
 
 | 장면 | 기법 | 동작 줄이기 |
 |---|---|---|
-| M1 노선도 차 이동 | SVG 도로 `<path id="road">` + 차에 `offset-path: url(#road)`(Safari 17+, 아니면 `path()`), WAAPI로 `offset-distance` 700~900ms `--ease-in-out`. 지나온 구간은 `stroke-dashoffset`으로 칠함. 바퀴 회전, 차체 2px 출렁. 페이지를 넘어도 차는 `view-transition-name: car` | 차가 정류장에 바로, 구간 바로 칠함, fade |
+| M1 노선도 차 이동 | (D49로 구현됨) 첫 그림 전 스크립트가 앞 정류장을 `--from`·`html[data-drive]`로 붙이고, `frame.css`가 차를 `(--here - --from) × 20cqi` 뒤에서 출발시켜 `--dur-move` `--ease-in-out`으로 달리게 한다. 지나온 길은 막대 하나를 `clip-path`로 같이 칠한다. 전환 중에는 화면을 누를 수 없으므로 차 이동을 View Transitions에 싣지 않는다. 곧은 길이 아니게 되면 `offset-path` + `followPath()`로 바꾼다 | 차가 정류장에 바로, 구간 바로 칠함, fade |
 | M2 차 문 열기 | CSS 3D 문 `rotateY(-75deg)` `perspective: 600px` 350ms, 기사님 `@starting-style`(0.95→1) 등장 + 손 흔들기(팔 조각 ±12°, 조각 그림이 있을 때) | 문 열린 정지, fade |
 | M3 담기 | `flip()` 유령 상자가 호를 그리며 장바구니 칸으로 550ms, 칸 200ms 통통, 주행 거리 증가, 효과음 '톡' | 비행 없음, 확인 표시와 알림만 |
 | M4 영수증 출력·도장 | 종이가 프린터 틈에서 `steps()`로 나옴(1.2~2초), 줄이 40ms 간격으로 나타남. 도장은 1.3→1 확대·−8° 회전 `--ease-spring` 250ms + 3px 흔들림 150ms + '쿵'. 색종이 1.2초 | 완성 영수증·도장 바로, 색종이·흔들림 없음 |
@@ -60,7 +60,7 @@ followPath(el, path: SVGPathElement, from, to, opts) // 노선도 차 이동(M1)
 | M7 도장판·정류장 열림·주행 거리 | 자물쇠 고리가 돌며 열림, 정류장 핀 0.9→1.05→1(300ms). 주행 거리는 숫자 기둥이 `translateY`로 굴러감(600ms, `tabular-nums`), `role="progressbar"`와 글("정류장 5곳 중 2곳, 12km") | 값만 바뀜 |
 | M8 홈 '출발' 장면 (2~3초) | `perspective` 컨테이너에 도로 `rotateX(60deg)`, 차선은 반복 그라데이션을 transform으로 흘림, 길가 소품은 속도 다르게(시차). 누르면 끝 | 정지 그림 |
 | 기사님 | 등장 때 한 번 통통(끝없는 반복 금지), 누르면 120ms 찌그러짐, 정류장마다 말풍선(타자 효과 ≤ 1초, 누르면 전체 표시) | 정지, 말풍선 바로 |
-| 페이지 전환 | `@view-transition { navigation: auto }` + 머리말·차·노선도에 `view-transition-name`. Firefox 등 미지원 브라우저는 그냥 이동 | `::view-transition-*` 애니메이션 없음 (기기 설정과 `data-motion` 둘 다) |
+| 페이지 전환 | `@view-transition { navigation: auto }` + 머리말에 `view-transition-name` (차 이동은 새 페이지에서, D49). Firefox 등 미지원 브라우저는 그냥 이동 | `::view-transition-*` 애니메이션 없음 (기기 설정과 `data-motion` 둘 다) |
 
 '손맛(juice)' 크기는 토큰으로 맞춘다: `--juice-s|m|l` (확대 비율, 흔들림 px, 길이). 드문 순간일수록 크게, 자주 하는 조작일수록 작게.
 

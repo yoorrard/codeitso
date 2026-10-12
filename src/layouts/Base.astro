@@ -16,6 +16,7 @@ import { evaluate } from '../lib/engine/index.ts';
 import { mastheadState } from '../lib/masthead-state.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import type { StationId } from '../lib/stations.ts';
+import { STATIONS } from '../lib/stations.ts';
 
 interface Props {
   /** 페이지 제목 (사이트 이름은 뒤에 붙는다). 없으면 홈 제목 */
@@ -27,11 +28,14 @@ interface Props {
 const { title, description = ko.site.description, station = null } = Astro.props;
 const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
 const faceImg = await getImage({ src: face, width: 64, height: 64, format: 'webp' });
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+// 배포 서버는 끝 빗금을 뗀 주소(/check)로 맞춘다 (wrangler.jsonc html_handling, D50)
+const canonical = Astro.site ? new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href : undefined;
 const hasMascot = Astro.slots.has('mascot');
 // 처음 온 사람 기준 머리말 값 (빌드 때 한 번)
 const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {}, {});
 const hasAction = Astro.slots.has('action');
+// M1: 첫 그림 전 스크립트가 바로 앞 정류장을 찾을 때 쓴다
+const stops = STATIONS.map((s) => s.path);
 ---
 
 <!doctype html>
@@ -43,7 +47,8 @@ const hasAction = Astro.slots.has('action');
     <meta name="description" content={description} />
     <meta name="theme-color" content="#1e2c58" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 --navy 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
-    <script is:inline>
+    <link rel="icon" href="/emoji/taxi.webp" type="image/webp" />
+    <script is:inline define:vars={{ stops }}>
       // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게)를 붙인다.
       // 읽기만 한다 (저장은 src/lib/store.ts).
       try {
@@ -52,12 +57,31 @@ const hasAction = Astro.slots.has('action');
         var saved = localStorage.getItem('cc:session:v1');
         if (saved || localStorage.getItem('cc:trip:v1')) document.documentElement.setAttribute('data-visit', 'again');
         if (saved && Object.keys(JSON.parse(saved).answers || {}).length > 0) document.documentElement.setAttribute('data-resume', '');
+        // 저장된 진행이 있으면 머리말 섬이 붙기 전까지 '처음 온 사람' 값(0km, 자물쇠)을 감춘다 (frame.css)
+        if (saved || localStorage.getItem('cc:study:v1') || localStorage.getItem('cc:meta:v1')) document.documentElement.setAttribute('data-saved', '');
       } catch (e) {}
-      // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 홈 출발 장면을 짧게 (자주 볼수록 짧게)
+      // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 홈 출발 장면을 짧게 (자주 볼수록 짧게).
+      // M1: 링크로 정류장을 옮겨 왔으면 차가 앞 정류장(홈이면 출발점)에서 이번 정류장까지 달린다 (frame.css의 data-drive)
       try {
         var nav = performance.getEntriesByType('navigation')[0];
-        var sameSite = document.referrer && new URL(document.referrer).origin === location.origin;
+        var ref = document.referrer ? new URL(document.referrer) : null;
+        var sameSite = ref && ref.origin === location.origin;
         if (sameSite || (nav && nav.type === 'back_forward')) document.documentElement.setAttribute('data-visit', 'again');
+        if (sameSite && nav && nav.type === 'navigate') {
+          var norm = function (path) {
+            return path.replace(/\/+$/, '') || '/';
+          };
+          var to = stops.indexOf(norm(location.pathname));
+          var fromPath = norm(ref.pathname);
+          // 홈·레시피·진열대에서 출발하면 노선 앞 출발점(-1)에서 달려온다
+          var garage = ['/', '/recipes', '/shelf'].indexOf(fromPath) >= 0;
+          var from = garage ? -1 : stops.indexOf(fromPath);
+          if (to >= 0 && (from >= 0 || garage) && from !== to) {
+            document.documentElement.style.setProperty('--from', String(from));
+            // 세 칸 이상이면 조금 더 길게 (--dur-drive)
+            document.documentElement.setAttribute('data-drive', Math.abs(to - from) >= 3 ? 'far' : '');
+          }
+        }
       } catch (e) {}
     </script>
   </head>
@@ -97,5 +121,28 @@ const hasAction = Astro.slots.has('action');
     </footer>
     <DictionaryPanel client:idle />
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+    <script>
+      // 모든 장면 건너뛰기 (UX 4절, R-08): 화면 어디든 누르거나 Esc면 돌고 있는 애니메이션(차 이동, 도장, 신호등…)을 끝 상태로.
+      // 누른 버튼은 그대로 눌린다 (누르기가 시작될 때 끝내고, 눌림 처리는 그 뒤에 일어난다)
+      // 숫자 굴리기·색종이처럼 애니메이션 객체가 아닌 것은 cc:skip 신호를 듣고 스스로 끝낸다.
+      // '건너뛰기' 버튼은 자기 click에서 끝내고 제목으로 초점을 옮기므로 여기서는 건드리지 않는다
+      import { skipAll } from '../lib/motion.ts';
+
+      const skip = (): void => {
+        skipAll(document);
+        document.dispatchEvent(new CustomEvent('cc:skip'));
+      };
+      document.addEventListener(
+        'pointerdown',
+        (e) => {
+          if (e.target instanceof Element && e.target.closest('[data-skip], .scene-skip-btn')) return;
+          skip();
+        },
+        { capture: true, passive: true },
+      );
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') skip();
+      });
+    </script>
   </body>
 </html>

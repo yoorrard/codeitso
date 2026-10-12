@@ -74,7 +74,8 @@ const domains = (p.domains ?? []).map(domainLabel).join(', ');
               <li>
                 <a href={l.url} target="_blank" rel="noopener noreferrer">
                   {l.label}
-                  <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+                  <Icon name="external" size="1em" />
+<span class="visually-hidden"> ({ko.shelf.newTab})</span>
                 </a>
               </li>
             ))}
@@ -84,7 +85,7 @@ const domains = (p.domains ?? []).map(domainLabel).join(', ');
     )
   }
   <p class="shelf-tags">
-    <span>{ko.shelf.capability}: {caps}</span>
+    <span>{ko.shelf.capability}: {caps}</span>{' '}
     {domains && <span>{ko.shelf.domain}: {domains}</span>}
   </p>
 </li>

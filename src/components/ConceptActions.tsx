@@ -7,7 +7,7 @@ import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import { fill, projectName } from '../lib/engine/index.ts';
 import type { QuizItem } from '../lib/engine/types.ts';
-import { track } from '../lib/events.ts';
+import { stateKey, track } from '../lib/track.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { progress } from '../lib/progress.ts';
 import { $result } from '../lib/result.ts';
@@ -33,6 +33,8 @@ function Question({ conceptId, item, index }: { conceptId: string; item: QuizIte
   const pick = (choice: number): void => {
     setPicked(choice);
     const ok = choice === item.answer;
+    // 집계(R-60): 같은 문제는 처음 고른 답만 센다
+    track('quiz_answer', ok ? 'ok' : 'ng', `${conceptId}.${index}`);
     if (ok) {
       const first = !$trip.get().seenStamps.includes(`quiz.${conceptId}.${index}`);
       markQuizCorrect(conceptId, index);
@@ -93,10 +95,11 @@ export default function ConceptActions({ conceptId, quiz, askAI }: Props) {
     markConceptRead(conceptId);
     announce(ko.concept.markedRead);
     const p = progress($result.get(), $study.get(), meta);
+    // 집계(R-60): 그 상태의 필수 개념을 모두 읽었을 때 한 번
+    if (p.stamps.includes(STUDY_STAMP)) track('required_done', undefined, stateKey($result.get().session));
     if (p.stamps.includes(STUDY_STAMP) && !$trip.get().seenStamps.includes(STUDY_STAMP)) {
       markStampsSeen([STUDY_STAMP]);
       setStudyStamp(true);
-      track('required_done');
       announce(ko.study.stampDone);
       void sfx('stamp');
     }

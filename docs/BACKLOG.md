@@ -51,8 +51,10 @@
 - `normalizeSession`은 cart가 배열이 아닐 때를 막지 않는다 (지금은 saved.ts·fromShareState가 먼저 거른다).
 - shared 항목은 order가 같은 앞 칸을 '앞선 칸'으로 보지 않는다 (명세와 같음, 지금 자료에는 order가 같은 칸이 없다).
 - 2차로 미룬 칸의 stepHint 개념이 1차 단계로 옮겨 붙는다 (case-04에서 로그인을 미루면 로그인 개념이 저장 단계로).
+- 영수증·레시피 카드의 난이도는 합계 점수와 말('5 보통')이라 몇 점 만점인지 알 수 없다 (문장 검토, T14). 진열대 카드는 별 3개 기준이다. 바꾸려면 `receipt.ts`의 `difficultyText`와 templates.json, ENGINE.md, `npm run examples`를 함께 고친다.
 
 ## 화면
 
 - 개념 카드 그림 10장 (자료의 `figure` 설명대로, svg-illustrator). 지금은 설명 글상자 (D46).
-
+- 노선 띠의 차를 정면 택시 그림 문자 대신 옆모습 SVG(`scene/Car.astro`를 작게, 남색 위 테두리, 뒤로 갈 때 뒤집기, 바퀴 `spin`)로 (game-ux 검토 제안 E, gzip 약 1KB). 섬 안이라 Preact판이 필요하다.
+- 한꺼번에 겹치는 순간 다듬기: /receipt 도착 때 M1(위)과 M4 출력(아래)이 같이 시작하고, /check 첫 도착(충돌 없음)에 M1·신호등·도장·잉크 고리·흔들림이 한 번에 난다. 실기기에서 2~5배 느리게 보고 순서를 정한다.

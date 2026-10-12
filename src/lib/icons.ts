@@ -17,6 +17,7 @@ import downloadSvg from '@phosphor-icons/core/assets/duotone/download-simple-duo
 import expandSvg from '@phosphor-icons/core/assets/duotone/caret-down-duotone.svg?raw';
 import helpSvg from '@phosphor-icons/core/assets/duotone/question-duotone.svg?raw';
 import pinSvg from '@phosphor-icons/core/assets/duotone/map-pin-duotone.svg?raw';
+import externalSvg from '@phosphor-icons/core/assets/duotone/arrow-square-out-duotone.svg?raw';
 
 export const icons = {
   close: closeSvg,
@@ -36,6 +37,7 @@ export const icons = {
   expand: expandSvg,
   help: helpSvg,
   pin: pinSvg,
+  external: externalSvg,
 } as const;
 
 export type IconName = keyof typeof icons;

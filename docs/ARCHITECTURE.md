@@ -133,7 +133,9 @@ code-chauffeur/
 | `required_done` | 없음 | 그 영수증의 시작 전 필수 개념을 모두 읽었을 때 |
 | `quiz_answer` | `ok`, `ng` | 확인 문제 답 (같은 문제는 처음 한 번만) |
 
-- '처음 보는 상태'는 `toShareState(session)`을 JSON으로 만든 문자열의 짧은 해시로 가린다. 보낸 이벤트 열쇠(`이벤트:해시`)를 `cc:meta:v1.sent`에 최근 20개까지 둔다. 같은 열쇠는 다시 보내지 않는다.
+- '처음 보는 상태'는 공유 링크 조각(`shareHash(session)`)의 짧은 해시(FNV-1a, `stateKey`)로 가린다. 보낸 이벤트 열쇠를 `cc:meta:v1.sent`에 최근 20개까지 둔다. 같은 열쇠는 다시 보내지 않는다: `receipt_issued:해시`, `card_copy:카드:해시`, `required_done:해시`, `quiz_answer:개념.번호`(처음 고른 답만).
+- 레시피로 출발하거나 공유 링크로 이어 하면 `interviewStartedAt`을 지운다 (그 영수증의 구간은 `none`).
+- 이벤트 목록·구간·본문 검사·걸린 시간 구간은 `src/lib/event-spec.ts` 한 곳에 두고 화면(`src/lib/track.ts`)과 Worker(`worker/index.ts`)가 같이 쓴다 (시험: `tests/lib/event-spec.test.ts`, `tests/worker/`).
 
 D1 표 (`migrations/0001_events.sql`):
 
@@ -169,11 +171,12 @@ ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1;
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "code-chauffeur",
   "main": "worker/index.ts",
-  "compatibility_date": "2026-10-01",
+  "compatibility_date": "2026-09-20",
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash",
     "run_worker_first": ["/api/*"]
   },
   "d1_databases": [
@@ -184,6 +187,8 @@ ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1;
 
 - 빌드: `npx astro build` → 배포: `npx wrangler deploy`. 사이트가 전부 정적이라 `@astrojs/cloudflare` 어댑터는 쓰지 않는다.
 - `/api/*`만 Worker 함수를 먼저 거치고, 나머지는 정적 파일이 바로 나간다.
+- 화면의 링크는 끝 빗금 없이(`/check`) 쓰므로 `html_handling`을 `drop-trailing-slash`로 둔다 (기본값이면 `/check` → `/check/`로 한 번 돌려보낸다). 대표 주소(canonical)도 끝 빗금을 뗀다 (D50).
+- Workers 로그(observability)는 끈다. 요청 기록에 IP 같은 정보가 남지 않게 한다 (R-60).
 - 배포는 둘로 나눈다.
   - **미리 보기 배포** (T21): main에 합쳐지면 `npm run validate`(개발용)가 통과할 때 배포한다. 모든 화면 위에 "검토 중인 시험판" 띠를 두고, 검색 엔진이 색인하지 않게 `noindex`를 붙인다.
   - **정식 배포** (T22): `npm run validate:release`가 통과해야 한다 (사람 확인이 남은 진열 상품이 없어야 함). 띠와 `noindex`를 뗀다.
@@ -213,7 +218,7 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 ```
 
 - `npm run typecheck`는 `astro check && tsc -p tsconfig.json`으로 바꾼다 (`@astrojs/check` 필요).
-- `worker/`는 DOM 타입과 부딪히지 않게 `worker/tsconfig.json`을 따로 두고 `npx wrangler types`로 만든 타입을 쓴다.
+- `worker/`는 DOM 타입과 부딪히지 않게 `worker/tsconfig.json`을 따로 두고 `npx wrangler types`로 만든 타입을 쓴다. 만든 타입 파일(`worker/worker-configuration.d.ts`, 약 600KB)은 저장소에 두지 않고 `npm run typecheck:worker`가 그때마다 만든다 (`npm run typecheck`에 들어 있음).
 
 ## 11. 성능 기준
 

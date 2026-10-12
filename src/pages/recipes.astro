@@ -45,7 +45,7 @@ const cards = data.recipes.recipes.map((recipe) => {
             <dt>{model.timeLabel}</dt>
             <dd>{model.timeText}</dd>
           </dl>
-          <RecipeStart client:visible recipeId={recipe.id} primary />
+          <RecipeStart client:visible recipeId={recipe.id} />
         </li>
       ))
     }

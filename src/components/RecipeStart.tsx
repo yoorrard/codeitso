@@ -7,7 +7,7 @@ import { fill } from '../lib/engine/index.ts';
 import type { Session } from '../lib/engine/types.ts';
 import { commitSession } from '../lib/result.ts';
 import { hasProgress, sameSession, stationById } from '../lib/stations.ts';
-import { $session } from '../lib/store.ts';
+import { $session, patchMeta } from '../lib/store.ts';
 
 interface Props {
   recipeId: string;
@@ -25,6 +25,8 @@ export default function RecipeStart({ recipeId, primary = false }: Props) {
 
   const go = (): void => {
     commitSession(target);
+    // 레시피로 채운 상태는 인터뷰 시작 시각이 없다 (발행 집계 구간 none)
+    patchMeta({ interviewStartedAt: undefined });
     window.location.assign(stationById('check').path);
   };
   const start = (): void => {

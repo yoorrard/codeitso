@@ -8,17 +8,31 @@ import { useHydrated } from '../lib/hydrated.ts';
 import { $result } from '../lib/result.ts';
 import { $study } from '../lib/store.ts';
 
+/** 방금 읽고 돌아온 개념 (들어온 주소를 읽기만 하고 저장하지 않는다) */
+function cameFrom(): string | null {
+  if (typeof document === 'undefined' || !document.referrer) return null;
+  try {
+    const ref = new URL(document.referrer);
+    if (ref.origin !== window.location.origin) return null;
+    return ref.pathname.match(/^\/concepts\/([^/]+)\/?$/)?.[1] ?? null;
+  } catch {
+    return null;
+  }
+}
+
 function Item({ id }: { id: string }) {
   const study = useStore($study);
   const ready = useHydrated();
   const c = catalog.concept.get(id);
   if (!c) return null;
   const rec = ready ? study[id] : undefined;
+  // 게임 순간: 개념 카드에서 다 읽고 돌아오면 그 줄의 '읽음' 표가 한 번 뒤집혀 나타난다
+  const fresh = ready && rec?.read === true && cameFrom() === id;
   return (
     <li class={rec?.read ? 'study-item read' : 'study-item'}>
       <a href={`/concepts/${id}`}>{c.title}</a>
       <span class="study-meta">
-        <span class={rec?.read ? 'badge' : 'badge badge-soft'}>{rec?.read ? ko.study.read : ko.study.notRead}</span>
+        <span class={rec?.read ? (fresh ? 'badge flip-in' : 'badge') : 'badge badge-soft'}>{rec?.read ? ko.study.read : ko.study.notRead}</span>
         <span>{fill(ko.study.quizCount, { n: rec?.quiz.length ?? 0, total: c.quiz.length })}</span>
       </span>
     </li>

@@ -11,6 +11,8 @@ export default defineConfig({
       include: ['src/lib/engine/**/*.ts'],
       reporter: ['text-summary', 'text', 'html'],
       reportsDirectory: 'coverage',
+      // 엔진 줄 기준 90% 아래로 내려가면 실패 (T04, .claude/rules/engine.md)
+      thresholds: { lines: 90 },
     },
   },
 });

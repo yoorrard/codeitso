@@ -5,7 +5,7 @@ import { firstPhaseProducts } from './recheck.ts';
 import { displayWidth, fill, formatMinutes, oneLine, padEndWidth, padStartWidth, truncateWidth } from './text.ts';
 
 export interface ReceiptItem {
-  /** 이 상품이 맡은 칸 이름 (여럿이면 ·로 잇는다) */
+  /** 이 상품이 맡은 칸 이름 (여럿이면 ', '로 잇는다) */
   slot: string;
   productId: string;
   name: string;

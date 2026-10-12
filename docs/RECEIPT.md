@@ -56,7 +56,7 @@
 | 8 | 준비물 | 확인란(`- [ ]`) 목록, 오래 걸리는 것 먼저 | 상품 `prep` |
 | 9 | 구현 전에 조사할 것 | 조사 지시문 + 항목마다 무엇을 확인 / 왜 / 어디서 / 확인됐다고 볼 기준 | 조사 카드, `pack.researchIntro`, `pack.noResearch` |
 | 10 | 진행 순서 | 단계 규칙 + 단계마다 쓰는 도구, 완성 확인, 먼저 볼 개념 링크. 키를 숨길 중간 서버가 있으면 데이터 단계 앞에 '중간 서버 준비 (키 숨기기)' | `slotSteps`, `proxyStep`, `pack.stepRule`, `pack.conceptLink` |
-| 11 | 안전 기본 지시 | 기본 다섯 줄 + 조건에 맞는 안전 지시 | `safetyDefaults`, `safety` 규칙 |
+| 11 | 안전 기본 지시 | 기본 여섯 줄 + 조건에 맞는 안전 지시 | `safetyDefaults`, `safety` 규칙 |
 | 12 | AI 작업 방식 | 한 단계씩, 쉬운 말, 모르면 질문, 확인 방법 알려 주기 | `aiTools.*.workStyle` |
 | 맺음 | — | 면책 안내 | `disclaimer` |
 

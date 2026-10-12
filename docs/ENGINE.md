@@ -24,7 +24,7 @@ conversationCards(cat, r);                           // 대화 카드 5장
 4. 다음 질문 = 보인 질문 중 답이 없는 첫 질문. 없으면 인터뷰 끝.
 5. 앞 답을 바꿔 숨겨진 질문의 답은 지우지 않고 무시한다. 되돌리면 다시 살아난다.
 
-'좁혀지는 중' 미리 보기: `answerChips()`(답한 질문의 짧은 이름 + 고른 보기), `buildSlots()`(지금 생긴 칸), `matchingRecipes()`(지금까지의 답과 어긋나지 않는 레시피를 같은 답이 많은 순으로 2개).
+'좁혀지는 중' 미리 보기: `answerChips()`(답한 질문의 짧은 이름 + 고른 보기), `buildSlots()`(지금 생긴 칸), `matchingRecipes()`(지금까지의 답과 어긋나지 않고 같은 답이 하나 이상인 레시피를 같은 답이 많은 순으로 2개, 같으면 `recipes.json` 순서. 첫 답 전에는 비어 있다).
 
 ## 2. 칸 만들기 (`shop.ts` buildSlots)
 
@@ -48,13 +48,13 @@ conversationCards(cat, r);                           // 대화 카드 5장
 | topic | 이용자가 주제를 골랐고 상품에 주제가 있을 때: 겹치면 / 안 겹치면 | topicMatch (+3) / topicMissed (−3) |
 | aiTool | 상품 `goodFor`에 이용자의 ai 태그가 있음 | aiToolMatch (+2) |
 | budget | 무료로 시작할 수 있는 상품 / 유료인데 이용자가 0원만 | freeProduct (+2) / paidWhenBudgetFree (−4) |
-| realtime | 이용자가 실시간이 필요하고 데이터 상품일 때: realtime·frequent / daily·static | realtimeMet (+2) / realtimeMissed (−3) |
+| realtime | 이용자가 실시간이 필요하고 데이터 상품일 때: realtime·frequent / daily·static (상품에 갱신 주기가 없으면 이 항목 없음) | realtimeMet (+2) / realtimeMissed (−3) |
 | difficulty | 상품 난이도와 이용자 수준의 차이 × | difficultyGap (−1) |
 | official | 공식 제공 | providerOfficial (+1) |
 | access | 필요한 자격 (없음·가입 0, 키 −1, 승인 −2, 계좌·사업자 −4) | accessPenalty |
 | proxy | 상품에 proxy 기능이 있고, 이 칸의 기능이 없는 다른 장바구니 상품 중 키 노출 위험 상품이 있음 | proxyNeeded (+2) |
 | shared | 상품이 이미 장바구니에 있고, 이 칸보다 **앞선** 열린 칸의 기능도 가짐 (앞 칸을 채우려고 담은 상품이 이 칸도 맡을 수 있을 때). 담은 그 칸에서는 더하지 않는다 | sharedTool (+2) |
-| local | 저장(store) 상품이고 저장 위치가 이용자 기기(local)일 때: 나만 씀 / 여럿이 씀 | localForMe (+2) / localForShared (−6) |
+| local | 저장(store) 상품이고 저장 위치가 이용자 기기(local)일 때: 나만 씀 / 그 밖 (쓰는 사람 태그가 아직 없을 때도 여럿이 씀으로 본다) | localForMe (+2) / localForShared (−6) |
 
 - 항목 값이 0이면 기록하지 않는다.
 - **추천 이유**: 값이 양수인 항목을 큰 순(같으면 위 표 순서)으로 최대 `reasonsMax`(3)개.
@@ -99,7 +99,7 @@ conversationCards(cat, r);                           // 대화 카드 5장
 3. kept인 빈 칸 충돌 → `templates.emptySlot.research`로 만든 항목, id `research.empty:칸id`
 4. 장바구니의 색인 상품 → `templates.indexResearch`로 만든 항목, id `research.index:상품id`
 
-**안전 지시**: `templates.safetyDefaults` 다섯 줄 + 조건이 맞는 `safety` 규칙 줄 (같은 문장은 한 번).
+**안전 지시**: `templates.safetyDefaults` 여섯 줄 + 조건이 맞는 `safety` 규칙 줄 (같은 문장은 한 번).
 
 **예상 막힘**: 장바구니 상품의 `stuck` (담은 순서) + 조건이 맞는 `stuck` 규칙.
 

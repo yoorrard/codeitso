@@ -75,13 +75,16 @@ const reports: PageReport[] = [];
 
 try {
   for (const route of list) {
-    for (const vp of [...VIEWPORTS, { name: '360-reduce', width: 360, height: 800 }]) {
-      const reduce = vp.name.endsWith('reduce');
+    // 360-reduce: 기기 설정의 동작 줄이기, 360-site-reduce: 사이트 설정(html[data-motion=reduce])의 동작 줄이기 (D30)
+    for (const vp of [...VIEWPORTS, { name: '360-reduce', width: 360, height: 800 }, { name: '360-site-reduce', width: 360, height: 800 }]) {
       const context = await browser.newContext({
         viewport: { width: vp.width, height: vp.height },
-        reducedMotion: reduce ? 'reduce' : 'no-preference',
+        reducedMotion: vp.name === '360-reduce' ? 'reduce' : 'no-preference',
         locale: 'ko-KR',
       });
+      if (vp.name === '360-site-reduce') {
+        await context.addInitScript(() => window.localStorage.setItem('cc:prefs:v1', JSON.stringify({ motion: 'reduce', sound: false })));
+      }
       const page = await context.newPage();
       const rep: PageReport = {
         route,

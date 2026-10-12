@@ -3,6 +3,7 @@
 // - 거의 투명한 점(알파 8 미만)은 완전히 투명하게: 가장자리까지 퍼진 흐린 점 때문에 자르기가 안 되는 문제
 // - 거의 불투명한 점(알파 250 이상)은 완전히 불투명하게: 몸이 알파 253으로 살짝 비치는 문제
 // 원본(chauffeur-wave.webp)은 그대로 두고 정리본(chauffeur-wave.png)을 만든다. 화면은 Astro <Picture>가 크기별로 만든다.
+// 전광판 옆 작은 얼굴(chauffeur-face.png)은 정리본에서 머리 부분만 잘라 낸다 (T05, 그림은 고치지 않음).
 import { join } from 'node:path';
 import sharp from 'sharp';
 import { ROOT } from '../lib/load-data.ts';
@@ -32,3 +33,8 @@ for (const pose of POSES) {
     .toFile(join(DIR, `${pose}.png`));
   console.log(`${pose}: ${info.width}×${info.height} → ${t.info.width + PAD * 2}×${t.info.height + PAD * 2}`);
 }
+
+// 머리 부분만 정사각으로 자른다 (정리본 기준 좌표: 모자 위부터 옷깃까지, 흔드는 손은 빼고)
+const FACE = { left: 10, top: 0, width: 700, height: 700 };
+await sharp(join(DIR, 'chauffeur-wave.png')).extract(FACE).resize(256).png({ compressionLevel: 9 }).toFile(join(DIR, 'chauffeur-face.png'));
+console.log('chauffeur-face: 256×256');

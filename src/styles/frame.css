@@ -1,0 +1,494 @@
+/* 기본 틀 (T05): 머리말(노선 띠·전광판·계기판·설정), 무대, 아래 막대, 기사님 자리, 설정 창.
+   섬(Preact)도 같은 클래스를 쓰므로 범위 없는 전역 스타일로 둔다. 값은 tokens.css 변수만 쓴다. */
+
+/* 문서 간 View Transitions: 머리말은 제자리, 무대만 바뀐다 (D25). 동작 줄이기면 --dur-page가 0 */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-page);
+}
+
+.masthead {
+  view-transition-name: masthead;
+}
+
+::view-transition-group(masthead),
+::view-transition-old(masthead),
+::view-transition-new(masthead) {
+  animation-duration: var(--dur-page);
+}
+
+/* ── 머리말 ─────────────────────────────────────────────── */
+.masthead {
+  background: var(--navy);
+  color: var(--on-navy);
+  padding-block: var(--space-2) var(--space-3);
+  padding-inline: max(var(--gutter), env(safe-area-inset-left)) max(var(--gutter), env(safe-area-inset-right));
+}
+
+.masthead-inner {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+}
+
+/* 노선 띠: 정류장 다섯을 잇는 길. 지나온 구간은 금빛 */
+.route ol {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  list-style: none;
+  padding: 0;
+  position: relative;
+}
+
+.route ol::before {
+  /* 길 */
+  content: '';
+  position: absolute;
+  inset-inline: 10%;
+  inset-block-start: 22px;
+  block-size: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--navy-deep);
+}
+
+.stop {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* 지나온 구간: 이 정류장에서 다음 정류장까지 금빛 */
+.stop.behind::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%;
+  inline-size: 100%;
+  inset-block-start: 22px;
+  block-size: 6px;
+  background: var(--taxi);
+  z-index: 0;
+}
+
+.stop a,
+.stop button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-inline-size: var(--tap);
+  min-block-size: var(--tap);
+  padding: 0 var(--space-1) var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--on-navy);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  line-height: var(--leading-tight);
+}
+
+.pin {
+  display: grid;
+  place-items: center;
+  inline-size: 50px;
+  block-size: 50px;
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  color: var(--ink-soft);
+  box-shadow: 0 0 0 3px var(--navy-deep);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.pin img {
+  inline-size: 30px;
+  block-size: 30px;
+}
+
+.stop.done .pin {
+  box-shadow: 0 0 0 3px var(--taxi);
+}
+
+.stop.current .pin {
+  box-shadow:
+    0 0 0 3px var(--navy),
+    0 0 0 6px var(--taxi);
+  transform: scale(var(--juice-m-scale));
+}
+
+.stop.current .stop-name {
+  font-weight: var(--weight-strong);
+  color: var(--taxi);
+}
+
+.stop.locked .pin {
+  background: var(--navy-deep);
+  color: var(--on-navy);
+  box-shadow: 0 0 0 3px var(--navy-deep);
+}
+
+.stop.locked .stop-name {
+  opacity: 0.85;
+}
+
+@media (hover: hover) {
+  .stop a:hover .pin {
+    transform: translateY(-2px);
+  }
+}
+
+.route-hint {
+  margin-block-start: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--navy-deep);
+  font-size: var(--text-sm);
+}
+
+/* 전광판 + 계기판 + 설정 */
+.board-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+
+.board {
+  flex: 1;
+  min-inline-size: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--navy-deep);
+}
+
+.face {
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: var(--radius-pill);
+  background: var(--sky);
+}
+
+.board-text {
+  font-family: var(--font-receipt);
+  font-weight: var(--weight-strong);
+  color: var(--taxi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.odometer {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--navy-deep);
+  font-family: var(--font-receipt);
+  font-weight: var(--weight-strong);
+  color: var(--taxi);
+}
+
+.odometer .unit {
+  font-size: var(--text-sm);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+}
+
+.icon-btn.on-dark {
+  color: var(--on-navy);
+}
+
+.icon-wrap {
+  display: inline-flex;
+}
+
+.storage-off {
+  margin-block-start: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+/* ── 설정 창 (popover) ───────────────────────────────────── */
+.settings-panel {
+  position: fixed;
+  inset: auto;
+  inset-block-start: var(--space-4);
+  inset-inline-end: var(--gutter);
+  inline-size: min(320px, calc(100vw - 2 * var(--gutter)));
+  margin: 0;
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow-lift);
+}
+
+.settings-panel :focus-visible {
+  outline-color: var(--focus);
+}
+
+.settings-title {
+  font-weight: var(--weight-heading);
+  padding: var(--space-1) var(--space-2) var(--space-2);
+}
+
+.toggle-row,
+.menu-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  inline-size: 100%;
+  padding: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: start;
+}
+
+.toggle-row {
+  justify-content: space-between;
+}
+
+.toggle-row:hover,
+.menu-row:hover {
+  background: var(--paper);
+}
+
+.switch {
+  min-inline-size: 56px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--ink-soft);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.toggle-row[aria-pressed='true'] .switch {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--on-navy);
+}
+
+.settings-note {
+  padding: 0 var(--space-2) var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.menu-row.danger {
+  color: var(--stop);
+}
+
+/* ── 대화 창 (<dialog>) ─────────────────────────────────── */
+.sheet {
+  /* 초기화(* { margin: 0 })가 지운 dialog의 가운데 정렬을 되살린다 */
+  margin: auto;
+  inline-size: min(480px, calc(100vw - 2 * var(--gutter)));
+  max-block-size: calc(100dvh - 2 * var(--space-5));
+  padding: var(--space-5);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow-lift);
+}
+
+.sheet::backdrop {
+  background: rgb(18 27 58 / 0.5); /* floor-guard-ignore: --navy-deep의 반투명. CSS 변수로 알파를 바꿀 수 없다 */
+}
+
+.sheet h2 {
+  font-size: var(--text-lg);
+  margin-block-end: var(--space-3);
+}
+
+.sheet h3 {
+  font-size: var(--text-base);
+  margin-block: var(--space-4) var(--space-2);
+}
+
+.sheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-block-start: var(--space-5);
+}
+
+.trip-km strong {
+  font-size: var(--text-xl);
+  margin-inline: var(--space-1);
+}
+
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.stamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-radius: var(--radius);
+  border: 2px dashed var(--line);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.stamp img {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+.stamp.got {
+  border-style: solid;
+  border-color: var(--taxi);
+  background: var(--gold-soft);
+}
+
+.stamp.got img {
+  filter: none;
+  opacity: 1;
+}
+
+.stamp-state {
+  color: var(--ink-soft);
+}
+
+/* ── 버튼 ───────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--ink-soft);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  border-color: var(--taxi);
+  background: var(--taxi);
+  color: var(--ink);
+}
+
+.btn-danger {
+  border-color: var(--stop);
+  background: var(--stop);
+  color: var(--on-stop);
+}
+
+/* ── 무대 ───────────────────────────────────────────────── */
+.stage {
+  display: block;
+  /* 머리말·아래 막대 안쪽(720px)과 글 시작선을 맞춘다 */
+  max-inline-size: calc(var(--content-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding: var(--space-5) var(--gutter) var(--space-6);
+}
+
+.stage:focus {
+  outline: none;
+}
+
+/* ── 아래 막대: 주 버튼 + 사전 ─────────────────────────── */
+.action-bar {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 20;
+  background: var(--paper);
+  box-shadow: 0 -1px 0 var(--line);
+  padding-block: var(--space-3) max(var(--space-3), env(safe-area-inset-bottom));
+  padding-inline: var(--gutter);
+}
+
+.action-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+}
+
+.action-inner > :first-child:not(.dict-btn) {
+  flex: 1;
+}
+
+.dict-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-inline-start: auto;
+  min-block-size: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  color: var(--on-navy);
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+}
+
+.dict-btn:focus-visible {
+  outline-color: var(--focus);
+}
+
+/* 아주 낮은 화면(가로로 든 휴대폰, 글자 크게)에서는 아래 막대도 붙박이를 푼다 */
+@media (max-height: 480px) {
+  .action-bar {
+    position: static;
+  }
+}
+
+/* ── 기사님 자리 (왼쪽 아래) ─────────────────────────────── */
+.mascot-dock {
+  position: fixed;
+  inset-inline-start: var(--gutter);
+  inset-block-end: calc(var(--bar-bottom) + var(--space-2));
+  z-index: 15;
+  max-inline-size: min(280px, calc(100vw - 2 * var(--gutter)));
+  pointer-events: none;
+}
+
+.mascot-dock > * {
+  pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+  .route ol::before,
+  .stop.behind::after {
+    inset-block-start: 22px;
+  }
+}

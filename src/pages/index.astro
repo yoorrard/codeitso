@@ -1,68 +1,59 @@
 ---
-// T01 임시 홈: 빌드 때 엔진이 레시피 하나로 끝까지 도는지 확인한다. T07에서 지운다.
-import '../styles/global.css';
+// T01 임시 홈: 빌드 때 엔진이 레시피 하나로 끝까지 도는지, 그림 자산이 실리는지 확인한다. T07에서 진짜 홈으로 바꾼다.
+import Base from '../layouts/Base.astro';
+import Emoji from '../components/Emoji.astro';
+import Icon from '../components/Icon.astro';
+import Mascot from '../components/Mascot.astro';
 import { ko } from '../copy/ko.ts';
 import { catalog, data } from '../lib/data.ts';
 import { evaluate } from '../lib/engine/index.ts';
-import Mascot from '../components/Mascot.astro';
-import Icon from '../components/Icon.astro';
-import Emoji from '../components/Emoji.astro';
 import { icons } from '../lib/icons.ts';
 import type { IconName } from '../lib/icons.ts';
 
-const stationEmoji = ['station-lesson', 'station-interview', 'station-shop', 'station-check', 'station-receipt', 'taxi', 'party-popper', 'warning'];
-const iconNames = Object.keys(icons) as IconName[];
-
 const recipe = data.recipes.recipes[0];
 const r = recipe ? evaluate(catalog, { answers: recipe.answers, cart: recipe.cart, kept: recipe.kept ?? [], deferred: [] }) : null;
+const stationEmoji = ['station-lesson', 'station-interview', 'station-shop', 'station-check', 'station-receipt', 'taxi', 'party-popper', 'warning'];
+const iconNames = Object.keys(icons) as IconName[];
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{ko.site.name}</title>
-  </head>
-  <body>
-    <main style="padding: var(--gutter); max-width: var(--content-max); margin-inline: auto;">
-      <h1>{ko.site.slogan}</h1>
-      <p>{ko.site.intro}</p>
-      <h2>{ko.dev.engineCheck}</h2>
-      <p>{ko.dev.engineCheckNote}</p>
-      {
-        r && recipe && (
-          <dl>
-            <dt>{ko.dev.recipe}</dt>
-            <dd>{recipe.title}</dd>
-            <dt>{ko.dev.slots}</dt>
-            <dd>{r.slots.length}</dd>
-            <dt>{ko.dev.conflicts}</dt>
-            <dd>{r.conflicts.length}</dd>
-            <dt>{ko.dev.canIssue}</dt>
-            <dd>{r.canIssue ? ko.dev.yes : ko.dev.no}</dd>
-          </dl>
-        )
-      }
-      <h2>{ko.dev.assetCheck}</h2>
-      <p>{ko.dev.assetCheckNote}</p>
-      <Mascot width={200} alt={ko.mascot.waveAlt} />
-      <p class="row">{stationEmoji.map((id) => <Emoji id={id} size={48} />)}</p>
-      <p class="row icons">{iconNames.map((n) => <Icon name={n} />)}</p>
-    </main>
-  </body>
-  <style>
-    :global(.mascot) {
-      display: block;
-      height: auto;
-    }
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-    }
-    .icons {
-      color: var(--navy);
-    }
-  </style>
-</html>
+<Base>
+  <h1>{ko.site.slogan}</h1>
+  <p>{ko.site.intro}</p>
+  <h2>{ko.dev.engineCheck}</h2>
+  <p>{ko.dev.engineCheckNote}</p>
+  {
+    r && recipe && (
+      <dl>
+        <dt>{ko.dev.recipe}</dt>
+        <dd>{recipe.title}</dd>
+        <dt>{ko.dev.slots}</dt>
+        <dd>{r.slots.length}</dd>
+        <dt>{ko.dev.conflicts}</dt>
+        <dd>{r.conflicts.length}</dd>
+        <dt>{ko.dev.canIssue}</dt>
+        <dd>{r.canIssue ? ko.dev.yes : ko.dev.no}</dd>
+      </dl>
+    )
+  }
+  <h2>{ko.dev.assetCheck}</h2>
+  <p>{ko.dev.assetCheckNote}</p>
+  <Mascot width={200} alt={ko.mascot.waveAlt} />
+  <p class="row">{stationEmoji.map((id) => <Emoji id={id} size={48} />)}</p>
+  <p class="row icons">{iconNames.map((n) => <Icon name={n} />)}</p>
+  <a slot="action" class="btn btn-primary" href="/interview">{ko.home.build}</a>
+</Base>
+
+<style>
+  :global(.mascot) {
+    display: block;
+    height: auto;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .icons {
+    color: var(--navy);
+  }
+</style>

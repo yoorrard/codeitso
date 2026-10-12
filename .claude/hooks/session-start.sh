@@ -26,6 +26,13 @@ if [ -n "${CLAUDE_ENV_FILE:-}" ] && [ -d /opt/pw-browsers ]; then
     echo 'export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1'
   } >> "$CLAUDE_ENV_FILE"
 fi
+# 도구가 몰래 사용 통계를 보내지 않게 (사이트와 같은 원칙: 추적 없음)
+if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+  {
+    echo 'export ASTRO_TELEMETRY_DISABLED=1'
+    echo 'export WRANGLER_SEND_METRICS=false'
+  } >> "$CLAUDE_ENV_FILE"
+fi
 
 # 3. 지금 상태 한눈에: 다음 작업과 사람 대기열
 if [ -f docs/TASKS.md ]; then

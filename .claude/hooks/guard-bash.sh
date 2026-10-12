@@ -28,13 +28,24 @@ bare="$(printf '%s\n' "$cmd" | awk '
 if printf '%s' "$bare" | grep -Eq 'git[^|;&]*push[^|;&]*(--force([^-]|$)|[[:space:]]-f([[:space:]]|$))'; then
   block "git push --force" "git push -u origin <작업 브랜치>. 이미 합쳐진 기록만 있는 브랜치를 새로 만들 때만 --force-with-lease를 쓴다."
 fi
-if printf '%s' "$bare" | grep -Eq 'git[^|;&]*push[^|;&]*[[:space:]](origin[[:space:]]+)?(main|master)([[:space:]]|$|:)'; then
-  block "main/master로 바로 푸시" "작업 브랜치(claude/...)로 푸시한다."
+if printf '%s' "$bare" | grep -Eq 'git[^|;&]*push[^|;&]*[[:space:]:+](origin[[:space:]]+)?(main|master)([[:space:]]|$|:)'; then
+  block "main/master로 바로 푸시 (HEAD:main 같은 refspec 포함)" "작업 브랜치(claude/...)로 푸시한다."
+fi
+if printf '%s' "$bare" | grep -Eq 'git[^|;&]*push[^|;&]*[[:space:]]\+[^[:space:]]'; then
+  block "+refspec 강제 푸시" "git push -u origin <작업 브랜치> (강제 없이)."
 fi
 
-# 2. 검사 건너뛰기
-if printf '%s' "$bare" | grep -Eq -- '--no-verify|core\.hooksPath'; then
-  block "검사 건너뛰기(--no-verify)" "실패한 검사를 고친 뒤 커밋한다."
+# 2. 검사 건너뛰기: --no-verify와 줄임꼴(git은 --no-veri도 받는다), commit -n, 훅 경로 바꾸기 (읽기 --get은 통과)
+if printf '%s' "$bare" | grep -Eq -- '--no-ver|git[^|;&]*commit[^|;&]*[[:space:]]-[a-zA-Z]*n([[:space:]]|$)|-c[[:space:]]*core\.hooksPath=|config([[:space:]]+--(global|local|system))?[[:space:]]+core\.hooksPath[[:space:]]+[^[:space:]-]'; then
+  block "검사 건너뛰기(--no-verify, commit -n, core.hooksPath 바꾸기)" "실패한 검사를 고친 뒤 커밋한다."
+fi
+
+# 2b. 브랜치 강제 삭제, 컨테이너에서 막힌 브라우저 내려받기
+if printf '%s' "$bare" | grep -Eq 'git[[:space:]]+branch[^|;&]*[[:space:]](-[a-zA-Z]*D|--delete[[:space:]]+--force|--force[[:space:]]+--delete)'; then
+  block "git branch -D (합치지 않은 일을 잃을 수 있다)" "합쳐진 브랜치만 git branch -d."
+fi
+if printf '%s' "$bare" | grep -Eq 'playwright[[:space:]]+install'; then
+  block "Playwright 브라우저 내려받기" "컨테이너의 /opt/pw-browsers(Chromium 1194)를 쓴다. Playwright 판을 올리지 않는다 (D33)."
 fi
 
 # 3. 작업을 통째로 지우는 명령

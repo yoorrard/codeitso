@@ -37,10 +37,12 @@ export async function receiptChars(): Promise<string> {
   add(JSON.stringify(templates.receipt).replace(/\{\{[a-z]+\}\}/g, ''));
   const rules = readJson<{ rules: { type: string; slot?: { label: string } }[] }>(join(DATA_DIR, 'rules.json'));
   for (const r of rules.rules) if (r.type === 'slot' && r.slot) add(r.slot.label);
-  // 화면의 전광판·계기판 고정 문구 (src/copy/ko.ts의 board 묶음이 생기면 함께 넣는다)
+  // 화면의 전광판·계기판 고정 문구 (src/copy/ko.ts의 board·stations 묶음)
   const ko = (await import('../../src/copy/ko.ts')) as { ko: Record<string, unknown> };
-  const board = ko.ko['board'];
-  if (board) add(JSON.stringify(board).replace(/\{\{[a-z]+\}\}/g, ''));
+  for (const group of ['board', 'stations']) {
+    const v = ko.ko[group];
+    if (v) add(JSON.stringify(v).replace(/\{\{[a-z]+\}\}/g, ''));
+  }
   return [...set].sort().join('');
 }
 

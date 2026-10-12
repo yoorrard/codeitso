@@ -8,6 +8,11 @@ on:
 permissions:
   contents: read
 
+# 도구의 사용 통계 보내기를 끈다 (추적 없음 원칙)
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  WRANGLER_SEND_METRICS: 'false'
+
 jobs:
   check:
     runs-on: ubuntu-latest

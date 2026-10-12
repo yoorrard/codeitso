@@ -55,7 +55,7 @@
 - 할 일: `tests/fixtures/`의 작은 가짜 자료로 시험한다. 조건 모양 전부(`deferred` 포함), 질문 숨김·되살림, 가중치 항목 하나하나, 같은 점수 순서 정하기, `shared`가 앞 칸에서만 붙는지, `conflict.paid-on-free`(유료 상품이 든 가짜 자료), 비워 둘 수 없는 칸, 2차로 미루기와 나누기 제안·더 쉬운 상품, 중간 서버 준비 단계 위치, 개념 순환 오류, 글자 폭 계산과 자르기, 예상 시간 반올림, 공유 상태 왕복과 잘못된 입력.
 - 완성 확인: `src/lib/engine` 줄 기준 시험 범위 90% 이상. 엔진 동작은 바꾸지 않는다 (바꿔야 하면 멈추고 사람에게 묻는다).
 
-### [ ] T05 자료 싣기·문구 파일·기본 틀
+### [x] T05 자료 싣기·문구 파일·기본 틀
 - 요구: R-10, R-43, R-50 · 읽을 것: `docs/ARCHITECTURE.md` 2·6절, `docs/UX.md` 2·7절
 - 할 일:
   - `src/lib/data.ts`: JSON을 import해 `Data`로 묶고 `catalog`를 내보낸다.
@@ -73,7 +73,7 @@
   - `src/lib/progress.ts` (D32): 주행 거리와 도장(정류장 다섯, 공부)을 `Session`·`evaluate` 결과·공부 기록에서 계산하는 순수 함수. `cc:trip:v1`에 장면을 이미 본 도장 id만 둔다.
 - 완성 확인: 단위 시험(저장·복원, 깨진 링크, 모르는 id 버림, 자유 입력이 링크에 없음, 정류장 규칙, 주행 거리·도장 계산과 같은 상태면 같은 값).
 
-### [ ] T06b 모션·효과음 기반
+### [x] T06b 모션·효과음 기반
 - 요구: R-08, R-51, R-53 · 읽을 것: `docs/UX.md` 4절, `game-motion` 스킬, 결정 D25·D28·D30 · 먼저: T02, T05
 - 할 일:
   - `src/lib/motion.ts`: `reduced()`(기기 설정 또는 `html[data-motion=reduce]`), `dur()`(토큰 읽기), `play()`, `skipAll()`(누르기·Esc·건너뛰기 버튼), `flip()`, `followPath()`. 사이트 설정의 동작 줄이기를 `html[data-motion]`과 저장소에 잇는다.
@@ -214,3 +214,6 @@
 2026-10-12 T02b 기사님 정리본과 `Mascot`(avif·webp 1배·2배), Fluent 3D 그림 문자 30개(`Emoji`), Phosphor duotone `Icon`(Astro·Preact), Pretendard 가변 글꼴로 바꿈·CSS 예산 30KB·`<picture>` 예산 셈 고침 (D38)
 2026-10-12 T03 Vitest 5.0.3(npm peer 버그는 overrides로), 골든·자료 검사(망가뜨린 자료 11가지)·명도 대비·글꼴 이름 시험 38개, 자료 검사를 `scripts/lib/validate.ts`로, check에 시험 포함, CI에 시험 범위·빌드·예산 (D39). 엔진 시험 범위 55% → T04
 2026-10-12 T06 (T05보다 먼저) nanostores 저장소(store·saved·result), lz-string 공유 링크(#r=, 읽고 바로 지움), 정류장 규칙·이어서 하기·상태 비교(stations), 주행 거리·도장(progress), 단위 시험 52개 (D40)
+2026-10-12 T05 기본 틀(Base.astro): 노선 띠·전광판·주행 거리·설정 메뉴(popover)·여행 기록과 기록 지우기(dialog)를 담은 머리말 섬, 붙박이 아래 막대(주 버튼·사전), 기사님 자리, aria-live 자리, 문서 간 View Transitions, 기사님 얼굴 자르기, 문구 묶음 (D41)
+2026-10-12 T06b motion.ts(reduced·dur·play·skipAll·skippable·flip·followPath), sfx.ts(기본 꺼짐, 켜면 합성기 동적 import, 소리 일곱 가지), 시험 12개
+2026-10-12 하네스 보강 (D42): 훅 구멍 메우기, 멈춤 검사 3번, 원격 측정 끄기, 사이트 설정 동작 줄이기 스크린샷

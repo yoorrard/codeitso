@@ -1,0 +1,72 @@
+---
+// 모든 화면의 기본 틀 (T05): 본문 바로 가기 → 머리말(노선 띠·전광판·계기판·설정) → 본문(무대) → 아래 막대(주 버튼·사전).
+// 기사님 자리(mascot 칸)와 화면 낭독기 알림 자리(#cc-live)도 여기 있다. 페이지 사이는 문서 간 View Transitions (D25).
+import '../styles/global.css';
+import '../styles/frame.css';
+import { getImage } from 'astro:assets';
+import face from '../assets/mascot/chauffeur-face.png';
+import Icon from '../components/Icon.astro';
+import Masthead from '../components/Masthead.tsx';
+import { ko } from '../copy/ko.ts';
+import { LIVE_ID } from '../lib/announce.ts';
+import type { StationId } from '../lib/stations.ts';
+
+interface Props {
+  /** 페이지 제목 (사이트 이름은 뒤에 붙는다). 없으면 홈 제목 */
+  title?: string;
+  description?: string;
+  /** 지금 정류장. 정류장이 아닌 화면은 비워 둔다 */
+  station?: StationId | null;
+}
+const { title, description = ko.site.description, station = null } = Astro.props;
+const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
+const faceImg = await getImage({ src: face, width: 64, height: 64, format: 'webp' });
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const hasMascot = Astro.slots.has('mascot');
+const hasAction = Astro.slots.has('action');
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1e2c58" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 --navy 값을 그대로 쓴다 -->
+    {canonical && <link rel="canonical" href={canonical} />}
+    <script is:inline>
+      // 사이트 설정의 '동작 줄이기'를 첫 그림 전에 붙인다. 읽기만 한다 (저장은 src/lib/store.ts).
+      try {
+        var p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}');
+        if (p && p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{ko.layout.skip}</a>
+    <header class="masthead on-dark">
+      <Masthead client:load station={station} faceSrc={faceImg.src} />
+    </header>
+    <main id="main" tabindex="-1" class="stage">
+      <slot />
+    </main>
+    {
+      hasMascot && (
+        <div class="mascot-dock">
+          <slot name="mascot" />
+        </div>
+      )
+    }
+    <div class="action-bar">
+      <div class="action-inner">
+        {hasAction && <slot name="action" />}
+        <a class="dict-btn" href="/dictionary">
+          <Icon name="dictionary" />
+          <span>{ko.layout.dictionary}</span>
+        </a>
+      </div>
+    </div>
+    <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>

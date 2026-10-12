@@ -101,10 +101,10 @@ If something appears during tests but you don't know which test:
 Bisect the test files (the original find-polluter.sh script is not vendored here; run test files one by one, halving the set each time):
 
 ```bash
-bash ./find-polluter.sh '.git' 'src/**/*.test.ts'
+npx vitest run tests/engine/shop.test.ts   # one file at a time; then halve the remaining set
 ```
 
-Runs tests one-by-one, stops at first polluter. See script for usage.
+Run the files one by one (or half the set at a time) and stop at the first file that leaves the polluting state behind.
 
 ## Real Example: Empty projectDir
 

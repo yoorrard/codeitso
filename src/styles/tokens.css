@@ -65,8 +65,8 @@
   --space-6: 32px;
   --space-7: 48px;
   --content-max: 720px;
-  --bar-top: 112px; /* 붙박이 머리말(노선 띠 + 전광판) 높이. T05에서 실제 값으로 맞춘다 */
-  --bar-bottom: 76px; /* 붙박이 아래 진행 막대 높이 */
+  --bar-top: 16px; /* 머리말은 붙박이가 아니다 (작은 화면을 덜 가리려고, D41). 초점 받은 요소 위 여백만 */
+  --bar-bottom: 76px; /* 붙박이 아래 진행 막대 높이 (주 버튼 44px + 위아래 여백) */
   --shadow: 0 2px 0 rgb(18 27 58 / 0.08), 0 10px 28px rgb(18 27 58 / 0.1);
   --shadow-lift: 0 4px 0 rgb(18 27 58 / 0.1), 0 16px 36px rgb(18 27 58 / 0.14);
 
@@ -79,6 +79,7 @@
   --dur-print: 2200ms; /* M4 영수증 출력 상한 */
   --dur-stamp: 250ms; /* 도장 찍기 */
   --dur-scene: 3000ms; /* 공들인 장면 상한 */
+  --dur-page: 240ms; /* 페이지 전환 (View Transitions, 250ms 안쪽) */
   --dur-fade: 150ms; /* 바뀐 것을 알려 주는 투명도 전환. 동작 줄이기에서도 남긴다 (D30) */
 
   /* 곡선: 들어오고 나갈 때 강한 ease-out, 화면 위 이동은 ease-in-out, 도장·도착은 살짝 튀는 스프링 */
@@ -114,6 +115,7 @@
     --dur-print: 0ms;
     --dur-stamp: 0ms;
     --dur-scene: 0ms;
+    --dur-page: 0ms;
     --juice-s-scale: 1;
     --juice-m-scale: 1;
     --juice-l-scale: 1;
@@ -133,6 +135,7 @@
   --dur-print: 0ms;
   --dur-stamp: 0ms;
   --dur-scene: 0ms;
+  --dur-page: 0ms;
   --juice-s-scale: 1;
   --juice-m-scale: 1;
   --juice-l-scale: 1;

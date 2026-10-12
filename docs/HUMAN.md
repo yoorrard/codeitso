@@ -61,4 +61,23 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 ## C01 대조표
 
-(에이전트가 상품별로 확인할 사실과 원문 링크를 채운다.)
+진열 상품 중 `needsReview: true`인 것을 공식 문서와 대조한다 (에이전트가 2026-10-12에 `data/products.json`에서 뽑음). 칸마다 지금 적힌 값이다. 맞으면 [x], 틀리면 고칠 값을 옆에 적어 주면 에이전트가 자료를 고치고 `needsReview: false`, `checkedAt`을 그달로 바꾼다. 무료 한도·자격·요금·갱신 주기는 특히 공식 원문으로만 확인한다 (CLAUDE.md 꼭 지킬 것 6).
+
+| 상품 | 확인할 사실 (지금 값) | 볼 곳 |
+|---|---|---|
+| [ ] `react-vite` React + Vite | 비용: 무료 (MIT 라이선스)<br>키 노출 위험: 없음<br>라이선스: MIT<br>준비물·걸리는 시간: Node.js LTS 설치(바로) | [React 공식 문서](https://ko.react.dev) [Vite 시작하기](https://vite.dev/guide/)  |
+| [ ] `github-pages` GitHub Pages | 비용: 공개 저장소는 무료<br>자격·키: 가입<br>키 노출 위험: 없음<br>준비물·걸리는 시간: GitHub 가입(바로) | [GitHub Pages 문서](https://docs.github.com/ko/pages)  |
+| [ ] `cloudflare-workers` Cloudflare Workers | 비용: 무료 플랜으로 시작 (정적 파일 요청은 무료·무제한)<br>자격·키: 가입<br>키 노출 위험: 없음<br>준비물·걸리는 시간: Cloudflare 가입(바로) | [Workers 정적 파일 문서](https://developers.cloudflare.com/workers/static-assets/) [Workers 한도](https://developers.cloudflare.com/workers/platform/limits/) [원문](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/) [원문](https://developers.cloudflare.com/workers/platform/limits/) |
+| [ ] `google-sheets-apps-script` 구글 시트 + 앱스 스크립트 | 비용: 구글 계정으로 무료<br>자격·키: 가입<br>서버 위치: 국외<br>키 노출 위험: 없음<br>준비물·걸리는 시간: 개인 구글 계정 (학교 계정은 외부 공유가 막힐 수 있어요)(바로) | [앱스 스크립트 웹 앱 안내](https://developers.google.com/apps-script/guides/web) [앱스 스크립트 할당량](https://developers.google.com/apps-script/guides/services/quotas)  |
+| [ ] `supabase` Supabase | 비용: 무료 플랜으로 시작 (활성 프로젝트 2개)<br>자격·키: 가입<br>서버 위치: selectable<br>키 노출 위험: 없음<br>준비물·걸리는 시간: Supabase 가입 (GitHub 계정으로도 가능)(바로) | [Supabase 문서](https://supabase.com/docs) [Supabase 요금](https://supabase.com/pricing) [원문](https://supabase.com/pricing) |
+| [ ] `neis-meal` 나이스 급식식단정보 | 비용: 무료<br>자격·키: 키 발급<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 교육정보 개방 포털에 로그인해 인증키 발급(바로) | [나이스 교육정보 개방 포털](https://open.neis.go.kr) [원문](https://open.neis.go.kr/portal/guide/apiGuidePage.do) |
+| [ ] `neis-schedule` 나이스 학사일정 | 비용: 무료<br>자격·키: 키 발급<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 교육정보 개방 포털에 로그인해 인증키 발급(바로) | [나이스 교육정보 개방 포털](https://open.neis.go.kr)  |
+| [ ] `neis-timetable` 나이스 시간표 | 비용: 무료<br>자격·키: 키 발급<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 교육정보 개방 포털에 로그인해 인증키 발급(바로) | [나이스 교육정보 개방 포털](https://open.neis.go.kr)  |
+| [ ] `data-go-kr` 공공데이터포털 | 비용: 대부분 무료<br>자격·키: 키 발급<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 공공데이터포털 가입 후 API 활용 신청 (승인 뒤 키가 동작하기까지 1~2시간)(몇 시간) | [공공데이터포털](https://www.data.go.kr)  |
+| [ ] `kma-forecast` 기상청 단기예보 | 비용: 무료<br>자격·키: 키 발급<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 공공데이터포털 가입 후 API 활용 신청 (승인 뒤 키가 동작하기까지 1~2시간)(몇 시간) | [기상청 단기예보 조회서비스 (공공데이터포털)](https://www.data.go.kr/data/15084084/openapi.do)  |
+| [ ] `data4library` 도서관 정보나루 | 비용: 무료<br>자격·키: 승인 필요<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 도서관 정보나루 가입 후 인증키 신청 (관리자 승인 필요)(며칠) | [도서관 정보나루](https://www.data4library.kr)  |
+| [ ] `fsc-stock` 금융위원회 주식시세정보 | 비용: 무료<br>자격·키: 키 발급<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 공공데이터포털 가입 후 API 활용 신청 (승인 뒤 키가 동작하기까지 1~2시간)(몇 시간) | [금융위원회 주식시세정보 (공공데이터포털)](https://www.data.go.kr/data/15094808/openapi.do)  |
+| [ ] `kis-open-api` 한국투자증권 Open API | 비용: API는 무료, 증권 계좌 필요<br>자격·키: 계좌·사업자 필요<br>서버 위치: 국내<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 한국투자증권 계좌 개설(며칠); KIS Developers 서비스 신청 후 앱 키 발급(바로) | [KIS Developers](https://apiportal.koreainvestment.com)  |
+| [ ] `kakao-maps` 카카오맵 지도 API | 비용: 무료 한도 안에서 무료<br>자격·키: 키 발급<br>서버 위치: 국내<br>키 노출 위험: 없음<br>준비물·걸리는 시간: 카카오 개발자 가입 후 앱을 만들고 JavaScript 키 받기(바로) | [카카오맵 Web API 안내](https://apis.map.kakao.com/web/guide/)  |
+| [ ] `telegram-bot` 텔레그램 봇 알림 | 비용: 무료<br>자격·키: 키 발급<br>서버 위치: 국외<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 텔레그램에서 BotFather로 봇을 만들고 토큰 받기(바로) | [텔레그램 봇 API](https://core.telegram.org/bots/api)  |
+| [ ] `discord-webhook` 디스코드 웹후크 알림 | 비용: 무료<br>자격·키: 가입<br>서버 위치: 국외<br>키 노출 위험: 있음<br>준비물·걸리는 시간: 디스코드 서버의 채널 설정에서 웹후크 만들기(바로) | [디스코드 웹후크 안내](https://support.discord.com/hc/ko/articles/228383668)  |

@@ -235,3 +235,4 @@
 2026-10-12 T19 사전 조사만: 공식 목록 수단(목록조회서비스 15077093, 목록개방현황 CSV 15062804)·분류 16개·이용 조건을 D51에 적고, 계정·키·약관·robots 확인을 H08·H09(선택 H10)로 넘김. 수집기는 사람 확인 뒤에 만든다
 2026-10-12 T20 npm run e2e (Playwright 1.56.1, 360px, dist를 scripts/qa/serve.ts로): 레시피 5개로 영수증·꾸러미 제목, 키보드만으로 인터뷰부터 영수증까지, 공유 링크 다시 열기(읽기 전용·조각 지움·이어 하기), 사전 질문 4개·옆 창 Esc·진열대 검색, 차 이동·영수증 출력 중 누르면 끝, 기기·사이트 동작 줄이기 흐름, axe 18개 화면(처음 온 사람)+6개(진행 있음) 심각·치명 0 — 41개 통과. CI에 e2e와 실패 기록 올리기를 더함. 첫 화면 JS 67.9KB/100KB (D52)
 2026-10-12 T21 준비(사람 단계 남음): 배포 작업(deploy.yml: main·수동, 검사·validate·빌드·예산, 비밀 값 없으면 건너뜀, database_id 확인, 원격 D1 표, wrangler deploy), CSP(Astro 해시)·_headers, '검토 중인 시험판' 띠·noindex·robots, Web Analytics 자리(/receipt 제외), docs/DEPLOY.md, HUMAN H11. 완성 확인은 사람이 계정을 연결한 뒤 (D53)
+2026-10-12 T22 준비(사람 단계 남음): 관찰 시험 안내서 docs/OBSERVATION.md(과제 3개, 관찰할 것 9가지, 기록 양식), 남은 위험 목록 docs/RISKS.md, 정식 배포는 deploy.yml에서 SITE_STAGE=release일 때 validate:release에 묶임(D53). C01 대조표를 HUMAN.md에 채움(진열 상품 16개)

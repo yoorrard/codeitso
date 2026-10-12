@@ -33,7 +33,9 @@ function slotArt(capability: string): string {
 function compareLine(ranking: SlotRanking): string | null {
   const { runnerUp, compare } = ranking;
   if (!runnerUp || !compare) return null;
-  if (compare.ahead.length === 0) return fill(ko.shop.compareTie, { name: runnerUp.product.name });
+  // 점수가 같으면 엔진이 무엇으로 갈렸는지 알려 준다 (공식 → 맡는 칸 수 → 난이도 → 이름)
+  if (compare.tieBy) return fill(ko.shop.compareTie, { name: runnerUp.product.name, why: ko.shop.tieWhy[compare.tieBy] });
+  if (compare.ahead.length === 0) return fill(ko.shop.compareNotRecommended, { name: runnerUp.product.name });
   const labels = compare.ahead.map((k) => {
     const theirs = runnerUp.parts[k] ?? 0;
     const con = (T.conLabels as Record<string, string | undefined>)[k];

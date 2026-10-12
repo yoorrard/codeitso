@@ -428,7 +428,7 @@ describe('추천 이유와 아쉬운 점', () => {
 describe('compareScored 정렬', () => {
   const sc = (p: Product, value: number, slotsCovered = 1): Scored => ({ product: p, score: value, parts: {}, reasons: [], cons: [], slotsCovered });
 
-  it('점수와 공식 제공이 같으면 지금 열린 칸을 더 많이 맡는 상품이 먼저 (한 상품으로 두 칸을 채우면 더 단순하다)', () => {
+  it('점수와 공식 제공이 같으면 맡는 칸 수(slotsCovered)가 큰 상품이 먼저 (값은 rankSlot이 센다)', () => {
     const list = [sc(product('airtable-like', { difficulty: 1 }), 4, 1), sc(product('supabase-like', { difficulty: 2 }), 4, 2)];
     expect(ids([...list].sort(compareScored))).toEqual(['supabase-like', 'airtable-like']);
   });
@@ -443,6 +443,47 @@ describe('compareScored 정렬', () => {
       sc(plain('e', { difficulty: 3 }), 7),
     ];
     expect(ids([...list].sort(compareScored))).toEqual(['e', 'c', 'd', 'b', 'a', 'f']);
+  });
+});
+
+describe('동점 규칙: 지금 열린 칸을 더 맡는 상품 (D55)', () => {
+  const STORE = slotOf('slot.store', 'store', { order: 20 });
+  const AUTH = slotOf('slot.auth', 'auth', { order: 30 });
+  const HOST = slotOf('slot.host', 'host', { order: 40 });
+  // 셋 다 기본 3점(무료 +2, 공식 +1). 난이도는 이용자 수준과 같아 점수에 영향이 없다
+  const both = product('both', { capabilities: ['store', 'auth'] });
+  const storeOnly = product('aaa-store', { capabilities: ['store'], difficulty: 1 });
+  const authOnly = product('aaa-auth', { capabilities: ['auth'], difficulty: 1 });
+
+  it('같은 점수면 비어 있는 다른 칸에서도 최고 점수인 상품이 앞 (저장 칸에서 로그인도 맡는 상품)', () => {
+    const cat = tinyCatalog({ products: [both, storeOnly, authOnly] });
+    const r = rankSlot(cat, STORE, {}, [], [STORE, AUTH]);
+    expect(r.recommended?.product.id).toBe('both');
+    expect(r.compare?.tieBy).toBe('coverage');
+  });
+
+  it('다른 상품이 이미 채운 칸은 세지 않는다 (맡는 칸 수가 같아져 이름 순으로 갈린다)', () => {
+    const cat = tinyCatalog({ products: [both, storeOnly, authOnly] });
+    const r = rankSlot(cat, STORE, {}, [authOnly], [STORE, AUTH]);
+    expect(r.recommended?.product.id).toBe('aaa-store');
+    expect(r.compare?.tieBy).toBe('id');
+  });
+
+  it('다른 칸에서 최고 점수가 아니면 세지 않는다 (그 칸에는 더 맞는 상품이 있다)', () => {
+    // 배포 칸 동점: 'sheet'은 저장도 맡지만 저장 칸에서는 'local'이 더 높다 → 맡는 칸 수로 앞서지 않는다
+    const sheet = product('sheet', { capabilities: ['host', 'store'] });
+    const pages = product('pages', { capabilities: ['host'] });
+    const local = product('local', { capabilities: ['store'], serverRegion: 'local' });
+    const cat = tinyCatalog({ products: [sheet, pages, local] });
+    const r = rankSlot(cat, HOST, on('audience.me'), [], [STORE, HOST]);
+    expect(ids(r.shelf)).toEqual(['pages', 'sheet']);
+    expect(r.compare?.tieBy).toBe('id');
+  });
+
+  it('점수가 다르면 동점 이유가 없다', () => {
+    const cat = tinyCatalog({ products: [product('a', { domains: ['domain.book'] }), product('b')] });
+    const r = rankSlot(cat, SCREEN, on('domain.book'), [], [SCREEN]);
+    expect(r.compare?.tieBy).toBeUndefined();
   });
 });
 
@@ -568,7 +609,7 @@ describe('rankSlot 추천·2위·비교·채움', () => {
     expect(ids(r.shelf)).toEqual(['z', 'a2', 'b2', 'b3', 'm']);
     expect(r.recommended?.product.id).toBe('z');
     expect(r.runnerUp?.product.id).toBe('a2');
-    expect(r.compare).toEqual({ ahead: [], behind: [] });
+    expect(r.compare).toEqual({ ahead: [], behind: [], tieBy: 'difficulty' });
   });
 
   it('채움: 칸 기능을 가진 장바구니 상품 모두 (담은 순서, 후보가 아니어도)', () => {

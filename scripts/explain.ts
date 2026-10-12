@@ -29,10 +29,13 @@ const r = evaluate(cat, session);
 console.log(`인터뷰 ${r.done ? '끝' : `미완료 (다음: ${r.interview.next?.id})`} · 태그 ${JSON.stringify(r.interview.tags)}`);
 for (const s of r.slots) {
   const rec = s.recommended?.product.id ?? '없음';
-  console.log(`\n[${s.slot.label}] ${s.slot.required ? '필수' : '선택'} · 추천 ${rec} · 담은 것 ${s.filledBy.join(', ') || '-'}`);
+  const tie = s.compare?.tieBy ? ` · 동점은 ${s.compare.tieBy}로 갈림` : '';
+  console.log(`\n[${s.slot.label}] ${s.slot.required ? '필수' : '선택'} · 추천 ${rec} · 담은 것 ${s.filledBy.join(', ') || '-'}${tie}`);
+  // 동점을 가르는 값: 공식 제공(공), 맡는 칸 수(칸), 난이도(난)
   for (const x of [...s.shelf, ...s.index]) {
     const mark = x === s.recommended ? '★' : x.product.layer === 'index' ? '색' : ' ';
-    console.log(`  ${mark} ${String(x.score).padStart(3)}  ${x.product.id.padEnd(36)} ${JSON.stringify(x.parts)}`);
+    const tieKeys = `${x.product.provider.type === 'official' ? '공' : '-'} 칸${x.slotsCovered} 난${x.product.difficulty}`;
+    console.log(`  ${mark} ${String(x.score).padStart(3)}  ${x.product.id.padEnd(30)} ${tieKeys}  ${JSON.stringify(x.parts)}`);
   }
 }
 console.log(`\n충돌: ${r.conflicts.map((c) => `${c.id}${c.kept ? '(그대로 둠)' : ''}`).join(', ') || '없음'}`);

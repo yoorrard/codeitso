@@ -344,6 +344,19 @@
       ]
     },
     {
+      "id": "q.finance-topic",
+      "text": "금융 정보 중 무엇이 필요한가요?",
+      "chip": "금융 정보",
+      "picture": false,
+      "showIf": { "tag": "domain.finance", "gte": 1 },
+      "options": [
+        { "id": "stock", "label": "주식 시세", "tags": { "topic.stock": 1 } },
+        { "id": "exchange", "label": "환율", "tags": { "topic.exchange": 1 } },
+        { "id": "economy", "label": "경제 지표(금리·물가 등)", "tags": { "topic.economy": 1 } },
+        { "id": "unknown", "label": "모르겠어요", "isUnknown": true, "tags": { "topic.stock": 1 } }
+      ]
+    },
+    {
       "id": "q.notify",
       "text": "바뀐 게 있으면 알림을 받을까요?",
       "help": "알림은 정해진 시간마다 확인하는 장치가 필요해서 조금 더 어려워요.",

@@ -52,15 +52,16 @@ export function answerChips(cat: Catalog, state: InterviewState): { questionId: 
 
 /**
  * 지금까지의 답과 어긋나지 않는 레시피. 같은 답이 많은 순, 같으면 레시피 순서.
- * '혹시 이걸 만드시나요?' 미리보기에 쓴다.
+ * '혹시 이걸 만드시나요?' 미리보기에 쓴다. '모르겠어요'(isUnknown) 답은 어긋남으로도 같은 답으로도 세지 않는다.
  */
 export function matchingRecipes(cat: Catalog, state: InterviewState, limit = 2): string[] {
   const scored: { id: string; same: number; index: number }[] = [];
+  const unknown = (qid: string, a: string): boolean => cat.question.get(qid)?.options?.find((o) => o.id === a)?.isUnknown === true;
   cat.data.recipes.recipes.forEach((r, index) => {
     let same = 0;
     for (const [qid, a] of Object.entries(state.answers)) {
       const ra = r.answers[qid];
-      if (ra === undefined) continue;
+      if (ra === undefined || unknown(qid, a)) continue;
       if (ra !== a) return;
       same += 1;
     }

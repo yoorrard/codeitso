@@ -6,8 +6,8 @@
 
 | 파일 | 담는 것 | 스키마 | 지금 개수 |
 |---|---|---|---|
-| `taxonomy.json` | 태그 분류표 (유형·사용자·AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 44개, 분야 10개 |
-| `questions.json` | 인터뷰 질문, 보기, 보기별 태그, 노출 조건 | `questions.schema.json` | 16문항 |
+| `taxonomy.json` | 태그 분류표 (유형·사용자·AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 53개, 분야 10개 |
+| `questions.json` | 인터뷰 질문, 보기, 보기별 태그, 노출 조건 | `questions.schema.json` | 17문항 |
 | `rules.json` | 칸·충돌·조사·안전·막힘 규칙 | `rules.schema.json` | 38개 |
 | `scoring.json` | 추천 가중치와 기준값 (사이트에 공개) | `scoring.schema.json` | |
 | `products.json` | 상품 카드 (진열·색인) | `products.schema.json` | 49개 (진열 48) |
@@ -47,6 +47,7 @@
 - `cartAny`에서 쓸 수 있는 field: `provider.type`, `access`, `realtime`, `serverRegion`, `layer`, `cost.free`, `keyExposureRisk`, `publicKey`, `recommendable`
 - 질문 노출 조건과 칸 규칙에는 장바구니 조건과 `deferred`를 쓸 수 없다 (검사가 막는다).
 - 질문 노출 조건은 앞선 질문이 만드는 태그와 답만 볼 수 있다.
+- '모르겠어요' 보기(`isUnknown: true`)는 태그를 줄 수도 있다: 앱 종류(→ 안내 페이지), 만드는 AI, 예산, 그리고 날씨·말과 글·금융 갈래(→ 가장 흔한 쪽인 예보·번역·주식 시세)는 기본 태그를 주고, 교육 주제의 '모르겠어요'는 태그를 주지 않는다(교육 상품은 주제가 서로 달라 하나로 보낼 수 없다). 레시피 미리 보기는 '모르겠어요'를 어긋남으로 세지 않는다.
 
 ## 4. 상품 카드
 

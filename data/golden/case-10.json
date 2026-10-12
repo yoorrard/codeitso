@@ -8,6 +8,7 @@
     "q.ai": "agent",
     "q.save": "no",
     "q.domain": "finance",
+    "q.finance-topic": "stock",
     "q.realtime": "realtime",
     "q.budget": "free-only",
     "q.payment": "no",
@@ -22,6 +23,7 @@
       "q.ai",
       "q.save",
       "q.domain",
+      "q.finance-topic",
       "q.realtime",
       "q.budget",
       "q.payment",
@@ -43,9 +45,9 @@
         "required": true,
         "recommended": "kis-open-api",
         "filledBy": ["kis-open-api"],
-        "score": 3,
-        "runnerUp": "bok-ecos",
-        "reasons": ["domain", "budget", "realtime"]
+        "score": 6,
+        "runnerUp": "fsc-stock",
+        "reasons": ["domain", "topic", "budget"]
       },
       {
         "id": "slot.host",
@@ -70,6 +72,6 @@
     "difficulty": 7,
     "difficultyFirst": 7,
     "minutes": 200,
-    "split": { "needed": true, "defer": [], "easier": [] }
+    "split": { "needed": true, "defer": [], "easier": [{ "slotId": "slot.data", "from": "kis-open-api", "to": "fsc-stock" }] }
   }
 }

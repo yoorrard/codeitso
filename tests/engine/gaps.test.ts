@@ -112,6 +112,17 @@ describe('matchingRecipes: 같은 답이 하나도 없는 레시피', () => {
   });
 });
 
+describe("matchingRecipes: '모르겠어요'는 어긋남으로 세지 않는다", () => {
+  const qa = question('qa', [option('x'), option('y')]);
+  const qc = question('qc', [option('f', { 'topic.f': 1 }), option('unknown', { 'topic.f': 1 }, { isUnknown: true })]);
+  const cat = tinyCatalog({ questions: [qa, qc], recipes: [recipe('r.w', { qa: 'x', qc: 'f' })] });
+
+  it("레시피가 고른 보기 대신 '모르겠어요'를 골라도 미리 보기에 남는다 (같은 답으로도 세지 않는다)", () => {
+    expect(matchingRecipes(cat, runInterview(cat, { qa: 'x', qc: 'unknown' }))).toEqual(['r.w']);
+    expect(matchingRecipes(cat, runInterview(cat, { qc: 'unknown' }))).toEqual([]);
+  });
+});
+
 // ── 순수성 ─────────────────────────────────────────────
 
 describe('같은 자료·같은 상태면 같은 결과, 자료는 그대로', () => {

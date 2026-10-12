@@ -33,9 +33,14 @@ export interface Scored {
   reasons: ScoreKey[];
   /** 점수를 깎은 항목 (많이 깎인 순) */
   cons: ScoreKey[];
-  /** 지금 열린 칸 중 이 상품이 맡을 수 있는 칸 수 (동점일 때만 쓴다) */
+  /**
+   * 동점일 때만 쓰는 값: 지금 열린 칸 중 이 상품이 맡을 수 있고, 다른 상품이 아직 채우지 않았고,
+   * 그 칸에서 이 상품이 최고 점수인 칸의 수. rankSlot이 센다 (scoreProduct만 부르면 1)
+   */
   slotsCovered: number;
 }
+
+export type TieBy = 'official' | 'coverage' | 'difficulty' | 'id';
 
 export interface SlotRanking {
   slot: Slot;
@@ -46,7 +51,8 @@ export interface SlotRanking {
   recommended: Scored | null;
   runnerUp: Scored | null;
   /** 추천과 2위 비교: 추천이 앞선 항목, 2위가 앞선 항목 */
-  compare: { ahead: ScoreKey[]; behind: ScoreKey[] } | null;
+  /** 추천과 2위의 차이. 점수가 같으면 tieBy가 무엇으로 갈렸는지 말한다 (정렬 순서: 공식 제공 → 맡는 칸 수 → 난이도 → id) */
+  compare: { ahead: ScoreKey[]; behind: ScoreKey[]; tieBy?: TieBy } | null;
   /** 이 칸을 채운 장바구니 상품 id */
   filledBy: string[];
 }
@@ -130,8 +136,7 @@ export function scoreProduct(cat: Catalog, p: Product, slot: Slot, tags: Record<
   const cons = SCORE_KEYS.filter((k) => (parts[k] ?? 0) < 0).sort(
     (a, b) => (parts[a] ?? 0) - (parts[b] ?? 0) || keyIndex(a) - keyIndex(b),
   );
-  const slotsCovered = slots.filter((s) => p.capabilities.includes(s.capability)).length;
-  return { product: p, score, parts, reasons, cons, slotsCovered };
+  return { product: p, score, parts, reasons, cons, slotsCovered: 1 };
 }
 
 /** 점수 → 공식 제공 → 지금 열린 칸을 더 많이 맡는 상품(한 상품으로 여러 칸을 채우면 더 단순하다) → 쉬운 난이도 → id 순 */
@@ -146,9 +151,47 @@ export function compareScored(a: Scored, b: Scored): number {
   );
 }
 
+/** 칸마다 진열 상품의 점수와, 추천할 수 있는 상품 중 최고 점수 (동점 규칙에서 쓴다) */
+function slotTops(cat: Catalog, slots: Slot[], tags: Record<string, number>, cart: Product[]): Map<string, { top: number; by: Map<string, number> }> {
+  const out = new Map<string, { top: number; by: Map<string, number> }>();
+  for (const t of slots) {
+    const by = new Map<string, number>();
+    let top = Number.NEGATIVE_INFINITY;
+    for (const p of slotCandidates(cat, t, tags)) {
+      if (p.layer !== 'shelf') continue;
+      const sc = scoreProduct(cat, p, t, tags, cart, slots).score;
+      by.set(p.id, sc);
+      if (p.recommendable && sc > top) top = sc;
+    }
+    out.set(t.id, { top, by });
+  }
+  return out;
+}
+
+/** 동점일 때 무엇으로 갈렸는지 (compareScored와 같은 순서) */
+function tieReason(a: Scored, b: Scored): TieBy {
+  const official = (s: Scored): boolean => s.product.provider.type === 'official';
+  if (official(a) !== official(b)) return 'official';
+  if (a.slotsCovered !== b.slotsCovered) return 'coverage';
+  if (a.product.difficulty !== b.product.difficulty) return 'difficulty';
+  return 'id';
+}
+
 export function rankSlot(cat: Catalog, slot: Slot, tags: Record<string, number>, cart: Product[], slots: Slot[]): SlotRanking {
+  const tops = slotTops(cat, slots, tags, cart);
+  // 맡는 칸 수 = 이 칸 1 + 다른 열린 칸 중 이 상품이 맡을 수 있는 칸. 다른 상품이 채운 칸, 이 상품보다
+  // 점수가 높은 상품이 있는 칸은 세지 않는다 (D55). 이 칸은 모두에게 같으므로 장바구니와 상관없이 1이다
+  const covered = (p: Product): number =>
+    1 +
+    slots.filter((t) => {
+      if (t.id === slot.id || !p.capabilities.includes(t.capability)) return false;
+      if (cart.some((c) => c.id !== p.id && c.capabilities.includes(t.capability))) return false;
+      const info = tops.get(t.id);
+      const mine = info?.by.get(p.id);
+      return info !== undefined && mine !== undefined && mine >= info.top;
+    }).length;
   const scored = slotCandidates(cat, slot, tags)
-    .map((p) => scoreProduct(cat, p, slot, tags, cart, slots))
+    .map((p) => ({ ...scoreProduct(cat, p, slot, tags, cart, slots), slotsCovered: covered(p) }))
     .sort(compareScored);
   const shelf = scored.filter((s) => s.product.layer === 'shelf');
   const index = scored.filter((s) => s.product.layer === 'index');
@@ -164,7 +207,7 @@ export function rankSlot(cat: Catalog, slot: Slot, tags: Record<string, number>,
       if (d > 0) ahead.push(k);
       if (d < 0) behind.push(k);
     }
-    compare = { ahead, behind };
+    compare = recommended.score === runnerUp.score ? { ahead, behind, tieBy: tieReason(recommended, runnerUp) } : { ahead, behind };
   }
   const filledBy = cart.filter((p) => p.capabilities.includes(slot.capability)).map((p) => p.id);
   return { slot, shelf, index, recommended, runnerUp, compare, filledBy };

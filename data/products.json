@@ -419,6 +419,7 @@
       "useWhen": "전 영업일 기준 주가 흐름을 보여 주는 화면을 만들 때",
       "capabilities": ["data"],
       "domains": ["domain.finance"],
+      "topics": ["topic.stock"],
       "provider": { "type": "official", "name": "금융위원회" },
       "access": "key",
       "cost": { "free": true, "note": "무료" },
@@ -451,6 +452,7 @@
       "useWhen": "실시간 시세가 꼭 필요하고, 해당 증권사 계좌를 만들 수 있을 때",
       "capabilities": ["data"],
       "domains": ["domain.finance"],
+      "topics": ["topic.stock"],
       "provider": { "type": "official", "name": "한국투자증권" },
       "access": "account-or-business",
       "cost": { "free": true, "note": "API는 무료, 증권 계좌 필요" },
@@ -536,7 +538,7 @@
           "lead": "instant"
         }
       ],
-      "promptFragment": "텔레그램 봇 토큰은 비밀 값으로 두고, 정한 조건에 맞을 때만 sendMessage로 나에게 알림을 보내 줘.",
+      "promptFragment": "정한 조건에 맞을 때만 텔레그램 봇의 sendMessage로 나에게 알림을 보내 줘. 봇 토큰은 키처럼 다뤄 줘.",
       "needsConcepts": ["api", "api-key", "env-var"],
       "stuck": [
         "내가 봇에게 먼저 말을 걸어야 봇이 나에게 메시지를 보낼 수 있어요.",
@@ -570,7 +572,7 @@
           "lead": "instant"
         }
       ],
-      "promptFragment": "디스코드 웹후크 주소는 비밀 값으로 두고, 정한 조건에 맞을 때만 그 주소로 메시지를 보내 줘.",
+      "promptFragment": "정한 조건에 맞을 때만 디스코드 웹후크 주소로 메시지를 보내 줘. 웹후크 주소는 키처럼 다뤄 줘.",
       "needsConcepts": ["api", "api-key", "env-var"],
       "stuck": ["웹후크 주소를 아는 사람은 누구나 그 채널에 글을 올릴 수 있어요. 주소를 키처럼 숨기세요."],
       "related": ["telegram-bot"],
@@ -846,7 +848,7 @@
       "keyExposureRisk": true,
       "recommendable": true,
       "prep": [{ "label": "Airtable 가입 후 개인 액세스 토큰 만들기", "url": "https://airtable.com/create/tokens", "lead": "instant" }],
-      "promptFragment": "저장할 데이터가 있으면 Airtable 베이스에 저장해 줘. 개인 액세스 토큰은 비밀 값으로 두고, 토큰 권한은 기록 읽기·쓰기만, 접근할 베이스는 이 베이스 하나만 고르게 안내해 줘.",
+      "promptFragment": "저장할 데이터가 있으면 Airtable 베이스에 저장해 줘. 개인 액세스 토큰을 만들 때 권한은 기록 읽기·쓰기만, 접근할 베이스는 이 베이스 하나만 고르게 안내해 줘.",
       "needsConcepts": ["api", "api-key", "env-var"],
       "stuck": [
         "개인 액세스 토큰은 만들 때 한 번만 보여 줘요. 바로 복사해 두세요.",
@@ -886,7 +888,7 @@
       "keyExposureRisk": true,
       "recommendable": true,
       "prep": [{ "label": "슬랙 앱을 만들고 수신 웹후크 켜기", "url": "https://api.slack.com/apps", "lead": "instant" }],
-      "promptFragment": "슬랙 웹후크 주소는 비밀 값으로 두고, 정한 조건에 맞을 때만 그 주소로 메시지를 보내 줘.",
+      "promptFragment": "정한 조건에 맞을 때만 슬랙 웹후크 주소로 메시지를 보내 줘. 웹후크 주소는 키처럼 다뤄 줘.",
       "needsConcepts": ["api", "api-key", "env-var"],
       "stuck": [
         "웹후크 주소를 아는 사람은 누구나 그 채널에 글을 올릴 수 있어요. 공개 저장소에 올라간 주소는 슬랙이 찾아서 끊기도 해요.",
@@ -1770,6 +1772,7 @@
       "useWhen": "금리나 환율이 어떻게 바뀌어 왔는지 표나 그래프로 보여 줄 때",
       "capabilities": ["data"],
       "domains": ["domain.finance"],
+      "topics": ["topic.economy"],
       "provider": { "type": "official", "name": "한국은행" },
       "access": "key",
       "cost": { "free": true, "note": "무료 (출처를 밝히면 한국은행 통계는 상업용으로도 쓸 수 있어요)" },
@@ -1807,6 +1810,7 @@
       "useWhen": "여행 경비 계산기처럼 오늘 환율이 필요한 화면을 만들 때",
       "capabilities": ["data"],
       "domains": ["domain.finance"],
+      "topics": ["topic.exchange"],
       "provider": { "type": "official", "name": "한국수출입은행" },
       "access": "key",
       "cost": { "free": true, "note": "무료" },

@@ -1,0 +1,70 @@
+{
+  "id": "case-22",
+  "title": "여행 환율 계산기 (금융 갈래: 환율, 하루 단위)",
+  "note": "금융 갈래(환율)로 수출입은행 환율 API가 7점(분야+3, 주제+3, 무료+2, 공식+1, 키−1, 난이도 차−1)으로 추천되고, 경제 지표 주제인 한국은행 ECOS는 주제가 안 맞아 2위로 처진다. 키를 숨기려고 앱스 스크립트를 담아 키 숨김 +2로 배포 칸 추천. 금융 조사·안전 지시가 붙는다.",
+  "answers": {
+    "q.type": "tool",
+    "q.audience": "anyone",
+    "q.ai": "chat-free",
+    "q.save": "no",
+    "q.domain": "finance",
+    "q.finance-topic": "exchange",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.payment": "no",
+    "q.device": "phone",
+    "q.style": "clean"
+  },
+  "cart": ["html-single", "koreaexim-exchange", "google-sheets-apps-script"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.finance-topic", "q.realtime", "q.budget", "q.payment", "q.device", "q.style"],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "koreaexim-exchange",
+        "filledBy": ["koreaexim-exchange"],
+        "score": 7,
+        "runnerUp": "bok-ecos",
+        "reasons": ["domain", "topic", "budget"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": ["google-sheets-apps-script"],
+        "score": 6,
+        "runnerUp": "netlify",
+        "reasons": ["aiTool", "budget", "proxy"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": ["research.finance-redistribution", "research.finance-advice"],
+    "safety": ["safety.proxy-key", "safety.finance-words"],
+    "study": {
+      "required": ["api", "api-key", "env-var"],
+      "all": ["api", "json", "api-key", "env-var", "deploy"]
+    },
+    "steps": ["slot.screen", "step.proxy", "slot.data", "slot.host"],
+    "prep": ["한국수출입은행 누리집에서 Open API 인증키 발급 신청", "개인 구글 계정 (학교 계정은 외부 공유가 막힐 수 있어요)"],
+    "stuckRules": ["stuck.apps-script-key", "stuck.apps-script-html"],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 130,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

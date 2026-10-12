@@ -62,8 +62,10 @@ if printf '%s' "$bare" | grep -Eq 'wrangler[^|;&]*(deploy|secret[[:space:]]+put)
 fi
 
 # 5. 골든 기대값을 바꾸는 커밋에는 이유가 있어야 한다
-# 'git commit'·'git -C 폴더 commit'만 잡는다. 'git-commit.svg' 같은 파일 이름은 잡지 않는다
-if printf '%s' "$cmd" | grep -Eq '(^|[;&|[:space:]])git([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+commit([[:space:]]|$)'; then
+# 'git commit'·'git -C 폴더 commit'·'/usr/bin/git commit'·"bash -c 'git commit …'"·'$(git commit …)'을 잡는다.
+# 'git-commit.svg' 같은 파일 이름은 잡지 않는다. 따옴표가 섞여 있어 정규식은 변수에 담는다.
+commit_re="(^|[;&|[:space:]/'\"(])git([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+commit([[:space:]]|\$|['\")])"
+if printf '%s' "$cmd" | grep -Eq "$commit_re"; then
   # 내용이 바뀐 골든 파일만 본다 (이름만 옮긴 것은 제외). 'git add -A && git commit'처럼 한 줄에 쓰는 경우도 잡으려고 HEAD와 비교한다.
   # name-status에서 R100(내용 그대로 이름만 옮김)은 빼고, 나머지 줄의 마지막 경로가 data/golden/이면 내용이 바뀐 것이다.
   if git -C "${CLAUDE_PROJECT_DIR:-.}" diff HEAD -M --name-status 2>/dev/null | awk '$1 != "R100" {print $NF}' | grep -q '^data/golden/'; then

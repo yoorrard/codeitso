@@ -230,7 +230,7 @@ export default function Interview({ faceSrc }: Props) {
             <ul class="slot-icons">
               {r.slots.map((s) => (
                 <li>
-                  <img src={`/emoji/${SLOT_ART[s.slot.id] ?? 'tools'}.webp`} width={32} height={32} alt="" />
+                  <img src={`/emoji/${SLOT_ART[s.slot.capability] ?? 'tools'}.webp`} width={32} height={32} alt="" />
                   <span>{s.slot.label}</span>
                 </li>
               ))}

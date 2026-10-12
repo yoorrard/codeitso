@@ -29,7 +29,7 @@ export const OPTION_ART: Record<string, Record<string, string>> = {
   'q.style': { unknown: 'artist-palette' },
 };
 
-/** 칸 id → 칸 그림 */
+/** 칸의 기능(capability) → 칸 그림 */
 export const SLOT_ART: Record<string, string> = {
   screen: 'slot-screen',
   store: 'slot-store',
@@ -37,6 +37,7 @@ export const SLOT_ART: Record<string, string> = {
   data: 'slot-data',
   notify: 'slot-notify',
   host: 'slot-host',
+  proxy: 'tools',
 };
 
 export function optionArt(questionId: string, optionId: string): string | null {

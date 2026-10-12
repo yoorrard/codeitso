@@ -558,3 +558,243 @@
     animation-duration: var(--dur-fade);
   }
 }
+
+/* ── 장보기 (T09) ───────────────────────────────────── */
+.shop {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.inventory {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.inventory button {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  min-inline-size: 72px;
+  padding: var(--space-2);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+}
+
+.inventory button[aria-expanded='true'] {
+  border-color: var(--navy);
+  box-shadow: inset 0 0 0 2px var(--navy);
+}
+
+.inventory .filled button {
+  background: var(--gold-soft);
+}
+
+.inv-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.inv-icon img {
+  inline-size: 36px;
+  block-size: 36px;
+}
+
+.slot-panel {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.slot-panel.open {
+  transition: opacity var(--dur-fade) var(--ease-out);
+}
+
+@starting-style {
+  .slot-panel.open {
+    opacity: 0;
+  }
+}
+
+.slot-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.slot-head h2 {
+  font-size: var(--text-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.badge-soft {
+  background: var(--sky);
+}
+
+.badge-top {
+  background: var(--taxi);
+  margin-block-end: var(--space-1);
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  list-style: none;
+  padding: 0;
+}
+
+.in-cart-line,
+.share-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--gold-soft);
+  font-weight: var(--weight-strong);
+}
+
+.share-line {
+  background: var(--sky);
+}
+
+.empty-line {
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  border: 2px dashed var(--ink-soft);
+}
+
+.product {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.product-top {
+  box-shadow:
+    0 0 0 3px var(--taxi),
+    var(--shadow);
+}
+
+.product.in-cart {
+  background: var(--gold-soft);
+}
+
+.product-head {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.product-head h3 {
+  font-size: var(--text-lg);
+}
+
+.product-thumb {
+  inline-size: 40px;
+  block-size: 40px;
+}
+
+.product-summary {
+  color: var(--ink-soft);
+}
+
+.product-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-3);
+}
+
+.product-facts dt {
+  font-weight: var(--weight-strong);
+  color: var(--ink-soft);
+}
+
+.product-facts ul {
+  padding-inline-start: var(--space-4);
+}
+
+.product-facts .chips {
+  padding: 0;
+}
+
+.stars {
+  color: var(--caution-ink);
+  letter-spacing: 2px;
+}
+
+.compare-line {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.product-more summary {
+  font-weight: var(--weight-strong);
+  color: var(--link);
+}
+
+.product-more .product-facts {
+  margin-block-start: var(--space-2);
+}
+
+.fragment {
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  font-size: var(--text-sm);
+}
+
+.index-list {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--caution);
+}
+
+.index-list summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-strong);
+  color: var(--caution-ink);
+}
+
+.stamp-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--gold-soft);
+}
+
+.stamp-banner.just-now {
+  animation: thump var(--dur-fast) var(--ease-out) var(--dur-stamp) both;
+}
+
+.all-required {
+  font-weight: var(--weight-strong);
+}
+
+@media (max-width: 420px) {
+  .product-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .product-facts dd + dt {
+    margin-block-start: var(--space-2);
+  }
+}

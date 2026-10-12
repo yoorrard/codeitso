@@ -175,6 +175,30 @@
       "researchCard": "research.key-hiding"
     },
     {
+      "id": "conflict.key-on-public-host",
+      "type": "conflict",
+      "when": {
+        "all": [
+          { "tag": "audience.me", "gte": 1 },
+          {
+            "cartAny": { "capability": "data", "field": "keyExposureRisk", "is": true }
+          },
+          {
+            "not": {
+              "cartAny": { "capability": "proxy" }
+            }
+          },
+          {
+            "cartAny": { "capability": "host" }
+          }
+        ]
+      },
+      "note": "나만 쓰는 앱은 키 노출 충돌을 띄우지 않지만(D14), 중간 서버 없이 공개 주소에 올리면 키가 드러난다 (D36)",
+      "message": "나만 쓰는 앱이어도, 키를 숨겨 줄 중간 서버 없이 공개 주소에 올리면 누구나 브라우저에서 API 키를 볼 수 있어요.",
+      "fixHint": "배포·공유 칸을 비우고 내 컴퓨터에서만 쓰거나, 키를 숨겨 주는 도구(예: 구글 시트 + 앱스 스크립트, Cloudflare Workers)를 담으세요.",
+      "researchCard": "research.key-hiding"
+    },
+    {
       "id": "conflict.shared-without-login",
       "type": "conflict",
       "when": {
@@ -304,7 +328,7 @@
           }
         ]
       },
-      "line": "API 키는 화면 코드에 넣지 않고, 중간 서버의 비밀 값(환경 변수)에서만 꺼내 쓴다."
+      "line": "API 키는 화면 코드에 넣지 않고, 중간 서버의 비밀 값(Workers의 Secret, 앱스 스크립트의 스크립트 속성 같은 환경 변수)에서만 꺼내 쓴다."
     },
     {
       "id": "safety.local-key",
@@ -322,7 +346,7 @@
           { "tag": "audience.me", "gte": 1 }
         ]
       },
-      "line": "중간 서버가 없으니 이 앱은 내 컴퓨터에서만 쓴다. API 키는 코드 한 곳(코딩 에이전트를 쓰면 .env 파일)에만 두고, 키가 든 파일은 저장소에 올리거나 남에게 보내지 않는다. 다른 사람과 나누기 전에 키를 중간 서버로 옮긴다."
+      "line": "중간 서버가 없으니 이 앱은 내 컴퓨터에서만 쓴다. 코딩 에이전트를 쓰면 키를 .env 파일에 둔다. 환경 변수를 쓸 수 없는 HTML 파일 한 장이면, 11번 첫 줄의 예외로 키를 코드 맨 위 한 곳에만 둔다. 키가 든 파일은 저장소나 공개 주소에 올리지 않고 남에게 보내지 않는다. 다른 사람과 나누기 전에 키를 중간 서버로 옮긴다."
     },
     {
       "id": "safety.public-key",
@@ -385,7 +409,7 @@
           }
         ]
       },
-      "text": "Cloudflare Workers에서는 키를 코드에 적지 말고 비밀 값(Secret)으로 등록해요. 터미널에서는 npx wrangler secret put API_KEY처럼 넣어요.",
+      "text": "Cloudflare Workers에서는 키를 코드에 적지 말고 비밀 값(Secret)으로 등록해요. 배포한 Worker에는 터미널에서 npx wrangler secret put (키 이름)으로 넣고, 내 컴퓨터에서 시험할 땐 .dev.vars 파일에 넣고 그 파일을 .gitignore에 적어요.",
       "concepts": ["env-var"]
     },
     {
@@ -399,8 +423,19 @@
           }
         ]
       },
-      "text": "앱스 스크립트에서는 키를 '프로젝트 설정 → 스크립트 속성'에 넣고, 코드에서는 PropertiesService로 꺼내 써요.",
+      "text": "앱스 스크립트에서는 키를 '프로젝트 설정 → 스크립트 속성'에 넣고, 서버 쪽 코드(Code.gs)에서 PropertiesService로 꺼내 UrlFetchApp으로 불러요. 키를 화면 HTML로 넘기지 않아요.",
       "concepts": ["env-var"]
+    },
+    {
+      "id": "stuck.apps-script-html",
+      "type": "stuck",
+      "when": {
+        "all": [
+          { "cartHas": "html-single" },
+          { "cartHas": "google-sheets-apps-script" }
+        ]
+      },
+      "text": "화면 HTML도 처음부터 앱스 스크립트 편집기(script.google.com)에 HTML 파일로 만들고, '배포 → 배포 테스트' 주소로 열어 봐요. 시트는 저장할 데이터가 있을 때만 만들면 돼요."
     },
     {
       "id": "stuck.workers-cron",
@@ -447,7 +482,7 @@
         ]
       },
       "note": "나만 쓰는 앱은 키 노출 충돌을 띄우지 않지만(D14), 화면에서 바로 부르면 CORS로 막힐 수 있다 (D34)",
-      "text": "중간 서버 없이 화면에서 바로 API를 부르면 CORS 때문에 막힐 수 있어요. 막히면 재확인으로 돌아가 키를 숨겨 주는 도구(예: 구글 시트 + 앱스 스크립트)를 담고, 그 도구를 거쳐 부르세요.",
+      "text": "중간 서버 없이 화면에서 바로 API를 부르면 CORS 때문에 막힐 수 있어요. 그러면 코드쇼퍼로 돌아가 중간 서버 기능이 있는 도구(구글 시트 + 앱스 스크립트, Cloudflare Workers 등)를 담고 꾸러미를 새로 받으세요.",
       "concepts": ["cors"]
     }
   ]

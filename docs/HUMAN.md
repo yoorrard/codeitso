@@ -8,7 +8,7 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 - [ ] H01 Cloudflare 계정 만들기(무료 플랜) — 미리 보기 배포(T21)에 필요 — T21 — (2026-10-12)
 - [ ] H01b Cloudflare API 토큰을 GitHub 저장소 Secrets에 `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`로 넣기 (T21에서 권한 범위를 안내) — T21 — (2026-10-12)
-- [x] H02 GitHub 저장소 만들고 꾸러미 올리기 — yoorrard/code-chauffeur (2026-10-12)
+- [x] H02 GitHub 저장소 만들고 이 폴더 올리기 — yoorrard/code-chauffeur (2026-10-12)
 
 ## 이름·법·학교
 

@@ -5,7 +5,7 @@
 
 ## 지금 상태
 
-- 끝난 것: 판단 엔진(`src/lib/engine/`), 자료(`data/`), 스키마, 검사 스크립트, 골든 사례 15개, 결과물 예시, 디자인 토큰, 자율 작업 하네스(`.claude/`, `scripts/guard`, `scripts/qa`).
+- 끝난 것: 판단 엔진(`src/lib/engine/`), 자료(`data/`), 스키마, 검사 스크립트, 골든 사례 16개, 결과물 예시, 디자인 토큰, 자율 작업 하네스(`.claude/`, `scripts/guard`, `scripts/qa`).
 - 남은 것: 화면과 배포. `docs/TASKS.md` 순서대로 `/next-task`로 하나씩 끝까지 한다.
 
 ## 일하는 방식 (사람 개입 최소)

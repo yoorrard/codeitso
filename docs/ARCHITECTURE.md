@@ -43,7 +43,7 @@ code-chauffeur/
 │  ├─ lib/                   (T05~T06) 자료 싣기, 상태 저장, 공유 링크, 진행(주행 거리·도장) / (T06b) 모션·효과음 / (T18) 집계 보내기 / (T15) 검색
 │  ├─ assets/mascot/         기사님 그림 원본 (소유자 제공)
 │  ├─ components/            (T07~) Astro 컴포넌트와 Preact 섬
-│  ├─ layouts/               (T05) 기본 틀: 도로 지도, 사전 버튼
+│  ├─ layouts/               (T05) 기본 틀: 노선 띠·전광판, 사전 버튼
 │  ├─ pages/                 (T01, T07~) 라우트
 │  ├─ copy/ko.ts             (T05) 화면 고정 문구. 엔진이 쓰는 문장은 data/templates.json
 │  └─ styles/tokens.css      디자인 토큰 (이미 있음)

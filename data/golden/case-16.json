@@ -1,0 +1,65 @@
+{
+  "id": "case-16",
+  "title": "나만 보는 날씨 위젯을 GitHub Pages에 올림 (공개 주소 키 노출 충돌을 그대로 둠)",
+  "note": "나만 쓰는 앱이라 key-in-static-page는 뜨지 않지만(D14), 중간 서버 없이 공개 주소에 올리면 키가 드러나 key-on-public-host가 뜬다(D36). 그대로 두면 키 숨기기 조사 카드가 붙는다. 점수는 손으로 계산: 날씨 데이터 kma 4(분야+3, 무료+2, 공식+1, 키−1, 난이도 차−1), 배포 칸은 앱스 스크립트 6(AI+2, 무료+2, 키 숨김+2, 공식+1, 난이도 차−1)이 추천이고 Workers·GitHub Pages가 4로 같아 id 순으로 Workers가 2위.",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "me",
+    "q.ai": "chat-free",
+    "q.save": "no",
+    "q.domain": "weather",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.device": "phone",
+    "q.style": "clean"
+  },
+  "cart": ["html-single", "kma-forecast", "github-pages"],
+  "kept": ["conflict.key-on-public-host"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.realtime", "q.budget", "q.device", "q.style"],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "kma-forecast",
+        "filledBy": ["kma-forecast"],
+        "score": 4,
+        "runnerUp": null,
+        "reasons": ["domain", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": ["github-pages"],
+        "score": 6,
+        "runnerUp": "cloudflare-workers",
+        "reasons": ["aiTool", "budget", "proxy"]
+      }
+    ],
+    "conflicts": ["conflict.key-on-public-host"],
+    "canIssue": true,
+    "research": ["research.key-hiding"],
+    "safety": ["safety.local-key"],
+    "study": {
+      "required": ["api", "api-key", "env-var"],
+      "all": ["api", "json", "api-key", "env-var", "deploy", "git-repo"]
+    },
+    "steps": ["slot.screen", "slot.data", "slot.host"],
+    "prep": ["공공데이터포털 가입 후 API 활용 신청 (승인 뒤 키가 동작하기까지 1~2시간)", "GitHub 가입"],
+    "stuckRules": ["stuck.cors-no-proxy"],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 130,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

@@ -20,7 +20,7 @@
       "prep": [],
       "promptFragment": "화면은 index.html 파일 하나로 만들어 줘. CSS와 JavaScript도 같은 파일 안에 넣고, 외부 라이브러리는 꼭 필요할 때만 써 줘.",
       "needsConcepts": [],
-      "stuck": ["파일을 더블클릭해서 열면 외부 데이터 불러오기가 막힐 수 있어요. 그럴 땐 배포한 주소로 열어 보세요."],
+      "stuck": ["파일을 더블클릭해서 열면 외부 데이터 불러오기가 막힐 수 있어요. 키가 들어 있지 않은 앱이면 배포한 주소로 열어 보세요."],
       "related": ["react-vite", "github-pages"],
       "links": [{ "label": "MDN HTML 안내", "url": "https://developer.mozilla.org/ko/docs/Web/HTML" }],
       "checkedAt": "2026-10",
@@ -52,7 +52,8 @@
       "needsConcepts": ["terminal"],
       "stuck": [
         "npm run dev로 띄운 주소(localhost)는 내 컴퓨터에서만 열려요. 다른 사람에게 보여 주려면 배포해야 해요.",
-        "Node.js를 설치한 뒤에는 터미널을 새로 열어야 npm 명령이 인식돼요."
+        "Node.js를 설치한 뒤에는 터미널을 새로 열어야 npm 명령이 인식돼요.",
+        "VITE_로 시작하는 환경 변수는 화면 코드에 그대로 들어가 브라우저에서 보여요. 비밀 키를 넣지 마세요."
       ],
       "related": ["html-single", "cloudflare-workers"],
       "links": [
@@ -109,7 +110,7 @@
       "keyExposureRisk": false,
       "recommendable": true,
       "prep": [{ "label": "Cloudflare 가입", "url": "https://dash.cloudflare.com/sign-up", "lead": "instant" }],
-      "promptFragment": "Cloudflare Workers에 배포할 거야. 화면 파일은 정적 파일(assets)로 올리고, 외부 API 호출은 Worker 함수에서 하도록 코드를 짜 줘.",
+      "promptFragment": "Cloudflare Workers에 배포할 거야. 화면 파일은 정적 파일(assets)로 올리고, 키가 필요한 외부 API를 부를 일이 있으면 Worker 함수에서 부르도록 코드를 짜 줘.",
       "needsConcepts": ["deploy", "terminal"],
       "stuck": ["처음 정한 Worker 이름이 주소에 들어가요 (예: my-app.myname.workers.dev)."],
       "related": ["github-pages", "google-sheets-apps-script"],
@@ -172,13 +173,14 @@
       "setupMinutes": 40,
       "keyExposureRisk": false,
       "recommendable": true,
-      "prep": [{ "label": "구글 계정", "url": "https://accounts.google.com/signup", "lead": "instant" }],
-      "promptFragment": "구글 앱스 스크립트 웹 앱으로 만들어 줘. 화면은 HtmlService로 보여 주고, 저장할 데이터가 있으면 구글 시트에 저장해 줘. 배포 설정에서 고를 값도 알려 줘.",
+      "prep": [{ "label": "개인 구글 계정 (학교 계정은 외부 공유가 막힐 수 있어요)", "url": "https://accounts.google.com/signup", "lead": "instant" }],
+      "promptFragment": "구글 앱스 스크립트 웹 앱으로 만들어 줘. 화면은 HtmlService로 보여 주고, 외부 데이터는 서버 쪽 코드(Code.gs)에서 불러와 화면은 google.script.run으로 결과만 받게 해 줘. 저장할 데이터가 있을 때만 구글 시트에 저장해 줘. 배포 설정에서 고를 값도 알려 줘.",
       "needsConcepts": ["deploy"],
       "stuck": [
         "코드를 고친 뒤에는 '배포 관리'에서 새 버전으로 배포해야 바뀐 내용이 보여요.",
         "웹 앱으로 배포할 때 '액세스 권한'을 확인하세요. 잘못 고르면 다른 사람이 열 수 없어요.",
-        "학교 계정(구글 워크스페이스)은 관리자 설정 때문에 외부 공유가 막혀 있을 수 있어요."
+        "학교 계정(구글 워크스페이스)은 관리자 설정 때문에 외부 공유가 막혀 있을 수 있어요.",
+        "처음 실행하면 권한 승인 창과 'Google에서 확인하지 않은 앱' 경고가 떠요. 내가 만든 스크립트면 '고급'을 눌러 내 프로젝트로 이동한 뒤 승인해요."
       ],
       "related": ["browser-storage", "supabase"],
       "links": [
@@ -369,11 +371,13 @@
           "lead": "hours"
         }
       ],
-      "promptFragment": "기상청 단기예보 API로 우리 동네 오늘 날씨를 보여 줘. 위경도를 격자 좌표(nx, ny)로 바꾸는 함수와 가장 최근 발표 시각을 구하는 함수도 만들어 줘.",
+      "promptFragment": "기상청 단기예보 API로 내가 알려 줄 동네의 오늘 날씨를 보여 줘. 브라우저 위치 권한은 쓰지 마. 위경도를 격자 좌표(nx, ny)로 바꾸는 함수와 가장 최근 발표 시각을 구하는 함수도 만들어 줘.",
       "needsConcepts": ["api", "api-key", "env-var", "json"],
       "stuck": [
         "위경도가 아니라 격자 좌표(nx, ny)를 넣어야 해요. 변환 방법은 기상청 활용 가이드에 있어요.",
-        "발표 시각(base_time)이 정해져 있어요. 아직 발표 전인 시각을 넣으면 빈 결과가 와요."
+        "발표 시각(base_time)이 정해져 있어요. 아직 발표 전인 시각을 넣으면 빈 결과가 와요.",
+        "발표 시각은 한국 시간 기준이에요. 서버(예: Cloudflare Workers)의 시계는 UTC라서 9시간을 더해 계산해야 해요.",
+        "인증키는 디코딩 키를 넣고, 주소에 붙일 때 코드가 인코딩하게 해요. 이미 인코딩된 키를 또 인코딩하면 키 오류가 나요."
       ],
       "related": ["data-go-kr"],
       "links": [{ "label": "기상청 단기예보 조회서비스 (공공데이터포털)", "url": "https://www.data.go.kr/data/15084084/openapi.do" }],

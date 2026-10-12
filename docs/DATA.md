@@ -8,7 +8,7 @@
 |---|---|---|---|
 | `taxonomy.json` | 태그 분류표 (유형·사용자·AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 44개, 분야 10개 |
 | `questions.json` | 인터뷰 질문, 보기, 보기별 태그, 노출 조건 | `questions.schema.json` | 14문항 |
-| `rules.json` | 칸·충돌·조사·안전·막힘 규칙 | `rules.schema.json` | 36개 |
+| `rules.json` | 칸·충돌·조사·안전·막힘 규칙 | `rules.schema.json` | 38개 |
 | `scoring.json` | 추천 가중치와 기준값 (사이트에 공개) | `scoring.schema.json` | |
 | `products.json` | 상품 카드 (진열·색인) | `products.schema.json` | 19개 |
 | `concepts.json` | 개념 카드 (공부할 것, 사전) | `concepts.schema.json` | 10장 |
@@ -17,7 +17,7 @@
 | `recipes.json` | 레시피 (답 + 장바구니 완성 세트) | `recipes.schema.json` | 5개 |
 | `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 6개 |
 | `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
-| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 15개 |
+| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 16개 |
 
 공통 정의(id 모양, 조건 문법 등)는 `schemas/defs.schema.json`에 있다.
 
@@ -66,7 +66,7 @@
 | `serverRegion` | 이용자가 입력한 데이터가 저장되는 곳: none, local, kr, overseas, selectable, unknown | 모두 |
 | `difficulty` | 1 쉬움 ~ 3 어려움 | 모두 |
 | `setupMinutes` | 처음 붙이는 데 걸리는 어림 시간(분) | 진열 |
-| `keyExposureRisk` | 키를 화면 코드에 넣으면 안 되고 중간 서버(또는 혼자 쓸 때 .env)에서만 써야 하는 상품 | 모두 |
+| `keyExposureRisk` | 키를 화면 코드에 넣으면 안 되고 중간 서버에서만 써야 하는 상품 (혼자 쓸 때의 예외는 `safety.local-key`) | 모두 |
 | `publicKey` | 화면 코드에 넣도록 만든 공개 키를 쓰는 상품 (예: 지도 JavaScript 키, 사이트 주소로 사용을 제한). `keyExposureRisk`와 함께 켤 수 없다 | |
 | `recommendable` | false면 추천 표시를 붙이지 않는다 (MCP 서버, 비공식 패키지, 색인 상품) | 모두 |
 | `license` | 이름 + 쉬운 풀이 + 원문 링크 | 오픈소스면 |
@@ -130,7 +130,7 @@
 
 ## 10. 골든 사례
 
-- 대표 인터뷰 답 + 최종 장바구니(+ 그대로 둔 충돌, 2차로 미룬 칸)를 넣으면 엔진이 내야 하는 결과: 물어본 질문, 칸별 추천·점수·2위·이유·채운 상품, 충돌, 발행 가능 여부, 조사할 것, 안전 규칙, 공부할 것, 진행 순서, 준비물, 난이도, 1차 난이도, 예상 시간, 나누기(미룰 칸, 더 쉬운 상품).
+- 대표 인터뷰 답 + 최종 장바구니(+ 그대로 둔 충돌, 2차로 미룬 칸)를 넣으면 엔진이 내야 하는 결과: 물어본 질문, 칸별 추천·점수·2위·이유·채운 상품, 충돌, 발행 가능 여부, 조사할 것, 안전 규칙, 공부할 것, 진행 순서, 준비물, 켜진 막힘 규칙(`stuckRules`, 적은 사례만), 난이도, 1차 난이도, 예상 시간, 나누기(미룰 칸, 더 쉬운 상품).
 - 비교 코드는 `scripts/lib/golden.ts`에 있어서 Vitest에서도 그대로 쓴다.
 - 새 사례는 `npm run golden:print`로 엔진 결과를 뽑은 뒤, **손으로 맞는지 따져 보고** 파일로 만든다. 엔진 결과를 그대로 복사해 넣기만 하면 회귀 검사가 아니다.
 - 1단계 목표 20개. 새 규칙을 넣으면 그 규칙이 켜지는 사례를 하나 이상 만든다 (`npm run golden` 끝에 한 번도 안 켜진 규칙이 나온다).

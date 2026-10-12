@@ -23,6 +23,8 @@ export interface GoldenExpect {
   study: { required: string[]; all: string[] };
   steps?: string[];
   prep?: string[];
+  /** 켜진 막힘 규칙 id (상품 메모 제외). 적은 사례만 비교한다 */
+  stuckRules?: string[];
   difficulty: number;
   difficultyFirst?: number;
   minutes?: number;
@@ -64,6 +66,7 @@ export function actual(r: EngineResult): GoldenExpect {
     study: { required: r.study.required, all: r.study.all },
     steps: r.steps.map((s) => s.slotId),
     prep: r.prep.map((p) => p.label),
+    stuckRules: r.stuck.filter((s) => s.from.startsWith('stuck.')).map((s) => s.from),
     difficulty: r.split.difficulty,
     difficultyFirst: r.split.difficultyFirst,
     minutes: r.minutes,
@@ -101,6 +104,7 @@ export function compareGolden(r: EngineResult, e: GoldenExpect): string[] {
   check('공부할 것', e.study, got.study);
   if (e.steps) check('진행 순서', e.steps, got.steps);
   if (e.prep) check('준비물', e.prep, got.prep);
+  if (e.stuckRules) check('막힘 규칙', e.stuckRules, got.stuckRules);
   check('난이도', e.difficulty, got.difficulty);
   if (e.difficultyFirst !== undefined) check('1차 난이도', e.difficultyFirst, got.difficultyFirst);
   if (e.minutes !== undefined) check('예상 시간(분)', e.minutes, got.minutes);

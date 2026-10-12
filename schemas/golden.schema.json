@@ -121,6 +121,11 @@
           "items": { "type": "string" },
           "description": "준비물 이름 (순서대로)"
         },
+        "stuckRules": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^stuck\\.[a-z0-9-]+$" },
+          "description": "켜진 막힘 규칙 id (규칙 순서). 상품 카드의 막힘 메모는 넣지 않는다. 적은 사례만 비교한다"
+        },
         "difficulty": { "type": "integer" },
         "difficultyFirst": { "type": "integer", "description": "2차로 미룬 칸에만 쓰이는 상품을 뺀 난이도" },
         "minutes": { "type": "integer" },

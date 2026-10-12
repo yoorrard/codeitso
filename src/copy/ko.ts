@@ -365,7 +365,7 @@ export const ko = {
     terminalAnswers: {
       'node -v': 'v22.18.0',
       'npm -v': '10.9.4',
-      'npm run dev': '  ➜  Local:   http://localhost:4321/',
+      'npm run dev': '  ➜  Local:   http://localhost:5173/',
       help: '알아듣는 명령: node -v, npm -v, npm run dev',
     },
     terminalUnknown: '{{cmd}}: command not found (이 연습 터미널은 node -v, npm -v, npm run dev만 알아들어요)',

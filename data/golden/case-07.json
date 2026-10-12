@@ -1,13 +1,14 @@
 {
   "id": "case-07",
-  "title": "번역 도구 (맞는 상품이 없는 칸을 조사할 것으로)",
-  "note": "번역 분야 상품이 진열대에 없어 외부 데이터 칸이 빈다. 예산이 0원이 아니어도 무료 상품 점수는 그대로다.",
+  "title": "번역 도구 (추천을 담지 않고 빈 칸을 조사할 것으로)",
+  "note": "번역 칸에 DeepL이 추천되지만 담지 않고, 빈 외부 데이터 칸을 그대로 두어 조사할 것으로 넘긴다. 예산이 0원이 아니어도 무료 상품 점수는 그대로다.",
   "answers": {
     "q.type": "tool",
     "q.audience": "few",
     "q.ai": "chat-paid",
     "q.save": "no",
     "q.domain": "language",
+    "q.lang-topic": "translate",
     "q.realtime": "daily",
     "q.budget": "small",
     "q.payment": "no",
@@ -23,6 +24,7 @@
       "q.ai",
       "q.save",
       "q.domain",
+      "q.lang-topic",
       "q.realtime",
       "q.budget",
       "q.payment",
@@ -39,7 +41,7 @@
         "runnerUp": "react-vite",
         "reasons": ["aiTool", "budget"]
       },
-      { "id": "slot.data", "required": true, "recommended": null, "filledBy": [] },
+      { "id": "slot.data", "required": true, "recommended": "deepl-api", "filledBy": [] },
       {
         "id": "slot.host",
         "required": true,

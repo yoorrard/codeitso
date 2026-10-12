@@ -319,14 +319,14 @@ describe('진짜 자료: case-04에서 로그인을 2차로 미루면', () => {
   });
 
   it('제안은 남고, 미룰 칸 대신 저장 칸의 더 쉬운 상품을 알려 준다', () => {
-    // supabase가 이제 미루지 않은 칸 중 저장 하나만 맡는다. 저장 진열 2위 google-sheets-apps-script:
-    // 무료 2 + 공식 1 (난이도 2 = 코딩 에이전트 수준 2) = 3 ≥ 기준 3, 난이도 2 < 3
+    // supabase가 이제 미루지 않은 칸 중 저장 하나만 맡는다. 저장 진열에서 난이도가 3보다 낮고 기준 3 이상인 첫 상품은
+    // airtable: 코딩 에이전트 2 + 무료 2 + 공식 1 + 키 −1 = 4, 난이도 2 (C02에서 더함. 그 전에는 google-sheets-apps-script 3점)
     expect(later.split).toEqual({
       difficulty: 7,
       difficultyFirst: 7,
       needed: true,
       defer: [],
-      easier: [{ slotId: 'slot.store', from: 'supabase', to: 'google-sheets-apps-script' }],
+      easier: [{ slotId: 'slot.store', from: 'supabase', to: 'airtable' }],
     });
   });
 

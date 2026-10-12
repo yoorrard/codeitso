@@ -309,12 +309,38 @@
           "label": "교육과정·성취기준",
           "tags": { "topic.curriculum": 1 }
         },
+        { "id": "school-info", "label": "학교 기본 정보", "tags": { "topic.school-info": 1 } },
+        { "id": "career", "label": "진로·직업", "tags": { "topic.career": 1 } },
         {
           "id": "unknown",
           "label": "모르겠어요",
           "isUnknown": true,
           "tags": {}
         }
+      ]
+    },
+    {
+      "id": "q.weather-topic",
+      "text": "날씨 정보 중 무엇이 필요한가요?",
+      "chip": "날씨 정보",
+      "picture": false,
+      "showIf": { "tag": "domain.weather", "gte": 1 },
+      "options": [
+        { "id": "forecast", "label": "날씨 예보", "tags": { "topic.forecast": 1 } },
+        { "id": "air", "label": "미세먼지·공기", "tags": { "topic.air": 1 } },
+        { "id": "unknown", "label": "모르겠어요", "isUnknown": true, "tags": { "topic.forecast": 1 } }
+      ]
+    },
+    {
+      "id": "q.lang-topic",
+      "text": "말과 글로 무엇을 하려고요?",
+      "chip": "말과 글",
+      "picture": false,
+      "showIf": { "tag": "domain.language", "gte": 1 },
+      "options": [
+        { "id": "translate", "label": "다른 나라 말로 옮기기", "tags": { "topic.translate": 1 } },
+        { "id": "dictionary", "label": "낱말 뜻 찾기", "tags": { "topic.dictionary": 1 } },
+        { "id": "unknown", "label": "모르겠어요", "isUnknown": true, "tags": { "topic.translate": 1 } }
       ]
     },
     {

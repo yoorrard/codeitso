@@ -7,17 +7,17 @@
 | 파일 | 담는 것 | 스키마 | 지금 개수 |
 |---|---|---|---|
 | `taxonomy.json` | 태그 분류표 (유형·사용자·AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 44개, 분야 10개 |
-| `questions.json` | 인터뷰 질문, 보기, 보기별 태그, 노출 조건 | `questions.schema.json` | 14문항 |
+| `questions.json` | 인터뷰 질문, 보기, 보기별 태그, 노출 조건 | `questions.schema.json` | 16문항 |
 | `rules.json` | 칸·충돌·조사·안전·막힘 규칙 | `rules.schema.json` | 38개 |
 | `scoring.json` | 추천 가중치와 기준값 (사이트에 공개) | `scoring.schema.json` | |
-| `products.json` | 상품 카드 (진열·색인) | `products.schema.json` | 19개 |
+| `products.json` | 상품 카드 (진열·색인) | `products.schema.json` | 49개 (진열 48) |
 | `concepts.json` | 개념 카드 (공부할 것, 사전) | `concepts.schema.json` | 20장 |
 | `research-cards.json` | 조사 카드 (조사할 것) | `research-cards.schema.json` | 13장 |
 | `templates.json` | 영수증·꾸러미·카드 문장 틀 | `templates.schema.json` | |
 | `recipes.json` | 레시피 (답 + 장바구니 완성 세트) | `recipes.schema.json` | 5개 |
 | `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 20개 |
 | `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
-| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 20개 |
+| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 21개 |
 
 공통 정의(id 모양, 조건 문법 등)는 `schemas/defs.schema.json`에 있다.
 

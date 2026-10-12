@@ -33,6 +33,8 @@ export interface Scored {
   reasons: ScoreKey[];
   /** 점수를 깎은 항목 (많이 깎인 순) */
   cons: ScoreKey[];
+  /** 지금 열린 칸 중 이 상품이 맡을 수 있는 칸 수 (동점일 때만 쓴다) */
+  slotsCovered: number;
 }
 
 export interface SlotRanking {
@@ -128,15 +130,17 @@ export function scoreProduct(cat: Catalog, p: Product, slot: Slot, tags: Record<
   const cons = SCORE_KEYS.filter((k) => (parts[k] ?? 0) < 0).sort(
     (a, b) => (parts[a] ?? 0) - (parts[b] ?? 0) || keyIndex(a) - keyIndex(b),
   );
-  return { product: p, score, parts, reasons, cons };
+  const slotsCovered = slots.filter((s) => p.capabilities.includes(s.capability)).length;
+  return { product: p, score, parts, reasons, cons, slotsCovered };
 }
 
-/** 점수 → 공식 제공 → 쉬운 난이도 → id 순 */
+/** 점수 → 공식 제공 → 지금 열린 칸을 더 많이 맡는 상품(한 상품으로 여러 칸을 채우면 더 단순하다) → 쉬운 난이도 → id 순 */
 export function compareScored(a: Scored, b: Scored): number {
   const official = (s: Scored): number => (s.product.provider.type === 'official' ? 0 : 1);
   return (
     b.score - a.score ||
     official(a) - official(b) ||
+    b.slotsCovered - a.slotsCovered ||
     a.product.difficulty - b.product.difficulty ||
     cmp(a.product.id, b.product.id)
   );

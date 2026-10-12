@@ -1,13 +1,14 @@
 {
   "id": "case-16",
   "title": "나만 보는 날씨 위젯을 GitHub Pages에 올림 (공개 주소 키 노출 충돌을 그대로 둠)",
-  "note": "나만 쓰는 앱이라 key-in-static-page는 뜨지 않지만(D14), 중간 서버 없이 공개 주소에 올리면 키가 드러나 key-on-public-host가 뜬다(D36). 그대로 두면 키 숨기기 조사 카드가 붙는다. 점수는 손으로 계산: 날씨 데이터 kma 4(분야+3, 무료+2, 공식+1, 키−1, 난이도 차−1), 배포 칸은 앱스 스크립트 6(AI+2, 무료+2, 키 숨김+2, 공식+1, 난이도 차−1)이 추천이고 Workers·GitHub Pages가 4로 같아 id 순으로 Workers가 2위.",
+  "note": "나만 쓰는 앱이라 key-in-static-page는 뜨지 않지만(D14), 중간 서버 없이 공개 주소에 올리면 키가 드러나 key-on-public-host가 뜬다(D36). 그대로 두면 키 숨기기 조사 카드가 붙는다. 점수는 손으로 계산: 날씨 데이터는 Open-Meteo 9(분야+3, 주제+3, 무료+2, 공식+1)가 추천, 기상청 7(같은 것에 키−1, 난이도 차−1)이 2위. 배포 칸은 앱스 스크립트·Netlify·Vercel이 6(AI+2, 무료+2, 키 숨김+2, 공식+1, 난이도 차−1)으로 같고, 공식·맡는 칸 수·난이도도 같아 id 순으로 앱스 스크립트가 추천, Netlify가 2위.",
   "answers": {
     "q.type": "page",
     "q.audience": "me",
     "q.ai": "chat-free",
     "q.save": "no",
     "q.domain": "weather",
+    "q.weather-topic": "forecast",
     "q.realtime": "daily",
     "q.budget": "free-only",
     "q.device": "phone",
@@ -16,7 +17,7 @@
   "cart": ["html-single", "kma-forecast", "github-pages"],
   "kept": ["conflict.key-on-public-host"],
   "expect": {
-    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.realtime", "q.budget", "q.device", "q.style"],
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.weather-topic", "q.realtime", "q.budget", "q.device", "q.style"],
     "slots": [
       {
         "id": "slot.screen",
@@ -30,11 +31,11 @@
       {
         "id": "slot.data",
         "required": true,
-        "recommended": "kma-forecast",
+        "recommended": "open-meteo",
         "filledBy": ["kma-forecast"],
-        "score": 4,
-        "runnerUp": null,
-        "reasons": ["domain", "budget", "official"]
+        "score": 9,
+        "runnerUp": "kma-forecast",
+        "reasons": ["domain", "topic", "budget"]
       },
       {
         "id": "slot.host",
@@ -42,7 +43,7 @@
         "recommended": "google-sheets-apps-script",
         "filledBy": ["github-pages"],
         "score": 6,
-        "runnerUp": "cloudflare-workers",
+        "runnerUp": "netlify",
         "reasons": ["aiTool", "budget", "proxy"]
       }
     ],

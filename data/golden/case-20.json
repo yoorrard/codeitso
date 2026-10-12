@@ -1,7 +1,7 @@
 {
   "id": "case-20",
-  "title": "동네 문화 행사 안내 (결제 받음, 분야 상품 없음)",
-  "note": "분야(문화)에 맞는 진열 상품이 없어 공공데이터포털이 데이터 칸에 추천되는 사례. 결제를 받는다고 해 결제 조사·안전 지시가 붙고, 다른 사람 개인정보를 로그인 없이 구글 시트에 받아 충돌 둘이 남아 발행이 막힌다.",
+  "title": "동네 문화 행사 안내 (결제 받음, 개인정보·로그인 충돌)",
+  "note": "문화 행사 정보 API가 추천되지만 이용자는 공공데이터포털을 담는다. 결제를 받는다고 해 결제 조사·안전 지시가 붙고, 다른 사람 개인정보를 로그인 없이 받아 충돌 둘이 남아 발행이 막힌다.",
   "answers": {
     "q.type": "page",
     "q.audience": "anyone",
@@ -59,7 +59,7 @@
           "google-sheets-apps-script"
         ],
         "score": 6,
-        "runnerUp": "supabase",
+        "runnerUp": "google-forms",
         "reasons": [
           "aiTool",
           "budget",
@@ -69,12 +69,12 @@
       {
         "id": "slot.data",
         "required": true,
-        "recommended": "data-go-kr",
+        "recommended": "culture-events",
         "filledBy": [
           "data-go-kr"
         ],
         "score": 4,
-        "runnerUp": null,
+        "runnerUp": "data-go-kr",
         "reasons": [
           "domain",
           "budget",
@@ -89,7 +89,7 @@
           "google-sheets-apps-script"
         ],
         "score": 8,
-        "runnerUp": "cloudflare-workers",
+        "runnerUp": "netlify",
         "reasons": [
           "aiTool",
           "budget",

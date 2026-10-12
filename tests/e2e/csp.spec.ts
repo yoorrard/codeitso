@@ -48,7 +48,8 @@ test('CSP: 사전 옆 창 검색, 진열대 검색, 확인 문제', async ({ pag
   await page.goto('/shelf');
   await islandsReady(page);
   await page.locator('#shelf-q').fill('지도');
-  await expect(page.locator('[data-shelf-item]:not([hidden])')).toHaveCount(1);
+  await expect(page.locator('[data-shelf-item][data-id="kakao-maps"]')).toBeVisible();
+  await expect(page.locator('[data-shelf-item][data-id="html-single"]')).toBeHidden();
   await page.goto('/concepts/api');
   const option = await hydrated(page.locator('.quiz-item .option').first());
   await option.click();

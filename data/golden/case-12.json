@@ -1,7 +1,7 @@
 {
   "id": "case-12",
   "title": "버스 도착 알림 (공공데이터포털, 앱스 스크립트 예약 실행)",
-  "note": "실시간 교통 상품이 진열대에 없어 추천이 없다. 포털 상품을 담고 실시간 충돌을 그대로 둔다.",
+  "note": "버스 도착 정보 API(TAGO)가 데이터 칸에 추천되지만, 이용자는 공공데이터포털에서 고르기로 하고 포털 상품을 담는다. 실시간 충돌을 그대로 둔다.",
   "answers": {
     "q.type": "board",
     "q.audience": "me",
@@ -39,14 +39,14 @@
         "runnerUp": "react-vite",
         "reasons": ["aiTool", "budget"]
       },
-      { "id": "slot.data", "required": true, "recommended": null, "filledBy": ["data-go-kr"] },
+      { "id": "slot.data", "required": true, "recommended": "tago-bus-arrival", "filledBy": ["data-go-kr"] },
       {
         "id": "slot.notify",
         "required": true,
         "recommended": "discord-webhook",
         "filledBy": ["discord-webhook"],
         "score": 5,
-        "runnerUp": "telegram-bot",
+        "runnerUp": "slack-webhook",
         "reasons": ["aiTool", "budget", "official"]
       },
       {
@@ -55,7 +55,7 @@
         "recommended": "google-sheets-apps-script",
         "filledBy": ["google-sheets-apps-script"],
         "score": 6,
-        "runnerUp": "cloudflare-workers",
+        "runnerUp": "netlify",
         "reasons": ["aiTool", "budget", "proxy"]
       }
     ],

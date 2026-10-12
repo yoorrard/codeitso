@@ -426,7 +426,12 @@ describe('추천 이유와 아쉬운 점', () => {
 });
 
 describe('compareScored 정렬', () => {
-  const sc = (p: Product, value: number): Scored => ({ product: p, score: value, parts: {}, reasons: [], cons: [] });
+  const sc = (p: Product, value: number, slotsCovered = 1): Scored => ({ product: p, score: value, parts: {}, reasons: [], cons: [], slotsCovered });
+
+  it('점수와 공식 제공이 같으면 지금 열린 칸을 더 많이 맡는 상품이 먼저 (한 상품으로 두 칸을 채우면 더 단순하다)', () => {
+    const list = [sc(product('airtable-like', { difficulty: 1 }), 4, 1), sc(product('supabase-like', { difficulty: 2 }), 4, 2)];
+    expect(ids([...list].sort(compareScored))).toEqual(['supabase-like', 'airtable-like']);
+  });
 
   it('점수 → 공식 제공 → 쉬운 난이도 → id', () => {
     const list = [

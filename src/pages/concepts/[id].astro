@@ -19,6 +19,9 @@ interface Props {
 const { concept: c } = Astro.props;
 const prereqs = c.prerequisites.map((id) => catalog.concept.get(id)).filter((x) => x !== undefined);
 const related = (c.relatedProducts ?? []).map((id) => catalog.product.get(id)).filter((x) => x !== undefined);
+// 개념 그림 (svg-illustrator가 그린 src/assets/concepts/<id>.svg). 있으면 그림 + 설명, 없으면 설명 상자만 (D46)
+const figures = import.meta.glob<string>('../../assets/concepts/*.svg', { query: '?raw', import: 'default', eager: true });
+const figureSvg = figures[`../../assets/concepts/${c.id}.svg`];
 ---
 
 <Base title={c.title} description={c.summary}>
@@ -36,8 +39,8 @@ const related = (c.relatedProducts ?? []).map((id) => catalog.product.get(id)).f
     <p class="concept-summary">{c.summary}</p>
     {
       c.figure && (
-        <figure class="concept-figure">
-          <Emoji id="light-bulb" size={56} />
+        <figure class={figureSvg ? 'concept-figure has-art' : 'concept-figure'}>
+          {figureSvg ? <div class="concept-art" role="img" aria-label={c.figure} set:html={figureSvg} /> : <Emoji id="light-bulb" size={56} />}
           <figcaption>
             <strong>{ko.concept.figure}</strong> {c.figure}
           </figcaption>

@@ -1263,6 +1263,20 @@
   background: var(--sky);
 }
 
+/* 그림이 있으면 그림을 위에 크게, 설명은 아래에 (그림 속 글자는 없고 설명이 뜻을 전한다) */
+.concept-figure.has-art {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.concept-art svg {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 320px;
+  block-size: auto;
+  margin-inline: auto;
+}
+
 .card h2 {
   font-size: var(--text-lg);
 }

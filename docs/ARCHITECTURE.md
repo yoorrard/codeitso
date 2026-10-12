@@ -81,13 +81,13 @@ code-chauffeur/
 
 ## 4. 상태와 저장
 
-모든 저장은 `src/lib/store.ts` 한 곳에서만 한다. localStorage를 못 쓰는 환경(사생활 보호 모드 등)에서는 메모리에만 두고 안내 한 줄을 보여 준다.
+모든 저장은 `src/lib/store.ts` 한 곳에서만 한다 (nanostores + @nanostores/persistent). 읽은 값의 모양 고르기는 `src/lib/saved.ts`, 엔진 결과 파생 store(`$result`, `commitSession`)는 자료 전체를 불러오므로 `src/lib/result.ts`에 따로 둔다 (설정 메뉴처럼 결과가 필요 없는 섬이 자료를 싣지 않게). localStorage를 못 쓰는 환경(사생활 보호 모드 등)에서는 메모리에만 두고 안내 한 줄을 보여 준다.
 
 | 키 | 내용 |
 |---|---|
 | `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers, cart, kept, deferred, freeText |
 | `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 정답 맞힌 문제 번호 |
-| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[] }` 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절) |
+| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true }` 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 첫 수업을 끝까지 봄·영수증을 한 번 이상 뽑음 (도장 계산용, D40) |
 | `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean }` (효과음 기본 false) |
 | `cc:trip:v1` | `{ seenStamps: string[] }` 이미 장면을 본 도장 id (도장 장면은 처음 한 번만). 주행 거리·도장 자체는 저장하지 않고 계산한다 (D32) |
 

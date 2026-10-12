@@ -63,7 +63,7 @@
   - 기본 틀(layout): 본문 바로 가기 링크, 머리말(노선 띠 자리, 행선지 전광판, 주행 거리 계기판 자리, 설정 메뉴: 동작 줄이기·효과음·내 여행 기록·기록 지우기), 본문(무대), 기사님 자리, 사전 버튼 자리, 아래 진행 막대 자리, 처음부터 있는 `aria-live` 알림 자리, `<title>`과 언어(`lang="ko"`), View Transitions 이름(머리말·노선 띠).
 - 완성 확인: 모든 라우트가 같은 틀을 쓰고, 키보드로 바로 가기·머리말·본문·사전 버튼 순서로 이동된다. 360px에서 붙박이 막대가 초점 받은 요소를 가리지 않는다.
 
-### [ ] T06 상태 저장·공유 링크·정류장 규칙
+### [x] T06 상태 저장·공유 링크·정류장 규칙
 - 요구: R-04, R-38, R-41 · 읽을 것: `docs/ARCHITECTURE.md` 4~5절, `docs/UX.md` 2.1절
 - 할 일:
   - nanostores + @nanostores/persistent로 `src/lib/store.ts`: 세션, 공부 기록, 메타, 설정. localStorage를 못 쓰면 메모리로. 저장은 `evaluate()`가 돌려준 `r.session`으로.
@@ -213,3 +213,4 @@
 2026-10-12 T02 남색·금색·지도 종이 토큰과 모션 토큰(스프링·손맛·동작 줄이기 페이드), 대비·동작 줄이기 검사(npm run tokens), Pretendard 3굵기·CC Receipt 직접 싣기(npm run fonts, D37), 기본 스타일
 2026-10-12 T02b 기사님 정리본과 `Mascot`(avif·webp 1배·2배), Fluent 3D 그림 문자 30개(`Emoji`), Phosphor duotone `Icon`(Astro·Preact), Pretendard 가변 글꼴로 바꿈·CSS 예산 30KB·`<picture>` 예산 셈 고침 (D38)
 2026-10-12 T03 Vitest 5.0.3(npm peer 버그는 overrides로), 골든·자료 검사(망가뜨린 자료 11가지)·명도 대비·글꼴 이름 시험 38개, 자료 검사를 `scripts/lib/validate.ts`로, check에 시험 포함, CI에 시험 범위·빌드·예산 (D39). 엔진 시험 범위 55% → T04
+2026-10-12 T06 (T05보다 먼저) nanostores 저장소(store·saved·result), lz-string 공유 링크(#r=, 읽고 바로 지움), 정류장 규칙·이어서 하기·상태 비교(stations), 주행 거리·도장(progress), 단위 시험 52개 (D40)

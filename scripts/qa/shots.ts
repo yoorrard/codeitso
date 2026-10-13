@@ -131,8 +131,8 @@ try {
           if (r.width === 0 || r.height === 0) continue;
           const style = getComputedStyle(el);
           if (style.visibility === 'hidden') continue;
-          // 문장 속 링크는 WCAG 2.5.8 예외. 블록처럼 놓인 링크와 버튼만 본다.
-          if (el.tagName === 'A' && style.display === 'inline') continue;
+          // 문장 속 링크와 점선 밑줄 말(.term-mark, D69)은 WCAG 2.5.8 예외(Inline). 블록처럼 놓인 링크와 버튼만 본다.
+          if ((el.tagName === 'A' && style.display === 'inline') || el.classList.contains('term-mark')) continue;
           if (r.width < 44 || r.height < 44) out.push(`${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''} "${(el.textContent ?? el.getAttribute('aria-label') ?? '').trim().slice(0, 20)}" ${Math.round(r.width)}×${Math.round(r.height)}`);
         }
         return out;

@@ -8,7 +8,7 @@ import { ko } from '../copy/ko.ts';
 ---
 
 <Base title={ko.interview.pageTitle} stage="destination">
-  <div class="map-band is-destination"><MapBoard client:idle stage="destination" /></div>
+  <div class="map-band is-destination"><MapBoard client:load stage="destination" /></div>
   <Interview client:load />
   <InterviewAction client:idle slot="action" />
 </Base>

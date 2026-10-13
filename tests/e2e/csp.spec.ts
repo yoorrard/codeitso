@@ -50,7 +50,7 @@ test('CSP: 사전 옆 창 검색, 도구 모음 검색, 확인 문제', async ({
   await expect(page.locator('[data-shelf-item][data-id="kakao-maps"]')).toBeVisible();
   await expect(page.locator('[data-shelf-item][data-id="html-single"]')).toBeHidden();
   await page.goto('/terms/api');
-  const option = await hydrated(page.locator('.quiz-item .option').first());
+  const option = await hydrated(page.locator('.quiz-item .quiz-opt').first());
   await option.click();
   await expect(page.locator('.quiz-result').first()).toBeVisible();
   expect(await violations()).toEqual([]);

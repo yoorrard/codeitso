@@ -3,11 +3,44 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { announce, GATHER_MS, LIVE_ID } from '../../src/lib/announce.ts';
 
-function fakeBrowser(): { live: { textContent: string }; flush: () => void } {
+interface FakeEl {
+  textContent: string;
+  attrs: Record<string, string>;
+  className: string;
+  setAttribute: (k: string, v: string) => void;
+}
+const fakeEl = (): FakeEl => {
+  const el: FakeEl = { textContent: '', attrs: {}, className: '', setAttribute: (k, v) => (el.attrs[k] = v) };
+  return el;
+};
+/** 열린 모달 대화 상자 흉내: 초점이 그 안에 있다. live가 없으면 append로 받은 것을 [data-live]로 돌려준다 */
+interface FakeDialog {
+  open: boolean;
+  live: FakeEl | null;
+  matches: (s: string) => boolean;
+  querySelector: (s: string) => FakeEl | null;
+  append: (el: FakeEl) => void;
+}
+function fakeDialog(live: FakeEl | null): FakeDialog {
+  const d: FakeDialog = {
+    open: true,
+    live,
+    matches: (s) => s === ':modal' && d.open,
+    querySelector: (s) => (s === '[data-live]' ? d.live : null),
+    append: (el) => (d.live = el),
+  };
+  return d;
+}
+
+function fakeBrowser(dialog: FakeDialog | null = null): { live: { textContent: string }; flush: () => void } {
   const live = { textContent: '' };
   const frames: (() => void)[] = [];
   const g = globalThis as Record<string, unknown>;
-  g['document'] = { getElementById: (id: string) => (id === LIVE_ID ? live : null) };
+  g['document'] = {
+    getElementById: (id: string) => (id === LIVE_ID ? live : null),
+    createElement: () => fakeEl(),
+    activeElement: { closest: () => dialog },
+  };
   g['window'] = {
     setTimeout: (cb: () => void, ms: number) => {
       expect(ms).toBe(GATHER_MS);
@@ -61,5 +94,33 @@ describe('알림', () => {
     announce('복사했어요.');
     b.flush();
     expect(b.live.textContent).toBe('복사했어요.');
+  });
+
+  it('모달 대화 상자가 열려 있으면 그 안의 알림 자리에 (바깥 #cc-live는 접근성 트리에서 빠진다)', () => {
+    const inside = fakeEl();
+    const d = fakeDialog(inside);
+    const b = fakeBrowser(d);
+    announce('21개를 찾았어요.');
+    b.flush();
+    expect(inside.textContent).toBe('21개를 찾았어요.');
+    expect(b.live.textContent).toBe('');
+  });
+
+  it('알림 자리가 없는 모달이면 처음 알릴 때 만들어 둔다', () => {
+    const d = fakeDialog(null);
+    const b = fakeBrowser(d);
+    announce('복사했어요.');
+    expect(d.live?.attrs['aria-live']).toBe('polite');
+    b.flush();
+    expect(d.live?.textContent).toBe('복사했어요.');
+  });
+
+  it('알리기 전에 대화 상자가 닫혔으면 기본 틀의 자리에 (고르고 바로 닫는 시트)', () => {
+    const d = fakeDialog(fakeEl());
+    const b = fakeBrowser(d);
+    announce('도구 12개를 보여 드려요.');
+    d.open = false;
+    b.flush();
+    expect(b.live.textContent).toBe('도구 12개를 보여 드려요.');
   });
 });

@@ -10,6 +10,7 @@ import { badges, evaluate, fill, toolDifficultyWord } from '../lib/engine/index.
 import type { Product } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
+import { $mapFocus } from '../lib/map/focus.ts';
 import { flip } from '../lib/motion.ts';
 import { slotArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
@@ -226,6 +227,9 @@ export default function Shop() {
     const first = r.slots.find((s) => s.slot.id === asked) ?? r.slots.find((s) => s.slot.required && s.filledBy.length === 0) ?? r.slots[0];
     if (first) setOpen(first.slot.id);
   }, [ready]);
+
+  // 지도에 지금 여는 칸을 알린다 (MapBoard가 그 마디에 --you 고리를 그린다, D68)
+  useEffect(() => $mapFocus.set(open), [open]);
 
   const g = gate('waypoints', r);
   // 빌드 때(처음 온 사람)도 못 가는 안내를 그린다: 만들 앱을 정하지 않은 사람에게 빈 도구 고르기를 보이지 않게

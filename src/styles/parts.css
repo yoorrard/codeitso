@@ -793,6 +793,33 @@
   padding-inline-start: calc(var(--space-3) + 20px + var(--space-2));
 }
 
+/* 검색 칸: 크롬 기본 지우기 ×(굵은 파랑)를 감추고 선 아이콘 단추(.field-clear 44, --text-3)를 직접 둔다 */
+.field[type='search']::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.field-wrap > .field:has(+ .field-clear) {
+  padding-inline-end: calc(var(--tap) + var(--space-1));
+}
+
+.field-clear {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 2px;
+  color: var(--text-3);
+  translate: 0 -50%;
+}
+
+/* 검색 칸 위에 보이는 라벨 (14/20 --text-2) */
+.field-label {
+  display: block;
+  margin-block-end: var(--space-2);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-strong);
+}
+
 /* ── 빈 상태 (brief 5.6): 그림 96 + 제목 22/700 + 한 줄 16 + 행동 하나. 빈 상태에는 기사 그림을 넣지 않는다 (brief 3.6) ── */
 .empty-state {
   display: grid;
@@ -825,8 +852,7 @@
 
 /* 남색 면 위 청록 글자 (brief 4.1, 6.68:1): 품질 바닥선이 color에 --cyan을 허락하는 단 하나의 클래스.
    이 규칙의 선택자는 모두 남색 면(--navy·--navy-raised·--tile 낮 값) 안에 있어야 한다 */
-.cyan-on-navy,
-.sim-code .json-key {
+.cyan-on-navy {
   color: var(--cyan);
 }
 
@@ -2237,385 +2263,267 @@
   font-weight: var(--weight-strong);
 }
 
-/* ── 공부·개념 카드 (T12) ───────────────────────────── */
-.concept {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.concept-summary {
-  font-size: var(--size-title-3);
-}
-
-.concept-figure {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin: 0;
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--selected);
-}
-
-/* 그림이 있으면 그림을 위에 크게, 설명은 아래에 (그림 속 글자는 없고 설명이 뜻을 전한다) */
-.concept-figure.has-art {
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.concept-art svg {
-  display: block;
-  inline-size: 100%;
-  max-inline-size: 320px;
-  block-size: auto;
-  margin-inline: auto;
-}
-
 .card h2 {
   font-size: var(--size-title-3);
 }
 
-.quiz-list {
-  display: grid;
-  gap: var(--space-4);
-  list-style: none;
-  padding: 0;
+/* ── 둘러보는 곳이 함께 쓰는 줄 덧붙임 (brief 6.9~6.12, D67 W3b): 사전 시트가 어느 화면에서나 열리므로 전역에 둔다 ──
+   아이콘 넷(찾기·알림·새 창·지우기)은 Phosphor Regular 경로를 마스크로 (.i-mask와 함께) */
+:root {
+  --i-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z'/%3E%3C/svg%3E");
+  --i-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z'/%3E%3C/svg%3E");
+  --i-external: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,104a8,8,0,0,1-16,0V59.32l-66.33,66.34a8,8,0,0,1-11.32-11.32L196.68,48H152a8,8,0,0,1,0-16h64a8,8,0,0,1,8,8Zm-40,24a8,8,0,0,0-8,8v72H48V80h72a8,8,0,0,0,0-16H48A16,16,0,0,0,32,80V208a16,16,0,0,0,16,16H176a16,16,0,0,0,16-16V136A8,8,0,0,0,184,128Z'/%3E%3C/svg%3E");
 }
 
-.quiz-item {
-  display: grid;
-  gap: var(--space-2);
+.i-search {
+  --i: var(--i-search);
 }
 
-.quiz-q {
-  font-weight: var(--weight-strong);
+.i-info {
+  --i: var(--i-info);
 }
 
-.option.is-answer {
-  border-color: var(--ok-ink);
-  box-shadow: inset 0 0 0 2px var(--ok-ink);
+.i-external {
+  --i: var(--i-external);
 }
 
-.option.is-wrong {
-  border-color: var(--bad-ink);
-  background: var(--surface);
+/* 묶음 목록 (층 1): 흰 면 + 모서리 16. 누를 때의 면이 모서리 밖으로 나오지 않게 자른다 */
+.list.group {
+  padding-block: 0;
+  overflow: hidden;
 }
 
-.quiz-result {
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  background: var(--bg);
+/* 둘째 줄을 한 줄로 (하는 일 한 줄) */
+.list-sub.is-one {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.quiz-result.ok {
-  background: var(--accent-soft);
+/* 글 칸이 좁으면(글자 200%, 아주 좁은 화면) 두 줄까지 보인다. rem은 뿌리 글자 크기를 따라가 글자를 키우면 문턱도 커진다 */
+.list-text:has(> .list-sub.is-one) {
+  container: list-text / inline-size;
 }
 
-.mini-stamp {
-  display: inline-grid;
-  place-items: center;
-  inline-size: 28px;
-  block-size: 28px;
-  margin-inline-start: var(--space-2);
-  border-radius: var(--radius-pill);
-  border: 2px solid var(--ok);
-  color: var(--ok-ink);
-  transform: rotate(-8deg);
-}
-
-.read-row {
-  display: grid;
-  gap: var(--space-3);
-  justify-items: start;
-}
-
-.study-list {
-  display: grid;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-}
-
-.study-item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  min-block-size: var(--tap);
-}
-
-.study-item.read {
-  background: var(--accent-soft);
-}
-
-.study-meta {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
-  font-size: var(--size-caption);
-  color: var(--text-2);
-}
-
-/* 해 보기 모형 */
-.sim {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.sim-fields {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.sim-fields label {
-  display: grid;
-  gap: var(--space-1);
-  font-weight: var(--weight-strong);
-}
-
-.sim-cap {
-  font-size: var(--size-caption);
-  font-weight: var(--weight-strong);
-  color: var(--text-2);
-}
-
-.sim-code {
-  margin: 0;
-  padding: var(--space-3);
-  border-radius: var(--radius-sm);
-  background: var(--navy-raised);
-  color: var(--on-navy);
-  font-family: var(--font-receipt);
-  font-size: var(--size-caption);
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-.sim-code.json {
-  display: grid;
-  justify-items: start;
-}
-
-.json-row {
-  min-block-size: var(--tap);
-  padding: 0 var(--space-3);
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  text-align: start;
-}
-
-.json-row[aria-pressed='true'] {
-  background: var(--navy);
-  outline: 2px solid var(--cyan);
-}
-
-.devtools.leak {
-  padding: var(--space-2);
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--bad-ink);
-}
-
-.leak-note {
-  color: var(--bad-ink);
-  font-weight: var(--weight-strong);
-}
-
-.mono {
-  font-family: var(--font-receipt);
-}
-
-.deploy-steps {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-}
-
-.deploy-steps li {
-  display: grid;
-  justify-items: center;
-  gap: var(--space-1);
-  padding: var(--space-2);
-  border-radius: var(--radius-lg);
-  background: var(--bg);
-  text-align: center;
-  font-size: var(--size-caption);
-  transition: background-color var(--dur-ui) var(--ease-out);
-}
-
-.deploy-steps li.on {
-  background: var(--accent-soft);
-  font-weight: var(--weight-strong);
-}
-
-.deploy-no {
-  display: grid;
-  place-items: center;
-  inline-size: 32px;
-  block-size: 32px;
-  border-radius: var(--radius-pill);
-  background: var(--navy);
-  color: var(--on-navy);
-}
-
-/* 개념 이름 링크가 줄 대부분을 차지해 누르기 쉽게 */
-.study-item a {
-  flex: 1 1 8rem;
-  display: inline-flex;
-  align-items: center;
-  min-block-size: var(--tap);
-  min-inline-size: var(--tap);
-  font-weight: var(--weight-strong);
-}
-
-/* ── 사전 (T15) ─────────────────────────────────────── */
-.dict {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.dict-label {
-  display: block;
-  font-weight: var(--weight-strong);
-  margin-block-end: var(--space-1);
-}
-
-.dict h3 {
-  font-size: var(--size-body);
-}
-
-.dict-list {
-  display: grid;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-}
-
-.dict-item {
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-.dict-item > a,
-.dict-item summary {
-  display: inline-flex;
-  align-items: center;
-  min-block-size: var(--tap);
-  font-weight: var(--weight-strong);
-}
-
-.error-card h4 {
-  font-size: var(--size-caption);
-  color: var(--text-2);
-  margin-block-start: var(--space-2);
-}
-
-.error-card ul,
-.error-card ol {
-  padding-inline-start: var(--space-5);
-}
-
-/* 사전 시트 (brief 6.12, 5.6 모달 시트): 휴대폰은 위 모서리 20의 아래 시트(최대 높이 90%), 1024px 이상은 오른쪽 옆 창 400.
-   손잡이는 그리지 않는다. 들어오기 320ms --ease-drawer, 나가기 200ms --ease-in, 동작 줄이기면 150ms 투명도만.
-   바탕은 아직 --bg다: 안의 결과가 흰 카드라서(.dict-item). 결과를 줄 목록으로 바꿀 때(6.12) --surface-raised로 옮긴다 */
-.dict-sheet {
-  --sheet-from: 0 100%;
-  inset: auto 0 0 0;
-  inline-size: 100%;
-  max-inline-size: 100%;
-  max-block-size: 90dvh;
-  margin: 0;
-  padding: 0 var(--gutter) calc(var(--space-5) + env(safe-area-inset-bottom));
-  border: 0;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  background: var(--bg);
-  color: var(--text);
-  box-shadow: var(--elev-3);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  translate: var(--sheet-from);
-  transition-property: translate, opacity, overlay, display;
-  transition-behavior: allow-discrete;
-  transition-duration: var(--dur-exit);
-  transition-timing-function: var(--ease-in);
-}
-
-.dict-sheet[open] {
-  translate: 0 0;
-  transition-duration: var(--dur-sheet);
-  transition-timing-function: var(--ease-drawer);
-}
-
-@starting-style {
-  .dict-sheet[open] {
-    translate: var(--sheet-from);
+@container list-text (width < 11rem) {
+  .list-sub.is-one {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
   }
 }
 
-.dict-sheet::backdrop {
-  background: var(--scrim);
+/* 새 창으로 여는 줄의 끝 표시 (› 대신) */
+.list-ext {
+  flex: none;
+  inline-size: 20px;
+  block-size: 20px;
+  background: var(--text-3);
+  mask: var(--i-external) center / contain no-repeat;
 }
 
-.dict-sheet :focus-visible {
-  outline-color: var(--focus);
+/* 붙여 넣을 말 상자의 [복사]: 작은 중립 버튼 36(누르는 곳 44). CopyButton은 보통 버튼을 그려서 여기서 작은 꼴로 바꾼다 */
+.paste-head .copy-btn {
+  min-block-size: var(--tap);
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
 }
 
-.dict-sheet-head {
-  position: sticky;
-  inset-block-start: 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  min-block-size: 56px;
-  margin: 0 calc(-1 * var(--gutter)) var(--space-2);
-  padding: var(--space-2) var(--gutter) 0;
-  background: var(--bg);
+.paste-head .copy-btn::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--tap) - var(--btn-sm)) / 2);
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--btn-bg);
 }
 
-.dict-sheet-head h2 {
-  font-size: var(--size-title-2);
-  line-height: var(--leading-title-2);
-  font-weight: var(--weight-heading);
+.paste-head .copy-btn:is(:hover, :active) {
+  background: none;
 }
 
-.dict-sheet-head .icon-btn {
-  margin-inline-end: calc(-1 * var(--space-3));
-  color: var(--text);
+.paste-head .copy-btn:is(:hover, :active)::before {
+  background: var(--btn-bg-press);
+}
+
+/* ── 사전 시트 (brief 6.12, 5.6 모달 시트): <dialog class="modal dict-sheet">. 휴대폰은 아래 시트(높이 90%, 결과가 바뀌어도
+   시트 높이는 그대로), 768px부터 가운데 640, 1024px 이상은 오른쪽 옆 창 400. 손잡이는 그리지 않는다. 안의 모양은 dictionary.css ── */
+.modal.dict-sheet {
+  block-size: 90dvh;
+  max-block-size: 90dvh;
+}
+
+@media (min-width: 768px) {
+  .modal.dict-sheet {
+    block-size: min(90dvh, 760px);
+  }
 }
 
 @media (min-width: 1024px) {
-  .dict-sheet {
-    --sheet-from: 100% 0;
+  .modal.dict-sheet {
+    --sheet-fade: 1;
     inset: 0 0 0 auto;
     inline-size: 400px;
-    max-block-size: 100dvh;
+    max-inline-size: 400px;
     block-size: 100dvh;
+    max-block-size: 100dvh;
+    margin: 0;
     border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+    translate: 100% 0;
+  }
+
+  .modal.dict-sheet[open] {
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .modal.dict-sheet[open] {
+      translate: 100% 0;
+    }
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .dict-sheet,
-  .dict-sheet[open] {
-    --sheet-from: 0 0;
-    transition-duration: var(--dur-fade);
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .modal.dict-sheet,
+  .modal.dict-sheet[open] {
+    --sheet-fade: 0;
+    translate: none;
   }
 }
 
-:root[data-motion='reduce'] :is(.dict-sheet, .dict-sheet[open]) {
-  --sheet-from: 0 0;
-  transition-duration: var(--dur-fade);
+@media (min-width: 1024px) {
+  :root[data-motion='reduce'] :is(.modal.dict-sheet, .modal.dict-sheet[open]) {
+    --sheet-fade: 0;
+    translate: none;
+  }
+}
+
+.dict-wait {
+  color: var(--text-2);
+}
+
+/* 사전의 안 (brief 6.12): 검색 칸 48 → 묶음(에러가 났을 때 → 용어 → 막히기 쉬운 곳 → 도구)마다 줄 목록. 에러 카드는 시트 안의 유일한 카드 */
+.dict {
+  display: grid;
+  gap: var(--space-5);
+  padding-block-end: var(--space-5);
+}
+
+/* /dictionary 페이지: H1 아래 한 줄 다음 24 */
+.stage .dict {
+  margin-block-start: var(--space-5);
+}
+
+.dict-group {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.dict-group-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--size-title-3);
+  line-height: var(--leading-title-3);
+}
+
+.dict-group-title .icon-wrap {
+  color: var(--warn-ink);
+}
+
+.dict-group-title svg {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.dict-hint {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-strong);
+}
+
+/* 예 칩 줄: 화면(시트) 끝까지 밀린다 */
+.dict-examples {
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+  scroll-padding-inline: var(--gutter);
+}
+
+.dict-tag {
+  margin-inline-start: var(--space-2);
+  vertical-align: 2px;
+}
+
+/* 누르지 않는 줄 (상품 없는 막히기 쉬운 곳): 16/24 */
+.list-row.dict-plain {
+  margin: 0;
+  cursor: auto;
+}
+
+@media (hover: hover) {
+  .list-row.dict-plain:hover {
+    background: transparent;
+  }
+}
+
+/* 시트 안에서는 줄이 시트 가장자리까지: 상자 없이 나눔 선만, 글은 시트 제목과 같은 선(양옆 여백)에서 */
+.dict-sheet .list.group {
+  margin-inline: calc(-1 * var(--gutter));
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dict-sheet .list-row {
+  --list-indent: var(--gutter);
+  padding-inline: var(--gutter);
+}
+
+.dict-sheet .list-row:has(> .list-tile) {
+  --list-indent: calc(var(--gutter) + 52px);
+}
+
+/* 에러 카드: 시트 안의 유일한 카드 (모서리 16, 그림자 없음, 1px 가는 선) */
+.error-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.error-card-title {
+  font-size: var(--size-title-3);
+  line-height: var(--leading-title-3);
+}
+
+.error-card-title:focus {
+  outline: none;
+}
+
+.error-card-sub {
+  margin-block-start: var(--space-3);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.error-card :is(ul, ol):not(.chip-row) {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding-inline-start: var(--space-5);
+}
+
+.error-card .paste {
+  margin-block-start: var(--space-1);
 }
 
 /* ── 소개·법 문서·바닥글 (T17) ─────────────────────── */
@@ -2703,7 +2611,7 @@
 .footer-links a {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-block-size: var(--tap);
   min-inline-size: var(--tap);
   color: var(--text-2);
@@ -2744,67 +2652,4 @@ img.art {
 .art-placeholder .glyph {
   inline-size: 92%;
   block-size: 92%;
-}
-
-/* ── 지난 영수증 (CONCEPT 6.11) ─────────────────────────── */
-.receipts-count {
-  margin-block: var(--space-3) var(--space-2);
-  color: var(--text-2);
-}
-
-.receipts-list {
-  padding: 0;
-  list-style: none;
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-.receipts-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-}
-
-.receipts-row + .receipts-row {
-  border-block-start: 1px solid var(--hairline);
-}
-
-.receipts-open {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  gap: var(--space-3);
-  min-inline-size: 0;
-  min-block-size: 56px;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.receipts-text {
-  display: grid;
-}
-
-.receipts-name {
-  font-size: var(--size-body-lg);
-  font-weight: var(--weight-strong);
-}
-
-.receipts-at {
-  font-size: var(--size-caption);
-  font-variant-numeric: tabular-nums;
-  color: var(--text-2);
-}
-
-.receipts-empty {
-  display: grid;
-  justify-items: center;
-  gap: var(--space-4);
-  padding-block: var(--space-6);
-  text-align: center;
-}
-
-.receipts-empty .receipts-empty-art {
-  inline-size: 120px;
 }

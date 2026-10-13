@@ -1,9 +1,11 @@
 // 해 보기 모형 다섯 가지 (T12, docs/UX.md 3.7): 진짜 키나 서버를 쓰지 않는 연습 화면. 결과는 화면 낭독기에도 알린다.
+// 모양은 try-it.css(brief 6.10, D67 W3b. 해 보기가 있는 카드에만 실린다): 코드 칸은 --fill 면의 본문 글꼴(고정폭은 영수증 안에서만), 입력은 .field 48.
 import { useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { fill } from '../lib/engine/index.ts';
 import type { Concept } from '../lib/engine/types.ts';
+import '../styles/try-it.css';
 
 type Kind = NonNullable<Concept['tryIt']>['kind'];
 const K = ko.tryIt;
@@ -17,18 +19,18 @@ function EnvVarForm() {
       <div class="sim-fields">
         <label>
           <span>{K.envName}</span>
-          <input class="line-input" value={name} onInput={(e) => setName((e.currentTarget as HTMLInputElement).value)} />
+          <input class="field" value={name} onInput={(e) => setName((e.currentTarget as HTMLInputElement).value)} />
         </label>
         <label>
           <span>{K.envValue}</span>
-          <input class="line-input" value={value} onInput={(e) => setValue((e.currentTarget as HTMLInputElement).value)} />
+          <input class="field" value={value} onInput={(e) => setValue((e.currentTarget as HTMLInputElement).value)} />
         </label>
       </div>
       <p class="sim-cap">{K.envFileTitle}</p>
       <pre class="sim-code">{`${clean}=${value}`}</pre>
       <p class="sim-cap">{K.envCodeTitle}</p>
       <pre class="sim-code">{`const key = env.${clean};`}</pre>
-      <p class="kept-note">{K.envNote}</p>
+      <p class="sim-note">{K.envNote}</p>
     </div>
   );
 }
@@ -44,7 +46,7 @@ function ApiKeyForm() {
       <p class="sim-cap">{K.keyInput}</p>
       <pre class="sim-code">{K.keyFake}</pre>
       <p class="sim-cap">{K.keyWhere}</p>
-      <div class="action-row">
+      <div class="sim-row">
         <button type="button" class="btn" aria-pressed={where === 'code'} onClick={() => choose('code')}>
           {K.keyInCode}
         </button>
@@ -56,7 +58,7 @@ function ApiKeyForm() {
         <div class={`devtools ${where === 'code' ? 'leak' : 'safe'}`}>
           <p class="sim-cap">{K.devtools}</p>
           <pre class="sim-code">{where === 'code' ? `fetch('…?key=${K.keyFake}')` : "fetch('/api/meal')"}</pre>
-          <p class={where === 'code' ? 'leak-note' : 'kept-note'}>{where === 'code' ? K.keyShown : K.keyHidden}</p>
+          <p class="devtools-note">{where === 'code' ? K.keyShown : K.keyHidden}</p>
         </div>
       )}
     </div>
@@ -69,7 +71,7 @@ function JsonReader() {
   return (
     <div class="sim">
       <p class="sim-cap">{K.jsonTitle}</p>
-      <p class="q-help">{K.jsonHint}</p>
+      <p class="sim-note">{K.jsonHint}</p>
       <div class="sim-code json">
         <span>{'{'}</span>
         {K.jsonSample.map((x) => (
@@ -87,7 +89,7 @@ function JsonReader() {
         ))}
         <span>{'}'}</span>
       </div>
-      {item && <p class="kept-note">{fill(K.jsonPick, { key: item.key, meaning: item.meaning })}</p>}
+      {item && <p class="sim-note">{fill(K.jsonPick, { key: item.key, meaning: item.meaning })}</p>}
     </div>
   );
 }
@@ -113,11 +115,18 @@ function TerminalSim() {
       <pre class="sim-code terminal" aria-labelledby="term-label">
         {lines.join('\n') || '$'}
       </pre>
-      <form class="action-row" onSubmit={run}>
+      <form class="sim-row" onSubmit={run}>
         <label class="visually-hidden" for="term-input">
           {K.terminalInput}
         </label>
-        <input id="term-input" class="line-input mono" value={cmd} autocomplete="off" spellcheck={false} onInput={(e) => setCmd((e.currentTarget as HTMLInputElement).value)} />
+        <input
+          id="term-input"
+          class="field"
+          value={cmd}
+          autocomplete="off"
+          spellcheck={false}
+          onInput={(e) => setCmd((e.currentTarget as HTMLInputElement).value)}
+        />
         <button type="submit" class="btn">
           {K.terminalRun}
         </button>
@@ -143,7 +152,7 @@ function DeploySim() {
           </li>
         ))}
       </ol>
-      <p class="kept-note">{K.deployNotes[step]}</p>
+      <p class="sim-note">{K.deployNotes[step]}</p>
       <button type="button" class="btn" onClick={next}>
         {step >= K.deploySteps.length - 1 ? K.deployAgain : K.deployNext}
       </button>

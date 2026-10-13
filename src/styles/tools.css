@@ -1,0 +1,223 @@
+/* 도구 모음 /tools와 도구 상세 /tools/[id] (brief 6.9, D67 W3b). 함께 쓰는 배치는 catalog-pages.css. 값은 tokens.css 변수만 쓴다. */
+
+/* ── 도구 모음 (brief 6.9): 검색 칸 48 → 칩 한 줄(분야 ⌄ | 기능) → 수 → 기능별 묶음(줄 72) → 원문만 있는 도구(접기) ── */
+.shelf-filter {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: var(--space-5);
+}
+
+/* 칩 줄은 화면 끝까지 밀린다 (양옆 여백 안에서 시작하고 끝난다) */
+.shelf-chips {
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+  scroll-padding-inline: var(--gutter);
+}
+
+/* 넓은 화면에서는 줄이 내용 칸 끝에서 칩 가운데를 자르므로 끝을 흐리게 해 밀린다는 것을 보인다 */
+@media (min-width: 768px) {
+  .shelf-chips {
+    mask-image: linear-gradient(to right, var(--text) calc(100% - var(--space-6)), transparent); /* 가림막은 알파만 본다 */
+  }
+}
+
+.chip-caret {
+  --i-size: 16px;
+}
+
+/* 분야 칩과 기능 칩 사이의 가는 세로 선 */
+.chip-sep {
+  flex: none;
+  align-self: center;
+  inline-size: 1px;
+  block-size: 20px;
+  background: var(--hairline);
+}
+
+.shelf-count {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+.shelf-none {
+  padding-block: var(--space-5);
+}
+
+.stage > .shelf-corner {
+  margin-block-start: var(--space-6);
+}
+
+/* 분야 시트: 고른 줄의 고리가 시트 가장자리에 붙지 않게 8 띄우고, 줄 글은 시트 제목과 같은 선(양옆 여백)에서 */
+.modal .domain-list {
+  margin: 0 calc(var(--space-2) - var(--gutter));
+}
+
+.domain-list .list-row {
+  --list-indent: var(--space-3);
+  padding-inline: var(--space-3);
+}
+
+.domain-list .list-row:has(> .list-tile) {
+  --list-indent: calc(var(--space-3) * 2 + 40px);
+}
+
+.domain-list .list-tile .glyph {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+/* 거르면 숨은 줄이 생긴다: 나눔 선은 보이는 줄 사이에만 (parts.css의 li + li 규칙을 덮는다) */
+.list.tool-list > li > .list-row::before {
+  content: none;
+}
+
+.list.tool-list > li:not([hidden]) ~ li:not([hidden]) > .list-row::before {
+  content: '';
+}
+
+.tool-price {
+  flex: none;
+  color: var(--text-2);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+  font-variant-numeric: tabular-nums;
+}
+
+/* '0원'은 낮추고 '유료'만 이름과 같은 무게로 (줄마다 되풀이되는 '0원'이 이름과 다투지 않게) */
+.tool-price.is-paid {
+  color: var(--text);
+  font-weight: var(--weight-strong);
+}
+
+.stage > .shelf-index {
+  margin-block-start: var(--space-6);
+}
+
+.shelf-index > summary {
+  padding-inline: var(--space-1);
+}
+
+.shelf-index .sec-note {
+  margin-block: 0 var(--space-3);
+}
+
+/* ── 도구 상세 (brief 6.9): 타일 64 + 이름 26 + 꼬리표 둘 → 한 줄 → (확인 중) → 한눈에 보기 … ── */
+.tool-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.tool-head-text {
+  display: grid;
+  gap: var(--space-2);
+  min-inline-size: 0;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stage > .tool-head + .page-lead {
+  margin-block-start: var(--space-4);
+}
+
+/* 키-값 묶음 목록: 키 15 --text-2, 값 15 --text. 좁으면 두 줄로 쌓이고 넓으면 두 칸 */
+.kv {
+  container: kv / inline-size;
+  margin: 0;
+}
+
+.kv-row {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+.kv-row + .kv-row::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: var(--space-4) 0;
+  block-size: 1px;
+  background: var(--hairline);
+}
+
+.kv dt {
+  color: var(--text-2);
+}
+
+.kv dd {
+  margin: 0;
+  min-inline-size: 0;
+  color: var(--text);
+}
+
+.kv dd > ul:not(.chip-row) {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@container kv (min-width: 30rem) {
+  .kv-row {
+    grid-template-columns: 9rem minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+/* 값 안의 링크: 밑줄 없이 링크 색 + 새 창 표시 16 (글 안의 링크라 누르는 곳 예외, WCAG 2.5.8) */
+.kv-link {
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .kv-link:hover {
+    text-decoration: underline;
+  }
+}
+
+.kv-ext {
+  --i-size: 16px;
+  margin-inline-start: 2px;
+  vertical-align: -3px;
+}
+
+/* 필요한 용어: 값 칸 안의 칩 한 줄 */
+.kv-chips {
+  margin-inline-start: -2px;
+}
+
+/* 글 줄 묶음 (막히기 쉬운 곳): 누르지 않는 줄, 16/24 */
+.text-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.text-rows > li {
+  position: relative;
+  padding: var(--space-3) var(--space-4);
+}
+
+.text-rows > li + li::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: var(--space-4) 0;
+  block-size: 1px;
+  background: var(--hairline);
+}

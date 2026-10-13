@@ -38,3 +38,18 @@ test('설정 시트: 스위치를 켜면 저장되고, 확인 대화 상자는 �
   await expect(sheet).toBeHidden();
   await expect(gear).toBeFocused();
 });
+
+test('기기에서 동작 줄이기가 켜져 있으면 스위치는 켜진 채 잠기고 까닭이 둘째 줄에 있다', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/tools');
+  await islandsReady(page);
+  await page.getByRole('button', { name: ko.settings.open, exact: true }).click();
+  const motion = page.getByRole('dialog', { name: ko.settings.title }).getByRole('switch', { name: ko.settings.motion });
+  await expect(motion).toHaveAttribute('aria-checked', 'true');
+  await expect(motion).toHaveAttribute('aria-disabled', 'true');
+  await expect(motion).toHaveAccessibleDescription(ko.settings.motionOs);
+  // 잠긴 스위치(aria-disabled)는 눌러도 바뀌지 않는다
+  await motion.dispatchEvent('click');
+  await expect(motion).toHaveAttribute('aria-checked', 'true');
+  expect(await page.evaluate(() => localStorage.getItem('cc:prefs:v1'))).toBeNull();
+});

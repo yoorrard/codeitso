@@ -1,0 +1,276 @@
+/* 용어 카드 /terms와 /terms/[id] (brief 6.10, D67 W3b): 타일·옅은 판·확인 문제·해 보기. 함께 쓰는 배치는 catalog-pages.css. 값은 tokens.css 변수만 쓴다. */
+
+/* ── 용어 카드 목록 (brief 6.10): 수 → (읽어 둘 용어 줄 목록) → 2열 타일(640px 이상 4열). 위 96은 옅은 판의 청사진 ── */
+.study-top {
+  display: grid;
+  gap: var(--space-2);
+  margin-block-start: var(--space-5);
+}
+
+.study-count {
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.study-count[data-wait] {
+  visibility: hidden;
+}
+
+.study-note {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.study-mine {
+  display: grid;
+  margin-block-start: var(--space-5);
+}
+
+.study-mine .sec-title {
+  margin-block-end: var(--space-1);
+}
+
+.study-mine .list {
+  margin-block-start: var(--space-3);
+}
+
+.term-state {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-strong);
+}
+
+.term-state.is-read {
+  color: var(--text);
+}
+
+.term-state.is-read::after {
+  content: '';
+  inline-size: 16px;
+  block-size: 16px;
+  background: var(--ok);
+  mask: var(--i-check) center / contain no-repeat;
+}
+
+/* 저장된 기록을 읽기 전에는 상태 글을 감춘다 (모두 '아직'으로 보였다가 바뀌지 않게) */
+.term-grid:not([data-ready]) .term-state {
+  visibility: hidden;
+}
+
+.term-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .term-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.term-tile {
+  display: grid;
+  gap: var(--space-2);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.term-text {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  padding-inline: var(--space-1);
+}
+
+.term-name {
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+  font-weight: var(--weight-strong);
+}
+
+@media (hover: hover) {
+  .term-tile:hover .term-name {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+/* 옅은 판 (brief 5.7): 64px 넘는 청사진은 --plate 면 위 --plate-line 선. 개념 그림 SVG는 판 색 변수로 칠한다 */
+.plate {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-lg);
+  background: var(--plate);
+  color: var(--plate-line);
+}
+
+.plate svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.term-plate {
+  block-size: 96px;
+  padding: var(--space-2) var(--space-3);
+}
+
+/* ── 용어 카드 상세 (brief 6.10): 다른 이름 → 3분 설명 → 그림으로 보면 → 해 보기 → 확인 문제 → 내 AI에게 배우기 → … ── */
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.concept-aliases {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.stage > .page-head + .concept-aliases {
+  margin-block-start: var(--space-2);
+}
+
+.concept-summary {
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body-lg);
+}
+
+.concept-body {
+  margin-block-end: var(--space-3);
+}
+
+.concept-figure {
+  margin: 0;
+}
+
+.concept-art {
+  aspect-ratio: 320 / 200;
+  max-inline-size: 28rem;
+  padding: var(--space-4);
+}
+
+.concept-figure figcaption {
+  margin-block-start: var(--space-3);
+  color: var(--text-2);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+}
+
+/* 확인 문제: 보기는 중립 버튼 56. 고르면 바로 정답(--ok-soft + ✓ 정답)과 고른 오답(--bad-soft + 오답), 그리고 풀이 */
+.quiz-list {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quiz-item {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.quiz-q {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body-lg);
+  font-weight: var(--weight-strong);
+}
+
+.quiz-q .i-mask {
+  margin-block-start: 4px;
+  color: var(--ok-ink);
+}
+
+.quiz-opts {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quiz-opt {
+  justify-content: flex-start;
+  inline-size: 100%;
+  min-block-size: var(--btn-lg);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  text-align: start;
+}
+
+.quiz-opt-text {
+  flex: 1;
+}
+
+.quiz-mark {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.quiz-opt.is-answer {
+  --btn-bg: var(--ok-soft);
+  --btn-bg-press: var(--ok-soft);
+}
+
+.quiz-opt.is-answer .quiz-mark {
+  color: var(--ok-ink);
+}
+
+.quiz-opt.is-answer .quiz-mark::before {
+  content: '';
+  inline-size: 16px;
+  block-size: 16px;
+  background: currentColor;
+  mask: var(--i-check) center / contain no-repeat;
+}
+
+.quiz-opt.is-wrong {
+  --btn-bg: var(--bad-soft);
+  --btn-bg-press: var(--bad-soft);
+}
+
+.quiz-opt.is-wrong .quiz-mark {
+  color: var(--bad-ink);
+}
+
+@media (forced-colors: active) {
+  .quiz-opt:is(.is-answer, .is-wrong) {
+    outline: 3px solid Highlight;
+    outline-offset: -3px;
+  }
+}
+
+.quiz-result strong {
+  margin-inline-end: var(--space-1);
+}
+
+.quiz-result.is-ok strong {
+  color: var(--ok-ink);
+}
+
+.quiz-result.is-bad strong {
+  color: var(--bad-ink);
+}

@@ -7,7 +7,7 @@
 | 영역 | 선택 | 메모 |
 |---|---|---|
 | 사이트 | Astro (정적 출력) + TypeScript strict | 서버 없이 HTML로 빌드한다. 판은 D35. |
-| 움직이는 부분 | Preact 섬(island) | 만들 앱 정하기·도구 고르기·도구끼리 맞춰 보기·설계도 받기·사전·지도처럼 상태가 있는 곳만 섬으로 만든다. 홈 첫 화면은 섬 없이 정적 SVG와 작은 스크립트(2KB 안쪽)로 돈다 (CONCEPT 6.1). 나머지는 정적 HTML. |
+| 움직이는 부분 | Preact 섬(island) | 만들 앱 정하기·도구 고르기·도구끼리 맞춰 보기·설계도 받기·사전·지도처럼 상태가 있는 곳만 섬으로 만든다. 홈 첫 화면에는 첫 그림 때 바로 붙는 섬(`client:load`)이 없다: 정적 SVG와 작은 스크립트로 그리고, 기본 틀의 섬(설정·사전·풀이)과 이어서 가기는 쉬는 시간(`client:idle`), 미리 짠 코스 버튼은 보일 때(`client:visible`) 붙는다 (CONCEPT 6.1, 11절). 나머지는 정적 HTML. |
 | 상태 | nanostores + @nanostores/persistent | 브라우저 localStorage에 저장. 키 이름은 아래 4절. |
 | 판단 | `src/lib/engine/` | 데이터와 규칙만으로 계산하는 순수 함수. 명세는 `docs/ENGINE.md`. |
 | 지도 | (T28) `src/lib/map/model.ts`의 `mapModel(session, evaluate())` + `MapBoard.tsx` 섬 | 엔진 결과를 그대로 그리는 순수 함수다. 땅 판과 표지는 SVG이고 색은 모두 CSS 변수라 낮·밤·느낌 팔레트가 같은 파일을 쓴다. 홈, 다섯 단계, 코스·지난 영수증 썸네일, 공유 미리 보기 그림이 같은 모형을 쓴다 (CONCEPT 6절 머리, 9절). |
@@ -67,7 +67,7 @@ code-chauffeur/
 
 | 주소 | 화면 | 만드는 방식 |
 |---|---|---|
-| `/` | 홈: "어디로 모실까요?", 만들 앱 정하기·도구 둘러보기, 미리 짠 코스 3개, 이어서 가기 | 정적 + 작은 스크립트 (첫 화면에는 섬 없음) |
+| `/` | 홈: "어디로 모실까요?", 만들 앱 정하기·도구 둘러보기, 미리 짠 코스 3개, 이어서 가기 | 정적 + 작은 스크립트 (첫 그림 때 붙는 섬 없음, 11절) |
 | `/test-drive` | 내 AI 써 보기 (연습, 번호 밖. 연습 1·2·3) | 정적 + 복사 버튼 섬 |
 | `/destination` | 1단계 만들 앱 정하기: 질문 | 섬 |
 | `/waypoints` | 2단계 도구 고르기: 기능마다 도구 고르기 | 섬 |
@@ -86,7 +86,7 @@ code-chauffeur/
 | `/legal/privacy` | 개인정보 처리방침 (초안, 사람 검토) | 정적 |
 | `/legal/notice` | 이용 안내·면책 (초안, 사람 검토) | 정적 |
 | `/404` | 길을 잘못 들었어요 | 정적 |
-| `/search-index.json`, `/robots.txt` | 검색 색인, 로봇 안내 (빌드 때 만드는 정적 끝점) | 정적 생성 |
+| `/search-index.json`, `/glossary.json`, `/glossary-tools.json`, `/robots.txt` | 검색 색인, 어려운 말 풀이 자료(손으로 쓴 용어 212개, D66·D69)와 도구 이름 풀이(products.json에서), 로봇 안내 (빌드 때 만드는 정적 끝점) | 정적 생성 |
 
 주소는 `src/lib/routes.ts`의 `ROUTES` 한 곳에서 정하고, 화면 코드에 주소를 직접 쓰지 않는다 (도구·용어 상세는 `toolPath`·`termPath`). 사전 옆 창은 기본 틀(layout)에 들어가 모든 화면에서 열린다. 단계마다 열리는 조건은 `docs/UX.md` 2.1절 (정본은 CONCEPT 2.1절).
 
@@ -121,13 +121,14 @@ code-chauffeur/
 | `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers(목적지 답), cart(고른 도구), kept(그대로 간 막힌 곳), deferred(나중으로 미룬 기능), freeText(한 줄 입력). 이름이 바뀌어도 키와 모양은 그대로라 저장된 답이 살아남는다 (D56) |
 | `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 용어 카드 읽음과 정답 맞힌 문제 번호 |
 | `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true }` 만들 앱 정하기 첫 답 시각, 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 내 AI 써 보기를 끝까지 함·영수증을 한 번 이상 받음 (단계 상태 계산용, D40·D56) |
-| `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean }` (효과음 기본 false) |
+| `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean, quiet: boolean, glossary: boolean, marks: boolean }` (효과음·조용히 모시기 기본 false, 어려운 말 풀이·점선 밑줄 기본 true, D67) |
 | `cc:seen:v1` | `{ scenes: string[] }` 처음 한 번만 다 보이는 큰 장면(S1 배차, S5 출발 → 도착)을 이미 본 기록. 다시 열면 끝 상태가 바로 보인다 (CONCEPT 7절) |
+| `cc:terms:v1` | (D69) 어려운 말 풀이를 한 번 연 용어 id(최근 300개). 다음 화면부터 그 말에 점선 밑줄을 긋지 않는다. 고른 글은 저장하지 않는다 |
 | `cc:receipts:v1` | (T25) 지난 영수증 최대 30장. 장마다 영수증 링크 조각(`#r=` 뒤), 앱 종류 id(`q.type`의 답), 받은 날만 둔다. 넘치면 가장 오래된 것을 빼고 그렇다고 알린다 (CONCEPT 8절) |
 
 - 옛 `cc:trip:v1`(도장 장면을 본 기록)은 `cc:seen:v1`로 바뀌었다. 옮길 값이 없으므로 읽지 않고, 남아 있으면 지운다 (`saved.ts`의 `LEGACY_KEYS`, `store.ts`가 처음 불릴 때).
 - 화면은 `Session`을 바꾸고, 결과는 매번 `evaluate(catalog, session)`로 다시 계산한다. 계산 결과를 저장하지 않는다. 저장할 때는 `r.session`(정리된 상태)을 쓴다.
-- '저장한 기록 지우기'는 진행 기록 다섯 키(`session`·`study`·`meta`·`seen`·`receipts`)를 지운다. 설정(`cc:prefs:v1`: 동작 줄이기·효과음)은 기록이 아니라서 남긴다 (멀미 때문에 켠 동작 줄이기가 풀리면 안 된다, D41).
+- '저장한 기록 지우기'는 진행 기록 여섯 키(`session`·`study`·`meta`·`seen`·`receipts`·`terms`)를 지운다. 설정(`cc:prefs:v1`: 동작 줄이기·효과음·조용히 모시기·풀이·점선 밑줄)은 기록이 아니라서 남긴다 (멀미 때문에 켠 동작 줄이기가 풀리면 안 된다, D41).
 - 단계마다 마쳤는지와 남은 개수(꼭 고를 것, 막힌 곳)는 `src/lib/progress.ts`가, 단계가 열렸는지(아직 못 가요와 그 이유)는 `src/lib/stages.ts`가 `evaluate()` 결과와 `cc:meta:v1`에서 매번 계산한다 (순수 함수, 시험 있음, D32 원칙 유지). 따로 쌓는 점수(km·도장)는 없다 (D56). 영수증 링크로 연 영수증도 같은 규칙으로 계산된다.
 - 저장 형식을 바꾸면 키의 `v1`을 올리고, 옛 값은 읽어서 옮긴 뒤 지운다.
 
@@ -148,7 +149,7 @@ code-chauffeur/
 
 ## 7. 검색 (사전·도구 모음)
 
-- 빌드 때 `src/pages/search-index.json.ts`가 용어 카드, 에러 안내, 도구(진열 상품과 색인 상품), 막히기 쉬운 곳 문장을 모아 MiniSearch 색인을 만든다 (D47). `scripts/build-search.ts`는 색인 크기와 예시 질문의 첫 결과를 찍어 보는 점검 도구다.
+- 빌드 때 `src/pages/search-index.json.ts`가 용어 카드, 에러 안내, 도구(진열 상품과 색인 상품), 막히기 쉬운 곳 문장, 어려운 말 풀이 용어를 모아 MiniSearch 색인을 만든다 (D47). 풀이 용어는 용어 카드가 있으면 그 카드 문서의 열쇠 말로 더하고, 없으면 `term` 종류 문서로 넣어 '용어' 묶음에 나온다 (D69). `scripts/build-search.ts`는 색인 크기와 예시 질문의 첫 결과를 찍어 보는 점검 도구다.
 - 결과는 네 묶음으로, 이 순서로 보인다 (CONCEPT 3.6·6.9절):
 
   | 묶음 이름 (화면) | 문서 종류 (`DocType`, 내부 id) | 그림 |
@@ -235,11 +236,11 @@ ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1;
 - 화면의 링크는 끝 빗금 없이(`/check`) 쓰므로 `html_handling`을 `drop-trailing-slash`로 둔다 (기본값이면 `/check` → `/check/`로 한 번 돌려보낸다). 대표 주소(canonical)도 끝 빗금을 뗀다 (D50).
 - Workers 로그(observability)는 끈다. 요청 기록에 IP 같은 정보가 남지 않게 한다 (R-60).
 - 배포는 둘로 나눈다.
-  - **미리 보기 배포** (T21): main에 합쳐지면 `npm run validate`(개발용)가 통과할 때 배포한다. 모든 화면 위에 "검토 중인 시험판" 띠를 두고, 검색 엔진이 색인하지 않게 `noindex`를 붙인다.
-  - **정식 배포** (T22): `npm run validate:release`가 통과해야 한다 (사람 확인이 남은 진열 상품이 없어야 함). 띠와 `noindex`를 뗀다.
+  - **미리 보기 배포** (T21): main에 합쳐지면 `npm run validate`(개발용)가 통과할 때 배포한다. 바닥글에 시험판 안내 한 줄('시험판이에요. 도구 정보가 바뀔 수 있어요.', D67)을 두고, 검색 엔진이 색인하지 않게 `noindex`를 붙인다.
+  - **정식 배포** (T22): `npm run validate:release`가 통과해야 한다 (사람 확인이 남은 진열 상품이 없어야 함). 그 한 줄과 `noindex`를 뗀다.
 - 배포는 GitHub Actions나 Cloudflare의 Git 연결 중 하나로 한다. 비밀 값(CLOUDFLARE_API_TOKEN 등)은 저장소 설정의 Secrets에만 둔다.
 - 보안 헤더 (T21, D53): CSP 본체는 Astro `security.csp`가 페이지마다 `<meta>`로 넣는다(스크립트·스타일 해시, 외부는 `static.cloudflareinsights.com` 스크립트와 `cloudflareinsights.com` 전송만, 인라인 style 속성만 허용). meta로 안 되는 `frame-ancestors`와 `X-Content-Type-Options`·`Referrer-Policy: same-origin`·`Permissions-Policy`·`Cross-Origin-Opener-Policy`·`X-Frame-Options`, `/_astro/*` 오래 두기는 `public/_headers`(Workers가 정적 파일 응답에 적용). e2e `tests/e2e/csp.spec.ts`가 주요 조작에서 CSP 위반 0을 확인한다.
-- 단계: 저장소 변수 `SITE_STAGE`(`preview` 기본 / `release`)가 빌드의 `PUBLIC_STAGE`가 된다 (`src/lib/stage.ts`). 미리 보기는 모든 화면 위 '검토 중인 시험판' 띠, `<meta name="robots" content="noindex, nofollow">`, `robots.txt`의 `Disallow: /`. 방문 통계는 `CF_BEACON_TOKEN`이 있을 때만, 도착 화면 `/arrival`을 빼고 싣는다. 옛 `/receipt`는 정적 파일 단계에서 301로 넘어가므로 통계 스크립트가 실릴 틈이 없다.
+- 단계: 저장소 변수 `SITE_STAGE`(`preview` 기본 / `release`)가 빌드의 `PUBLIC_STAGE`가 된다 (`src/lib/stage.ts`). 미리 보기는 바닥글의 시험판 안내 한 줄(D67: 모든 화면 맨 위의 띠는 걷었다), `<meta name="robots" content="noindex, nofollow">`, `robots.txt`의 `Disallow: /`. 방문 통계는 `CF_BEACON_TOKEN`이 있을 때만, 도착 화면 `/arrival`을 빼고 싣는다. 옛 `/receipt`는 정적 파일 단계에서 301로 넘어가므로 통계 스크립트가 실릴 틈이 없다.
 - 배포 작업은 `.github/workflows/deploy.yml`, 사람이 할 일은 `docs/DEPLOY.md`.
 
 ## 10. TypeScript 설정
@@ -269,12 +270,14 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 
 ## 11. 성능 기준
 
-- 첫 화면: 모바일 기준 LCP 2.5초 이하, 자바스크립트 100KB 이하(gzip). 홈 첫 화면에는 섬이 없다. 다른 페이지는 처음 불러오는 JS 140KB 이하.
+- 첫 화면: 모바일 기준 LCP 2.5초 이하, 자바스크립트 100KB 이하(gzip). 홈에는 첫 그림 때 붙는 섬(`client:load`)이 없다. 섬 일곱이 늦게 붙는다: 쉬는 시간에 넷(설정·이어서 가기·사전·풀이), 보일 때 셋(미리 짠 코스 버튼). 예산 검사는 늦게 붙는 섬의 묶음도 모두 센다(홈 97.7KB, 남은 자리가 좁아 홈에 섬을 더하려면 다른 것을 줄인다). 다른 페이지는 처음 불러오는 JS 140KB 이하.
 - 처음 불러오는 CSS(글꼴 `@font-face` 포함)는 gzip 30KB 이하. CSS는 첫 화면 그리기를 막는다 (D38). 밤 지도 토큰도 이 안에 든다.
 - 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다. 렌더 그림은 Astro `<Picture>`로 화면 크기에 맞는 AVIF/WebP 하나만 내려온다. 쪽별 그림 예산은 CONCEPT 9절 표 (가장 큰 곳은 목적지 첫 질문, 약 80KB).
-- 지도 (T28, gzip): 땅 판 한 장 24KB 이하, 지도 표지 묶음 10KB 이하, 지도 섬 8KB 이하, 지도 모형 3KB 안팎.
+- 지도 (T28, gzip, D68): 땅 판 한 장 24KB 이하, 지도 표지 묶음 10KB 이하, 지도 섬(MapBoard.tsx + `map/focus.ts`) 8KB 이하, 지도 모형(`map/model.ts`) 6.5KB 이하, 빌드한 MapBoard 묶음(섬 + 모형) 14.5KB 이하. 섬과 모형은 파일 하나씩 줄여(import한 엔진·문구·preact는 빼고) 잰다. 지도 CSS(`map.css`·`map-land.css`)는 지도를 그리는 페이지에만 실린다 (MapBoard.tsx가 불러온다).
 - 나중에 불러오는 묶음(효과음 합성기 같은 것)은 하나에 200KB 이하. 유휴 시간이나 이용자 행동 뒤에만 불러온다.
-- 대표 장면 S5(출발 → 도착)는 2.8초, 영수증 출력과 도장 S6은 950ms를 넘지 않는다.
+- 어려운 말 풀이 (brief 8절, D69, gzip): 풀이 섬(`TermPopover`, 모든 페이지) 5KB 이하, 자료 + 매처(`/glossary.json` + `term-engine` 묶음) 17KB 이하, 도구 이름 풀이(`/glossary-tools.json`, 같은 때 따로 받음) 4KB 이하. 자료는 처음 고르기·처음 밑줄 누름·섬 화면의 쉬는 시간 가운데 먼저 오는 때 받는다.
+- 사전 검색 색인(`/search-index.json`, 처음 찾을 때 받음)은 100KB 이하(gzip).
+- 대표 장면 S5+S6(출발 → 도착 → 영수증 출력과 도장)은 합계 3.0초(`--dur-scene`)를 넘지 않는다 (brief 7절).
 - 렌더 장치(three)는 개발용이라 화면에 실리는 JS에 들지 않는다.
 - `npm run qa:budget`이 빌드 결과로 이 기준을 검사한다.
 

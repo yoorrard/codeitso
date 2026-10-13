@@ -1,13 +1,22 @@
 ---
-// 용어 카드 /terms/[id] (docs/CONCEPT.md 6.8, T12): 검색으로도 들어오는 정적 페이지. 설명·그림 설명·문제 글은 HTML로,
-// 문제 풀기·읽음·내 AI에게 배우기·해 보기만 섬이다.
+// 용어 카드 /terms/[id] (brief 6.10, D67 W3b): 검색으로도 들어오는 정적 페이지.
+// 위에서 아래로: 이름(+ 필수/알면 좋아요 꼬리표) → 다른 이름 → 3분 설명(17/27) → 그림으로 보면(옅은 판) → 해 보기 → 확인 문제
+// → 내 AI에게 배우기(붙여 넣을 말 상자) → 먼저 알면 좋은 용어 → 관련 도구. 아래 막대: [다 읽었어요] 하나(ConceptRead).
+// 설명·그림 설명·문제 글은 HTML로, 문제 풀기·복사·읽음·해 보기만 섬이다.
 import Base from '../../layouts/Base.astro';
+import '../../styles/catalog-pages.css';
+import '../../styles/terms.css';
 import ConceptActions from '../../components/ConceptActions.tsx';
+import ConceptRead from '../../components/ConceptRead.tsx';
+import Glyph from '../../components/Glyph.astro';
+import Icon from '../../components/Icon.astro';
+import TermText from '../../components/TermText.astro';
 import TryIt from '../../components/TryIt.tsx';
 import { ko } from '../../copy/ko.ts';
 import { ROUTES, termPath, toolPath } from '../../lib/routes.ts';
 import { catalog, data } from '../../lib/data.ts';
 import type { Concept } from '../../lib/engine/types.ts';
+import { productArt } from '../../lib/shelf.ts';
 
 export function getStaticPaths() {
   return data.concepts.concepts.map((c) => ({ params: { id: c.id }, props: { concept: c } }));
@@ -19,71 +28,119 @@ interface Props {
 const { concept: c } = Astro.props;
 const prereqs = c.prerequisites.map((id) => catalog.concept.get(id)).filter((x) => x !== undefined);
 const related = (c.relatedProducts ?? []).map((id) => catalog.product.get(id)).filter((x) => x !== undefined);
-// 개념 그림 (svg-illustrator가 그린 src/assets/concepts/<id>.svg). 있으면 그림 + 설명, 없으면 설명 상자만 (D46)
+// 개념 그림 (src/assets/concepts/<id>.svg). 있으면 옅은 판 위 그림 + 설명, 없으면 설명만 (D46)
 const figures = import.meta.glob<string>('../../assets/concepts/*.svg', { query: '?raw', import: 'default', eager: true });
 const figureSvg = figures[`../../assets/concepts/${c.id}.svg`];
+const K = ko.concept;
+// 점선 밑줄 말을 긋는 칸 (brief 8절, D69): 설명·해 보기 안내. 이 카드 자신의 용어는 빼고.
+// 그림 설명(figcaption)에는 긋지 않는다: 버튼이 figure 이름을 쪼갠다 (D69 검토 반영)
+const self = { concept: c.id };
 ---
 
 <Base title={c.title} description={c.summary}>
-  <article class="concept">
-    <p><a href={ROUTES.terms}>{ko.concept.back}</a></p>
+  <a class="btn btn-text back-link" href={ROUTES.terms}>
+    <Icon name="back" />
+    <span>{K.back}</span>
+  </a>
+  <div class="page-head">
     <h1>{c.title}</h1>
-    <p><span class={c.level === 'must' ? 'badge' : 'badge badge-soft'}>{ko.concept.level[c.level]}</span></p>
-    {
-      c.aliases && c.aliases.length > 0 && (
-        <p class="q-help">
-          {ko.concept.aliases}: {c.aliases.join(', ')}
-        </p>
-      )
-    }
-    <p class="concept-summary">{c.summary}</p>
-    {
-      c.figure && (
-        <figure class={figureSvg ? 'concept-figure has-art' : 'concept-figure'}>
-          {figureSvg && <div class="concept-art" role="img" aria-label={c.figure} set:html={figureSvg} />}
-          <figcaption>
-            <strong>{ko.concept.figure}</strong> {c.figure}
-          </figcaption>
+    <span class="tag">{K.level[c.level]}</span>
+  </div>
+  {
+    c.aliases && c.aliases.length > 0 && (
+      <p class="concept-aliases">
+        {K.aliases}: {c.aliases.join(', ')}
+      </p>
+    )
+  }
+  <p class="concept-summary"><TermText text={c.summary} self={self} /></p>
+  <!-- 어려운 말 풀이 처음 한 번 기사 메시지 자리 (D69 검토 반영) -->
+  <div class="term-hint-slot" role="status" data-term-hint></div>
+  {
+    c.figure && (
+      <section class="sec" aria-labelledby="figure-title">
+        <h2 id="figure-title" class="sec-title">
+          {K.figure}
+        </h2>
+        <figure class="concept-figure">
+          {figureSvg && <div class="plate concept-art" aria-hidden="true" set:html={figureSvg} />}
+          <figcaption>{c.figure}</figcaption>
         </figure>
-      )
-    }
-    {
-      prereqs.length > 0 && (
-        <p>
-          {ko.concept.prerequisites}:{' '}
-          {prereqs.map((p, i) => (
-            <>
-              {i > 0 && ', '}
-              <a href={termPath(p.id)}>{p.title}</a>
-            </>
+      </section>
+    )
+  }
+  {
+    c.tryIt && (
+      <section class="sec" aria-labelledby="tryit-title">
+        <h2 id="tryit-title" class="sec-title">
+          {K.tryIt}
+        </h2>
+        <p class="concept-body"><TermText text={c.tryIt.instruction} self={self} /></p>
+        <p class="sec-note">{K.tryItNote}</p>
+        <TryIt client:visible kind={c.tryIt.kind} />
+      </section>
+    )
+  }
+  <ConceptActions client:visible conceptId={c.id} quiz={c.quiz} askAI={c.askAI} />
+  {
+    prereqs.length > 0 && (
+      <section class="sec" aria-labelledby="prereq-title">
+        <h2 id="prereq-title" class="sec-title">
+          {K.prerequisites}
+        </h2>
+        <ul class="list group">
+          {prereqs.map((p) => (
+            <li>
+              <a class="list-row" href={termPath(p.id)}>
+                <span class="list-text">
+                  <span class="list-name">{p.title}</span>
+                </span>
+                <span class="list-chev" aria-hidden="true" />
+              </a>
+            </li>
           ))}
-        </p>
-      )
-    }
-    {
-      c.tryIt && (
-        <section class="card" aria-labelledby="tryit-title">
-          <h2 id="tryit-title">{ko.concept.tryIt}</h2>
-          <p>{c.tryIt.instruction}</p>
-          <p class="q-help">{ko.concept.tryItNote}</p>
-          <TryIt client:visible kind={c.tryIt.kind} />
-        </section>
-      )
-    }
-    <ConceptActions client:visible conceptId={c.id} quiz={c.quiz} askAI={c.askAI} />
-    {
-      related.length > 0 && (
-        <section aria-labelledby="related-title">
-          <h2 id="related-title">{ko.concept.related}</h2>
-          <ul>
-            {related.map((p) => (
+        </ul>
+      </section>
+    )
+  }
+  {
+    related.length > 0 && (
+      <section class="sec" aria-labelledby="related-title">
+        <h2 id="related-title" class="sec-title">
+          {K.related}
+        </h2>
+        <ul class="list group">
+          {related.map((p) =>
+            p.layer === 'shelf' ? (
               <li>
-                <a href={toolPath(p.id)}>{p.name}</a>: {p.summary}
+                <a class="list-row is-tall" href={toolPath(p.id)}>
+                  <Glyph name={productArt(p)} tile="md" class="list-tile" />
+                  <span class="list-text">
+                    <span class="list-name">{p.name}</span>
+                    <span class="list-sub is-one">{p.summary}</span>
+                  </span>
+                  <span class="list-chev" aria-hidden="true" />
+                </a>
               </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-  </article>
+            ) : (
+              <li>
+                <a class="list-row is-tall" href={p.links[0]?.url} target="_blank" rel="noopener noreferrer">
+                  <Glyph name={productArt(p)} tile="md" class="list-tile" />
+                  <span class="list-text">
+                    <span class="list-name">{p.name}</span>
+                    <span class="list-sub is-one">{p.summary}</span>
+                  </span>
+                  <span class="list-ext" aria-hidden="true" />
+                  <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+                </a>
+              </li>
+            ),
+          )}
+        </ul>
+      </section>
+    )
+  }
+  <div slot="action" class="bar-stack">
+    <ConceptRead client:visible conceptId={c.id} />
+  </div>
 </Base>

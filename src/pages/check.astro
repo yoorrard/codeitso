@@ -8,7 +8,7 @@ import { ko } from '../copy/ko.ts';
 ---
 
 <Base title={ko.check.pageTitle} stage="check">
-  <div class="map-band is-check"><MapBoard client:idle stage="check" /></div>
+  <div class="map-band is-check"><MapBoard client:load stage="check" /></div>
   <Check client:load />
   <IssueButton client:load slot="action" />
 </Base>

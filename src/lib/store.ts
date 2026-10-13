@@ -69,6 +69,26 @@ export const $prefs = persistentAtom<Prefs>(KEYS.prefs, DEFAULT_PREFS, codec(rea
 export const $seen = persistentAtom<Seen>(KEYS.seen, EMPTY_SEEN, codec(readSeen, isEmptySeen));
 export const $receipts = persistentAtom<ReceiptEntry[]>(KEYS.receipts, [], codec(readReceipts, isEmptyReceipts));
 
+/** 한 번 연 어려운 말 풀이 용어 (brief 8절, D69): 다음 화면부터 그 말에 점선 밑줄을 긋지 않는다. 고른 글은 저장하지 않는다 */
+export const TERMS_KEY = 'cc:terms:v1';
+export const TERMS_SEEN_MAX = 300;
+
+/** 용어 id 목록만 고른다 (풀이 id: 영문 소문자·숫자·-, 도구 이름 항목은 tool: 앞붙이). 같은 것은 한 번, 최근 300개 */
+export function readTermsSeen(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  const ids = raw.filter((x): x is string => typeof x === 'string' && /^(tool:)?[a-z0-9][a-z0-9-]{0,79}$/.test(x));
+  return [...new Set(ids)].slice(-TERMS_SEEN_MAX);
+}
+
+export const $termsSeen = persistentAtom<string[]>(TERMS_KEY, [], codec(readTermsSeen, (l) => l.length === 0));
+
+/** 풀이를 연 용어를 적는다 (이미 있으면 그대로, 넘치면 가장 오래된 것부터 뺀다) */
+export function markTermSeen(id: string): void {
+  const list = $termsSeen.get();
+  if (list.includes(id)) return;
+  $termsSeen.set(readTermsSeen([...list, id]));
+}
+
 /** 받은 영수증을 지난 영수증에 더한다. 30장을 넘어 가장 오래된 것을 뺐으면 true */
 export function rememberReceipt(entry: ReceiptEntry): boolean {
   const { list, dropped } = addReceiptEntry($receipts.get(), entry);
@@ -115,7 +135,7 @@ export function markSceneSeen(id: string): void {
 }
 
 /**
- * '저장한 기록 지우기': 진행 기록 다섯 키(답·읽은 용어·메타·본 장면·지난 영수증)를 지운다 (처음 값으로 돌리면 codec이 키를 지운다).
+ * '저장한 기록 지우기': 진행 기록 여섯 키(답·읽은 용어·메타·본 장면·지난 영수증·연 풀이 용어)를 지운다 (처음 값으로 돌리면 codec이 키를 지운다).
  * 설정(동작 줄이기·효과음)은 기록이 아니라서 남긴다: 멀미 때문에 켠 동작 줄이기가 지우기로 풀리면 안 된다.
  */
 export function clearAll(): void {
@@ -124,4 +144,5 @@ export function clearAll(): void {
   $meta.set(EMPTY_META);
   $seen.set(EMPTY_SEEN);
   $receipts.set([]);
+  $termsSeen.set([]);
 }

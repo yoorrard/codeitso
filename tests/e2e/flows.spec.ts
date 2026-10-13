@@ -37,16 +37,29 @@ test('받은 영수증은 지난 영수증에 쌓이고, 줄을 누르면 다시
   await expect(page.locator('.paper')).toBeVisible();
   await page.goto('/receipts');
   await islandsReady(page);
-  const rows = page.locator('.receipts-row');
+  // 줄 72: 미니 지도 + 이름 + '받은 날 · 영수증 0000' (brief 6.11)
+  const rows = page.locator('.receipts-list > li');
   await expect(rows).toHaveCount(1);
-  await rows.first().locator('.receipts-open').click();
+  await expect(rows.first().locator('.list-map svg')).toHaveCount(1);
+  await expect(rows.first().locator('.list-sub')).toContainText(/영수증 \d{4}$/);
+  await rows.first().locator('a.list-row').click();
   await page.waitForURL(/\/arrival/);
   await islandsReady(page);
   await expect(page.locator('.paper')).toBeVisible();
   await page.goto('/receipts');
   await islandsReady(page);
-  await page.locator('.receipts-row button').first().click();
-  await expect(page.locator('.receipts-empty')).toBeVisible();
+  // 지우기는 확인 대화 상자를 거친다: 그만두면 그대로, 지우면 빈 상태
+  const del = page.locator('.receipt-del').first();
+  await del.click();
+  const confirm = page.getByRole('dialog', { name: ko.receipts.confirmTitle });
+  await expect(confirm).toBeVisible();
+  await confirm.getByRole('button', { name: ko.receipts.confirmNo }).click();
+  await expect(rows).toHaveCount(1);
+  await expect(del).toBeFocused();
+  await del.click();
+  await confirm.getByRole('button', { name: ko.receipts.confirmYes }).click();
+  await expect(page.locator('.empty-state')).toContainText(ko.receipts.empty);
+  await expect(page.locator('.empty-state a.btn-primary')).toHaveText(ko.receipts.goBuild);
 });
 
 test('만들 앱을 처음부터 끝까지 키보드만으로 정하고 도구 고르기·도구끼리 맞춰 보기·설계도 받기까지 간다 (case-01)', async ({ page }) => {

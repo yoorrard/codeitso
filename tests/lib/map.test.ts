@@ -1,5 +1,6 @@
 // 길 지도 모형 (docs/MAP.md 4절): 기능 조합 32가지와 골든 사례·미리 짠 코스 모두에서
-// 이름표가 서로·다른 것과 겹치지 않고, 모두 안전 구역 안에 있고, 기호는 12개 이하, 길은 45°·90°만 쓴다.
+// 이름표가 서로·다른 것·길과 겹치지 않고, 차가 마디·출발·빈 터·굴을 덮지 않고 routeD 위 제자리에 서고,
+// 모두 안전 구역 안에 있고, 기호는 12개 이하, 길은 45°·90°만 쓴다.
 import { describe, expect, it } from 'vitest';
 import type { EngineResult, Session } from '../../src/lib/engine/index.ts';
 import { evaluate, fill } from '../../src/lib/engine/index.ts';
@@ -8,7 +9,9 @@ import { goldenSession } from '../../scripts/lib/golden.ts';
 import { goldenFiles, readJson } from '../../scripts/lib/load-data.ts';
 import { ko } from '../../src/copy/ko.ts';
 import type { Box, HouseKind, MapInput, MapInputConflict, MapInputNode, MapModel, NodeShape, Pt } from '../../src/lib/map/model.ts';
-import { MAP_GRID, MAP_MAX_SYMBOLS, MAP_SAFE, labelBox, layoutMap, mapModel, markerKind, overlaps, textWidth } from '../../src/lib/map/model.ts';
+import { MAP_CAR, MAP_CAR_GAP, MAP_GRID, MAP_MAX_SYMBOLS, MAP_SAFE, labelBox, layoutMap, mapModel, markerKind, overlaps, textWidth } from '../../src/lib/map/model.ts';
+import { progress } from '../../src/lib/progress.ts';
+import { statusLine } from '../../src/lib/status-line.ts';
 import { realCatalog, realData } from '../fixtures/tiny.ts';
 
 const data = realData();
@@ -17,7 +20,8 @@ const cat = realCatalog();
 /** 칸 이름은 진짜 자료에서 (화면, 저장, 로그인, 외부 데이터, 알림, 배포·공유) */
 const SLOT_LABEL = new Map<string, string>();
 for (const r of data.rules.rules) if (r.type === 'slot') SLOT_LABEL.set(r.slot.capability, r.slot.label);
-const OPTIONAL: NodeShape[] = ['store', 'auth', 'data', 'notify', 'host'];
+const SHAPES: NodeShape[] = ['screen', 'store', 'auth', 'data', 'notify', 'host'];
+const OPTIONAL = SHAPES.slice(1);
 const TYPE_LABELS = (data.questions.questions.find((q) => q.id === 'q.type')?.options ?? []).filter((o) => o.isUnknown !== true).map((o) => o.label);
 const LONGEST_TYPE = [...TYPE_LABELS].sort((a, b) => textWidth(b) - textWidth(a))[0] ?? '';
 
@@ -76,7 +80,12 @@ function mixes(shapes: NodeShape[]): { name: string; input: MapInput }[] {
   ];
 }
 
-// ---------------------------------------------------------------- 불변식
+// ---------------------------------------------------------------- routeD를 따로 읽는 길 걷기 (모형의 계산을 쓰지 않는다)
+
+interface Walk {
+  length: number;
+  at(d: number): Pt & { angle: number };
+}
 
 function parseD(d: string): { cmd: string; nums: number[] }[] {
   const out: { cmd: string; nums: number[] }[] = [];
@@ -85,6 +94,68 @@ function parseD(d: string): { cmd: string; nums: number[] }[] {
   }
   return out;
 }
+
+/** M·L·A(작은 호)만 쓰는 SVG 길을 거리로 걷는다. 호는 끝점·반지름·sweep에서 가운데를 다시 구한다 */
+function walk(d: string): Walk {
+  const parts: { l: number; at: (t: number) => Pt & { angle: number } }[] = [];
+  let cur: Pt = { x: 0, y: 0 };
+  for (const c of parseD(d)) {
+    const [a = 0, b = 0, , , , f = 0, g = 0] = c.nums;
+    if (c.cmd === 'M') cur = { x: a, y: b };
+    else if (c.cmd === 'L') {
+      const s = cur;
+      const e = { x: a, y: b };
+      const l = Math.hypot(e.x - s.x, e.y - s.y);
+      const angle = (Math.atan2(e.y - s.y, e.x - s.x) * 180) / Math.PI;
+      parts.push({ l, at: (t) => ({ x: s.x + ((e.x - s.x) * t) / (l || 1), y: s.y + ((e.y - s.y) * t) / (l || 1), angle }) });
+      cur = e;
+    } else if (c.cmd === 'A') {
+      const r = a;
+      const sweep = c.nums[4] === 1 ? 1 : -1;
+      const s = cur;
+      const e = { x: f, y: g };
+      const q = Math.hypot(e.x - s.x, e.y - s.y) / 2;
+      const h = Math.sqrt(Math.max(0, r * r - q * q));
+      const n = { x: -(e.y - s.y) / (2 * q), y: (e.x - s.x) / (2 * q) };
+      const mid = { x: (s.x + e.x) / 2, y: (s.y + e.y) / 2 };
+      const sweepOf = (cx: Pt): number => {
+        let dl = Math.atan2(e.y - cx.y, e.x - cx.x) - Math.atan2(s.y - cx.y, s.x - cx.x);
+        while (dl > Math.PI) dl -= 2 * Math.PI;
+        while (dl <= -Math.PI) dl += 2 * Math.PI;
+        return dl;
+      };
+      const c1 = { x: mid.x + n.x * h, y: mid.y + n.y * h };
+      const c2 = { x: mid.x - n.x * h, y: mid.y - n.y * h };
+      const center = Math.sign(sweepOf(c1)) === sweep ? c1 : c2;
+      const delta = sweepOf(center);
+      const t0 = Math.atan2(s.y - center.y, s.x - center.x);
+      parts.push({
+        l: Math.abs(delta) * r,
+        at: (t) => {
+          const th = t0 + (sweep * t) / r;
+          return { x: center.x + r * Math.cos(th), y: center.y + r * Math.sin(th), angle: (Math.atan2(sweep * Math.cos(th), -sweep * Math.sin(th)) * 180) / Math.PI };
+        },
+      });
+      cur = e;
+    }
+  }
+  return {
+    length: parts.reduce((n, p) => n + p.l, 0),
+    at(dist) {
+      let left = dist;
+      for (const p of parts) {
+        if (left <= p.l + 1e-9) return p.at(left);
+        left -= p.l;
+      }
+      const lastPart = parts[parts.length - 1];
+      return lastPart ? lastPart.at(lastPart.l) : { ...cur, angle: 0 };
+    },
+  };
+}
+
+const angleGap = (a: number, b: number): number => Math.abs((((a - b) % 360) + 540) % 360 - 180);
+
+// ---------------------------------------------------------------- 불변식
 
 const on45 = (a: Pt, b: Pt): boolean => {
   const dx = Math.abs(b.x - a.x);
@@ -119,6 +190,44 @@ function checkD(d: string, points: Pt[]): string[] {
 const inside = (b: Box): boolean => b.x >= MAP_SAFE.x0 - 1e-9 && b.y >= MAP_SAFE.y0 - 1e-9 && b.x + b.w <= MAP_SAFE.x1 + 1e-9 && b.y + b.h <= MAP_SAFE.y1 + 1e-9;
 const onGrid = (p: Pt): boolean => p.x % MAP_GRID === 0 && p.y % MAP_GRID === 0;
 const coneBox = (p: Pt): Box => ({ x: p.x - 8, y: p.y - 8, w: 16, h: 16 });
+/** 길 바깥 선(굵기 8)으로 감싼 곧은 토막 */
+const roadBox = (a: Pt, b: Pt): Box => ({ x: Math.min(a.x, b.x) - 4, y: Math.min(a.y, b.y) - 4, w: Math.abs(b.x - a.x) + 8, h: Math.abs(b.y - a.y) + 8 });
+/** 돌린 차(가운데 x·y, 방향 angle, 36×18)가 상자에 gap보다 가까운가: 분리축 넷 (상자 가로·세로, 차 앞뒤·옆) */
+function carNear(car: { x: number; y: number; angle: number }, b: Box, gap: number): boolean {
+  const a = (car.angle * Math.PI) / 180;
+  const ax = [
+    { x: 1, y: 0 },
+    { x: 0, y: 1 },
+    { x: Math.cos(a), y: Math.sin(a) },
+    { x: -Math.sin(a), y: Math.cos(a) },
+  ];
+  const corners = (pts: Pt[], u: Pt): [number, number] => {
+    const v = pts.map((p) => p.x * u.x + p.y * u.y);
+    return [Math.min(...v), Math.max(...v)];
+  };
+  const h = { x: (MAP_CAR.l / 2) * Math.cos(a), y: (MAP_CAR.l / 2) * Math.sin(a) };
+  const k = { x: (-MAP_CAR.w / 2) * Math.sin(a), y: (MAP_CAR.w / 2) * Math.cos(a) };
+  const carPts = [
+    { x: car.x + h.x + k.x, y: car.y + h.y + k.y },
+    { x: car.x + h.x - k.x, y: car.y + h.y - k.y },
+    { x: car.x - h.x + k.x, y: car.y - h.y + k.y },
+    { x: car.x - h.x - k.x, y: car.y - h.y - k.y },
+  ];
+  const boxPts = [
+    { x: b.x - gap, y: b.y - gap },
+    { x: b.x + b.w + gap, y: b.y - gap },
+    { x: b.x - gap, y: b.y + b.h + gap },
+    { x: b.x + b.w + gap, y: b.y + b.h + gap },
+  ];
+  return ax.every((u) => {
+    const [a0, a1] = corners(carPts, u);
+    const [b0, b1] = corners(boxPts, u);
+    return a0 < b1 && b0 < a1;
+  });
+}
+
+const contains = (outer: Box, inner: Box): boolean =>
+  inner.x >= outer.x - 1e-9 && inner.y >= outer.y - 1e-9 && inner.x + inner.w <= outer.x + outer.w + 1e-9 && inner.y + inner.h <= outer.y + outer.h + 1e-9;
 
 /** 모형 하나의 불변식. 어긋난 것을 문장으로 돌려준다 (빈 배열이면 통과) */
 function violations(m: MapModel): string[] {
@@ -129,34 +238,71 @@ function violations(m: MapModel): string[] {
     ...m.nodes.map((n) => ({ key: n.id, box: n.label.box })),
   ];
   const things: { key: string; box: Box; owner?: string }[] = [
-    { key: '출발', box: m.start.box },
-    { key: '빈 터', box: m.lot.box },
-    { key: '깃발', box: m.lot.flagBox },
+    { key: '출발', box: m.start.box, owner: 'start' },
+    { key: '빈 터', box: m.lot.box, owner: 'lot' },
+    // 깃발은 빈 터 말뚝에 꽂혀 터와 겹친다
+    { key: '깃발', box: m.lot.flagBox, owner: 'lot' },
     ...(m.houses ? [{ key: '집', box: m.houses.box }] : []),
     ...(m.tunnel ? [{ key: '굴', box: m.tunnel.box }] : []),
     ...m.nodes.map((n) => ({ key: `마디 ${n.id}`, box: n.box, owner: n.id })),
     ...m.nodes.flatMap((n) => (n.cone ? [{ key: `고깔 ${n.id}`, box: coneBox(n.cone), owner: n.id }] : [])),
-    ...m.markers.map((k) => ({ key: `표지 ${k.id}`, box: k.box, owner: k.anchor ?? undefined })),
+    ...m.markers.map((k) => ({ key: `표지 ${k.id}`, box: k.box, owner: k.anchor ?? 'start' })),
+    { key: '차', box: m.car.box },
   ];
+  // 길 토막: 본선은 이어 붙인 꺾은선, 가지는 따로
+  const roadPieces = m.roads.flatMap((r) =>
+    r.points.slice(1).map((p, i) => ({ key: `길 ${r.id}`, road: r, box: roadBox(r.points[i] ?? p, p) })),
+  );
 
   for (const [i, a] of labels.entries()) {
     if (a.box.w <= 0) errs.push(`이름표 ${a.key}가 비었음`);
     if (!inside(a.box)) errs.push(`이름표 ${a.key}가 안전 구역 밖 ${JSON.stringify(a.box)}`);
     for (const b of labels.slice(i + 1)) if (overlaps(a.box, b.box)) errs.push(`이름표 ${a.key} ↔ ${b.key}`);
     for (const t of things) if (overlaps(a.box, t.box)) errs.push(`이름표 ${a.key} ↔ ${t.key}`);
+    for (const p of roadPieces) if (overlaps(a.box, p.box)) errs.push(`이름표 ${a.key} ↔ ${p.key}`);
   }
   for (const t of things) if (!inside(t.box)) errs.push(`${t.key}가 안전 구역 밖 ${JSON.stringify(t.box)}`);
 
-  // 표지는 자기 마디 모서리에만 겹칠 수 있다
-  const solids = things.filter((t) => !t.key.startsWith('표지'));
-  for (const [i, k] of m.markers.entries()) {
-    for (const t of solids) if (t.owner !== k.anchor && overlaps(k.box, t.box)) errs.push(`표지 ${k.id} ↔ ${t.key}`);
-    for (const o of m.markers.slice(i + 1)) if (overlaps(k.box, o.box)) errs.push(`표지 ${k.id} ↔ 표지 ${o.id}`);
+  // 고정된 것(출발·빈 터·깃발·집·마디·고깔)끼리는 겹치지 않는다 (마디와 제 고깔, 빈 터와 깃발은 붙어 있다)
+  const solids = things.filter((t) => !t.key.startsWith('표지') && t.key !== '차');
+  const fixed = solids.filter((t) => t.key !== '굴');
+  for (const [i, a] of fixed.entries()) {
+    for (const b of fixed.slice(i + 1)) if ((a.owner === undefined || a.owner !== b.owner) && overlaps(a.box, b.box)) errs.push(`${a.key} ↔ ${b.key}`);
   }
-  // 굴은 마디·출발·빈 터·집과 겹치지 않는다
+  // 표지는 자기 마디(길 전체는 출발) 모서리에만 겹칠 수 있고, 남의 길에 앉지 않는다
+  for (const [i, k] of m.markers.entries()) {
+    const owner = k.anchor ?? 'start';
+    for (const t of solids) if (t.owner !== owner && overlaps(k.box, t.box)) errs.push(`표지 ${k.id} ↔ ${t.key}`);
+    for (const o of m.markers.slice(i + 1)) if (overlaps(k.box, o.box)) errs.push(`표지 ${k.id} ↔ 표지 ${o.id}`);
+    if (overlaps(k.box, m.car.box)) errs.push(`표지 ${k.id} ↔ 차`);
+    for (const p of roadPieces) {
+      const own = k.anchor === null ? p.road.from === 'start' && p.box.x < m.start.x : p.road.to === k.anchor || p.road.from === k.anchor;
+      if (!own && overlaps(k.box, p.box)) errs.push(`표지 ${k.id} ↔ ${p.key}`);
+    }
+    if (k.count > 1) {
+      if (!k.countAt || !contains(k.box, { x: k.countAt.x - 7, y: k.countAt.y - 7, w: 14, h: 14 })) errs.push(`표지 ${k.id}의 개수 동그라미가 상자 밖`);
+    } else if (k.countAt !== null) errs.push(`표지 ${k.id}에 개수가 하나인데 동그라미가 있음`);
+  }
+  // 굴은 마디·출발·빈 터·집과 겹치지 않고, 굴 표지는 굴 상자 안에
   if (m.tunnel) {
     for (const t of solids) if (t.key !== '굴' && overlaps(m.tunnel.box, t.box)) errs.push(`굴 ↔ ${t.key}`);
+    if (!contains(m.tunnel.box, { x: m.tunnel.sign.x - 8, y: m.tunnel.sign.y - 8, w: 16, h: 16 })) errs.push('굴 표지가 굴 상자 밖');
   }
+  // 나중 가지 끝 마디와 집은 남의 길에 앉지 않는다
+  for (const n of m.nodes.filter((x) => x.state === 'later')) {
+    for (const p of roadPieces) if (p.road.from !== n.id && p.road.to !== n.id && overlaps(n.box, p.box)) errs.push(`나중 마디 ${n.id} ↔ ${p.key}`);
+  }
+  if (m.houses) for (const p of roadPieces) if (overlaps(m.houses.box, p.box)) errs.push(`집 ↔ ${p.key}`);
+
+  // 차: 마디·출발·빈 터·굴·고깔과 띄움만큼 떨어져, routeD 위 dist 자리에 그 방향으로 선다
+  for (const t of solids) if (carNear(m.car, t.box, MAP_CAR_GAP - 0.02)) errs.push(`차 ↔ ${t.key}`);
+  if (!contains(m.car.box, { x: m.car.x - 9, y: m.car.y - 9, w: 18, h: 18 })) errs.push('차 상자가 차를 감싸지 않음');
+  const route = walk(m.routeD);
+  const spot = route.at(m.car.dist);
+  if (Math.hypot(spot.x - m.car.x, spot.y - m.car.y) > 0.05) errs.push(`차가 routeD ${m.car.dist} 자리 밖 ${JSON.stringify([m.car.x, m.car.y])} ≠ ${JSON.stringify([spot.x, spot.y])}`);
+  if (angleGap(spot.angle, m.car.angle) > 0.5) errs.push(`차 방향 ${m.car.angle}° ≠ 길 방향 ${spot.angle}°`);
+  if (Math.abs(route.length - m.routeLength) > 0.05) errs.push(`routeLength ${m.routeLength} ≠ ${route.length}`);
+  if (m.car.dist < 0 || m.car.dist > m.routeLength) errs.push('차 거리가 길 밖');
 
   const expected = m.nodes.length + 2 + (m.houses ? 1 : 0) + (m.tunnel ? 1 : 0) + m.markers.length;
   if (m.symbols !== expected) errs.push(`기호 수 ${m.symbols} ≠ ${expected}`);
@@ -178,9 +324,12 @@ function violations(m: MapModel): string[] {
   const routePts = mains.flatMap((r, i) => (i === 0 ? r.points : r.points.slice(1)));
   errs.push(...checkD(m.routeD, routePts).map((e) => `routeD: ${e}`));
   if (mains[0]?.from !== 'start' || mains[mains.length - 1]?.to !== 'lot') errs.push('본선이 출발에서 빈 터까지 이어지지 않음');
-  for (const n of m.nodes) if (!onGrid(n.main) || !onGrid({ x: n.x, y: n.y })) errs.push(`마디 ${n.id}가 격자 밖`);
-  if (!inside({ x: m.car.x - 1, y: m.car.y - 1, w: 2, h: 2 })) errs.push('차가 안전 구역 밖');
-  if (m.car.dist < 0 || m.car.dist > m.routeLength) errs.push('차 거리가 길 밖');
+  for (const n of m.nodes) {
+    if (!onGrid(n.main) || !onGrid({ x: n.x, y: n.y })) errs.push(`마디 ${n.id}가 격자 밖`);
+    // 마디 거리도 routeD 위 그 자리
+    const at = route.at(n.dist);
+    if (Math.hypot(at.x - n.main.x, at.y - n.main.y) > 0.05) errs.push(`마디 ${n.id}의 dist ${n.dist}가 제자리가 아님`);
+  }
   return errs;
 }
 
@@ -242,14 +391,15 @@ describe('골든 사례와 미리 짠 코스', () => {
   for (const { name, s } of sessions) {
     it(name, () => {
       const r = evaluate(cat, s);
-      const focus = r.slots[0]?.slot.id;
-      for (const opts of [{}, { traffic: true }, { arrived: true }, { focus }, { traffic: true, focus }]) {
-        const m = mapModel(r, opts);
-        expectValid(m, `${name} ${JSON.stringify(opts)}`);
-        expect(m.nodes.map((n) => n.id)).toEqual(r.slots.map((x) => x.slot.id));
-        expect(mapModel(evaluate(cat, s), opts)).toEqual(m);
-        expect(m.summary.length).toBeGreaterThan(0);
+      for (const slot of [undefined, ...r.slots.map((x) => x.slot.id)]) {
+        for (const opts of [{}, { traffic: true }, { arrived: true }, { focus: slot }, { traffic: true, focus: slot }]) {
+          const m = mapModel(r, opts);
+          expectValid(m, `${name} ${JSON.stringify(opts)}`);
+          expect(m.nodes.map((n) => n.id)).toEqual(r.slots.map((x) => x.slot.id));
+          expect(m.summary.length).toBeGreaterThan(0);
+        }
       }
+      expect(mapModel(evaluate(cat, s), { traffic: true })).toEqual(mapModel(r, { traffic: true }));
     });
   }
 
@@ -259,6 +409,20 @@ describe('골든 사례와 미리 짠 코스', () => {
       for (const [q, a] of Object.entries(s.answers ?? {})) {
         answers[q] = a;
         expectValid(mapModel(evaluate(cat, { answers: { ...answers } })), `${name} ${q}`);
+      }
+    }
+  });
+
+  it('도구를 하나씩 고를 때마다 차는 앞으로만 간다 (S3가 offset-distance를 늘리기만 한다)', () => {
+    for (const { name, s } of sessions) {
+      const r0 = evaluate(cat, { answers: s.answers ?? {} });
+      if (!r0.done) continue;
+      let prev = -1;
+      for (let k = 0; k <= (s.cart ?? []).length; k += 1) {
+        const m = mapModel(evaluate(cat, { answers: s.answers ?? {}, cart: (s.cart ?? []).slice(0, k) }));
+        expectValid(m, `${name} 고른 도구 ${k}개`);
+        expect(m.car.dist, `${name} 고른 도구 ${k}개`).toBeGreaterThanOrEqual(prev);
+        prev = m.car.dist;
       }
     }
   });
@@ -275,7 +439,7 @@ function golden(id: string): Partial<Session> {
 const near = (a: Pt, b: Pt, d: number): boolean => Math.abs(a.x - b.x) <= d && Math.abs(a.y - b.y) <= d;
 
 describe('표지', () => {
-  it('anchorSlot이 있는 막힌 곳은 그 마디 모서리에 붙는다 (case-04: 저장, 나라 밖 저장)', () => {
+  it('anchorSlot이 있는 막힌 곳은 그 마디 귀퉁이(막히면 변 가운데)에 붙는다 (case-04: 저장, 나라 밖 저장)', () => {
     const r = evaluate(cat, golden('case-04'));
     const c = r.conflicts.find((x) => x.id === 'conflict.personal-server');
     expect(c?.anchorSlot).toBe('slot.store');
@@ -285,9 +449,10 @@ describe('표지', () => {
     const store = m.nodes.find((n) => n.id === 'slot.store');
     expect(mk?.kind).toBe('globe');
     expect(mk?.anchor).toBe('slot.store');
+    expect(mk?.countAt).toBeNull();
     expect(store?.state).toBe('jam');
     if (!mk || !store) throw new Error('표지나 마디가 없음');
-    expect(near(mk, store, 14)).toBe(true);
+    expect(near(mk, store, 18)).toBe(true);
     // 다른 마디보다 붙은 마디에 가장 가깝다
     const closest = [...m.nodes].sort((a, b) => Math.hypot(a.x - mk.x, a.y - mk.y) - Math.hypot(b.x - mk.x, b.y - mk.y))[0];
     expect(closest?.id).toBe('slot.store');
@@ -302,10 +467,9 @@ describe('표지', () => {
     expect(m.markers.find((x) => x.id === 'conflict.personal-server')?.kind).toBe('question');
     expect(m.nodes.find((n) => n.id === 'slot.store')?.state).toBe('slow');
     expect(m.roads.find((x) => x.to === 'slot.store')?.state).toBe('slow');
-    expect(m.summary).toContain(fill(ko.map.summary.kept, { n: 1 }));
   });
 
-  it('anchorSlot이 없으면 출발 옆 길 전체 표지 하나에 개수를 단다 (case-21: 유료 도구)', () => {
+  it('anchorSlot이 없으면 출발 고리 오른쪽 위 귀퉁이(+12, −12)에 길 전체 표지 하나 (case-21: 유료 도구)', () => {
     const r = evaluate(cat, golden('case-21'));
     const m = mapModel(r, { traffic: true });
     expect(m.markers).toHaveLength(1);
@@ -314,18 +478,30 @@ describe('표지', () => {
     expect(mk?.anchor).toBeNull();
     expect(mk?.kind).toBe('toll');
     expect(mk?.count).toBe(1);
+    expect(mk?.countAt).toBeNull();
     expect(mk?.conflicts).toEqual(['conflict.paid-on-free']);
-    if (!mk) throw new Error('표지 없음');
-    expect(Math.hypot(mk.x - m.start.x, mk.y - m.start.y)).toBeLessThanOrEqual(64);
+    expect([mk?.x, mk?.y]).toEqual([m.start.x + 12, m.start.y - 12]);
   });
 
-  it('길 전체 표지는 여럿을 모아 센다 (case-20: 나라 밖 저장 + 로그인 없이 같이 씀)', () => {
+  it('길 전체 표지는 여럿을 모아 세고, 개수 동그라미 자리를 함께 낸다', () => {
     const r = evaluate(cat, golden('case-20'));
     const m = mapModel(r, { traffic: true });
     expect(m.markers.find((x) => x.anchor === 'slot.store')?.kind).toBe('globe');
     const whole = m.markers.find((x) => x.id === 'whole-route');
     expect(whole?.count).toBe(1);
     expect(whole?.conflicts).toEqual(['conflict.shared-without-login']);
+    const two = layoutMap({
+      nodes: [node('screen', { filled: true }), node('host', { filled: true })],
+      conflicts: [
+        { id: 'a', kind: 'toll', anchor: null },
+        { id: 'b', kind: 'alert', anchor: null },
+      ],
+      traffic: true,
+    });
+    expectValid(two, '길 전체 둘');
+    const mk = two.markers[0];
+    expect(mk?.count).toBe(2);
+    expect(mk?.countAt).toEqual({ x: two.start.x + 12 + 10, y: two.start.y - 12 + 9 });
   });
 
   it('표지는 도구끼리 맞춰 보기(traffic)와 설계도 받기에서만 그린다', () => {
@@ -347,9 +523,8 @@ describe('표지', () => {
   });
 
   it('기호가 12개를 넘으면 표지를 길 전체 하나로 모은다', () => {
-    const shapes: NodeShape[] = ['screen', 'store', 'auth', 'data', 'notify', 'host'];
-    const conflicts: MapInputConflict[] = shapes.slice(0, 4).map((s) => ({ id: `c.${s}`, kind: 'gap', anchor: `slot.${s}` }));
-    const m = layoutMap({ nodes: shapes.map((s) => node(s, { traffic: 'jam' })), conflicts, traffic: true, houses: 'many', tunnel: 'open' });
+    const conflicts: MapInputConflict[] = SHAPES.slice(0, 4).map((s) => ({ id: `c.${s}`, kind: 'gap', anchor: `slot.${s}` }));
+    const m = layoutMap({ nodes: SHAPES.map((s) => node(s, { traffic: 'jam' })), conflicts, traffic: true, houses: 'many', tunnel: 'open' });
     expectValid(m, '모으기');
     expect(m.symbols).toBeLessThanOrEqual(MAP_MAX_SYMBOLS);
     expect(m.markers).toHaveLength(1);
@@ -379,14 +554,40 @@ describe('마디와 길', () => {
     expect(m.summary).toContain(fill(ko.map.summary.later, { n: 1 }));
   });
 
-  it('지금 여는 칸은 open, 고른 칸은 picked, 나머지는 ghost', () => {
-    const r = evaluate(cat, { answers: evaluate(cat, golden('case-04')).session.answers, cart: ['react-vite'] });
+  it('이름표는 길에 앉지 않는다 (case-08·case-21의 외부 데이터가 가운데 세로 길 위에 있던 것)', () => {
+    for (const id of ['case-08', 'case-21']) {
+      for (const opts of [{}, { traffic: true }]) {
+        const m = mapModel(evaluate(cat, golden(id)), opts);
+        const data = m.nodes.find((n) => n.id === 'slot.data');
+        if (!data) throw new Error(`${id}: 외부 데이터 없음`);
+        for (const r of m.roads) {
+          for (let i = 0; i + 1 < r.points.length; i += 1) {
+            const a = r.points[i];
+            const b = r.points[i + 1];
+            if (a && b) expect(overlaps(data.label.box, roadBox(a, b)), `${id} ${r.id}`).toBe(false);
+          }
+        }
+      }
+    }
+  });
+
+  it('지금 여는 칸은 고리(focus)를 받는다: 비었으면 open, 골랐으면 picked + 고리', () => {
+    const answers = evaluate(cat, golden('case-04')).session.answers;
+    const r = evaluate(cat, { answers, cart: ['react-vite'] });
     const m = mapModel(r, { focus: 'slot.store' });
+    const store = m.nodes.find((n) => n.id === 'slot.store');
     expect(m.nodes.find((n) => n.id === 'slot.screen')?.state).toBe('picked');
-    expect(m.nodes.find((n) => n.id === 'slot.store')?.state).toBe('open');
+    expect(store?.state).toBe('open');
     expect(m.nodes.find((n) => n.id === 'slot.host')?.state).toBe('ghost');
+    expect(m.focus).toEqual({ id: 'slot.store', x: store?.x, y: store?.y, r: 16 });
+    // 고리(반지름 16 + 선 3의 반)는 마디 상자 반쪽 16 + 이름표 띄움 2 안에 든다
+    expect((m.focus?.r ?? 0) + 1.5).toBeLessThanOrEqual(18);
     expect(m.roads.find((x) => x.to === 'slot.screen')?.state).toBe('built');
     expect(m.roads.find((x) => x.to === 'slot.store')?.state).toBe('ghost');
+    const picked = mapModel(r, { focus: 'slot.screen' });
+    expect(picked.nodes.find((n) => n.id === 'slot.screen')?.state).toBe('picked');
+    expect(picked.focus?.id).toBe('slot.screen');
+    expect(mapModel(r).focus).toBeNull();
   });
 
   it('학생 정보를 받으면 저장 마디에 빗금 (case-02)', () => {
@@ -407,16 +608,27 @@ describe('마디와 길', () => {
       const q = after.points[i + 1];
       return q !== undefined && Math.min(p.x, q.x) <= t.x && t.x <= Math.max(p.x, q.x) && Math.min(p.y, q.y) <= t.y && t.y <= Math.max(p.y, q.y);
     })).toBe(true);
+    // 굴 표지는 늘 똑바로: 가로 굴은 오른쪽 위, 세로 굴은 오른쪽
+    expect(t.sign).toEqual(t.angle === 0 ? { x: t.x + 12, y: t.y - 12 } : { x: t.x + 14, y: t.y - 8 });
     const m9 = mapModel(evaluate(cat, golden('case-09')));
     expect(m9.tunnel?.ghost).toBe(true);
     expect(mapModel(evaluate(cat, golden('case-11'))).tunnel).toBeNull();
   });
 
+  it('굴은 차가 움직여도 제자리다', () => {
+    const s = golden('case-01');
+    const places = new Set<string>();
+    for (let k = 0; k <= (s.cart ?? []).length; k += 1) {
+      const m = mapModel(evaluate(cat, { ...s, cart: (s.cart ?? []).slice(0, k) }));
+      if (m.tunnel) places.add(JSON.stringify([m.tunnel.x, m.tunnel.y]));
+    }
+    expect(places.size).toBe(1);
+  });
+
   it('마디 수가 늘어도 출발·빈 터는 제자리이고, 마디 자리는 마디 수마다 정해져 있다', () => {
     const places = new Set<string>();
     for (let n = 1; n <= 6; n += 1) {
-      const shapes = (['screen', 'store', 'auth', 'data', 'notify', 'host'] as NodeShape[]).slice(0, n);
-      const m = layoutMap({ nodes: shapes.map((s) => node(s)) });
+      const m = layoutMap({ nodes: SHAPES.slice(0, n).map((s) => node(s)) });
       places.add(JSON.stringify([m.start.x, m.start.y, m.lot.x, m.lot.y]));
       expect(m.nodes).toHaveLength(n);
     }
@@ -426,34 +638,84 @@ describe('마디와 길', () => {
 
 describe('차', () => {
   const answers = evaluate(cat, golden('case-04')).session.answers;
+  const nodeBoxes = (m: MapModel): Box[] => [m.start.box, m.lot.box, ...m.nodes.map((n) => n.box)];
+  const clear = (m: MapModel): boolean => nodeBoxes(m).every((b) => !carNear(m.car, b, MAP_CAR_GAP - 0.02));
 
-  it('아무것도 고르지 않았으면 출발에', () => {
+  it('아무것도 고르지 않았으면 출발 위 길에 선다 (출발 고리와 길 전체 표지 자리를 덮지 않는다)', () => {
     const m = mapModel(evaluate(cat, { answers }));
     expect(m.car.at).toBe('start');
-    expect(m.car.dist).toBe(0);
-    expect([m.car.x, m.car.y]).toEqual([m.start.x, m.start.y]);
+    expect(m.car.angle).toBe(-90);
+    expect(m.car.x).toBe(m.start.x);
+    expect(m.car.dist).toBe(44);
+    expect(overlaps(m.car.box, m.start.box, MAP_CAR_GAP - 0.02)).toBe(false);
+    expect(overlaps(m.car.box, { x: m.start.x + 2, y: m.start.y - 22, w: 20, h: 20 })).toBe(false);
+    expect(m.car.box).toEqual({ x: m.start.x - MAP_CAR.w / 2, y: m.car.y - MAP_CAR.l / 2, w: MAP_CAR.w, h: MAP_CAR.l });
   });
 
-  it('출발부터 이어서 고른 마지막 마디에 선다 (중간이 비면 그 앞에서 멈춘다)', () => {
+  it('출발부터 이어서 고른 마지막 마디의 앞(막히면 뒤)에 띄워 선다 (중간이 비면 그 앞에서 멈춘다)', () => {
     const r = evaluate(cat, { answers, cart: ['react-vite', 'cloudflare-workers'] });
     const m = mapModel(r);
     expect(m.car.at).toBe('slot.screen');
     const screen = m.nodes.find((n) => n.id === 'slot.screen');
-    expect([m.car.x, m.car.y]).toEqual([screen?.x, screen?.y]);
-    expect(m.car.dist).toBe(screen?.dist);
-    expect(screen?.passed).toBe(true);
+    if (!screen) throw new Error('화면 없음');
+    expect(Math.abs(m.car.dist - screen.dist)).toBeGreaterThanOrEqual(16 + MAP_CAR_GAP + MAP_CAR.l / 2 - 0.01);
+    expect(clear(m)).toBe(true);
+    expect(screen.passed).toBe(true);
     expect(m.nodes.find((n) => n.id === 'slot.host')?.passed).toBe(false);
   });
 
-  it('다 고르면 마지막 마디에, 도착하면 빈 터 앞에 선다', () => {
+  it('마디 1~6개, 앞에서부터 k개를 골랐을 때마다 어느 마디에도 닿지 않고 뒤로 가지 않는다 (마디 4개까지는 늘 앞으로)', () => {
+    for (let n = 1; n <= 6; n += 1) {
+      const shapes = SHAPES.slice(0, n);
+      let prev = -1;
+      for (let k = 0; k <= n + 1; k += 1) {
+        const arrived = k === n + 1;
+        const m = layoutMap({ nodes: shapes.map((s, i) => node(s, { filled: i < k })), arrived });
+        const tag = `${n}개 중 ${arrived ? '도착' : `${k}개`}`;
+        expect(clear(m), tag).toBe(true);
+        expectValid(m, tag);
+        expect(m.car.at, tag).toBe(arrived ? 'lot' : k === 0 ? 'start' : `slot.${shapes[Math.min(k, n) - 1]}`);
+        if (n <= 4) expect(m.car.dist, tag).toBeGreaterThan(prev);
+        else expect(m.car.dist, tag).toBeGreaterThanOrEqual(prev);
+        prev = m.car.dist;
+      }
+    }
+  });
+
+  it('두 마디 사이가 좁던 곳에서도 어느 쪽에도 닿지 않는다 (지도 점검 장면 six-partial-calm · case-04 · case-09)', () => {
+    const c19 = golden('case-19');
+    const six: Partial<Session> = {
+      ...c19,
+      answers: { ...c19.answers, 'q.notify': 'yes', 'q.personal': 'yes-students', 'q.style': 'serious' },
+      cart: ['html-single', 'supabase'],
+      kept: [],
+      deferred: [],
+      freeText: '반 도서 기록장',
+    };
+    for (const [name, s] of [
+      ['six', six],
+      ['case-04', golden('case-04')],
+      ['case-09', golden('case-09')],
+    ] as const) {
+      const r = evaluate(cat, s);
+      for (const opts of [{}, { traffic: true }, { focus: r.slots[1]?.slot.id }]) {
+        const m = mapModel(r, opts);
+        expect(clear(m), `${name} ${JSON.stringify(opts)}`).toBe(true);
+        expectValid(m, `${name} ${JSON.stringify(opts)}`);
+      }
+    }
+  });
+
+  it('다 고르면 마지막 마디 앞에, 도착하면 빈 터 가장자리에서 띄움만큼 앞에 선다', () => {
     const r = evaluate(cat, golden('case-19'));
     const m = mapModel(r);
     const last = m.nodes[m.nodes.length - 1];
     expect(m.car.at).toBe(last?.id);
     const a = mapModel(r, { arrived: true });
     expect(a.car.at).toBe('lot');
-    expect(a.car.dist).toBeCloseTo(a.routeLength - 16, 1);
-    expect(Math.hypot(a.car.x - a.lot.entry.x, a.car.y - a.lot.entry.y)).toBe(16);
+    expect(a.car.dist).toBeCloseTo(a.routeLength - 26, 1);
+    expect(a.car.angle).toBe(-90);
+    expect(a.car.box.y - (a.lot.box.y + a.lot.box.h)).toBeCloseTo(MAP_CAR_GAP, 1);
     expect(a.lot.state).toBe('drawn');
     expect(a.nodes.every((n) => n.passed)).toBe(true);
     expect(a.roads.filter((x) => x.kind === 'main').every((x) => x.state === 'built')).toBe(true);
@@ -468,14 +730,13 @@ describe('차', () => {
   });
 });
 
-describe('빈 터, 집, 팔레트, 요약 글', () => {
-  it('앱 종류를 정하기 전에는 빈 터만, 정하면 윤곽 + 종류 이름', () => {
+describe('빈 터, 깃발, 집, 팔레트, 요약 글', () => {
+  it('앱 종류를 정하기 전에는 맨땅(bare), 정하면 윤곽(outline) + 종류 이름', () => {
     const empty = mapModel(evaluate(cat, {}));
-    expect(empty.lot.state).toBe('empty');
+    expect(empty.lot.state).toBe('bare');
     expect(empty.lot.type).toBeNull();
     expect(empty.lot.label.text).toBe(ko.map.destination);
     expect(empty.start.label.text).toBe(ko.map.start);
-    expect(empty.summary.startsWith(ko.map.summary.noDestination)).toBe(true);
     const form = mapModel(evaluate(cat, { answers: { 'q.type': 'form' } }));
     expect(form.lot.state).toBe('outline');
     expect(form.lot.type).toBe('form');
@@ -483,6 +744,16 @@ describe('빈 터, 집, 팔레트, 요약 글', () => {
     const unknown = mapModel(evaluate(cat, { answers: { 'q.type': 'unknown' } }));
     expect(unknown.lot.type).toBe('unknown');
     expect(unknown.lot.label.text).toBe(ko.map.destination);
+  });
+
+  it('깃발 밑동(12, 22)이 빈 터 왼쪽 위 말뚝(6, 6)에 꽂히고, 이름표는 깃발을 비킨다', () => {
+    for (const label of TYPE_LABELS) {
+      const m = layoutMap({ nodes: [node('screen')], lot: { type: 'page', label } });
+      expect([m.lot.flag.x + 12, m.lot.flag.y + 22]).toEqual([m.lot.box.x + 6, m.lot.box.y + 6]);
+      expect(overlaps(m.lot.label.box, m.lot.flagBox), label).toBe(false);
+      // 빈 터 위 줄에 앉는다 (넓으면 깃발 왼쪽)
+      expect(m.lot.label.box.y + m.lot.label.box.h, label).toBeLessThanOrEqual(m.lot.box.y);
+    }
   });
 
   it('쓰는 사람: 나만 1채, 몇 명 3채, 아무나 골목, 모름은 나만', () => {
@@ -499,24 +770,46 @@ describe('빈 터, 집, 팔레트, 요약 글', () => {
     expect([p('clean'), p('cute'), p('serious'), p('bold'), p('unknown'), p()]).toEqual(['clean', 'cute', 'calm', 'bold', 'clean', 'clean']);
   });
 
-  it('요약 글: 목적지 이름 · 꼭 고를 것 · 막힌 곳 (MAP.md 4절의 본보기 꼴)', () => {
+  it('요약 글: 처음 오면 목적지 한 문장만', () => {
+    expect(mapModel(evaluate(cat, {})).summary).toBe(ko.map.summary.noDestination);
+    expect(mapModel(evaluate(cat, { answers: { 'q.type': 'form' } })).summary).toBe(fill(ko.map.summary.destination, { name: '신청서·설문' }));
+  });
+
+  it('요약 글: 목적지 이름 · 남은 꼭 고를 것 · 막힌 곳 (상태 한 줄과 같은 수와 말)', () => {
     const trip = data.recipes.recipes.find((x) => x.id === 'trip-form');
     if (!trip) throw new Error('trip-form 없음');
     const base: Partial<Session> = { answers: trip.answers, cart: trip.cart, kept: [], freeText: '체험학습 신청서' };
     const r: EngineResult = evaluate(cat, base);
-    const required = r.slots.filter((s) => s.slot.required).length;
-    const picked = r.slots.filter((s) => s.slot.required && s.filledBy.length > 0).length;
-    expect(mapModel(r, { traffic: true }).summary).toBe(`목적지 체험학습 신청서. 꼭 고를 것 ${required}개 중 ${picked}개 골랐어요. 막힌 곳 1개.`);
+    const p = progress(r, {});
+    expect(p.blocked).toBe(1);
+    const picks = p.requiredLeft > 0 ? fill(ko.map.summary.requiredLeft, { n: p.requiredLeft }) : ko.map.summary.requiredDone;
+    expect(mapModel(r, { traffic: true }).summary).toBe(`목적지 체험학습 신청서. ${picks} 막힌 곳이 1개 있어요.`);
+    expect(statusLine('check', r, {})).toContain(ko.progress.status.blocked.replace('{{n}}', '1'));
+    // 그대로 가기로 두면 상태 한 줄처럼 '막힌 곳이 없어요' (그대로 가는 곳을 따로 세지 않는다)
     const kept = evaluate(cat, { ...base, kept: ['conflict.personal-server'] });
-    expect(mapModel(kept, { traffic: true }).summary).toBe(`목적지 체험학습 신청서. 꼭 고를 것 ${required}개 중 ${picked}개 골랐어요. 그대로 가는 곳 1개.`);
-    expect(mapModel(kept, { arrived: true }).summary).toBe(
-      `목적지 체험학습 신청서. ${ko.map.summary.arrived} 꼭 고를 것 ${required}개 중 ${picked}개 골랐어요.`,
-    );
+    expect(mapModel(kept, { traffic: true }).summary).toBe(`목적지 체험학습 신청서. ${picks} ${ko.map.summary.clear}`);
+    expect(statusLine('check', kept, {})).toContain(ko.progress.status.clear);
+    expect(mapModel(kept, { arrived: true }).summary).toBe(`목적지 체험학습 신청서. ${ko.map.summary.arrived}`);
     // 한 줄 입력이 없으면 앱 종류 이름
     const noText = mapModel(evaluate(cat, { answers: trip.answers, cart: trip.cart }));
     expect(noText.summary.startsWith(fill(ko.map.summary.destination, { name: noText.lot.label.text }))).toBe(true);
-    // 막힌 곳이 없으면 원활
+    // 막힌 곳이 없으면 상태 한 줄과 같은 말
     expect(mapModel(evaluate(cat, golden('case-01')), { traffic: true }).summary.endsWith(ko.map.summary.clear)).toBe(true);
+  });
+
+  it('요약 글: 남은 꼭 고를 것 수는 상태 한 줄과 같다 (골든 사례 모두)', () => {
+    for (const { name, s } of sessions) {
+      const r = evaluate(cat, { answers: s.answers ?? {}, cart: (s.cart ?? []).slice(0, 1) });
+      if (!r.done) continue;
+      const p = progress(r, {});
+      const pickable = p.requiredLeft - p.requiredNoTool;
+      const summary = mapModel(r).summary;
+      const line = statusLine('waypoints', r, {});
+      if (pickable > 0) {
+        expect(summary, name).toContain(fill(ko.map.summary.requiredLeft, { n: pickable }));
+        expect(line, name).toContain(fill(ko.progress.status.requiredLeft, { n: pickable }));
+      } else expect(summary, name).not.toContain(fill(ko.map.summary.requiredLeft, { n: 0 }));
+    }
   });
 });
 

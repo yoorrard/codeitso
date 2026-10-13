@@ -7,6 +7,6 @@ import { ko } from '../copy/ko.ts';
 ---
 
 <Base title={ko.receipt.pageTitle} stage="arrival">
-  <div class="map-band is-arrival"><MapBoard client:idle stage="arrival" /></div>
+  <div class="map-band is-arrival"><MapBoard client:load stage="arrival" /></div>
   <Receipt client:load />
 </Base>

@@ -1,4 +1,4 @@
-// 배포 단계 (T21·T22, D53): 미리 보기(preview)는 모든 화면 위에 '검토 중인 시험판' 띠와 noindex를 붙인다.
+// 배포 단계 (T21·T22, D53): 미리 보기(preview)는 바닥글에 시험판 안내 한 줄과 noindex를 붙인다 (맨 위 띠는 D67에서 걷었다).
 // 정식(release)은 빌드 때 PUBLIC_STAGE=release일 때만이고, 배포 작업이 그때 npm run validate:release를 먼저 통과시킨다.
 export type Stage = 'preview' | 'release';
 

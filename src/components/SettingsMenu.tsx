@@ -20,13 +20,30 @@ interface Props {
   onCleared?: (message: string) => void;
 }
 
-/** 켜고 끄는 줄 하나: 줄 전체가 스위치 (role="switch"), 오른쪽 44×28 모양은 장식 */
-function SwitchRow({ label, on, onToggle }: { label: string; on: boolean; onToggle: () => void }) {
+/** 켜고 끄는 줄 하나: 줄 전체가 스위치 (role="switch"), 오른쪽 44×28 모양은 장식.
+ *  둘째 줄(note)은 이름이 아니라 설명으로 잇는다. locked면 바꿀 수 없다 (기기 설정이 이미 켠 동작 줄이기) */
+function SwitchRow({ id, label, note, on, locked = false, onToggle }: { id: string; label: string; note?: string; on: boolean; locked?: boolean; onToggle: () => void }) {
   return (
     <li>
-      <button type="button" role="switch" aria-checked={on} class="list-row" onClick={onToggle}>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={on}
+        aria-disabled={locked ? 'true' : undefined}
+        aria-labelledby={`${id}-name`}
+        aria-describedby={note ? `${id}-note` : undefined}
+        class={note ? 'list-row is-tall' : 'list-row'}
+        onClick={locked ? undefined : onToggle}
+      >
         <span class="list-text">
-          <span class="list-name">{label}</span>
+          <span id={`${id}-name`} class="list-name">
+            {label}
+          </span>
+          {note && (
+            <span id={`${id}-note`} class="list-sub">
+              {note}
+            </span>
+          )}
         </span>
         <span class="switch" aria-hidden="true" />
       </button>
@@ -81,16 +98,19 @@ export default function SettingsMenu({ onCleared }: Props) {
           </form>
         </div>
         <ul class="list settings-list">
-          <SwitchRow label={ko.settings.motion} on={reduce} onToggle={() => setPrefs({ motion: reduce ? 'auto' : 'reduce' })} />
-          {osReduce && !reduce && (
-            <li>
-              <p class="settings-note">{ko.settings.motionOs}</p>
-            </li>
-          )}
-          <SwitchRow label={ko.settings.sound} on={prefs.sound} onToggle={() => flip('sound')} />
-          <SwitchRow label={ko.settings.quiet} on={prefs.quiet} onToggle={() => flip('quiet')} />
-          <SwitchRow label={ko.settings.glossary} on={prefs.glossary} onToggle={() => flip('glossary')} />
-          <SwitchRow label={ko.settings.marks} on={prefs.marks} onToggle={() => flip('marks')} />
+          {/* 기기에서 동작 줄이기가 켜져 있으면 사이트는 이미 줄이고 있다: 스위치를 켜진 채 잠그고 그 까닭을 둘째 줄에 */}
+          <SwitchRow
+            id="cc-set-motion"
+            label={ko.settings.motion}
+            note={osReduce && !reduce ? ko.settings.motionOs : undefined}
+            on={reduce || osReduce}
+            locked={osReduce && !reduce}
+            onToggle={() => setPrefs({ motion: reduce ? 'auto' : 'reduce' })}
+          />
+          <SwitchRow id="cc-set-sound" label={ko.settings.sound} on={prefs.sound} onToggle={() => flip('sound')} />
+          <SwitchRow id="cc-set-quiet" label={ko.settings.quiet} note={ko.settings.quietNote} on={prefs.quiet} onToggle={() => flip('quiet')} />
+          <SwitchRow id="cc-set-glossary" label={ko.settings.glossary} on={prefs.glossary} onToggle={() => flip('glossary')} />
+          <SwitchRow id="cc-set-marks" label={ko.settings.marks} note={ko.settings.marksNote} on={prefs.marks} onToggle={() => flip('marks')} />
           <li>
             <a class="list-row" href={ROUTES.receipts}>
               <span class="list-text">

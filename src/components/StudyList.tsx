@@ -1,92 +1,89 @@
-// 읽어 둘 용어 섬 (T12, docs/CONCEPT.md 6.8): 먼저 읽어 둘 용어 → 만들면서 볼 용어. 용어마다 읽음 표시와 맞힌 문제 수.
-// 만들 앱을 정하기 전이면 모든 용어 카드를 필수부터 보여 준다.
+// 용어 카드 목록의 섬 (brief 6.10, D67 W3b): 맨 위 "20장 중 n장 읽음" → (만들 앱을 정했으면) '읽어 둘 용어' 줄 목록.
+// 그 아래 2열 타일(옅은 판 위 청사진 그림)은 terms/index.astro가 정적으로 그리고, 이 섬은 타일의 상태 글('아직 안 읽음'(숨은 글)·'읽음 ✓'·'다 맞혔어요 ✓')만
+// 저장된 기록에 맞춰 바꾼다 (그림 SVG를 섬 묶음에 넣지 않으려고. ShelfFilter와 같은 방식). 퍼센트·순위는 쓰지 않는다.
 import { useStore } from '@nanostores/preact';
+import { useEffect } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
 import { fill } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { $result } from '../lib/result.ts';
 import { termPath } from '../lib/routes.ts';
+import type { StudyRecord } from '../lib/saved.ts';
 import { $study } from '../lib/store.ts';
 
-/** 방금 읽고 돌아온 개념 (들어온 주소를 읽기만 하고 저장하지 않는다) */
-function cameFrom(): string | null {
-  if (typeof document === 'undefined' || !document.referrer) return null;
-  try {
-    const ref = new URL(document.referrer);
-    if (ref.origin !== window.location.origin) return null;
-    return ref.pathname.match(/^\/terms\/([^/]+)\/?$/)?.[1] ?? null;
-  } catch {
-    return null;
-  }
+type TermState = 'todo' | 'read' | 'solved';
+
+/** 읽음 기록과 맞힌 문제 수로 용어 하나의 상태 */
+export function termState(study: StudyRecord, id: string): TermState {
+  const rec = study[id];
+  const total = catalog.concept.get(id)?.quiz.length ?? 0;
+  if (rec && total > 0 && rec.quiz.length >= total) return 'solved';
+  return rec?.read ? 'read' : 'todo';
 }
 
-function Item({ id }: { id: string }) {
-  const study = useStore($study);
-  const ready = useHydrated();
-  const c = catalog.concept.get(id);
-  if (!c) return null;
-  const rec = ready ? study[id] : undefined;
-  // 용어 카드에서 다 읽고 돌아오면 그 줄의 '읽음' 표가 한 번 뒤집혀 나타난다
-  const fresh = ready && rec?.read === true && cameFrom() === id;
-  return (
-    <li class={rec?.read ? 'study-item read' : 'study-item'}>
-      <a href={termPath(id)}>{c.title}</a>
-      <span class="study-meta">
-        <span class={rec?.read ? (fresh ? 'badge flip-in' : 'badge') : 'badge badge-soft'}>{rec?.read ? ko.study.read : ko.study.notRead}</span>
-        <span>{fill(ko.study.quizCount, { n: rec?.quiz.length ?? 0, total: c.quiz.length })}</span>
-      </span>
-    </li>
-  );
+const WORD: Record<TermState, string> = {
+  todo: ko.study.notRead,
+  read: ko.study.read,
+  solved: ko.study.solved,
+};
+
+/** 정적 타일([data-term])의 상태 글을 기록에 맞춘다 */
+function paintTiles(study: StudyRecord): void {
+  for (const el of Array.from(document.querySelectorAll<HTMLElement>('[data-term-state]'))) {
+    const s = termState(study, el.dataset['termState'] ?? '');
+    el.textContent = WORD[s];
+    el.classList.toggle('is-read', s !== 'todo');
+    // 안 읽은 것은 숨은 글로만 ('아직'이 열여덟 번 되풀이되지 않게. 위의 'n장 읽음'이 같은 말을 한다)
+    el.classList.toggle('visually-hidden', s === 'todo');
+  }
+  document.querySelector('.term-grid')?.setAttribute('data-ready', '');
 }
 
 export default function StudyList() {
   const ready = useHydrated();
   const r = useStore($result);
-  const has = ready && r.study.all.length > 0;
+  const study = useStore($study);
+  const all = catalog.data.concepts.concepts;
+  const n = ready ? all.filter((c) => study[c.id]?.read === true).length : 0;
+  const mine = ready ? r.study.required : [];
 
-  if (!has) {
-    const all = [...catalog.data.concepts.concepts].sort((a, b) => (a.level === b.level ? a.order - b.order : a.level === 'must' ? -1 : 1));
-    return (
-      <>
-        <p class="q-help">{ko.study.noSession}</p>
-        <h2>{fill(ko.study.all, { n: all.length })}</h2>
-        <ul class="study-list">
-          {all.map((c) => (
-            <Item id={c.id} />
-          ))}
-        </ul>
-      </>
-    );
-  }
+  useEffect(() => {
+    if (ready) paintTiles(study);
+  }, [ready, study]);
+
   return (
-    <>
-      <section aria-labelledby="study-required" class="card">
-        <h2 id="study-required">{ko.study.required}</h2>
-        <p class="q-help">{ko.study.requiredMinutes}</p>
-        <ul class="study-list">
-          {r.study.required.map((id) => (
-            <Item id={id} />
-          ))}
-        </ul>
-      </section>
-      <section aria-labelledby="study-steps">
-        <h2 id="study-steps">{ko.study.steps}</h2>
-        <ol class="step-concepts">
-          {r.steps
-            .filter((s) => s.concepts.length > 0)
-            .map((s) => (
-              <li>
-                <strong>{s.title}</strong>
-                <ul class="study-list">
-                  {s.concepts.map((id) => (
-                    <Item id={id} />
-                  ))}
-                </ul>
-              </li>
-            ))}
-        </ol>
-      </section>
-    </>
+    <div class="study-top">
+      <p class="study-count" data-wait={ready ? undefined : ''}>
+        {fill(ko.study.readCount, { total: all.length, n })}
+      </p>
+      {ready && mine.length === 0 && <p class="study-note">{ko.study.noSession}</p>}
+      {mine.length > 0 && (
+        <section class="study-mine" aria-labelledby="study-mine">
+          <h2 id="study-mine" class="sec-title">
+            {ko.study.mine}
+          </h2>
+          <p class="study-note">{ko.study.mineNote}</p>
+          <ul class="list group">
+            {mine.map((id) => {
+              const c = catalog.concept.get(id);
+              if (!c) return null;
+              const s = termState(study, id);
+              return (
+                <li key={id}>
+                  <a class="list-row" href={termPath(id)}>
+                    <span class="list-text">
+                      <span class="list-name">{c.title}</span>
+                    </span>
+                    <span class={s === 'todo' ? 'term-state visually-hidden' : 'term-state is-read'}>{WORD[s]}</span>
+                    <span class="list-chev" aria-hidden="true" />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+    </div>
   );
 }

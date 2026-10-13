@@ -3,6 +3,10 @@
 //  - 처음 불러오는 CSS 합계(gzip): 30KB 이하 (CSS는 첫 화면 그리기를 막는다)
 //  - 그림·애니메이션 파일 합계: 300KB 이하 (<picture>와 srcset은 실제로 내려오는 하나만 센다)
 // 나중에 동적으로 불러오는 묶음(예: 지연 3D 장면)은 HTML에 드러나지 않으므로 따로 LAZY_LIMIT으로 본다.
+// 길 지도(docs/MAP.md, D68)는 따로 본다: 땅 판 24KB · 표지 묶음 10KB · 지도 섬 8KB · 지도 모형 6.5KB(gzip).
+// 섬과 모형은 각 파일만 줄여(esbuild minify, import는 밖에 둔 채) 재고, 빌드에서 둘이 함께 실린 MapBoard 묶음은 합계 안인지 본다.
+// 어려운 말 풀이(brief 8절, D69)도 따로 본다: 풀이 섬 5KB · 자료(/glossary.json) + 매처 묶음 17KB · 도구 이름(/glossary-tools.json) 4KB.
+// 사전 검색 색인(/search-index.json)은 처음 찾을 때 받는다: 100KB (gzip).
 //   npm run qa:budget
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
@@ -138,6 +142,48 @@ if (biggestLazy) {
   if (!ok) failed += 1;
   console.log(`${ok ? '✓' : '✗'} 가장 큰 지연 묶음 ${relative(DIST, biggestLazy.f)} ${(biggestLazy.n / KB).toFixed(1)}KB/${LAZY_LIMIT / KB}KB`);
 }
+// 길 지도
+const MAP_LIMITS = { land: 24 * KB, sprite: 10 * KB, island: 8 * KB, model: 6.5 * KB } as const;
+async function minifiedGz(files: string[]): Promise<number> {
+  // esbuild는 vite·wrangler와 함께 깔린다. 파일 하나씩 줄이므로 import한 다른 모듈(엔진·문구·preact)은 세지 않는다
+  const { transform } = await import('esbuild');
+  let code = '';
+  for (const f of files) {
+    const src = readFileSync(join(ROOT, f), 'utf8');
+    const out = await transform(src, { loader: f.endsWith('.tsx') ? 'tsx' : 'ts', minify: true, format: 'esm', jsx: 'automatic', jsxImportSource: 'preact', target: 'es2022' });
+    code += out.code;
+  }
+  return gzipSync(Buffer.from(code), { level: 9 }).length;
+}
+const mapRows: [string, number, number][] = [
+  ['땅 판 src/assets/map/land.svg', gzSize(join(ROOT, 'src/assets/map/land.svg')), MAP_LIMITS.land],
+  ['표지 묶음 src/assets/map/map-sprite.svg', gzSize(join(ROOT, 'src/assets/map/map-sprite.svg')), MAP_LIMITS.sprite],
+  ['지도 섬 MapBoard.tsx + map/focus.ts', await minifiedGz(['src/components/MapBoard.tsx', 'src/lib/map/focus.ts']), MAP_LIMITS.island],
+  ['지도 모형 src/lib/map/model.ts', await minifiedGz(['src/lib/map/model.ts']), MAP_LIMITS.model],
+];
+const shipped = [...allJs].filter((f) => /[\\/]MapBoard\.[^\\/]+\.js$/.test(f)).reduce((a, f) => a + gzSize(f), 0);
+if (shipped > 0) mapRows.push(['빌드한 MapBoard 묶음 (섬 + 모형)', shipped, MAP_LIMITS.island + MAP_LIMITS.model]);
+for (const [name, n, limit] of mapRows) {
+  const ok = n <= limit;
+  if (!ok) failed += 1;
+  console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB`);
+}
+
+// 어려운 말 풀이와 검색 색인 (나중에 받는 자료라 페이지 합계에 들지 않는다)
+const GLOSSARY_LIMITS = { island: 5 * KB, data: 17 * KB, tools: 4 * KB, search: 100 * KB } as const;
+const chunk = (re: RegExp): number => [...allJs].filter((f) => re.test(f)).reduce((a, f) => a + gzSize(f), 0);
+const lazyRows: [string, number, number][] = [
+  ['풀이 섬 TermPopover', chunk(/[\\/]TermPopover\.[^\\/]+\.js$/), GLOSSARY_LIMITS.island],
+  ['풀이 자료 + 매처 /glossary.json + term-engine', gzSize(join(DIST, 'glossary.json')) + chunk(/[\\/]term-engine\.[^\\/]+\.js$/), GLOSSARY_LIMITS.data],
+  ['도구 이름 풀이 /glossary-tools.json', gzSize(join(DIST, 'glossary-tools.json')), GLOSSARY_LIMITS.tools],
+  ['사전 검색 색인 /search-index.json', gzSize(join(DIST, 'search-index.json')), GLOSSARY_LIMITS.search],
+];
+for (const [name, n, limit] of lazyRows) {
+  const ok = n > 0 && n <= limit;
+  if (!ok) failed += 1;
+  console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB${n === 0 ? ' (빌드에 없다)' : ''}`);
+}
+
 if (failed > 0) {
   console.log(`\n예산 초과 ${failed}건. 섬을 나누거나(client:visible/idle), 그림을 줄이거나, 라이브러리를 바꾼다.`);
   process.exit(1);

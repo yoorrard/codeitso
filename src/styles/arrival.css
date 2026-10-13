@@ -360,7 +360,8 @@
   position: relative;
 }
 
-/* 프린터 틈: 종이가 위에서 아래로 덜컥덜컥 뽑혀 나온다 (S6). 틈은 --tile (밤에 남색이 바탕에 묻히지 않게).
+/* 프린터 틈: 종이가 위에서 아래로 덜컥덜컥 찍혀 나온다 (S6, clip-path를 steps(14)로). 틈은 --tile (밤에 남색이 바탕에 묻히지 않게).
+   설계도 받기 섬이 뽑을 때까지 종이를 가려 두고(data-print=wait) 종이가 화면에 보일 때 뽑는다(Receipt.tsx, D71 검토 반영).
    틈은 종이보다 양옆 12씩만 넓다 (영수증 글꼴의 ch로 종이와 같은 셈) */
 .printer {
   position: relative;
@@ -408,12 +409,13 @@
     linear-gradient(225deg, var(--receipt) 50%, transparent 50%) var(--space-2) 0 / var(--space-4) var(--space-2) repeat-x;
 }
 
+/* 위에서부터 한 줄씩 드러난다. 끝에서는 아래 톱니(8)와 그림자까지 다 보이게 넉넉히 연다 */
 @keyframes print {
   from {
-    transform: translateY(-100%);
+    clip-path: inset(0 0 100% 0);
   }
   to {
-    transform: translateY(0);
+    clip-path: inset(calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) calc(-2 * var(--space-2)) calc(-1 * var(--space-2)));
   }
 }
 
@@ -516,12 +518,53 @@
   color: var(--seal);
   font-weight: var(--weight-heading);
   transform: rotate(-6deg);
-  animation: stamp-press var(--dur-stamp) var(--ease-spring) var(--dur-print) both;
+  /* 출력이 끝나기 --dur-stamp 앞에 내려찍어 출력과 함께 끝난다 (brief 7절: 2750~3000) */
+  animation: stamp-press var(--dur-stamp) var(--ease-in) calc(var(--dur-print) - var(--dur-stamp)) both;
 }
 
-/* 한 번 뽑은 영수증은 다시 뽑지 않는다: 영수증 칸으로 돌아올 때, 도착 장면을 이미 본 뒤 다시 열 때 (섬이 data-printed를 붙인다) */
-.receipt-scene[data-printed] :is(.paper, .r-stamp) {
+/* 뽑을 차례인데 종이가 아직 화면에 보이지 않았다: 프린터 틈 안에 가려 둔다(애니메이션이 아니다). 종이가 보이면 섬이 이 표시를 떼어
+   출력이 처음부터 돈다. 그 전에 화면을 누르거나 Esc를 누르면(cc:skip) 섬이 다 나온 종이로 바꾼다 */
+.receipt-scene[data-print='wait'] .paper {
+  clip-path: inset(0 0 100% 0);
+}
+
+.receipt-scene[data-print='wait'] :is(.paper, .r-stamp) {
   animation: none;
+}
+
+/* 한 번 뽑은 영수증은 다시 뽑지 않는다: 영수증 칸으로 돌아올 때, 도착 장면을 이미 본 뒤 다시 열 때 (섬이 data-printed를 붙인다).
+   출발 → 도착 장면을 끝 모습으로 볼 때(동작 줄이기·조용히 모시기 still, 섬이 붙기 전에 건너뜀 skip)도 뽑지 않는다 */
+.receipt-scene[data-printed] :is(.paper, .r-stamp),
+:root:is([data-depart='still'], [data-depart='skip']) .receipt-scene :is(.paper, .r-stamp) {
+  animation: none;
+}
+
+/* 조용히 모시기 (brief 7절): 큰 장면 S5+S6은 끝 모습을 짧게 비치기만 한다 (출력·도장 없이) */
+:root[data-quiet] .receipt-scene:not([data-printed]) :is(.paper, .r-stamp) {
+  animation: ar-fade var(--dur-fade) var(--ease-out) both;
+}
+
+@keyframes ar-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ── 출발 → 도착 (S5, src/lib/map/arrive.ts): 시트는 차가 빈 터에 닿은 뒤 아래에서 올라온다 ──
+   섬이 붙기 전(첫 그림)부터 내려 둔다. 장면이 시작되면(data-depart=run) 애니메이션이 이어받고, 스크립트가 돌지 못해도 --dur-scene 뒤에는 나온다 */
+:root[data-depart='play'] .content-sheet.on-map {
+  animation: ar-hold 0s linear var(--dur-scene) backwards;
+}
+
+@keyframes ar-hold {
+  from {
+    transform: translateY(100vh);
+  }
+}
+
+/* 끝 모습으로 볼 때(동작 줄이기·조용히 모시기): 시트를 짧게 비친다 */
+:root[data-depart='still'] .content-sheet.on-map {
+  animation: ar-fade var(--dur-fade) var(--ease-out) both;
 }
 
 /* S6: 1.3배에서 1배로 누르기만 한다. 'to'가 없어 끝 상태는 요소 자기 값(−6°)이다 */
@@ -534,13 +577,6 @@
 
 .r-footer {
   color: var(--text-2);
-}
-
-/* 출력 장면 [건너뛰기]: 종이 오른쪽 위 (누르는 곳 44) */
-.scene-skip-btn {
-  position: absolute;
-  inset-block-start: var(--space-3);
-  inset-inline-end: 0;
 }
 
 /* ── 아래 막대: 주 버튼 하나가 막대 폭을 채운다 (섬의 맨 바깥이 버튼이라 .action-main의 flex 항목이다) ── */

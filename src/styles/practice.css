@@ -2,23 +2,7 @@
    번호 원 24(parts.css .num-dot) + 2px --hairline 잇는 선. 상자·점선·옅은 파랑 알약 없이 제목과 간격으로 나눈다.
    부품(.paste·.fold·.tag·.btn-text·.content-sheet)은 parts.css·frame.css. 이 파일은 이 화면만 싣는다. */
 
-/* 지도 띠가 없는 단계라(연습 띠와 S8은 W5) 휴대폰에서는 시트를 납작하게: 단계 줄 바로 아래에서 화면 끝에서 끝까지,
-   둥근 모서리·그림자 없이 (덮을 지도가 없는데 떠 있는 시트로 보이지 않게, D70 검토 반영) */
-.content-sheet.practice {
-  margin-block-start: calc(-1 * var(--space-5));
-  margin-inline: calc(-1 * var(--gutter));
-  border-radius: 0;
-  box-shadow: none;
-}
-
-@media (min-width: 680px) {
-  .content-sheet.practice {
-    margin-block-start: calc(var(--space-3) - var(--space-5));
-    margin-inline: 0;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--elev-sheet);
-  }
-}
+/* 지도 띠 160(연습 고리, D71) 위로 16 겹친 내용 시트: 다른 단계와 같은 .content-sheet.on-map (parts.css) */
 
 .practice h1:focus {
   outline: none;

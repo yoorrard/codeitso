@@ -22,7 +22,7 @@
 | 시험 | Vitest(엔진·자료), Playwright 1.56.1 + @axe-core/playwright(화면·접근성) | Playwright는 컨테이너 Chromium에 맞춰 고정 (D33). 시각 점검·예산은 `scripts/qa/` |
 | 글꼴 | Pretendard(모든 화면 글), `CC Receipt`(영수증 종이와 '요금 0원' 칩, D2Coding에서 글자를 골라 이름을 바꿈) | 둘 다 OFL. Pretendard는 가변 글꼴 동적 하위 집합(D38), 영수증 글꼴은 고정 문구 글자만 고른 하위 집합 (D29·D37). 쓰는 곳은 CONCEPT 5.4. `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
 | 화면 색 | 낮 지도(기본)와 밤 지도 | `src/styles/tokens.css`가 `@media (prefers-color-scheme: dark)` 안에서 같은 토큰 이름에 밤 값을 다시 준다. 화면 코드는 모드를 모른다. 대비 검사(`npm run tokens`)는 두 모드를 모두 돈다. 사이트 안 색 설정은 BACKLOG (CONCEPT 5.3). |
-| 모션 | CSS 전환·키프레임·`@starting-style`, WAAPI, SVG `stroke-dashoffset`·`offset-path`, FLIP, 문서 간 View Transitions, 직접 쓴 `src/lib/motion.ts` | 라이브러리 없음. `canvas-confetti`와 `@types/canvas-confetti`를 뺀다 (D56, T25). CSS 3D는 대표 장면의 지도 기울이기 하나만. 장면은 CONCEPT 7절. |
+| 모션 | CSS 전환·키프레임·`@starting-style`, WAAPI, SVG `stroke-dashoffset`·`offset-path`, FLIP, 직접 쓴 `src/lib/motion.ts` | 라이브러리 없음. `canvas-confetti`와 `@types/canvas-confetti`를 뺀다 (D56, T25). CSS 3D는 대표 장면의 지도 기울이기 하나만. 장면은 CONCEPT 7절. 문서 간 View Transitions는 꺼 두었다(D71 검토 반영: 붙기 전 지도는 땅만 그려 섞어 비추면 길이 사라졌다 나타난다). 다시 켤 때 켜기(`@view-transition`)는 기본 틀 머리 맨 앞의 인라인 style에 둔다(바깥 CSS 묶음에만 두면 섬 모듈을 받는 중에 크롬이 전환을 건너뛴다, D71 W5b). 조건은 `src/styles/frame.css` 머리 주석. |
 | 효과음 | `src/lib/sfx.ts` + 켰을 때만 동적 import하는 합성기 | 기본 꺼짐, 소리 파일 없음 (D28) |
 | 아이콘·그림 | Phosphor Regular(MIT, 빌드 때 인라인 SVG), 직접 그린 SVG(기능 그림, 질문 그림, 지도 표지 묶음 `src/assets/map/map-sprite.svg`, 청사진 자리 표시), 미리 구운 3D 렌더(`src/assets/art/`, Astro `<Picture>`로 AVIF/WebP) | 사람 그림(마스코트)과 Fluent 3D 그림 문자(`public/emoji/`)는 쓰지 않는다 (D56, T25에서 걷어 냄). 렌더가 없으면 `Art.astro`가 청사진 자리 표시를 쓴다 (CONCEPT 5.7, 9절). |
 | 그림 굽기 (개발용) | (T33) `scripts/assets/render-art.ts` (`npm run art`, `npm run art:sheet`) + three·@gltf-transform(devDependency만) | 컨테이너의 Playwright Chromium을 화면 없이 띄워 소유자가 준 GLB를 조명 한 벌에서 굽고 투명 PNG를 만든다. **three는 devDependency에만 두고 `src`에서 import하지 않는다** (품질 바닥선이 막는다). 실행 중 WebGL은 쓰지 않는다 (D26·D54·D56). 화면에 실리는 JS는 0KB. |
@@ -120,9 +120,9 @@ code-chauffeur/
 |---|---|
 | `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers(목적지 답), cart(고른 도구), kept(그대로 간 막힌 곳), deferred(나중으로 미룬 기능), freeText(한 줄 입력). 이름이 바뀌어도 키와 모양은 그대로라 저장된 답이 살아남는다 (D56) |
 | `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 용어 카드 읽음과 정답 맞힌 문제 번호 |
-| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true }` 만들 앱 정하기 첫 답 시각, 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 내 AI 써 보기를 끝까지 함·영수증을 한 번 이상 받음 (단계 상태 계산용, D40·D56) |
+| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true, checkJams?: string[] }` 만들 앱 정하기 첫 답 시각, 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 내 AI 써 보기를 끝까지 함·영수증을 한 번 이상 받음 (단계 상태 계산용, D40·D56), 도구끼리 맞춰 보기에서 마지막으로 본 막힌 마디(칸 id, 12개까지. 고치고 돌아오면 빨강이 걷히는 장면 S4, D71) |
 | `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean, quiet: boolean, glossary: boolean, marks: boolean }` (효과음·조용히 모시기 기본 false, 어려운 말 풀이·점선 밑줄 기본 true, D67) |
-| `cc:seen:v1` | `{ scenes: string[] }` 처음 한 번만 다 보이는 큰 장면(S1 배차, S5 출발 → 도착)을 이미 본 기록. 다시 열면 끝 상태가 바로 보인다 (CONCEPT 7절) |
+| `cc:seen:v1` | `{ scenes: string[] }` 처음 한 번만 다 보이는 장면을 이미 본 기록: S1 홈 첫 방문 `home`, S5+S6 출발 → 도착 `arrival`, 어려운 말 풀이 처음 안내 `glossary-hint`, S7 단계 줄에서 그 단계의 ✓를 찍은 `done:{단계}`. 다시 열면 끝 상태가 바로 보인다. 이 키가 있으면 기본 틀이 다시 온 사람(`data-visit`)으로 보고 홈 장면을 돌리지 않는다. 설계도 받기에서는 기본 틀의 첫 그림 전 스크립트가 이 키(`arrival`)와 `cc:meta:v1.issued`, 앞 화면(`document.referrer`가 도구끼리 맞춰 보기)·이동 종류(새로 연 이동)를 읽어 출발 → 도착 장면을 고른다(`html[data-depart]`: play · still, 읽기만, CONCEPT 7절, D71) |
 | `cc:terms:v1` | (D69) 어려운 말 풀이를 한 번 연 용어 id(최근 300개). 다음 화면부터 그 말에 점선 밑줄을 긋지 않는다. 고른 글은 저장하지 않는다 |
 | `cc:receipts:v1` | (T25) 지난 영수증 최대 30장. 장마다 영수증 링크 조각(`#r=` 뒤), 앱 종류 id(`q.type`의 답), 받은 날만 둔다. 넘치면 가장 오래된 것을 빼고 그렇다고 알린다 (CONCEPT 8절) |
 

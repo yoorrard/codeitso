@@ -15,7 +15,7 @@ test('설계도 받기: 영수증 출력 중에 누르면 다 나온 영수증�
   await page.locator('.action-bar .btn-issue').click();
   await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
-  await expect(page.getByRole('button', { name: ko.receipt.skip })).toBeVisible();
+  await expect(page.getByRole('button', { name: ko.common.skip })).toBeVisible();
   // 화면 어디든 누르면 끝난다: 링크가 없는 제목을 누른다 (종이 모서리는 출력 중 머리줄 링크와 겹칠 수 있다)
   await page.locator('#receipt-title').click({ force: true });
   await expect.poll(() => longAnimations(page, 0)).toEqual([]);
@@ -59,7 +59,7 @@ for (const mode of ['기기 설정', '사이트 설정'] as const) {
     await page.waitForURL(/\/arrival$/);
     await islandsReady(page);
     await still();
-    await expect(page.getByRole('button', { name: ko.receipt.skip })).toBeHidden();
+    await expect(page.getByRole('button', { name: ko.common.skip })).toBeHidden();
     await expect(page.locator('.paper')).toBeVisible();
     await context.close();
   });

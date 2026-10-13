@@ -17,7 +17,7 @@ paths:
 ## 원칙
 
 1. 모션은 지금 위치와 바뀐 것을 알려 준다 (R-08). 대표 그림은 **자라는 길 지도**이고, 움직임은 엔진 결과(고른 도구, 막힌 곳, 미룬 것)를 그대로 그린다. 장식만을 위한 끝없는 반복은 없다 (5초 넘는 자동 반복 금지, WCAG 2.2.2).
-2. 모션 하나 1초 안쪽, 대표 장면(S5) 2.8초 이하. **누르면(또는 Esc·건너뛰기 버튼) 끝 상태로.** 기다려야 다음 행동을 할 수 있게 만들지 않는다.
+2. 모션 하나 1초 안쪽, 대표 장면(S5+S6) 3.0초(`--dur-scene`) 이하. **누르면(또는 Esc·건너뛰기 버튼) 끝 상태로.** 기다려야 다음 행동을 할 수 있게 만들지 않는다.
 3. 동작 줄이기(기기 설정 또는 `html[data-motion="reduce"]`): 이동·확대·기울기·흔들림을 없애고, 바뀐 것을 보여 주는 짧은 투명도 전환(`--dur-fade`)만 남긴다. 끝 상태가 바로 보이고, 정지한 지도만으로 모든 정보가 보인다.
 4. 움직임이 알려 주는 것은 글로도 알린다 (`aria-live`). 색만으로 뜻을 전하지 않는다 (막힘·서행·원활에는 늘 그림과 글).
 5. 번쩍임 초당 3번 미만. 한 번에 움직이는 길은 둘까지. `transform`·`opacity`·`stroke-dashoffset`만 움직이고 `filter: blur`는 쓰지 않는다.
@@ -27,8 +27,8 @@ paths:
 
 | 층 | 무엇 | 비용 |
 |---|---|---|
-| L0 | CSS 전환·키프레임, `@starting-style`, `linear()` 스프링 토큰, `offset-path`·`offset-rotate`, `@property` 색 넘기기, CSS 3D(지도 층 기울이기 하나), SVG `stroke-dashoffset`, 문서 간 View Transitions(`@view-transition { navigation: auto }`, 240ms 안쪽) | 0KB |
-| L1 | `src/lib/motion.ts`: `reduced()`, `dur()`, `play()`, `skipAll()`, `flip()`, `followPath()` / `src/lib/sfx.ts`: 효과음 켰을 때만 동적 import | 약 2KB |
+| L0 | CSS 전환·키프레임, `@starting-style`, `linear()` 스프링 토큰, `offset-path`·`offset-rotate`, `@property` 색 넘기기, CSS 3D(지도 층 기울이기 하나), SVG `stroke-dashoffset` | 0KB |
+| L1 | `src/lib/motion.ts`: `reduced()`, `quiet()`, `dur()`, `ease()`, `play()`, `skipAll()`, `skippable()`, `capture()`+`fly()`, `canDrive()`+`drive()` / `src/lib/sfx.ts`: 효과음 켰을 때만 동적 import | 약 2KB |
 | L2 | 미리 구운 3D 렌더 그림 (`npm run art`, 개발용 three는 devDependency만, src에서 import 금지) | 그림 예산 안 |
 | 금지 | GSAP, Motion 전체, Lottie, Rive, 실행 중 three.js·WebGL, canvas-confetti (D26·D54·D56) | — |
 
@@ -39,8 +39,9 @@ reduced(): boolean                        // 기기 설정 || html[data-motion="
 dur(token: `--dur-${string}`): number     // CSS 변수에서 ms 읽기 (줄이기면 0, --dur-fade만 유지)
 play(el, keyframes, opts): Animation      // element.animate 감싸기: 토큰 길이·곡선, 줄이기면 끝 상태로 바로
 skipAll(root = document): void            // root 안 실행 중 애니메이션을 모두 finish()
-flip(from: Element, to: Element, opts)    // 고르기(S3): 기능 타일 유령 사본이 호를 그리며 지도 마디로 이동 후 제거
-followPath(el, path: SVGPathElement, from, to, opts) // 지도 위 차 이동(S1·S5·S8): offset-distance 애니메이션
+capture(el) → fly(from, to, opts)          // 정하기(S3): 줄의 타일을 미리 잡아 두고, 유령 사본이 지도 마디로 날아간 뒤 제거 (마디가 화면 밖이면 날지 않음)
+canDrive() / drive(car, d, from, to, opts)  // 지도 위 차 이동(S3·S5·S8): offset-path는 애니메이션 안에만 두고 offset-distance를 움직인다. offset-path가 없는 엔진은 차가 제자리에 나타남
+quiet() / applyQuietPref(on)               // 조용히 모시기: 사건 기사 메시지·효과음을 끄고 큰 장면(S1·S5+S6)은 끝 상태 + 150ms 페이드
 ```
 
 - 화면 아무 곳 누르기·Esc·"건너뛰기" 버튼은 장면 안에서 `skipAll(sceneRoot)`. 기본 틀이 `cc:skip` 신호도 보낸다 (숫자 굴리기처럼 애니메이션 객체가 아닌 것).
@@ -60,11 +61,11 @@ followPath(el, path: SVGPathElement, from, to, opts) // 지도 위 차 이동(S1
 |---|---|---|
 | S1 홈 첫 방문 | 지도 1.04 → 1 가라앉기(`--dur-settle`) + 본보기 길 `stroke-dashoffset`(`--dur-draw`) + 차가 가장자리에서 출발 표지로 `offset-path`(강한 감속) + 출발 고리 한 번 | 다 그려진 지도와 서 있는 차 |
 | S2 지도가 자라요 (만들 앱 정하기, 답마다) | 답 하나에 변화 하나: 마디 점선이 톡 생김(`--dur-pop` 스프링), 길 이어 그리기, 청사진 윤곽 비침, 느낌 답이면 `@property` 색 넘기기 | 150ms 페이드로 바뀐 것만 |
-| S3 정하면 이어져요 (도구 고르기, [{도구}로 정하기]) | `flip()` 기능 타일이 호를 그리며 지도 마디로(`--dur-fly`), 마디 채움(스프링), 점선 → 실선(`--dur-draw`), 상태 숫자 굴리기(`--dur-roll`) | 마디와 길이 바로 바뀜, 낭독만 |
+| S3 정하면 이어져요 (도구 고르기, [{도구}로 정하기]) | `capture()`+`fly()` 기능 타일이 지도 마디로(`--dur-fly`), 마디 채움(스프링), 점선 → 실선(`--dur-draw`), 상태 숫자 굴리기(`--dur-roll`) | 마디와 길이 바로 바뀜, 낭독만 |
 | S4 맞춰 보기 (도구끼리 맞춰 보기) | 길 위 교통 색 덮기, 막힌 구간 두 번 숨쉬기(1초에 3번 미만), 풀면 빨강이 걷히고 초록, 그대로 가면 노랑 + 물음표, 다 풀리면 청록 짧은 대시 하나가 출발에서 빈 터까지 훑음(`--dur-sweep`) | 색·그림·글만 바뀜 |
 | S5 출발 → 도착 (대표 장면) | 밤 주행 모드 → 지도 층이 1.2배로 기울며 차를 따라가고(`--ease-drive`), 마디마다 ✓ → 전조등 두 번 깜빡임(`--dur-blink`, 브랜드 서명 모션) → 빈 터에 청사진 실선과 설계도 두루마리 → 낮으로 돌아오며 시트와 영수증 출력(S6). S5+S6 합계 `--dur-scene`(3.0초) 이하 (설계서 7절) | 150ms 페이드로 끝 상태 |
 | S6 영수증 출력과 도장 | 종이가 `steps()` 프린터 박자로 `clip-path`(`--dur-print`), '코드쇼퍼 · 요금 0원' 도장 1.3 → 1(`--dur-stamp`). 색종이 없음 | 다 나온 영수증과 도장 |
-| S7 단계 이동 | 문서 간 View Transitions: 지도(`view-transition-name: map`)와 단계 줄(`rail`)은 제자리, 시트 내용만 바뀜. 새 페이지에서 마친 단계에 ✓ | 전환 없음 |
+| S7 단계 이동 | 문서 간 View Transitions는 끈다(D71: 붙기 전 화면으로 넘어가 어색함, 다시 켜는 법은 frame.css 머리 주석). 새 페이지에서 새로 마친 단계의 ✓(스프링 300)와 막대 칸 채우기(200)만 한 번 | 바로 바뀜 |
 | S8 연습 마침 (내 AI 써 보기) | 차가 연습 고리를 한 바퀴(S1과 같은 이동 함수), 고리가 청록 심으로 채워짐 | 고리가 바로 채워짐 |
 | S9 용어 카드 읽음·정답 | 청사진 판이 왼쪽부터 색으로 채워짐(마스크), 다 맞히면 남색 고리 위로 청록 빛이 한 바퀴(`stroke-dashoffset`) | 바로 바뀜 |
 | 누르기·기사 메시지 | 누르기 0.97(`--dur-tap`), 기사 메시지 `@starting-style` 등장(`--dur-ui`), 다음 행동이면 한 줄로 접힘 | 없음 / 바로 보임 |

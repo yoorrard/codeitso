@@ -64,6 +64,10 @@ describe('메타 읽기', () => {
   it('true일 때만 첫 수업·영수증 표시를 둔다', () => {
     expect(readMeta({ lessonDone: true, issued: 'yes', interviewStartedAt: -1 })).toEqual({ sent: [], lessonDone: true });
     expect(readMeta({ interviewStartedAt: 1_700_000_000_000 }).interviewStartedAt).toBe(1_700_000_000_000);
+    // 도구끼리 맞춰 보기에서 마지막으로 본 막힌 마디 (S4 '뚫림', D71): 글자 목록만, 비면 두지 않는다
+    expect(readMeta({ checkJams: ['slot.store', 3, '', 'slot.store'] }).checkJams).toEqual(['slot.store']);
+    expect(readMeta({ checkJams: [] })).toEqual({ sent: [] });
+    expect(isEmptyMeta({ sent: [], checkJams: ['slot.host'] })).toBe(false);
   });
 });
 

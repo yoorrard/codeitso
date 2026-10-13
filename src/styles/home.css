@@ -27,6 +27,99 @@
   translate: -50% calc(-50% - var(--space-2));
 }
 
+/* ── 첫 방문 장면 S1 (CONCEPT 7절, brief 7절, D71). 기본 틀이 첫 그림 전에 html[data-intro]를 붙인다 (처음 온 사람만, 한 번).
+   0~400 지도 1.04 → 1 · 0~600 본보기 길 그리기(가림막) · 400~1200 차가 왼쪽 가장자리에서 출발 줄을 따라 달려 와(--ease-out) 출발에서 위로 꺾어 섬
+   (offset-path는 키프레임 안에만: 끝나면 차는 자기 자리) · 1200~1500 출발 고리가 한 번 퍼짐. 합계 1500.
+   조용히 모시기·동작 줄이기(still)는 끝 모습을 --dur-fade로 비치기만. 기기 설정의 동작 줄이기는 길이 토큰이 0이라 바로 끝 모습 ── */
+:root[data-intro='play'] .map-band.is-home .map-board {
+  animation: mb-settle var(--dur-settle) var(--ease-out) both;
+}
+
+:root[data-intro='play'] .is-home .mb-roads {
+  mask: url(#mb-intro);
+}
+
+:root[data-intro='play'] .is-home .mb-intro-path {
+  animation: mb-draw var(--dur-route) var(--ease-in-out) both;
+}
+
+:root[data-intro='play'] .is-home .mb-car-wrap {
+  animation: mb-live-in var(--dur-ui) var(--ease-out) var(--dur-settle) backwards;
+}
+
+@supports (offset-path: path('M0 0')) {
+  :root[data-intro='play'] .is-home .mb-car {
+    /* 들어오는 차는 이미 달리는 중이라 강한 감속(--ease-out): 천천히 출발하면 휴대폰 폭에서 차가 화면 밖에 오래 있다 (D71 검토 반영) */
+    animation: mb-approach var(--dur-approach) var(--ease-out) var(--dur-settle) backwards;
+  }
+}
+
+:root[data-intro='play'] .is-home .mb-pulse {
+  animation: mb-pulse var(--dur-pop) var(--ease-out) calc(var(--dur-settle) + var(--dur-approach)) both;
+}
+
+:root[data-intro='still'] .map-band.is-home .map-board {
+  animation: mb-live-in var(--dur-fade) var(--ease-out) both;
+}
+
+/* 길 그리기 가림막: 길보다 넓은 흰 선. 끝 모습(가림막 다 열림)이 기본이라 장면이 없으면 길이 그대로 다 보인다 */
+.mb-intro-path {
+  fill: none;
+  stroke: var(--brand-white);
+  stroke-width: 18;
+  stroke-dasharray: 1 2;
+}
+
+/* 출발 고리 퍼짐: 평소에는 보이지 않는다 */
+.mb-pulse {
+  fill: none;
+  stroke: var(--you);
+  stroke-width: 3;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes mb-settle {
+  from {
+    scale: 1.04;
+  }
+}
+
+@keyframes mb-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes mb-approach {
+  from {
+    offset-path: var(--approach);
+    offset-distance: 0%;
+    offset-rotate: auto;
+    transform: none;
+  }
+
+  to {
+    offset-path: var(--approach);
+    offset-distance: 100%;
+    offset-rotate: auto;
+    transform: none;
+  }
+}
+
+@keyframes mb-pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
 /* 시트 아래 무대 여백은 시트가 낸다 (시트와 바닥글 사이에 회색 띠가 남지 않게) */
 .stage:has(> .home) {
   padding-block-end: 0;

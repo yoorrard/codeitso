@@ -81,7 +81,8 @@ const self = { concept: c.id };
       </section>
     )
   }
-  <ConceptActions client:visible conceptId={c.id} quiz={c.quiz} askAI={c.askAI} />
+  <!-- client:idle: 붙으면 위쪽 그림 판도 읽음·다 맞힘으로 칠한다 (S9, 판은 정적 HTML이라 보일 때 붙으면 늦다) -->
+  <ConceptActions client:idle conceptId={c.id} quiz={c.quiz} askAI={c.askAI} />
   {
     prereqs.length > 0 && (
       <section class="sec" aria-labelledby="prereq-title">

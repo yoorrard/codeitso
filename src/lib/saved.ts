@@ -25,6 +25,8 @@ export interface Meta {
   lessonDone?: boolean;
   /** 영수증을 한 번 이상 받음 (도착 단계 마침) */
   issued?: boolean;
+  /** 도구끼리 맞춰 보기에서 마지막으로 본 막힌 마디(칸 id). 도구 고르기에서 고치고 돌아오면 빨강이 걷히는 장면(S4, D71)을 돌린다 */
+  checkJams?: string[];
 }
 
 export interface Prefs {
@@ -101,6 +103,8 @@ export function readMeta(raw: unknown): Meta {
   if (typeof t === 'number' && Number.isFinite(t) && t > 0) out.interviewStartedAt = t;
   if (o['lessonDone'] === true) out.lessonDone = true;
   if (o['issued'] === true) out.issued = true;
+  const jams = strings(o['checkJams'], 12);
+  if (jams.length > 0) out.checkJams = jams;
   return out;
 }
 
@@ -158,7 +162,7 @@ export function isEmptyStudy(s: StudyRecord): boolean {
   return Object.keys(s).length === 0;
 }
 export function isEmptyMeta(m: Meta): boolean {
-  return m.sent.length === 0 && m.interviewStartedAt === undefined && !m.lessonDone && !m.issued;
+  return m.sent.length === 0 && m.interviewStartedAt === undefined && !m.lessonDone && !m.issued && !m.checkJams?.length;
 }
 export function isDefaultPrefs(p: Prefs): boolean {
   return (

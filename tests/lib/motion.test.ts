@@ -1,6 +1,6 @@
 // 모션 기반: 동작 줄이기 판단(기기·사이트 둘 다), 토큰 길이 읽기, 건너뛰기
 import { afterEach, describe, expect, it } from 'vitest';
-import { applyMotionPref, dur, parseDuration, reduced, skipAll } from '../../src/lib/motion.ts';
+import { applyMotionPref, applyQuietPref, dur, parseDuration, quiet, reduced, skipAll } from '../../src/lib/motion.ts';
 
 /** 시험용 가짜 브라우저: html 속성, 기기 설정, CSS 변수 */
 function fakeBrowser(opts: { osReduce?: boolean; vars?: Record<string, string> } = {}): { attrs: Map<string, string> } {
@@ -34,6 +34,17 @@ describe('CSS 시간 값 읽기', () => {
     expect(parseDuration('')).toBe(0);
     expect(parseDuration('auto')).toBe(0);
     expect(parseDuration('-5ms')).toBe(0);
+  });
+});
+
+describe('조용히 모시기 (brief 7절)', () => {
+  it('html[data-quiet]로 붙이고 뗀다', () => {
+    fakeBrowser();
+    expect(quiet()).toBe(false);
+    applyQuietPref(true);
+    expect(quiet()).toBe(true);
+    applyQuietPref(false);
+    expect(quiet()).toBe(false);
   });
 });
 

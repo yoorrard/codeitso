@@ -1,30 +1,13 @@
 /* 기본 틀 (T05, docs/CONCEPT.md 5.8): 머리줄(브랜드·단계 줄·설정), 무대, 아래 막대, 설정 창.
    섬(Preact)도 같은 클래스를 쓰므로 범위 없는 전역 스타일로 둔다. 값은 tokens.css 변수만 쓴다. */
 
-/* 문서 간 View Transitions: 머리줄은 제자리, 무대만 바뀐다 (D25, CONCEPT S7). 동작 줄이기면 --dur-ui가 0 */
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-group(root),
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: var(--dur-ui);
-}
-
-.topbar {
-  view-transition-name: topbar;
-}
-
-/* 머리줄은 제자리: 스크롤한 뒤 넘겨도 위에서 미끄러져 내려오지 않게 자리 이동은 하지 않는다 */
-::view-transition-group(topbar) {
-  animation: none;
-}
-
-::view-transition-old(topbar),
-::view-transition-new(topbar) {
-  animation-duration: var(--dur-ui);
-}
+/* 단계 이동 S7 (brief 7절, D25·D71): 문서 간 View Transitions는 꺼 두었다(D71 검토 반영). 지도 섬이 붙기 전의 지도는 땅만 그리므로(D68)
+   옛 화면과 섞어 비추면 길이 사라졌다 다시 나타나고, 띠 높이가 바뀌며 지도가 한 번 튄다: 전환이 없을 때보다 나빴다.
+   새 화면에서 도는 단계 줄 ✓와 막대 칸 채움(StageRail.tsx)은 그대로다.
+   다시 켜는 조건: 붙기 전에 지도 띠가 옛 그림을 칠할 수 있을 때 (예: pageswap에서 띠 SVG를 store.ts로 떠 두고 첫 그림 전에 넣기).
+   그때 켜기(@view-transition)는 기본 틀 머리의 인라인 style에 둔다(바깥 묶음에만 두면 크롬이 건너뛴다). 머리줄·단계 줄·지도 띠에
+   view-transition-name을 주고 자리 이동 없이(animation: none) 시트만 바꾸며, 지도 묶음은 화면 안이면 기본 크기 변환, 화면 밖이면
+   animation: none으로 나눈다(viewTransition.types). 사이트 설정의 동작 줄이기면 pageswap·pagereveal에서 skipTransition() */
 
 /* ── 머리줄 (CONCEPT 5.8, brief 3.2): 가로 묶음 로고(그림 52×44 + 8 + 글자 상표 82×20), 사전, 설정. 높이 56. 붙박이가 아니다 (D41) ── */
 .topbar {
@@ -339,6 +322,45 @@
   }
 }
 
+/* 단계 이동 S7: 새로 마친 단계의 ✓가 톡 찍히고(--dur-pop 스프링), 막대 칸과 잇는 선이 왼쪽부터 채워진다(--dur-ui).
+   섬이 just-done·just-reached를 한 번 붙인다(StageRail.tsx). 동작 줄이기면 길이가 0이라 바로 보인다 */
+.rail-full :is(.step-dot.just-done, .rail-practice.just-done) .icon-wrap {
+  animation: step-done var(--dur-pop) var(--ease-spring) both;
+}
+
+@keyframes step-done {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+.rail-list > li.just-reached::before {
+  transform-origin: left center;
+  animation: bar-fill var(--dur-ui) var(--ease-out) both;
+}
+
+.rail-bars .bar.done.just-done {
+  position: relative;
+  overflow: hidden;
+  background: var(--fill);
+}
+
+.rail-bars .bar.done.just-done::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--chosen);
+  transform-origin: left center;
+  animation: bar-fill var(--dur-ui) var(--ease-out) both;
+}
+
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
 /* 접힘: 글 줄 44 + 4칸 막대 4 + 아래 여백 4 = 52 */
 .rail-toggle {
   flex-direction: column;
@@ -406,7 +428,8 @@
 
 /* 밤에는 --fill이 머리줄 바탕과 거의 같아(1.19:1) 네 칸 구조가 안 읽혀서, 빈 칸을 한 단 밝은 선 색으로 */
 @media (prefers-color-scheme: dark) {
-  .rail-bars .bar {
+  .rail-bars .bar,
+  .rail-bars .bar.done.just-done {
     background: var(--hairline);
   }
 }
@@ -1029,6 +1052,18 @@
   line-height: var(--leading-caption);
   font-weight: var(--weight-strong);
   font-variant-numeric: tabular-nums;
+}
+
+/* 숫자 굴리기(S3): 숫자만 따로 감싸 옛 숫자(.sl-old)를 위에 겹쳐 둔다. 움직임은 StatusLine.tsx */
+.sl-n,
+.sl-n > span {
+  display: inline-block;
+  position: relative;
+}
+
+.sl-n > .sl-old {
+  position: absolute;
+  inset: 0;
 }
 
 /* 아주 낮은 화면(가로로 든 휴대폰)이나 글자를 크게 키운 좁은 화면에서는 아래 막대도 붙박이를 푼다.

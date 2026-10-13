@@ -1,10 +1,13 @@
 // 기사 메시지 (docs/CONCEPT.md 4.1, brief 6.1): 사건 때만 낸다. 왼쪽에 모자 배지 원(32px), 오른쪽에 두 문장 이하의 글.
 // 닫기 단추(44px)로 접고, 저절로 닫히지 않는다. 얼굴 그림은 넣지 않는다 (기사는 로고 안에만 있다, D65).
 // 접을 때 초점이 닫기 단추에 있었으면 메시지 다음의 누를 수 있는 것으로 옮긴다 (지운 단추와 함께 초점이 body로 사라지지 않게, WCAG 2.4.3).
+// 조용히 모시기(brief 7절)면 사건 메시지를 내지 않는다: 같은 일은 화면 글·상태 한 줄·낭독이 알린다.
+import { useStore } from '@nanostores/preact';
 import { useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { LOGO_BADGE } from '../lib/logo-paths.ts';
 import { sentences } from '../lib/sentences.ts';
+import { $prefs } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
 import { Logo } from './Logo.tsx';
 
@@ -32,7 +35,8 @@ function nextFocus(el: Element): HTMLElement | null {
 export function DispatchNote({ title, text, closable = true, class: cls }: Props) {
   const [open, setOpen] = useState(true);
   const box = useRef<HTMLElement>(null);
-  if (!open) return null;
+  const quiet = useStore($prefs).quiet;
+  if (!open || quiet) return null;
   const hide = (): void => {
     const el = box.current;
     if (el?.contains(document.activeElement)) nextFocus(el)?.focus();

@@ -3,21 +3,31 @@
 // 층: 땅 판 → 그림자 → 길(밤 빛 → 바깥 → 심) → 굴 → 마디 → 지금 여는 곳 고리 → 빈 터·윤곽·깃발 → 집 → 표지 → 이름표 → 차.
 // 그림은 표지 묶음(MapSprite.astro)을 <use>로 쓴다. 자리는 모두 모형의 값 그대로다 (이 파일에서 자리를 고치지 않는다).
 // 안의 모든 것은 aria-hidden이고 바깥 svg 하나가 role="img"와 요약 한 문장을 가진다 (지도에서만 알 수 있는 정보는 없다, CONCEPT 5.8).
-// 색·굵기는 src/styles/map.css가 토큰으로 칠한다. 움직임(S2~S5·S7)은 W5에서 붙인다.
+// 색·굵기는 src/styles/map.css가 토큰으로 칠한다. 움직임(S2·S3·S4, D71)은 src/lib/map/scene.ts가 앞 모형과 새 모형을 견주어 붙인다
+// (설계도 받기의 출발 → 도착 S5는 src/lib/map/arrive.ts가 도착한 지도 위에서):
+// 그래서 움직일 것에는 data-k 이름을 달고, 잠깐 쓰는 그림을 붙일 빈 층(.mb-fx-r 길 밑, .mb-fx-n 길과 마디 사이)을 둔다.
+// 차는 굽는 곳 안에 서지 않게 호의 가까운 끝으로 옮겨 세운다(src/lib/map/rest.ts). 홈의 본보기 지도는 첫 방문 장면 S1의 재료(intro)를 함께 그린다.
 import { useStore } from '@nanostores/preact';
+import type { ComponentChildren, Ref } from 'preact';
+import { useLayoutEffect, useRef } from 'preact/hooks';
+import { ko } from '../copy/ko.ts';
 import '../styles/map-land.css';
 import '../styles/map.css';
 import { $arrivalView, resultFor } from '../lib/arrival-view.ts';
 import { catalog } from '../lib/data.ts';
 import { evaluate } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
-import { $mapFocus } from '../lib/map/focus.ts';
+import { $mapCue, $mapFocus } from '../lib/map/focus.ts';
 import type { MapModel, MapNode } from '../lib/map/model.ts';
 import { mapModel } from '../lib/map/model.ts';
+import { restPose } from '../lib/map/rest.ts';
+import { animateMap } from '../lib/map/scene.ts';
+import { departing, sceneClock } from '../lib/depart.ts';
 import { $result } from '../lib/result.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
+import { runScene } from '../lib/scene.ts';
 import type { StageId } from '../lib/stages.ts';
-import { $meta } from '../lib/store.ts';
+import { $meta, patchMeta } from '../lib/store.ts';
 
 // 땅 판은 서버에서만 싣는다. 섬은 서버가 그린 땅 판을 그대로 물려받는다: Preact는 붙일 때 dangerouslySetInnerHTML을 쓰지 않고,
 // 그 뒤로도 __html이 같으면 건드리지 않는다. 그래서 브라우저 묶음에 땅 판 글자(gzip 약 3KB)가 들어가지 않는다. 파일이 없으면 빈 땅.
@@ -34,8 +44,8 @@ export type MapVariant = 'band' | 'mini';
 const tr = (x: number, y: number): string => `translate(${x} ${y})`;
 
 /** 마디 모양 (지금 여는 곳도 키우지 않는다. 고리는 m.focus가 따로 그린다) */
-function shapeAt(n: MapNode, cls: string, dx = 0, dy = 0) {
-  return <use class={cls} href={`#mk-node-${n.shape}`} x={n.x + dx - 14} y={n.y + dy - 14} width={28} height={28} />;
+function shapeAt(n: MapNode, cls: string, dx = 0, dy = 0, k?: string) {
+  return <use class={cls} data-k={k} href={`#mk-node-${n.shape}`} x={n.x + dx - 14} y={n.y + dy - 14} width={28} height={28} />;
 }
 
 interface SvgProps {
@@ -45,14 +55,27 @@ interface SvgProps {
   live?: boolean;
   /** 장식 그림 (홈 본보기 지도, 코스 미리 보기): 뜻은 옆 글이 전하므로 요약 글 없이 aria-hidden */
   decorative?: boolean;
+  /** 홈 첫 방문 장면 S1의 재료: 길 그리기 가림막, 출발 고리 퍼짐, 차가 왼쪽 가장자리에서 출발로 오는 길(--approach). 움직임은 home.css */
+  intro?: boolean;
+  /** 느낌 색을 바꿀 때 @property 전환을 켠다 (붙은 뒤 답할 때만: 붙을 때 저장된 느낌으로 바뀌는 것은 바로) */
+  grow?: boolean;
+  /** 차 바로 밑에 더 그릴 층 (내 AI 써 보기의 연습 고리) */
+  extra?: ComponentChildren;
+  /** 차 자리를 모형 대신 이것으로 (연습 고리가 출발 길에 닿는 곳) */
+  carAt?: { x: number; y: number; angle: number };
+  svgRef?: Ref<SVGSVGElement>;
 }
 
 /** 모형을 그리는 순수 컴포넌트. 정적으로도(코스 썸네일) 섬 안에서도 쓴다. mini는 길과 마디만 */
-export function MapSvg({ model: m, variant = 'band', live = true, decorative = false }: SvgProps) {
+export function MapSvg({ model: m, variant = 'band', live = true, decorative = false, intro = false, grow = false, extra, carAt, svgRef }: SvgProps) {
   const mini = variant === 'mini';
   const hidden = mini || !live || decorative;
   const l = m.lot;
-  const labels = [m.start.label, l.label, ...m.nodes.map((n) => n.label)];
+  const labels = [
+    ['start', m.start.label],
+    ['lot', l.label],
+    ...m.nodes.map((n) => [n.id, n.label] as const),
+  ] as const;
   const main = m.roads.filter((r) => r.kind === 'main');
   // 밤 주행 빛: 이어진 길을 한 path로 그려 겹치는 이음매가 두 번 칠해지지 않게 한다 (흐림 필터 없이 넓은 선 하나).
   // 교통 정보를 덮은 길(도구끼리 맞춰 보기)에는 두지 않는다: 청록 빛이 초록·빨강 길과 섞여 교통 색을 흐린다
@@ -61,11 +84,14 @@ export function MapSvg({ model: m, variant = 'band', live = true, decorative = f
     .map((r) => r.d)
     .join(' ');
   const t = m.tunnel;
-  const car = m.car;
+  const car = carAt ?? restPose(m.routeD, m.car);
+  const s = m.start;
 
   return (
     <svg
+      ref={svgRef}
       class={`map-board is-${variant}${m.traffic ? ' is-traffic' : ''}`}
+      data-grow={grow ? '' : undefined}
       viewBox={mini ? '60 32 312 176' : `0 0 ${m.width} ${m.height}`}
       preserveAspectRatio={mini ? 'xMidYMid meet' : 'xMidYMid slice'}
       data-palette={m.palette}
@@ -82,15 +108,21 @@ export function MapSvg({ model: m, variant = 'band', live = true, decorative = f
           <g class="mb-live">
             <g class="mb-shadows">
               {/* 아직 짓지 않은 자리(점선 마디)에는 그림자가 없다. 빈 터는 맨땅이라 그림자를 두지 않는다 */}
-              {m.nodes.filter((n) => n.state !== 'ghost' && n.state !== 'later').map((n) => shapeAt(n, 'mb-shadow', 2, 3))}
+              {m.nodes.filter((n) => n.state !== 'ghost' && n.state !== 'later').map((n) => shapeAt(n, 'mb-shadow', 2, 3, `s:${n.id}`))}
             </g>
+            {intro && (
+              <mask id="mb-intro" maskUnits="userSpaceOnUse">
+                <path class="mb-intro-path" d={m.routeD} pathLength={1} />
+              </mask>
+            )}
+            <g class="mb-fx-r" />
             <g class="mb-roads">
               {!mini && halo && <path class="mb-halo" d={halo} />}
               {m.roads.map((r) =>
                 r.state === 'ghost' || r.state === 'later' ? (
-                  <path key={r.id} class={`mb-road is-${r.state}`} d={r.d} />
+                  <path key={r.id} data-k={r.id} class={`mb-road is-${r.state}`} d={r.d} />
                 ) : (
-                  <g key={r.id} class={`mb-road is-${r.state}`}>
+                  <g key={r.id} data-k={r.id} class={`mb-road is-${r.state}`}>
                     <path class="mb-outer" d={r.d} />
                     <path class="mb-core" d={r.d} />
                   </g>
@@ -100,12 +132,12 @@ export function MapSvg({ model: m, variant = 'band', live = true, decorative = f
             {t &&
               !mini &&
               (t.ghost ? (
-                <g class="mb-tunnel-ghost">
+                <g class="mb-tunnel-ghost" data-k="tunnel">
                   <rect x={t.x - (t.angle ? 8 : 13)} y={t.y - (t.angle ? 13 : 8)} width={t.angle ? 16 : 26} height={t.angle ? 26 : 16} rx={5} />
                   <use href="#mk-fn-proxy" x={t.x - 6} y={t.y - 6} width={12} height={12} />
                 </g>
               ) : (
-                <g class="mb-tunnel">
+                <g class="mb-tunnel" data-k="tunnel">
                   {/* 몸은 길 방향을 따르되(세로 길은 mk-tunnel-v) 돌리지 않아 그림자가 늘 오른쪽 아래, 표지는 똑바로 */}
                   {t.angle ? (
                     <use href="#mk-tunnel-v" x={t.x - 10} y={t.y - 16} width={20} height={32} />
@@ -115,9 +147,11 @@ export function MapSvg({ model: m, variant = 'band', live = true, decorative = f
                   <use href="#mk-tunnel-sign" x={t.sign.x - 8} y={t.sign.y - 8} width={16} height={16} />
                 </g>
               ))}
-            <use href="#mk-start" x={m.start.x - 14} y={m.start.y - 14} width={28} height={28} />
+            <g class="mb-fx-n" />
+            <use href="#mk-start" x={s.x - 14} y={s.y - 14} width={28} height={28} />
+            {intro && <circle class="mb-pulse" cx={s.x} cy={s.y} r={14} />}
             {m.nodes.map((n) => (
-              <g key={n.id} class={`mb-node is-${n.state}`}>
+              <g key={n.id} data-k={n.id} class={`mb-node is-${n.state}`}>
                 {n.cone && <use href="#mk-cone" x={n.cone.x - 8} y={n.cone.y - 8} width={16} height={16} />}
                 {n.hatch && !mini && <use class="mb-hatch" href="#mk-hatch-ring" x={n.x - 22} y={n.y - 22} width={44} height={44} />}
                 {shapeAt(n, 'mb-shape')}
@@ -133,6 +167,7 @@ export function MapSvg({ model: m, variant = 'band', live = true, decorative = f
                 )}
                 {m.arrived && n.passed && (
                   <use
+                    class="mb-done"
                     href="#mk-done"
                     x={n.x + (m.markers.some((k) => k.anchor === n.id && k.x > n.x && k.y < n.y) ? -16 : 4)}
                     y={n.y - 16}
@@ -146,15 +181,15 @@ export function MapSvg({ model: m, variant = 'band', live = true, decorative = f
             <g class={`mb-lot is-${l.state}`}>
               <use href="#mk-lot" x={l.box.x} y={l.box.y} width={l.box.w} height={l.box.h} />
               {l.type && <use class="mb-bp" href={`#mk-bp-${l.type}`} x={l.x - 28} y={l.y - 20} width={56} height={40} />}
-              {m.arrived && <use href="#mk-scroll" x={l.x + 10} y={l.y + 8} width={20} height={14} />}
+              {m.arrived && <use class="mb-scroll" href="#mk-scroll" x={l.x + 10} y={l.y + 8} width={20} height={14} />}
             </g>
-            <use href="#mk-flag" x={l.flag.x} y={l.flag.y} width={16} height={24} />
+            <use class="mb-flag" href="#mk-flag" x={l.flag.x} y={l.flag.y} width={16} height={24} />
             {!mini && m.houses && (
-              <use href={`#mk-house-${m.houses.kind}`} x={m.houses.box.x} y={m.houses.box.y} width={m.houses.box.w} height={m.houses.box.h} />
+              <use data-k="houses" href={`#mk-house-${m.houses.kind}`} x={m.houses.box.x} y={m.houses.box.y} width={m.houses.box.w} height={m.houses.box.h} />
             )}
             {!mini &&
               m.markers.map((k) => (
-                <g key={k.id}>
+                <g key={k.id} data-k={`m:${k.id}`}>
                   <use href={`#mk-${k.kind}`} x={k.x - 10} y={k.y - 10} width={20} height={20} />
                   {k.countAt && (
                     <g class="mb-count" transform={tr(k.countAt.x, k.countAt.y)}>
@@ -168,18 +203,24 @@ export function MapSvg({ model: m, variant = 'band', live = true, decorative = f
               ))}
             {!mini && (
               <g class="mb-labels" font-size="17">
-                {labels.map((x) => (
-                  <text x={x.x} y={x.y} text-anchor={x.anchor} dominant-baseline="central">
+                {labels.map(([k, x]) => (
+                  <text key={k} data-k={`l:${k}`} x={x.x} y={x.y} text-anchor={x.anchor} dominant-baseline="central">
                     {x.text}
                   </text>
                 ))}
               </g>
             )}
+            {extra}
             {!mini && (
               // 차: 그림자는 돌지 않는 바깥 묶음의 필터(#mb-shade, 페이지에 한 번 MapSprite.astro)가, 자리·방향은 안쪽 묶음이.
-              // S3·S5는 안쪽 묶음에 offset-path(routeD)를 준다
+              // 움직일 때(S1·S3·S5·S8)는 안쪽 묶음에 애니메이션 동안만 offset-path를 준다 (끝나면 이 transform 자리로).
+              // S1의 길(--approach): 왼쪽 가장자리에서 출발 줄(y)을 따라 와 출발에서 위로 꺾어 선다 (홈 본보기는 차가 출발 위에 선다)
               <g class="mb-car-wrap" filter="url(#mb-shade)">
-                <g class="mb-car" transform={`${tr(car.x, car.y)} rotate(${car.angle})`}>
+                <g
+                  class="mb-car"
+                  transform={`${tr(car.x, car.y)} rotate(${car.angle})`}
+                  style={intro ? { '--approach': `path('M${s.x - 124} ${s.y}H${s.x - 12}A12 12 0 0 0 ${s.x} ${s.y - 12}V${car.y}')` } : undefined}
+                >
                   <use href="#mk-car-top" x={-18} y={-9} width={36} height={18} />
                   <use class="mb-car-lights" href="#mk-car-lights" x={-18} y={-9} width={36} height={18} />
                 </g>
@@ -198,9 +239,13 @@ interface Props {
   variant?: MapVariant;
 }
 
+/** 지도 장면(S2·S3·S4)을 돌리는 단계. 설계도 받기의 출발 → 도착 장면(S5)은 src/lib/map/arrive.ts가 따로 돌린다 */
+const SCENE_STAGES: readonly (StageId | undefined)[] = ['destination', 'waypoints', 'check'];
+
 /**
  * 지도 섬. 붙기 전(빌드 때 HTML)에는 땅 판만 그리고, 붙은 뒤 저장된 진행으로 길·마디·차를 그려 --dur-fade로 비친다.
  * 그래서 다시 온 사람이 처음 온 사람의 지도를 잠깐 보는 일이 없다 (D68).
+ * 붙은 뒤에는 그릴 때마다 앞 모형과 견주어 바뀐 것을 움직이고(src/lib/map/scene.ts), 도는 동안 띠 오른쪽 위에 [건너뛰기]를 보인다.
  */
 export default function MapBoard({ stage, variant = 'band' }: Props) {
   const ready = useHydrated();
@@ -219,5 +264,45 @@ export default function MapBoard({ stage, variant = 'band' }: Props) {
     // 지금 여는 곳 고리는 도구 고르기가 열렸을 때만 (만들 앱을 정하기 전에는 펼친 칸이 없다)
     focus: ready && stage === 'waypoints' && r.done ? (open ?? undefined) : undefined,
   });
-  return <MapSvg model={model} variant={variant} live={ready} />;
+  const svg = useRef<SVGSVGElement>(null);
+  const last = useRef<{ model: MapModel; clear: boolean } | null>(null);
+  const departed = useRef(false);
+
+  useLayoutEffect(() => {
+    const el = svg.current;
+    if (!ready || !el) return;
+    // 설계도 받기: [설계도 받으러 출발하기]로 처음 왔으면 출발 → 도착 장면(S5)을 한 번. 장면 모듈은 그때만 불러온다
+    if (stage === 'arrival' && model.arrived && !departed.current && departing()) {
+      departed.current = true;
+      sceneClock();
+      const band = el.closest('.map-band');
+      // 차는 도구끼리 맞춰 보기에서 서 있던 자리에서 떠난다 (그 화면과 같은 모형으로 다시 센다. 길이 같을 때만)
+      const was = mapModel(r, { traffic: true });
+      const from = was.routeD === model.routeD ? restPose(was.routeD, was.car).dist : undefined;
+      // 받는 사이에 건너뛰었으면 arriveScene이 돌리지 않고 빈 목록을 돌려준다
+      void import('../lib/map/arrive.ts').then((m) => runScene(band, m.arriveScene(el, model, from)));
+    }
+    if (!SCENE_STAGES.includes(stage)) return;
+    const prev = last.current;
+    last.current = { model, clear: r.canIssue };
+    const cue = $mapCue.get();
+    if (cue) $mapCue.set(null);
+    runScene(el.closest('.map-band'), animateMap(el, prev?.model ?? null, model, { stage, clear: r.canIssue, wasClear: prev?.clear, cue, lastJams: meta.checkJams ?? [] }));
+    // 도구끼리 맞춰 보기: 지금 막힌 마디를 적어 둔다. 도구 고르기에서 고치고 돌아오면 빨강이 걷히는 장면을 돌린다
+    if (stage === 'check' && model.traffic) {
+      const jams = model.nodes.filter((n) => n.state === 'jam').map((n) => n.id);
+      if (jams.join() !== (meta.checkJams ?? []).join()) patchMeta({ checkJams: jams });
+    }
+  });
+
+  return (
+    <>
+      <MapSvg model={model} variant={variant} live={ready} grow={ready && last.current !== null} svgRef={svg} />
+      {variant === 'band' && (
+        <button type="button" class="btn btn-sm map-skip" data-skip hidden>
+          {ko.common.skip}
+        </button>
+      )}
+    </>
+  );
 }

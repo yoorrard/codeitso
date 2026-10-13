@@ -57,7 +57,7 @@ export default function CopyButton({ text, srLabel, label, done, onCopied, prima
     if (ok) timer.current = window.setTimeout(() => setState('idle'), DONE_MS);
     announce(ok ? (done ?? ko.common.copied) : ko.common.copyFailed);
     if (ok) {
-      void sfx('tap');
+      void sfx('answer');
       onCopied?.();
     }
   }

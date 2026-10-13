@@ -6,6 +6,8 @@
 // (모달이 열린 동안에는 시트 밖 알림 자리가 읽히지 않는다).
 // 빌드 때는 처음 온 사람 기준(빈 진행)으로 그리고, 붙은 뒤 저장된 진행으로 바꾼다. 붙으면 data-ready를 달아,
 // 다시 온 손님에게는 그때까지 진행 표시를 감춘다(frame.css: 틀린 첫 그림을 보이지 않게).
+// 단계 이동 S7 (D71 W5b): 마친 단계는 다음 화면에서야 ✓로 보인다(지금 단계는 늘 '지금'). 새로 ✓가 된 단계는 그 화면에서 한 번
+// ✓가 톡(--dur-pop 스프링) 찍히고 막대 칸·잇는 선이 채워진다(--dur-ui). 본 것은 본 장면 기록(done:단계)으로 남겨 다시 돌지 않는다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
@@ -17,7 +19,7 @@ import { $result } from '../lib/result.ts';
 import { sentences } from '../lib/sentences.ts';
 import type { Stage, StageId } from '../lib/stages.ts';
 import { NUMBERED, STAGES, stageById, stageNumber } from '../lib/stages.ts';
-import { $meta, $storageOk } from '../lib/store.ts';
+import { $meta, $seen, $storageOk, markSceneSeen } from '../lib/store.ts';
 import { sfx } from '../lib/sfx.ts';
 import { Icon } from './Icon.tsx';
 
@@ -47,6 +49,7 @@ export default function StageRail({ stage, initial }: Props) {
   const refocus = useRef(-1);
   const [fresh, setFresh] = useState<StageId[]>([]);
   const seen = useRef<StageId[] | null>(null);
+  const [justDone, setJustDone] = useState<StageId[]>([]);
 
   // 붙는 순간 못 가는 단계의 버튼이 링크로 바뀌어도 초점을 잃지 않게, 초점 받은 칸을 기억했다가 되돌린다
   useEffect(() => {
@@ -77,10 +80,19 @@ export default function StageRail({ stage, initial }: Props) {
     setFresh(opened);
     const next = STAGES[STAGES.findIndex((s) => s.id === stage) + 1]?.id;
     if (next && opened.includes(next) && isOpenedId(next) && !SAID_BY_SCREEN.includes(stage)) announce(ko.layout.opened[next]);
-    void sfx('add');
+    void sfx('confirm');
   }, [ready, openIds.join(' ')]);
 
   const stateOf = (id: StageId): StepState => (id === stage ? 'current' : p.stages[id] ? 'done' : view.gates[id].open ? 'open' : 'locked');
+
+  // S7: 붙은 뒤 처음 그릴 때, 아직 ✓를 본 적 없는 마친 단계 (본 장면 기록 done:단계)
+  useEffect(() => {
+    if (!ready) return;
+    const done = STAGES.filter((s) => stateOf(s.id) === 'done' && !$seen.get().scenes.includes(`done:${s.id}`)).map((s) => s.id);
+    if (done.length === 0) return;
+    setJustDone(done);
+    for (const id of done) markSceneSeen(`done:${id}`);
+  }, [ready]);
   const reasonOf = (id: StageId): string => {
     const why = view.gates[id].reason;
     return why ? ko.locks[why] : ko.locks.generic;
@@ -97,7 +109,7 @@ export default function StageRail({ stage, initial }: Props) {
 
   /** 원 24: 마침 ✓, 번호 단계는 숫자, 연습은 빈 고리 */
   const dot = (id: StageId, state: StepState) => (
-    <span class={`step-dot${fresh.includes(id) ? ' just-opened' : ''}`} aria-hidden="true">
+    <span class={`step-dot${fresh.includes(id) ? ' just-opened' : ''}${justDone.includes(id) ? ' just-done' : ''}`} aria-hidden="true">
       {state === 'done' ? <Icon name="check" size="14px" /> : (stageNumber(id) ?? <span class="step-ring" />)}
     </span>
   );
@@ -107,8 +119,10 @@ export default function StageRail({ stage, initial }: Props) {
     const state = stateOf(s.id);
     const prev = NUMBERED[i - 1];
     const reached = prev !== undefined && p.stages[prev.id] && (state === 'done' || state === 'current');
+    // 앞 단계가 방금 ✓가 되었으면 잇는 선도 이번에 채운다
+    const just = reached && prev !== undefined && justDone.includes(prev.id);
     return (
-      <li class={`step ${state}${reached ? ' reached' : ''}`}>
+      <li class={`step ${state}${reached ? ' reached' : ''}${just ? ' just-reached' : ''}`}>
         {/* 지금 단계는 늘 링크로: 붙기 전후로 같은 요소다 */}
         {state === 'locked' ? (
           <button type="button" aria-disabled="true" onClick={() => tell(s.id)}>
@@ -185,7 +199,11 @@ export default function StageRail({ stage, initial }: Props) {
     <nav ref={nav} aria-label={ko.layout.routeLabel} class="rail" data-ready={ready ? '' : undefined}>
       <div class="rail-full">
         <p class="visually-hidden">{position}</p>
-        <a class={`rail-practice ${practice}`} href={PRACTICE.path} aria-current={practice === 'current' ? 'step' : undefined}>
+        <a
+          class={`rail-practice ${practice}${justDone.includes(PRACTICE.id) ? ' just-done' : ''}`}
+          href={PRACTICE.path}
+          aria-current={practice === 'current' ? 'step' : undefined}
+        >
           {practice === 'done' && <Icon name="check" size="16px" />}
           <span>{ko.stages[PRACTICE.id]}</span>
           <span class="rail-practice-opt">({ko.progress.optional})</span>
@@ -207,7 +225,7 @@ export default function StageRail({ stage, initial }: Props) {
         <span class="rail-bars" aria-hidden="true">
           {/* 마친 칸은 남색(내 것), 지금 칸은 파랑(지금): 펼친 줄의 원과 같은 문법 (D64 검토 반영) */}
           {NUMBERED.map((s) => (
-            <span class={n === null ? 'bar' : s.id === stage ? 'bar now' : p.stages[s.id] ? 'bar done' : 'bar'} />
+            <span class={n === null ? 'bar' : s.id === stage ? 'bar now' : p.stages[s.id] ? `bar done${justDone.includes(s.id) ? ' just-done' : ''}` : 'bar'} />
           ))}
         </span>
       </button>

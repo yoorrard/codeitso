@@ -435,7 +435,6 @@ export const ko = {
     pasteLabel: 'AI에게 보낼 말',
     prepTitle: '준비물 (오래 걸리는 것부터)',
     stuckTitle: '막히기 쉬운 곳',
-    skip: '건너뛰기',
     /** 맺음 한 줄 */
     end: '영수증 챙겨 가세요. 막히면 언제든 사전을 여세요.',
     /** 맺음 아래 작은 글: 설계도 끝 면책과 같은 뜻의 화면 말 (합쇼체는 슬로건에만, brief 2.3) */
@@ -813,6 +812,8 @@ export const ko = {
   /** 길 지도 (docs/MAP.md, src/lib/map/model.ts): 이름표와 role="img" 요약 글. 마디 이름은 칸 이름, 빈 터 이름은 앱 종류 보기 이름(자료)이다 */
   map: {
     start: '출발',
+    /** 내 AI 써 보기 지도 띠의 연습 고리 이름표 */
+    practice: '연습',
     /** 앱 종류를 아직 모를 때 빈 터 이름표 */
     destination: '목적지',
     /**

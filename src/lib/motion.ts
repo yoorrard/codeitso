@@ -34,6 +34,19 @@ export function applyMotionPref(motion: 'auto' | 'reduce'): void {
   else html.removeAttribute('data-motion');
 }
 
+/** 조용히 모시기 (brief 7절): 큰 장면(S1·S5+S6)을 끝 상태로. 사이트 설정을 html[data-quiet]에 붙인다 (첫 그림 전에는 기본 틀) */
+export function quiet(): boolean {
+  const html = root();
+  return html !== null && html.getAttribute('data-quiet') !== null;
+}
+
+export function applyQuietPref(on: boolean): void {
+  const html = root();
+  if (!html) return;
+  if (on) html.setAttribute('data-quiet', '');
+  else html.removeAttribute('data-quiet');
+}
+
 function cssVar(name: string): string {
   const html = root();
   if (!html || typeof getComputedStyle !== 'function') return '';
@@ -101,49 +114,65 @@ export function skippable(scene: HTMLElement): () => void {
   };
 }
 
-/**
- * 담기 비행(M3): from 자리에 유령 사본을 띄워 to 쪽으로 호를 그리며 날린 뒤 지운다.
- * 줄이기면 날리지 않고 바로 끝난다 (확인 표시와 알림은 부르는 쪽이 한다).
- */
-export async function flip(from: Element, to: Element, opts: { dur?: DurToken; lift?: number } = {}): Promise<void> {
-  if (reduced() || typeof document === 'undefined') return;
-  const a = from.getBoundingClientRect();
-  const b = to.getBoundingClientRect();
-  const ghost = from.cloneNode(true) as HTMLElement;
-  ghost.setAttribute('aria-hidden', 'true');
-  ghost.removeAttribute('id');
-  Object.assign(ghost.style, {
-    position: 'fixed',
-    left: `${a.left}px`,
-    top: `${a.top}px`,
-    width: `${a.width}px`,
-    height: `${a.height}px`,
-    margin: '0',
-    pointerEvents: 'none',
-    zIndex: '50',
-  });
-  document.body.append(ghost);
-  const dx = b.left + b.width / 2 - (a.left + a.width / 2);
-  const dy = b.top + b.height / 2 - (a.top + a.height / 2);
-  const lift = opts.lift ?? 80;
-  const anim = play(
-    ghost,
-    [
-      { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-      { transform: `translate(${dx / 2}px, ${dy / 2 - lift}px) scale(0.7)`, opacity: 1, offset: 0.5 },
-      { transform: `translate(${dx}px, ${dy}px) scale(0.3)`, opacity: 0 },
-    ],
-    { dur: opts.dur ?? '--dur-hop', ease: '--ease-in-out' },
-  );
-  try {
-    await anim.finished;
-  } catch {
-    // 건너뛰거나 취소해도 유령은 지운다
-  }
-  ghost.remove();
+/** 날릴 것: 누른 때의 자리와 겉모습 (누른 줄은 곧 다시 그려져 사라지므로 미리 떠 둔다) */
+export interface FlySource {
+  rect: DOMRect;
+  ghost: Element;
 }
 
-/** 노선도 차 이동(M1): offset-path가 걸린 요소를 offset-distance from → to로 (예: '25%' → '50%') */
-export function followPath(el: Element, from: string, to: string, opts: { dur?: DurToken } = {}): Animation {
-  return play(el, [{ offsetDistance: from }, { offsetDistance: to }], { dur: opts.dur ?? '--dur-hop', ease: '--ease-in-out' });
+/** 지금 자리와 겉모습을 떠 둔다 (fly의 from) */
+export function capture(el: Element): FlySource {
+  const ghost = el.cloneNode(true) as Element;
+  ghost.setAttribute('aria-hidden', 'true');
+  ghost.removeAttribute('id');
+  return { rect: el.getBoundingClientRect(), ghost };
+}
+
+/**
+ * 고르기 비행(S3): 떠 둔 사본을 from 자리에 띄워, 살짝 휜 호(2차 베지어를 12토막)를 따라 to 가운데로 날리며 작아지고 사라진다.
+ * 곡선은 애니메이션 전체에 한 번 걸린다 (WAAPI의 easing은 진행률에, 토막 사이는 곧게). 줄이기면 날리지 않는다
+ */
+export function fly(from: FlySource, to: Element, opts: { dur?: DurToken } = {}): Animation | null {
+  if (reduced() || typeof document === 'undefined') return null;
+  const a = from.rect;
+  const b = to.getBoundingClientRect();
+  const g = from.ghost as HTMLElement;
+  // 그림자(--elev-2)로 지도 위에 떠 보이게 한다: 어두운 모드에서는 남색 그림이 밤 지도에 묻힌다 (D71 검토 반영)
+  Object.assign(g.style, { position: 'fixed', left: `${a.left}px`, top: `${a.top}px`, width: `${a.width}px`, height: `${a.height}px`, margin: '0', pointerEvents: 'none', zIndex: '50', boxShadow: 'var(--elev-2)' });
+  document.body.append(g);
+  const dx = b.left + b.width / 2 - (a.left + a.width / 2);
+  const dy = b.top + b.height / 2 - (a.top + a.height / 2);
+  // 가운데에서 진행 방향의 오른쪽으로 거리의 1/5(최대 64)만큼 비킨 조절점
+  const len = Math.hypot(dx, dy) || 1;
+  const bend = Math.min(64, len / 5);
+  const cx = dx / 2 - (dy / len) * bend;
+  const cy = dy / 2 + (dx / len) * bend;
+  const end = Math.max(0.3, Math.min(1, b.width / Math.max(1, a.width)));
+  const frames: Keyframe[] = [];
+  for (let i = 0; i <= 12; i += 1) {
+    const t = i / 12;
+    const u = 1 - t;
+    const x = 2 * u * t * cx + t * t * dx;
+    const y = 2 * u * t * cy + t * t * dy;
+    frames.push({ transform: `translate(${x}px, ${y}px) scale(${1 + (end - 1) * t})`, opacity: t < 0.8 ? 1 : 1 - (t - 0.8) * 5 });
+  }
+  const anim = play(g, frames, { dur: opts.dur ?? '--dur-fly', ease: '--ease-in-out' });
+  void anim.finished.catch(() => undefined).then(() => g.remove());
+  return anim;
+}
+
+/** CSS 이동 경로를 쓸 수 있는가 (없으면 차는 움직이지 않고 끝 자리에 바로 선다) */
+export function canDrive(): boolean {
+  return typeof CSS !== 'undefined' && CSS.supports('offset-path', "path('M0 0')");
+}
+
+/**
+ * 지도 위 차 이동(S1·S3·S5·S8): 길(d, 지도 단위) 위 from에서 to까지 offset-distance로, 차 머리는 길의 접선(offset-rotate: auto).
+ * 이동 경로는 애니메이션 안에만 둔다(fill: backwards): 끝나면 차는 자기 자리(transform 속성)로 돌아가므로,
+ * to는 그 자리와 같은 거리여야 한다. 동작 줄이기거나 이동 경로를 못 쓰면 움직이지 않는다
+ */
+export function drive(car: Element, d: string, from: number, to: number, opts: { dur: DurToken; after?: number }): Animation | null {
+  if (from === to || reduced() || !canDrive()) return null;
+  const at = (n: number): Keyframe => ({ offsetPath: `path('${d}')`, offsetDistance: `${n}px`, offsetRotate: 'auto', transform: 'none' });
+  return car.animate([at(from), at(to)], { duration: dur(opts.dur), delay: opts.after ?? 0, easing: ease('--ease-drive'), fill: 'backwards' });
 }

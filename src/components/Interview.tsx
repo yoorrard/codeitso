@@ -208,7 +208,7 @@ export default function Interview() {
     if (change) announce(change);
     if (finished) announce(fill(ko.interview.done, { n: after.slots.length }));
     // 다 정했으면 '정함' 소리 (도착 차임은 설계도 받기에만, brief 7절)
-    void sfx(finished ? 'add' : 'tap');
+    void sfx(finished ? 'confirm' : 'answer');
     const idx = after.interview.visible.findIndex((v) => v.id === q.id);
     goToQuestion(idx < 0 ? after.interview.visible.length : idx + 1);
   };

@@ -3,7 +3,8 @@
 //   [{도구}로 바꾸기] 이미 정한 칸에서 다른 줄을 눌렀을 때 · [도구끼리 맞춰 보러 가기] 꼭 고를 것을 다 골랐을 때
 //   꺼짐 + 옆 글 버튼 [이번엔 건너뛰기] 눌린 줄이 없을 때(있으면 좋은 것) · [만들 앱 정하러 가기] 잠겼을 때
 // 이름은 괄호 안을 빼고, 14자를 넘으면 '고른 도구로 정하기' + 낭독 이름 '고른 도구로 정하기: {온전한 이름}'(보이는 글로 시작, WCAG 2.5.3). 조사는 josa.ts.
-// 저장은 장바구니(cart)뿐이다. '고를 예정'과 여는 칸은 pick-nav.ts의 화면 상태로 도구 섬(Shop)과 나눠 쓴다. S3 연출은 W5.
+// 저장은 장바구니(cart)뿐이다. '고를 예정'과 여는 칸은 pick-nav.ts의 화면 상태로 도구 섬(Shop)과 나눠 쓴다.
+// 정하면(S3, D71) 누른 줄의 그림을 떠 두고 지도 섬에 신호($mapCue)를 남긴다: 지도 섬이 그 그림을 마디로 날리고 마디를 채운다.
 import { useStore } from '@nanostores/preact';
 import { useLayoutEffect, useRef } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
@@ -12,6 +13,8 @@ import { fill } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
+import { $mapCue } from '../lib/map/focus.ts';
+import { capture } from '../lib/motion.ts';
 import {
   $openSlot,
   $pending,
@@ -67,6 +70,9 @@ export default function WaypointsAction() {
   const save = (product: Product, change: boolean): void => {
     const slotId = $openSlot.get();
     if (slotId === null) return;
+    // 누른 줄은 정하자마자 다음 칸으로 다시 그려져 사라지므로, 그 그림의 자리와 겉모습을 먼저 떠 둔다
+    const tile = document.querySelector(`#w-slot .w-row[data-product="${product.id}"] .list-tile`);
+    $mapCue.set({ slot: slotId, from: tile ? capture(tile) : null });
     updateSession((s) => ({ ...s, cart: cartAfterPick($result.get(), slotId, product.id) }));
     clearPending(slotId);
     const after = $result.get();
@@ -74,7 +80,7 @@ export default function WaypointsAction() {
     // 같은 동작은 같은 이름: [바꾸기]를 눌렀으면 '바꿨어요', 남은 수는 상태 한 줄과 같은 말
     const said = [fill(change ? ko.shop.changedAs : ko.shop.pickedAs, { dir: josa(plainName(product.name), 'dir') }), left > 0 ? fill(ko.shop.requiredLeft, { n: left }) : ko.shop.allRequired];
     announce([...said, ...moveTo(nextOpenSlot(after, slotId))].join(' '));
-    void sfx('add');
+    void sfx('confirm');
     refocus.current = true;
   };
 

@@ -242,6 +242,9 @@ test.describe('설계도 받기', () => {
   test('영수증은 한 번만 뽑는다: 칸을 옮겼다 돌아와도, 다시 열어도 다시 뽑지 않는다', async ({ page }) => {
     await open(page, '/arrival', golden('case-01'), issued);
     await expect(page.locator('#cc-live')).toContainText(ko.dispatch.arrival);
+    // 휴대폰에서는 종이가 아래 막대 밑에 있다: 보일 때 뽑는다 (D71 검토 반영)
+    await expect(page.locator('.receipt-scene')).toHaveAttribute('data-print', 'wait');
+    await page.locator('.receipt-scene').scrollIntoViewIfNeeded();
     await expect(page.locator('.receipt-scene')).toHaveAttribute('data-printed', '');
     const running = () => page.evaluate(() => document.querySelector('.receipt-scene')?.getAnimations({ subtree: true }).length ?? -1);
     await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();

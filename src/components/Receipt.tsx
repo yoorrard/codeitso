@@ -5,6 +5,9 @@
 // 영수증·설계도·AI에게 할 말은 모두 엔진(receiptModel·renderPack·conversationCards)이 만든다. 화면은 그리고 복사만 한다.
 // 영수증 링크(#r=)로 열면 읽자마자 주소에서 지우고 읽기 전용으로 보인다. '이어서 가기'를 누를 때만 저장한다.
 // 잠김(만들 앱을 정하기 전·막힌 곳이 남음)은 빈 상태 하나: 까닭은 상태 한 줄, 행동은 아래 막대 주 버튼 하나와 같다.
+// 영수증 출력·도장(S6)은 arrival.css의 CSS 애니메이션이다. 뽑을 때까지 종이를 가려 두고(data-print=wait), 종이가 화면에 보일 때 뽑는다:
+// 출발 → 도착 장면(S5)으로 왔으면 지도 섬과 같은 장면 시계(src/lib/depart.ts)로 시트가 다 올라온 때(2300), 아니면 바로.
+// 그때 종이가 화면 밖이면(휴대폰에서는 보통 아래 막대 밑) 처음 보일 때 뽑는다 (D71 검토 반영). 장면 중 [건너뛰기]는 지도 띠 오른쪽 위 하나다(src/lib/scene.ts).
 import { useStore } from '@nanostores/preact';
 import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -18,7 +21,9 @@ import { conversationCards, evaluate, fill, receiptModel, renderPack, renderRece
 import { elapsedBucket, isBucket } from '../lib/event-spec.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { LOGO_MONO_MARK } from '../lib/logo-paths.ts';
-import { reduced, skipAll, skippable } from '../lib/motion.ts';
+import { arrivalPlan } from '../lib/arrival-plan.ts';
+import { departing, inView, markChimed, markPrintLater, untilScene, wasChimed, wasSkipped } from '../lib/depart.ts';
+import { dur, quiet, reduced } from '../lib/motion.ts';
 import { receiptNo } from '../lib/receipt-no.ts';
 import { $result, commitSession } from '../lib/result.ts';
 import { ROUTES, termPath } from '../lib/routes.ts';
@@ -26,6 +31,7 @@ import { EMPTY_SESSION } from '../lib/saved.ts';
 import { sfx } from '../lib/sfx.ts';
 import { SHARE_PREFIX, consumeShareHash, shareHash, shareUrl } from '../lib/share.ts';
 import { gate, hasProgress, sameSession } from '../lib/stages.ts';
+import { statusLine } from '../lib/status-line.ts';
 import { stateKey, track } from '../lib/track.ts';
 import { $meta, $seen, $session, markSceneSeen, patchMeta, rememberReceipt } from '../lib/store.ts';
 import CopyButton from './CopyButton.tsx';
@@ -39,13 +45,31 @@ const T = catalog.data.templates;
 /** 처음 받은 영수증의 도착 알림은 한 번만 (CONCEPT 7절 S6) */
 const ARRIVED = 'arrival';
 
-/** 출력이 끝난 뒤(동작 줄이기면 바로) 도착 알림과 소리 하나: 내 영수증을 처음 받았을 때만 (영수증 링크로 연 것은 아님).
- *  색종이·축하 팡파르는 없다 (D56). 0ms 애니메이션은 animationend가 오지 않는 브라우저가 있어 장면 끝에서 부른다 */
-function announceArrival(): void {
-  if ($arrivalView.get().kind !== 'own' || $meta.get().issued !== true || $seen.get().scenes.includes(ARRIVED)) return;
+/** 내 영수증을 처음 받는 때인가 (영수증 링크로 연 것은 아님) */
+function firstArrival(): boolean {
+  return $arrivalView.get().kind === 'own' && $meta.get().issued === true && !$seen.get().scenes.includes(ARRIVED);
+}
+
+/** 도착 차임 (세 음): 출발 → 도착 장면이면 차가 빈 터에 닿을 때 지도 장면이 이미 냈다 */
+function chime(): void {
+  if (wasChimed()) return;
+  markChimed();
+  void sfx('arrive');
+}
+
+/** 도착 알림(과 차임): 내 영수증을 처음 받았을 때만. 출력을 기다리지 않는다 (종이가 화면 밖이면 한참 뒤에 뽑힌다).
+ *  알림은 보이는 글과 같은 말이다: 기사 메시지가 있으면 그 말, 조용히 모시기라 숨겼으면 상태 한 줄. 색종이·축하 팡파르는 없다 (D56) */
+function announceArrival(text: string): void {
+  if (!firstArrival()) return;
   markSceneSeen(ARRIVED);
-  announce(`${ko.dispatch.arrival} ${ko.dispatch.arrivalNext}`);
-  void sfx('stamp');
+  announce(text);
+  chime();
+}
+
+/** 종이를 뽑지 않고 끝 모습으로 볼 때: 동작 줄이기 · 조용히 모시기(짧은 비침만) · 출발 → 도착을 끝 모습으로(still, skip) */
+function calm(): boolean {
+  const d = document.documentElement.getAttribute('data-depart');
+  return reduced() || quiet() || d === 'still' || d === 'skip';
 }
 type Tab = 'receipt' | 'pack' | 'study' | 'cards';
 const TABS: Tab[] = ['receipt', 'pack', 'study', 'cards'];
@@ -198,12 +222,15 @@ export default function Receipt() {
   const meta = useStore($meta);
   const seen = useStore($seen);
   const [tab, setTab] = useState<Tab>('receipt');
-  const [scene, setScene] = useState(false);
-  // 출력은 한 번만: 도착 장면을 이미 봤거나 이 화면에서 한 번 뽑았으면, 영수증 칸으로 돌아오거나 다시 열어도 다시 뽑지 않는다 (arrival.css)
+  // 출력은 한 번만: 도착 장면을 이미 봤거나 이 화면에서 한 번 뽑았으면, 영수증 칸으로 돌아오거나 다시 열어도 다시 뽑지 않는다 (arrival.css).
+  // 본 기록은 화면을 열 때의 값만 쓴다: 도착 알림이 본 기록을 남겨도(장면 2300) 그 뒤에 뽑는 출력을 끊지 않게
   const [printedHere, setPrintedHere] = useState(false);
-  const printed = printedHere || seen.scenes.includes(ARRIVED);
+  const seenAtOpen = useRef<boolean | null>(null);
+  /** 지금 뽑는다 (종이가 화면에 보였다) */
+  const [printing, setPrinting] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
-  const skipRef = useRef<HTMLButtonElement>(null);
+  /** 처음 받은 내 영수증이라 도장 '쿵'을 낼 차례 (한 번만) */
+  const thud = useRef(false);
   const confirm = useRef<HTMLDialogElement>(null);
   const continueBtn = useRef<HTMLButtonElement>(null);
 
@@ -217,28 +244,81 @@ export default function Receipt() {
   const shared = view.kind === 'shared';
   const r = loaded ? resultFor(catalog, view, live) : FIRST_VISIT;
   const open = shared || gate('arrival', r).open;
+  if (loaded && seenAtOpen.current === null) seenAtOpen.current = seen.scenes.includes(ARRIVED);
+  const printed = printedHere || seenAtOpen.current === true;
+  /** 뽑을 차례인데 아직 뽑지 않았다: 종이를 가려 둔다 (arrival.css data-print=wait, 애니메이션 없음) */
+  const hold = loaded && !printed && !printing && !calm();
+  const stamp = (): void => {
+    if (!thud.current) return;
+    thud.current = false;
+    void sfx('stamp');
+  };
 
-  // 출력 장면: 누르기·Esc·건너뛰기로 끝. 동작 줄이기거나 돌 애니메이션이 없으면 장면 없이 끝 상태로 바로 도착 알림
+  // 출력 장면 (S6): 종이가 보이는 화면(아래 막대 위)에 4분의 1 이상 들어오면 뽑는다. 출발 → 도착 장면이면 시트가 다 올라온 때(장면 2300)에
+  // 보고, 아니면(처음 보는 내 영수증을 바로 열었을 때) 바로 본다. 화면 밖이면 처음 보일 때 (화면 밖에서 돌지 않게, S3·S9와 같은 규칙).
+  // 도착 알림·차임은 그때 바로 낸다 (출력을 기다리지 않는다). 화면 누르기·Esc·[건너뛰기](cc:skip)면 뽑지 않고 끝 모습으로.
+  // 출력은 0.7초라 [건너뛰기]를 따로 띄우지 않는다 (장면 틀은 1초 넘는 장면만): 출발 → 도착이면 지도 장면이 출력 끝까지 단추를 둔다
   useEffect(() => {
     const el = sceneRef.current;
     if (!loaded || !el) return;
-    const running = reduced() ? [] : el.getAnimations({ subtree: true });
-    if (running.length === 0) {
-      setPrintedHere(true);
-      announceArrival();
+    thud.current = firstArrival();
+    const text = quiet() ? statusLine('arrival', r, $meta.get(), undefined, view.kind) : `${ko.dispatch.arrival} ${ko.dispatch.arrivalNext}`;
+    const paper = el.querySelector('.paper');
+    // 뽑지 않는다 (이미 뽑음·동작 줄이기·조용히 모시기·끝 모습, 그리고 섬이 그린 뒤 듣기 전에 이미 건너뜀): 짧은 비침이 있으면 그것이 끝난 뒤 끝 모습으로
+    if (!paper || !el.hasAttribute('data-print') || calm() || wasSkipped()) {
+      announceArrival(text);
+      const running = el.getAnimations({ subtree: true });
+      void Promise.allSettled(running.map((a) => a.finished)).then(() => {
+        setPrintedHere(true);
+        stamp();
+      });
       return;
     }
-    setScene(true);
-    const release = skippable(el);
-    void Promise.allSettled(running.map((a) => a.finished)).then(() => {
-      if (document.activeElement === skipRef.current) document.getElementById('receipt-title')?.focus();
-      setScene(false);
+    let io: IntersectionObserver | null = null;
+    let timer = 0;
+    const stop = (): void => {
+      window.clearTimeout(timer);
+      io?.disconnect();
+      document.removeEventListener('cc:skip', skip);
+    };
+    const go = (): void => {
+      stop();
+      setPrinting(true);
+    };
+    function skip(): void {
+      stop();
+      announceArrival(text);
       setPrintedHere(true);
-      release();
-      announceArrival();
-    });
-    return release;
+      stamp();
+    }
+    // 가려 둔 종이(clip-path)는 IntersectionObserver에 보이지 않는 것으로 잡히므로 종이를 담은 틀(el)로 잰다
+    const look = (): void => {
+      announceArrival(text);
+      if (inView(el)) return go();
+      // 출발 → 도착 장면이면 지도 장면을 지금 끝내게 한다 ([건너뛰기]를 거둔다)
+      if (departing()) markPrintLater();
+      // 아래 막대에 가린 곳은 보이지 않는 곳으로 센다. 종이가 화면보다 길면 화면 절반을 채울 때
+      const bar = document.querySelector('.action-bar:not(.is-static)')?.getBoundingClientRect().height ?? 0;
+      io = new IntersectionObserver((es) => {
+        if (es.some((e) => e.isIntersecting && (e.intersectionRatio >= 0.25 || e.intersectionRect.height >= (e.rootBounds?.height ?? Infinity) / 2))) go();
+      }, { threshold: [0.05, 0.1, 0.15, 0.2, 0.25], rootMargin: `0px 0px -${Math.round(bar)}px 0px` });
+      io.observe(el);
+    };
+    document.addEventListener('cc:skip', skip);
+    timer = window.setTimeout(look, departing() ? Math.max(0, untilScene(arrivalPlan(dur).print)) : 0);
+    return stop;
   }, [loaded, view.kind, open]);
+
+  // 뽑는 중: 출력·도장이 끝나면(건너뛰면 바로) 뽑은 것으로 적고 도장 '쿵'
+  useEffect(() => {
+    const el = sceneRef.current;
+    if (!printing || !el) return;
+    const running = el.getAnimations({ subtree: true });
+    void Promise.allSettled(running.map((a) => a.finished)).then(() => {
+      setPrintedHere(true);
+      stamp();
+    });
+  }, [printing]);
 
   // 집계(R-60): 처음 보는 상태의 내 영수증이 화면에 나오면 한 번. 구간은 목적지 첫 답부터 걸린 시간
   const stateId = stateKey(r.session);
@@ -363,13 +443,8 @@ export default function Receipt() {
       <Tabs active={tab} onChange={setTab} />
 
       <Panel id="receipt" active={tab}>
-        <div class="receipt-scene" ref={sceneRef} data-printed={printed ? '' : undefined}>
+        <div class="receipt-scene" ref={sceneRef} data-printed={printed ? '' : undefined} data-print={hold ? 'wait' : undefined}>
           <Paper r={r} issuedAt={issuedAt} />
-          {scene && (
-            <button ref={skipRef} type="button" class="btn btn-sm scene-skip-btn" onClick={() => sceneRef.current && skipAll(sceneRef.current)}>
-              {ko.receipt.skip}
-            </button>
-          )}
         </div>
         <div class="ar-pair">
           <CopyButton text={url} label={ko.receipt.copyLink} done={ko.receipt.linkCopied} />

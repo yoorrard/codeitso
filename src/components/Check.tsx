@@ -85,7 +85,7 @@ function Jam({ c, mark }: { c: Conflict; mark: (text: string) => ComponentChildr
   const keep = (): void => {
     updateSession((s) => ({ kept: [...s.kept, c.id] }));
     announce(ko.check.keptAnnounce);
-    void sfx('green');
+    void sfx('confirm');
     refocus(`[data-conflict="${c.id}"]`, NEXT_JAM);
   };
   const defer = (): void => {
@@ -163,7 +163,7 @@ export default function Check() {
     if (before === true && r.canIssue && !cleared) {
       setCleared(true);
       announce(ko.dispatch.checkDone);
-      void sfx('green');
+      void sfx('clear');
       // 메시지 '막힌 곳이 없어요. 출발할까요?'와 다 풀린 지도가 보이게 맨 위로 (주 버튼은 아래 막대에 그대로 보인다)
       window.scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
     }
@@ -204,7 +204,7 @@ export default function Check() {
   const swap = (from: string, to: string): void => {
     updateSession((s) => ({ cart: s.cart.map((id) => (id === from ? to : id)) }));
     announce(fill(ko.check.swapped, { toDir: josa(shortProduct(to), 'dir') }));
-    void sfx('add');
+    void sfx('confirm');
     refocus(`[data-easier="${from}"]`, '#ck-split');
   };
 

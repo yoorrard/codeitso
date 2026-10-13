@@ -5,6 +5,7 @@
 // 나중에 동적으로 불러오는 묶음(예: 지연 3D 장면)은 HTML에 드러나지 않으므로 따로 LAZY_LIMIT으로 본다.
 // 길 지도(docs/MAP.md, D68)는 따로 본다: 땅 판 24KB · 표지 묶음 10KB · 지도 섬 8KB · 지도 모형 6.5KB(gzip).
 // 섬과 모형은 각 파일만 줄여(esbuild minify, import는 밖에 둔 채) 재고, 빌드에서 둘이 함께 실린 MapBoard 묶음은 합계 안인지 본다.
+// 섬에는 지도 장면(D71)의 움직임 모듈(map/scene.ts 바뀐 것 견주기, map/rest.ts 서는 자리, scene.ts 건너뛰기)도 넣어 잰다: 모형은 키우지 않는다.
 // 어려운 말 풀이(brief 8절, D69)도 따로 본다: 풀이 섬 5KB · 자료(/glossary.json) + 매처 묶음 17KB · 도구 이름(/glossary-tools.json) 4KB.
 // 사전 검색 색인(/search-index.json)은 처음 찾을 때 받는다: 100KB (gzip).
 //   npm run qa:budget
@@ -159,7 +160,11 @@ async function minifiedGz(files: string[]): Promise<number> {
 const mapRows: [string, number, number][] = [
   ['땅 판 src/assets/map/land.svg', gzSize(join(ROOT, 'src/assets/map/land.svg')), MAP_LIMITS.land],
   ['표지 묶음 src/assets/map/map-sprite.svg', gzSize(join(ROOT, 'src/assets/map/map-sprite.svg')), MAP_LIMITS.sprite],
-  ['지도 섬 MapBoard.tsx + map/focus.ts', await minifiedGz(['src/components/MapBoard.tsx', 'src/lib/map/focus.ts']), MAP_LIMITS.island],
+  [
+    '지도 섬 MapBoard.tsx + map/focus.ts + 장면(map/scene.ts, map/rest.ts, scene.ts)',
+    await minifiedGz(['src/components/MapBoard.tsx', 'src/lib/map/focus.ts', 'src/lib/map/scene.ts', 'src/lib/map/rest.ts', 'src/lib/scene.ts']),
+    MAP_LIMITS.island,
+  ],
   ['지도 모형 src/lib/map/model.ts', await minifiedGz(['src/lib/map/model.ts']), MAP_LIMITS.model],
 ];
 const shipped = [...allJs].filter((f) => /[\\/]MapBoard\.[^\\/]+\.js$/.test(f)).reduce((a, f) => a + gzSize(f), 0);

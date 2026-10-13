@@ -2,7 +2,7 @@
 // 모든 화면의 기본 틀 (T27, docs/CONCEPT.md 5.8): 본문 바로 가기 → 머리줄(브랜드·사전·설정) → 단계 줄(단계 화면만)
 // → 본문(시트) → 아래 막대(단계 화면: 상태 한 줄 + 주 버튼, 붙박이) → 바닥글. 화면 낭독기 알림 자리(#cc-live)도 여기 있다.
 // 맨 위 '검토 중인 시험판' 띠는 걷어 냈다(brief 3.2, D67): 미리 보기 배포의 안내 한 줄은 바닥글에 둔다.
-// 페이지 사이는 문서 간 View Transitions (D25, S7): 머리줄과 단계 줄은 제자리, 본문만 바뀐다.
+// 페이지 사이의 문서 간 View Transitions(S7)는 꺼 두었다 (D71 검토 반영: 붙기 전 지도는 땅만 그려 길이 사라졌다 나타난다. 다시 켜는 조건은 frame.css).
 import '../styles/global.css';
 import '../styles/frame.css';
 import '../styles/parts.css';
@@ -40,7 +40,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname.replace(/\/+$/, '') ||
 // 처음 온 사람 기준 단계 줄 값 (빌드 때 한 번)
 const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {});
 const hasAction = Astro.slots.has('action');
-// 지도 띠가 있는 단계와 지도를 그리는 화면(홈)에만 지도 표지 묶음을 숨겨 넣는다 (내 AI 써 보기에는 지도가 없다).
+// 지도 띠가 있는 단계와 지도를 그리는 화면(홈, 내 AI 써 보기의 연습 고리 띠)에만 지도 표지 묶음을 숨겨 넣는다 (내 AI 써 보기는 map으로).
 // 지도 CSS는 지도를 그리는 MapBoard.tsx가 불러온다 (D68)
 const hasMap = map || (stage !== null && stage !== 'test-drive');
 ---
@@ -62,12 +62,15 @@ const hasMap = map || (stage !== null && stage !== 'test-drive');
     <link rel="manifest" href="/manifest.webmanifest" />
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
-      // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게), 이어 갈 진행(data-resume),
-      // 연습을 마침(data-lesson-done: 내 AI 써 보기의 주 버튼이 붙기 전 바뀌어 보이지 않게), 영수증 링크(data-receipt-link)를 붙인다.
+      // 첫 그림 전에: 사이트 설정의 '동작 줄이기'·'조용히 모시기'(data-quiet)와 다시 온 사람 표시, 이어 갈 진행(data-resume),
+      // 연습을 마침(data-lesson-done: 내 AI 써 보기의 주 버튼·연습 고리가 붙기 전 바뀌어 보이지 않게), 영수증 링크(data-receipt-link)를 붙인다.
+      // 처음 온 사람이면 홈 첫 방문 장면 S1을 고른다(data-intro: play = 장면, still = 조용히 모시기·동작 줄이기의 끝 모습 + 짧은 비침, D71).
       // 읽기만 한다 (저장은 src/lib/store.ts).
+      var p = {};
       try {
-        var p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}');
-        if (p && p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
+        p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}') || {};
+        if (p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
+        if (p.quiet === true) document.documentElement.setAttribute('data-quiet', '');
         var saved = localStorage.getItem('cc:session:v1');
         if (saved || localStorage.getItem('cc:seen:v1')) document.documentElement.setAttribute('data-visit', 'again');
         if (saved && Object.keys(JSON.parse(saved).answers || {}).length > 0) document.documentElement.setAttribute('data-resume', '');
@@ -75,13 +78,38 @@ const hasMap = map || (stage !== null && stage !== 'test-drive');
       } catch (e) {}
       // 영수증 링크(#r=)로 열었으면: 설계도 받기 섬이 링크를 읽을 때까지 빌드 때 그린 잠김 화면을 감춘다 (arrival.css)
       if (location.hash.indexOf('#r=') === 0) document.documentElement.setAttribute('data-receipt-link', '');
-      // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 홈 장면을 짧게 (자주 볼수록 짧게)
+      // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 다시 온 사람으로 본다 (홈 첫 방문 장면 S1을 돌리지 않는다)
       try {
         var nav = performance.getEntriesByType('navigation')[0];
         var ref = document.referrer ? new URL(document.referrer) : null;
         if ((ref && ref.origin === location.origin) || (nav && nav.type === 'back_forward')) document.documentElement.setAttribute('data-visit', 'again');
       } catch (e) {}
+      if (!document.documentElement.hasAttribute('data-visit')) document.documentElement.setAttribute('data-intro', p.quiet === true || p.motion === 'reduce' ? 'still' : 'play');
     </script>
+    {
+      stage === 'arrival' && (
+        <script is:inline data-from={ROUTES.check}>
+          // 출발 → 도착 장면(S5+S6, D71): 도구끼리 맞춰 보기에서 [설계도 받으러 출발하기]로 처음 왔으면 html[data-depart]를 붙인다.
+          // play = 장면, still = 조용히 모시기·동작 줄이기(끝 모습 + 짧은 비침). 다시 열기·뒤로 가기·영수증 링크·이미 본 장면이면 붙이지 않는다.
+          // 읽기만 한다 (저장은 src/lib/store.ts, 장면은 src/lib/depart.ts와 src/lib/map/arrive.ts)
+          (function () {
+          try {
+            var from = document.currentScript.getAttribute('data-from');
+            var ref = document.referrer ? new URL(document.referrer) : null;
+            var how = performance.getEntriesByType('navigation')[0];
+            var pref = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}') || {};
+            var issued = JSON.parse(localStorage.getItem('cc:meta:v1') || '{}').issued === true;
+            var seen = (JSON.parse(localStorage.getItem('cc:seen:v1') || '{}') || {}).scenes || [];
+            var came = ref && ref.origin === location.origin && ref.pathname.replace(/\/+$/, '') === from && (!how || how.type === 'navigate');
+            if (came && issued && seen.indexOf('arrival') < 0 && location.hash.indexOf('#r=') !== 0) {
+              var calm = pref.quiet === true || pref.motion === 'reduce' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+              document.documentElement.setAttribute('data-depart', calm ? 'still' : 'play');
+            }
+          } catch (e) {}
+          })();
+        </script>
+      )
+    }
   </head>
   <body>
     {hasMap && <MapSprite />}
@@ -147,19 +175,23 @@ const hasMap = map || (stage !== null && stage !== 'test-drive');
     }
     <script>
       // 모든 장면 건너뛰기 (CONCEPT 7절, R-08): 화면 어디든 누르거나 Esc면 돌고 있는 애니메이션(영수증 출력, 교통 정보…)을 끝 상태로.
-      // 누른 버튼은 그대로 눌린다 (누르기가 시작될 때 끝내고, 눌림 처리는 그 뒤에 일어난다)
+      // 누르기는 click(잡기 단계)에서 끝낸다: 누르기가 시작될 때(pointerdown) 끝내면 움직이던 시트가 손가락 밑에서 끝 자리로 튀어
+      // 손을 뗀 곳이 다른 요소가 되고 click이 사라진다 (WCAG 2.5.2, D71 검토 반영). 눌린 버튼의 click 처리는 그 뒤에 그대로 일어난다.
+      // 화면을 굴리기만 하면 click이 없으니 장면은 그대로 돈다.
       // 숫자 굴리기처럼 애니메이션 객체가 아닌 것은 cc:skip 신호를 듣고 스스로 끝낸다.
       // '건너뛰기' 버튼은 자기 click에서 끝내고 제목으로 초점을 옮기므로 여기서는 건드리지 않는다
       import { skipAll } from '../lib/motion.ts';
 
       const skip = (): void => {
+        // 출발 → 도착 장면(S5)이 섬이 붙기 전이면 돌지 않게 (src/lib/depart.ts)
+        if (document.documentElement.getAttribute('data-depart') === 'play') document.documentElement.setAttribute('data-depart', 'skip');
         skipAll(document);
         document.dispatchEvent(new CustomEvent('cc:skip'));
       };
       document.addEventListener(
-        'pointerdown',
+        'click',
         (e) => {
-          if (e.target instanceof Element && e.target.closest('[data-skip], .scene-skip-btn')) return;
+          if (e.target instanceof Element && e.target.closest('[data-skip]')) return;
           skip();
         },
         { capture: true, passive: true },

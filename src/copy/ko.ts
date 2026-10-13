@@ -628,4 +628,38 @@ export const ko = {
     ownWay: '내 답으로 처음부터 가고 싶으면 목적지를 말해 주세요.',
     goInterview: '목적지 말하기',
   },
+  /** 길 지도 (docs/MAP.md, src/lib/map/model.ts): 이름표와 role="img" 요약 글. 마디 이름은 칸 이름, 빈 터 이름은 앱 종류 보기 이름(자료)이다 */
+  map: {
+    start: '출발',
+    /** 앱 종류를 아직 모를 때 빈 터 이름표 */
+    destination: '목적지',
+    /** 요약 글은 이 문장들을 띄어 이어 붙인다: '목적지 체험학습 신청서. 꼭 고를 것 4개 중 3개 골랐어요. 막힌 곳 1개.' */
+    summary: {
+      destination: '목적지 {{name}}.',
+      noDestination: '목적지를 아직 정하지 않았어요.',
+      arrived: '도착했어요. 빈 터에 설계도가 놓였어요.',
+      picked: '꼭 고를 것 {{total}}개 중 {{picked}}개 골랐어요.',
+      later: '나중에 붙일 것 {{n}}개.',
+      blocked: '막힌 곳 {{n}}개.',
+      kept: '그대로 가는 곳 {{n}}개.',
+      clear: '모두 원활해요.',
+    },
+    /** 지도 표지의 이름 (그림 옆 글, title). 교통 색에는 늘 그림과 글이 같이 붙는다 */
+    marker: {
+      jam: '막힘',
+      slow: '서행',
+      toll: '유료 도구',
+      gap: '빈 칸',
+      lock: '키 노출',
+      globe: '나라 밖 저장',
+      alert: '막힌 곳',
+      question: '그대로 가기로 함',
+      wholeRoute: '길 전체',
+      count: '{{n}}개',
+      later: '나중에 붙일 것',
+      tunnel: '중간 서버',
+      tunnelGhost: '중간 서버가 필요해요',
+      students: '학생 정보를 받아요',
+    },
+  },
 } as const;

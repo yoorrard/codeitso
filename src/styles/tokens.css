@@ -103,6 +103,8 @@
   --node-fill: var(--navy); /* 고른 곳. 대비: --map-land 3 */
   --on-node: #ffffff; /* 대비: --node-fill 4.5 */
   --you: var(--brand-blue); /* 지금 위치. 대비: --map-land 3 */
+  --map-car: var(--navy); /* 지도 위 차 몸 (로고의 남색 차를 위에서 본 것). 대비: --map-land 3 */
+  --map-car-light: var(--cyan); /* 차 앞 전조등. 대비: --map-car 3 */
 
   /* 글꼴 */
   --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
@@ -319,11 +321,54 @@
     --node-fill: #e6eef8;
     --on-node: #08101b;
     --you: var(--cyan);
+    --map-car: #4a6699; /* 로고 밤 팔레트의 강철 남색 (docs/review/v2/brand.md 7절) */
+    --map-car-light: #8fe3ff;
     --elev-1: 0 1px 2px rgb(0 0 0 / 0.4);
     --elev-2: 0 0 0 1px rgb(255 255 255 / 0.06), 0 8px 24px -4px rgb(0 0 0 / 0.5);
     --elev-3: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 48px -12px rgb(0 0 0 / 0.7);
     --elev-sheet: 0 0 0 1px rgb(255 255 255 / 0.06), 0 -12px 32px -8px rgb(0 0 0 / 0.6);
     --edge-light: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+}
+
+/* 느낌 팔레트 (CONCEPT 5.3): 목적지의 '느낌' 답은 지도(MapBoard의 data-palette)의 땅·물·공원 색만 바꾼다.
+   글자·마디·교통 색은 그대로라, 땅 위 그림 대비(--map-ghost·--ok-ink·--warn-ink·--bad-ink·--node-fill·--map-car 3:1 이상)를
+   네 팔레트 낮·밤 모두에서 계산해 두었다 (낮 가장 낮은 값: 강렬하게의 --map-ghost 3.11, 밤: 기본의 --map-car 3.21) */
+[data-palette='cute'] {
+  --map-land: #f3eef4;
+  --map-water: #cfe3f5;
+  --map-park: #dcefdf;
+}
+
+[data-palette='calm'] {
+  --map-land: #eceeea;
+  --map-water: #c6d4db;
+  --map-park: #d3ddcf;
+}
+
+[data-palette='bold'] {
+  --map-land: #e9edf7;
+  --map-water: #a9c8f0;
+  --map-park: #bfe0b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-palette='cute'] {
+    --map-land: #130f1f;
+    --map-water: #12203a;
+    --map-park: #10261f;
+  }
+
+  [data-palette='calm'] {
+    --map-land: #0f1413;
+    --map-water: #0f1d24;
+    --map-park: #11201b;
+  }
+
+  [data-palette='bold'] {
+    --map-land: #08132a;
+    --map-water: #0a2650;
+    --map-park: #0b2c1c;
   }
 }
 

@@ -5,6 +5,9 @@
 import '../styles/global.css';
 import '../styles/frame.css';
 import '../styles/parts.css';
+import '../styles/map-land.css';
+import '../styles/map.css';
+import MapSprite from '../components/MapSprite.astro';
 import Icon from '../components/Icon.astro';
 import DictionaryPanel from '../components/DictionaryPanel.tsx';
 import TermPopover from '../components/TermPopover.tsx';
@@ -72,6 +75,7 @@ const hasAction = Astro.slots.has('action');
     </script>
   </head>
   <body>
+    {stage && <MapSprite />}
     <a class="skip-link" href="#main">{ko.layout.skip}</a>
     {STAGE === 'preview' && <p class="stage-banner">{ko.layout.stageBanner}</p>}
     <header class="topbar">

@@ -41,7 +41,7 @@ Project rules win over generic craft advice.
 | Accessibility | WCAG 2.2 AA, tap targets ≥ 44px (`--tap`), focus ring `--focus` / `--focus-on-dark`. Details in the project's `accessibility` skill. |
 | Copy | Fixed UI text in `src/copy/ko.ts`, engine sentences in `data/templates.json`, style per `.claude/rules/copy.md` (해요체, short verb buttons). |
 | Budget | First-screen JS ≤ 100KB gzip, images and animation ≤ 300KB per page (`npm run qa:budget`). No external requests. |
-| Theme | One light "paper" theme with the dark `--road` band. A polish pass adds no dark mode. |
+| Theme | Day map and night map (`prefers-color-scheme`, D57). Every color pair is checked in both; the receipt paper stays white at night. |
 
 If `scripts/guard/floor-guard.ts` exists, the project's after-edit hook already runs it on every edit under `src/`. Fix what it reports instead of re-checking those rules by hand.
 
@@ -82,7 +82,7 @@ Don't perfect one corner while the rest of the path stays below the same bar.
 
 Each item is a check on the built result, not an intention. Run them on the same `/visual-qa` round instead of separate screenshot trips.
 
-- **Contrast:** body and placeholder text ≥ 4.5:1, large text ≥ 3:1, borders, icons and focus ≥ 3:1. On a colored surface use the pair documented in `tokens.css` (`--ink` on `--taxi`, `--paper` on `--road`), never an ad-hoc gray.
+- **Contrast:** body and placeholder text ≥ 4.5:1, large text ≥ 3:1, borders, icons and focus ≥ 3:1. On a colored surface use the pair documented in `tokens.css` (`--on-gold` on `--gold`, `--receipt-ink` on `--receipt`), never an ad-hoc gray.
 - **Depth:** shadows come from `--shadow` (offset plus soft blur). A zero-offset colored halo is decoration.
 - **Spacing:** tight groups, generous separation, more space above a heading than below it. Read the computed values. Side gutter `--gutter`, content ≤ `--content-max`.
 - **Type:** sizes only from the token scale (`--text-sm` to `--text-2xl`), line height `--leading`. Body lines ≤ `--content-max` (about 45 Hangul syllables at 16px; 65–75ch for Latin text). Korean text uses `word-break: keep-all` with `overflow-wrap: break-word`, so words break at spaces and long URLs or keys still wrap. Headings `text-wrap: balance`; tracking never tighter than -0.04em, Hangul body text near 0. Obvious steps in size and weight. Run the real copy at every width and fix what overflows.
@@ -134,7 +134,7 @@ The floor holds the mechanics; it never picks the direction. With every check gr
 
 ### Color, imagery and icons
 
-- Semantic tokens with stable meanings: `--go` done/resolved, `--stop` conflict/error, `--caution` warning, `--taxi` emphasis fill.
+- Semantic tokens with stable meanings: `--flow` clear/done, `--slow` kept on purpose, `--jam` blocked/error, `--caution` warning fill, `--gold` emphasis fill.
 - Verify text, control and focus contrast in every state, hover and disabled included.
 - Icons stay coherent: Phosphor SVG for UI controls in one style and weight, Fluent 3D emoji images only for stations, slots and rewards; sizes and optical alignment consistent within each set.
 - No image layout shift: dimensions or `aspect-ratio` on every image, Astro's `<Image>` for raster assets, useful alt (or `alt=""` when decorative).
@@ -182,9 +182,9 @@ Score: 0 = severe (layout thrash, nothing optimized); 1 = major problems; 2 = pa
 ### 3. Tokens
 
 - Hard-coded colors, sizes, radii, shadows or durations.
-- A token used against its documented role (`--taxi` as text color, `--line` as input border, `--caution` as text).
+- A token used against its documented role (`--gold` as text color on a light surface, `--hairline` as input border, `--caution` as text).
 - A movement duration not zeroed in both the reduced-motion media query and `[data-motion='reduce']`, or `--dur-fade` zeroed.
-- The wrong focus color on the `--road` band.
+- The wrong focus color on a `--navy` fill (use `--focus-on-dark`).
 
 Score: 0 = hard-coded everywhere; 1 = mostly hard-coded; 2 = tokens used inconsistently; 3 = tokens used, a few literals; 4 = only tokens, both reduced-motion paths correct.
 

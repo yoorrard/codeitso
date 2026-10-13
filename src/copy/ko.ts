@@ -38,6 +38,26 @@ export const ko = {
     text: '5단계 중 {{passed}}단계 마침',
     requiredLeft: '꼭 고를 것 {{n}}개 남음',
     blocked: '막힌 곳 {{n}}개',
+    /** 단계 줄이 좁을 때 접은 단추 (CONCEPT 5.8): '경유지 · 3/5' */
+    short: '{{stage}} · {{n}}/5',
+    sheetTitle: '진행 단계',
+    sheetOpen: '진행 단계 보기',
+    close: '닫기',
+    /** 아래 막대 위 줄의 상태 한 줄 (CONCEPT 5.8 Live Activity 순서: 지금 상태 → 남은 것) */
+    status: {
+      testDriveTodo: '연습 3개, 10분이면 돼요',
+      testDriveDone: '마쳤어요',
+      question: '{{n}}번째 질문',
+      destinationDone: '정했어요',
+      locked: '목적지를 정하면 열려요',
+      requiredLeft: '꼭 고를 것 {{n}}개 남음',
+      requiredDone: '꼭 고를 것을 다 골랐어요',
+      blocked: '막힌 곳 {{n}}개',
+      clear: '모두 원활해요',
+      issued: '영수증 받음',
+      arrivalReady: '영수증을 받을 수 있어요',
+    },
+    miniPath: '고를 것 {{total}}개 중 {{picked}}개 골랐어요',
   },
   settings: {
     open: '설정',

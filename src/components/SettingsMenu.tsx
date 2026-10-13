@@ -12,10 +12,10 @@ const MENU_ID = 'cc-settings';
 
 interface Props {
   /** 기록을 지운 뒤 화면에 보일 안내 (낭독기 알림과 같은 글) */
-  onCleared: (message: string) => void;
+  onCleared?: (message: string) => void;
 }
 
-export function SettingsMenu({ onCleared }: Props) {
+export default function SettingsMenu({ onCleared }: Props) {
   const prefs = useStore($prefs);
   const gear = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ export function SettingsMenu({ onCleared }: Props) {
 
   return (
     <div class="settings">
-      <button ref={gear} type="button" class="icon-btn on-dark" popovertarget={MENU_ID} aria-label={ko.settings.open}>
+      <button ref={gear} type="button" class="icon-btn" popovertarget={MENU_ID} aria-label={ko.settings.open}>
         <Icon name="settings" />
       </button>
       <div ref={menu} id={MENU_ID} popover="auto" class="settings-panel" aria-label={ko.settings.title} role="group">
@@ -74,7 +74,7 @@ export function SettingsMenu({ onCleared }: Props) {
             onClick={() => {
               clearAll();
               announce(ko.settings.cleared);
-              onCleared(ko.settings.cleared);
+              onCleared?.(ko.settings.cleared);
             }}
           >
             {ko.settings.clearYes}

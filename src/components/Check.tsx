@@ -11,10 +11,10 @@ import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
-import { sentences } from '../lib/sentences.ts';
 import { sfx } from '../lib/sfx.ts';
 import { ROUTES, waypointPath } from '../lib/routes.ts';
 import { gate } from '../lib/stages.ts';
+import { DispatchNote } from './DispatchNote.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const T = catalog.data.templates;
@@ -127,7 +127,8 @@ export default function Check() {
 
   return (
     <div class="check">
-      <h1>{ko.common.checkTitle}</h1>
+      <h1>{ko.check.pageTitle}</h1>
+      <DispatchNote text={ko.dispatch.check} />
 
       <section class="card" aria-labelledby="understood">
         <h2 id="understood">{ko.check.understood}</h2>
@@ -176,14 +177,7 @@ export default function Check() {
       </section>
 
       {allGreen && (
-        <div class={cleared ? 'dispatch-note just-now' : 'dispatch-note'}>
-          <span class="brand-mark" aria-hidden="true" />
-          <p>
-            {sentences(ko.dispatch.checkDone).map((t) => (
-              <span class="line">{t}</span>
-            ))}
-          </p>
-        </div>
+        <DispatchNote text={ko.dispatch.checkDone} closable={false} class={cleared ? 'just-now' : undefined} />
       )}
 
       {(r.split.needed || r.session.deferred.length > 0) && (

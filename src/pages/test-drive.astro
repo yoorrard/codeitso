@@ -2,6 +2,7 @@
 // 시운전 /test-drive (docs/CONCEPT.md 6.2, R-11·R-12): AI 채팅에서 웹페이지 한 장 만들기. 문장 세 개를 복사해 차례로 보낸다.
 import Base from '../layouts/Base.astro';
 import CopyButton from '../components/CopyButton.tsx';
+import DispatchNote from '../components/DispatchNote.astro';
 import LessonFinish from '../components/LessonFinish.tsx';
 import Icon from '../components/Icon.astro';
 import { ko } from '../copy/ko.ts';
@@ -13,6 +14,7 @@ const L = ko.lesson;
 
 <Base title={L.pageTitle} stage="test-drive">
   <h1>{L.title}</h1>
+  <DispatchNote text={ko.dispatch.testDrive} />
   <p class="lead">{L.lead}</p>
   <ol class="lesson-steps">
     {

@@ -61,7 +61,7 @@ import lot from '../assets/art/P01.png';
 
 WCAG defines large text as 18pt / 14pt bold, which is 24px / 18.66px. With our tokens only `--text-xl` (28px) and `--text-2xl` (36px) count as large at regular weight; `--text-lg` (20px) counts only when bold. Hangul gets no discount.
 
-Use the token pairs documented in `tokens.css`: text is `--ink` / `--ink-soft` on `--paper` or `--receipt`; input borders use `--ink-soft` (`--line` is decorative only); `--taxi` is a fill with `--ink` text, never a text color; on the `--road` band text is `--paper` and focus is `--focus-on-dark`; warning text is `--caution-ink`. A new color becomes a token with its measured contrast in a comment, then the T02 contrast check runs again. Never a raw hex in a component.
+Use the token pairs documented in `tokens.css`: text is `--ink` / `--ink-soft` on `--paper`, `--card` or `--surface-2`, and `--receipt-ink` / `--receipt-soft` on the receipt paper; input borders use `--ink-soft` (`--hairline` is decorative only); `--gold` is a fill with `--on-gold` text, never a text color (gold text is `--gold-ink`); on a `--navy` fill focus is `--focus-on-dark`; warning text is `--caution-ink`. Check both day and night values. A new color becomes a token with its measured contrast in a comment, then the T02 contrast check runs again. Never a raw hex in a component.
 
 ### Use of color (1.4.1)
 

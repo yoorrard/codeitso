@@ -1,12 +1,16 @@
 ---
-// 모든 화면의 기본 틀 (T05, docs/CONCEPT.md 5.8): 본문 바로 가기 → 머리줄(브랜드·단계 줄·설정) → 본문 → 아래 막대(주 버튼·사전).
-// 화면 낭독기 알림 자리(#cc-live)도 여기 있다. 페이지 사이는 문서 간 View Transitions (D25). 틀의 모양은 T27에서 마무리한다.
+// 모든 화면의 기본 틀 (T27, docs/CONCEPT.md 5.8): 본문 바로 가기 → 머리줄(브랜드·사전·설정) → 단계 줄(단계 화면만)
+// → 본문(시트) → 아래 막대(단계 화면: 상태 한 줄 + 주 버튼, 붙박이) → 바닥글. 화면 낭독기 알림 자리(#cc-live)도 여기 있다.
+// 페이지 사이는 문서 간 View Transitions (D25, S7): 머리줄과 단계 줄은 제자리, 본문만 바뀐다.
 import '../styles/global.css';
 import '../styles/frame.css';
 import '../styles/parts.css';
 import Icon from '../components/Icon.astro';
 import DictionaryPanel from '../components/DictionaryPanel.tsx';
-import Masthead from '../components/Masthead.tsx';
+import BrandMark from '../components/BrandMark.astro';
+import SettingsMenu from '../components/SettingsMenu.tsx';
+import StageRail from '../components/StageRail.tsx';
+import StatusLine from '../components/StatusLine.tsx';
 import { ko } from '../copy/ko.ts';
 import { LIVE_ID } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
@@ -28,7 +32,7 @@ const { title, description = ko.site.description, stage = null } = Astro.props;
 const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
 // 배포 서버는 끝 빗금을 뗀 주소(/check)로 맞춘다 (wrangler.jsonc html_handling, D50)
 const canonical = Astro.site ? new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href : undefined;
-// 처음 온 사람 기준 머리말 값 (빌드 때 한 번)
+// 처음 온 사람 기준 단계 줄 값 (빌드 때 한 번)
 const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {});
 const hasAction = Astro.slots.has('action');
 ---
@@ -40,7 +44,8 @@ const hasAction = Astro.slots.has('action');
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#1e2c58" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 --navy 값을 그대로 쓴다 -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--card 낮) 값을 그대로 쓴다 -->
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141a2b" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--card 밤) 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
@@ -64,22 +69,46 @@ const hasAction = Astro.slots.has('action');
   </head>
   <body>
     <a class="skip-link" href="#main">{ko.layout.skip}</a>
-    <header class="masthead on-dark">
-      {STAGE === 'preview' && <p class="stage-banner">{ko.layout.stageBanner}</p>}
-      <Masthead client:idle stage={stage} initial={initial} />
+    {STAGE === 'preview' && <p class="stage-banner">{ko.layout.stageBanner}</p>}
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href={ROUTES.home}>
+          <BrandMark />
+          <span class="wordmark">{ko.site.name}</span>
+        </a>
+        <div class="top-actions">
+          <a class="dict-btn" href={ROUTES.dictionary}>
+            <Icon name="dictionary" />
+            <span>{ko.layout.dictionary}</span>
+          </a>
+          <SettingsMenu client:idle />
+        </div>
+      </div>
+      {
+        stage && (
+          <div class="rail-wrap">
+            <StageRail client:idle stage={stage} initial={initial} />
+          </div>
+        )
+      }
     </header>
-    <main id="main" tabindex="-1" class="stage">
+    <main id="main" tabindex="-1" class:list={['stage', { 'has-bar': stage !== null }]}>
       <slot />
     </main>
-    <div class:list={['action-bar', { 'is-static': stage === null }]} role="region" aria-label={ko.layout.actionBar}>
-      <div class="action-inner">
-        {hasAction && <slot name="action" />}
-        <a class="dict-btn" href={ROUTES.dictionary}>
-          <Icon name="dictionary" />
-          <span>{ko.layout.dictionary}</span>
-        </a>
-      </div>
-    </div>
+    {
+      (stage || hasAction) && (
+        <div class:list={['action-bar', { 'is-static': stage === null }]} role="region" aria-label={ko.layout.actionBar}>
+          <div class="action-inner">
+            {stage && <StatusLine client:idle stage={stage} />}
+            {hasAction && (
+              <div class="action-main">
+                <slot name="action" />
+              </div>
+            )}
+          </div>
+        </div>
+      )
+    }
     <footer class="site-footer" aria-label={ko.footer.label}>
       <p>{ko.footer.license}</p>
       <ul>

@@ -10,7 +10,6 @@ import { badges, evaluate, fill } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
-import { sentences } from '../lib/sentences.ts';
 import { flip } from '../lib/motion.ts';
 import { SLOT_ART } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
@@ -19,6 +18,7 @@ import { sfx } from '../lib/sfx.ts';
 import { ROUTES, termPath } from '../lib/routes.ts';
 import { gate } from '../lib/stages.ts';
 import { Icon } from './Icon.tsx';
+import { DispatchNote } from './DispatchNote.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const T = catalog.data.templates;
@@ -259,14 +259,7 @@ export default function Shop() {
   return (
     <div class="shop">
       <h1>{ko.shop.title}</h1>
-      <div class="dispatch-note">
-        <span class="brand-mark" aria-hidden="true" />
-        <p>
-          {sentences(ko.dispatch.waypoints).map((t) => (
-            <span class="line">{t}</span>
-          ))}
-        </p>
-      </div>
+      <DispatchNote text={ko.dispatch.waypoints} />
       <nav aria-label={ko.shop.inventory}>
         <ul class="inventory" ref={inventory}>
           {r.slots.map((s) => {

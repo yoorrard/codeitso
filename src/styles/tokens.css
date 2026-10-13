@@ -104,7 +104,7 @@
   --space-7: 48px;
   --content-max: 720px;
   --bar-top: 16px; /* 머리줄은 붙박이가 아니다 (작은 화면을 덜 가리려고, D41). 초점 받은 요소 위 여백만 */
-  --bar-bottom: calc(4.75rem + env(safe-area-inset-bottom)); /* 붙박이 아래 막대 높이. 글자를 키우면 함께 커지게 rem */
+  --bar-bottom: calc(7rem + env(safe-area-inset-bottom)); /* 붙박이 아래 막대 높이(상태 한 줄 + 주 버튼). 글자를 키우면 함께 커지게 rem */
 
   /* 높이 네 층 (CONCEPT 5.5): 지도(0) → 떠 있는 조작(1) → 시트(2, 위쪽으로만) → 대화 상자(3). 시트 안 카드에는 그림자를 두지 않는다 */
   --elev-1: 0 1px 2px rgb(17 24 48 / 0.08), 0 4px 12px rgb(17 24 48 / 0.08);

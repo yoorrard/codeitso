@@ -10,7 +10,6 @@ import { answerChips, evaluate, fill, matchingRecipes } from '../lib/engine/inde
 import type { Option, Question } from '../lib/engine/types.ts';
 import { track } from '../lib/track.ts';
 import { useHydrated } from '../lib/hydrated.ts';
-import { sentences } from '../lib/sentences.ts';
 import { SLOT_ART, optionArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { EMPTY_SESSION, FREE_TEXT_MAX } from '../lib/saved.ts';
@@ -18,6 +17,7 @@ import { sfx } from '../lib/sfx.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { patchMeta } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
+import { DispatchNote } from './DispatchNote.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const LINE_MAX = Math.min(80, FREE_TEXT_MAX);
@@ -156,14 +156,7 @@ export default function Interview() {
             </p>
           </div>
           {at === 0 && bubble && Object.keys(r.session.answers).length === 0 && (
-            <div class="dispatch-note">
-              <span class="brand-mark" aria-hidden="true" />
-              <p>
-                {sentences(ko.dispatch.destination).map((t) => (
-                  <span class="line">{t}</span>
-                ))}
-              </p>
-            </div>
+            <DispatchNote text={ko.dispatch.destination} />
           )}
           <h1 id="q-title" ref={heading} tabIndex={-1}>
             <span class="visually-hidden">{fill(ko.interview.questionNo, { n: at + 1 })}. </span>

@@ -325,19 +325,47 @@
   padding-inline: var(--space-2);
 }
 
-/* 기사 메시지 (CONCEPT 4.1): 왼쪽에 브랜드 마크, 오른쪽에 두 문장 이하의 글. 모양은 T27에서 마무리한다 */
+/* 기사 메시지 (CONCEPT 4.1): 왼쪽에 브랜드 마크(40px), 오른쪽에 두 문장 이하의 글, 닫기 단추.
+   가는 선으로 나눈 시트 안 상자라 그림자를 두지 않는다 (CONCEPT 5.5) */
 .dispatch-note {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3);
+  border: 1px solid var(--hairline);
   border-radius: var(--radius);
-  background: var(--gold-soft);
+  background: var(--surface-2);
+  color: var(--ink);
   font-weight: var(--weight-strong);
+  animation: note-in var(--dur-ui) var(--ease-out) both;
+}
+
+.dispatch-note > p {
+  flex: 1;
 }
 
 .dispatch-note .brand-mark {
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: 11px;
+}
+
+.dispatch-note .brand-mark:not(.has-svg)::before {
+  inset: 9px;
+  border-width: 4px;
+}
+
+.dispatch-close {
   flex-shrink: 0;
+  margin-inline-start: auto;
+  color: var(--ink-soft);
+}
+
+@keyframes note-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--juice-m-shake));
+  }
 }
 
 .options {

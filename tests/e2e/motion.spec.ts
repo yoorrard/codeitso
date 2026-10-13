@@ -8,13 +8,13 @@ import { hydrated } from './helpers.ts';
 test('단계 줄: 지금 단계가 표시되고, 다른 단계 링크로 옮겨 간다', async ({ page }) => {
   await page.goto('/test-drive');
   await islandsReady(page);
-  await expect(page.locator('.rail a[aria-current="step"]')).toHaveAttribute('href', '/test-drive');
-  await page.locator('.rail a[href="/destination"]').click();
+  await expect(page.locator('.rail-list a[aria-current="step"]')).toHaveAttribute('href', '/test-drive');
+  await page.locator('.rail-list a[href="/destination"]').click();
   await page.waitForURL(/\/destination$/);
   await islandsReady(page);
-  await expect(page.locator('.rail a[aria-current="step"]')).toHaveAttribute('href', '/destination');
+  await expect(page.locator('.rail-list a[aria-current="step"]')).toHaveAttribute('href', '/destination');
   // 목적지를 정하기 전에는 경유지로 갈 수 없다: 링크가 아니라 이유를 알려 주는 버튼
-  await expect(page.locator('.rail .step.locked button').first()).toHaveAttribute('aria-disabled', 'true');
+  await expect(page.locator('.rail-list .step.locked button').first()).toHaveAttribute('aria-disabled', 'true');
 });
 
 test('도착: 영수증 출력 중에 누르면 다 나온 영수증이 바로 보인다', async ({ page }) => {
@@ -48,7 +48,7 @@ for (const mode of ['기기 설정', '사이트 설정'] as const) {
     const finish = await hydrated(page.locator('main button.btn-primary').last());
     await finish.click();
     await still();
-    await page.locator('.rail a[href="/destination"]').click();
+    await page.locator('.rail-list a[href="/destination"]').click();
     await page.waitForURL(/\/destination$/);
     await islandsReady(page);
     await still();

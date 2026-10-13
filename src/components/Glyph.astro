@@ -1,0 +1,13 @@
+---
+// 직접 그린 SVG 그림을 HTML에 바로 넣는다 (src/lib/glyphs.ts). 늘 장식이다: 뜻은 옆의 글이 전한다.
+import { glyph } from '../lib/glyphs.ts';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+const { name, class: cls } = Astro.props;
+const svg = glyph(name);
+---
+
+{svg && <span class:list={['glyph', cls]} aria-hidden="true" set:html={svg} />}

@@ -21,10 +21,10 @@ for (const c of CASES) {
   });
 }
 
-test('사전 옆 창: 아래 막대의 사전을 누르면 열리고 Esc로 닫히며 초점이 돌아온다', async ({ page }) => {
+test('사전 옆 창: 머리줄의 사전을 누르면 열리고 Esc로 닫히며 초점이 돌아온다', async ({ page }) => {
   await page.goto('/waypoints');
   await islandsReady(page);
-  const button = page.locator('.action-bar .dict-btn');
+  const button = page.locator('.topbar .dict-btn');
   await button.click();
   const sheet = page.locator('dialog[open]');
   await expect(sheet).toBeVisible();

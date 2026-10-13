@@ -40,7 +40,7 @@ test('CSP: 사전 옆 창 검색, 도구 모음 검색, 확인 문제', async ({
   const violations = await watchCsp(page);
   await page.goto('/waypoints');
   await islandsReady(page);
-  await page.locator('.action-bar .dict-btn').click();
+  await page.locator('.topbar .dict-btn').click();
   await page.locator('#dict-q').fill('CORS');
   await expect(page.locator('.dict .error-card').first()).toBeVisible();
   await page.keyboard.press('Escape');

@@ -1,0 +1,12 @@
+---
+// 브랜드 마크 (docs/CONCEPT.md 5.7). 섬 안에서는 BrandMark.tsx를 쓴다.
+import { glyph } from '../lib/glyphs.ts';
+
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+const svg = glyph('mark');
+---
+
+{svg ? <span class:list={['brand-mark', 'has-svg', cls]} aria-hidden="true" set:html={svg} /> : <span class:list={['brand-mark', cls]} aria-hidden="true" />}

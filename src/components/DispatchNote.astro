@@ -1,0 +1,16 @@
+---
+// 기사 메시지의 정적 판 (docs/CONCEPT.md 4.1). 섬 안에서는 DispatchNote.tsx를 쓴다. 정적 판은 닫기 단추가 없다.
+import { ko } from '../copy/ko.ts';
+import { sentences } from '../lib/sentences.ts';
+import BrandMark from './BrandMark.astro';
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<aside class="dispatch-note" aria-label={ko.dispatch.label}>
+  <BrandMark />
+  <p>{sentences(text).map((t) => <span class="line">{t}</span>)}</p>
+</aside>

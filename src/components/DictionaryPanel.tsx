@@ -4,13 +4,16 @@ import type { ComponentType } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { Icon } from './Icon.tsx';
+import { DICT_EVENT } from '../lib/dict-event.ts';
 
-type DictProps = { autoFocus?: boolean };
+type DictProps = { autoFocus?: boolean; initial?: string };
 
 export default function DictionaryPanel() {
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
   const [Comp, setComp] = useState<ComponentType<DictProps> | null>(null);
+  // 어려운 말 풀이(TermPopover)에서 '사전에서 찾기'로 열면 그 말로 찾은 채 연다. 열 때마다 새로 그리게 key를 바꾼다
+  const [initial, setInitial] = useState({ q: '', n: 0 });
 
   useEffect(() => {
     if (window.location.pathname.startsWith('/dictionary')) return;
@@ -22,8 +25,19 @@ export default function DictionaryPanel() {
       void import('./Dictionary.tsx').then((m) => setComp(() => m.default));
       dialog.current?.showModal();
     };
+    const onAsk = (e: Event): void => {
+      const q = (e as CustomEvent<{ q?: string }>).detail?.q ?? '';
+      opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      setInitial((s) => ({ q, n: s.n + 1 }));
+      void import('./Dictionary.tsx').then((m) => setComp(() => m.default));
+      if (!dialog.current?.open) dialog.current?.showModal();
+    };
     document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
+    document.addEventListener(DICT_EVENT, onAsk);
+    return () => {
+      document.removeEventListener('click', onClick);
+      document.removeEventListener(DICT_EVENT, onAsk);
+    };
   }, []);
 
   return (
@@ -36,7 +50,7 @@ export default function DictionaryPanel() {
           </button>
         </form>
       </div>
-      {Comp ? <Comp autoFocus /> : <p class="q-help">{ko.dict.loading}</p>}
+      {Comp ? <Comp autoFocus initial={initial.q} key={initial.n} /> : <p class="q-help">{ko.dict.loading}</p>}
     </dialog>
   );
 }

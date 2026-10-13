@@ -1,0 +1,644 @@
+{
+  "version": 1,
+  "terms": [
+    {
+      "id": "api",
+      "term": "API",
+      "aliases": [
+        "오픈 API",
+        "Open API",
+        "에이피아이"
+      ],
+      "plain": "다른 서비스에 정보를 달라고 요청하는 정해진 창구예요.",
+      "example": "급식 API에 학교와 날짜를 보내면 그날 메뉴가 와요.",
+      "concept": "api"
+    },
+    {
+      "id": "api-key",
+      "term": "API 키",
+      "aliases": [
+        "인증키",
+        "서비스 키",
+        "API key",
+        "API 인증키"
+      ],
+      "plain": "API를 쓸 때 내가 누구인지 알려 주는 긴 비밀번호예요.",
+      "example": "남이 보면 내 이름으로 API를 쓸 수 있어서 숨겨야 해요.",
+      "concept": "api-key"
+    },
+    {
+      "id": "json",
+      "term": "JSON",
+      "aliases": [
+        "제이슨"
+      ],
+      "plain": "데이터를 '이름: 값' 짝으로 적는 글자 형식이에요.",
+      "example": "{\"메뉴\": \"카레\"}처럼 생겼어요.",
+      "concept": "json"
+    },
+    {
+      "id": "cors",
+      "term": "CORS",
+      "aliases": [
+        "CORS 에러",
+        "교차 출처"
+      ],
+      "plain": "다른 주소의 서버가 내 화면의 요청을 허락했는지 브라우저가 확인하는 규칙이에요.",
+      "example": "허락이 없으면 브라우저가 응답을 막아요.",
+      "concept": "cors"
+    },
+    {
+      "id": "env-var",
+      "term": "환경 변수",
+      "aliases": [
+        "환경변수",
+        ".env",
+        "env",
+        "시크릿",
+        "Secret"
+      ],
+      "plain": "키처럼 코드에 직접 쓰면 안 되는 값을 코드 밖에 따로 적어 두는 곳이에요.",
+      "concept": "env-var"
+    },
+    {
+      "id": "terminal",
+      "term": "터미널",
+      "aliases": [
+        "명령 프롬프트",
+        "CLI",
+        "파워셸"
+      ],
+      "plain": "글자로 컴퓨터에 명령을 내리는 창이에요.",
+      "example": "npm install 같은 명령을 여기에 적어요.",
+      "concept": "terminal"
+    },
+    {
+      "id": "deploy",
+      "term": "배포",
+      "aliases": [
+        "디플로이",
+        "deploy"
+      ],
+      "plain": "내 앱을 인터넷 주소에 올려 다른 사람도 열 수 있게 하는 일이에요.",
+      "concept": "deploy"
+    },
+    {
+      "id": "hosting",
+      "term": "호스팅",
+      "aliases": [
+        "hosting",
+        "웹 호스팅"
+      ],
+      "plain": "내 앱 파일을 인터넷에 올려 두고 늘 열어 주는 서비스예요.",
+      "example": "GitHub Pages, Cloudflare가 호스팅을 해 줘요.",
+      "concept": "deploy"
+    },
+    {
+      "id": "git-repo",
+      "term": "저장소",
+      "aliases": [
+        "GitHub 저장소",
+        "깃허브 저장소",
+        "레포",
+        "리포지토리",
+        "repository",
+        "repo"
+      ],
+      "plain": "코드 파일과 고친 기록을 보관하는 인터넷 폴더예요.",
+      "concept": "git-repo"
+    },
+    {
+      "id": "github",
+      "term": "GitHub",
+      "aliases": [
+        "깃허브"
+      ],
+      "plain": "코드 저장소를 보관하고 함께 고칠 수 있는 서비스예요.",
+      "concept": "git-repo"
+    },
+    {
+      "id": "git",
+      "term": "Git",
+      "plain": "코드를 고칠 때마다 기록을 남겨 언제든 되돌릴 수 있게 하는 도구예요.",
+      "concept": "git-commit"
+    },
+    {
+      "id": "commit",
+      "term": "커밋",
+      "aliases": [
+        "commit",
+        "git commit"
+      ],
+      "plain": "지금까지 고친 내용을 한 덩어리로 기록해 두는 일이에요.",
+      "concept": "git-commit"
+    },
+    {
+      "id": "push",
+      "term": "푸시",
+      "aliases": [
+        "push",
+        "git push"
+      ],
+      "plain": "내 컴퓨터의 커밋을 인터넷 저장소에 올리는 일이에요.",
+      "concept": "git-commit"
+    },
+    {
+      "id": "free-tier",
+      "term": "무료 한도",
+      "aliases": [
+        "프리 티어",
+        "free tier",
+        "무료 플랜",
+        "무료 할당량"
+      ],
+      "plain": "돈을 내지 않고 쓸 수 있는 양이에요. 넘으면 멈추거나 돈이 나가요.",
+      "concept": "free-tier"
+    },
+    {
+      "id": "auth",
+      "term": "로그인",
+      "aliases": [
+        "인증",
+        "auth",
+        "로그인 기능"
+      ],
+      "plain": "지금 쓰는 사람이 누구인지 확인하는 기능이에요.",
+      "example": "각자 자기 기록만 보게 할 때 필요해요.",
+      "concept": "auth-login"
+    },
+    {
+      "id": "server",
+      "term": "서버",
+      "aliases": [
+        "server",
+        "웹 서버"
+      ],
+      "plain": "요청을 받으면 알맞은 답을 돌려주는 컴퓨터예요.",
+      "concept": "server"
+    },
+    {
+      "id": "serverless",
+      "term": "서버리스",
+      "aliases": [
+        "serverless",
+        "서버리스 함수"
+      ],
+      "plain": "서버를 늘 켜 두지 않고, 요청이 올 때만 잠깐 코드를 실행하는 방식이에요.",
+      "concept": "server"
+    },
+    {
+      "id": "frontend",
+      "term": "프론트엔드",
+      "aliases": [
+        "프런트엔드",
+        "frontend",
+        "프론트"
+      ],
+      "plain": "버튼과 입력 칸처럼 브라우저에서 보이는 화면 쪽이에요.",
+      "concept": "frontend-backend"
+    },
+    {
+      "id": "backend",
+      "term": "백엔드",
+      "aliases": [
+        "backend"
+      ],
+      "plain": "화면 뒤에서 데이터를 저장하고 처리하는 쪽이에요.",
+      "concept": "frontend-backend"
+    },
+    {
+      "id": "localhost",
+      "term": "로컬호스트",
+      "aliases": [
+        "localhost",
+        "로컬 호스트",
+        "127.0.0.1"
+      ],
+      "plain": "'지금 이 컴퓨터'를 가리키는 주소예요. 나만 열 수 있어요.",
+      "concept": "localhost"
+    },
+    {
+      "id": "port",
+      "term": "포트",
+      "aliases": [
+        "포트 번호",
+        "port"
+      ],
+      "plain": "한 컴퓨터 안에서 프로그램마다 나눠 쓰는 문 번호예요.",
+      "example": "localhost:3000의 3000이 포트예요.",
+      "concept": "localhost"
+    },
+    {
+      "id": "npm",
+      "term": "npm",
+      "aliases": [
+        "엔피엠",
+        "npm install"
+      ],
+      "plain": "남이 만든 코드 묶음(패키지)을 내려받아 설치하는 도구예요.",
+      "concept": "npm-package"
+    },
+    {
+      "id": "package",
+      "term": "패키지",
+      "aliases": [
+        "라이브러리",
+        "package",
+        "library",
+        "의존성"
+      ],
+      "plain": "남이 미리 만들어 둔 코드 묶음이에요.",
+      "concept": "npm-package"
+    },
+    {
+      "id": "domain",
+      "term": "도메인",
+      "aliases": [
+        "도메인 주소",
+        "domain",
+        "웹 주소"
+      ],
+      "plain": "example.com처럼 사람이 읽기 쉬운 인터넷 주소예요.",
+      "concept": "domain"
+    },
+    {
+      "id": "https",
+      "term": "HTTPS",
+      "aliases": [
+        "SSL",
+        "TLS",
+        "보안 연결"
+      ],
+      "plain": "주고받는 내용을 암호로 바꿔 안전하게 오가게 하는 연결이에요.",
+      "concept": "https"
+    },
+    {
+      "id": "database",
+      "term": "데이터베이스",
+      "aliases": [
+        "DB",
+        "디비",
+        "database"
+      ],
+      "plain": "앱의 데이터를 정리해서 모아 두는 곳이에요.",
+      "concept": "database"
+    },
+    {
+      "id": "devtools",
+      "term": "개발자 도구",
+      "aliases": [
+        "개발자도구",
+        "브라우저 개발자 도구",
+        "devtools",
+        "F12"
+      ],
+      "plain": "브라우저에 들어 있는 점검 도구예요. 오류와 요청을 볼 수 있어요.",
+      "concept": "devtools"
+    },
+    {
+      "id": "console",
+      "term": "콘솔",
+      "aliases": [
+        "console",
+        "브라우저 콘솔"
+      ],
+      "plain": "개발자 도구에서 오류와 기록이 찍히는 칸이에요.",
+      "concept": "devtools"
+    },
+    {
+      "id": "logs",
+      "term": "로그",
+      "aliases": [
+        "log",
+        "logs",
+        "실행 기록",
+        "오류 기록"
+      ],
+      "plain": "프로그램이 실행되면서 남기는 기록이에요.",
+      "concept": "logs"
+    },
+    {
+      "id": "token",
+      "term": "토큰",
+      "aliases": [
+        "token",
+        "액세스 토큰"
+      ],
+      "plain": "허락받았다는 걸 보여 주는 긴 표 같은 글자예요. 키처럼 숨겨요.",
+      "concept": "api-key"
+    },
+    {
+      "id": "proxy",
+      "term": "중간 서버",
+      "aliases": [
+        "프록시",
+        "proxy"
+      ],
+      "plain": "내 화면과 외부 API 사이에서 키를 숨긴 채 대신 요청해 주는 작은 서버예요.",
+      "concept": "api-key"
+    },
+    {
+      "id": "key-exposure",
+      "term": "키 노출",
+      "aliases": [
+        "키 노출 위험"
+      ],
+      "plain": "숨겨야 할 API 키가 화면 코드에 드러나 누구나 볼 수 있게 되는 일이에요.",
+      "concept": "api-key"
+    },
+    {
+      "id": "static-site",
+      "term": "정적 페이지",
+      "aliases": [
+        "정적 사이트",
+        "static site"
+      ],
+      "plain": "미리 만들어 둔 파일을 그대로 보여 주는 웹페이지예요. 서버 계산이 없어요."
+    },
+    {
+      "id": "html",
+      "term": "HTML",
+      "aliases": [
+        "에이치티엠엘"
+      ],
+      "plain": "웹페이지의 뼈대를 적는 글자 형식이에요."
+    },
+    {
+      "id": "css",
+      "term": "CSS",
+      "plain": "웹페이지의 색·글꼴·배치를 정하는 글이에요."
+    },
+    {
+      "id": "javascript",
+      "term": "자바스크립트",
+      "aliases": [
+        "JavaScript",
+        "JS"
+      ],
+      "plain": "웹페이지가 움직이고 반응하게 만드는 프로그래밍 언어예요."
+    },
+    {
+      "id": "framework",
+      "term": "프레임워크",
+      "aliases": [
+        "framework"
+      ],
+      "plain": "앱의 기본 틀과 규칙을 미리 갖춰 둔 도구 묶음이에요."
+    },
+    {
+      "id": "react",
+      "term": "React",
+      "aliases": [
+        "리액트"
+      ],
+      "plain": "화면을 작은 부품으로 나눠 만드는 자바스크립트 도구예요."
+    },
+    {
+      "id": "component",
+      "term": "컴포넌트",
+      "aliases": [
+        "component"
+      ],
+      "plain": "버튼이나 카드처럼 화면을 이루는 작은 부품이에요."
+    },
+    {
+      "id": "realtime",
+      "term": "실시간",
+      "aliases": [
+        "real-time",
+        "리얼타임"
+      ],
+      "plain": "바뀌면 바로바로 새 값이 오는 방식이에요. 하루 한 번 바뀌는 것과 달라요."
+    },
+    {
+      "id": "webhook",
+      "term": "웹훅",
+      "aliases": [
+        "webhook",
+        "웹 훅"
+      ],
+      "plain": "무슨 일이 생기면 정해진 주소로 자동으로 알려 주는 방식이에요."
+    },
+    {
+      "id": "ai-agent",
+      "term": "AI 코딩 에이전트",
+      "aliases": [
+        "코딩 에이전트",
+        "에이전트",
+        "Claude Code",
+        "Codex",
+        "Cursor"
+      ],
+      "plain": "파일을 직접 만들고 고치며 코드를 짜 주는 AI 도구예요."
+    },
+    {
+      "id": "prompt",
+      "term": "프롬프트",
+      "aliases": [
+        "prompt"
+      ],
+      "plain": "AI에게 보내는 지시 글이에요."
+    },
+    {
+      "id": "markdown",
+      "term": "마크다운",
+      "aliases": [
+        "Markdown",
+        ".md",
+        "md 파일"
+      ],
+      "plain": "제목과 목록을 #, - 같은 기호로 적는 간단한 글 형식이에요.",
+      "example": "코드쇼퍼 설계도가 이 형식이에요."
+    },
+    {
+      "id": "blueprint",
+      "term": "설계도",
+      "aliases": [
+        "설계 문서"
+      ],
+      "plain": "코드쇼퍼가 만들어 주는 문서예요. 내 AI가 읽고 무엇을 어떤 순서로 만들지 알아요."
+    },
+    {
+      "id": "open-data",
+      "term": "공공데이터",
+      "aliases": [
+        "공공 데이터",
+        "공공데이터포털",
+        "data.go.kr"
+      ],
+      "plain": "나라와 기관이 누구나 쓰라고 열어 둔 자료예요. 보통 API 키를 받아 써요.",
+      "concept": "api"
+    },
+    {
+      "id": "rate-limit",
+      "term": "호출 한도",
+      "aliases": [
+        "하루 호출 한도",
+        "요청 한도",
+        "rate limit",
+        "트래픽 한도"
+      ],
+      "plain": "하루나 한 달에 API를 부를 수 있는 횟수예요.",
+      "concept": "free-tier"
+    },
+    {
+      "id": "personal-info",
+      "term": "개인정보",
+      "aliases": [
+        "개인 정보"
+      ],
+      "plain": "이름·연락처처럼 누구인지 알 수 있는 정보예요. 모을 때 조심해야 해요."
+    },
+    {
+      "id": "server-region",
+      "term": "서버 지역",
+      "aliases": [
+        "리전",
+        "region",
+        "서버 위치"
+      ],
+      "plain": "데이터가 실제로 저장되는 나라와 지역이에요.",
+      "concept": "server"
+    },
+    {
+      "id": "license",
+      "term": "라이선스",
+      "aliases": [
+        "license",
+        "오픈 소스 라이선스"
+      ],
+      "plain": "남의 코드나 자료를 쓸 때 지켜야 할 조건이에요."
+    },
+    {
+      "id": "open-source",
+      "term": "오픈 소스",
+      "aliases": [
+        "오픈소스",
+        "open source"
+      ],
+      "plain": "누구나 코드를 보고 고쳐 쓸 수 있게 공개한 소프트웨어예요."
+    },
+    {
+      "id": "url",
+      "term": "URL",
+      "aliases": [
+        "유알엘",
+        "링크 주소"
+      ],
+      "plain": "인터넷에서 페이지나 자료가 있는 자리를 가리키는 주소예요.",
+      "concept": "domain"
+    },
+    {
+      "id": "browser",
+      "term": "브라우저",
+      "aliases": [
+        "Chrome",
+        "크롬",
+        "사파리",
+        "Safari",
+        "엣지"
+      ],
+      "plain": "웹페이지를 열어 보는 프로그램이에요."
+    },
+    {
+      "id": "cache",
+      "term": "캐시",
+      "aliases": [
+        "cache"
+      ],
+      "plain": "다시 빨리 열려고 브라우저가 잠깐 저장해 둔 사본이에요.",
+      "example": "고쳤는데 그대로 보이면 새로 고침을 해 보세요."
+    },
+    {
+      "id": "build",
+      "term": "빌드",
+      "aliases": [
+        "build"
+      ],
+      "plain": "고친 코드를 배포할 수 있는 파일로 바꾸는 과정이에요.",
+      "concept": "deploy"
+    },
+    {
+      "id": "bug",
+      "term": "버그",
+      "aliases": [
+        "bug"
+      ],
+      "plain": "프로그램이 뜻대로 움직이지 않는 잘못이에요.",
+      "concept": "logs"
+    },
+    {
+      "id": "error-message",
+      "term": "에러 메시지",
+      "aliases": [
+        "오류 메시지",
+        "에러 문장"
+      ],
+      "plain": "문제가 생겼을 때 프로그램이 알려 주는 글이에요. 그대로 AI에게 보여 주면 도움이 돼요.",
+      "concept": "logs"
+    },
+    {
+      "id": "responsive",
+      "term": "반응형",
+      "aliases": [
+        "반응형 디자인",
+        "responsive"
+      ],
+      "plain": "휴대폰·PC 같은 화면 크기에 맞춰 배치가 바뀌는 방식이에요."
+    },
+    {
+      "id": "vibe-coding",
+      "term": "바이브코딩",
+      "aliases": [
+        "바이브 코딩",
+        "vibe coding"
+      ],
+      "plain": "코드를 직접 쓰지 않고 AI에게 말로 시켜 앱을 만드는 방법이에요."
+    },
+    {
+      "id": "no-code",
+      "term": "노코드",
+      "aliases": [
+        "노 코드",
+        "no-code"
+      ],
+      "plain": "코드를 쓰지 않고 화면에서 끌어다 놓으며 만드는 방식이에요."
+    },
+    {
+      "id": "apps-script",
+      "term": "앱스 스크립트",
+      "aliases": [
+        "Apps Script",
+        "구글 앱스 스크립트"
+      ],
+      "plain": "구글 시트 같은 구글 서비스에 붙여 쓰는 작은 프로그램이에요."
+    },
+    {
+      "id": "sdk",
+      "term": "SDK",
+      "aliases": [
+        "에스디케이"
+      ],
+      "plain": "어떤 서비스를 쉽게 쓰도록 그 회사가 준비해 둔 코드 묶음이에요.",
+      "concept": "npm-package"
+    },
+    {
+      "id": "endpoint",
+      "term": "엔드포인트",
+      "aliases": [
+        "endpoint"
+      ],
+      "plain": "API에서 요청을 보내는 정해진 주소 하나예요.",
+      "concept": "api"
+    },
+    {
+      "id": "cloud",
+      "term": "클라우드",
+      "aliases": [
+        "cloud"
+      ],
+      "plain": "내 컴퓨터 대신 인터넷 너머 회사의 컴퓨터를 빌려 쓰는 것이에요.",
+      "concept": "server"
+    }
+  ]
+}

@@ -15,6 +15,7 @@ case "$rel" in
   docs/examples/*.md) block "엔진이 만든 예시다. 자료나 엔진을 고친 뒤 npm run examples로 다시 만든다." ;;
   package-lock.json) block "npm install/npm ci가 만든다. 손으로 고치지 않는다." ;;
   node_modules/*|dist/*|.astro/*) block "만들어지는 폴더다. 원본을 고친다." ;;
+  assets-src/brand/*) block "소유자가 준 로고 원본이다. 고치지 않고, 화면용 SVG·크기별 그림은 따로 만든다 (CLAUDE.md 꼭 지킬 것 12, D60)." ;;
   assets-src/art/*) block "소유자가 준 그림 원본(이미지 생성·Tripo3D)이다. 고치지 않고 npm run art가 같은 조명으로 굽는다 (CLAUDE.md 꼭 지킬 것 12, CONCEPT 9절)." ;;
   public/fonts/*|src/styles/fonts.css) block "npm run fonts가 만든다. 손으로 고치지 않는다." ;;
   .env|.env.*|*/.env|*/.env.*|.dev.vars)

@@ -44,7 +44,7 @@ export const BANNED: readonly BannedWord[] = [
   { re: /초보 추천/, instead: '처음 쓰기 쉬움' },
   { re: /초록불|빨간불|신호등/, instead: '원활 / 막힘 / 교통 정보' },
   { re: /충돌/, instead: '막힌 곳' },
-  { re: /체크|클릭|큐레이션|오픈(?!소스|스트리트맵| API| 데이터|사전|AI)/, instead: '확인 / 누르기 / 고르기 / 열기 (copy.md)' },
+  { re: /체크|클릭|큐레이션|오픈(?!소스| 소스|스트리트맵| API| 데이터|사전|AI)/, instead: '확인 / 누르기 / 고르기 / 열기 (copy.md)' },
 ];
 
 export interface WordHit {

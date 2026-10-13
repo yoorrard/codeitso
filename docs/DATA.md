@@ -18,6 +18,7 @@
 | `templates.json` | 영수증·설계도·AI에게 할 말 문장 틀 | `templates.schema.json` | |
 | `recipes.json` | 레시피 = 화면의 미리 짠 코스 (답 + 고른 도구 완성 세트) | `recipes.schema.json` | 5개 |
 | `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 20개 |
+| `glossary.json` | 어려운 말 풀이: 용어마다 한 문장 풀이(해요체, 70자 안쪽), 다른 이름, 짧은 예, 용어 카드 연결. 화면에서 글을 끌어 고르면 뜬다 (D60). 엔진은 쓰지 않는다 | (시험: `tests/lib/glossary.test.ts`가 id·이름 겹침, 풀이 길이·끝맺음, 카드 연결을 막는다) | 64개 |
 | `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
 | `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 21개 |
 

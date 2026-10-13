@@ -7,6 +7,7 @@ import '../styles/frame.css';
 import '../styles/parts.css';
 import Icon from '../components/Icon.astro';
 import DictionaryPanel from '../components/DictionaryPanel.tsx';
+import TermPopover from '../components/TermPopover.tsx';
 import BrandMark from '../components/BrandMark.astro';
 import SettingsMenu from '../components/SettingsMenu.tsx';
 import StageRail from '../components/StageRail.tsx';
@@ -120,6 +121,7 @@ const hasAction = Astro.slots.has('action');
       </ul>
     </footer>
     <DictionaryPanel client:idle />
+    <TermPopover client:idle />
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
     {
       analyticsAllowed(Astro.url.pathname) && (

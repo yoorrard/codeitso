@@ -401,6 +401,15 @@ export const ko = {
     deployNext: '다음 단계',
     deployAgain: '처음부터',
   },
+  glossary: {
+    label: "'{{term}}' 풀이",
+    announce: '{{term}}: {{plain}}',
+    more: '용어 카드 보기',
+    search: '사전에서 더 보기',
+    missLabel: '사전에서 찾기',
+    missSearch: "'{{text}}' 사전에서 찾기",
+    close: '풀이 닫기',
+  },
   dict: {
     pageTitle: '사전',
     title: '사전',

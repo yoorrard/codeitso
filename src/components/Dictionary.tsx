@@ -111,8 +111,8 @@ function ResultItem({ doc }: { doc: SearchDoc }) {
   );
 }
 
-export default function Dictionary({ autoFocus = false }: { autoFocus?: boolean }) {
-  const [q, setQ] = useState('');
+export default function Dictionary({ autoFocus = false, initial = '' }: { autoFocus?: boolean; initial?: string }) {
+  const [q, setQ] = useState(initial);
   const [index, setIndex] = useState<MiniSearch<SearchDoc> | null>(null);
   const [failed, setFailed] = useState(false);
   const input = useRef<HTMLInputElement>(null);
@@ -131,7 +131,7 @@ export default function Dictionary({ autoFocus = false }: { autoFocus?: boolean 
   useEffect(() => {
     load();
     // 섬이 붙기 전에 친 글도 이어받는다
-    if (input.current?.value) setQ(input.current.value);
+    if (!initial && input.current?.value) setQ(input.current.value);
     if (autoFocus) input.current?.focus();
   }, []);
 

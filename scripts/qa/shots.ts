@@ -2,6 +2,7 @@
 //   npm run qa:shots                 dist의 모든 페이지
 //   npm run qa:shots -- / /interview 주어진 라우트만
 // 결과: .qa/shots/*.png, .qa/axe.json, .qa/report.md. 심각한 문제가 있으면 종료 코드 1.
+// 화면마다 보이는 주 버튼(.btn-primary) 수를 센다. PRIMARY_ONE_ROUTES의 화면은 2개 이상이면 실패 (brief 5.6 '화면마다 주 버튼은 하나', D67).
 import { mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import AxeBuilder from '@axe-core/playwright';
@@ -14,6 +15,9 @@ const PORT = 4399;
 const BASE = `http://127.0.0.1:${PORT}`;
 const OUT = join(ROOT, '.qa');
 const SHOTS = join(OUT, 'shots');
+/** 주 버튼이 하나뿐이어야 하는 화면. 둘러보는 곳부터 시작하고, 단계 화면은 W4가 화면을 다시 짠 뒤 더한다 */
+const PRIMARY_ONE_ROUTES: readonly string[] = ['/tools', '/tools/supabase', '/terms', '/terms/api', '/receipts', '/dictionary', '/about'];
+
 const VIEWPORTS = [
   { name: '360', width: 360, height: 800 },
   { name: '768', width: 768, height: 1024 },
@@ -34,10 +38,10 @@ function routesFromDist(): string[] {
     }
   };
   walk(dist);
-  // 개념·상품 상세는 수가 많으니 하나씩만 대표로 찍는다
+  // 용어 카드·도구 상세는 수가 많으니 하나씩만 대표로 찍는다
   const seen = new Set<string>();
   return out.sort().filter((r) => {
-    const m = r.match(/^\/(concepts|products)\//);
+    const m = r.match(/^\/(terms|tools|concepts|products)\//);
     if (!m) return true;
     if (seen.has(m[1] ?? '')) return false;
     seen.add(m[1] ?? '');
@@ -62,6 +66,8 @@ interface PageReport {
   failedRequests: string[];
   horizontalOverflow: boolean;
   smallTargets: string[];
+  /** 보이는 주 버튼 수 (닫힌 시트·숨은 것 빼고, 화면 밖으로 스크롤된 것은 센다) */
+  primaryButtons: number;
   axe: { serious: number; critical: number; ids: string[] };
   tabOrder?: string[];
 }
@@ -101,6 +107,7 @@ try {
         failedRequests: [],
         horizontalOverflow: false,
         smallTargets: [],
+        primaryButtons: 0,
         axe: { serious: 0, critical: 0, ids: [] },
       };
       page.on('console', (m) => {
@@ -130,6 +137,14 @@ try {
         }
         return out;
       });
+      rep.primaryButtons = await page.evaluate(
+        () =>
+          Array.from(document.querySelectorAll<HTMLElement>('.btn-primary')).filter((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.width === 0 || r.height === 0) return false;
+            return typeof el.checkVisibility !== 'function' || el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true });
+          }).length,
+      );
       // axe는 낮(360)과 밤(360-dark) 두 모드에서 본다 (밤 지도의 대비)
       if (vp.name === '360' || vp.name === '360-dark') {
         const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
@@ -162,17 +177,25 @@ try {
   server.close();
 }
 
+const tooManyPrimary = (r: PageReport): boolean => PRIMARY_ONE_ROUTES.includes(r.route) && r.primaryButtons > 1;
 const bad = reports.filter(
-  (r) => r.axe.serious + r.axe.critical > 0 || r.horizontalOverflow || r.consoleErrors.length > 0 || r.externalRequests.length > 0 || r.smallTargets.length > 0,
+  (r) =>
+    r.axe.serious + r.axe.critical > 0 ||
+    r.horizontalOverflow ||
+    r.consoleErrors.length > 0 ||
+    r.externalRequests.length > 0 ||
+    r.smallTargets.length > 0 ||
+    tooManyPrimary(r),
 );
 const md: string[] = ['# 시각 점검 보고', '', `라우트 ${list.length}개 × 화면 4종. 스크린샷: .qa/shots/`, ''];
-md.push('| 라우트 | 화면 | axe 심각/치명 | 가로 스크롤 | 작은 누르는 곳 | 콘솔 에러 | 외부 요청 |', '|---|---|---|---|---|---|---|');
+md.push('| 라우트 | 화면 | axe 심각/치명 | 가로 스크롤 | 작은 누르는 곳 | 주 버튼 | 콘솔 에러 | 외부 요청 |', '|---|---|---|---|---|---|---|---|');
 for (const r of reports) {
-  md.push(`| ${r.route} | ${r.viewport} | ${r.viewport === '360' || r.viewport === '360-dark' ? `${r.axe.serious}/${r.axe.critical} ${r.axe.ids.join(' ')}` : '-'} | ${r.horizontalOverflow ? '있음' : '-'} | ${r.smallTargets.length} | ${r.consoleErrors.length} | ${r.externalRequests.length} |`);
+  md.push(`| ${r.route} | ${r.viewport} | ${r.viewport === '360' || r.viewport === '360-dark' ? `${r.axe.serious}/${r.axe.critical} ${r.axe.ids.join(' ')}` : '-'} | ${r.horizontalOverflow ? '있음' : '-'} | ${r.smallTargets.length} | ${r.primaryButtons}${tooManyPrimary(r) ? ' (2개 이상)' : ''} | ${r.consoleErrors.length} | ${r.externalRequests.length} |`);
 }
 for (const r of reports) {
   const notes = [
     ...r.smallTargets.map((s) => `작은 누르는 곳: ${s}`),
+    ...(tooManyPrimary(r) ? [`주 버튼이 ${r.primaryButtons}개: 화면마다 하나만 .btn-primary로 두고 나머지는 .btn-soft·.btn(중립)·.btn-text로`] : []),
     ...r.consoleErrors.map((s) => `콘솔 에러: ${s}`),
     ...r.externalRequests.map((s) => `외부 요청: ${s}`),
     ...r.failedRequests.map((s) => `실패한 요청: ${s}`),

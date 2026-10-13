@@ -1,25 +1,43 @@
-// 머리줄의 설정 메뉴: 동작 줄이기, 효과음, 저장한 기록 지우기 (docs/CONCEPT.md 6.12절. 지난 영수증은 T32에서 더한다).
-// 메뉴는 popover(바깥 누르기·Esc로 닫힘), 확인 창은 <dialog>(초점 가두기·Esc). 닫으면 설정 버튼으로 초점을 돌린다.
+// 머리줄의 설정 (brief 6.13, D67): 모달 시트(<dialog class="modal">) 안의 줄 56 목록.
+// 스위치 다섯(동작 줄이기 · 효과음 · 조용히 모시기 · 어려운 말 풀이 · 점선 밑줄) → 지난 영수증 보기 › → 저장한 기록 지우기(위험 글).
+// 조용히 모시기·풀이·점선 밑줄은 여기서 저장만 한다($prefs). 그 동작은 장면(W5)과 풀이(W6b)가 $prefs를 읽어 붙인다.
+// 지우기는 시트 위에 겹쳐 뜨는 확인 대화 상자(<dialog class="sheet">). 둘 다 초점 가두기·Esc, 시트를 닫으면 설정 버튼으로 초점을 돌린다.
+// 지우고 나면 시트까지 닫아 설정 버튼으로 돌아간다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { announce } from '../lib/announce.ts';
 import { applyMotionPref } from '../lib/motion.ts';
+import type { Prefs } from '../lib/saved.ts';
 import { $prefs, clearAll, setPrefs } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
 
-const MENU_ID = 'cc-settings';
+const TITLE_ID = 'cc-settings-title';
 
 interface Props {
   /** 기록을 지운 뒤 화면에 보일 안내 (낭독기 알림과 같은 글) */
   onCleared?: (message: string) => void;
 }
 
+/** 켜고 끄는 줄 하나: 줄 전체가 스위치 (role="switch"), 오른쪽 44×28 모양은 장식 */
+function SwitchRow({ label, on, onToggle }: { label: string; on: boolean; onToggle: () => void }) {
+  return (
+    <li>
+      <button type="button" role="switch" aria-checked={on} class="list-row" onClick={onToggle}>
+        <span class="list-text">
+          <span class="list-name">{label}</span>
+        </span>
+        <span class="switch" aria-hidden="true" />
+      </button>
+    </li>
+  );
+}
+
 export default function SettingsMenu({ onCleared }: Props) {
   const prefs = useStore($prefs);
   const gear = useRef<HTMLButtonElement>(null);
-  const menu = useRef<HTMLDivElement>(null);
+  const sheet = useRef<HTMLDialogElement>(null);
   const clearDialog = useRef<HTMLDialogElement>(null);
   const [osReduce, setOsReduce] = useState(false);
 
@@ -34,41 +52,64 @@ export default function SettingsMenu({ onCleared }: Props) {
   // 사이트 설정의 동작 줄이기를 html에 붙인다 (첫 그림 전에는 기본 틀의 작은 스크립트가 한다)
   useEffect(() => applyMotionPref(prefs.motion), [prefs.motion]);
 
-  const openDialog = (d: HTMLDialogElement | null): void => {
-    menu.current?.hidePopover();
-    d?.showModal();
+  /** 시트 뒤 어두운 막을 누르면 닫는다 (닫기 단추·Esc와 같다) */
+  const backdrop = (e: MouseEvent): void => {
+    const d = sheet.current;
+    if (!d || e.target !== d) return;
+    const box = d.getBoundingClientRect();
+    if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) d.close();
   };
-  const backToGear = (): void => gear.current?.focus();
 
   const reduce = prefs.motion === 'reduce';
+  const flip = (key: 'sound' | 'quiet' | 'glossary' | 'marks'): void => setPrefs({ [key]: !prefs[key] } as Partial<Prefs>);
 
   return (
     <div class="settings">
-      <button ref={gear} type="button" class="icon-btn" popovertarget={MENU_ID} aria-label={ko.settings.open}>
+      <button ref={gear} type="button" class="icon-btn" aria-haspopup="dialog" aria-label={ko.settings.open} onClick={() => sheet.current?.showModal()}>
         <Icon name="settings" />
       </button>
-      <div ref={menu} id={MENU_ID} popover="auto" class="settings-panel" aria-label={ko.settings.title} role="group">
-        <p class="settings-title">{ko.settings.title}</p>
-        <button type="button" class="toggle-row" aria-pressed={reduce} onClick={() => setPrefs({ motion: reduce ? 'auto' : 'reduce' })}>
-          <span>{ko.settings.motion}</span>
-          <span class="switch" aria-hidden="true">{reduce ? ko.settings.on : ko.settings.off}</span>
-        </button>
-        {osReduce && !reduce && <p class="settings-note">{ko.settings.motionOs}</p>}
-        <button type="button" class="toggle-row" aria-pressed={prefs.sound} onClick={() => setPrefs({ sound: !prefs.sound })}>
-          <span>{ko.settings.sound}</span>
-          <span class="switch" aria-hidden="true">{prefs.sound ? ko.settings.on : ko.settings.off}</span>
-        </button>
-        <a class="menu-row" href={ROUTES.receipts}>
-          <Icon name="share" />
-          <span>{ko.settings.receipts}</span>
-        </a>
-        <button type="button" class="menu-row danger" onClick={() => openDialog(clearDialog.current)}>
-          <Icon name="warning" />
-          <span>{ko.settings.clear}</span>
-        </button>
-      </div>
 
-      <dialog ref={clearDialog} class="sheet" aria-labelledby="cc-clear-title" aria-describedby="cc-clear-body" onClose={backToGear}>
+      <dialog ref={sheet} class="modal" aria-labelledby={TITLE_ID} onClose={() => gear.current?.focus()} onClick={backdrop}>
+        <div class="modal-head">
+          <h2 id={TITLE_ID} class="modal-title">
+            {ko.settings.title}
+          </h2>
+          <form method="dialog">
+            <button class="icon-btn" aria-label={ko.settings.close}>
+              <Icon name="close" />
+            </button>
+          </form>
+        </div>
+        <ul class="list settings-list">
+          <SwitchRow label={ko.settings.motion} on={reduce} onToggle={() => setPrefs({ motion: reduce ? 'auto' : 'reduce' })} />
+          {osReduce && !reduce && (
+            <li>
+              <p class="settings-note">{ko.settings.motionOs}</p>
+            </li>
+          )}
+          <SwitchRow label={ko.settings.sound} on={prefs.sound} onToggle={() => flip('sound')} />
+          <SwitchRow label={ko.settings.quiet} on={prefs.quiet} onToggle={() => flip('quiet')} />
+          <SwitchRow label={ko.settings.glossary} on={prefs.glossary} onToggle={() => flip('glossary')} />
+          <SwitchRow label={ko.settings.marks} on={prefs.marks} onToggle={() => flip('marks')} />
+          <li>
+            <a class="list-row" href={ROUTES.receipts}>
+              <span class="list-text">
+                <span class="list-name">{ko.settings.receipts}</span>
+              </span>
+              <span class="list-chev" aria-hidden="true" />
+            </a>
+          </li>
+          <li>
+            <button type="button" class="list-row is-danger" aria-haspopup="dialog" onClick={() => clearDialog.current?.showModal()}>
+              <span class="list-text">
+                <span class="list-name">{ko.settings.clear}</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </dialog>
+
+      <dialog ref={clearDialog} class="sheet" aria-labelledby="cc-clear-title" aria-describedby="cc-clear-body">
         <h2 id="cc-clear-title">{ko.settings.clearTitle}</h2>
         <p id="cc-clear-body">{ko.settings.clearBody}</p>
         <form method="dialog" class="sheet-actions">
@@ -78,6 +119,8 @@ export default function SettingsMenu({ onCleared }: Props) {
             value="clear"
             onClick={() => {
               clearAll();
+              // 설정 시트도 닫는다: 모달이 열려 있으면 #cc-live가 접근성 트리에서 빠져 알림이 묻힌다 (D64)
+              sheet.current?.close();
               announce(ko.settings.cleared);
               onCleared?.(ko.settings.cleared);
             }}

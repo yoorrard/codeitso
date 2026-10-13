@@ -93,6 +93,13 @@
   --focus: var(--blue-10); /* 대비: --surface 3, --bg 3, --surface-raised 3 */
   --focus-on-navy: var(--cyan); /* 대비: --navy 3 */
 
+  /* 그림 판 (brief 4.3·5.7): 48px 이하 그림 타일은 남색 채움(--tile), 64px 이상 청사진 그림은 옅은 판(--plate)에 선(--plate-line).
+     밤에는 남색 면이 바탕에 묻혀(1.14:1) 둘 다 한 단 밝은 남색 판 + 밝은 파랑 선으로 바뀐다. 요금 칩·영수증 프린터 틈도 --tile */
+  --tile: var(--navy); /* 그림 타일·요금 칩·프린터 틈의 면 */
+  --on-tile: #ffffff; /* 타일 위 그림·글자. 대비: --tile 4.5 */
+  --plate: var(--blue-2); /* 큰 청사진 그림의 옅은 판 */
+  --plate-line: var(--navy); /* 판 위 선 1.5. 대비: --plate 4.5 */
+
   /* 영수증 종이 (낮·밤 모두 흰 종이) */
   --receipt: #ffffff;
   --receipt-ink: #111c2c; /* 대비: --receipt 4.5 */
@@ -115,12 +122,14 @@
   --you: var(--brand-blue); /* 지금 위치. 대비: --map-land 3 */
   --map-car: var(--navy); /* 지도 위 차 몸 (로고의 남색 차를 위에서 본 것). 대비: --map-land 3 */
   --map-car-light: var(--cyan); /* 차 앞 전조등. 대비: --map-car 3 */
+  --map-flag: var(--brand-blue); /* 빈 터 깃발. 대비: --map-land 3 */
+  --route-halo: transparent; /* 밤 주행 빛 (장식, 흐림 필터 없이 넓은 선 하나). 낮에는 없다 */
+  --map-shadow: rgb(0 20 60 / 0.16); /* 지도 위 물건의 바닥 그림자 (장식) */
 
   /* 글꼴 */
   --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-receipt: 'CC Receipt', 'Pretendard Variable', ui-monospace, 'Courier New', monospace; /* 영수증 종이 안에서만 */
   --weight-body: 400;
-  --weight-medium: 500;
   --weight-strong: 600; /* 버튼·칩·줄 이름·숫자 */
   --weight-heading: 700; /* 제목 */
 
@@ -199,7 +208,8 @@
   --dur-signal: 350ms;
   --dur-print: 700ms; /* 영수증 출력 */
   --dur-stamp: 250ms;
-  --dur-scene: 2800ms; /* 대표 장면 상한 */
+  --dur-blink: 320ms; /* 전조등 두 번 깜빡임 (켜짐 120 · 꺼짐 80 · 켜짐 120, 1초에 3번 미만) */
+  --dur-scene: 3000ms; /* 대표 장면 상한 (S5+S6 합계, brief 7절) */
   --dur-fade: 150ms; /* 동작 줄이기에서도 남긴다 (D30) */
 
   /* 곡선 */
@@ -207,6 +217,7 @@
   --ease-in: cubic-bezier(0.64, 0, 0.78, 0); /* 나가기 (Base easeAccelerate) */
   --ease-in-out: cubic-bezier(0.2, 0, 0, 1); /* 화면 위 이동 (Material 3 standard) */
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* 시트 */
+  --ease-drive: cubic-bezier(0.45, 0, 0.25, 1); /* 차: 천천히 출발 → 달림 → 부드럽게 섬 */
   --ease-spring: linear(0, 0.06, 0.195, 0.358, 0.518, 0.66, 0.776, 0.866, 0.93, 0.974, 1.001, 1.016, 1.023, 1.024, 1.023, 1.019, 1.015, 1.011, 1.008, 1.005, 1); /* 강성 270·감쇠 25 (TDS 'medium'과 같은 값), 넘침 2.4%, 460ms */
 
   /* 손맛: 드문 순간일수록 크게 */
@@ -219,52 +230,21 @@
   --juice-press-scale: 0.98;
   --juice-stamp-scale: 1.3;
 
-  /* ── 옛 이름 (v1 → v2 별명, docs/review/v2/systems.md 7절). 화면을 새 이름으로 옮기면 하나씩 지운다 ── */
+  /* ── 개념 그림 이전 대기 (D67): 화면 코드(CSS·TSX·Astro)와 지도 스프라이트의 옛 이름은 모두 새 이름으로 옮기고 별명을 지웠다.
+     아래 열둘은 아직 옛 이름을 쓰는 개념 그림(src/assets/concepts/*.svg 20장, 용어 카드 머리)만을 위해 남긴다.
+     용어 카드를 옅은 판(--plate)으로 다시 그릴 때(brief 5.7·6.10) 지운다. 화면 코드에서 쓰면 품질 바닥선(old-token·no-gold)이 막는다 ── */
   --paper: var(--bg);
   --card: var(--surface);
-  --surface-2: var(--fill);
   --sky: var(--selected);
-  --ink: var(--text);
   --ink-soft: var(--text-2);
-  --ink-faint: var(--text-3);
-  --on-ink: var(--on-accent);
-  --gold: var(--accent); /* 금색을 없앴다: 옛 금색 채움은 행동 파랑 하나로 */
-  --on-gold: var(--on-accent); /* 대비: --gold 4.5 */
-  --gold-soft: var(--accent-soft);
-  --gold-ink: var(--link);
+  --gold: var(--accent); /* floor-guard-ignore: 개념 그림 이전 대기 (D67) */
+  --gold-soft: var(--accent-soft); /* floor-guard-ignore: 개념 그림 이전 대기 (D67) */
   --navy-deep: var(--navy-raised);
-  --blueprint: var(--brand-blue);
   --flow: var(--ok-ink);
-  --on-flow: var(--on-bad); /* 대비: --flow 4.5 */
-  --slow: var(--warn-ink);
-  --on-slow: var(--on-bad); /* 대비: --slow 4.5 */
+  --on-flow: var(--on-bad);
   --jam: var(--bad-ink);
-  --on-jam: var(--on-bad); /* 대비: --jam 4.5 */
+  --on-jam: var(--on-bad);
   --caution: var(--warn);
-  --caution-ink: var(--warn-ink);
-  --focus-on-dark: var(--focus-on-navy);
-  --map-shadow: rgb(0 20 60 / 0.16);
-  --shadow: var(--elev-1);
-  --shadow-lift: var(--elev-3);
-  --radius: var(--radius-lg);
-  --radius-btn: var(--radius-md);
-  --radius-tile: 12px;
-  --radius-sheet: var(--radius-xl);
-  --btn: var(--btn-md);
-  --btn-bar: var(--btn-lg);
-  --btn-home: var(--btn-lg);
-  --chip: var(--btn-sm);
-  --text-sm: var(--size-caption);
-  --text-base: var(--size-body);
-  --text-md: var(--size-body-lg);
-  --text-lg: var(--size-title-3);
-  --text-xl: var(--size-title-1);
-  --text-2xl: var(--size-display);
-  --text-3xl: 2.75rem;
-  --leading: var(--leading-body-lg);
-  --leading-tight: 1.25;
-  --tracking-heading: var(--tracking-title);
-  --weight-display: var(--weight-heading);
 }
 
 /* 밤: 기기가 어두운 모드일 때. 같은 '대비:' 쌍을 이 값으로도 검사한다 */
@@ -333,6 +313,12 @@
     --you: var(--cyan);
     --map-car: #4a6699; /* 로고 밤 팔레트의 강철 남색 (docs/review/v2/brand.md 7절) */
     --map-car-light: #8fe3ff;
+    --map-flag: var(--blue-10);
+    --route-halo: rgb(0 180 250 / 0.18);
+    --tile: var(--blue-3);
+    --on-tile: var(--blue-11);
+    --plate: var(--blue-3);
+    --plate-line: var(--blue-11);
     --logo-body: #4a6699; /* 강철 남색 (brand.md 7절). --map-car 밤 값과 같다 */
     --logo-letter: var(--gray-12);
     --logo-accent: var(--blue-10);
@@ -408,6 +394,7 @@
     --dur-signal: 0ms;
     --dur-print: 0ms;
     --dur-stamp: 0ms;
+    --dur-blink: 0ms;
     --dur-scene: 0ms;
     --juice-s-scale: 1;
     --juice-m-scale: 1;
@@ -435,6 +422,7 @@
   --dur-signal: 0ms;
   --dur-print: 0ms;
   --dur-stamp: 0ms;
+  --dur-blink: 0ms;
   --dur-scene: 0ms;
   --juice-s-scale: 1;
   --juice-m-scale: 1;

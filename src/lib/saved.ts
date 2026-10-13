@@ -30,6 +30,12 @@ export interface Meta {
 export interface Prefs {
   motion: 'auto' | 'reduce';
   sound: boolean;
+  /** 조용히 모시기 (brief 7절): 사건 기사 메시지·효과음·큰 장면을 줄인다. 기본 꺼짐 */
+  quiet: boolean;
+  /** 어려운 말 풀이 (brief 8절): 글을 골라 뜨는 풀이. 기본 켜짐 */
+  glossary: boolean;
+  /** 점선 밑줄 (brief 8절): 사전에 있는 말 밑의 점선. 기본 켜짐 */
+  marks: boolean;
 }
 
 /** 처음 한 번만 다 보이는 큰 장면(S1 배차, S5 출발 → 도착)을 이미 본 기록 (CONCEPT 7절) */
@@ -52,7 +58,7 @@ export const FREE_TEXT_MAX = 200;
 const LIST_MAX = 200;
 
 export const EMPTY_SESSION: Session = { answers: {}, cart: [], kept: [], deferred: [] };
-export const DEFAULT_PREFS: Prefs = { motion: 'auto', sound: false };
+export const DEFAULT_PREFS: Prefs = { motion: 'auto', sound: false, quiet: false, glossary: true, marks: true };
 export const EMPTY_META: Meta = { sent: [] };
 export const EMPTY_SEEN: Seen = { scenes: [] };
 
@@ -100,7 +106,13 @@ export function readMeta(raw: unknown): Meta {
 
 export function readPrefs(raw: unknown): Prefs {
   const o = obj(raw);
-  return { motion: o['motion'] === 'reduce' ? 'reduce' : 'auto', sound: o['sound'] === true };
+  return {
+    motion: o['motion'] === 'reduce' ? 'reduce' : 'auto',
+    sound: o['sound'] === true,
+    quiet: o['quiet'] === true,
+    glossary: o['glossary'] !== false,
+    marks: o['marks'] !== false,
+  };
 }
 
 /** 지난 영수증: 모양이 맞는 것만, 같은 조각은 하나만, 최근 것부터 RECEIPTS_MAX장까지 */
@@ -144,7 +156,13 @@ export function isEmptyMeta(m: Meta): boolean {
   return m.sent.length === 0 && m.interviewStartedAt === undefined && !m.lessonDone && !m.issued;
 }
 export function isDefaultPrefs(p: Prefs): boolean {
-  return p.motion === DEFAULT_PREFS.motion && p.sound === DEFAULT_PREFS.sound;
+  return (
+    p.motion === DEFAULT_PREFS.motion &&
+    p.sound === DEFAULT_PREFS.sound &&
+    p.quiet === DEFAULT_PREFS.quiet &&
+    p.glossary === DEFAULT_PREFS.glossary &&
+    p.marks === DEFAULT_PREFS.marks
+  );
 }
 export function isEmptyReceipts(l: ReceiptEntry[]): boolean {
   return l.length === 0;

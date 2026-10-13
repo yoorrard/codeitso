@@ -15,46 +15,57 @@ html {
   text-size-adjust: 100%;
   /* 붙박이 머리말·아래 막대가 초점 받은 요소를 가리지 않게 (WCAG 2.4.11) */
   scroll-padding-block: var(--bar-top) var(--bar-bottom);
-  background: var(--paper);
+  background: var(--bg);
 }
 
 body {
   min-height: 100dvh;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-body);
-  font-size: var(--text-base);
+  font-size: var(--size-body);
   font-weight: var(--weight-body);
-  line-height: var(--leading);
+  line-height: var(--leading-body);
   word-break: keep-all;
   overflow-wrap: anywhere; /* 글자를 크게 키워 낱말이 줄보다 길면 그 안에서라도 끊어 가로 스크롤을 막는다 (WCAG 1.4.10) */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  caret-color: var(--ink);
-  scrollbar-color: var(--ink-soft) transparent;
+  caret-color: var(--text);
+  scrollbar-color: var(--text-2) transparent;
 }
 
+/* 글자 단계 (brief 5.1): 굵기는 400·600·700 셋만. 제목 줄 높이는 '크기 + 9px'(19px 이상 규칙, systems 4.1)이라
+   화면 CSS가 크기만 바꿔도 줄 높이가 따라간다. 단계 밖 H1은 26/35, 묶음 제목 H2는 19/28·600 */
 h1,
 h2,
 h3,
 h4 {
   font-weight: var(--weight-heading);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-heading);
-  /* balance는 한국어에서 '한 / 번만'처럼 낱말 묶음을 가르기 쉬워 pretty를 쓴다 */
-  text-wrap: pretty;
+  line-height: calc(1em + 0.5625rem);
+  letter-spacing: var(--tracking-title-sm);
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: var(--text-2xl);
+  font-size: var(--size-title-1);
+  letter-spacing: var(--tracking-title);
 }
 
 h2 {
-  font-size: var(--text-xl);
+  font-size: var(--size-title-3);
+  font-weight: var(--weight-strong);
 }
 
 h3 {
-  font-size: var(--text-lg);
+  font-size: var(--size-body-lg);
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-body);
+}
+
+h4 {
+  font-size: var(--size-body);
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-body);
 }
 
 p,
@@ -109,19 +120,19 @@ button:disabled,
   cursor: not-allowed;
 }
 
-/* 키보드 초점은 늘 보인다 (마우스로 누를 때는 숨김) */
+/* 키보드 초점은 늘 보인다 (마우스로 누를 때는 숨김). 2px 고리 + 2px 띄움 (brief 4.6): 고른 줄의 안쪽 2px 고리와 띄움으로 갈린다 */
 :focus-visible {
-  outline: 3px solid var(--focus);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
 .on-dark :focus-visible {
-  outline-color: var(--focus-on-dark);
+  outline-color: var(--focus-on-navy);
 }
 
 ::selection {
-  background: var(--gold-soft);
-  color: var(--ink);
+  background: var(--selected);
+  color: var(--text);
 }
 
 code,
@@ -165,10 +176,10 @@ samp {
 
 .skip-link:focus-visible {
   transform: none;
-  outline-color: var(--focus-on-dark);
+  outline-color: var(--focus-on-navy);
 }
 
-/* 숫자를 나란히 비교하는 곳 */
+/* 숫자를 나란히 비교하는 곳 (비용·개수·시간·n/4). 고정폭 글꼴은 영수증 종이 안에서만 쓴다 */
 .tabular {
   font-variant-numeric: tabular-nums;
 }

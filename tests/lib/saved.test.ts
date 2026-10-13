@@ -68,13 +68,17 @@ describe('메타 읽기', () => {
 });
 
 describe('설정 읽기', () => {
-  it('모르는 값은 기본값 (동작은 기기 설정 따르기, 효과음 꺼짐)', () => {
-    expect(readPrefs({ motion: 'fast', sound: 'on' })).toEqual(DEFAULT_PREFS);
-    expect(DEFAULT_PREFS).toEqual({ motion: 'auto', sound: false });
+  it('모르는 값은 기본값 (동작은 기기 설정 따르기, 효과음·조용히 모시기 꺼짐, 풀이·점선 밑줄 켜짐)', () => {
+    expect(readPrefs({ motion: 'fast', sound: 'on', quiet: 1, glossary: 'no', marks: null })).toEqual(DEFAULT_PREFS);
+    expect(DEFAULT_PREFS).toEqual({ motion: 'auto', sound: false, quiet: false, glossary: true, marks: true });
   });
 
-  it('줄이기와 효과음 켜기', () => {
-    expect(readPrefs({ motion: 'reduce', sound: true })).toEqual({ motion: 'reduce', sound: true });
+  it('줄이기와 효과음 켜기 (옛 저장 값에 없는 칸은 기본값)', () => {
+    expect(readPrefs({ motion: 'reduce', sound: true })).toEqual({ motion: 'reduce', sound: true, quiet: false, glossary: true, marks: true });
+  });
+
+  it('조용히 모시기 켜기, 풀이·점선 밑줄 끄기 (brief 6.13)', () => {
+    expect(readPrefs({ quiet: true, glossary: false, marks: false })).toEqual({ motion: 'auto', sound: false, quiet: true, glossary: false, marks: false });
   });
 });
 
@@ -93,7 +97,9 @@ describe('처음 값 판단 (처음 값이면 저장 키를 지운다)', () => {
     expect(isEmptyMeta({ sent: [] })).toBe(true);
     expect(isEmptyMeta({ sent: [], issued: true })).toBe(false);
     expect(isDefaultPrefs(DEFAULT_PREFS)).toBe(true);
-    expect(isDefaultPrefs({ motion: 'reduce', sound: false })).toBe(false);
+    expect(isDefaultPrefs({ ...DEFAULT_PREFS, motion: 'reduce' })).toBe(false);
+    expect(isDefaultPrefs({ ...DEFAULT_PREFS, quiet: true })).toBe(false);
+    expect(isDefaultPrefs({ ...DEFAULT_PREFS, marks: false })).toBe(false);
     expect(isEmptySeen({ scenes: [] })).toBe(true);
     expect(isEmptySeen({ scenes: ['s5'] })).toBe(false);
   });

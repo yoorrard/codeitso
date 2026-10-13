@@ -1,7 +1,7 @@
 // 저장소(store.ts): 깨진 저장 값, 처음 값이면 키 지우기, 기록 지우기, 되풀이해도 한 번만
 import { setPersistentEngine } from '@nanostores/persistent';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { KEYS } from '../../src/lib/saved.ts';
+import { DEFAULT_PREFS, KEYS } from '../../src/lib/saved.ts';
 
 // store.ts를 불러오기 전에 가짜 저장소를 끼운다 (일부러 깨진 값과 남의 키를 넣어 둔다)
 const storage: Record<string, string> = {
@@ -19,7 +19,7 @@ beforeAll(async () => {
 describe('저장소', () => {
   it('깨진 저장 값은 처음 값으로 읽는다', () => {
     expect(store.$session.get()).toEqual({ answers: {}, cart: [], kept: [], deferred: [] });
-    expect(store.$prefs.get()).toEqual({ motion: 'reduce', sound: false });
+    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', sound: false });
   });
 
   it('빌드(서버)에서는 저장 안내를 띄우지 않는다', () => {
@@ -35,7 +35,7 @@ describe('저장소', () => {
 
   it('설정은 모양을 골라 저장한다', () => {
     store.setPrefs({ sound: true });
-    expect(store.$prefs.get()).toEqual({ motion: 'reduce', sound: true });
+    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', sound: true });
     store.setPrefs({ motion: 'auto', sound: false });
     expect(KEYS.prefs in storage).toBe(false);
   });
@@ -77,7 +77,7 @@ describe('저장소', () => {
     store.clearAll();
     for (const key of [KEYS.session, KEYS.study, KEYS.meta, KEYS.seen, KEYS.receipts]) expect(key in storage).toBe(false);
     expect(storage['other:key']).toBe('그대로');
-    expect(store.$prefs.get()).toEqual({ motion: 'reduce', sound: true });
+    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', sound: true });
     expect(KEYS.prefs in storage).toBe(true);
   });
 });

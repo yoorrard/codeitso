@@ -63,49 +63,26 @@
   text-decoration: none;
 }
 
-.wordmark {
-  font-size: var(--text-lg);
-  white-space: nowrap;
-  font-weight: var(--weight-display);
-  letter-spacing: var(--tracking-heading);
-}
-
-/* 브랜드 마크: 남색 둥근 네모 안의 끊긴 금색 고리. 그림(mark.svg)이 오기 전에는 CSS로 그린다 */
+/* 글자 상표와 브랜드 마크: 소유자 로고 그림 (D60). 크기만 정한다 (그림 위에 그림자·외곽선을 더하지 않는다) */
+.wordmark,
 .brand-mark {
-  position: relative;
+  display: block;
   flex-shrink: 0;
-  inline-size: 32px;
-  block-size: 32px;
-  border-radius: 9px;
-  background: var(--navy);
 }
 
-.brand-mark:not(.has-svg)::before {
-  content: '';
-  position: absolute;
-  inset: 7px;
-  border: 3.5px solid var(--gold);
-  border-inline-end-color: transparent;
-  border-radius: var(--radius-pill);
-  transform: rotate(-45deg);
-}
-
-.brand-mark.has-svg {
-  background: none;
-}
-
-.brand-mark svg {
+.wordmark img,
+.brand-mark img {
   display: block;
   inline-size: 100%;
-  block-size: 100%;
+  block-size: auto;
 }
 
-.brand-mark .mark-tile {
-  color: var(--navy);
+.wordmark {
+  inline-size: 92px;
 }
 
-.brand-mark .mark-ring {
-  color: var(--gold);
+.brand .brand-mark {
+  inline-size: 40px;
 }
 
 .top-actions {

@@ -9,6 +9,7 @@ import Icon from '../components/Icon.astro';
 import DictionaryPanel from '../components/DictionaryPanel.tsx';
 import TermPopover from '../components/TermPopover.tsx';
 import BrandMark from '../components/BrandMark.astro';
+import Wordmark from '../components/Wordmark.astro';
 import SettingsMenu from '../components/SettingsMenu.tsx';
 import StageRail from '../components/StageRail.tsx';
 import StatusLine from '../components/StatusLine.tsx';
@@ -48,7 +49,9 @@ const hasAction = Astro.slots.has('action');
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--card 낮) 값을 그대로 쓴다 -->
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141a2b" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--card 밤) 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
       // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게)를 붙인다.
@@ -75,7 +78,7 @@ const hasAction = Astro.slots.has('action');
       <div class="topbar-inner">
         <a class="brand" href={ROUTES.home}>
           <BrandMark />
-          <span class="wordmark">{ko.site.name}</span>
+          <Wordmark />
         </a>
         <div class="top-actions">
           <a class="dict-btn" href={ROUTES.dictionary}>

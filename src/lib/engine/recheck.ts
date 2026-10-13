@@ -14,8 +14,10 @@ export interface Conflict {
   researchCard?: string;
   /** 빈 칸 충돌의 칸 id */
   slotId?: string;
-  /** 지도에서 이 막힌 곳을 붙일 칸 id. 규칙 충돌은 규칙의 anchorSlot, 빈 칸 충돌은 그 칸. 없으면 길 전체 */
+  /** 지도에서 이 막힌 곳을 붙일 칸 id. 규칙 충돌은 규칙의 anchorSlot(열린 칸일 때만), 빈 칸 충돌은 그 칸. 없으면 길 전체 */
   anchorSlot?: string;
+  /** 빈 칸 충돌에서 그 칸을 '나중에 붙일 것'으로 미룰 수 있는지 (칸의 deferrable). 미루면 이 막힌 곳은 사라진다 */
+  deferrable?: boolean;
   /** '그대로 가기'를 고를 수 있는지 (비워 둘 수 없는 칸은 false, 화면: 통행 불가) */
   keepable: boolean;
   /** 이용자가 '그대로 가기'를 골랐는지 (화면: 서행) */
@@ -50,6 +52,7 @@ export function emptySlotId(slotId: string): string {
 /** 출발 전 점검: 규칙 충돌(규칙 순서) 다음에 빈 필수 칸(칸 순서). 화면에서는 '막힌 곳' */
 export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: Slot[]): Conflict[] {
   const out: Conflict[] = [];
+  const open = new Set(slots.map((s) => s.id));
   for (const r of cat.data.rules.rules) {
     if (r.type !== 'conflict' || !evalCondition(r.when, ctx)) continue;
     out.push({
@@ -58,7 +61,8 @@ export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: S
       message: r.message,
       fixHint: r.fixHint,
       researchCard: r.researchCard,
-      ...(r.anchorSlot ? { anchorSlot: r.anchorSlot } : {}),
+      // 열리지 않은 칸은 지도에 없으므로 길 전체에 단다
+      ...(r.anchorSlot && open.has(r.anchorSlot) ? { anchorSlot: r.anchorSlot } : {}),
       keepable: true,
       kept: session.kept.includes(r.id),
     });
@@ -76,6 +80,7 @@ export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: S
       fixHint: s.emptyFix ?? fill(t.fixHint, { label: s.label }),
       slotId: s.id,
       anchorSlot: s.id,
+      ...(s.deferrable === true ? { deferrable: true } : {}),
       keepable,
       kept: keepable && session.kept.includes(id),
     });

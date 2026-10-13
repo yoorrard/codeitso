@@ -229,10 +229,10 @@ describe('renderPack 2·10번: 도구 없는 단계와 문장 틀 없는 단계'
     ]);
   });
 
-  it('2번: 화면 단계는 빼고, 도구가 없는 단계는 이름만', () => {
+  it('2번: 화면 단계는 빼고, 도구가 없는 단계는 이름만 (미룬 것이 없으면 그냥 만들 것)', () => {
     expect(section(md, H.scope, H.screens)).toEqual([
       P.scopeRule,
-      `### ${L.firstPhase}`,
+      `### ${L.build}`,
       ...RECORD_FEATURES,
       `- ${storeStep.title}`,
       '- 덤 칸: 덤 상품',
@@ -286,10 +286,10 @@ describe('renderPack 2·3번: 나중으로 미룬 칸', () => {
     expect(section(later, H.screens, H.features)).toEqual(RECORD_SCREENS);
   });
 
-  it('2번: 먼저 만들 것 목록에서 빠지고 나중에 붙일 것에 칸 이름으로', () => {
+  it('2번: 먼저 만들 것 목록에서 빠지고 나중에 붙일 것에 칸 이름으로 (미루기 전에는 그냥 만들 것)', () => {
     expect(section(now, H.scope, H.screens)).toEqual([
       P.scopeRule,
-      `### ${L.firstPhase}`,
+      `### ${L.build}`,
       ...RECORD_FEATURES,
       `- ${notifyStep.title}: 알림 상품`,
       `### ${L.notBuild}`,
@@ -364,7 +364,7 @@ describe('진짜 자료: case-04에서 로그인을 나중으로 미루면', () 
       ['supabase', '저장 외 1개', false],
       ['cloudflare-workers', '배포·공유', false],
     ]);
-    expect(m.difficultyText).toBe(`7 ${T.receipt.levels.hard}`);
+    expect(m.difficultyText).toBe(T.receipt.levels.hard);
   });
 
   it('설계도: 로그인 화면이 빠지고, 나중에 붙일 것에 로그인, 7번 표에 (나중) 없음', () => {

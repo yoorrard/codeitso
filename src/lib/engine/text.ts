@@ -7,7 +7,7 @@ export function fill(template: string, vars: Record<string, string | number>): s
   });
 }
 
-/** 고정폭 글꼴에서 차지하는 칸 수. 한글·한자·전각 문자는 2칸으로 센다. */
+/** 고정폭 글꼴에서 차지하는 칸 수. 한글·한자·전각 문자와 그림 문자는 2칸으로 센다. */
 export function displayWidth(s: string): number {
   let w = 0;
   for (const ch of s) {
@@ -19,7 +19,8 @@ export function displayWidth(s: string): number {
       (c >= 0xf900 && c <= 0xfaff) ||
       (c >= 0xfe30 && c <= 0xfe4f) ||
       (c >= 0xff00 && c <= 0xff60) ||
-      (c >= 0xffe0 && c <= 0xffe6);
+      (c >= 0xffe0 && c <= 0xffe6) ||
+      (c >= 0x1f300 && c <= 0x1faff); // 그림 문자(이모지)는 고정폭 글꼴에서도 2칸을 차지한다
     w += wide ? 2 : 1;
   }
   return w;

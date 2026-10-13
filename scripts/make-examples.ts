@@ -1,4 +1,4 @@
-// 레시피(화면: 미리 짠 코스)마다 영수증, AI에게 할 말, 설계도 예시를 docs/examples/에 만든다.
+// 미리 짠 코스(자료: recipes)마다 영수증, AI에게 할 말, 설계도 예시를 docs/examples/에 만든다.
 //   node scripts/make-examples.ts
 // 발행 시각과 사이트 주소는 예시용 고정값이다.
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -26,7 +26,7 @@ for (const recipe of data.recipes.recipes) {
   const doc = [
     `# 예시: ${recipe.title}`,
     '',
-    '> 엔진이 미리 짠 코스(레시피)로 만든 결과물 예시입니다. `npm run examples`로 다시 만듭니다. 손으로 고치지 마세요.',
+    '> 엔진이 미리 짠 코스로 만든 결과물 예시입니다. `npm run examples`로 다시 만듭니다. 손으로 고치지 마세요.',
     '',
     '## 텍스트 영수증',
     '',
@@ -34,7 +34,7 @@ for (const recipe of data.recipes.recipes) {
     receipt,
     '```',
     '',
-    '## AI에게 할 말 (대화 카드)',
+    '## AI에게 할 말',
     '',
     cards,
     '',

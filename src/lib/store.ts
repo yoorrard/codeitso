@@ -11,6 +11,7 @@ import {
   EMPTY_SESSION,
   EMPTY_SEEN,
   KEYS,
+  LEGACY_KEYS,
   SENT_MAX,
   isDefaultPrefs,
   isEmptyMeta,
@@ -39,6 +40,7 @@ function storageWorks(): boolean {
 
 const ok = storageWorks();
 if (!ok) setPersistentEngine({}, { addEventListener() {}, removeEventListener() {} });
+else if (typeof window !== 'undefined') for (const k of LEGACY_KEYS) window.localStorage.removeItem(k);
 
 /** localStorage를 쓸 수 있는가 (false면 '진행 상황이 저장되지 않아요' 한 줄) */
 export const $storageOk = atom(ok);

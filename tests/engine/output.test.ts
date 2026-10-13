@@ -137,8 +137,9 @@ describe('displayWidth', () => {
     expect(displayWidth('힤')).toBe(1);
   });
 
-  it('지금은 코드 포인트마다 센다 (이모지 1칸, 결합 문자도 1칸)', () => {
-    expect(displayWidth('😀')).toBe(1);
+  it('그림 문자(이모지)는 2칸, 결합 문자는 코드 포인트마다 1칸', () => {
+    expect(displayWidth('😀')).toBe(2);
+    expect(displayWidth('🚕')).toBe(2);
     expect(displayWidth('é')).toBe(2);
     expect(displayWidth('가')).toBe(3);
   });
@@ -337,7 +338,7 @@ describe('receiptModel', () => {
     const cat = receiptCatalog();
     const m = receiptModel(cat, evaluate(cat, { answers: ANSWERED, cart: RECEIPT_CART }), ISSUED);
     expect(m.difficulty).toBe(6);
-    expect(m.difficultyText).toBe(`6 ${T.receipt.levels.normal}`);
+    expect(m.difficultyText).toBe(T.receipt.levels.normal);
     expect(m.minutes).toBe(100);
     expect(m.timeText).toBe('약 1시간 30분');
   });
@@ -348,7 +349,7 @@ describe('receiptModel', () => {
     const m = receiptModel(cat, r, ISSUED);
     expect(m.items.map((i) => i.later)).toEqual([false, false, true]);
     expect(m.difficulty).toBe(3);
-    expect(m.difficultyText).toBe(`3 ${T.receipt.levels.easy}`);
+    expect(m.difficultyText).toBe(T.receipt.levels.easy);
     expect(m.minutes).toBe(60);
     expect(m.timeText).toBe('약 1시간');
   });
@@ -368,7 +369,7 @@ describe('receiptModel', () => {
       ['배포·공유', 'google-sheets-apps-script', '0원'],
     ]);
     expect(m.destination).toBe('안내 페이지');
-    expect(m.difficultyText).toBe('5 보통');
+    expect(m.difficultyText).toBe('보통');
     expect(m.timeText).toBe('약 2시간');
   });
 });
@@ -403,6 +404,14 @@ describe('renderReceiptText', () => {
     expect(lines.find((l) => l.startsWith('목적지'))?.endsWith('…')).toBe(true);
   });
 
+  it("칸 이름이 길어도 '(나중)' 표시는 잘리지 않는다 (칸 이름을 먼저 자른다)", () => {
+    const base = modelWith({});
+    const m = modelWith({ items: [{ ...base.items[0]!, slot: '로그인 외 1개', later: true }] });
+    const line = renderReceiptText(m).split('\n').find((l) => l.includes(m.laterMark));
+    expect(line?.startsWith(`로그…${m.laterMark}`)).toBe(true);
+    expect(displayWidth(line ?? '')).toBe(WIDTH);
+  });
+
   it('줄 순서와 모양', () => {
     const m = receiptModel(REAL, goldenResult('case-08'), ISSUED);
     const lines = renderReceiptText(m).split('\n');
@@ -420,10 +429,10 @@ describe('renderReceiptText', () => {
       sep,
       '도구 비용 합계          0원으로 시작',
       '예상 시간              약 2시간 30분',
-      '난이도                        6 보통',
-      '준비물                             3',
-      '읽어 둘 용어                       6',
-      '알아볼 것                          1',
+      '난이도                          보통',
+      '준비물                           3개',
+      '읽어 둘 용어                     6개',
+      '알아볼 것                        1개',
       sep,
       `[ ${T.receipt.stamp} ]`,
       T.receipt.footer,
@@ -442,9 +451,9 @@ describe('renderReceiptText', () => {
       [m.totalLabel, m.total],
       [m.timeLabel, m.timeText],
       [m.difficultyLabel, m.difficultyText],
-      [m.countLabels.prep, String(m.counts.prep)],
-      [m.countLabels.study, String(m.counts.study)],
-      [m.countLabels.research, String(m.counts.research)],
+      [m.countLabels.prep, fill(m.countFormat, { n: m.counts.prep })],
+      [m.countLabels.study, fill(m.countFormat, { n: m.counts.study })],
+      [m.countLabels.research, fill(m.countFormat, { n: m.counts.research })],
     ] as const) {
       const l = lines.find((x) => x.startsWith(label));
       expect(l && displayWidth(l)).toBe(WIDTH);

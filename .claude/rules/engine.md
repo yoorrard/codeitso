@@ -15,7 +15,7 @@ paths:
 - 같은 자료와 같은 `Session`이면 늘 같은 결과. 정렬은 `cmp`(로캘과 무관). `localeCompare` 금지.
 - Node가 빌드 없이 바로 실행하므로 **지울 수 있는 타입 문법만**: `enum`·`namespace`·매개변수 속성 금지, 타입만 쓰는 import는 `import type`, 상대 경로 import에는 `.ts` 확장자.
 - 문장을 코드에 박지 않는다. 엔진이 쓰는 문장은 `data/templates.json`에서 가져오고 `fill()`로 채운다.
-- 동작을 바꾸면 같은 커밋에서 `docs/ENGINE.md`, `data/golden/`(이유를 적고 손으로), 필요하면 `/about/scoring` 화면을 함께 고친다. 절차는 `docs/ENGINE.md` 8절.
+- 동작을 바꾸면 같은 커밋에서 `docs/ENGINE.md`, `data/golden/`(이유를 적고 손으로), 필요하면 `/about/criteria` 화면을 함께 고친다. 절차는 `docs/ENGINE.md` 8절.
 - 화면에서 필요한 계산이 엔진에 없으면 화면에서 계산하지 말고 엔진에 함수를 더한다 (시험과 함께).
 
 ## 스크립트 (`scripts/`)

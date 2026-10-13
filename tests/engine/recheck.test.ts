@@ -79,14 +79,30 @@ describe('규칙 충돌', () => {
     expect(evaluate(cat, { answers: OFF }).conflicts).toEqual([]);
   });
 
-  it('anchorSlot이 있으면 그대로 넘기고, 없으면 키도 없다 (지도에서 막힌 곳을 붙일 칸)', () => {
-    const cat = tinyCatalog({
-      rules: [{ ...conflictRule('conflict.a', { always: true }), anchorSlot: 'slot.data' }, conflictRule('conflict.b', { always: true })],
-      cards: [card('card.x')],
-    });
-    const [a, b] = evaluate(cat, {}).conflicts;
+  it('anchorSlot은 그 칸이 열렸을 때만 넘기고, 아니면 키도 없다 (지도에서 막힌 곳을 붙일 칸, 없으면 길 전체)', () => {
+    const DATA = slotRule('slot-rule.data', { id: 'slot.data', label: '외부 데이터', capability: 'data', required: false, order: 40 });
+    const make = (open: boolean) =>
+      tinyCatalog({
+        rules: [...(open ? [DATA] : []), { ...conflictRule('conflict.a', { always: true }), anchorSlot: 'slot.data' }, conflictRule('conflict.b', { always: true })],
+        cards: [card('card.x')],
+      });
+    const [a, b] = evaluate(make(true), {}).conflicts;
     expect(a?.anchorSlot).toBe('slot.data');
     expect(b && 'anchorSlot' in b).toBe(false);
+    // 칸이 열리지 않았으면 지도에 그 칸이 없으므로 길 전체에 단다
+    const [closed] = evaluate(make(false), {}).conflicts;
+    expect(closed?.id).toBe('conflict.a');
+    expect(closed && 'anchorSlot' in closed).toBe(false);
+  });
+
+  it('진짜 자료와 골든 사례에서 막힌 곳의 anchorSlot은 늘 열린 칸이다', () => {
+    const cat = makeCatalog(realData());
+    for (let n = 1; n <= 23; n++) {
+      const g = readJson<Golden>(join(DATA_DIR, 'golden', `case-${String(n).padStart(2, '0')}.json`));
+      const r = evaluate(cat, goldenSession(g));
+      const open = new Set(r.slots.map((s) => s.slot.id));
+      for (const c of r.conflicts) if (c.anchorSlot) expect(open.has(c.anchorSlot), `${g.id} ${c.id}`).toBe(true);
+    }
   });
 
   it('진짜 충돌 규칙의 anchorSlot은 CONCEPT 3.7 표대로 (유료 도구는 길 전체)', () => {
@@ -99,9 +115,9 @@ describe('규칙 충돌', () => {
       'conflict.paid-on-free': null,
       'conflict.realtime-mismatch': 'slot.data',
       'conflict.personal-server': 'slot.store',
-      'conflict.key-in-static-page': 'slot.data',
+      'conflict.key-in-static-page': 'slot.host',
       'conflict.key-on-public-host': 'slot.host',
-      'conflict.shared-without-login': 'slot.auth',
+      'conflict.shared-without-login': null,
     });
   });
 
@@ -213,6 +229,12 @@ describe('빈 필수 칸', () => {
     const c = conflictIn(evaluate(cat, {}), emptySlotId('slot.data'));
     expect(c.message).toBe('데이터가 없어요.');
     expect(c.fixHint).toBe('데이터 상품을 담으세요.');
+  });
+
+  it('미룰 수 있는 칸(deferrable)이 비면 deferrable: true, 아니면 키도 없다', () => {
+    const r = evaluate(tinyCatalog({ rules: [STORE, AUTH] }), {});
+    expect(conflictIn(r, emptySlotId('slot.auth')).deferrable).toBe(true);
+    expect('deferrable' in conflictIn(r, emptySlotId('slot.store'))).toBe(false);
   });
 
   it('필수가 아닌 칸은 비어도 충돌이 아니다', () => {

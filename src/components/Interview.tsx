@@ -119,7 +119,7 @@ export default function Interview() {
     if (!r.done) return;
     moved.current = true;
     setFinished(true);
-    announce(ko.interview.done);
+    announce(fill(ko.interview.done, { n: r.slots.length }));
     void sfx('arrive');
   };
 
@@ -138,7 +138,7 @@ export default function Interview() {
           <h1 id="q-title" ref={heading} tabIndex={-1}>
             {ko.common.interviewDone}
           </h1>
-          <p>{ko.interview.done}</p>
+          <p>{fill(ko.interview.done, { n: r.slots.length })}</p>
           <a class="btn btn-primary btn-lg" href={ROUTES.waypoints}>
             {ko.interview.goShop}
           </a>

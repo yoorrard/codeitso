@@ -16,7 +16,7 @@ export { PROXY_STEP } from './checkout.ts';
 export type { EngineResult } from './evaluate.ts';
 export { evaluate, normalizeSession } from './evaluate.ts';
 export type { ReceiptItem, ReceiptModel } from './receipt.ts';
-export { projectName, receiptModel, renderReceiptText } from './receipt.ts';
+export { difficultyWord, projectName, receiptModel, renderReceiptText, toolDifficultyWord } from './receipt.ts';
 export type { PackOptions } from './pack.ts';
 export { conversationCards, packFileName, renderPack } from './pack.ts';
 export type { ShareState } from './extras.ts';

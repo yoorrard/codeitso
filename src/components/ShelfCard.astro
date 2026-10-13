@@ -7,7 +7,7 @@ import Emoji from './Emoji.astro';
 import Icon from './Icon.astro';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
-import { badges, fill } from '../lib/engine/index.ts';
+import { badges, fill, toolDifficultyWord } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/index.ts';
 import { capabilityLabel, domainLabel, productArt } from '../lib/shelf.ts';
 import { toolPath } from '../lib/routes.ts';
@@ -59,7 +59,7 @@ const domains = (p.domains ?? []).map(domainLabel).join(', ');
           <span aria-hidden="true" class="stars">
             {stars}
           </span>
-          <span class="visually-hidden">{fill(ko.shop.difficultyText, { n: p.difficulty })}</span>
+          <span class="visually-hidden">{fill(ko.shop.difficultyText, { level: toolDifficultyWord(catalog, p.difficulty) })}</span>
         </dd>
       </dl>
     ) : (

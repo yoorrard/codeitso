@@ -76,13 +76,13 @@ function Paper({ r, issuedAt, onPrinted }: { r: EngineResult; issuedAt: string; 
         </p>
         <p class="r-row r-fixed r-counts">
           <span>
-            {m.countLabels.prep} {m.counts.prep}
+            {m.countLabels.prep} {fill(m.countFormat, { n: m.counts.prep })}
           </span>
           <span>
-            {m.countLabels.study} {m.counts.study}
+            {m.countLabels.study} {fill(m.countFormat, { n: m.counts.study })}
           </span>
           <span>
-            {m.countLabels.research} {m.counts.research}
+            {m.countLabels.research} {fill(m.countFormat, { n: m.counts.research })}
           </span>
         </p>
         <hr class="r-rule" />

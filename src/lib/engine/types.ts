@@ -265,6 +265,7 @@ export type PackLabel =
   | 'ai'
   | 'answers'
   | 'firstPhase'
+  | 'build'
   | 'notBuild'
   | 'deferred'
   | 'feature'
@@ -343,6 +344,7 @@ export interface Templates {
     paidIncluded: string;
     /** 나중에 붙일 것 품목 표시 */
     later: string;
+    count: string;
     more: string;
     levels: { easy: string; normal: string; hard: string };
     timeFormat: { minutes: string; hours: string; hoursHalf: string };

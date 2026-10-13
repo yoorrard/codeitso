@@ -9,7 +9,7 @@ import RecipeStart from '../../components/RecipeStart.tsx';
 import { ko } from '../../copy/ko.ts';
 import { ROUTES, termPath, toolPath } from '../../lib/routes.ts';
 import { catalog } from '../../lib/data.ts';
-import { badges, fill } from '../../lib/engine/index.ts';
+import { badges, fill, toolDifficultyWord } from '../../lib/engine/index.ts';
 import type { Product } from '../../lib/engine/index.ts';
 import { capabilityLabel, domainLabel, productArt, recipesWith, shelfProducts } from '../../lib/shelf.ts';
 
@@ -86,7 +86,7 @@ const domains = (p.domains ?? []).map(domainLabel);
       <dt>{ko.shop.difficulty}</dt>
       <dd>
         <span aria-hidden="true" class="stars">{stars}</span>
-        <span class="visually-hidden">{fill(ko.shop.difficultyText, { n: p.difficulty })}</span>
+        <span class="visually-hidden">{fill(ko.shop.difficultyText, { level: toolDifficultyWord(catalog, p.difficulty) })}</span>
       </dd>
       <dt>{P.capabilities}</dt>
       <dd>{p.capabilities.map(capabilityLabel).join(', ')}</dd>

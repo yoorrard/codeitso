@@ -60,7 +60,8 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
 
   // 2. 범위
   h2(P.headings.scope);
-  out.push(P.scopeRule, '', `### ${L.firstPhase}`, '');
+  // 나중에 붙일 것이 없으면 '먼저'가 가리킬 다음이 없으므로 그냥 '만들 것'
+  out.push(P.scopeRule, '', `### ${deferred.length > 0 ? L.firstPhase : L.build}`, '');
   for (const f of typeTpl.features) out.push(`- ${f.name}`);
   for (const s of r.steps) {
     if (s.slotId === 'slot.screen') continue;

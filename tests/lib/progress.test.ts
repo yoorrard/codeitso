@@ -54,6 +54,24 @@ describe('단계 마침', () => {
     expect(p.requiredTotal).toBeGreaterThan(0);
   });
 
+  it('나중으로 미룬 꼭 고를 것은 남은 수에 넣지 않는다 (case-04에서 로그인을 미룸)', () => {
+    const g = readJson<Golden>(goldenFiles().find((f) => f.endsWith('case-04.json')) ?? '');
+    const r = evaluate(cat, { answers: g.answers, cart: ['react-vite', 'firebase-firestore', 'cloudflare-workers'], deferred: ['slot.auth'] });
+    expect(r.slots.find((s) => s.slot.id === 'slot.auth')?.filledBy).toEqual([]);
+    const p = progress(r, {});
+    expect(p.requiredLeft).toBe(0);
+    expect(p.stages.waypoints).toBe(true);
+  });
+
+  it("빈 꼭 고를 것을 '그대로 가기'로 두면 남은 수에 넣지 않는다", () => {
+    const answersOnly = evaluate(cat, { answers: ready.session.answers });
+    const keepable = answersOnly.conflicts.filter((c) => c.kind === 'empty-slot' && c.keepable);
+    expect(keepable.length).toBeGreaterThan(0);
+    const kept = evaluate(cat, { answers: ready.session.answers, kept: keepable.map((c) => c.id) });
+    const before = progress(answersOnly, {}).requiredLeft;
+    expect(progress(kept, {}).requiredLeft).toBe(before - keepable.length);
+  });
+
   it('같은 상태면 늘 같은 값', () => {
     expect(progress(ready, { issued: true })).toEqual(progress(ready, { issued: true }));
   });

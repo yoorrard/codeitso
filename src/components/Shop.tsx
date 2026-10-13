@@ -6,7 +6,7 @@ import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import type { EngineResult, Scored, SlotRanking } from '../lib/engine/index.ts';
-import { badges, evaluate, fill } from '../lib/engine/index.ts';
+import { badges, evaluate, fill, toolDifficultyWord } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
@@ -93,7 +93,7 @@ function ProductCard({ s, slotId, capability, inCart, recommended, compare, onTo
           <span aria-hidden="true" class="stars">
             {stars}
           </span>
-          <span class="visually-hidden">{fill(ko.shop.difficultyText, { n: p.difficulty })}</span>
+          <span class="visually-hidden">{fill(ko.shop.difficultyText, { level: toolDifficultyWord(catalog, p.difficulty) })}</span>
         </dd>
         {s.reasons.length > 0 && (
           <>

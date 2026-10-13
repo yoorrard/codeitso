@@ -6,7 +6,7 @@ import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import type { Conflict } from '../lib/engine/index.ts';
-import { answerChips, evaluate, fill, formatMinutes } from '../lib/engine/index.ts';
+import { answerChips, difficultyWord, evaluate, fill, formatMinutes } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
 import { $result, updateSession } from '../lib/result.ts';
@@ -43,6 +43,12 @@ function ConflictItem({ c }: { c: Conflict }) {
   const undo = (): void => {
     updateSession((s) => ({ kept: s.kept.filter((k) => k !== c.id) }));
   };
+  const defer = (): void => {
+    if (!c.slotId) return;
+    const id = c.slotId;
+    updateSession((s) => ({ deferred: [...s.deferred, id] }));
+    announce(fill(ko.check.deferred, { slotObj: josa(slotLabel(id), 'obj') }));
+  };
   const toShop = waypointPath(c.slotId);
   return (
     <li class={`conflict${c.kept ? ' kept' : ''}`}>
@@ -61,8 +67,13 @@ function ConflictItem({ c }: { c: Conflict }) {
         ) : (
           <div class="conflict-actions">
             <a class="btn" href={toShop}>
-              {ko.common.conflictChange}
+              {c.kind === 'empty-slot' ? ko.common.conflictPick : ko.common.conflictChange}
             </a>
+            {c.deferrable && c.slotId && (
+              <button type="button" class="btn" aria-label={fill(ko.check.deferLabel, { slot: slotLabel(c.slotId) })} onClick={defer}>
+                {ko.check.defer}
+              </button>
+            )}
             {c.keepable ? (
               <>
                 <button type="button" class="btn" onClick={keep}>
@@ -150,7 +161,7 @@ export default function Check() {
           ))}
         </ul>
         {r.orphans.length > 0 && <p class="q-help">{fill(ko.check.orphans, { names: r.orphans.map(productName).join(', ') })}</p>}
-        <p class="q-help">{fill(ko.check.size, { d: r.split.difficultyFirst, time: formatMinutes(r.minutes, T.receipt.timeFormat) })}</p>
+        <p class="q-help">{fill(ko.check.size, { level: difficultyWord(catalog, r.split.difficultyFirst), time: formatMinutes(r.minutes, T.receipt.timeFormat) })}</p>
       </section>
 
       {alternative && (

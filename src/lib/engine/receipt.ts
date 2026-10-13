@@ -35,6 +35,8 @@ export interface ReceiptModel {
   footer: string;
   /** 나중에 붙일 것 품목 표시 */
   laterMark: string;
+  /** 개수 표시 틀 ('{{n}}개') */
+  countFormat: string;
 }
 
 /** 설계도 제목과 영수증 목적지에 쓰는 이름: 한 줄 입력 → 유형 이름 → '내 앱' */
@@ -53,6 +55,12 @@ export function difficultyWord(cat: Catalog, n: number): string {
   if (n <= Math.floor(split / 2)) return words.easy;
   if (n <= split) return words.normal;
   return words.hard;
+}
+
+/** 도구 하나의 난이도(1~3)를 말로: 1 쉬움, 2 보통, 3 어려움 */
+export function toolDifficultyWord(cat: Catalog, d: number): string {
+  const words = cat.data.templates.receipt.levels;
+  return d <= 1 ? words.easy : d === 2 ? words.normal : words.hard;
 }
 
 /** 상품이 맡은 칸 이름: '저장, 배포·공유'처럼 잇고, width를 넘으면 '저장 외 1개' */
@@ -94,12 +102,14 @@ export function receiptModel(cat: Catalog, r: EngineResult, issuedAt: string): R
     timeText: formatMinutes(r.minutes, t.timeFormat),
     difficultyLabel: t.difficulty,
     difficulty,
-    difficultyText: `${difficulty} ${difficultyWord(cat, difficulty)}`,
+    // 숫자(난이도 합)는 초심자가 읽을 수 없어 말로만 (쉬움·보통·어려움)
+    difficultyText: difficultyWord(cat, difficulty),
     counts: { prep: r.prep.length, study: r.study.all.length, research: r.research.length },
     countLabels: { prep: t.prep, study: t.study, research: t.research },
     stamp: t.stamp,
     footer: t.footer,
     laterMark: t.later,
+    countFormat: t.count,
   };
 }
 
@@ -122,13 +132,15 @@ export function renderReceiptText(m: ReceiptModel): string {
   out.push(`${m.destinationLabel}  ${truncateWidth(m.destination, WIDTH - displayWidth(m.destinationLabel) - 2)}`);
   out.push(line);
   // 칸 이름 자리: 기본 12칸(이름 11칸 + 띄움). 11칸을 넘는 이름(예: '로그인(나중)' 12칸)이 있으면
-  // 13칸으로 넓혀 12칸까지 보이고, 도구 이름 자리를 한 칸 줄인다. '(나중)' 표시가 잘리지 않게 하려는 것이다.
-  const items = m.items.map((i) => ({ ...i, label: i.later ? `${i.slot}${m.laterMark}` : i.slot }));
-  const slotW = Math.min(13, Math.max(12, ...items.map((i) => displayWidth(i.label) + 1)));
+  // 13칸으로 넓혀 12칸까지 보이고, 도구 이름 자리를 한 칸 줄인다. '(나중)' 표시는 늘 보이게
+  // 칸 이름 쪽을 먼저 자르고 표시를 붙인다 (예: '로그인 외 1…(나중)').
+  const markW = displayWidth(m.laterMark);
+  const slotW = Math.min(13, Math.max(12, ...m.items.map((i) => displayWidth(i.slot) + (i.later ? markW : 0) + 1)));
   const priceW = 4;
   const nameW = WIDTH - slotW - priceW - 1;
-  for (const i of items) {
-    const slot = padEndWidth(truncateWidth(i.label, slotW - 1), slotW);
+  for (const i of m.items) {
+    const label = i.later ? `${truncateWidth(i.slot, slotW - 1 - markW)}${m.laterMark}` : truncateWidth(i.slot, slotW - 1);
+    const slot = padEndWidth(label, slotW);
     const name = padEndWidth(truncateWidth(i.name, nameW), nameW);
     out.push(`${slot}${name} ${padStartWidth(i.price, priceW)}`);
   }
@@ -137,9 +149,10 @@ export function renderReceiptText(m: ReceiptModel): string {
   out.push(row(m.timeLabel, m.timeText));
   out.push(row(m.difficultyLabel, m.difficultyText));
   // 개수는 한 줄씩: '준비물 · 읽어 둘 용어 · 알아볼 것'을 한 줄에 이으면 36칸을 넘는다
-  out.push(row(m.countLabels.prep, String(m.counts.prep)));
-  out.push(row(m.countLabels.study, String(m.counts.study)));
-  out.push(row(m.countLabels.research, String(m.counts.research)));
+  const count = (n: number): string => fill(m.countFormat, { n });
+  out.push(row(m.countLabels.prep, count(m.counts.prep)));
+  out.push(row(m.countLabels.study, count(m.counts.study)));
+  out.push(row(m.countLabels.research, count(m.counts.research)));
   out.push(line);
   out.push(center(`[ ${m.stamp} ]`));
   out.push(center(m.footer));

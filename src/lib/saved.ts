@@ -10,6 +10,9 @@ export const KEYS = {
   seen: 'cc:seen:v1',
 } as const;
 
+/** 더는 쓰지 않는 옛 키. 옮길 값이 없어 읽지 않고, 남아 있으면 지운다 (cc:trip:v1 = 옛 도장 장면 기록, D56) */
+export const LEGACY_KEYS = ['cc:trip:v1'] as const;
+
 /** 개념 id → 읽음, 맞힌 확인 문제 번호 */
 export type StudyRecord = Record<string, { read: boolean; quiz: number[] }>;
 

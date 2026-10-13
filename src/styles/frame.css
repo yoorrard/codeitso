@@ -208,8 +208,8 @@
 
 .step.current a {
   padding-inline: var(--space-3);
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--chosen);
+  color: var(--on-chosen);
 }
 
 .step.locked button {
@@ -268,7 +268,7 @@
 }
 
 .rail-bars .bar.here {
-  background: var(--ink);
+  background: var(--brand-blue);
 }
 
 @container rail (max-width: 19rem) {
@@ -315,7 +315,7 @@
 }
 
 .stage-sheet-list .step.current a {
-  background: var(--ink);
+  background: var(--chosen);
 }
 
 .step-reason {
@@ -536,31 +536,52 @@
 }
 
 /* ── 버튼 ───────────────────────────────────────────────── */
+/* 버튼 (v2, docs/review/v2/systems.md 4.6): 외곽선 버튼은 쓰지 않는다. 기본은 테두리 없는 중립 면(--fill), 주 버튼은 화면마다 하나 */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-block-size: var(--tap);
-  padding: var(--space-2) var(--space-4);
-  border: 2px solid var(--ink-soft);
-  border-radius: var(--radius);
-  background: var(--card);
-  color: var(--ink);
+  min-block-size: var(--btn-md);
+  padding: var(--space-2) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  color: var(--text);
+  font-size: var(--size-body);
   font-weight: var(--weight-strong);
   text-decoration: none;
-  transition: transform var(--dur-tap) var(--ease-out);
+  transition:
+    transform var(--dur-tap) var(--ease-out),
+    background-color var(--dur-tap) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--fill-press);
+  }
 }
 
 .btn:active {
+  background: var(--fill-press);
   transform: scale(var(--juice-press-scale));
 }
 
-/* 주 버튼은 먹색 채움 (CONCEPT 5.3: 금색 큰 버튼은 쓰지 않는다). 밤 지도에서는 밝은 먹색 위 어두운 글자 */
+/* 주 버튼: 행동 파랑 채움에 흰 글자 (로고 파랑보다 한 단 짙은 값이라 흰 글자 4.5:1을 넘는다) */
 .btn-primary {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--on-ink);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn-primary:active {
+  background: var(--accent-press);
+}
+
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: var(--accent-press);
+  }
 }
 
 .btn-danger {

@@ -1,69 +1,37 @@
-// 주행 거리와 도장 (D32): 저장된 상태에서 매번 계산한다. 따로 쌓는 점수가 아니라 '얼마나 왔나'.
-// 같은 상태면 늘 같은 값이고, 같은 일을 되풀이해도 늘지 않는다 (부작용 없음, 시험 있음).
+// 진행 (docs/CONCEPT.md 8절, D56): 단계마다 마쳤는지와 실제로 남은 일의 개수. 따로 쌓는 점수(km·도장)는 없다.
+// 저장된 상태와 evaluate() 결과에서 매번 계산한다. 같은 상태면 늘 같은 값이다 (부작용 없음, 시험 있음).
 import type { EngineResult } from './engine/index.ts';
-import type { Meta, StudyRecord } from './saved.ts';
-import type { StationId } from './stations.ts';
-import { STATIONS } from './stations.ts';
-
-/** 한 가지 일을 마칠 때마다 늘어나는 거리(km) */
-export const KM = {
-  lesson: 5,
-  answer: 2,
-  slot: 5,
-  check: 10,
-  receipt: 10,
-  conceptRead: 3,
-  quizCorrect: 1,
-} as const;
+import type { Meta } from './saved.ts';
+import type { StageId } from './stages.ts';
+import { STAGES } from './stages.ts';
 
 export interface Progress {
-  /** 정류장마다 마쳤는가 */
-  stations: Record<StationId, boolean>;
-  /** 마친 정류장 수 (0~5) */
+  /** 단계마다 마쳤는가 */
+  stages: Record<StageId, boolean>;
+  /** 마친 단계 수 (0~5) */
   passed: number;
-  km: number;
-  /** 받은 도장 id: station.<정류장>, study.required, quiz.<개념>.<번호> */
-  stamps: string[];
+  /** 꼭 고를 것(필수) 전체와 아직 고르지 않은 수. 목적지를 정하기 전에는 0 */
+  requiredTotal: number;
+  requiredLeft: number;
+  /** 아직 풀지 않은 막힌 곳 (그대로 가기를 고른 것은 빼고) */
+  blocked: number;
 }
 
-export function progress(r: EngineResult, study: StudyRecord, meta: Pick<Meta, 'lessonDone' | 'issued'>): Progress {
-  const answered = r.interview.answered;
-  const required = r.slots.filter((s) => s.slot.required);
-  const filled = r.slots.filter((s) => s.filledBy.length > 0).length;
-  const stations: Record<StationId, boolean> = {
-    lesson: meta.lessonDone === true,
-    interview: r.done,
-    shop: r.done && r.session.cart.length > 0 && required.every((s) => s.filledBy.length > 0),
+export function progress(r: EngineResult, meta: Pick<Meta, 'lessonDone' | 'issued'>): Progress {
+  const required = r.done ? r.slots.filter((s) => s.slot.required) : [];
+  const requiredLeft = required.filter((s) => s.filledBy.length === 0).length;
+  const stages: Record<StageId, boolean> = {
+    'test-drive': meta.lessonDone === true,
+    destination: r.done,
+    waypoints: r.done && r.session.cart.length > 0 && requiredLeft === 0,
     check: r.canIssue,
-    receipt: meta.issued === true && r.canIssue,
+    arrival: meta.issued === true && r.canIssue,
   };
-
-  const reads = Object.entries(study).filter(([, v]) => v.read).map(([id]) => id);
-  const quizzes = Object.entries(study)
-    .flatMap(([id, v]) => v.quiz.map((n) => `quiz.${id}.${n}`))
-    .sort();
-  const studyDone = r.study.required.length > 0 && r.study.required.every((id) => study[id]?.read === true);
-
-  const stamps = [
-    ...STATIONS.filter((s) => stations[s.id]).map((s) => `station.${s.id}`),
-    ...(studyDone ? ['study.required'] : []),
-    ...quizzes,
-  ];
-
-  const km =
-    (stations.lesson ? KM.lesson : 0) +
-    answered * KM.answer +
-    filled * KM.slot +
-    (stations.check ? KM.check : 0) +
-    (stations.receipt ? KM.receipt : 0) +
-    reads.length * KM.conceptRead +
-    quizzes.length * KM.quizCorrect;
-
-  return { stations, passed: STATIONS.filter((s) => stations[s.id]).length, km, stamps };
-}
-
-/** 장면을 아직 보지 않은 새 도장 (도장 장면은 처음 한 번만) */
-export function unseenStamps(p: Progress, seen: string[]): string[] {
-  const s = new Set(seen);
-  return p.stamps.filter((id) => !s.has(id));
+  return {
+    stages,
+    passed: STAGES.filter((s) => stages[s.id]).length,
+    requiredTotal: required.length,
+    requiredLeft,
+    blocked: r.done ? r.conflicts.filter((c) => !c.kept).length : 0,
+  };
 }

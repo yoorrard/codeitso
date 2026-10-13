@@ -113,9 +113,9 @@ export interface SlotDef {
   order: number;
   matchDomain?: boolean;
   deferrable?: boolean;
-  /** true면 비워 둔 채로 영수증을 뽑을 수 없다 ('그대로 두기' 불가) */
+  /** true면 비워 둔 채로 출발할 수 없다 ('그대로 가기' 불가, 화면: 통행 불가) */
   mustFill?: boolean;
-  /** 장보기에서 칸 제목 아래 한 줄 설명 */
+  /** 경유지에서 칸 제목 아래 한 줄 설명 */
   help?: string;
   emptyMessage?: string;
   emptyFix?: string;
@@ -135,6 +135,8 @@ export interface ConflictRule extends RuleBase {
   message: string;
   fixHint: string;
   researchCard: string;
+  /** 지도에서 이 막힌 곳을 붙일 칸 id. 없으면 길 전체 (예: 유료 도구) */
+  anchorSlot?: string;
 }
 export interface ResearchRule extends RuleBase {
   type: 'research';
@@ -339,11 +341,14 @@ export interface Templates {
     free: string;
     paid: string;
     paidIncluded: string;
+    /** 나중에 붙일 것 품목 표시 */
     later: string;
     more: string;
     levels: { easy: string; normal: string; hard: string };
     timeFormat: { minutes: string; hours: string; hoursHalf: string };
     total: string;
+    /** 모든 도구가 0원으로 시작할 수 있을 때의 도구 비용 합계 */
+    totalFree: string;
     time: string;
     difficulty: string;
     prep: string;
@@ -406,16 +411,16 @@ export interface Data {
   errors: { version: 1; errors: ErrorEntry[] };
 }
 
-/** 이용자 한 명의 진행 상태. 브라우저 저장소와 공유 링크에 들어가는 것 */
+/** 이용자 한 명의 진행 상태. 브라우저 저장소와 영수증 링크에 들어가는 것 */
 export interface Session {
   /** 질문 id → 보기 id */
   answers: Record<string, string>;
-  /** 담은 상품 id (담은 순서) */
+  /** 고른 도구(상품) id (고른 순서) */
   cart: string[];
-  /** 재확인에서 '그대로 두고 조사할 것에 추가'를 고른 충돌 id */
+  /** 점검에서 '그대로 가기'를 고른 충돌(막힌 곳) id */
   kept: string[];
-  /** 1차/2차 나누기에서 2차로 미룬 칸 id */
+  /** 점검에서 '나중으로 미루기'를 고른 칸 id (나중에 붙일 것) */
   deferred: string[];
-  /** "만들고 싶은 걸 한 줄로". 공유 링크에는 넣지 않는다 */
+  /** "만들고 싶은 걸 한 줄로". 영수증 링크에는 넣지 않는다 */
   freeText?: string;
 }

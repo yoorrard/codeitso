@@ -129,7 +129,7 @@ Need a curve that isn't there? Add a token first. Don't hand-roll one inline.
 
 **UI animations stay under 300ms.** A 180ms dropdown feels more responsive than a 400ms one.
 
-**Reach for a spring instead** when the motion is an element that should feel alive (the mascot hop, a stamp landing, a station pin popping). In this project springs are CSS `linear()` curves stored as tokens (`--ease-spring`, roughly Apple's `duration: 0.5, bounce: 0.2`), so they cost 0 KB.
+**Reach for a spring instead** when the motion is an element that should feel alive (a map node popping in, a stamp landing, a station pin popping). In this project springs are CSS `linear()` curves stored as tokens (`--ease-spring`, roughly Apple's `duration: 0.5, bounce: 0.2`), so they cost 0 KB.
 
 Keep bounce at 0.1–0.3, and avoid bounce in most UI — reserve it for playful, rare moments (stamps, arrivals, celebrations).
 

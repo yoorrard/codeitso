@@ -61,7 +61,7 @@ export function formatMinutes(min: number, f: TimeFormat): string {
   return fill(half % 2 === 0 ? f.hours : f.hoursHalf, { h });
 }
 
-/** 꾸러미에 넣을 한 줄 입력 정리: 줄바꿈 없애고, 앞뒤 공백 없애고, 길이 제한 */
+/** 설계도에 넣을 한 줄 입력 정리: 줄바꿈 없애고, 앞뒤 공백 없애고, 길이 제한 */
 export function oneLine(s: string, max = 80): string {
   const t = s.replace(/[\r\n\t]+/g, ' ').replace(/\s{2,}/g, ' ').trim();
   return [...t].slice(0, max).join('');

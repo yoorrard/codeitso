@@ -1,5 +1,5 @@
-// 인터뷰 섬 (T08, docs/UX.md 3.3): 한 화면에 질문 하나. 보기 하나하나가 버튼이고 누르면 바로 다음 질문.
-// 이전으로 돌아가 바꾸기, 'n번째 질문', 좁혀지는 중 상자(답 칩·생긴 칸·혹시 이 레시피), 마지막 한 줄 입력, 인터뷰 도장.
+// 목적지 섬 (T08, docs/CONCEPT.md 6.3): 한 화면에 질문 하나. 보기 하나하나가 버튼이고 누르면 바로 다음 질문.
+// 이전으로 돌아가 바꾸기, 'n번째 질문', 길 찾는 중 상자(답 칩·생긴 고를 것·혹시 이 코스), 마지막 한 줄 입력, 목적지 정하기.
 // 계산은 모두 엔진(evaluate·answerChips·matchingRecipes). 화면은 보여 주기만 한다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
@@ -15,17 +15,12 @@ import { SLOT_ART, optionArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { EMPTY_SESSION, FREE_TEXT_MAX } from '../lib/saved.ts';
 import { sfx } from '../lib/sfx.ts';
-import { $trip, markStampsSeen, patchMeta } from '../lib/store.ts';
+import { ROUTES } from '../lib/routes.ts';
+import { patchMeta } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const LINE_MAX = Math.min(80, FREE_TEXT_MAX);
-const STAMP = 'station.interview';
-
-interface Props {
-  /** 기사님 얼굴 그림 주소 (페이지가 빌드 때 만든다) */
-  faceSrc: string;
-}
 
 function StylePreview({ option }: { option: Option }) {
   const tag = Object.keys(option.tags).find((t) => t.startsWith('style.'));
@@ -63,14 +58,14 @@ function OptionButton({ q, option, picked, onPick }: { q: Question; option: Opti
   );
 }
 
-export default function Interview({ faceSrc }: Props) {
+export default function Interview() {
   const ready = useHydrated();
   const live = useStore($result);
   const r = ready ? live : FIRST_VISIT;
   const [pos, setPos] = useState<number | null>(null);
   const moved = useRef(false);
   const [bubble, setBubble] = useState(true);
-  const [finished, setFinished] = useState<'none' | 'first' | 'again'>('none');
+  const [finished, setFinished] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const narrow = useRef<HTMLDetailsElement>(null);
 
@@ -95,7 +90,7 @@ export default function Interview({ faceSrc }: Props) {
   // 질문마다 페이지 제목도 바꾼다 (WCAG 2.4.2)
   useEffect(() => {
     if (!ready) return;
-    const what = finished !== 'none' ? ko.common.interviewDone : q ? `${fill(ko.interview.questionNo, { n: at + 1 })}: ${q.text}` : ko.interview.lineTitle;
+    const what = finished ? ko.common.interviewDone : q ? `${fill(ko.interview.questionNo, { n: at + 1 })}: ${q.text}` : ko.interview.lineTitle;
     document.title = fill(ko.interview.docTitle, { what });
   }, [ready, at, q?.id, finished]);
 
@@ -122,14 +117,10 @@ export default function Interview({ faceSrc }: Props) {
 
   const finish = (): void => {
     if (!r.done) return;
-    const first = !$trip.get().seenStamps.includes(STAMP);
-    markStampsSeen([STAMP]);
     moved.current = true;
-    setFinished(first ? 'first' : 'again');
-    if (first) {
-      announce(ko.interview.done);
-      void sfx('stamp');
-    }
+    setFinished(true);
+    announce(ko.interview.done);
+    void sfx('arrive');
   };
 
   const chips = answerChips(catalog, r.interview);
@@ -139,16 +130,16 @@ export default function Interview({ faceSrc }: Props) {
 
   return (
     <div class="interview" data-ready={ready ? '' : undefined}>
-      {finished !== 'none' ? (
+      {finished ? (
         <section class="q-card q-done" key="done" aria-labelledby="q-title">
-          <span class={finished === 'first' ? 'stamp-mark stamp-in' : 'stamp-mark'} aria-hidden="true">
-            <img src="/emoji/station-interview.webp" width={56} height={56} alt="" />
+          <span class="done-check" aria-hidden="true">
+            <Icon name="check" size="28px" />
           </span>
           <h1 id="q-title" ref={heading} tabIndex={-1}>
             {ko.common.interviewDone}
           </h1>
           <p>{ko.interview.done}</p>
-          <a class="btn btn-primary btn-lg" href="/shop">
+          <a class="btn btn-primary btn-lg" href={ROUTES.waypoints}>
             {ko.interview.goShop}
           </a>
         </section>
@@ -165,10 +156,10 @@ export default function Interview({ faceSrc }: Props) {
             </p>
           </div>
           {at === 0 && bubble && Object.keys(r.session.answers).length === 0 && (
-            <div class="mascot-line">
-              <img class="face" src={faceSrc} width={40} height={40} alt="" />
+            <div class="dispatch-note">
+              <span class="brand-mark" aria-hidden="true" />
               <p>
-                {sentences(ko.mascot.interview).map((t) => (
+                {sentences(ko.dispatch.destination).map((t) => (
                   <span class="line">{t}</span>
                 ))}
               </p>
@@ -184,6 +175,7 @@ export default function Interview({ faceSrc }: Props) {
               <OptionButton q={q} option={o} picked={r.interview.answers[q.id] === o.id} onPick={pick} />
             ))}
           </ul>
+          {q.options.some((o) => o.id === 'maybe') && <p class="q-help">{ko.interview.maybeNote}</p>}
           {r.interview.answers[q.id] !== undefined && (
             <button type="button" class="btn" onClick={() => go(at + 1)}>
               {ko.common.next}

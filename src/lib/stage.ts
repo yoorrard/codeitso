@@ -9,5 +9,5 @@ export const BEACON_TOKEN: string = typeof import.meta.env.PUBLIC_CF_BEACON_TOKE
 
 /** 방문 통계를 싣지 않는 화면: 공유 상태가 주소에 있는 영수증 (R-04) */
 export function analyticsAllowed(pathname: string): boolean {
-  return BEACON_TOKEN !== '' && !/^\/receipt\/?$/.test(pathname);
+  return BEACON_TOKEN !== '' && !/^\/arrival\/?$/.test(pathname);
 }

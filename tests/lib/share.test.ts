@@ -29,8 +29,8 @@ describe('공유 링크', () => {
     expect(JSON.parse(text)).toEqual({ v: 1, a: session.answers, c: session.cart, k: session.kept, d: session.deferred });
   });
 
-  it('주소는 사이트/receipt#r= 모양 (끝 빗금은 하나로)', () => {
-    expect(shareUrl('https://codechauffeur.example/', session).startsWith('https://codechauffeur.example/receipt#r=')).toBe(true);
+  it('주소는 사이트/arrival#r= 모양 (끝 빗금은 하나로)', () => {
+    expect(shareUrl('https://codechauffeur.example/', session).startsWith('https://codechauffeur.example/arrival#r=')).toBe(true);
   });
 
   it('#r=가 없으면 none', () => {
@@ -58,17 +58,17 @@ describe('공유 링크', () => {
   it('읽은 뒤 주소에서 #r=를 지운다', () => {
     let replaced = '';
     const win = {
-      location: { hash: shareHash(session), pathname: '/receipt', search: '?a=1' },
+      location: { hash: shareHash(session), pathname: '/arrival', search: '?a=1' },
       history: { state: null, replaceState: (_s: unknown, _t: string, url: string) => (replaced = url) },
     } as unknown as Pick<Window, 'location' | 'history'>;
     expect(consumeShareHash(win).status).toBe('ok');
-    expect(replaced).toBe('/receipt?a=1');
+    expect(replaced).toBe('/arrival?a=1');
   });
 
   it('#r=가 없으면 주소를 건드리지 않는다', () => {
     let called = false;
     const win = {
-      location: { hash: '', pathname: '/receipt', search: '' },
+      location: { hash: '', pathname: '/arrival', search: '' },
       history: { state: null, replaceState: () => (called = true) },
     } as unknown as Pick<Window, 'location' | 'history'>;
     expect(consumeShareHash(win).status).toBe('none');

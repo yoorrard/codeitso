@@ -7,7 +7,7 @@ export const KEYS = {
   study: 'cc:study:v1',
   meta: 'cc:meta:v1',
   prefs: 'cc:prefs:v1',
-  trip: 'cc:trip:v1',
+  seen: 'cc:seen:v1',
 } as const;
 
 /** 개념 id → 읽음, 맞힌 확인 문제 번호 */
@@ -17,9 +17,9 @@ export interface Meta {
   interviewStartedAt?: number;
   /** 보낸 집계 이벤트 열쇠 (최근 SENT_MAX개) */
   sent: string[];
-  /** 첫 수업을 끝까지 봄 (첫 수업 도장) */
+  /** 시운전을 끝까지 함 (시운전 단계 마침) */
   lessonDone?: boolean;
-  /** 영수증을 한 번 이상 뽑음 (계산대 도장) */
+  /** 영수증을 한 번 이상 받음 (도착 단계 마침) */
   issued?: boolean;
 }
 
@@ -28,9 +28,9 @@ export interface Prefs {
   sound: boolean;
 }
 
-export interface Trip {
-  /** 장면을 이미 본 도장 id (도장 장면은 처음 한 번만) */
-  seenStamps: string[];
+/** 처음 한 번만 다 보이는 큰 장면(S1 배차, S5 출발 → 도착)을 이미 본 기록 (CONCEPT 7절) */
+export interface Seen {
+  scenes: string[];
 }
 
 export const SENT_MAX = 20;
@@ -40,7 +40,7 @@ const LIST_MAX = 200;
 export const EMPTY_SESSION: Session = { answers: {}, cart: [], kept: [], deferred: [] };
 export const DEFAULT_PREFS: Prefs = { motion: 'auto', sound: false };
 export const EMPTY_META: Meta = { sent: [] };
-export const EMPTY_TRIP: Trip = { seenStamps: [] };
+export const EMPTY_SEEN: Seen = { scenes: [] };
 
 function obj(raw: unknown): Record<string, unknown> {
   return typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? (raw as Record<string, unknown>) : {};
@@ -89,8 +89,8 @@ export function readPrefs(raw: unknown): Prefs {
   return { motion: o['motion'] === 'reduce' ? 'reduce' : 'auto', sound: o['sound'] === true };
 }
 
-export function readTrip(raw: unknown): Trip {
-  return { seenStamps: strings(obj(raw)['seenStamps']) };
+export function readSeen(raw: unknown): Seen {
+  return { scenes: strings(obj(raw)['scenes']) };
 }
 
 /** 처음 값과 같으면 저장할 필요가 없다 (키를 지운다) */
@@ -106,6 +106,6 @@ export function isEmptyMeta(m: Meta): boolean {
 export function isDefaultPrefs(p: Prefs): boolean {
   return p.motion === DEFAULT_PREFS.motion && p.sound === DEFAULT_PREFS.sound;
 }
-export function isEmptyTrip(t: Trip): boolean {
-  return t.seenStamps.length === 0;
+export function isEmptySeen(t: Seen): boolean {
+  return t.scenes.length === 0;
 }

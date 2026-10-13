@@ -1,4 +1,4 @@
-// '영수증 뽑기' 주 버튼 (재확인 아래 막대). 발행할 수 있을 때만 켜지고, 꺼져 있으면 aria-disabled와 이유 글.
+// '출발하기' 주 버튼 (점검 아래 막대, CONCEPT 6.5). 출발할 수 있을 때만 켜지고, 꺼져 있으면 aria-disabled와 이유 글.
 import { useStore } from '@nanostores/preact';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
@@ -7,7 +7,7 @@ import { evaluate, fill } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { $result } from '../lib/result.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
-import { stationById } from '../lib/stations.ts';
+import { stageById } from '../lib/stages.ts';
 import { patchMeta } from '../lib/store.ts';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
@@ -26,7 +26,7 @@ export default function IssueButton() {
       return;
     }
     patchMeta({ issued: true });
-    window.location.assign(stationById('receipt').path);
+    window.location.assign(stageById('arrival').path);
   };
 
   return (
@@ -36,9 +36,14 @@ export default function IssueButton() {
           {reason}
         </p>
       )}
-      <button type="button" class="btn btn-primary btn-issue" aria-disabled={blocked} aria-describedby={blocked ? 'issue-reason' : undefined} onClick={issue}>
+      <button type="button" class="btn btn-primary btn-issue" aria-disabled={blocked} aria-describedby={blocked ? 'issue-reason' : 'issue-note'} onClick={issue}>
         {ko.common.issue}
       </button>
+      {!blocked && (
+        <p id="issue-note" class="issue-note">
+          {ko.check.issueNote}
+        </p>
+      )}
     </div>
   );
 }

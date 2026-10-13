@@ -10,6 +10,7 @@ import { catalog } from '../lib/data.ts';
 import { badges, fill } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/index.ts';
 import { capabilityLabel, domainLabel, productArt } from '../lib/shelf.ts';
+import { toolPath } from '../lib/routes.ts';
 
 interface Props {
   product: Product;
@@ -25,7 +26,7 @@ const domains = (p.domains ?? []).map(domainLabel).join(', ');
 <li class:list={['card', 'shelf-card', { 'shelf-card-index': !isShelf }]} data-shelf-item data-id={p.id} data-domains={(p.domains ?? []).join(' ')} data-caps={p.capabilities.join(' ')}>
   <div class="shelf-card-head">
     <Emoji id={productArt(p)} size={40} class="product-thumb" />
-    <h3>{isShelf ? <a class="shelf-card-link" href={`/products/${p.id}`}>{p.name}</a> : p.name}</h3>
+    <h3>{isShelf ? <a class="shelf-card-link" href={toolPath(p.id)}>{p.name}</a> : p.name}</h3>
   </div>
   <p class="product-summary">{p.summary}</p>
   <ul class="badge-row">

@@ -1,0 +1,12 @@
+---
+// 목적지 /destination (docs/CONCEPT.md 6.3, T08): 질문 섬 하나. 빌드 때는 처음 온 사람 기준 첫 질문을 그린다.
+import Base from '../layouts/Base.astro';
+import Interview from '../components/Interview.tsx';
+import InterviewAction from '../components/InterviewAction.tsx';
+import { ko } from '../copy/ko.ts';
+---
+
+<Base title={ko.interview.pageTitle} stage="destination">
+  <Interview client:load />
+  <InterviewAction client:idle slot="action" />
+</Base>

@@ -1,16 +1,17 @@
 ---
-// 진열대 /shelf (docs/UX.md 3.8, T13, R-46): 코너(상품의 대표 기능)별 상품 카드와 분야·기능 거르기 섬.
-// 목록은 정적 HTML이라 자바스크립트 없이도 모두 보이고, 거르기 섬은 숨기기·보이기만 한다. 검색창은 T15에서 붙인다.
-// 색인 상품은 상세 페이지 없이 맨 아래 '색인에서 찾은 것'에만 보인다.
-import Base from '../layouts/Base.astro';
-import '../styles/catalog-pages.css';
-import Emoji from '../components/Emoji.astro';
-import Icon from '../components/Icon.astro';
-import ShelfCard from '../components/ShelfCard.astro';
-import ShelfFilter from '../components/ShelfFilter.tsx';
-import { ko } from '../copy/ko.ts';
-import { optionArt } from '../lib/option-art.ts';
-import { capabilityChoices, corners, domainChoices, indexProducts, shelfProducts } from '../lib/shelf.ts';
+// 도구 모음 /tools (docs/CONCEPT.md 6.7, T13, R-46): 대표 기능별 도구 카드와 분야·기능 거르기 섬.
+// 목록은 정적 HTML이라 자바스크립트 없이도 모두 보이고, 거르기 섬은 숨기기·보이기만 한다.
+// 원문만 있는 도구는 상세 페이지 없이 맨 아래 '원문만 있는 도구'에만 보인다. 줄 목록 모양은 T32에서 바꾼다.
+import Base from '../../layouts/Base.astro';
+import '../../styles/catalog-pages.css';
+import Emoji from '../../components/Emoji.astro';
+import Icon from '../../components/Icon.astro';
+import ShelfCard from '../../components/ShelfCard.astro';
+import ShelfFilter from '../../components/ShelfFilter.tsx';
+import { ko } from '../../copy/ko.ts';
+import { ROUTES } from '../../lib/routes.ts';
+import { optionArt } from '../../lib/option-art.ts';
+import { capabilityChoices, corners, domainChoices, indexProducts, shelfProducts } from '../../lib/shelf.ts';
 
 const S = ko.shelf;
 const everything = [...shelfProducts, ...indexProducts];
@@ -62,5 +63,5 @@ const groups = corners(shelfProducts);
       </section>
     )
   }
-  <a slot="action" class="btn btn-primary" href="/interview">{S.goBuild}</a>
+  <a slot="action" class="btn btn-primary" href={ROUTES.destination}>{S.goBuild}</a>
 </Base>

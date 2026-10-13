@@ -1,12 +1,12 @@
-// 주요 흐름 (T20): 레시피 5개로 영수증까지, 인터뷰 처음부터 끝까지(키보드만), 공유 링크 다시 열기.
+// 주요 흐름 (T20): 코스 5개로 영수증까지, 목적지 처음부터 끝까지(키보드만), 영수증 링크 다시 열기.
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/engine/index.ts';
 import { addToCart, answerInterview, golden, hydrated, islandsReady, receiptWords, recipes } from './helpers.ts';
 
 for (const recipe of recipes) {
-  test(`레시피 '${recipe.title}'로 출발해 영수증과 꾸러미를 받는다`, async ({ page }) => {
-    await page.goto('/recipes');
+  test(`코스 '${recipe.title}'로 출발해 영수증과 설계도를 받는다`, async ({ page }) => {
+    await page.goto('/courses');
     const go = await hydrated(page.getByRole('button', { name: fill(ko.home.recipeGoLabel, { title: recipe.title }) }));
     await go.click();
     await page.waitForURL(/\/check$/);
@@ -14,7 +14,7 @@ for (const recipe of recipes) {
     const issue = page.locator('.action-bar .btn-issue');
     await expect(issue).not.toHaveAttribute('aria-disabled', 'true');
     await issue.click();
-    await page.waitForURL(/\/receipt$/);
+    await page.waitForURL(/\/arrival$/);
     await islandsReady(page);
     await expect(page.locator('.paper')).toBeVisible();
     await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
@@ -24,44 +24,44 @@ for (const recipe of recipes) {
   });
 }
 
-test('인터뷰를 처음부터 끝까지 키보드만으로 하고 장보기·재확인·계산대까지 간다 (case-01)', async ({ page }) => {
+test('목적지를 처음부터 끝까지 키보드만으로 정하고 경유지·점검·도착까지 간다 (case-01)', async ({ page }) => {
   const kase = golden('case-01');
-  await page.goto('/interview');
+  await page.goto('/destination');
   await islandsReady(page);
   await answerInterview(page, kase.answers, { keyboard: true, freeText: '우리 반 급식 안내' });
   await expect(page.locator('.q-done h1')).toBeFocused();
   await page.keyboard.press('Tab');
   await expect(page.locator('.q-done a.btn-primary')).toBeFocused();
   await page.keyboard.press('Enter');
-  await page.waitForURL(/\/shop$/);
+  await page.waitForURL(/\/waypoints$/);
   await islandsReady(page);
   await addToCart(page, kase.cart);
   await page.locator('.action-bar a.btn-primary').click();
   await page.waitForURL(/\/check$/);
   await islandsReady(page);
   await page.locator('.action-bar .btn-issue').click();
-  await page.waitForURL(/\/receipt$/);
+  await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
   await expect(page.locator('.paper')).toContainText('우리 반 급식 안내');
 });
 
-test('공유 링크를 다른 기기에서 열면 같은 영수증을 읽기 전용으로 보고, 이어 하기로 가져온다', async ({ page, browser, context }) => {
+test('영수증 링크를 다른 기기에서 열면 같은 영수증을 읽기 전용으로 보고, 이어서 가기로 가져온다', async ({ page, browser, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.goto('/recipes');
+  await page.goto('/courses');
   const first = recipes[0];
-  if (!first) throw new Error('레시피가 없다');
+  if (!first) throw new Error('코스가 없다');
   await (await hydrated(page.getByRole('button', { name: fill(ko.home.recipeGoLabel, { title: first.title }) }))).click();
   await page.waitForURL(/\/check$/);
   await islandsReady(page);
   await page.locator('.action-bar .btn-issue').click();
-  await page.waitForURL(/\/receipt$/);
+  await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
   const paper = (await page.locator('.paper').innerText()).split('\n').filter((l) => !/\d{4}-\d{2}-\d{2}/.test(l));
   await page.getByRole('button', { name: ko.receipt.copyLink }).click();
   // 누르기가 출력 장면도 끝내서 축하 알림과 같이 이어 읽힌다
   await expect(page.locator('#cc-live')).toContainText(ko.receipt.linkCopied);
   const url = await page.evaluate(() => navigator.clipboard.readText());
-  expect(url).toContain('/receipt#');
+  expect(url).toContain('/arrival#');
 
   const other = await browser.newContext({ viewport: { width: 360, height: 800 } });
   const pc = await other.newPage();

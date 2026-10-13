@@ -1,11 +1,12 @@
-// 공부할 것 섬 (T12, docs/UX.md 3.7): 시작 전 필수 → 단계별. 개념마다 읽음 표시와 맞힌 문제 수.
-// 인터뷰 전이면 모든 개념을 필수부터 보여 준다.
+// 읽어 둘 용어 섬 (T12, docs/CONCEPT.md 6.8): 먼저 읽어 둘 용어 → 만들면서 볼 용어. 용어마다 읽음 표시와 맞힌 문제 수.
+// 목적지를 정하기 전이면 모든 용어 카드를 필수부터 보여 준다.
 import { useStore } from '@nanostores/preact';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
 import { fill } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { $result } from '../lib/result.ts';
+import { termPath } from '../lib/routes.ts';
 import { $study } from '../lib/store.ts';
 
 /** 방금 읽고 돌아온 개념 (들어온 주소를 읽기만 하고 저장하지 않는다) */
@@ -14,7 +15,7 @@ function cameFrom(): string | null {
   try {
     const ref = new URL(document.referrer);
     if (ref.origin !== window.location.origin) return null;
-    return ref.pathname.match(/^\/concepts\/([^/]+)\/?$/)?.[1] ?? null;
+    return ref.pathname.match(/^\/terms\/([^/]+)\/?$/)?.[1] ?? null;
   } catch {
     return null;
   }
@@ -26,11 +27,11 @@ function Item({ id }: { id: string }) {
   const c = catalog.concept.get(id);
   if (!c) return null;
   const rec = ready ? study[id] : undefined;
-  // 게임 순간: 개념 카드에서 다 읽고 돌아오면 그 줄의 '읽음' 표가 한 번 뒤집혀 나타난다
+  // 용어 카드에서 다 읽고 돌아오면 그 줄의 '읽음' 표가 한 번 뒤집혀 나타난다
   const fresh = ready && rec?.read === true && cameFrom() === id;
   return (
     <li class={rec?.read ? 'study-item read' : 'study-item'}>
-      <a href={`/concepts/${id}`}>{c.title}</a>
+      <a href={termPath(id)}>{c.title}</a>
       <span class="study-meta">
         <span class={rec?.read ? (fresh ? 'badge flip-in' : 'badge') : 'badge badge-soft'}>{rec?.read ? ko.study.read : ko.study.notRead}</span>
         <span>{fill(ko.study.quizCount, { n: rec?.quiz.length ?? 0, total: c.quiz.length })}</span>
@@ -49,7 +50,7 @@ export default function StudyList() {
     return (
       <>
         <p class="q-help">{ko.study.noSession}</p>
-        <h2>{ko.study.all}</h2>
+        <h2>{fill(ko.study.all, { n: all.length })}</h2>
         <ul class="study-list">
           {all.map((c) => (
             <Item id={c.id} />

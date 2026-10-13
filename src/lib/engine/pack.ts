@@ -8,7 +8,7 @@ import { cell, fill, oneLine } from './text.ts';
 import type { StyleTemplate, TypeTemplate } from './types.ts';
 
 export interface PackOptions {
-  /** 개념 카드 링크에 쓸 사이트 주소 (끝에 / 없이). 화면에서는 location.origin */
+  /** 용어 카드 링크(/terms/아이디)에 쓸 사이트 주소 (끝에 / 없이). 화면에서는 location.origin */
   siteUrl: string;
   /** 발행 시각 (이용자 기기 시간, 예: 2026-10-12 14:05) */
   issuedAt: string;
@@ -20,7 +20,7 @@ function pick<T>(record: Record<string, T>, tag: string | undefined, fallback: s
   return v;
 }
 
-/** 이용자 AI에게 넘길 설계 꾸러미(.md). 문장은 모두 data/templates.json과 상품 카드에서 온다. */
+/** 이용자 AI에게 넘길 설계도(.md, 내부 이름 pack). 문장은 모두 data/templates.json과 상품 카드에서 온다. */
 export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): string {
   const T = cat.data.templates;
   const P = T.pack;
@@ -49,7 +49,7 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   for (const line of P.intro) out.push(`> ${fill(line, { saveAs: aiTpl.saveAs })}`);
   out.push('', `${L.issued}: ${opts.issuedAt} · ${L.format} 1`);
 
-  // 1. 만들 것
+  // 1. 만들 것 (목적지)
   h2(P.headings.what);
   const chips = answerChips(cat, r.interview).map((c) => `${c.chip}: ${c.label}`);
   out.push(`- ${L.oneLine}: ${oneLine(r.session.freeText ?? '') || typeTpl.goal}`);
@@ -159,7 +159,7 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
     }
   }
 
-  // 9. 구현 전에 조사할 것
+  // 9. 만들기 전에 알아볼 것
   h2(P.headings.research);
   if (r.research.length === 0) {
     out.push(P.noResearch);
@@ -199,15 +199,15 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   return out.join('\n');
 }
 
-/** 대화 카드: 고른 AI에 맞게 꾸러미를 가리키는 말을 채운다 */
+/** 대화 카드(화면: AI에게 할 말): 고른 AI에 맞게 설계도를 가리키는 말을 채운다 */
 export function conversationCards(cat: Catalog, r: EngineResult): { id: string; title: string; when: string; text: string }[] {
   const T = cat.data.templates;
   const aiTpl = pick(T.aiTools, tagsWithPrefix(r.interview.tags, 'ai.')[0], 'ai.chat-free');
   return T.conversationCards.map((c) => ({ ...c, text: fill(c.text, { packRef: aiTpl.packRef }) }));
 }
 
-/** 꾸러미 파일 이름: design-pack-YYYYMMDD-HHmm.md */
+/** 설계도 파일 이름: codechauffeur-plan-YYYYMMDD-HHmm.md (이용자 기기 시간) */
 export function packFileName(date: Date): string {
   const p = (n: number): string => String(n).padStart(2, '0');
-  return `design-pack-${date.getFullYear()}${p(date.getMonth() + 1)}${p(date.getDate())}-${p(date.getHours())}${p(date.getMinutes())}.md`;
+  return `codechauffeur-plan-${date.getFullYear()}${p(date.getMonth() + 1)}${p(date.getDate())}-${p(date.getHours())}${p(date.getMinutes())}.md`;
 }

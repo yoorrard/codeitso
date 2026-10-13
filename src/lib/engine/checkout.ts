@@ -23,7 +23,7 @@ export interface Step {
   slotId: string;
   title: string;
   doneWhen: string;
-  /** 이 단계에 쓰는 장바구니 상품 id. 비어 있으면 '조사할 것'으로 넘긴 칸 */
+  /** 이 단계에 쓰는 장바구니 상품 id. 비어 있으면 '그대로 가기'로 '알아볼 것'에 넘긴 칸 */
   products: string[];
   /** 이 단계 전에 볼 개념 (배울 순서) */
   concepts: string[];
@@ -38,7 +38,7 @@ export interface Study {
 
 const LEAD_ORDER: Record<Lead, number> = { days: 0, hours: 1, instant: 2 };
 
-/** 조사할 것: 규칙 카드 → 그대로 둔 규칙 충돌 → 그대로 둔 빈 칸 → 색인 상품. id가 같으면 앞의 것만 남긴다. */
+/** 알아볼 것: 규칙 카드 → 그대로 둔 규칙 충돌 → 그대로 둔 빈 칸 → 색인 상품(화면: 원문만 있는 도구). id가 같으면 앞의 것만 남긴다. */
 export function collectResearch(cat: Catalog, ctx: Ctx, conflicts: Conflict[], slots: Slot[]): ResearchItem[] {
   const out: ResearchItem[] = [];
   const seen = new Set<string>();
@@ -164,7 +164,7 @@ export function topoSort(cat: Catalog, ids: Set<string>): string[] {
 export const PROXY_STEP = 'step.proxy';
 
 /**
- * 진행 순서: 2차로 미루지 않은 열린 칸 중, 채웠거나 '조사할 것'으로 넘긴 칸만 (칸 순서).
+ * 진행 순서: 나중으로 미루지 않은 열린 칸 중, 채웠거나 '알아볼 것'으로 넘긴 칸만 (칸 순서).
  * 키 노출 위험 상품과 키를 숨겨 주는 상품(proxy)을 함께 담았으면, 키 노출 위험 상품이 처음 나오는
  * 단계 바로 앞에 '중간 서버 준비' 단계를 넣는다. 키를 화면에 넣지 않고 데이터를 붙이게 하려는 것이다.
  * 상품의 필요 개념은 그 상품이 처음 나오는 단계에 붙인다. 개념의 stepHint가 'proxy'이고 중간 서버

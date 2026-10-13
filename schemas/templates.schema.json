@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "templates.schema.json",
-  "title": "영수증·설계 꾸러미 문장 틀",
-  "description": "화면과 꾸러미에 나가는 문장은 코드가 아니라 여기에 둔다. {{이름}} 자리는 엔진이 채운다.",
+  "title": "영수증·설계도 문장 틀",
+  "description": "화면과 설계도에 나가는 문장은 코드가 아니라 여기에 둔다. {{이름}} 자리는 엔진이 채운다.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -151,7 +151,7 @@
               }
             }
           },
-          "alternative": { "type": "string", "description": "코딩 없이 되는 방법. 재확인에서 한 줄로 알려 준다" }
+          "alternative": { "type": "string", "description": "코딩 없이 되는 방법. 점검에서 '코딩 없이 가는 지름길'로 한 줄 알려 준다" }
         }
       }
     },
@@ -229,8 +229,8 @@
         "required": ["label", "saveAs", "packRef", "workStyle"],
         "properties": {
           "label": { "type": "string" },
-          "saveAs": { "type": "string", "description": "꾸러미를 어디에 어떻게 넣는지 한 줄 안내" },
-          "packRef": { "type": "string", "description": "대화 카드에서 꾸러미를 가리키는 말" },
+          "saveAs": { "type": "string", "description": "설계도를 어디에 어떻게 넣는지 한 줄 안내" },
+          "packRef": { "type": "string", "description": "대화 카드(AI에게 할 말)에서 설계도를 가리키는 말" },
           "workStyle": {
             "type": "array",
             "items": { "type": "string" },
@@ -293,6 +293,7 @@
         "levels",
         "timeFormat",
         "total",
+        "totalFree",
         "time",
         "difficulty",
         "prep",
@@ -306,7 +307,8 @@
         "destination": { "type": "string" },
         "free": { "type": "string" },
         "paid": { "type": "string" },
-        "total": { "type": "string" },
+        "total": { "type": "string", "description": "도구 비용 합계 이름표 ('요금'은 코드쇼퍼 이용료에만 쓴다)" },
+        "totalFree": { "type": "string", "description": "모든 도구가 0원으로 시작할 수 있을 때의 합계 값" },
         "time": { "type": "string" },
         "difficulty": { "type": "string" },
         "prep": { "type": "string" },
@@ -316,7 +318,7 @@
         "footer": { "type": "string" },
         "unnamed": { "type": "string", "description": "한 줄 입력도 유형도 없을 때 쓰는 이름" },
         "paidIncluded": { "type": "string" },
-        "later": { "type": "string", "description": "2차 품목 표시" },
+        "later": { "type": "string", "description": "나중에 붙일 것 품목 표시" },
         "more": { "type": "string", "description": "맡은 칸이 많을 때. {{n}}에 나머지 칸 수" },
         "levels": {
           "type": "object",
@@ -405,7 +407,7 @@
         "researchIntro": { "type": "string" },
         "noResearch": { "type": "string" },
         "stepRule": { "type": "string" },
-        "conceptLink": { "type": "string", "description": "개념 카드 주소 틀. {{site}}와 {{id}}를 채운다" },
+        "conceptLink": { "type": "string", "description": "용어 카드 주소 틀(/terms/아이디). {{site}}와 {{id}}를 채운다" },
         "deferredNote": { "type": "string" },
         "a11yLine": { "type": "string" },
         "indexMemo": { "type": "string" },
@@ -568,7 +570,7 @@
         "title": { "type": "string", "minLength": 1 },
         "doneWhen": { "type": "string", "minLength": 1 }
       },
-      "description": "키 노출 위험 상품과 중간 서버 상품을 함께 담았을 때 데이터 단계 앞에 넣는 단계"
+      "description": "키 노출 위험 상품과 중간 서버 상품을 함께 골랐을 때 데이터 단계 앞에 넣는 단계"
     }
   }
 }

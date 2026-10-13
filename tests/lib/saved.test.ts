@@ -8,12 +8,12 @@ import {
   isEmptyMeta,
   isEmptySession,
   isEmptyStudy,
-  isEmptyTrip,
+  isEmptySeen,
   readMeta,
   readPrefs,
   readSession,
   readStudy,
-  readTrip,
+  readSeen,
 } from '../../src/lib/saved.ts';
 
 describe('세션 읽기', () => {
@@ -75,9 +75,10 @@ describe('설정 읽기', () => {
   });
 });
 
-describe('여행 기록 읽기', () => {
-  it('본 도장 id만, 겹침 없이', () => {
-    expect(readTrip({ seenStamps: ['station.interview', 'station.interview', 7] })).toEqual({ seenStamps: ['station.interview'] });
+describe('본 장면 기록 읽기', () => {
+  it('장면 id만, 겹침 없이', () => {
+    expect(readSeen({ scenes: ['s1', 's1', 7] })).toEqual({ scenes: ['s1'] });
+    expect(readSeen({ seenStamps: ['station.interview'] })).toEqual({ scenes: [] });
   });
 });
 
@@ -90,6 +91,7 @@ describe('처음 값 판단 (처음 값이면 저장 키를 지운다)', () => {
     expect(isEmptyMeta({ sent: [], issued: true })).toBe(false);
     expect(isDefaultPrefs(DEFAULT_PREFS)).toBe(true);
     expect(isDefaultPrefs({ motion: 'reduce', sound: false })).toBe(false);
-    expect(isEmptyTrip({ seenStamps: [] })).toBe(true);
+    expect(isEmptySeen({ scenes: [] })).toBe(true);
+    expect(isEmptySeen({ scenes: ['s5'] })).toBe(false);
   });
 });

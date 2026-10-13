@@ -4,24 +4,24 @@
 import { persistentAtom, setPersistentEngine } from '@nanostores/persistent';
 import { atom } from 'nanostores';
 import type { Session } from './engine/types.ts';
-import type { Meta, Prefs, StudyRecord, Trip } from './saved.ts';
+import type { Meta, Prefs, Seen, StudyRecord } from './saved.ts';
 import {
   DEFAULT_PREFS,
   EMPTY_META,
   EMPTY_SESSION,
-  EMPTY_TRIP,
+  EMPTY_SEEN,
   KEYS,
   SENT_MAX,
   isDefaultPrefs,
   isEmptyMeta,
   isEmptySession,
   isEmptyStudy,
-  isEmptyTrip,
+  isEmptySeen,
   readMeta,
   readPrefs,
   readSession,
   readStudy,
-  readTrip,
+  readSeen,
 } from './saved.ts';
 
 /** 빌드(서버)에서는 저장소가 없어도 안내를 띄우지 않는다. 브라우저에서만 실제로 써 본다. */
@@ -61,7 +61,7 @@ export const $session = persistentAtom<Session>(KEYS.session, EMPTY_SESSION, cod
 export const $study = persistentAtom<StudyRecord>(KEYS.study, {}, codec(readStudy, isEmptyStudy));
 export const $meta = persistentAtom<Meta>(KEYS.meta, EMPTY_META, codec(readMeta, isEmptyMeta));
 export const $prefs = persistentAtom<Prefs>(KEYS.prefs, DEFAULT_PREFS, codec(readPrefs, isDefaultPrefs));
-export const $trip = persistentAtom<Trip>(KEYS.trip, EMPTY_TRIP, codec(readTrip, isEmptyTrip));
+export const $seen = persistentAtom<Seen>(KEYS.seen, EMPTY_SEEN, codec(readSeen, isEmptySeen));
 
 export function setPrefs(patch: Partial<Prefs>): void {
   $prefs.set(readPrefs({ ...$prefs.get(), ...patch }));
@@ -91,19 +91,19 @@ export function rememberSent(key: string): boolean {
   return true;
 }
 
-export function markStampsSeen(ids: string[]): void {
-  const t = $trip.get();
-  const next = [...new Set([...t.seenStamps, ...ids])];
-  if (next.length !== t.seenStamps.length) $trip.set({ seenStamps: next });
+/** 큰 장면을 봤다고 적는다. 다시 열면 끝 상태가 바로 보인다 */
+export function markSceneSeen(id: string): void {
+  const t = $seen.get();
+  if (!t.scenes.includes(id)) $seen.set({ scenes: [...t.scenes, id] });
 }
 
 /**
- * '저장한 기록 지우기': 진행 기록 네 키를 지운다 (처음 값으로 돌리면 codec이 키를 지운다).
+ * '저장한 기록 지우기': 진행 기록 네 키(답·읽은 용어·메타·본 장면)를 지운다 (처음 값으로 돌리면 codec이 키를 지운다).
  * 설정(동작 줄이기·효과음)은 기록이 아니라서 남긴다: 멀미 때문에 켠 동작 줄이기가 지우기로 풀리면 안 된다.
  */
 export function clearAll(): void {
   $session.set(EMPTY_SESSION);
   $study.set({});
   $meta.set(EMPTY_META);
-  $trip.set(EMPTY_TRIP);
+  $seen.set(EMPTY_SEEN);
 }

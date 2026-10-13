@@ -39,13 +39,14 @@
 
 | 명령 | 하는 일 |
 |---|---|
-| `npm run check` | 자료 검사 + 골든 + 토큰 + 글꼴 글자 + 품질 바닥선 + 하네스 검사 + 타입 검사 + 단위 시험. 커밋 전에 반드시 |
+| `npm run check` | 자료 검사 + 골든 + 토큰 + 글꼴 글자 + 품질 바닥선 + 쓰지 않는 말 + 하네스 검사 + 타입 검사 + 단위 시험. 커밋 전에 반드시 |
 | `npm test` / `test:coverage` | Vitest 단위 시험(골든·자료 검사·엔진) / 엔진 시험 범위 보고 (`coverage/`) |
 | `npm run validate` / `validate:release` | 자료 교차 검사 / 배포용 (사람 확인이 남은 진열 상품이 있으면 실패) |
 | `npm run golden` / `golden:print` | 추천 회귀 검사 / 엔진 결과를 골든 모양으로 출력 |
 | `npm run explain -- case-03` | 사례나 레시피 하나의 칸별 점수 풀이 |
 | `npm run examples` | `docs/examples/` 다시 만들기 (손으로 고치지 않는다) |
 | `npm run guard` | 품질 바닥선 (토큰 밖 값, 외부 자원, 코드 속 문장, any, 시험 건너뛰기, 엔진 순수성) |
+| `npm run words` | 쓰지 않는 말 (옛 비유·바꾼 말·영어 섞어 쓰기, CONCEPT 3.9절). 화면 문구와 자료 문장 |
 | `npm run qa:shots -- [라우트]` | 빌드 결과를 360·768·1280px와 동작 줄이기로 찍고 axe·가로 스크롤·작은 버튼·외부 요청 검사 → `.qa/` |
 | `npm run qa:budget` | 성능 예산 (첫 화면 JS, 페이지 그림, 지연 묶음) |
 | `npm run e2e` | Playwright 주요 흐름(레시피 5개, 키보드만으로 인터뷰, 공유 링크), 검색, 모션 건너뛰기·동작 줄이기, axe. 먼저 `npm run build` |

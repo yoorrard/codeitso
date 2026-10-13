@@ -1,4 +1,4 @@
-// 출력 엔진 시험: 글자 도우미(text.ts), 영수증(receipt.ts), 설계 꾸러미·대화 카드·파일 이름(pack.ts),
+// 출력 엔진 시험: 글자 도우미(text.ts), 영수증(receipt.ts), 설계도·대화 카드·파일 이름(pack.ts),
 // 그 밖의 함수(extras.ts: 배지, 에러 사전, 공유 상태, 확인 문제).
 // 기대값은 docs/ENGINE.md 6·7절, docs/RECEIPT.md, data/templates.json, data/scoring.json
 // (phaseSplitDifficulty 6, baseMinutes 30)으로 손으로 계산했다.
@@ -50,7 +50,7 @@ function widths(text: string): number[] {
   return text.split('\n').map(displayWidth);
 }
 
-/** 실제 칸 id와 이름을 쓰는 작은 칸 규칙 (영수증·꾸러미용) */
+/** 실제 칸 id와 이름을 쓰는 작은 칸 규칙 (영수증·설계도용) */
 const SLOT_SCREEN = slotRule('slot-rule.screen', { id: 'slot.screen', label: '화면', capability: 'screen', required: true, order: 10, mustFill: true });
 const SLOT_STORE = slotRule('slot-rule.store', { id: 'slot.store', label: '저장', capability: 'store', required: true, order: 20 });
 const SLOT_AUTH = slotRule('slot-rule.auth', { id: 'slot.auth', label: '로그인', capability: 'auth', required: true, order: 30, deferrable: true });
@@ -90,7 +90,7 @@ describe('fill', () => {
   });
 
   it('빠진 값은 오류를 낸다', () => {
-    expect(() => fill('{{project}} 꾸러미', {})).toThrow(/'project'/);
+    expect(() => fill('{{project}} 설계도', {})).toThrow(/'project'/);
   });
 
   it('남는 값은 무시한다', () => {
@@ -289,9 +289,9 @@ describe('slotLabelFor', () => {
     expect(slotLabelFor(REAL, ['화면', '저장'], 11)).toBe('화면, 저장');
   });
 
-  it('폭을 넘으면 첫 칸 외 n칸', () => {
-    expect(slotLabelFor(REAL, ['저장', '배포·공유'], 11)).toBe('저장 외 1칸');
-    expect(slotLabelFor(REAL, ['저장', '로그인', '배포·공유'], 11)).toBe('저장 외 2칸');
+  it('폭을 넘으면 첫 칸 외 n개', () => {
+    expect(slotLabelFor(REAL, ['저장', '배포·공유'], 11)).toBe('저장 외 1개');
+    expect(slotLabelFor(REAL, ['저장', '로그인', '배포·공유'], 11)).toBe('저장 외 2개');
     expect(slotLabelFor(REAL, ['저장', '배포·공유'], 999)).toBe('저장, 배포·공유');
   });
 
@@ -301,23 +301,25 @@ describe('slotLabelFor', () => {
 });
 
 describe('receiptModel', () => {
-  it('품목: 담은 순서, 맡은 칸, 가격, 합계', () => {
+  it('품목: 고른 순서, 맡은 칸, 가격, 도구 비용 합계', () => {
     const cat = receiptCatalog();
     const r = evaluate(cat, { answers: ANSWERED, cart: RECEIPT_CART });
     const m = receiptModel(cat, r, ISSUED);
     expect(m.items).toEqual([
       { slot: '화면', productId: 'p.screen', name: '화면 상품', free: true, price: T.receipt.free, later: false },
-      { slot: '저장 외 1칸', productId: 'p.both', name: '저장 배포 상품', free: true, price: T.receipt.free, later: false },
+      { slot: '저장 외 1개', productId: 'p.both', name: '저장 배포 상품', free: true, price: T.receipt.free, later: false },
       { slot: '알림', productId: 'p.bell', name: '알림 상품', free: false, price: T.receipt.paid, later: false },
     ]);
     expect(m.total).toBe(T.receipt.paidIncluded);
   });
 
-  it('모두 무료면 합계 0원', () => {
+  it('모두 0원으로 시작하면 도구 비용 합계도 0원으로 시작 (요금이라 부르지 않는다)', () => {
     const cat = receiptCatalog();
     const m = receiptModel(cat, evaluate(cat, { answers: ANSWERED, cart: ['p.screen', 'p.both'] }), ISSUED);
-    expect(m.total).toBe(T.receipt.free);
-    expect(m.total).toBe('0원');
+    expect(m.total).toBe(T.receipt.totalFree);
+    expect(m.total).toBe('0원으로 시작');
+    expect(m.totalLabel).toBe('도구 비용 합계');
+    expect(m.items.map((i) => i.price)).toEqual(['0원', '0원']);
   });
 
   it('발행 시각은 넘긴 값 그대로, 이름·글자는 문장 틀에서', () => {
@@ -331,7 +333,7 @@ describe('receiptModel', () => {
     expect(m.laterMark).toBe(T.receipt.later);
   });
 
-  it('난이도·시간은 1차 상품만 (30 + 10 + 20 + 40분)', () => {
+  it('난이도·시간은 먼저 만들 것의 상품만 (30 + 10 + 20 + 40분)', () => {
     const cat = receiptCatalog();
     const m = receiptModel(cat, evaluate(cat, { answers: ANSWERED, cart: RECEIPT_CART }), ISSUED);
     expect(m.difficulty).toBe(6);
@@ -340,7 +342,7 @@ describe('receiptModel', () => {
     expect(m.timeText).toBe('약 1시간 30분');
   });
 
-  it('2차로 미룬 칸에만 쓰이면 later, 1차 계산에서 빠진다', () => {
+  it('나중으로 미룬 칸에만 쓰이면 later, 먼저 만들 것 계산에서 빠진다', () => {
     const cat = receiptCatalog();
     const r = evaluate(cat, { answers: ANSWERED, cart: RECEIPT_CART, deferred: ['slot.notify'] });
     const m = receiptModel(cat, r, ISSUED);
@@ -351,7 +353,7 @@ describe('receiptModel', () => {
     expect(m.timeText).toBe('약 1시간');
   });
 
-  it('개수는 준비물·공부할 것·조사할 것 길이', () => {
+  it('개수는 준비물·읽어 둘 용어·알아볼 것 길이', () => {
     const r = goldenResult('case-03');
     const m = receiptModel(REAL, r, ISSUED);
     expect(m.counts).toEqual({ prep: r.prep.length, study: r.study.all.length, research: r.research.length });
@@ -397,7 +399,7 @@ describe('renderReceiptText', () => {
     const lines = text.split('\n');
     expect(lines.find((l) => l.startsWith('화면'))).toContain('…');
     expect(lines.find((l) => l.startsWith('외부 데이터'))).toContain('a-very-long-ascii-…');
-    expect(lines.find((l) => l.startsWith('알림(2차)'))?.endsWith('유료')).toBe(true);
+    expect(lines.find((l) => l.startsWith('알림(나중)'))?.endsWith('유료')).toBe(true);
     expect(lines.find((l) => l.startsWith('목적지'))?.endsWith('…')).toBe(true);
   });
 
@@ -413,20 +415,22 @@ describe('renderReceiptText', () => {
       sep,
       '화면        React + Vite         0원'.trim(),
       '외부 데이터 금융위원회 주식시…   0원',
-      '알림(2차)   텔레그램 봇 알림     0원',
+      '알림(나중)  텔레그램 봇 알림     0원',
       '배포·공유   Cloudflare Workers   0원',
       sep,
-      '합계                             0원',
+      '도구 비용 합계          0원으로 시작',
       '예상 시간              약 2시간 30분',
       '난이도                        6 보통',
-      '준비물 3 · 공부할 것 6 · 조사할 것 1',
+      '준비물                             3',
+      '읽어 둘 용어                       6',
+      '알아볼 것                          1',
       sep,
       `[ ${T.receipt.stamp} ]`,
       T.receipt.footer,
     ]);
   });
 
-  it('품목·합계 줄은 정확히 36칸이고 값이 오른쪽 끝', () => {
+  it('품목·합계·개수 줄은 정확히 36칸이고 값이 오른쪽 끝', () => {
     const m = receiptModel(REAL, goldenResult('case-01'), ISSUED);
     const lines = renderReceiptText(m).split('\n');
     const itemLines = lines.slice(5, 5 + m.items.length);
@@ -438,6 +442,9 @@ describe('renderReceiptText', () => {
       [m.totalLabel, m.total],
       [m.timeLabel, m.timeText],
       [m.difficultyLabel, m.difficultyText],
+      [m.countLabels.prep, String(m.counts.prep)],
+      [m.countLabels.study, String(m.counts.study)],
+      [m.countLabels.research, String(m.counts.research)],
     ] as const) {
       const l = lines.find((x) => x.startsWith(label));
       expect(l && displayWidth(l)).toBe(WIDTH);
@@ -452,20 +459,40 @@ describe('renderReceiptText', () => {
     expect(lines.at(-1)).toBe(`${' '.repeat(17)}f`);
   });
 
-  it('칸 이름 자리는 12칸: 길면 11칸에서 자르고, 로그인(2차)는 딱 들어간다', () => {
+  it('칸 이름 자리는 기본 12칸: 11칸 이름 + 띄움, 도구 이름 19칸 (알림(나중)도 그대로)', () => {
     const m = modelWith({});
     const first = m.items[0];
     expect(first).toBeDefined();
     if (!first) return;
+    const name = 'a'.repeat(19);
     const lines = renderReceiptText({
       ...m,
       items: [
-        { ...first, slot: '아주 긴 칸 이름', later: false },
-        { ...first, slot: '로그인', later: true },
+        { ...first, slot: '외부 데이터', later: false, name },
+        { ...first, slot: '알림', later: true, name },
       ],
     }).split('\n');
-    expect(lines[5]?.startsWith('아주 긴 칸… ')).toBe(true);
-    expect(lines[6]?.startsWith('로그인(2차) ')).toBe(true);
+    expect(first.price).toBe('0원');
+    expect(lines[5]).toBe(`외부 데이터 ${name}  0원`);
+    expect(lines[6]).toBe(`알림(나중)  ${name}  0원`);
+    for (const l of [lines[5] ?? '', lines[6] ?? '']) expect(displayWidth(l)).toBe(WIDTH);
+  });
+
+  it('11칸을 넘는 칸 이름(로그인(나중) 12칸)이 있으면 13칸으로 넓혀 12칸까지 보이고, 도구 이름 자리는 18칸', () => {
+    const m = modelWith({});
+    const first = m.items[0];
+    expect(first).toBeDefined();
+    if (!first) return;
+    const name = 'a'.repeat(19);
+    const lines = renderReceiptText({
+      ...m,
+      items: [
+        { ...first, slot: '아주 긴 칸 이름', later: false, name },
+        { ...first, slot: '로그인', later: true, name },
+      ],
+    }).split('\n');
+    expect(lines[5]).toBe(`아주 긴 칸 … ${'a'.repeat(17)}…  0원`);
+    expect(lines[6]).toBe(`로그인(나중) ${'a'.repeat(17)}…  0원`);
     for (const l of [lines[5] ?? '', lines[6] ?? '']) expect(displayWidth(l)).toBe(WIDTH);
   });
 
@@ -500,7 +527,7 @@ describe('renderPack: 골든 사례', () => {
     }
   });
 
-  it('같은 입력이면 같은 꾸러미', () => {
+  it('같은 입력이면 같은 설계도', () => {
     for (const g of GOLDEN) {
       const a = renderPack(REAL, goldenResult(g.id), { siteUrl: SITE, issuedAt: ISSUED });
       const b = renderPack(realCatalog(), goldenResult(g.id), { siteUrl: SITE, issuedAt: ISSUED });
@@ -511,12 +538,12 @@ describe('renderPack: 골든 사례', () => {
   it('머리말: 제목, 발행 시각, 맺음말은 면책 안내', () => {
     const md = renderPack(REAL, goldenResult('case-01'), { siteUrl: SITE, issuedAt: ISSUED });
     const lines = md.split('\n');
-    expect(lines[0]).toBe('# 안내 페이지 설계 꾸러미');
+    expect(lines[0]).toBe('# 안내 페이지 설계도');
     expect(md).toContain(`${T.pack.labels.issued}: ${ISSUED} · ${T.pack.labels.format} 1`);
     expect(md.trimEnd().endsWith(T.disclaimer)).toBe(true);
   });
 
-  it('2차로 미룬 칸이 있을 때만 미룬 것과 그 안내', () => {
+  it('나중으로 미룬 칸이 있을 때만 나중에 붙일 것과 그 안내', () => {
     for (const g of GOLDEN) {
       const r = goldenResult(g.id);
       const md = renderPack(REAL, r, { siteUrl: SITE, issuedAt: ISSUED });
@@ -528,16 +555,16 @@ describe('renderPack: 골든 사례', () => {
     expect(md).toContain(`- 알림: ${T.pack.deferredNote}`);
   });
 
-  it('2차에만 쓰는 도구는 7번에 (2차)', () => {
+  it('나중에만 쓰는 도구는 7번에 (나중)', () => {
     const md = renderPack(REAL, goldenResult('case-08'), { siteUrl: SITE, issuedAt: ISSUED });
-    expect(md).toContain('| 알림 (2차) | [텔레그램 봇 알림](');
-    expect(md).toContain('**텔레그램 봇 알림** (2차)');
-    expect(md).not.toContain('**Cloudflare Workers** (2차)');
+    expect(md).toContain('| 알림 (나중) | [텔레그램 봇 알림](');
+    expect(md).toContain('**텔레그램 봇 알림** (나중)');
+    expect(md).not.toContain('**Cloudflare Workers** (나중)');
     const same = renderPack(REAL, goldenResult('case-03'), { siteUrl: SITE, issuedAt: ISSUED });
-    expect(same).not.toContain('(2차)');
+    expect(same).not.toContain('(나중)');
   });
 
-  it('조사할 것이 없을 때만 noResearch, 있으면 항목 수만큼', () => {
+  it('알아볼 것이 없을 때만 noResearch, 있으면 항목 수만큼', () => {
     for (const g of GOLDEN) {
       const r = goldenResult(g.id);
       const md = renderPack(REAL, r, { siteUrl: SITE, issuedAt: ISSUED });
@@ -549,7 +576,7 @@ describe('renderPack: 골든 사례', () => {
     expect(goldenResult('case-12').research).toHaveLength(3);
   });
 
-  it('색인 상품이 있을 때만 indexMemo', () => {
+  it('색인 상품(원문만 있는 도구)이 있을 때만 indexMemo', () => {
     for (const g of GOLDEN) {
       const r = goldenResult(g.id);
       const md = renderPack(REAL, r, { siteUrl: SITE, issuedAt: ISSUED });
@@ -559,13 +586,14 @@ describe('renderPack: 골든 사례', () => {
     expect(md).toContain(`**korean-elementary-learning-map-mcp**\n\n- ${T.pack.indexMemo}`);
   });
 
-  it('개념 링크는 사이트 주소 끝의 / 를 떼고 붙인다', () => {
+  it('용어 카드 링크(/terms/)는 사이트 주소 끝의 / 를 떼고 붙인다', () => {
     const r = goldenResult('case-01');
     const a = renderPack(REAL, r, { siteUrl: `${SITE}//`, issuedAt: ISSUED });
     const b = renderPack(REAL, r, { siteUrl: SITE, issuedAt: ISSUED });
     expect(a).toBe(b);
-    expect(a).toContain(`](${SITE}/concepts/`);
-    expect(a).not.toContain(`${SITE}//concepts`);
+    expect(a).toContain(`](${SITE}/terms/`);
+    expect(a).not.toContain(`${SITE}//terms`);
+    expect(a).not.toContain('/concepts/');
   });
 });
 
@@ -577,7 +605,7 @@ describe('renderPack: 자유 입력', () => {
     const clean = `우리 학교 급식 안내 ${'가'.repeat(100)}`;
     const title = [...clean].slice(0, 30).join('');
     const one = [...clean].slice(0, 80).join('');
-    expect(md.split('\n')[0]).toBe(`# ${title} 설계 꾸러미`);
+    expect(md.split('\n')[0]).toBe(`# ${title} 설계도`);
     expect(md).toContain(`- ${T.pack.labels.oneLine}: ${one}\n`);
     expect(md).not.toContain('우리 학교\n');
   });
@@ -587,13 +615,13 @@ describe('renderPack: 자유 입력', () => {
     expect(md).toContain(`- ${T.pack.labels.oneLine}: ${T.types['type.page']?.goal}`);
   });
 
-  it('공유 링크로 열면 자유 입력 대신 유형 목표', () => {
+  it('영수증 링크로 열면 자유 입력 대신 유형 목표', () => {
     const session: Partial<Session> = { ...goldenSession(golden('case-01')), freeText: '비밀 한 줄' };
     const viaLink = fromShareState(JSON.parse(JSON.stringify(toShareState(session as Session))));
     expect(viaLink).not.toBeNull();
     const md = renderPack(REAL, evaluate(REAL, viaLink ?? {}), { siteUrl: SITE, issuedAt: ISSUED });
     expect(md).not.toContain('비밀 한 줄');
-    expect(md.split('\n')[0]).toBe('# 안내 페이지 설계 꾸러미');
+    expect(md.split('\n')[0]).toBe('# 안내 페이지 설계도');
     expect(md).toContain(`- ${T.pack.labels.oneLine}: ${T.types['type.page']?.goal}`);
   });
 });
@@ -718,7 +746,7 @@ describe('conversationCards', () => {
     expect(cards[0]?.text.startsWith(`${T.aiTools['ai.chat-free']?.packRef}를 읽고`)).toBe(true);
   });
 
-  it('코딩 에이전트면 폴더에 저장한 꾸러미를 가리킨다', () => {
+  it('코딩 에이전트면 폴더에 저장한 설계도를 가리킨다', () => {
     const cat = tinyCatalog({ questions: [tagQuestion({ 'ai.agent': 1 })] });
     const cards = conversationCards(cat, evaluate(cat, { answers: ANSWERED }));
     const ref = T.aiTools['ai.agent']?.packRef ?? '';
@@ -735,13 +763,13 @@ describe('conversationCards', () => {
 
 describe('packFileName', () => {
   // 함수는 이용자 기기 시간(로컬 시각)을 쓴다. 로컬 시각으로 만든 Date라 시간대와 무관하게 같은 값이 나온다.
-  it('design-pack-YYYYMMDD-HHmm.md', () => {
-    expect(packFileName(new Date(2026, 9, 12, 14, 5))).toBe('design-pack-20261012-1405.md');
+  it('codechauffeur-plan-YYYYMMDD-HHmm.md', () => {
+    expect(packFileName(new Date(2026, 9, 12, 14, 5))).toBe('codechauffeur-plan-20261012-1405.md');
   });
 
   it('한 자리는 0을 채우고 초는 버린다', () => {
-    expect(packFileName(new Date(2026, 0, 2, 3, 4, 59, 999))).toBe('design-pack-20260102-0304.md');
-    expect(packFileName(new Date(2026, 11, 31, 0, 0))).toBe('design-pack-20261231-0000.md');
+    expect(packFileName(new Date(2026, 0, 2, 3, 4, 59, 999))).toBe('codechauffeur-plan-20260102-0304.md');
+    expect(packFileName(new Date(2026, 11, 31, 0, 0))).toBe('codechauffeur-plan-20261231-0000.md');
   });
 });
 

@@ -112,6 +112,15 @@ describe('망가뜨린 자료를 잡는다', () => {
     expect(errors.some((e) => e.includes('없는 상품 no-such-product'))).toBe(true);
   });
 
+  it('충돌 규칙의 anchorSlot이 어떤 칸 규칙도 만들지 않는 칸', () => {
+    const errors = broken((x) => {
+      const c = x.data.rules.rules.find((r) => r.type === 'conflict');
+      if (!c || c.type !== 'conflict') throw new Error('충돌 규칙이 없습니다');
+      c.anchorSlot = 'slot.nowhere';
+    });
+    expect(errors.some((e) => e.includes('anchorSlot (slot.nowhere)'))).toBe(true);
+  });
+
   it('출처 대응표가 domain 태그가 아닌 곳을 가리킴', () => {
     const errors = broken((x) => {
       const s = first(x.sources.sources);

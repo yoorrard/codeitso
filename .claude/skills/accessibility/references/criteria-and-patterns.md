@@ -8,7 +8,7 @@ Both levels must pass. The last column says where the criterion bites in this ap
 
 | Criterion | Level | Requirement | 코드쇼퍼 |
 |---|---|---|---|
-| 1.1.1 Non-text Content | A | Images and icons have text alternatives | Mascot, picture options, car/stop SVGs |
+| 1.1.1 Non-text Content | A | Images and icons have text alternatives | Route map (role=img summary), picture options, renders and blueprint placeholders |
 | 1.2.1 Audio-only and Video-only | A | Transcript or audio description | No media in phase 1 |
 | 1.2.2 Captions (Prerecorded) | A | Video with audio has captions | Korean captions if video is added |
 | 1.2.3 Audio Description or Media Alternative | A | Video has description or alternative | As above |

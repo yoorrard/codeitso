@@ -10,32 +10,34 @@ export interface Conflict {
   kind: 'rule' | 'empty-slot';
   message: string;
   fixHint: string;
-  /** 규칙 충돌을 '그대로 두면' 붙는 조사 카드 */
+  /** 규칙 충돌을 '그대로 가기'로 두면 '알아볼 것'에 붙는 조사 카드 */
   researchCard?: string;
   /** 빈 칸 충돌의 칸 id */
   slotId?: string;
-  /** '그대로 두고 조사할 것에 추가'를 고를 수 있는지 (비워 둘 수 없는 칸은 false) */
+  /** 지도에서 이 막힌 곳을 붙일 칸 id. 규칙 충돌은 규칙의 anchorSlot, 빈 칸 충돌은 그 칸. 없으면 길 전체 */
+  anchorSlot?: string;
+  /** '그대로 가기'를 고를 수 있는지 (비워 둘 수 없는 칸은 false, 화면: 통행 불가) */
   keepable: boolean;
-  /** 이용자가 '그대로 두고 조사할 것에 추가'를 골랐는지 */
+  /** 이용자가 '그대로 가기'를 골랐는지 (화면: 서행) */
   kept: boolean;
 }
 
 export interface EasierSwap {
   slotId: string;
-  /** 지금 담은 상품 */
+  /** 지금 고른 상품 */
   from: string;
-  /** 같은 칸에서 추천 기준을 넘는, 난이도가 더 낮은 진열 상품 */
+  /** 같은 칸에서 추천 기준을 넘는, 난이도가 더 낮은 진열(shelf) 상품 */
   to: string;
 }
 
 export interface Split {
   /** 장바구니 상품 난이도 합 (같은 상품은 한 번) */
   difficulty: number;
-  /** 2차로 미룬 칸에만 쓰이는 상품을 뺀 1차 난이도 */
+  /** 나중으로 미룬 칸에만 쓰이는 상품을 뺀 '먼저 만들 것'의 난이도 */
   difficultyFirst: number;
-  /** 나누기를 제안할지: 1차 난이도가 기준보다 크면 */
+  /** 나누기를 제안할지: 먼저 만들 것의 난이도가 기준보다 크면 */
   needed: boolean;
-  /** 아직 미루지 않은, 2차로 미룰 수 있는 칸 (칸 순서). needed일 때만 */
+  /** 아직 미루지 않은, 나중으로 미룰 수 있는 칸 (칸 순서). needed일 때만 */
   defer: string[];
   /** 더 쉬운 상품으로 바꾸는 제안. needed일 때만 */
   easier: EasierSwap[];
@@ -45,7 +47,7 @@ export function emptySlotId(slotId: string): string {
   return `conflict.empty-slot:${slotId}`;
 }
 
-/** 재확인 검사: 규칙 충돌(규칙 순서) 다음에 빈 필수 칸(칸 순서) */
+/** 출발 전 점검: 규칙 충돌(규칙 순서) 다음에 빈 필수 칸(칸 순서). 화면에서는 '막힌 곳' */
 export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: Slot[]): Conflict[] {
   const out: Conflict[] = [];
   for (const r of cat.data.rules.rules) {
@@ -56,6 +58,7 @@ export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: S
       message: r.message,
       fixHint: r.fixHint,
       researchCard: r.researchCard,
+      ...(r.anchorSlot ? { anchorSlot: r.anchorSlot } : {}),
       keepable: true,
       kept: session.kept.includes(r.id),
     });
@@ -72,6 +75,7 @@ export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: S
       message: s.emptyMessage ?? fill(t.message, { label: s.label }),
       fixHint: s.emptyFix ?? fill(t.fixHint, { label: s.label }),
       slotId: s.id,
+      anchorSlot: s.id,
       keepable,
       kept: keepable && session.kept.includes(id),
     });
@@ -84,7 +88,7 @@ function slotsOf(p: Product, slots: Slot[]): Slot[] {
   return slots.filter((s) => p.capabilities.includes(s.capability));
 }
 
-/** 담은 상품 중 2차로 미룬 칸에만 쓰이는 상품을 뺀 것 (칸 밖 상품은 1차에 둔다) */
+/** 고른 상품 중 나중으로 미룬 칸에만 쓰이는 상품을 뺀 것 = 먼저 만들 것 (칸 밖 상품은 먼저 만들 것에 둔다) */
 export function firstPhaseProducts(cart: Product[], slots: Slot[], deferred: string[]): Product[] {
   return cart.filter((p) => {
     const fills = slotsOf(p, slots);
@@ -94,8 +98,8 @@ export function firstPhaseProducts(cart: Product[], slots: Slot[], deferred: str
 }
 
 /**
- * 1차/2차 나누기. 칸을 미뤄도 그 칸의 상품이 다른 칸에도 쓰이면 난이도 숫자는 그대로일 수 있다
- * (예: Supabase가 저장과 로그인을 함께 맡을 때 로그인을 미룸). 그래도 그 기능을 만드는 일은 2차로 넘어간다.
+ * '먼저 만들 것 / 나중에 붙일 것' 나누기. 칸을 미뤄도 그 칸의 상품이 다른 칸에도 쓰이면 난이도 숫자는 그대로일 수 있다
+ * (예: Supabase가 저장과 로그인을 함께 맡을 때 로그인을 미룸). 그래도 그 기능을 만드는 일은 나중으로 넘어간다.
  */
 export function suggestSplit(cat: Catalog, cart: Product[], rankings: SlotRanking[], deferred: string[]): Split {
   const slots = rankings.map((r) => r.slot);

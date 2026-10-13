@@ -1,11 +1,12 @@
 ---
-// 레시피 /recipes (docs/UX.md 3.9, T14, R-47): 완성 세트 카드 목록. 난이도·예상 시간은 레시피의 답·장바구니·그대로 둔 충돌로
+// 미리 짠 코스 /courses (docs/CONCEPT.md 6.10, T14, R-47): 완성 세트 카드 목록. 난이도·예상 시간은 레시피의 답·장바구니·그대로 둔 충돌로
 // 엔진을 돌려 영수증과 같은 값(receiptModel: 1차 난이도와 그 말, 예상 시간)을 빌드 때 보여 준다.
 // "이 레시피로 출발"(RecipeStart 섬)은 답·장바구니·그대로 둔 충돌·한 줄 입력을 채우고 재확인으로 간다.
 import Base from '../layouts/Base.astro';
 import '../styles/catalog-pages.css';
 import RecipeStart from '../components/RecipeStart.tsx';
 import { ko } from '../copy/ko.ts';
+import { ROUTES, toolPath } from '../lib/routes.ts';
 import { catalog, data } from '../lib/data.ts';
 import { evaluate, receiptModel } from '../lib/engine/index.ts';
 
@@ -36,7 +37,7 @@ const cards = data.recipes.recipes.map((recipe) => {
             <dd>
               <ul class="link-list">
                 {products.map((p) => (
-                  <li>{p.layer === 'shelf' ? <a href={`/products/${p.id}`}>{p.name}</a> : p.name}</li>
+                  <li>{p.layer === 'shelf' ? <a href={toolPath(p.id)}>{p.name}</a> : p.name}</li>
                 ))}
               </ul>
             </dd>
@@ -51,5 +52,5 @@ const cards = data.recipes.recipes.map((recipe) => {
     }
   </ul>
   <p class="recipe-own">{R.ownWay}</p>
-  <a slot="action" class="btn" href="/interview">{R.goInterview}</a>
+  <a slot="action" class="btn" href={ROUTES.destination}>{R.goInterview}</a>
 </Base>

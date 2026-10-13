@@ -1,25 +1,31 @@
 # 구조 설계
 
+화면의 세계관·구성·장면은 `docs/CONCEPT.md`(D56)가 정본이다. 이 문서는 그것을 어떤 기술과 파일로 만드는지를 적는다. 문서끼리 어긋나면 PRD > CONCEPT > 이 문서 순으로 따른다.
+
 ## 1. 기술 구성
 
 | 영역 | 선택 | 메모 |
 |---|---|---|
-| 사이트 | Astro (정적 출력) + TypeScript strict | 서버 없이 HTML로 빌드한다. 버전은 T01에서 최신 안정판으로 정하고 `docs/DECISIONS.md`에 적는다. |
-| 움직이는 부분 | Preact 섬(island) | 인터뷰·장보기·재확인·계산대·사전처럼 상태가 있는 곳만 섬으로 만든다. 나머지는 정적 HTML. |
+| 사이트 | Astro (정적 출력) + TypeScript strict | 서버 없이 HTML로 빌드한다. 판은 D35. |
+| 움직이는 부분 | Preact 섬(island) | 목적지·경유지·점검·도착·사전·지도처럼 상태가 있는 곳만 섬으로 만든다. 홈 첫 화면은 섬 없이 정적 SVG와 작은 스크립트(2KB 안쪽)로 돈다 (CONCEPT 6.1). 나머지는 정적 HTML. |
 | 상태 | nanostores + @nanostores/persistent | 브라우저 localStorage에 저장. 키 이름은 아래 4절. |
-| 판단 | `src/lib/engine/` (이미 있음) | 데이터와 규칙만으로 계산하는 순수 함수. 명세는 `docs/ENGINE.md`. |
+| 판단 | `src/lib/engine/` | 데이터와 규칙만으로 계산하는 순수 함수. 명세는 `docs/ENGINE.md`. |
+| 지도 | (T28) `src/lib/map/model.ts`의 `mapModel(session, evaluate())` + `MapBoard.tsx` 섬 | 엔진 결과를 그대로 그리는 순수 함수다. 땅 판과 표지는 SVG이고 색은 모두 CSS 변수라 낮·밤·느낌 팔레트가 같은 파일을 쓴다. 홈, 다섯 단계, 코스·지난 영수증 썸네일, 공유 미리 보기 그림이 같은 모형을 쓴다 (CONCEPT 6절 머리, 9절). |
 | 자료 | `data/*.json` + `schemas/*.schema.json` | 빌드 때 import. 검사는 `npm run validate`. |
-| 검색 | MiniSearch | 빌드 때 색인을 만들어 `public/search-index.json`으로 내보낸다. 한글 처리는 7절. |
-| 공유 링크 | lz-string | 주소의 `#r=` 뒤에 압축해 넣는다. 서버로 가지 않는다. |
+| 검색 | MiniSearch | 빌드 때 색인을 만들어 정적 끝점 `/search-index.json`으로 내보낸다 (D47). 한글 처리와 묶음은 7절. |
+| 영수증 링크 | lz-string | 주소의 `#r=` 뒤에 압축해 넣는다 (`/arrival#r=…`). 서버로 가지 않는다. 5절. |
 | 배포 | Cloudflare Workers 정적 파일(static assets) 무료 플랜 | 정적 파일 요청은 무료·무제한. 주소는 처음엔 `이름.하위도메인.workers.dev`. |
+| 옛 주소 넘기기 | `public/_redirects` | Workers 정적 파일이 읽어 옛 주소 10개를 301로 넘긴다 (3.1절, D56). |
 | 집계 | Worker 함수 `/api/event` + D1 | 날짜별 이벤트 횟수만. 무료 플랜: Worker 요청 하루 10만 건, D1 쓰기 하루 10만 행. |
-| 방문 통계 | Cloudflare Web Analytics | 쿠키 없음. `/receipt`에는 싣지 않는다. |
+| 방문 통계 | Cloudflare Web Analytics | 쿠키 없음. 도착 화면 `/arrival`에는 싣지 않는다 (D17). |
 | 자동화 | GitHub Actions | 검사·시험·배포, 2단계부터 색인 갱신. 공개 저장소는 무료. |
 | 시험 | Vitest(엔진·자료), Playwright 1.56.1 + @axe-core/playwright(화면·접근성) | Playwright는 컨테이너 Chromium에 맞춰 고정 (D33). 시각 점검·예산은 `scripts/qa/` |
-| 글꼴 | Pretendard(본문), `CC Receipt`(영수증·전광판, D2Coding에서 글자를 골라 이름을 바꿈) | 둘 다 OFL. Pretendard는 가변 글꼴 동적 하위 집합(D38), 영수증 글꼴은 고정 문구 글자만 고른 하위 집합 (D29·D37). `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
-| 모션 | CSS 전환·키프레임·`@starting-style`·`offset-path`·CSS 3D, 문서 간 View Transitions, 직접 쓴 `src/lib/motion.ts` (약 2KB) | 라이브러리 없음. 계산대 색종이만 `canvas-confetti`(ISC, 4.3KB) 지연 로드 (D25, D26) |
+| 글꼴 | Pretendard(모든 화면 글), `CC Receipt`(영수증 종이와 '요금 0원' 칩, D2Coding에서 글자를 골라 이름을 바꿈) | 둘 다 OFL. Pretendard는 가변 글꼴 동적 하위 집합(D38), 영수증 글꼴은 고정 문구 글자만 고른 하위 집합 (D29·D37). 쓰는 곳은 CONCEPT 5.4. `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
+| 화면 색 | 낮 지도(기본)와 밤 지도 | `src/styles/tokens.css`가 `@media (prefers-color-scheme: dark)` 안에서 같은 토큰 이름에 밤 값을 다시 준다. 화면 코드는 모드를 모른다. 대비 검사(`npm run tokens`)는 두 모드를 모두 돈다. 사이트 안 색 설정은 BACKLOG (CONCEPT 5.3). |
+| 모션 | CSS 전환·키프레임·`@starting-style`, WAAPI, SVG `stroke-dashoffset`·`offset-path`, FLIP, 문서 간 View Transitions, 직접 쓴 `src/lib/motion.ts` | 라이브러리 없음. `canvas-confetti`와 `@types/canvas-confetti`를 뺀다 (D56, T25). CSS 3D는 대표 장면의 지도 기울이기 하나만. 장면은 CONCEPT 7절. |
 | 효과음 | `src/lib/sfx.ts` + 켰을 때만 동적 import하는 합성기 | 기본 꺼짐, 소리 파일 없음 (D28) |
-| 아이콘·그림 | Fluent Emoji 3D(MIT) 128px webp는 `public/emoji/`, Phosphor(MIT) SVG는 빌드 때 인라인, 기사님은 `src/assets/mascot/`(Astro `<Picture>`로 크기별 webp·avif), 나머지는 직접 그린 SVG | D27 |
+| 아이콘·그림 | Phosphor Regular(MIT, 빌드 때 인라인 SVG), 직접 그린 SVG(기능 그림, 질문 그림, 지도 표지 묶음 `src/assets/map/map-sprite.svg`, 청사진 자리 표시), 미리 구운 3D 렌더(`src/assets/art/`, Astro `<Picture>`로 AVIF/WebP) | 사람 그림(마스코트)과 Fluent 3D 그림 문자(`public/emoji/`)는 쓰지 않는다 (D56, T25에서 걷어 냄). 렌더가 없으면 `Art.astro`가 청사진 자리 표시를 쓴다 (CONCEPT 5.7, 9절). |
+| 그림 굽기 (개발용) | (T33) `scripts/assets/render-art.ts` (`npm run art`, `npm run art:sheet`) + three·@gltf-transform(devDependency만) | 컨테이너의 Playwright Chromium을 화면 없이 띄워 소유자가 준 GLB를 조명 한 벌에서 굽고 투명 PNG를 만든다. **three는 devDependency에만 두고 `src`에서 import하지 않는다** (품질 바닥선이 막는다). 실행 중 WebGL은 쓰지 않는다 (D26·D54·D56). 화면에 실리는 JS는 0KB. |
 
 Cloudflare Pages가 아니라 Workers로 가는 이유는 `docs/DECISIONS.md`의 D04.
 
@@ -29,112 +35,151 @@ Cloudflare Pages가 아니라 Workers로 가는 이유는 `docs/DECISIONS.md`의
 code-chauffeur/
 ├─ CLAUDE.md                 Claude Code가 매번 읽는 규칙
 ├─ .claude/                  규칙(rules), 스킬(skills), 전문가 에이전트(agents), 훅(hooks), settings.json
-├─ THIRD_PARTY_NOTICES.md    가져온 스킬·글꼴·아이콘·라이브러리의 라이선스
+├─ THIRD_PARTY_NOTICES.md    가져온 스킬·글꼴·아이콘·라이브러리·그림의 라이선스
+├─ assets-src/art/           (T33) 소유자가 준 참고 그림 PNG와 GLB (CONCEPT 9절 (c))
 ├─ data/                     자료 (사람이 고치는 곳)
 │  ├─ golden/                추천 회귀 검사 사례
 │  └─ index/                 (T19) 자동 수집 색인. 저장소 기록에는 올리지 않는다
 ├─ schemas/                  자료 스키마
 ├─ scripts/                  검사·예시·색인 스크립트 (Node로 바로 실행)
-│  ├─ lib/                   부작용 없는 도우미 (자료 읽기, 골든 비교, 색 대비). 시험에서도 import
-│  ├─ guard/                 품질 바닥선(floor-guard), 하네스 앞머리 검사
+│  ├─ lib/                   부작용 없는 도우미 (자료 읽기, 골든 비교, 색 대비, 쓰지 않는 말). 시험에서도 import
+│  ├─ guard/                 품질 바닥선(floor-guard), 쓰지 않는 말(check-words), 하네스 앞머리 검사
+│  ├─ assets/                (T28·T33) 땅 판 만들기(make-map), 렌더 굽기(render-art)
 │  ├─ fonts/                 글꼴 만들기 (Pretendard 조각 복사, CC Receipt 하위 집합·이름 바꾸기)
 │  └─ qa/                    시각 점검(shots), 성능 예산(budget), 정적 서버(serve)
 ├─ src/
 │  ├─ lib/engine/            판단 엔진 (화면과 무관한 순수 함수)
-│  ├─ lib/                   (T05~T06) 자료 싣기, 상태 저장, 공유 링크, 진행(주행 거리·도장) / (T06b) 모션·효과음 / (T18) 집계 보내기 / (T15) 검색
-│  ├─ assets/mascot/         기사님 그림 원본 (소유자 제공)
-│  ├─ components/            (T07~) Astro 컴포넌트와 Preact 섬
-│  ├─ layouts/               (T05) 기본 틀: 노선 띠·전광판, 사전 버튼
-│  ├─ pages/                 (T01, T07~) 라우트
-│  ├─ copy/ko.ts             (T05) 화면 고정 문구. 엔진이 쓰는 문장은 data/templates.json
-│  └─ styles/tokens.css      디자인 토큰 (이미 있음)
-├─ tests/                    (T03~) Vitest 시험, tests/fixtures/ 가짜 자료
+│  ├─ lib/                   주소(routes), 자료 싣기, 상태 저장, 영수증 링크, 단계(stages)와 진행(단계 상태·남은 개수), 모션·효과음, 집계 보내기, 검색 / (T28) map/ 지도 모형
+│  ├─ assets/                concepts/ 용어 카드 그림, (T28) map/ 땅 판·지도 표지 묶음, (T33) art/ 구운 렌더
+│  ├─ components/            Astro 컴포넌트와 Preact 섬
+│  ├─ layouts/               기본 틀: 머리줄·단계 줄·아래 막대, 사전 옆 창
+│  ├─ pages/                 라우트 (3절)
+│  ├─ copy/ko.ts             화면 고정 문구. 엔진이 쓰는 문장은 data/templates.json
+│  └─ styles/tokens.css      디자인 토큰 (낮·밤)
+├─ tests/                    Vitest 시험, tests/fixtures/ 가짜 자료, tests/e2e/ Playwright
 ├─ worker/index.ts           (T18) /api/event 집계 함수 (따로 tsconfig)
 ├─ migrations/               (T18) D1 표 만들기 SQL
-├─ public/                   글꼴(fonts/), 3D 그림 문자(emoji/), 빌드 때 만든 검색 색인
-└─ docs/                     문서
+├─ public/                   글꼴(fonts/), 보안 머리글(_headers), 옛 주소 넘기기(_redirects)
+└─ docs/                     문서 (순위: PRD > CONCEPT > UX·DESIGN·ARCHITECTURE·ENGINE > TASKS)
 ```
 
 ## 3. 라우트
 
 | 주소 | 화면 | 만드는 방식 |
 |---|---|---|
-| `/` | 홈: "어디로 모실까요?", 두 입구, 레시피 3개, 이어서 하기 | 정적 + 작은 섬 |
-| `/lesson` | 첫 수업 | 정적 + 복사 버튼 섬 |
-| `/interview` | 인터뷰 | 섬 |
-| `/shop` | 장보기 | 섬 |
-| `/check` | 재확인 | 섬 |
-| `/receipt` | 계산대: 영수증·설계 꾸러미·대화 카드. `#r=`로 다시 열기 | 섬 |
-| `/study` | 공부할 것 (영수증 기준 목록) | 섬 |
-| `/concepts/[id]` | 개념 카드 (검색 유입용 정적 페이지 + 확인 문제 섬) | 정적 생성 |
-| `/shelf` | 진열대: 코너별 구경, 검색 | 정적 + 섬 |
-| `/products/[id]` | 진열 상품 상세 (색인 상품은 만들지 않는다) | 정적 생성 |
-| `/recipes` | 레시피 목록, "이 레시피로 출발" | 정적 + 섬 |
-| `/dictionary` | 사전 전체 화면 (옆 창과 같은 내용) | 섬 |
+| `/` | 홈: "어디로 모실까요?", 목적지 말하기·도구 둘러보기, 미리 짠 코스 3개, 이어서 가기 | 정적 + 작은 스크립트 (첫 화면에는 섬 없음) |
+| `/test-drive` | 시운전 (연습 1·2·3) | 정적 + 복사 버튼 섬 |
+| `/destination` | 목적지 질문 | 섬 |
+| `/waypoints` | 경유지: 기능마다 도구 고르기 | 섬 |
+| `/check` | 점검 (제목 '출발 전 점검') | 섬 |
+| `/arrival` | 도착: 영수증·설계도·읽어 둘 용어·AI에게 할 말. `#r=`로 다시 열기 | 섬 |
+| `/receipts` | (T32) 지난 영수증: 최대 30장, 줄을 누르면 `/arrival#r=…` | 섬 |
+| `/terms` | 용어 카드 20장. 목적지를 정했으면 맨 위에 읽어 둘 용어(먼저 읽어 둘 용어 → 만들면서 볼 용어) | 정적 + 섬 |
+| `/terms/[id]` | 용어 카드 (검색 유입용 정적 페이지 + 확인 문제 섬) | 정적 생성 |
+| `/tools` | 도구 모음: 분야·기능별 둘러보기, 검색 | 정적 + 섬 |
+| `/tools/[id]` | 도구 상세 (`layer: shelf`만. 원문만 있는 도구는 만들지 않는다) | 정적 생성 |
+| `/courses` | 미리 짠 코스, "이 코스로 출발" | 정적 + 섬 |
+| `/dictionary` | 사전 전체 화면 (옆 창과 같은 내용, 에러 묶음 바로 가기 `/dictionary#errors`) | 섬 |
 | `/about` | 서비스 소개, 하지 않는 것, AI를 안 쓰는 이유 | 정적 |
-| `/about/scoring` | 추천 공식: `data/scoring.json` 값을 그대로 표로 | 정적 |
+| `/about/criteria` | 추천 기준: `data/scoring.json` 값을 그대로 표로 | 정적 |
+| `/about/credits` | 크레딧: 글꼴·아이콘·그림·라이브러리의 출처와 라이선스 | 정적 |
 | `/legal/privacy` | 개인정보 처리방침 (초안, 사람 검토) | 정적 |
 | `/legal/notice` | 이용 안내·면책 (초안, 사람 검토) | 정적 |
 | `/404` | 길을 잘못 들었어요 | 정적 |
+| `/search-index.json`, `/robots.txt` | 검색 색인, 로봇 안내 (빌드 때 만드는 정적 끝점) | 정적 생성 |
 
-사전 옆 창은 기본 틀(layout)에 들어가 모든 화면에서 열린다. 정류장마다 열리는 조건은 `docs/UX.md` 2.1절.
+주소는 `src/lib/routes.ts`의 `ROUTES` 한 곳에서 정하고, 화면 코드에 주소를 직접 쓰지 않는다 (도구·용어 상세는 `toolPath`·`termPath`). 사전 옆 창은 기본 틀(layout)에 들어가 모든 화면에서 열린다. 단계마다 열리는 조건은 `docs/UX.md` 2.1절 (정본은 CONCEPT 2.1절).
+
+### 3.1 옛 주소 넘기기 (`public/_redirects`)
+
+아직 배포 전이지만 비용이 0이고, e2e와 이미 나눈 미리 보기 링크를 지켜 주므로 옛 주소 10개를 301로 넘긴다 (CONCEPT 2.2절).
+
+```text
+/lesson          /test-drive      301
+/interview       /destination     301
+/shop            /waypoints       301
+/receipt         /arrival         301
+/shelf           /tools           301
+/products/:id    /tools/:id       301
+/concepts/:id    /terms/:id       301
+/study           /terms           301
+/recipes         /courses         301
+/about/scoring   /about/criteria  301
+```
+
+- Workers 정적 파일이 이 파일을 읽는다 (`_headers`와 같은 자리). `/api/*`는 Worker가 먼저 받으므로 영향이 없다.
+- 주소의 `#r=` 조각은 서버로 가지 않지만, 브라우저가 넘겨받은 주소에 그대로 붙인다. 그래서 옛 영수증 링크 `/receipt#r=…`도 `/arrival#r=…`로 열린다.
+- 같은 목록이 `src/lib/routes.ts`의 `REDIRECTS`에 있고, 단위 시험(`tests/lib/routes.test.ts`)이 두 목록이 같은지, 10줄 모두 301인지, 넘겨받는 곳이 지금 있는 주소인지 확인한다. `astro dev`와 로컬 정적 서버(`scripts/qa/serve.ts`)는 이 파일을 읽지 않으므로 e2e는 새 주소만 쓴다. 실제 넘김은 `wrangler dev`나 미리 보기 배포에서 본다.
+- 정식 출시 석 달 뒤에 이 파일을 지울지 다시 본다 (`docs/BACKLOG.md`).
 
 ## 4. 상태와 저장
 
-모든 저장은 `src/lib/store.ts` 한 곳에서만 한다 (nanostores + @nanostores/persistent). 읽은 값의 모양 고르기는 `src/lib/saved.ts`, 엔진 결과 파생 store(`$result`, `commitSession`)는 자료 전체를 불러오므로 `src/lib/result.ts`에 따로 둔다 (설정 메뉴처럼 결과가 필요 없는 섬이 자료를 싣지 않게). localStorage를 못 쓰는 환경(사생활 보호 모드 등)에서는 메모리에만 두고 안내 한 줄을 보여 준다.
+모든 저장은 `src/lib/store.ts` 한 곳에서만 한다 (nanostores + @nanostores/persistent). 읽은 값의 모양 고르기는 `src/lib/saved.ts`, 엔진 결과 파생 store(`$result`, `commitSession`)는 자료 전체를 불러오므로 `src/lib/result.ts`에 따로 둔다 (설정 대화 상자처럼 결과가 필요 없는 섬이 자료를 싣지 않게). localStorage를 못 쓰는 환경(사생활 보호 모드 등)에서는 메모리에만 두고 안내 한 줄을 보여 준다.
 
 | 키 | 내용 |
 |---|---|
-| `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers, cart, kept, deferred, freeText |
-| `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 정답 맞힌 문제 번호 |
-| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true }` 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 첫 수업을 끝까지 봄·영수증을 한 번 이상 뽑음 (도장 계산용, D40) |
+| `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers(목적지 답), cart(고른 도구), kept(그대로 간 막힌 곳), deferred(나중으로 미룬 기능), freeText(한 줄 입력). 이름이 바뀌어도 키와 모양은 그대로라 저장된 답이 살아남는다 (D56) |
+| `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 용어 카드 읽음과 정답 맞힌 문제 번호 |
+| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true }` 목적지 첫 답 시각, 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 시운전을 끝까지 함·영수증을 한 번 이상 받음 (단계 상태 계산용, D40·D56) |
 | `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean }` (효과음 기본 false) |
-| `cc:trip:v1` | `{ seenStamps: string[] }` 이미 장면을 본 도장 id (도장 장면은 처음 한 번만). 주행 거리·도장 자체는 저장하지 않고 계산한다 (D32) |
+| `cc:seen:v1` | `{ scenes: string[] }` 처음 한 번만 다 보이는 큰 장면(S1 배차, S5 출발 → 도착)을 이미 본 기록. 다시 열면 끝 상태가 바로 보인다 (CONCEPT 7절) |
+| `cc:receipts:v1` | (T25) 지난 영수증 최대 30장. 장마다 영수증 링크 조각(`#r=` 뒤), 앱 종류 id(`q.type`의 답), 받은 날만 둔다. 넘치면 가장 오래된 것을 빼고 그렇다고 알린다 (CONCEPT 8절) |
 
+- 옛 `cc:trip:v1`(도장 장면을 본 기록)은 `cc:seen:v1`로 바뀌었다. 옮길 값이 없으므로 읽지 않고, 남아 있으면 지운다 (T25).
 - 화면은 `Session`을 바꾸고, 결과는 매번 `evaluate(catalog, session)`로 다시 계산한다. 계산 결과를 저장하지 않는다. 저장할 때는 `r.session`(정리된 상태)을 쓴다.
-- '저장한 기록 지우기'는 진행 기록 네 키(`session`·`study`·`meta`·`trip`)를 지운다. 설정(`cc:prefs:v1`: 동작 줄이기·효과음)은 기록이 아니라서 남긴다 (멀미 때문에 켠 동작 줄이기가 풀리면 안 된다, D41).
-- 주행 거리와 도장은 `src/lib/progress.ts`가 `Session`, `evaluate()` 결과, `cc:study:v1`에서 매번 계산한다 (순수 함수, 시험 있음). 공유 링크로 연 영수증도 같은 규칙으로 계산된다.
+- '저장한 기록 지우기'는 진행 기록 다섯 키(`session`·`study`·`meta`·`seen`·`receipts`)를 지운다. 설정(`cc:prefs:v1`: 동작 줄이기·효과음)은 기록이 아니라서 남긴다 (멀미 때문에 켠 동작 줄이기가 풀리면 안 된다, D41).
+- 단계마다 마쳤는지와 남은 개수(꼭 고를 것, 막힌 곳)는 `src/lib/progress.ts`가, 단계가 열렸는지(아직 못 가요와 그 이유)는 `src/lib/stages.ts`가 `evaluate()` 결과와 `cc:meta:v1`에서 매번 계산한다 (순수 함수, 시험 있음, D32 원칙 유지). 따로 쌓는 점수(km·도장)는 없다 (D56). 영수증 링크로 연 영수증도 같은 규칙으로 계산된다.
 - 저장 형식을 바꾸면 키의 `v1`을 올리고, 옛 값은 읽어서 옮긴 뒤 지운다.
 
-## 5. 공유 링크
+## 5. 영수증 링크 (공유 링크)
 
-- 모양: `https://사이트/receipt#r=<압축 문자열>`
-- 압축 전 값: `toShareState(session)` → `{ v: 1, a: 답, c: 장바구니, k: 그대로 둔 충돌, d: 2차로 미룬 칸 }`. 자유 입력(freeText)은 넣지 않는다.
+- 모양: `https://사이트/arrival#r=<압축 문자열>`. 옛 `/receipt#r=…` 링크는 3.1절의 301로 같은 곳에 닿는다.
+- 압축 전 값: `toShareState(session)` → `{ v: 1, a: 답, c: 고른 도구, k: 그대로 간 막힌 곳, d: 나중으로 미룬 기능 }`. 한 줄 입력(freeText)은 넣지 않는다.
 - 압축: `LZString.compressToEncodedURIComponent(JSON.stringify(state))`
 - 여는 쪽: 압축 풀기 → `fromShareState()`로 모양 검사 → `evaluate()`가 모르는 id를 버린다. 읽자마자 `history.replaceState`로 주소에서 `#r=`를 지운다. 실패하면 "링크가 깨졌어요" 안내 후 홈으로.
-- 링크로 연 영수증은 읽기 전용으로 보여 주고, "이 영수증으로 이어 하기"를 누를 때만 저장한다 (지금 상태와 다르면 묻는다).
+- 링크로 연 영수증은 읽기 전용으로 보여 주고, "이 영수증으로 이어서 가기"를 누를 때만 저장한다 (지금 상태와 다르면 묻는다).
+- 지난 영수증(`/receipts`)의 줄을 누르면 저장해 둔 조각으로 `/arrival#r=…`를 연다. 이렇게 다시 열 때는 대표 장면 S5가 돌지 않는다 (S5는 점검의 [출발하기]로 왔을 때만, `history.state` 표시로 가린다).
 
 ## 6. 자료를 화면에 싣는 법
 
 - 빌드 때 `data/*.json`을 import해 `Data` 모양으로 묶는 `src/lib/data.ts`를 만든다. 섬은 여기서 `makeCatalog(data)`를 한 번 만들어 쓴다.
-- 자료 전체(지금 약 120KB, gzip 약 30KB)는 섬이 필요한 화면에서만 불러온다. 진열 상품이 늘어 200KB를 넘으면 칸별로 나누는 방법을 `docs/DECISIONS.md`에 정하고 바꾼다.
-- `data/index/`(T19 자동 색인)는 분야별 JSON으로 `public/index/분야.json`에 내보내고, 장보기·진열대에서 필요한 분야만 불러온다. 파일 수 2만 개, 파일당 25MiB 한도를 지킨다.
+- 자료 전체(지금 약 120KB, gzip 약 30KB)는 섬이 필요한 화면에서만 불러온다. 진열 상품(`layer: shelf`)이 늘어 200KB를 넘으면 기능(칸)별로 나누는 방법을 `docs/DECISIONS.md`에 정하고 바꾼다.
+- `data/index/`(T19 자동 색인)는 분야별 JSON으로 `public/index/분야.json`에 내보내고, 경유지·도구 모음에서 필요한 분야만 불러온다. 화면에서는 '원문만 있는 도구'로 보인다. 파일 수 2만 개, 파일당 25MiB 한도를 지킨다.
 
-## 7. 검색 (사전·진열대)
+## 7. 검색 (사전·도구 모음)
 
-- 빌드 전에 `scripts/build-search.ts`(T15)가 개념 카드, 에러 안내, 상품(진열·색인), 예상 막힘 문장을 모아 MiniSearch 색인을 만들고 JSON으로 저장한다.
+- 빌드 때 `src/pages/search-index.json.ts`가 용어 카드, 에러 안내, 도구(진열 상품과 색인 상품), 막히기 쉬운 곳 문장을 모아 MiniSearch 색인을 만든다 (D47). `scripts/build-search.ts`는 색인 크기와 예시 질문의 첫 결과를 찍어 보는 점검 도구다.
+- 결과는 네 묶음으로, 이 순서로 보인다 (CONCEPT 3.6·6.9절):
+
+  | 묶음 이름 (화면) | 문서 종류 (`DocType`, 내부 id) | 그림 |
+  |---|---|---|
+  | 에러가 났을 때 | `error` | 계기판 경고등 |
+  | 용어 | `concept` | 청사진 판 |
+  | 막히기 쉬운 곳 | `stuck` | — |
+  | 도구 | `product` (색인 상품은 꼬리표 '원문만') | 기능 그림 |
+
 - 낱말 나누기:
   1. 영문·숫자 덩어리와 한글 덩어리를 따로 자른다 ("API키는" → "api", "키는").
   2. 한글 덩어리 끝의 흔한 조사(은·는·이·가·을·를·에·에서·으로·로·와·과·의·도·만)를 떼어 낸 형태도 넣는다 ("키는" → "키").
   3. 한 글자 낱말도 버리지 않고, 두 글자 이상이면 두 글자씩 끊은 조각(bigram)도 함께 넣는다 ("환경변수" → "환경", "경변", "변수").
   4. 영문은 소문자로.
-- 같은 낱말 조각이 이름(title)에 걸리면 본문보다 높게 친다 (boost). 그래서 "API키는"은 'API 키' 카드가 'API' 카드보다 위에 온다.
-- 에러 붙여 넣기는 검색과 따로 `matchErrors()`(정규식)로 찾는다.
+- 같은 낱말 조각이 이름(title)에 걸리면 본문보다 높게 친다 (boost). 그래서 "API키는"은 'API 키' 용어 카드가 'API' 용어 카드보다 위에 온다.
+- 에러 붙여 넣기는 검색과 따로 `matchErrors()`(정규식)로 찾아 맨 위에 둔다.
 
 ## 8. 집계 (Worker + D1)
 
-이벤트 다섯 개만 받는다. 이름과 구간 값은 정해진 목록만 받고 나머지는 버린다.
+이벤트 다섯 개만 받는다. 이름과 구간 값은 정해진 목록만 받고 나머지는 버린다. 이벤트 이름은 내부 id라 화면 이름이 바뀌어도 그대로 둔다 (D56).
 
 | 이벤트 | 구간(bucket) | 보내는 때 |
 |---|---|---|
-| `interview_start` | 없음 | 답이 하나도 없던 상태에서 첫 답을 고를 때. 이때 `interviewStartedAt`을 적는다 |
-| `receipt_issued` | `m00-05`, `m05-10`, `m10-15`, `m15-20`, `m20-30`, `m30+`, `none` | 처음 보는 상태의 영수증이 화면에 나올 때. 구간은 `interviewStartedAt`부터 걸린 시간(첫 수업 제외), 시작 시각이 없으면(레시피·공유 링크) `none` |
-| `card_copy` | `first`, `next`, `verify`, `error`, `change` | 대화 카드 복사 |
-| `required_done` | 없음 | 그 영수증의 시작 전 필수 개념을 모두 읽었을 때 |
-| `quiz_answer` | `ok`, `ng` | 확인 문제 답 (같은 문제는 처음 한 번만) |
+| `interview_start` | 없음 | 답이 하나도 없던 상태에서 목적지 첫 답을 고를 때. 이때 `interviewStartedAt`을 적는다 |
+| `receipt_issued` | `m00-05`, `m05-10`, `m10-15`, `m15-20`, `m20-30`, `m30+`, `none` | 처음 보는 상태의 영수증이 도착 화면에 나올 때. 구간은 `interviewStartedAt`부터 걸린 시간(시운전 제외), 시작 시각이 없으면(미리 짠 코스·영수증 링크) `none` |
+| `card_copy` | `first`, `next`, `verify`, `error`, `change` | AI에게 할 말 한 장을 복사 |
+| `required_done` | 없음 | 그 영수증의 먼저 읽어 둘 용어를 모두 읽었을 때 |
+| `quiz_answer` | `ok`, `ng` | 용어 카드 확인 문제 답 (같은 문제는 처음 한 번만) |
 
-- '처음 보는 상태'는 공유 링크 조각(`shareHash(session)`)의 짧은 해시(FNV-1a, `stateKey`)로 가린다. 보낸 이벤트 열쇠를 `cc:meta:v1.sent`에 최근 20개까지 둔다. 같은 열쇠는 다시 보내지 않는다: `receipt_issued:해시`, `card_copy:카드:해시`, `required_done:해시`, `quiz_answer:개념.번호`(처음 고른 답만).
-- 레시피로 출발하거나 공유 링크로 이어 하면 `interviewStartedAt`을 지운다 (그 영수증의 구간은 `none`).
+- '처음 보는 상태'는 영수증 링크 조각(`shareHash(session)`)의 짧은 해시(FNV-1a, `stateKey`)로 가린다. 보낸 이벤트 열쇠를 `cc:meta:v1.sent`에 최근 20개까지 둔다. 같은 열쇠는 다시 보내지 않는다: `receipt_issued:해시`, `card_copy:카드:해시`, `required_done:해시`, `quiz_answer:개념.번호`(처음 고른 답만).
+- 미리 짠 코스로 출발하거나 영수증 링크로 이어서 가면 `interviewStartedAt`을 지운다 (그 영수증의 구간은 `none`).
 - 이벤트 목록·구간·본문 검사·걸린 시간 구간은 `src/lib/event-spec.ts` 한 곳에 두고 화면(`src/lib/track.ts`)과 Worker(`worker/index.ts`)가 같이 쓴다 (시험: `tests/lib/event-spec.test.ts`, `tests/worker/`).
 
 D1 표 (`migrations/0001_events.sql`):
@@ -186,7 +231,7 @@ ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1;
 ```
 
 - 빌드: `npx astro build` → 배포: `npx wrangler deploy`. 사이트가 전부 정적이라 `@astrojs/cloudflare` 어댑터는 쓰지 않는다.
-- `/api/*`만 Worker 함수를 먼저 거치고, 나머지는 정적 파일이 바로 나간다.
+- `/api/*`만 Worker 함수를 먼저 거치고, 나머지는 정적 파일이 바로 나간다. 정적 파일 쪽은 `public/_headers`(보안 머리글)와 `public/_redirects`(옛 주소 301, 3.1절)를 읽는다.
 - 화면의 링크는 끝 빗금 없이(`/check`) 쓰므로 `html_handling`을 `drop-trailing-slash`로 둔다 (기본값이면 `/check` → `/check/`로 한 번 돌려보낸다). 대표 주소(canonical)도 끝 빗금을 뗀다 (D50).
 - Workers 로그(observability)는 끈다. 요청 기록에 IP 같은 정보가 남지 않게 한다 (R-60).
 - 배포는 둘로 나눈다.
@@ -194,7 +239,7 @@ ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1;
   - **정식 배포** (T22): `npm run validate:release`가 통과해야 한다 (사람 확인이 남은 진열 상품이 없어야 함). 띠와 `noindex`를 뗀다.
 - 배포는 GitHub Actions나 Cloudflare의 Git 연결 중 하나로 한다. 비밀 값(CLOUDFLARE_API_TOKEN 등)은 저장소 설정의 Secrets에만 둔다.
 - 보안 헤더 (T21, D53): CSP 본체는 Astro `security.csp`가 페이지마다 `<meta>`로 넣는다(스크립트·스타일 해시, 외부는 `static.cloudflareinsights.com` 스크립트와 `cloudflareinsights.com` 전송만, 인라인 style 속성만 허용). meta로 안 되는 `frame-ancestors`와 `X-Content-Type-Options`·`Referrer-Policy: same-origin`·`Permissions-Policy`·`Cross-Origin-Opener-Policy`·`X-Frame-Options`, `/_astro/*` 오래 두기는 `public/_headers`(Workers가 정적 파일 응답에 적용). e2e `tests/e2e/csp.spec.ts`가 주요 조작에서 CSP 위반 0을 확인한다.
-- 단계: 저장소 변수 `SITE_STAGE`(`preview` 기본 / `release`)가 빌드의 `PUBLIC_STAGE`가 된다 (`src/lib/stage.ts`). 미리 보기는 모든 화면 위 '검토 중인 시험판' 띠, `<meta name="robots" content="noindex, nofollow">`, `robots.txt`의 `Disallow: /`. 방문 통계는 `CF_BEACON_TOKEN`이 있을 때만, `/receipt`를 빼고 싣는다.
+- 단계: 저장소 변수 `SITE_STAGE`(`preview` 기본 / `release`)가 빌드의 `PUBLIC_STAGE`가 된다 (`src/lib/stage.ts`). 미리 보기는 모든 화면 위 '검토 중인 시험판' 띠, `<meta name="robots" content="noindex, nofollow">`, `robots.txt`의 `Disallow: /`. 방문 통계는 `CF_BEACON_TOKEN`이 있을 때만, 도착 화면 `/arrival`을 빼고 싣는다. 옛 `/receipt`는 정적 파일 단계에서 301로 넘어가므로 통계 스크립트가 실릴 틈이 없다.
 - 배포 작업은 `.github/workflows/deploy.yml`, 사람이 할 일은 `docs/DEPLOY.md`.
 
 ## 10. TypeScript 설정
@@ -224,11 +269,13 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 
 ## 11. 성능 기준
 
-- 첫 화면: 모바일 기준 LCP 2.5초 이하, 자바스크립트 100KB 이하(gzip). 다른 페이지는 처음 불러오는 JS 140KB 이하.
-- 처음 불러오는 CSS(글꼴 `@font-face` 포함)는 gzip 30KB 이하. CSS는 첫 화면 그리기를 막는다 (D38).
-- 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다. 기사님 그림은 `Mascot` 컴포넌트로 화면 크기에 맞는 avif 하나만 내려온다 (보이는 폭 200px일 때 1배 7KB, 2배 15KB).
-- 나중에 불러오는 묶음(색종이, 선택 3D 장면)은 하나에 200KB 이하. 유휴 시간이나 이용자 행동 뒤에만 불러온다.
-- 영수증 출력 모션은 3초를 넘지 않는다.
+- 첫 화면: 모바일 기준 LCP 2.5초 이하, 자바스크립트 100KB 이하(gzip). 홈 첫 화면에는 섬이 없다. 다른 페이지는 처음 불러오는 JS 140KB 이하.
+- 처음 불러오는 CSS(글꼴 `@font-face` 포함)는 gzip 30KB 이하. CSS는 첫 화면 그리기를 막는다 (D38). 밤 지도 토큰도 이 안에 든다.
+- 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다. 렌더 그림은 Astro `<Picture>`로 화면 크기에 맞는 AVIF/WebP 하나만 내려온다. 쪽별 그림 예산은 CONCEPT 9절 표 (가장 큰 곳은 목적지 첫 질문, 약 80KB).
+- 지도 (T28, gzip): 땅 판 한 장 24KB 이하, 지도 표지 묶음 10KB 이하, 지도 섬 8KB 이하, 지도 모형 3KB 안팎.
+- 나중에 불러오는 묶음(효과음 합성기 같은 것)은 하나에 200KB 이하. 유휴 시간이나 이용자 행동 뒤에만 불러온다.
+- 대표 장면 S5(출발 → 도착)는 2.8초, 영수증 출력과 도장 S6은 950ms를 넘지 않는다.
+- 렌더 장치(three)는 개발용이라 화면에 실리는 JS에 들지 않는다.
 - `npm run qa:budget`이 빌드 결과로 이 기준을 검사한다.
 
 ## 12. 시험과 CI
@@ -238,15 +285,17 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 | `npm run validate` | 스키마 + 교차 검사 |
 | `npm run golden` | 추천 회귀 검사 |
 | `npm run typecheck` | 타입 검사 |
-| `npm run tokens` | 토큰 대비와 동작 줄이기 검사 |
+| `npm run tokens` | 토큰 대비(낮·밤 두 모드)와 동작 줄이기 검사 |
 | `npm run fonts:check` | 영수증 글꼴에 고정 문구 글자가 다 있는지 (`npm run fonts`로 다시 만듦) |
-| `npm run guard` | 품질 바닥선 (토큰 밖 값, 외부 자원, 화면 코드 속 문장, any, 시험 건너뛰기, 엔진 순수성) |
+| `npm run guard` | 품질 바닥선 (토큰 밖 값, 외부 자원, 화면 코드 속 문장, any, 시험 건너뛰기, 엔진 순수성, `src`의 three import) |
+| `node scripts/guard/check-words.ts` | 쓰지 않는 말 (CONCEPT 3.9절). 화면 문구(`src/copy/ko.ts`)와 자료 문장에서 버린 비유와 바꾼 말을 찾는다 (T24에서 `check`에 넣는다) |
 | `npm run harness` | `.claude/` 스킬·에이전트·규칙 앞머리 검사 |
-| `npm run check` | 위 일곱 개 + `npm test`. 커밋 전과 CI에서 돈다 |
-| `npm run qa:shots` | 빌드 결과 스크린샷(360·768·1280·동작 줄이기), axe, 가로 스크롤, 작은 버튼, 외부 요청 |
+| `npm run check` | 위 검사들 + `npm test`. 커밋 전과 CI에서 돈다 |
+| `npm run qa:shots` | 빌드 결과 스크린샷(360·768·1280·동작 줄이기, T34부터 밤 모드도), axe, 가로 스크롤, 작은 버튼, 외부 요청 |
 | `npm run qa:budget` | 성능 예산 |
-| `npm test` | Vitest: 골든 사례 + 자료 검사(망가뜨린 자료를 잡는지) + 엔진·스크립트 단위 시험 (`tests/*.test.ts`) |
+| `npm run art` / `art:sheet` | (T33) 렌더 굽기 / 모든 렌더를 한 장에 놓은 견본 (빛과 색이 맞는지 본다) |
+| `npm test` | Vitest: 골든 사례 + 자료 검사(망가뜨린 자료를 잡는지) + 엔진·스크립트·화면 도우미 단위 시험 (`tests/**/*.test.ts`, 옛 주소 넘기기 10줄 포함) |
 | `npm run test:coverage` | 엔진(`src/lib/engine`) 시험 범위. 줄 기준 90% 이상 (T04부터 문턱으로 막음) |
-| `npm run e2e` | Playwright(`tests/e2e/`, 360px): 레시피 5개로 영수증까지, 키보드만으로 인터뷰, 공유 링크 다시 열기, 사전·진열대 검색, 장면 중간 누르기, 동작 줄이기(기기·사이트) 흐름, 모든 화면 axe(처음 온 사람·진행 있음). 빌드한 `dist/`를 `scripts/qa/serve.ts`로 띄운다 |
+| `npm run e2e` | Playwright(`tests/e2e/`, 360px): 미리 짠 코스 5개로 영수증까지, 키보드만으로 목적지 끝까지, 영수증 링크 다시 열기·이어서 가기, 사전·도구 모음 검색, 장면 중간 누르기, 동작 줄이기(기기·사이트) 흐름, 모든 화면 axe(처음 온 사람·진행 있음). 빌드한 `dist/`를 `scripts/qa/serve.ts`로 띄운다 |
 
 GitHub Actions(`.github/workflows/check.yml`)는 모든 푸시와 PR에서 `npm ci && npm run check && npm run build && npm run qa:budget && npm run e2e`를 돌린다 (`check`에 `npm test`가 들어 있다). 배포 조건은 9절.

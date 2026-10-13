@@ -21,7 +21,7 @@ export function matchErrors(cat: Catalog, text: string): ErrorEntry[] {
   return cat.data.errors.errors.filter((e) => e.patterns.some((p) => new RegExp(p, 'i').test(t)));
 }
 
-/** 공유 링크에 넣는 상태. 자유 입력은 넣지 않는다. 압축(lz-string)은 화면 쪽에서 한다. */
+/** 영수증 링크(/arrival#r=…)에 넣는 상태. 자유 입력은 넣지 않는다. 압축(lz-string)은 화면 쪽에서 한다. */
 export interface ShareState {
   v: 1;
   a: Record<string, string>;

@@ -258,7 +258,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.mascot-line .line {
+.dispatch-note .line {
   display: block;
 }
 
@@ -325,7 +325,8 @@
   padding-inline: var(--space-2);
 }
 
-.mascot-line {
+/* 기사 메시지 (CONCEPT 4.1): 왼쪽에 브랜드 마크, 오른쪽에 두 문장 이하의 글. 모양은 T27에서 마무리한다 */
+.dispatch-note {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -335,11 +336,8 @@
   font-weight: var(--weight-strong);
 }
 
-.mascot-line .face {
-  inline-size: 40px;
-  block-size: 40px;
-  border-radius: var(--radius-pill);
-  background: var(--sky);
+.dispatch-note .brand-mark {
+  flex-shrink: 0;
 }
 
 .options {
@@ -940,7 +938,8 @@
   font-weight: var(--weight-strong);
 }
 
-/* M6 신호등: 빨강 → (노랑) → 초록. 불 하나가 --dur-signal 이상 켜진다 */
+/* 교통 정보 (CONCEPT 5.3·S4): 막힘 빨강 · 서행 노랑 · 원활 초록(노랑을 거쳐). 불 하나가 --dur-signal 이상 켜진다.
+   S4의 길 위 색 덮기는 T28 지도에서 한다 */
 .light {
   display: grid;
   gap: 4px;
@@ -957,15 +956,19 @@
   background: var(--navy);
 }
 
-.is-red .lamp-red {
+.is-jam .lamp-red {
   background: var(--stop);
 }
 
-.is-green .lamp-yellow {
+.is-slow .lamp-yellow {
+  background: var(--caution);
+}
+
+.is-flow .lamp-yellow {
   animation: lamp-yellow var(--dur-signal) linear both;
 }
 
-.is-green .lamp-green {
+.is-flow .lamp-green {
   background: var(--go);
   animation: lamp-green var(--dur-signal) linear var(--dur-signal) both;
 }
@@ -1002,11 +1005,6 @@
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius);
   background: var(--paper);
-}
-
-.mascot-line.plain {
-  background: none;
-  padding: 0;
 }
 
 .issue-wrap {

@@ -9,7 +9,7 @@ export interface InterviewState {
   answers: Record<string, string>;
   /** 태그 → 합계 */
   tags: Record<string, number>;
-  /** 다음에 물을 질문. 없으면 인터뷰 끝 */
+  /** 다음에 물을 질문. 없으면 목적지 질문 끝 */
   next: Question | null;
   answered: number;
   total: number;
@@ -37,7 +37,7 @@ export function runInterview(cat: Catalog, rawAnswers: Record<string, string>): 
   return { visible, answers, tags, next, answered: Object.keys(answers).length, total: visible.length };
 }
 
-/** 인터뷰 화면 위 '좁혀지는 중' 칩: 답한 질문의 짧은 이름과 고른 보기 */
+/** 목적지 화면 위 '길 찾는 중' 칩: 답한 질문의 짧은 이름과 고른 보기 (설계도 1번 '고른 답'에도 쓴다) */
 export function answerChips(cat: Catalog, state: InterviewState): { questionId: string; chip: string; label: string }[] {
   const out: { questionId: string; chip: string; label: string }[] = [];
   for (const q of state.visible) {
@@ -51,7 +51,7 @@ export function answerChips(cat: Catalog, state: InterviewState): { questionId: 
 }
 
 /**
- * 지금까지의 답과 어긋나지 않는 레시피. 같은 답이 많은 순, 같으면 레시피 순서.
+ * 지금까지의 답과 어긋나지 않는 레시피(화면: 미리 짠 코스). 같은 답이 많은 순, 같으면 레시피 순서.
  * '혹시 이걸 만드시나요?' 미리보기에 쓴다. '모르겠어요'(isUnknown) 답은 어긋남으로도 같은 답으로도 세지 않는다.
  */
 export function matchingRecipes(cat: Catalog, state: InterviewState, limit = 2): string[] {

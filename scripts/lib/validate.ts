@@ -225,6 +225,11 @@ export function validateAll(input: ValidationInput): ValidationResult {
     if (r.type === 'stuck') for (const c of r.concepts ?? []) if (!conceptIds.has(c)) err(`${where}: 없는 개념 ${c}`);
   }
   for (const s of Object.keys(data.templates.slotSteps)) if (!slotIds.has(s)) warn(`templates.slotSteps: 어떤 규칙도 만들지 않는 칸 ${s}`);
+  for (const r of data.rules.rules) {
+    if (r.type === 'conflict' && r.anchorSlot !== undefined && !slotIds.has(r.anchorSlot)) {
+      err(`rules/${r.id}: 어떤 칸 규칙도 만들지 않는 anchorSlot (${r.anchorSlot})`);
+    }
+  }
 
   // 조사 카드
   dupes('research-cards', data.researchCards.cards.map((c) => c.id));

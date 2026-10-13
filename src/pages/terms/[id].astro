@@ -1,11 +1,12 @@
 ---
-// 개념 카드 /concepts/[id] (docs/UX.md 3.7, T12): 검색으로도 들어오는 정적 페이지. 설명·그림 설명·문제 글은 HTML로,
+// 용어 카드 /terms/[id] (docs/CONCEPT.md 6.8, T12): 검색으로도 들어오는 정적 페이지. 설명·그림 설명·문제 글은 HTML로,
 // 문제 풀기·읽음·내 AI에게 배우기·해 보기만 섬이다.
 import Base from '../../layouts/Base.astro';
 import ConceptActions from '../../components/ConceptActions.tsx';
 import TryIt from '../../components/TryIt.tsx';
 import Emoji from '../../components/Emoji.astro';
 import { ko } from '../../copy/ko.ts';
+import { ROUTES, termPath, toolPath } from '../../lib/routes.ts';
 import { catalog, data } from '../../lib/data.ts';
 import type { Concept } from '../../lib/engine/types.ts';
 
@@ -26,7 +27,7 @@ const figureSvg = figures[`../../assets/concepts/${c.id}.svg`];
 
 <Base title={c.title} description={c.summary}>
   <article class="concept">
-    <p><a href="/study">{ko.concept.back}</a></p>
+    <p><a href={ROUTES.terms}>{ko.concept.back}</a></p>
     <h1>{c.title}</h1>
     <p><span class={c.level === 'must' ? 'badge' : 'badge badge-soft'}>{ko.concept.level[c.level]}</span></p>
     {
@@ -54,7 +55,7 @@ const figureSvg = figures[`../../assets/concepts/${c.id}.svg`];
           {prereqs.map((p, i) => (
             <>
               {i > 0 && ', '}
-              <a href={`/concepts/${p.id}`}>{p.title}</a>
+              <a href={termPath(p.id)}>{p.title}</a>
             </>
           ))}
         </p>
@@ -78,7 +79,7 @@ const figureSvg = figures[`../../assets/concepts/${c.id}.svg`];
           <ul>
             {related.map((p) => (
               <li>
-                <a href={`/products/${p.id}`}>{p.name}</a>: {p.summary}
+                <a href={toolPath(p.id)}>{p.name}</a>: {p.summary}
               </li>
             ))}
           </ul>

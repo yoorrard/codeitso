@@ -114,7 +114,7 @@ Surface habits:
 - Monospace as a costume for "technical". D2Coding belongs to the receipt and to real code, commands and keys (terminal-sim, prompt fragments); don't spread it as decoration. The receipt itself is never a finding.
 - Any new font family. The display voice comes from Pretendard's weights and the token scale.
 - Unicode glyphs or emoji *text characters* standing in for icons. UI controls use Phosphor SVG in one style and weight; stations, slots and rewards use the project's Fluent 3D emoji images (`public/emoji/`, see `docs/DESIGN.md` §8). The ✓ and ★ in `docs/UX.md` describe meaning, not the glyph to ship.
-- Geometric masks approximating an organic outline (a circle cropped around the mascot). Use an asset with a real alpha edge, or no cut-out.
+- Geometric masks approximating an organic outline (a circle cropped around a render). Use an asset with a real alpha edge, or no cut-out.
 
 The floor holds the mechanics; it never picks the direction. With every check green, spend the remaining effort on the committed world (road, taxi, receipt), and when torn between refined and committed, commit.
 

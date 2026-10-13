@@ -27,7 +27,7 @@ export interface EngineResult {
   cart: Product[];
   slots: SlotRanking[];
   conflicts: Conflict[];
-  /** 모든 충돌을 고쳤거나 '그대로 두기'를 골랐으면 영수증을 뽑을 수 있다 */
+  /** 모든 충돌(막힌 곳)을 고쳤거나 '그대로 가기'를 골랐으면 출발할 수 있다 (도착에서 영수증과 설계도를 받는다) */
   canIssue: boolean;
   split: Split;
   orphans: string[];
@@ -41,7 +41,7 @@ export interface EngineResult {
   notBuild: string[];
 }
 
-/** 받은 상태를 정리한다: 모르는 상품·충돌·칸은 버리고, 2차로 미룰 수 없는 칸은 뺀다. */
+/** 받은 상태를 정리한다: 모르는 상품·충돌·칸은 버리고, 나중으로 미룰 수 없는 칸은 뺀다. */
 export function normalizeSession(cat: Catalog, s: Partial<Session>): Session {
   const answers: Record<string, string> = {};
   for (const [qid, oid] of Object.entries(s.answers ?? {})) {
@@ -60,7 +60,7 @@ export function normalizeSession(cat: Catalog, s: Partial<Session>): Session {
   return out;
 }
 
-/** 인터뷰부터 계산대까지 한 번에 계산한다. 화면은 이 결과만 읽는다. */
+/** 목적지 질문부터 도착까지 한 번에 계산한다. 화면은 이 결과만 읽는다. */
 export function evaluate(cat: Catalog, input: Partial<Session>): EngineResult {
   const base = normalizeSession(cat, input);
   const interview = runInterview(cat, base.answers);

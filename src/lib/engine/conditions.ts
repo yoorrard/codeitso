@@ -8,7 +8,7 @@ export interface Ctx {
   answers: Record<string, string>;
   /** 장바구니 상품 */
   cart: Product[];
-  /** 2차로 미룬 칸 id (재확인 뒤에만 쓴다. 칸 규칙·질문 조건에서는 늘 빈 배열) */
+  /** 나중으로 미룬 칸 id (점검 뒤에만 쓴다. 칸 규칙·질문 조건에서는 늘 빈 배열) */
   deferred: string[];
 }
 
@@ -73,7 +73,7 @@ export function evalCondition(c: Condition, ctx: Ctx): boolean {
   return !evalCondition(c.not, ctx);
 }
 
-/** 조건 안에서 장바구니나 2차로 미룬 칸을 보는지 (칸 규칙과 질문 노출 조건에는 쓰면 안 된다) */
+/** 조건 안에서 장바구니나 나중으로 미룬 칸을 보는지 (칸 규칙과 질문 노출 조건에는 쓰면 안 된다) */
 export function usesCart(c: Condition): boolean {
   if ('cartHas' in c || 'cartAny' in c || 'deferred' in c) return true;
   if ('all' in c) return c.all.some(usesCart);

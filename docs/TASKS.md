@@ -182,7 +182,7 @@
 - 읽을 것: `docs/CONCEPT.md` 0·10절
 - 할 일: CONCEPT.md를 싣고 D56, HUMAN(기사님 항목 닫기, 그림 요청 A01~A05), TASKS, BACKLOG, CLAUDE.md(문서 순위, 꼭 지킬 것 12)를 고친다. 네 안과 심사 원문은 `docs/review/concept/`.
 
-### [ ] T24 용어와 주소
+### [x] T24 용어와 주소
 - 읽을 것: CONCEPT 2·3절 · 먼저: T23
 - 할 일: 3절의 모든 말 바꾸기(`ko.ts`, `templates.json`, 질문·규칙 문장), 페이지 옮기기(/test-drive, /destination, /waypoints, /check, /arrival, /tools, /terms, /courses, /about/criteria, /receipts는 T32), `stations.ts` → `stages.ts`, 설계도 파일 이름, `public/_redirects` 301, 금지어 검사(3.9절), copy.md 세계관 낱말(3.8절), e2e, UX 7절·RECEIPT·ARCHITECTURE 라우트.
 - 완성 확인: `npm run check`, 금지어 0, 골든 그대로(바뀌면 `골든:`), `npm run examples`, 영수증 36칸, 옛 주소 10개 시험, `ko-copy-editor`·`engine-guardian` 검토.
@@ -302,3 +302,4 @@
 2026-10-12 C02 (진행 중) 진열 상품 18 → 48: 기반 도구 10(Netlify, Vercel, Firebase 셋, 구글 설문지, Airtable, Slack, EmailJS, Heroku), 한국 공공 데이터 11(학교 기본정보, 커리어넷, 국어사전 셋, 관광, 특일, 에어코리아, 버스 도착, 서울 열린데이터, 문화 행사), 지도·번역·그림·금융·날씨 9. 주제 6개·갈래 질문 2개, 동점이면 열린 칸을 더 맡는 상품, case-21(유료 충돌). 사실은 검색 결과로만 확인해 모두 확인 중(C01 대조표 46개, 근거 docs/review/) (D55)
 2026-10-12 C02 엔진 검토 반영: 동점 규칙을 '아직 비었고 그 칸에서도 1등인 칸'만 세도록 좁힘, 동점 이유를 2위 줄에 표시(tieBy), 금융 갈래 질문(주식·환율·경제 통계), '모르겠어요' 답은 레시피 맞추기에서 뺌, 키 자리를 단정하던 promptFragment 4개 고침, 골든 case-22·23 (D55 고침). 이름 순 동점 남은 곳은 BACKLOG
 2026-10-13 T23 컨셉 확정(D56): 네 안(호출 플랫폼·길 지도·월드맵·퍼스널 쇼퍼)을 세 시선(초심자 이해·플랫폼과 게임 품질·브랜드)으로 심사해 '길 지도'를 뼈대로 정함. 단계는 시운전 → 목적지 → 경유지 → 점검 → 도착. docs/CONCEPT.md, 기사님 그림 항목 닫고 그림 요청 A01~A05, 작업 T24~T34
+2026-10-13 T24 용어와 주소: 화면 문구·자료 문장·엔진 문장·문서를 CONCEPT 3절 용어로(설계도, 고른 도구, 막힌 곳 막힘·서행·원활, 읽어 둘 용어, 알아볼 것, AI에게 할 말, 도구 모음, 미리 짠 코스…), 주소 /test-drive·/destination·/waypoints·/check·/arrival·/tools·/terms·/courses·/about/criteria와 옛 주소 10개 301(public/_redirects, src/lib/routes.ts), 쓰지 않는 말 검사(npm run words, check에 포함), 단계 줄 섬(진행 단계, 못 가는 이유), 영수증 '도구 비용 합계'·'(나중)', 설계도 파일 이름 codechauffeur-plan-…md, 충돌 규칙 anchorSlot, 그대로 간 막힌 곳은 서행(노랑). T25 일부: 기사님 그림·택시 장면·색종이(canvas-confetti 뺌)·도장·주행 거리·전광판을 걷어 냄. 그림 문자는 SVG 그림이 오면 바꾼다

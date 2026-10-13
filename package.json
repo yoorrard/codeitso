@@ -23,7 +23,7 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "astro check && tsc -p tsconfig.json && npm run typecheck:worker",
     "typecheck:worker": "wrangler types worker/worker-configuration.d.ts > /dev/null && tsc -p worker/tsconfig.json",
-    "check": "npm run validate && npm run golden && npm run tokens && npm run fonts:check && npm run guard && npm run harness && npm run typecheck && npm run test",
+    "check": "npm run validate && npm run golden && npm run tokens && npm run fonts:check && npm run guard && npm run words && npm run harness && npm run typecheck && npm run test",
     "guard": "node scripts/guard/floor-guard.ts",
     "qa:shots": "node scripts/qa/shots.ts",
     "qa:budget": "node scripts/qa/budget.ts",
@@ -31,14 +31,14 @@
     "tokens": "node scripts/check-tokens.ts",
     "fonts": "node scripts/fonts/build-fonts.ts",
     "fonts:check": "node scripts/fonts/build-fonts.ts --check",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "words": "node scripts/guard/check-words.ts"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.13.0",
     "@phosphor-icons/core": "2.1.1",
     "@playwright/test": "1.56.1",
-    "@types/canvas-confetti": "1.9.0",
     "@types/node": "^22.18.0",
     "@vitest/coverage-v8": "5.0.3",
     "ajv": "^8.17.1",
@@ -53,7 +53,6 @@
     "@nanostores/persistent": "1.3.5",
     "@nanostores/preact": "1.1.0",
     "astro": "7.3.8",
-    "canvas-confetti": "1.9.4",
     "lz-string": "1.5.0",
     "minisearch": "7.2.0",
     "nanostores": "1.5.4",

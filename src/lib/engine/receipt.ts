@@ -5,13 +5,13 @@ import { firstPhaseProducts } from './recheck.ts';
 import { displayWidth, fill, formatMinutes, oneLine, padEndWidth, padStartWidth, truncateWidth } from './text.ts';
 
 export interface ReceiptItem {
-  /** 이 상품이 맡은 칸 이름 (여럿이면 ', '로 잇는다) */
+  /** 이 상품(화면: 도구)이 맡은 칸 이름 (여럿이면 ', '로 잇는다) */
   slot: string;
   productId: string;
   name: string;
   free: boolean;
   price: string;
-  /** 2차로 미룬 칸에만 쓰이는 상품 */
+  /** 나중으로 미룬 칸에만 쓰이는 상품 (영수증 표시 '(나중)') */
   later: boolean;
 }
 
@@ -33,11 +33,11 @@ export interface ReceiptModel {
   countLabels: { prep: string; study: string; research: string };
   stamp: string;
   footer: string;
-  /** 2차 품목 표시 */
+  /** 나중에 붙일 것 품목 표시 */
   laterMark: string;
 }
 
-/** 꾸러미 제목과 영수증 목적지에 쓰는 이름: 한 줄 입력 → 유형 이름 → '내 앱' */
+/** 설계도 제목과 영수증 목적지에 쓰는 이름: 한 줄 입력 → 유형 이름 → '내 앱' */
 export function projectName(cat: Catalog, r: EngineResult): string {
   const free = oneLine(r.session.freeText ?? '', 30);
   if (free) return free;
@@ -55,7 +55,7 @@ export function difficultyWord(cat: Catalog, n: number): string {
   return words.hard;
 }
 
-/** 상품이 맡은 칸 이름: '저장, 배포·공유'처럼 잇고, width를 넘으면 '저장 외 1칸' */
+/** 상품이 맡은 칸 이름: '저장, 배포·공유'처럼 잇고, width를 넘으면 '저장 외 1개' */
 export function slotLabelFor(cat: Catalog, labels: string[], width: number): string {
   if (labels.length === 0) return cat.data.templates.pack.labels.toolOther;
   const joined = labels.join(', ');
@@ -87,7 +87,8 @@ export function receiptModel(cat: Catalog, r: EngineResult, issuedAt: string): R
     destination: projectName(cat, r),
     items,
     totalLabel: t.total,
-    total: allFree ? t.free : t.paidIncluded,
+    // 도구 비용 합계: 모두 0원으로 시작할 수 있으면 '0원으로 시작', 아니면 '유료 포함' (요금이라 부르지 않는다, CONCEPT 3.4)
+    total: allFree ? t.totalFree : t.paidIncluded,
     minutes: r.minutes,
     timeLabel: t.time,
     timeText: formatMinutes(r.minutes, t.timeFormat),
@@ -120,11 +121,14 @@ export function renderReceiptText(m: ReceiptModel): string {
   const out: string[] = [center(m.title), center(m.issuedAt), line];
   out.push(`${m.destinationLabel}  ${truncateWidth(m.destination, WIDTH - displayWidth(m.destinationLabel) - 2)}`);
   out.push(line);
-  const slotW = 12;
+  // 칸 이름 자리: 기본 12칸(이름 11칸 + 띄움). 11칸을 넘는 이름(예: '로그인(나중)' 12칸)이 있으면
+  // 13칸으로 넓혀 12칸까지 보이고, 도구 이름 자리를 한 칸 줄인다. '(나중)' 표시가 잘리지 않게 하려는 것이다.
+  const items = m.items.map((i) => ({ ...i, label: i.later ? `${i.slot}${m.laterMark}` : i.slot }));
+  const slotW = Math.min(13, Math.max(12, ...items.map((i) => displayWidth(i.label) + 1)));
   const priceW = 4;
   const nameW = WIDTH - slotW - priceW - 1;
-  for (const i of m.items) {
-    const slot = padEndWidth(truncateWidth(i.later ? `${i.slot}${m.laterMark}` : i.slot, slotW - 1), slotW);
+  for (const i of items) {
+    const slot = padEndWidth(truncateWidth(i.label, slotW - 1), slotW);
     const name = padEndWidth(truncateWidth(i.name, nameW), nameW);
     out.push(`${slot}${name} ${padStartWidth(i.price, priceW)}`);
   }
@@ -132,7 +136,10 @@ export function renderReceiptText(m: ReceiptModel): string {
   out.push(row(m.totalLabel, m.total));
   out.push(row(m.timeLabel, m.timeText));
   out.push(row(m.difficultyLabel, m.difficultyText));
-  out.push(`${m.countLabels.prep} ${m.counts.prep} · ${m.countLabels.study} ${m.counts.study} · ${m.countLabels.research} ${m.counts.research}`);
+  // 개수는 한 줄씩: '준비물 · 읽어 둘 용어 · 알아볼 것'을 한 줄에 이으면 36칸을 넘는다
+  out.push(row(m.countLabels.prep, String(m.counts.prep)));
+  out.push(row(m.countLabels.study, String(m.counts.study)));
+  out.push(row(m.countLabels.research, String(m.counts.research)));
   out.push(line);
   out.push(center(`[ ${m.stamp} ]`));
   out.push(center(m.footer));

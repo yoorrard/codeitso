@@ -38,7 +38,7 @@ GitHub 저장소 → Settings → Secrets and variables → Actions → **Variab
 ## 5. 방문 통계 (선택, R-61)
 
 1. 대시보드 → Web Analytics → 사이트 추가 → 사이트 주소 입력.
-2. **자동 설치(automatic setup)는 끈다.** 자동으로 넣으면 영수증 화면에도 실려 R-04를 어긴다. 우리 사이트는 토큰만 받아 영수증 화면을 빼고 직접 싣는다.
+2. **자동 설치(automatic setup)는 끈다.** 자동으로 넣으면 도착 화면(`/arrival`, 영수증)에도 실려 R-04를 어긴다. 우리 사이트는 토큰만 받아 도착 화면을 빼고 직접 싣는다.
 3. 보여 주는 코드 조각의 `"token": "…"` 값을 4단계 `CF_BEACON_TOKEN`에 넣는다.
 
 ## 6. 첫 배포와 확인 (T21 완성 확인)
@@ -46,7 +46,9 @@ GitHub 저장소 → Settings → Secrets and variables → Actions → **Variab
 1. `main`에 합치거나, Actions → deploy → Run workflow.
 2. 끝나면 `https://code-chauffeur.<하위도메인>.workers.dev`에서:
    - 모든 화면 맨 위에 '검토 중인 시험판' 띠가 보인다.
-   - 홈 → 인터뷰 → 장보기 → 재확인 → 계산대(영수증)까지 간다.
+   - 홈 → 목적지 → 경유지 → 점검 → 도착(영수증)까지 간다.
+   - 옛 주소 하나(예: `/receipt`)를 열면 새 주소(`/arrival`)로 넘어간다 (`public/_redirects`의 301).
+   - 방문 통계를 켰다면(5단계), 다른 화면에는 `cloudflareinsights` 스크립트가 있고 도착 화면의 페이지 소스에는 없다.
    - `/robots.txt`가 `Disallow: /`이다.
 3. 집계가 쌓이는지 (운영자만): `npx wrangler d1 execute code-chauffeur-events --remote --command "SELECT * FROM daily_events ORDER BY day DESC LIMIT 20"`
 

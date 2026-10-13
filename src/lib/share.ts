@@ -1,8 +1,9 @@
-// 공유 링크 (docs/ARCHITECTURE.md 5절): /receipt#r=<압축 문자열>. 자유 입력(freeText)은 넣지 않는다.
+// 영수증 링크 (docs/ARCHITECTURE.md 5절): /arrival#r=<압축 문자열>. 자유 입력(freeText)은 넣지 않는다.
 // 받은 값은 믿지 않는다: 풀기 → fromShareState(모양 검사) → evaluate()가 모르는 id를 버린다.
 import LZString from 'lz-string';
 import { fromShareState, toShareState } from './engine/index.ts';
 import type { Session } from './engine/types.ts';
+import { ROUTES } from './routes.ts';
 
 const PREFIX = '#r=';
 /** 이보다 긴 해시는 열어 보지 않는다 (정상 링크는 수백 자) */
@@ -15,7 +16,7 @@ export function shareHash(s: Session): string {
 }
 
 export function shareUrl(siteUrl: string, s: Session): string {
-  return `${siteUrl.replace(/\/+$/, '')}/receipt${shareHash(s)}`;
+  return `${siteUrl.replace(/\/+$/, '')}${ROUTES.arrival}${shareHash(s)}`;
 }
 
 /** location.hash 값을 읽는다. #r=가 없으면 none, 풀 수 없으면 broken */

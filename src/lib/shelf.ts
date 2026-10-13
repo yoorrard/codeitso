@@ -1,4 +1,4 @@
-// 진열대(/shelf)와 상품 상세(/products/[id])가 함께 쓰는 이름표와 그림 (T13, docs/UX.md 3.8).
+// 도구 모음(/tools)과 도구 상세(/tools/[id])가 함께 쓰는 이름표와 그림 (T13, docs/CONCEPT.md 6.7).
 // 점수·추천은 계산하지 않는다. 기능 이름은 장보기 칸 이름(rules.json)을 그대로 쓰고, 칸이 없는 기능(proxy)만 ko.ts에서 가져온다.
 import { ko } from '../copy/ko.ts';
 import { data } from './data.ts';

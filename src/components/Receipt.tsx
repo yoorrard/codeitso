@@ -1,6 +1,6 @@
-// 계산대 섬 (T11, docs/UX.md 3.6, docs/RECEIPT.md): 영수증 출력 장면(M4) → 탭 네 개(영수증·설계 꾸러미·공부할 것·대화 카드).
-// 영수증·꾸러미·대화 카드는 모두 엔진(receiptModel·renderPack·conversationCards)이 만든다. 화면은 그리고 복사·내려받기만 한다.
-// 공유 링크(#r=)로 열면 읽자마자 주소에서 지우고, 읽기 전용으로 보여 준다. '이어 하기'를 누를 때만 저장한다.
+// 도착 섬 (T11, docs/CONCEPT.md 6.6, docs/RECEIPT.md): 영수증 출력 장면(S6) → 탭 네 개(영수증·설계도·읽어 둘 용어·AI에게 할 말).
+// 영수증·설계도·AI에게 할 말은 모두 엔진(receiptModel·renderPack·conversationCards)이 만든다. 화면은 그리고 복사·내려받기만 한다.
+// 영수증 링크(#r=)로 열면 읽자마자 주소에서 지우고, 읽기 전용으로 보여 준다. '이어서 가기'를 누를 때만 저장한다.
 import { useStore } from '@nanostores/preact';
 import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -15,16 +15,17 @@ import { elapsedBucket, isBucket } from '../lib/event-spec.ts';
 import { stateKey, track } from '../lib/track.ts';
 import { reduced, skipAll, skippable } from '../lib/motion.ts';
 import { $result, commitSession } from '../lib/result.ts';
-import { sentences } from '../lib/sentences.ts';
 import { sfx } from '../lib/sfx.ts';
 import { consumeShareHash, shareUrl } from '../lib/share.ts';
-import { hasProgress, sameSession } from '../lib/stations.ts';
-import { $meta, $session, $trip, markStampsSeen, patchMeta } from '../lib/store.ts';
+import { ROUTES, termPath } from '../lib/routes.ts';
+import { hasProgress, sameSession } from '../lib/stages.ts';
+import { $meta, $seen, $session, markSceneSeen, patchMeta } from '../lib/store.ts';
 import CopyButton from './CopyButton.tsx';
 import { Icon } from './Icon.tsx';
 
 const T = catalog.data.templates;
-const STAMP = 'station.receipt';
+/** 처음 받은 영수증의 도착 알림은 한 번만 (CONCEPT 7절 S6) */
+const ARRIVED = 'arrival';
 type Tab = 'receipt' | 'pack' | 'study' | 'cards';
 const TABS: Tab[] = ['receipt', 'pack', 'study', 'cards'];
 
@@ -132,20 +133,14 @@ function Panel({ id, active, children }: { id: Tab; active: Tab; children: Compo
   );
 }
 
-interface Props {
-  faceSrc: string;
-}
-
-export default function Receipt({ faceSrc }: Props) {
+export default function Receipt() {
   const [mode, setMode] = useState<Mode>({ kind: 'loading' });
   const [issuedAt, setIssuedAt] = useState('');
   const [tab, setTab] = useState<Tab>('receipt');
-  const [celebrate, setCelebrate] = useState(false);
   const [scene, setScene] = useState(false);
   const live = useStore($result);
   const meta = useStore($meta);
   const sceneRef = useRef<HTMLDivElement>(null);
-  const confettiRef = useRef<{ reset: () => void } | null>(null);
   const skipRef = useRef<HTMLButtonElement>(null);
   const confirm = useRef<HTMLDialogElement>(null);
   const continueBtn = useRef<HTMLButtonElement>(null);
@@ -179,14 +174,7 @@ export default function Receipt({ faceSrc }: Props) {
     return release;
   }, [mode.kind, r.canIssue]);
 
-  // 화면을 누르거나 Esc면(기본 틀의 cc:skip) 색종이도 바로 걷는다
-  useEffect(() => {
-    const stop = (): void => confettiRef.current?.reset();
-    document.addEventListener('cc:skip', stop);
-    return () => document.removeEventListener('cc:skip', stop);
-  }, []);
-
-  // 집계(R-60): 처음 보는 상태의 내 영수증이 화면에 나오면 한 번. 구간은 인터뷰 첫 답부터 걸린 시간
+  // 집계(R-60): 처음 보는 상태의 내 영수증이 화면에 나오면 한 번. 구간은 목적지 첫 답부터 걸린 시간
   const stateId = stateKey(r.session);
   useEffect(() => {
     if (mode.kind !== 'own' || !meta.issued || !r.canIssue) return;
@@ -200,7 +188,7 @@ export default function Receipt({ faceSrc }: Props) {
     return (
       <section class="q-card" aria-labelledby="receipt-title">
         <h1 id="receipt-title">{ko.receipt.broken}</h1>
-        <a class="btn btn-primary" href="/">
+        <a class="btn btn-primary" href={ROUTES.home}>
           {ko.receipt.home}
         </a>
       </section>
@@ -210,7 +198,7 @@ export default function Receipt({ faceSrc }: Props) {
     return (
       <section class="q-card" aria-labelledby="receipt-title">
         <h1 id="receipt-title">{ko.receipt.blocked}</h1>
-        <a class="btn btn-primary" href="/check">
+        <a class="btn btn-primary" href={ROUTES.check}>
           {ko.receipt.toCheck}
         </a>
       </section>
@@ -225,21 +213,12 @@ export default function Receipt({ faceSrc }: Props) {
   const prep = [...r.prep].sort((a, b) => ['days', 'hours', 'instant'].indexOf(a.lead) - ['days', 'hours', 'instant'].indexOf(b.lead));
   const conceptTitle = (id: string): string => catalog.concept.get(id)?.title ?? id;
 
-  // 처음 뽑은 영수증이면 출력이 끝난 뒤 색종이·기사님 축하·계산대 도장 (공유 링크로 연 것은 아님)
+  // 처음 받은 영수증이면 출력이 끝난 뒤 도착 알림과 소리 하나 (영수증 링크로 연 것은 아님). 색종이·축하 팡파르는 없다 (D56)
   const printed = (): void => {
-    if (shared || !meta.issued || $trip.get().seenStamps.includes(STAMP)) return;
-    markStampsSeen([STAMP]);
-    setCelebrate(true);
-    announce(`${ko.mascot.receipt} ${ko.receipt.stampDone}`);
-    void sfx('cheer');
-    if (!reduced()) {
-      // 기본 인스턴스는 blob 작업자(worker)를 만들어 CSP(worker-src)에 막히므로, 작업자 없이 도는 인스턴스를 만든다 (D53)
-      void import('canvas-confetti').then((m) => {
-        const fire = m.default.create(undefined, { resize: true, useWorker: false, disableForReducedMotion: true });
-        confettiRef.current = fire;
-        void fire({ particleCount: 90, spread: 75, startVelocity: 38, ticks: 70, origin: { y: 0.35 }, disableForReducedMotion: true });
-      });
-    }
+    if (shared || !meta.issued || $seen.get().scenes.includes(ARRIVED)) return;
+    markSceneSeen(ARRIVED);
+    announce(`${ko.dispatch.arrival} ${ko.dispatch.arrivalNext}`);
+    void sfx('stamp');
   };
 
   const sendPc = async (): Promise<void> => {
@@ -290,8 +269,9 @@ export default function Receipt({ faceSrc }: Props) {
   return (
     <div class="receipt">
       <h1 id="receipt-title" tabIndex={-1}>
-        {ko.receipt.pageTitle}
+        {shared ? ko.receipt.pageTitle : ko.dispatch.arrival}
       </h1>
+      {!shared && <p class="lead">{ko.dispatch.arrivalNext}</p>}
       {shared && (
         <div class="shared-note">
           <p>{ko.receipt.sharedNote}</p>
@@ -319,23 +299,6 @@ export default function Receipt({ faceSrc }: Props) {
           </button>
         )}
       </div>
-
-      {celebrate && (
-        <div class="stamp-banner just-now">
-          <span class="stamp-mark stamp-in" aria-hidden="true">
-            <img src="/emoji/station-receipt.webp" width={56} height={56} alt="" />
-          </span>
-          <div class="mascot-line plain">
-            <img class="face" src={faceSrc} width={40} height={40} alt="" />
-            <p>
-              {sentences(ko.mascot.receipt).map((t) => (
-                <span class="line">{t}</span>
-              ))}
-              <span class="line">{ko.receipt.stampDone}</span>
-            </p>
-          </div>
-        </div>
-      )}
 
       <Tabs active={tab} onChange={setTab}>
         <Panel id="receipt" active={tab}>
@@ -406,7 +369,7 @@ export default function Receipt({ faceSrc }: Props) {
               <ul class="concept-links">
                 {r.study.required.map((id) => (
                   <li>
-                    <a href={`/concepts/${id}`}>{conceptTitle(id)}</a>
+                    <a href={termPath(id)}>{conceptTitle(id)}</a>
                   </li>
                 ))}
               </ul>
@@ -420,13 +383,13 @@ export default function Receipt({ faceSrc }: Props) {
                       {s.concepts.map((id, i) => (
                         <>
                           {i > 0 && ', '}
-                          <a href={`/concepts/${id}`}>{conceptTitle(id)}</a>
+                          <a href={termPath(id)}>{conceptTitle(id)}</a>
                         </>
                       ))}
                     </li>
                   ))}
               </ol>
-              <a class="btn" href="/study">
+              <a class="btn" href={ROUTES.terms}>
                 {ko.receipt.studyGo}
               </a>
             </>

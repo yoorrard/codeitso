@@ -1,10 +1,10 @@
-// 접근성 (T20, docs/UX.md 6절): 모든 화면에서 axe 심각·치명 0. 진행이 있는 상태(레시피로 채움)의 정류장 화면도 본다.
+// 접근성 (T20, docs/UX.md 6절): 모든 화면에서 axe 심각·치명 0. 진행이 있는 상태(코스로 채움)의 단계 화면도 본다.
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { islandsReady } from './helpers.ts';
 import { readFileSync } from 'node:fs';
 
-const ROUTES = ['/', '/lesson', '/interview', '/shop', '/check', '/receipt', '/study', '/concepts/api', '/shelf', '/products/neis-meal', '/recipes', '/dictionary', '/about', '/about/scoring', '/about/credits', '/legal/privacy', '/legal/notice', '/nowhere'];
+const ROUTES = ['/', '/test-drive', '/destination', '/waypoints', '/check', '/arrival', '/terms', '/terms/api', '/tools', '/tools/neis-meal', '/courses', '/dictionary', '/about', '/about/criteria', '/about/credits', '/legal/privacy', '/legal/notice', '/nowhere'];
 
 const recipe = (JSON.parse(readFileSync('data/recipes.json', 'utf8')) as { recipes: { answers: Record<string, string>; cart: string[]; kept?: string[]; freeText?: string }[] }).recipes[0];
 
@@ -21,8 +21,8 @@ for (const route of ROUTES) {
   });
 }
 
-for (const route of ['/', '/interview', '/shop', '/check', '/receipt', '/study']) {
-  test(`axe ${route} (레시피로 채운 진행)`, async ({ page }) => {
+for (const route of ['/', '/destination', '/waypoints', '/check', '/arrival', '/terms']) {
+  test(`axe ${route} (코스로 채운 진행)`, async ({ page }) => {
     await page.addInitScript((s) => {
       localStorage.setItem('cc:session:v1', JSON.stringify(s));
       localStorage.setItem('cc:meta:v1', JSON.stringify({ sent: [], issued: true, lessonDone: true }));

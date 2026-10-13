@@ -44,10 +44,10 @@
         "Access to fetch at 'https://api.example.com/data' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
       ],
       "meaning": "브라우저가 다른 주소의 서버 응답을 막았어요. 그 서버가 브라우저에서 바로 부르는 것을 허락하지 않았다는 뜻이에요.",
-      "causes": ["공공 API처럼 브라우저 호출을 허락하지 않는 서버를 화면 코드에서 바로 부름", "파일을 더블클릭해서 연 상태에서 요청함"],
+      "causes": ["공공 API처럼 브라우저 호출을 허락하지 않는 서버를 화면 코드에서 바로 부름", "파일을 두 번 눌러서 연 상태에서 요청함"],
       "tryFirst": [
         "화면 코드에서 바로 부르지 말고 중간 서버(예: Cloudflare Workers)를 거쳐 부르기",
-        "파일을 더블클릭해 열었다면 로컬 서버나 배포한 주소로 열기"
+        "파일을 두 번 눌러 열었다면 로컬 서버나 배포한 주소로 열기"
       ],
       "askAI": "브라우저 콘솔에 '(에러 붙여 넣기)'가 나왔어. 중간 서버를 거쳐 부르도록 코드를 바꾸는 방법을 알려 줘. 키는 중간 서버의 비밀 값으로 둘 거야. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
       "concepts": ["cors", "api"]

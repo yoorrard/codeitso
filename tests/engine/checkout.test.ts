@@ -1,4 +1,4 @@
-// 계산대 엔진(checkout.ts) 시험: 조사할 것, 안전 지시, 예상 막힘, 준비물, 공부할 것(선수 개념·위상 정렬),
+// 도착 엔진(checkout.ts) 시험: 알아볼 것, 안전 지시, 막히기 쉬운 곳, 준비물, 읽어 둘 용어(선수 개념·위상 정렬),
 // 진행 순서(중간 서버 단계 자리, 개념 붙이기), 예상 시간, 만들지 않을 것.
 // 기대값은 docs/ENGINE.md 5절과 data/scoring.json(baseMinutes 30, unknownSetupMinutes 60, studyRequiredMax 3)으로 손으로 계산했다.
 import { describe, expect, it } from 'vitest';
@@ -85,9 +85,9 @@ function run(cat: Catalog, s: Partial<Session>): EngineResult {
   return evaluate(cat, { answers: ANSWERED, ...s });
 }
 
-// ── 조사할 것 ─────────────────────────────────────────────
+// ── 알아볼 것 ─────────────────────────────────────────────
 
-describe('collectResearch 조사할 것', () => {
+describe('collectResearch 알아볼 것', () => {
   it('조건이 맞는 조사 규칙의 카드를 규칙 순서로 담는다', () => {
     const cat = tinyCatalog({
       rules: [
@@ -265,9 +265,9 @@ describe('collectSafety 안전 지시', () => {
   });
 });
 
-// ── 예상 막힘 ─────────────────────────────────────────────
+// ── 막히기 쉬운 곳 ─────────────────────────────────────────────
 
-describe('collectStuck 예상 막힘', () => {
+describe('collectStuck 막히기 쉬운 곳', () => {
   it('상품 메모(담은 순서) 다음에 조건이 맞는 규칙(규칙 순서)', () => {
     const cat = tinyCatalog({
       rules: [
@@ -352,7 +352,7 @@ describe('collectPrep 준비물', () => {
   });
 });
 
-// ── 공부할 것: 선수 개념과 줄 세우기 ─────────────────────────────────────────────
+// ── 읽어 둘 용어: 선수 개념과 줄 세우기 ─────────────────────────────────────────────
 
 describe('withPrerequisites 선수 개념 모으기', () => {
   it('선수 개념을 끝까지 더한다', () => {
@@ -440,7 +440,7 @@ describe('topoSort 배울 순서', () => {
   });
 });
 
-describe('buildStudy 공부할 것', () => {
+describe('buildStudy 읽어 둘 용어', () => {
   const concepts = [
     concept('m1', { order: 10 }),
     concept('g1', { order: 15, level: 'good', prerequisites: ['m1'] }),

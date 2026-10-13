@@ -3,6 +3,7 @@
 import type MiniSearch from 'minisearch';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
+import { termPath, toolPath } from '../lib/routes.ts';
 import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import { fill, matchErrors } from '../lib/engine/index.ts';
@@ -47,7 +48,7 @@ function ErrorCard({ e, found = false }: { e: ErrorEntry; found?: boolean }) {
           {concepts.map((c, i) => (
             <>
               {i > 0 && ', '}
-              <a href={`/concepts/${c.id}`}>{c.title}</a>
+              <a href={termPath(c.id)}>{c.title}</a>
             </>
           ))}
         </p>
@@ -61,7 +62,7 @@ function ResultItem({ doc }: { doc: SearchDoc }) {
     const c = catalog.concept.get(doc.ref);
     return (
       <li class="dict-item">
-        <a href={`/concepts/${doc.ref}`}>{c?.title ?? doc.title}</a>
+        <a href={termPath(doc.ref)}>{c?.title ?? doc.title}</a>
         <p class="q-help">{doc.body}</p>
       </li>
     );
@@ -83,7 +84,7 @@ function ResultItem({ doc }: { doc: SearchDoc }) {
       <li class="dict-item">
         <p>{doc.body}</p>
         {p && p.layer === 'shelf' && (
-          <a class="q-help" href={`/products/${p.id}`}>
+          <a class="q-help" href={toolPath(p.id)}>
             {p.name}
           </a>
         )}
@@ -94,7 +95,7 @@ function ResultItem({ doc }: { doc: SearchDoc }) {
   return (
     <li class="dict-item">
       {p.layer === 'shelf' ? (
-        <a href={`/products/${p.id}`}>{p.name}</a>
+        <a href={toolPath(p.id)}>{p.name}</a>
       ) : (
         <span>
           {p.name} <span class="badge badge-soft">{ko.dict.indexBadge}</span>{' '}

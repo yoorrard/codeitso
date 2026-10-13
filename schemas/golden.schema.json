@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "golden.schema.json",
   "title": "추천 회귀 검사 사례 (골든 케이스)",
-  "description": "인터뷰 답과 최종 장바구니를 넣으면 엔진이 내야 하는 결과. 규칙·가중치·상품을 바꾸면 이 사례들이 그대로 통과해야 한다.",
+  "description": "목적지 질문의 답과 최종 장바구니(고른 도구)를 넣으면 엔진이 내야 하는 결과. 규칙·가중치·상품을 바꾸면 이 사례들이 그대로 통과해야 한다.",
   "type": "object",
   "additionalProperties": false,
   "required": ["id", "title", "answers", "cart", "expect"],
@@ -29,7 +29,7 @@
       "type": "array",
       "items": { "$ref": "defs.schema.json#/$defs/slotId" },
       "uniqueItems": true,
-      "description": "1차/2차 나누기에서 2차로 미룬 칸"
+      "description": "'먼저 만들 것 / 나중에 붙일 것' 나누기에서 나중으로 미룬 칸"
     },
     "expect": {
       "type": "object",
@@ -89,7 +89,7 @@
         "research": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "조사할 것 id (순서대로)"
+          "description": "알아볼 것 id (순서대로)"
         },
         "safety": {
           "type": "array",
@@ -127,7 +127,7 @@
           "description": "켜진 막힘 규칙 id (규칙 순서). 상품 카드의 막힘 메모는 넣지 않는다. 적은 사례만 비교한다"
         },
         "difficulty": { "type": "integer" },
-        "difficultyFirst": { "type": "integer", "description": "2차로 미룬 칸에만 쓰이는 상품을 뺀 난이도" },
+        "difficultyFirst": { "type": "integer", "description": "나중으로 미룬 칸에만 쓰이는 상품을 뺀 난이도 (먼저 만들 것)" },
         "minutes": { "type": "integer" },
         "split": {
           "type": "object",

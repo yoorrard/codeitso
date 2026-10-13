@@ -25,7 +25,7 @@ const D2_FILES: { weight: number; style: string; file: string; sha256: string }[
 ];
 const RECEIPT_FAMILY = 'CC Receipt';
 
-/** 영수증 글꼴에 넣을 글자: 출력 가능한 ASCII + 기호 + 영수증·전광판의 고정 글자 */
+/** 영수증 글꼴에 넣을 글자: 출력 가능한 ASCII + 기호 + 영수증과 '요금 0원' 칩의 고정 글자 */
 export async function receiptChars(): Promise<string> {
   const set = new Set<string>();
   const add = (s: string): void => {
@@ -37,12 +37,9 @@ export async function receiptChars(): Promise<string> {
   add(JSON.stringify(templates.receipt).replace(/\{\{[a-z]+\}\}/g, ''));
   const rules = readJson<{ rules: { type: string; slot?: { label: string } }[] }>(join(DATA_DIR, 'rules.json'));
   for (const r of rules.rules) if (r.type === 'slot' && r.slot) add(r.slot.label);
-  // 화면의 전광판·계기판 고정 문구 (src/copy/ko.ts의 board·stations 묶음)
-  const ko = (await import('../../src/copy/ko.ts')) as { ko: Record<string, unknown> };
-  for (const group of ['board', 'stations']) {
-    const v = ko.ko[group];
-    if (v) add(JSON.stringify(v).replace(/\{\{[a-z]+\}\}/g, ''));
-  }
+  // 화면에서 영수증 글꼴을 쓰는 곳은 영수증 종이와 '요금 0원' 칩뿐이다 (docs/CONCEPT.md 5.4, src/copy/ko.ts의 home.fareChip)
+  const { ko } = await import('../../src/copy/ko.ts');
+  add(ko.home.fareChip);
   return [...set].sort().join('');
 }
 

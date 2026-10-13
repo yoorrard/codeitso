@@ -4,7 +4,7 @@
     {
       "id": "q.type",
       "text": "어디로 모실까요?",
-      "help": "만들고 싶은 것과 가장 가까운 그림을 고르세요.",
+      "help": "만들고 싶은 앱과 가장 가까운 것을 고르세요.",
       "chip": "만들 것",
       "picture": true,
       "options": [
@@ -29,12 +29,12 @@
         {
           "id": "quiz",
           "label": "퀴즈",
-          "alt": "체크 표시가 된 상자 그림",
+          "alt": "확인 표시가 된 상자 그림",
           "tags": { "type.quiz": 1 }
         },
         {
           "id": "tool",
-          "label": "도구",
+          "label": "계산기·도우미",
           "alt": "알록달록한 주판 그림",
           "tags": { "type.tool": 1 }
         },
@@ -46,7 +46,7 @@
         },
         {
           "id": "unknown",
-          "label": "아직 모르겠어요",
+          "label": "아직 못 정했어요",
           "alt": "턱을 괴고 고민하는 얼굴 그림",
           "isUnknown": true,
           "tags": { "type.page": 1 }
@@ -148,7 +148,7 @@
         },
         {
           "id": "maybe",
-          "label": "아마도",
+          "label": "아마 그럴 거예요",
           "tags": { "need.save": 1 }
         },
         {
@@ -189,7 +189,7 @@
         },
         {
           "id": "maybe",
-          "label": "아마도",
+          "label": "아마 그럴 거예요",
           "tags": { "need.login": 1 }
         },
         {
@@ -376,7 +376,7 @@
         },
         {
           "id": "maybe",
-          "label": "아마도",
+          "label": "아마 그럴 거예요",
           "tags": { "need.notify": 1 }
         },
         {
@@ -445,7 +445,7 @@
     {
       "id": "q.personal",
       "text": "이름·연락처 같은 개인정보를 받나요?",
-      "help": "모르면 받는다고 보고, 조심할 점을 설계 꾸러미에 넣어 드려요.",
+      "help": "모르면 받는다고 보고, 조심할 점을 설계도에 넣어 드려요.",
       "chip": "개인정보",
       "picture": false,
       "showIf": { "tag": "need.save", "gte": 1 },
@@ -495,7 +495,7 @@
         },
         {
           "id": "maybe",
-          "label": "아마도",
+          "label": "아마 그럴 거예요",
           "tags": { "sensitive.payment": 1 }
         },
         {

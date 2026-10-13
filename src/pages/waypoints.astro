@@ -1,0 +1,12 @@
+---
+// 경유지 /waypoints (docs/CONCEPT.md 6.4, T09): 고를 것 목록과 도구 섬 하나. 아래 막대는 점검으로.
+import Base from '../layouts/Base.astro';
+import Shop from '../components/Shop.tsx';
+import { ko } from '../copy/ko.ts';
+import { ROUTES } from '../lib/routes.ts';
+---
+
+<Base title={ko.shop.pageTitle} stage="waypoints">
+  <Shop client:load />
+  <a slot="action" class="btn btn-primary" href={ROUTES.check}>{ko.shop.goCheck}</a>
+</Base>

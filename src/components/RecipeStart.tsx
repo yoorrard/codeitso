@@ -1,17 +1,17 @@
-// '이 레시피로 출발' 섬: 답·장바구니·그대로 둔 충돌·한 줄 입력을 채우고 재확인(/check)으로 간다 (docs/UX.md 3.9).
-// 저장된 진행이 있고 레시피와 다르면 바꿀지 먼저 묻는다.
+// '이 코스로 출발' 섬: 답·고른 도구·그대로 간 막힌 곳·한 줄 입력을 채우고 점검(/check)으로 간다 (docs/CONCEPT.md 6.10).
+// 저장된 진행이 있고 코스와 다르면 바꿀지 먼저 묻는다.
 import { useRef } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
 import { fill } from '../lib/engine/index.ts';
 import type { Session } from '../lib/engine/types.ts';
 import { commitSession } from '../lib/result.ts';
-import { hasProgress, sameSession, stationById } from '../lib/stations.ts';
+import { hasProgress, sameSession, stageById } from '../lib/stages.ts';
 import { $session, patchMeta } from '../lib/store.ts';
 
 interface Props {
   recipeId: string;
-  /** 금색 주 버튼으로 (한 화면에 하나만, DESIGN 3절). 홈의 카드에서는 보통 버튼 */
+  /** 주 버튼으로 (한 화면에 하나만). 홈의 카드에서는 보통 버튼 */
   primary?: boolean;
 }
 
@@ -25,9 +25,9 @@ export default function RecipeStart({ recipeId, primary = false }: Props) {
 
   const go = (): void => {
     commitSession(target);
-    // 레시피로 채운 상태는 인터뷰 시작 시각이 없다 (발행 집계 구간 none)
+    // 코스로 채운 상태는 목적지 시작 시각이 없다 (발행 집계 구간 none)
     patchMeta({ interviewStartedAt: undefined });
-    window.location.assign(stationById('check').path);
+    window.location.assign(stageById('check').path);
   };
   const start = (): void => {
     const now = $session.get();

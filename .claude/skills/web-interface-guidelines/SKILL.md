@@ -75,7 +75,7 @@ paths:
 ### 그림
 
 - `<img>`에 `width`·`height` (밀림 방지). Astro `<Image>`/`<Picture>`로 webp·avif와 크기별 파일을 만든다.
-- 첫 화면 밖 그림은 `loading="lazy"`, 첫 화면 핵심 그림(기사님)은 `fetchpriority="high"`.
+- 첫 화면 밖 그림은 `loading="lazy"`, 첫 화면 핵심 그림(홈 지도의 차 렌더)은 `fetchpriority="high"`.
 - SVG 그림은 토큰 색(`currentColor` 또는 `var(--…)`)을 쓴다.
 
 ### 성능

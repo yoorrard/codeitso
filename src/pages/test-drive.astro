@@ -1,16 +1,17 @@
 ---
-// 첫 수업 /lesson (docs/UX.md 3.2, R-11·R-12): AI 채팅에서 웹페이지 한 장 만들기. 문장 세 개를 복사해 차례로 보낸다.
+// 시운전 /test-drive (docs/CONCEPT.md 6.2, R-11·R-12): AI 채팅에서 웹페이지 한 장 만들기. 문장 세 개를 복사해 차례로 보낸다.
 import Base from '../layouts/Base.astro';
 import CopyButton from '../components/CopyButton.tsx';
 import LessonFinish from '../components/LessonFinish.tsx';
 import Icon from '../components/Icon.astro';
 import { ko } from '../copy/ko.ts';
 import { fill } from '../lib/engine/index.ts';
+import { ROUTES } from '../lib/routes.ts';
 
 const L = ko.lesson;
 ---
 
-<Base title={L.pageTitle} station="lesson">
+<Base title={L.pageTitle} stage="test-drive">
   <h1>{L.title}</h1>
   <p class="lead">{L.lead}</p>
   <ol class="lesson-steps">
@@ -47,5 +48,5 @@ const L = ko.lesson;
     <p>{L.doneBody}</p>
     <LessonFinish client:visible />
   </section>
-  <a slot="action" class="btn" href="/interview">{L.skip}</a>
+  <a slot="action" class="btn" href={ROUTES.destination}>{L.skip}</a>
 </Base>

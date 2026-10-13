@@ -54,10 +54,11 @@ describe('저장소', () => {
     expect(store.$meta.get().sent).toEqual(['issue:abc']);
   });
 
-  it('본 도장을 더한다 (겹침 없이)', () => {
-    store.markStampsSeen(['station.interview']);
-    store.markStampsSeen(['station.interview', 'station.shop']);
-    expect(store.$trip.get().seenStamps).toEqual(['station.interview', 'station.shop']);
+  it('본 장면을 더한다 (겹침 없이)', () => {
+    store.markSceneSeen('s1');
+    store.markSceneSeen('s1');
+    store.markSceneSeen('s5');
+    expect(store.$seen.get().scenes).toEqual(['s1', 's5']);
   });
 
   it('기록 지우기는 진행 기록 네 키를 지우고, 설정과 남의 키는 그대로 둔다', () => {
@@ -65,7 +66,7 @@ describe('저장소', () => {
     store.$session.set({ answers: { 'q.type': 'page' }, cart: ['x'], kept: [], deferred: [] });
     store.setPrefs({ motion: 'reduce', sound: true });
     store.clearAll();
-    for (const key of [KEYS.session, KEYS.study, KEYS.meta, KEYS.trip]) expect(key in storage).toBe(false);
+    for (const key of [KEYS.session, KEYS.study, KEYS.meta, KEYS.seen]) expect(key in storage).toBe(false);
     expect(storage['other:key']).toBe('그대로');
     expect(store.$prefs.get()).toEqual({ motion: 'reduce', sound: true });
     expect(KEYS.prefs in storage).toBe(true);

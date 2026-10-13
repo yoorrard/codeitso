@@ -36,7 +36,7 @@ function must<V>(v: V | undefined, what: string): V {
   return v;
 }
 
-/** 꾸러미에서 두 제목 사이의 줄 (빈 줄 뺌) */
+/** 설계도에서 두 제목 사이의 줄 (빈 줄 뺌) */
 function section(md: string, from: string, to: string): string[] {
   const lines = md.split('\n');
   const a = lines.indexOf(`## ${from}`);
@@ -170,7 +170,7 @@ describe('같은 자료·같은 상태면 같은 결과, 자료는 그대로', (
   });
 });
 
-// ── 꾸러미: 작은 자료 ─────────────────────────────────────────────
+// ── 설계도: 작은 자료 ─────────────────────────────────────────────
 
 describe('renderPack 1번: 쓰는 사람 문장 틀이 없는 태그', () => {
   function pack(audience: string): string[] {
@@ -267,7 +267,7 @@ describe('renderPack 5번: 외부 데이터 칸을 조사로 넘기면', () => {
   });
 });
 
-describe('renderPack 2·3번: 2차로 미룬 칸', () => {
+describe('renderPack 2·3번: 나중으로 미룬 칸', () => {
   const cat = tinyCatalog({
     questions: [tagQuestion({ 'type.record': 1 })],
     rules: [SCREEN, NOTIFY],
@@ -278,7 +278,7 @@ describe('renderPack 2·3번: 2차로 미룬 칸', () => {
   const now = renderPack(cat, evaluate(cat, { answers: ANSWERED, cart: ['p.screen', 'p.bell'] }), OPTS);
   const later = renderPack(cat, evaluate(cat, { answers: ANSWERED, cart: ['p.screen', 'p.bell'], deferred: ['slot.notify'] }), OPTS);
 
-  it('3번: 알림 칸의 화면은 1차일 때만 화면 목록 끝에 붙는다', () => {
+  it('3번: 알림 칸의 화면은 먼저 만들 것일 때만 화면 목록 끝에 붙는다', () => {
     expect(section(now, H.screens, H.features)).toEqual([
       ...RECORD_SCREENS,
       `${RECORD.screens.length + 1}. **${notifyScreen.name}**: ${notifyScreen.parts.join(', ')}`,
@@ -286,7 +286,7 @@ describe('renderPack 2·3번: 2차로 미룬 칸', () => {
     expect(section(later, H.screens, H.features)).toEqual(RECORD_SCREENS);
   });
 
-  it('2번: 1차 목록에서 빠지고 미룬 것에 칸 이름으로', () => {
+  it('2번: 먼저 만들 것 목록에서 빠지고 나중에 붙일 것에 칸 이름으로', () => {
     expect(section(now, H.scope, H.screens)).toEqual([
       P.scopeRule,
       `### ${L.firstPhase}`,
@@ -305,9 +305,9 @@ describe('renderPack 2·3번: 2차로 미룬 칸', () => {
   });
 });
 
-// ── 진짜 자료: Supabase가 맡은 로그인을 2차로 미루기 (골든 사례에 없는 길) ─────────────────
+// ── 진짜 자료: Supabase가 맡은 로그인을 나중으로 미루기 (골든 사례에 없는 길) ─────────────────
 
-describe('진짜 자료: case-04에서 로그인을 2차로 미루면', () => {
+describe('진짜 자료: case-04에서 로그인을 나중으로 미루면', () => {
   // case-04: react-vite(난이도 2, 40분) + supabase(저장·로그인, 3, 60분) + cloudflare-workers(배포·proxy, 2, 40분)
   const g = goldenCase('case-04');
   const base = evaluate(REAL, goldenSession(g));
@@ -317,7 +317,7 @@ describe('진짜 자료: case-04에서 로그인을 2차로 미루면', () => {
     expect(base.split).toEqual({ difficulty: 7, difficultyFirst: 7, needed: true, defer: ['slot.auth'], easier: [] });
   });
 
-  it('Supabase가 저장도 맡아 1차 난이도·시간·공부할 것·충돌은 그대로', () => {
+  it('Supabase가 저장도 맡아 먼저 만들 것의 난이도·시간·읽어 둘 용어·충돌은 그대로', () => {
     expect(later.session.deferred).toEqual(['slot.auth']);
     expect(later.split.difficultyFirst).toBe(7); // 2 + 3 + 2
     expect(later.minutes).toBe(170); // 30 + 40 + 60 + 40
@@ -356,18 +356,18 @@ describe('진짜 자료: case-04에서 로그인을 2차로 미루면', () => {
     ]);
   });
 
-  it('영수증: Supabase는 1차 품목이고 칸 이름은 저장 외 1칸', () => {
+  it('영수증: Supabase는 먼저 만들 것 품목이고 칸 이름은 저장 외 1개', () => {
     // '저장, 로그인'은 4 + 2 + 6 = 12칸이라 11칸을 넘는다
     const m = receiptModel(REAL, later, ISSUED);
     expect(m.items.map((i) => [i.productId, i.slot, i.later])).toEqual([
       ['react-vite', '화면', false],
-      ['supabase', '저장 외 1칸', false],
+      ['supabase', '저장 외 1개', false],
       ['cloudflare-workers', '배포·공유', false],
     ]);
     expect(m.difficultyText).toBe(`7 ${T.receipt.levels.hard}`);
   });
 
-  it('꾸러미: 로그인 화면이 빠지고, 미룬 것에 로그인, 7번 표에 (2차) 없음', () => {
+  it('설계도: 로그인 화면이 빠지고, 나중에 붙일 것에 로그인, 7번 표에 (나중) 없음', () => {
     const authScreen = must(must(T.slotSteps['slot.auth'], 'slot.auth').screen, 'slot.auth screen');
     const line = `**${authScreen.name}**: ${authScreen.parts.join(', ')}`;
     const baseMd = renderPack(REAL, base, OPTS);

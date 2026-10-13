@@ -1,16 +1,12 @@
 ---
-// 재확인 /check (docs/UX.md 3.5, T10): 요약·신호등·나누기 섬과, 아래 막대의 '영수증 뽑기' 섬.
-import { getImage } from 'astro:assets';
+// 출발 전 점검 /check (docs/CONCEPT.md 6.5, T10): 요약·교통 정보·나누기 섬과, 아래 막대의 '출발하기' 섬.
 import Base from '../layouts/Base.astro';
 import Check from '../components/Check.tsx';
 import IssueButton from '../components/IssueButton.tsx';
-import face from '../assets/mascot/chauffeur-face.png';
 import { ko } from '../copy/ko.ts';
-
-const faceImg = await getImage({ src: face, width: 80, height: 80, format: 'webp' });
 ---
 
-<Base title={ko.check.pageTitle} station="check">
-  <Check client:load faceSrc={faceImg.src} />
+<Base title={ko.check.pageTitle} stage="check">
+  <Check client:load />
   <IssueButton client:load slot="action" />
 </Base>

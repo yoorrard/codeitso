@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "questions.schema.json",
-  "title": "인터뷰 질문 (적힌 순서대로, 보이는 첫 미응답 질문을 묻는다)",
+  "title": "목적지 질문 (적힌 순서대로, 보이는 첫 미응답 질문을 묻는다)",
   "type": "object",
   "required": ["version", "questions"],
   "additionalProperties": false,
@@ -18,7 +18,7 @@
           "id": { "$ref": "defs.schema.json#/$defs/questionId" },
           "text": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
           "help": { "type": "string" },
-          "chip": { "type": "string", "description": "'좁혀지는 중' 미리 보기에 쓰는 짧은 이름" },
+          "chip": { "type": "string", "description": "'길 찾는 중' 미리 보기와 설계도 1번 '고른 답'에 쓰는 짧은 이름" },
           "picture": { "type": "boolean", "description": "true면 그림 보기. 모든 보기에 alt가 있어야 한다" },
           "showIf": { "$ref": "defs.schema.json#/$defs/condition" },
           "options": {

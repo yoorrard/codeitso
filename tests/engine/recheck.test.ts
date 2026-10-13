@@ -79,6 +79,32 @@ describe('규칙 충돌', () => {
     expect(evaluate(cat, { answers: OFF }).conflicts).toEqual([]);
   });
 
+  it('anchorSlot이 있으면 그대로 넘기고, 없으면 키도 없다 (지도에서 막힌 곳을 붙일 칸)', () => {
+    const cat = tinyCatalog({
+      rules: [{ ...conflictRule('conflict.a', { always: true }), anchorSlot: 'slot.data' }, conflictRule('conflict.b', { always: true })],
+      cards: [card('card.x')],
+    });
+    const [a, b] = evaluate(cat, {}).conflicts;
+    expect(a?.anchorSlot).toBe('slot.data');
+    expect(b && 'anchorSlot' in b).toBe(false);
+  });
+
+  it('진짜 충돌 규칙의 anchorSlot은 CONCEPT 3.7 표대로 (유료 도구는 길 전체)', () => {
+    const anchors = Object.fromEntries(
+      realData()
+        .rules.rules.filter((x): x is ConflictRule => x.type === 'conflict')
+        .map((x) => [x.id, x.anchorSlot ?? null]),
+    );
+    expect(anchors).toEqual({
+      'conflict.paid-on-free': null,
+      'conflict.realtime-mismatch': 'slot.data',
+      'conflict.personal-server': 'slot.store',
+      'conflict.key-in-static-page': 'slot.data',
+      'conflict.key-on-public-host': 'slot.host',
+      'conflict.shared-without-login': 'slot.auth',
+    });
+  });
+
   it('cartHas: 그 상품을 담았을 때만 켜진다', () => {
     const cat = tinyCatalog({
       rules: [conflictRule('conflict.has-b', { cartHas: 'p-b' }), conflictRule('conflict.has-ghost', { cartHas: 'ghost' })],
@@ -172,6 +198,7 @@ describe('빈 필수 칸', () => {
         message: fill(t.message, { label: '저장' }),
         fixHint: fill(t.fixHint, { label: '저장' }),
         slotId: 'slot.store',
+        anchorSlot: 'slot.store',
         keepable: true,
         kept: false,
       },

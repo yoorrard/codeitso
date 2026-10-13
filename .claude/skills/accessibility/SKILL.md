@@ -38,12 +38,12 @@ Automated tools find only part of the barriers. "axe serious/critical = 0" is th
 ```astro
 ---
 import { Image } from 'astro:assets';
-import wave from '../assets/mascot/chauffeur-wave.webp';
+import lot from '../assets/art/P01.png';
 ---
 <!-- Informative: one sentence, "무엇이 무엇을 하는 그림" (.claude/rules/copy.md) -->
-<Image src={wave} alt="기사님이 손을 흔들며 손님을 맞는 그림" />
+<Image src={lot} alt="말뚝과 줄로 자리를 잡은 빈 터에 설계도 두루마리가 놓인 그림" />
 <!-- Decorative: the text beside it already says everything -->
-<Image src={wave} alt="" />
+<Image src={lot} alt="" />
 ```
 
 - Astro's `<Image>` will not build without `alt`; `alt=""` is the explicit "decorative" answer. Never start alt with "이미지" or "그림".
@@ -290,9 +290,9 @@ A real screen-reader pass (VoiceOver, TalkBack, NVDA with a Korean voice) can't 
 ## 코드쇼퍼 특이점
 
 - **Interview options are buttons, not radios** (D19 in `docs/DECISIONS.md`, WCAG 3.2.2). Choosing an option advances to the next question, so each option is a `<button type="button">`: click, Enter and Space advance; arrow keys never do. The earlier choice shows `aria-pressed="true"`. Options sit in a `role="group"` named by the question heading (`aria-labelledby`).
-- **Conflict status is color + icon + text.** Open: `--stop` + warning icon (`aria-hidden`) + the word "충돌"; resolved: `--go` + check icon + text. The M6 traffic-light lamps change at most once per 350ms (never 3+ flashes per second); under reduced motion only the final state is shown.
+- **Traffic status is color + icon + text** (docs/CONCEPT.md 5.3): 막힘 = red + accident mark + "막힘", 서행 (kept on purpose) = amber + question mark + "서행", 원활 = green + check + "원활". Lamps change at most once per 350ms (never 3+ flashes per second); under reduced motion only the final state is shown.
 - **Every motion is skippable and never blocks.** A tap on a scene calls `finish()`; controls stay usable while it plays; the outcome is announced in text.
-- **Mascot and illustrations** (`src/assets/mascot/`, car and stop SVGs): informative ones get a one-sentence Korean alt; decorative ones next to text that says the same get `alt=""` (SVG: `aria-hidden="true"`). Speech-bubble text is real text, never baked into the image (1.4.5).
+- **Map, renders and illustrations** (route-map SVG, `src/assets/art/` renders, blueprint placeholders): the map is `role="img"` with a one-sentence Korean summary and every fact it shows also exists in the sheet's HTML; decorative images next to text that says the same get `alt=""` (SVG: `aria-hidden="true"`). Dispatch-note text is real text, never baked into an image (1.4.5).
 - **The D2Coding receipt is deliberate.** It still reflows at 320px (wraps, or scrolls in a focusable region) and its buttons have visible labels ("영수증 복사").
 
 ## References

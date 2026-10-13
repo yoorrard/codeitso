@@ -1,5 +1,5 @@
-// 장보기 섬 (T09, docs/UX.md 3.4): 칸 목록(인벤토리) → 칸을 하나씩 펼쳐 추천·다른 진열 상품·색인을 보고 담는다.
-// 점수·추천·이유·2위 비교·배지는 모두 엔진 결과(evaluate, badges). 화면은 글로 옮겨 보여 주기만 한다.
+// 경유지 섬 (T09, docs/CONCEPT.md 6.4): 고를 것 목록 → 하나씩 펼쳐 추천·다른 도구·원문만 있는 도구를 보고 고른다.
+// 점수·추천·이유·다른 후보 비교·꼬리표는 모두 엔진 결과(evaluate, badges). 화면은 글로 옮겨 보여 주기만 한다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
@@ -16,12 +16,11 @@ import { SLOT_ART } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import { sfx } from '../lib/sfx.ts';
-import { gate } from '../lib/stations.ts';
-import { $trip, markStampsSeen } from '../lib/store.ts';
+import { ROUTES, termPath } from '../lib/routes.ts';
+import { gate } from '../lib/stages.ts';
 import { Icon } from './Icon.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
-const STAMP = 'station.shop';
 const T = catalog.data.templates;
 
 /** 칸 그림은 칸의 기능으로 고른다 (칸 id는 'slot.screen'처럼 점이 들어 있다) */
@@ -148,7 +147,7 @@ function ProductCard({ s, slotId, capability, inCart, recommended, compare, onTo
                 {concepts.map((c, i) => (
                   <>
                     {i > 0 && ', '}
-                    <a href={`/concepts/${c.id}`}>{c.title}</a>
+                    <a href={termPath(c.id)}>{c.title}</a>
                   </>
                 ))}
               </dd>
@@ -201,22 +200,17 @@ function ProductCard({ s, slotId, capability, inCart, recommended, compare, onTo
   );
 }
 
-interface Props {
-  faceSrc: string;
-}
-
-export default function Shop({ faceSrc }: Props) {
+export default function Shop() {
   const ready = useHydrated();
   const live = useStore($result);
   const r = ready ? live : FIRST_VISIT;
   const [open, setOpen] = useState<string | null>(null);
-  const [stamp, setStamp] = useState<'none' | 'first' | 'again'>('none');
   const inventory = useRef<HTMLUListElement>(null);
 
   const required = r.slots.filter((s) => s.slot.required);
   const allRequired = required.length > 0 && required.every((s) => s.filledBy.length > 0);
 
-  // 처음 펼칠 칸: 주소의 ?slot=(재확인의 '바꾸기'), 비어 있는 첫 필수 칸, 첫 칸 순
+  // 처음 펼칠 것: 주소의 ?slot=(점검의 '도구 바꾸기'), 아직 고르지 않은 첫 꼭 고를 것, 첫 것 순
   useEffect(() => {
     if (!ready || open !== null) return;
     const asked = new URLSearchParams(window.location.search).get('slot');
@@ -224,13 +218,13 @@ export default function Shop({ faceSrc }: Props) {
     if (first) setOpen(first.slot.id);
   }, [ready]);
 
-  const g = gate('shop', r);
-  // 빌드 때(처음 온 사람)도 잠김 안내를 그린다: 인터뷰를 마치지 않은 사람에게 빈 장보기를 보이지 않게
+  const g = gate('waypoints', r);
+  // 빌드 때(처음 온 사람)도 못 가는 안내를 그린다: 목적지를 정하지 않은 사람에게 빈 경유지를 보이지 않게
   if (!g.open) {
     return (
       <section class="q-card" aria-labelledby="shop-locked">
         <h1 id="shop-locked">{ko.shop.locked}</h1>
-        <a class="btn btn-primary" href="/interview">
+        <a class="btn btn-primary" href={ROUTES.destination}>
           {ko.shop.toInterview}
         </a>
       </section>
@@ -256,25 +250,19 @@ export default function Shop({ faceSrc }: Props) {
     updateSession((s) => ({ cart: [...s.cart, p.id] }));
     void sfx('add');
     const after = $result.get();
-    const filled = after.slots.filter((s) => s.filledBy.includes(p.id)).map((s) => s.slot.label);
-    announce(`${fill(ko.shop.added, { obj: josa(p.name, 'obj') })} ${filled.map((label) => fill(ko.shop.slotFilled, { slot: label })).join(' ')}`);
-    const req = after.slots.filter((s) => s.slot.required);
-    if (req.length > 0 && req.every((s) => s.filledBy.length > 0)) {
-      const first = !$trip.get().seenStamps.includes(STAMP);
-      markStampsSeen([STAMP]);
-      setStamp(first ? 'first' : 'again');
-      announce(first ? `${ko.shop.stampDone} ${ko.shop.allRequired}` : ko.shop.allRequired);
-      if (first) void sfx('stamp');
-    }
+    // 남은 일을 바로 말한다 (CONCEPT 3.2): '○○ 골랐어요. 꼭 고를 것이 n개 남았어요.' 다 골랐으면 점검으로
+    const left = after.slots.filter((s) => s.slot.required && s.filledBy.length === 0).length;
+    const next = left > 0 ? fill(ko.shop.requiredLeft, { n: left }) : ko.shop.allRequired;
+    announce(`${fill(ko.shop.added, { obj: josa(p.name, 'obj') })} ${next}`);
   };
 
   return (
     <div class="shop">
       <h1>{ko.shop.title}</h1>
-      <div class="mascot-line">
-        <img class="face" src={faceSrc} width={40} height={40} alt="" />
+      <div class="dispatch-note">
+        <span class="brand-mark" aria-hidden="true" />
         <p>
-          {sentences(ko.mascot.shop).map((t) => (
+          {sentences(ko.dispatch.waypoints).map((t) => (
             <span class="line">{t}</span>
           ))}
         </p>
@@ -304,17 +292,6 @@ export default function Shop({ faceSrc }: Props) {
           })}
         </ul>
       </nav>
-
-      {stamp !== 'none' && (
-        <div class={stamp === 'first' ? 'stamp-banner just-now' : 'stamp-banner'}>
-          <span class={stamp === 'first' ? 'stamp-mark stamp-in' : 'stamp-mark'} aria-hidden="true">
-            <img src="/emoji/station-shop.webp" width={56} height={56} alt="" />
-          </span>
-          <p>
-            <strong>{ko.shop.stampDone}</strong> {ko.shop.allRequired}
-          </p>
-        </div>
-      )}
 
       {r.slots.map((ranking) => {
         const id = ranking.slot.id;
@@ -370,7 +347,7 @@ export default function Shop({ faceSrc }: Props) {
           </section>
         );
       })}
-      {ready && allRequired && stamp === 'none' && <p class="all-required">{ko.shop.allRequired}</p>}
+      {ready && allRequired && <p class="all-required">{ko.shop.allRequired}</p>}
     </div>
   );
 }

@@ -44,10 +44,13 @@ function StylePreview({ option }: { option: Option }) {
 function OptionButton({ q, option, picked, onPick }: { q: Question; option: Option; picked: boolean; onPick: (o: Option) => void }) {
   const art = optionArt(q.id, option.id);
   const hasArt = q.picture && (art !== null || q.id === 'q.style');
+  // 그림 보기의 '모르겠어요'는 아래 전체 폭 줄로 (CONCEPT 6.3). 앱 종류는 140px 청사진 타일, 나머지 그림 보기는 64px
+  const row = q.picture && option.isUnknown === true;
+  const size = row ? 'md' : q.id === 'q.type' ? 'hero' : 'xl';
   return (
-    <li>
-      <button type="button" class={`option${hasArt ? ' option-pic' : ''}${option.isUnknown ? ' option-unknown' : ''}`} aria-pressed={picked} onClick={() => onPick(option)}>
-        {hasArt && (art ? <ArtTile name={art} size="xl" /> : <StylePreview option={option} />)}
+    <li class={row ? 'option-row' : undefined}>
+      <button type="button" class={`option${hasArt && !row ? ' option-pic' : ''}${option.isUnknown ? ' option-unknown' : ''}`} aria-pressed={picked} onClick={() => onPick(option)}>
+        {hasArt && (art ? <ArtTile name={art} size={size} /> : <StylePreview option={option} />)}
         <span class="option-label">{option.label}</span>
         {picked && (
           <span class="picked-mark" aria-hidden="true">
@@ -164,7 +167,7 @@ export default function Interview() {
             {q.text}
           </h1>
           {q.help && <p class="q-help">{q.help}</p>}
-          <ul class={`options${q.picture ? ' options-pic' : ''}`}>
+          <ul class={`options${q.picture ? ' options-pic' : q.options.length === 4 ? ' options-grid' : ''}${q.id === 'q.type' ? ' options-hero' : ''}`}>
             {q.options.map((o) => (
               <OptionButton q={q} option={o} picked={r.interview.answers[q.id] === o.id} onPick={pick} />
             ))}

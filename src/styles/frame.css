@@ -386,7 +386,7 @@
 }
 
 /* 64px 이하 타일에서는 청사진의 치수선이 0.5px 잡선으로 보여 뺀다 */
-.art-tile .bp-dim {
+.art-tile:not(.tile-hero) .bp-dim {
   display: none;
 }
 
@@ -405,6 +405,14 @@
   inline-size: 64px;
   block-size: 64px;
   border-radius: var(--radius-btn);
+}
+
+/* 큰 청사진 타일: 놓인 칸의 폭을 채우되 140px까지 (목적지 첫 질문, CONCEPT 6.3) */
+.art-tile.tile-hero {
+  inline-size: min(100%, 140px);
+  block-size: auto;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
 }
 
 .storage-off {

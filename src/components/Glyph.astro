@@ -8,7 +8,7 @@ interface Props {
   name: string;
   class?: string;
   /** 그림 타일 크기. 없으면 타일 없이 글자색 그림 */
-  tile?: 'sm' | 'md' | 'lg' | 'xl';
+  tile?: 'sm' | 'md' | 'lg' | 'xl' | 'hero';
 }
 const { name, class: cls, tile } = Astro.props;
 const svg = glyph(name);

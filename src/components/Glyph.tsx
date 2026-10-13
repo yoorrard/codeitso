@@ -9,7 +9,7 @@ export function Glyph({ name, class: cls }: { name: string; class?: string }) {
   return <span class={cls ? `glyph ${cls}` : 'glyph'} aria-hidden="true" dangerouslySetInnerHTML={{ __html: svg }} />;
 }
 
-export type TileSize = 'sm' | 'md' | 'lg' | 'xl';
+export type TileSize = 'sm' | 'md' | 'lg' | 'xl' | 'hero';
 
 /** 그림 타일 (CONCEPT 5.7): 남색 둥근 네모 안에 밝은 선 그림. 기능 그림·질문 그림·청사진 자리 표시가 같은 틀을 쓴다 */
 export function ArtTile({ name, size = 'md', class: cls, tileRef }: { name: string; size?: TileSize; class?: string; tileRef?: Ref<HTMLSpanElement> }) {

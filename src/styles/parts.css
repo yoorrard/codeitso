@@ -380,6 +380,26 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
 }
 
+/* 앱 종류: 360px에서 2열 큰 타일 (CONCEPT 6.3) */
+.options-hero {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+}
+
+/* 네·아니요·아마·모르겠어요: 2×2 (글자를 키우면 1열) */
+.options-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+}
+
+.options-grid .option {
+  justify-content: center;
+  text-align: center;
+}
+
+/* 그림 보기의 '모르겠어요'는 아래 전체 폭 줄 */
+.options .option-row {
+  grid-column: 1 / -1;
+}
+
 .option {
   display: flex;
   align-items: center;

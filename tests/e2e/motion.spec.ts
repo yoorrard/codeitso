@@ -28,7 +28,8 @@ test('도착: 영수증 출력 중에 누르면 다 나온 영수증이 바로 �
   await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
   await expect(page.getByRole('button', { name: ko.receipt.skip })).toBeVisible();
-  await page.locator('.paper').click({ position: { x: 20, y: 20 }, force: true });
+  // 화면 어디든 누르면 끝난다: 링크가 없는 제목을 누른다 (종이 모서리는 출력 중 머리줄 링크와 겹칠 수 있다)
+  await page.locator('#receipt-title').click({ force: true });
   await expect.poll(() => longAnimations(page, 0)).toEqual([]);
   await expect(page.locator('.paper')).toHaveCSS('transform', /none|matrix\(1, 0, 0, 1, 0, 0\)/);
 });

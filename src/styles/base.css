@@ -10,7 +10,7 @@
 }
 
 html {
-  color-scheme: light;
+  /* color-scheme(낮·밤)은 tokens.css가 정한다 */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   /* 붙박이 머리말·아래 막대가 초점 받은 요소를 가리지 않게 (WCAG 2.4.11) */
@@ -30,7 +30,7 @@ body {
   overflow-wrap: anywhere; /* 글자를 크게 키워 낱말이 줄보다 길면 그 안에서라도 끊어 가로 스크롤을 막는다 (WCAG 1.4.10) */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  caret-color: var(--navy);
+  caret-color: var(--ink);
   scrollbar-color: var(--ink-soft) transparent;
 }
 

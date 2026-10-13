@@ -133,7 +133,7 @@ export async function flip(from: Element, to: Element, opts: { dur?: DurToken; l
       { transform: `translate(${dx / 2}px, ${dy / 2 - lift}px) scale(0.7)`, opacity: 1, offset: 0.5 },
       { transform: `translate(${dx}px, ${dy}px) scale(0.3)`, opacity: 0 },
     ],
-    { dur: opts.dur ?? '--dur-move', ease: '--ease-in-out' },
+    { dur: opts.dur ?? '--dur-hop', ease: '--ease-in-out' },
   );
   try {
     await anim.finished;
@@ -145,5 +145,5 @@ export async function flip(from: Element, to: Element, opts: { dur?: DurToken; l
 
 /** 노선도 차 이동(M1): offset-path가 걸린 요소를 offset-distance from → to로 (예: '25%' → '50%') */
 export function followPath(el: Element, from: string, to: string, opts: { dur?: DurToken } = {}): Animation {
-  return play(el, [{ offsetDistance: from }, { offsetDistance: to }], { dur: opts.dur ?? '--dur-move', ease: '--ease-in-out' });
+  return play(el, [{ offsetDistance: from }, { offsetDistance: to }], { dur: opts.dur ?? '--dur-hop', ease: '--ease-in-out' });
 }

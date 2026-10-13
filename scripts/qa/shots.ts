@@ -76,10 +76,17 @@ const reports: PageReport[] = [];
 try {
   for (const route of list) {
     // 360-reduce: 기기 설정의 동작 줄이기, 360-site-reduce: 사이트 설정(html[data-motion=reduce])의 동작 줄이기 (D30)
-    for (const vp of [...VIEWPORTS, { name: '360-reduce', width: 360, height: 800 }, { name: '360-site-reduce', width: 360, height: 800 }]) {
+    // 360-dark: 기기가 어두운 모드일 때의 밤 지도 (D56)
+    for (const vp of [
+      ...VIEWPORTS,
+      { name: '360-reduce', width: 360, height: 800 },
+      { name: '360-site-reduce', width: 360, height: 800 },
+      { name: '360-dark', width: 360, height: 800 },
+    ]) {
       const context = await browser.newContext({
         viewport: { width: vp.width, height: vp.height },
         reducedMotion: vp.name === '360-reduce' ? 'reduce' : 'no-preference',
+        colorScheme: vp.name === '360-dark' ? 'dark' : 'light',
         locale: 'ko-KR',
       });
       if (vp.name === '360-site-reduce') {
@@ -123,13 +130,16 @@ try {
         }
         return out;
       });
-      if (vp.name === '360') {
+      // axe는 낮(360)과 밤(360-dark) 두 모드에서 본다 (밤 지도의 대비)
+      if (vp.name === '360' || vp.name === '360-dark') {
         const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
         for (const v of axe.violations) {
           if (v.impact === 'serious') rep.axe.serious += 1;
           if (v.impact === 'critical') rep.axe.critical += 1;
           if (v.impact === 'serious' || v.impact === 'critical') rep.axe.ids.push(`${v.id}(${v.nodes.length})`);
         }
+      }
+      if (vp.name === '360') {
         rep.tabOrder = [];
         await page.locator('body').click({ position: { x: 1, y: 1 } }).catch(() => undefined);
         for (let i = 0; i < 25; i += 1) {
@@ -158,7 +168,7 @@ const bad = reports.filter(
 const md: string[] = ['# 시각 점검 보고', '', `라우트 ${list.length}개 × 화면 4종. 스크린샷: .qa/shots/`, ''];
 md.push('| 라우트 | 화면 | axe 심각/치명 | 가로 스크롤 | 작은 누르는 곳 | 콘솔 에러 | 외부 요청 |', '|---|---|---|---|---|---|---|');
 for (const r of reports) {
-  md.push(`| ${r.route} | ${r.viewport} | ${r.viewport === '360' ? `${r.axe.serious}/${r.axe.critical} ${r.axe.ids.join(' ')}` : '-'} | ${r.horizontalOverflow ? '있음' : '-'} | ${r.smallTargets.length} | ${r.consoleErrors.length} | ${r.externalRequests.length} |`);
+  md.push(`| ${r.route} | ${r.viewport} | ${r.viewport === '360' || r.viewport === '360-dark' ? `${r.axe.serious}/${r.axe.critical} ${r.axe.ids.join(' ')}` : '-'} | ${r.horizontalOverflow ? '있음' : '-'} | ${r.smallTargets.length} | ${r.consoleErrors.length} | ${r.externalRequests.length} |`);
 }
 for (const r of reports) {
   const notes = [

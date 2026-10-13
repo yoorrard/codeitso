@@ -1,61 +1,99 @@
-/* 코드쇼퍼 디자인 토큰. 색은 기사님 그림(남색 제복, 금색 배지)에서 가져왔다 (docs/DESIGN.md 3절, D31).
-   글자색 줄의 '대비:' 주석은 검사가 읽는다: 그 색을 적힌 바탕 위 글자로 쓸 때 필요한 최소 대비 (scripts/check-tokens.ts).
-   색을 바꾸면 npm run check로 대비를 다시 확인한다. 화면 코드는 이 변수만 쓴다. */
+/* 코드쇼퍼 디자인 토큰 (docs/CONCEPT.md 5.3~5.5·7절, D56). 낮 지도(기본)와 밤 지도(기기가 어두운 모드일 때).
+   글자색 줄의 '대비:' 주석은 검사가 읽는다: 그 색을 적힌 바탕 위 글자(그림은 3)로 쓸 때 필요한 최소 대비.
+   검사는 낮과 밤 두 값 모두에서 같은 쌍을 본다 (scripts/check-tokens.ts). 화면 코드는 이 변수만 쓴다. */
 :root {
+  color-scheme: light;
+
   /* 바탕과 면 */
-  --paper: #f2f5fa; /* 기본 바탕 (옅은 지도 종이) */
-  --card: #ffffff; /* 카드·창 바탕 */
-  --receipt: #ffffff; /* 영수증 종이 */
-  --sky: #dce8f7; /* 옅은 면: 고른 보기, 지나온 구간 바탕 */
-  --line: #d3dbe8; /* 장식 선만. 입력 칸 테두리에는 쓰지 않는다 */
+  --paper: #f4f6f9; /* 페이지 바탕 */
+  --card: #ffffff; /* 시트·카드·대화 상자 */
+  --surface-2: #f0f3f7; /* 입력 칸, 묶음 목록 바탕 */
+  --hairline: #e2e7ee; /* 장식 선만. 입력 칸 테두리에는 --ink-soft */
+  --receipt: #ffffff; /* 영수증 종이 (낮·밤 모두 흰색) */
+  --sky: #e3ebf7; /* 고른 보기·지금 고르는 것의 옅은 바탕 */
+  --gold-soft: #fff3cc; /* 추천·기사 메시지의 옅은 금색 바탕 */
 
   /* 글자 */
-  --ink: #16213f; /* 기본 글자 (남색 먹). 대비: --paper 4.5, --card 4.5, --sky 4.5, --taxi 4.5, --gold-soft 4.5, --caution 4.5 */
-  --ink-soft: #4b5674; /* 보조 글자, 입력 칸 테두리. 대비: --paper 4.5, --card 4.5, --sky 4.5 */
+  --ink: #111830; /* 기본 글자, 낮 주 버튼 채움. 대비: --paper 4.5, --card 4.5, --surface-2 4.5, --sky 4.5, --gold-soft 4.5 */
+  --on-gold: #111830; /* 금색·주의 채움 위 글자 (낮·밤 모두 먹색). 대비: --gold 4.5, --caution 4.5 */
+  --receipt-ink: #111830; /* 영수증 종이 위 글자 (종이는 낮·밤 모두 흰색). 대비: --receipt 4.5 */
+  --receipt-soft: #4a5368; /* 영수증 종이 위 보조 글자·점선. 대비: --receipt 4.5 */
+  --on-ink: #ffffff; /* 주 버튼(--ink 채움) 위 글자. 대비: --ink 4.5 */
+  --ink-soft: #4a5368; /* 보조 글자, 입력 칸 테두리. 대비: --paper 4.5, --card 4.5, --surface-2 4.5, --sky 4.5, --gold-soft 4.5 */
+  --ink-faint: #5f6880; /* 꼬리 글. 대비: --paper 4.5, --card 4.5 */
   --link: #1a56db; /* 링크 글자. 대비: --paper 4.5, --card 4.5 */
+  --gold-ink: #8a6500; /* 금색 계열 글자. 대비: --paper 4.5, --card 4.5 */
 
-  /* 브랜드: 제복 남색과 배지 금색 */
-  --navy: #1e2c58; /* 머리말, 전광판, 차 몸체, 주 버튼 바탕 */
-  --navy-deep: #121b3a; /* 도로, 어두운 면 */
-  --road: var(--navy-deep);
-  --on-navy: #f2f5fa; /* 남색 위 글자. 대비: --navy 4.5, --navy-deep 4.5 */
-  --taxi: #f5b700; /* 금색. 밝은 바탕에서는 채움만(위 글자 --ink), 남색 위에서는 글자로도. 대비: --navy 4.5, --navy-deep 4.5 */
-  --gold-soft: #fff1c2; /* 추천 표시 바탕, 지나온 노선 구간 */
-  --teal: #0a7568; /* 지금 위치·지도 핀. 대비: --paper 4.5, --card 4.5 */
+  /* 브랜드: 남색 차와 금색 고리 */
+  --navy: #1e2c58; /* 브랜드 남색: 차 몸체, 고른 마디, 내 길 바깥선, 기능 타일 */
+  --navy-deep: #121b3a; /* 남색 위의 더 어두운 면 */
+  --on-navy: #f2f5fa; /* 남색 위 글자·그림. 대비: --navy 4.5, --navy-deep 4.5 */
+  --gold: #f5b700; /* 채움 전용: '요금 0원' 칩, 추천 꼬리표, 내 길의 심, 영수증 도장. 위 글자는 --on-gold. 대비: --navy 4.5, --navy-deep 4.5 */
+  --you: #0a7568; /* 지금 위치, 지금 여는 마디의 고리. 대비: --paper 4.5, --card 4.5, --map-land 3 */
+  --blueprint: #2d5bd0; /* 청사진 선: 짓기 전 건물 윤곽, 자리 표시 그림. 대비: --map-land 3, --card 3 */
 
-  /* 신호 (늘 아이콘 + 글과 함께) */
-  --go: #1a7a43; /* 해결·완료. 대비: --paper 4.5, --card 4.5 */
-  --on-go: #ffffff; /* 대비: --go 4.5 */
-  --stop: #c13838; /* 충돌·오류. 대비: --paper 4.5, --card 4.5 */
-  --on-stop: #ffffff; /* 대비: --stop 4.5 */
-  --caution: #e07b00; /* 경고 채움. 위 글자는 --ink */
-  --caution-ink: #9a5200; /* 밝은 바탕 위 경고 글자. 대비: --paper 4.5, --card 4.5 */
-  --focus: #1a56db; /* 밝은 바탕의 키보드 초점 테두리. 대비: --paper 3, --card 3, --sky 3 */
-  --focus-on-dark: #f5b700; /* 어두운 바탕의 초점 테두리. 대비: --navy 3, --navy-deep 3 */
+  /* 교통 정보 (늘 그림 + 글과 함께. 색만으로 뜻을 전하지 않는다) */
+  --flow: #15803d; /* 원활. 대비: --paper 4.5, --card 4.5, --map-land 3 */
+  --on-flow: #ffffff; /* 대비: --flow 4.5 */
+  --slow: #b45309; /* 서행 (알고 그대로 감). 대비: --paper 4.5, --card 4.5, --map-land 3 */
+  --on-slow: #ffffff; /* 대비: --slow 4.5 */
+  --jam: #c8372d; /* 막힘·오류. 대비: --paper 4.5, --card 4.5, --map-land 3 */
+  --on-jam: #ffffff; /* 대비: --jam 4.5 */
+  --caution: #e9a23b; /* 주의 꼬리표 채움 (위 글자 --on-gold) */
+  --caution-ink: #9a5200; /* 밝은 바탕 위 주의 글자. 대비: --paper 4.5, --card 4.5 */
+  --seal: #c8372d; /* 영수증 도장 (영수증 종이는 늘 흰색). 대비: --receipt 4.5 */
+
+  /* 초점 */
+  --focus: #1a56db; /* 키보드 초점 테두리. 대비: --paper 3, --card 3, --sky 3 */
+  --focus-on-dark: #f5b700; /* 남색 위 초점 테두리. 대비: --navy 3, --navy-deep 3 */
+
+  /* 지도 (CONCEPT 5.3·5.5). 땅·블록·길·물·공원은 장식이라 대비를 따지지 않는다 */
+  --map-land: #edf1f5;
+  --map-block: #e2e8ef;
+  --map-road: #ffffff;
+  --map-road-edge: #c7d0dc;
+  --map-water: #cadcef;
+  --map-park: #d5e6d2;
+  --map-ghost: #6f798d; /* 아직 고르지 않은 마디의 점선, 아직 나지 않은 길. 대비: --map-land 3 */
+  --node-fill: #1e2c58; /* 고른 마디 채움. 대비: --map-land 3 */
+  --on-node: #ffffff; /* 고른 마디 위 그림. 대비: --node-fill 4.5 */
+  --map-shadow: rgb(30 44 88 / 0.16); /* 오른쪽 아래 2·3px, 흐림 없음 */
+  --route-outer: var(--navy); /* 내 길 바깥선 (6) */
+  --route-core: var(--gold); /* 내 길 가운데 심 (2) */
 
   /* 글꼴 (둘 다 OFL, public/fonts에 직접 둔다. D29) */
   --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-receipt: 'CC Receipt', 'Pretendard Variable', ui-monospace, 'Courier New', monospace;
   --weight-body: 400;
-  --weight-strong: 700;
-  --weight-heading: 800;
+  --weight-strong: 600; /* 버튼·꼬리표·숫자 */
+  --weight-heading: 700; /* 제목 */
+  --weight-display: 800; /* 홈 제목과 글자 상표만 */
 
-  /* 글자 크기 (기본 16px 아래로 내리지 않는다. --text-sm은 보조 정보에만) */
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.25rem;
-  --text-xl: 1.75rem;
-  --text-2xl: 2.25rem;
+  /* 글자 크기 (14px 아래로 내리지 않는다) */
+  --text-sm: 0.875rem; /* 14 꼬리 글, 꼬리표, 지도 이름표 */
+  --text-base: 1rem; /* 16 본문 */
+  --text-md: 1.0625rem; /* 17 목록 이름, 버튼 글 */
+  --text-lg: 1.25rem; /* 20 소제목 */
+  --text-xl: 1.5rem; /* 24 화면 제목 */
+  --text-2xl: 1.875rem; /* 30 홈 제목 (1023px까지) */
+  --text-3xl: 2.5rem; /* 40 홈 제목 (1024px부터) */
   --leading: 1.6;
   --leading-tight: 1.25;
   --tracking-heading: -0.02em;
 
   /* 모양과 간격 */
   --radius-sm: 8px;
-  --radius: 12px;
+  --radius-tile: 12px; /* 그림 타일 */
+  --radius-btn: 14px; /* 버튼 */
+  --radius: 16px; /* 카드 */
   --radius-lg: 20px;
+  --radius-sheet: 24px; /* 시트 위쪽 모서리 */
   --radius-pill: 999px;
   --tap: 44px; /* 누르는 곳 최소 크기 */
+  --btn-home: 56px; /* 홈 주 버튼 높이 */
+  --btn-bar: 52px; /* 아래 막대 주 버튼 */
+  --btn: 48px; /* 보조 버튼 */
+  --chip: 32px; /* 칩의 보이는 높이 (누르는 곳은 --tap) */
   --gutter: 16px; /* 화면 양옆 여백 */
   --space-1: 4px;
   --space-2: 8px;
@@ -65,27 +103,34 @@
   --space-6: 32px;
   --space-7: 48px;
   --content-max: 720px;
-  --bar-top: 16px; /* 머리말은 붙박이가 아니다 (작은 화면을 덜 가리려고, D41). 초점 받은 요소 위 여백만 */
+  --bar-top: 16px; /* 머리줄은 붙박이가 아니다 (작은 화면을 덜 가리려고, D41). 초점 받은 요소 위 여백만 */
   --bar-bottom: calc(4.75rem + env(safe-area-inset-bottom)); /* 붙박이 아래 막대 높이. 글자를 키우면 함께 커지게 rem */
-  --shadow: 0 2px 0 rgb(18 27 58 / 0.08), 0 10px 28px rgb(18 27 58 / 0.1);
-  --shadow-lift: 0 4px 0 rgb(18 27 58 / 0.1), 0 16px 36px rgb(18 27 58 / 0.14);
 
-  /* 모션 길이 (docs/UX.md 4절. 모션 하나 1초 안쪽, 장면 3초 이하) */
-  --dur-fast: 150ms; /* 누름·작은 상태 변화 */
-  --dur-base: 300ms; /* 보통 UI 전환 */
-  --dur-slow: 600ms; /* 숫자 굴러가기 */
-  --dur-move: 800ms; /* M1 차 이동 */
-  --dur-fly: 550ms; /* M3 담기 비행 */
-  --dur-door: 350ms; /* M2 차 문 열기 */
-  --dur-drive: 900ms; /* M8 홈 출발 장면에서 차가 달려와 서기까지 (모션 하나 1초 안쪽) */
-  --dur-print: 2200ms; /* M4 영수증 출력 상한 */
-  --dur-stamp: 250ms; /* 도장 찍기 */
-  --dur-signal: 350ms; /* M6 신호등 불 하나 (번쩍임 초당 3번 미만) */
-  --dur-scene: 3000ms; /* 공들인 장면 상한 */
-  --dur-page: 240ms; /* 페이지 전환 (View Transitions, 250ms 안쪽) */
+  /* 높이 네 층 (CONCEPT 5.5): 지도(0) → 떠 있는 조작(1) → 시트(2, 위쪽으로만) → 대화 상자(3). 시트 안 카드에는 그림자를 두지 않는다 */
+  --elev-1: 0 1px 2px rgb(17 24 48 / 0.08), 0 4px 12px rgb(17 24 48 / 0.08);
+  --elev-2: 0 -1px 0 rgb(17 24 48 / 0.04), 0 -8px 24px rgb(17 24 48 / 0.08);
+  --elev-3: 0 12px 40px rgb(17 24 48 / 0.18);
+  --shadow: var(--elev-1);
+  --shadow-lift: var(--elev-3);
+
+  /* 모션 길이 (CONCEPT 7절. 모션 하나 1초 안쪽, 대표 장면 2.8초 이하) */
+  --dur-tap: 120ms; /* 누르기 */
+  --dur-ui: 240ms; /* 보통 전환, 페이지 전환, 기사 메시지 */
+  --dur-sheet: 320ms; /* 시트 올라오기 */
+  --dur-pop: 300ms; /* 마디 생기기·채우기 */
+  --dur-settle: 400ms; /* 지도 가라앉기 */
+  --dur-draw: 400ms; /* 길 한 토막 그리기 */
+  --dur-fly: 500ms; /* 타일 날아가기 (S3) */
+  --dur-hop: 400ms; /* 차가 마디 하나를 가는 최대 길이 */
+  --dur-roll: 600ms; /* 숫자 굴리기 */
+  --dur-sweep: 700ms; /* 다 풀림 빛 (S4) */
+  --dur-signal: 350ms; /* 교통 정보 불 하나 (번쩍임 초당 3번 미만) */
+  --dur-print: 700ms; /* 영수증 출력 (S6) */
+  --dur-stamp: 250ms; /* 도장 */
+  --dur-scene: 2800ms; /* 대표 장면 상한 (S5) */
   --dur-fade: 150ms; /* 바뀐 것을 알려 주는 투명도 전환. 동작 줄이기에서도 남긴다 (D30) */
 
-  /* 곡선: 들어오고 나갈 때 강한 ease-out, 화면 위 이동은 ease-in-out, 도장·도착은 살짝 튀는 스프링 */
+  /* 곡선: 들어오고 나갈 때 강한 ease-out, 화면 위 이동은 ease-in-out, 마디·도장은 살짝 튀는 스프링 */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -100,7 +145,52 @@
   --juice-l-shake: 4px;
   --juice-press-scale: 0.97; /* 버튼을 누를 때 살짝 들어감 */
   --juice-stamp-scale: 1.3; /* 도장이 내려찍히기 전 크기 */
-  --juice-tilt: 3deg; /* M1 차가 달릴 때 살짝 기울기 */
+}
+
+/* 밤 지도: 기기가 어두운 모드일 때 (사이트 안의 색 설정은 BACKLOG). 같은 '대비:' 쌍을 이 값으로도 검사한다 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0b1020;
+    --card: #141a2b;
+    --surface-2: #1a2136;
+    --hairline: #263048;
+    --sky: #1c2a48;
+    --gold-soft: #2a2414;
+    --ink: #eef1f7;
+    --on-ink: #0b1020;
+    --ink-soft: #aab3c5;
+    --ink-faint: #8a93a8;
+    --link: #7fa7ff;
+    --gold-ink: #f5c02e;
+    --navy-deep: #0e1530;
+    --gold: #f5c02e;
+    --you: #3fc1ae;
+    --blueprint: #7fa7ff;
+    --flow: #34d399;
+    --on-flow: #0b1020;
+    --slow: #fbbf24;
+    --on-slow: #0b1020;
+    --jam: #f87171;
+    --on-jam: #0b1020;
+    --caution: #e9a23b;
+    --caution-ink: #fbbf24;
+    --focus: #7fa7ff;
+    --map-land: #0e1424;
+    --map-block: #141c2f;
+    --map-road: #222c42;
+    --map-road-edge: #2c3852;
+    --map-water: #12223a;
+    --map-park: #10241d;
+    --map-ghost: #8994aa;
+    --node-fill: #e6eaf3;
+    --on-node: #0b1020;
+    --map-shadow: rgb(0 0 0 / 0.35);
+    --route-outer: var(--gold);
+    --elev-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 12px rgb(0 0 0 / 0.3);
+    --elev-2: 0 -1px 0 rgb(255 255 255 / 0.04), 0 -8px 24px rgb(0 0 0 / 0.4);
+    --elev-3: 0 12px 40px rgb(0 0 0 / 0.55);
+  }
 }
 
 /* linear()를 모르는 브라우저는 스프링 대신 ease-out */
@@ -113,18 +203,20 @@
 /* '동작 줄이기': 이동·확대·흔들림은 없애고, 바뀐 것을 알리는 짧은 페이드만 남긴다 (D30) */
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --dur-fast: 0ms;
-    --dur-base: 0ms;
-    --dur-slow: 0ms;
-    --dur-move: 0ms;
+    --dur-tap: 0ms;
+    --dur-ui: 0ms;
+    --dur-sheet: 0ms;
+    --dur-pop: 0ms;
+    --dur-settle: 0ms;
+    --dur-draw: 0ms;
     --dur-fly: 0ms;
-    --dur-door: 0ms;
-    --dur-drive: 0ms;
+    --dur-hop: 0ms;
+    --dur-roll: 0ms;
+    --dur-sweep: 0ms;
+    --dur-signal: 0ms;
     --dur-print: 0ms;
     --dur-stamp: 0ms;
-    --dur-signal: 0ms;
     --dur-scene: 0ms;
-    --dur-page: 0ms;
     --juice-s-scale: 1;
     --juice-m-scale: 1;
     --juice-l-scale: 1;
@@ -133,24 +225,25 @@
     --juice-l-shake: 0px;
     --juice-press-scale: 1;
     --juice-stamp-scale: 1;
-    --juice-tilt: 0deg;
   }
 }
 
 /* 화면에서 '동작 줄이기'를 직접 켰을 때 (html에 data-motion="reduce") */
 :root[data-motion='reduce'] {
-  --dur-fast: 0ms;
-  --dur-base: 0ms;
-  --dur-slow: 0ms;
-  --dur-move: 0ms;
+  --dur-tap: 0ms;
+  --dur-ui: 0ms;
+  --dur-sheet: 0ms;
+  --dur-pop: 0ms;
+  --dur-settle: 0ms;
+  --dur-draw: 0ms;
   --dur-fly: 0ms;
-  --dur-door: 0ms;
-  --dur-drive: 0ms;
+  --dur-hop: 0ms;
+  --dur-roll: 0ms;
+  --dur-sweep: 0ms;
+  --dur-signal: 0ms;
   --dur-print: 0ms;
   --dur-stamp: 0ms;
-  --dur-signal: 0ms;
   --dur-scene: 0ms;
-  --dur-page: 0ms;
   --juice-s-scale: 1;
   --juice-m-scale: 1;
   --juice-l-scale: 1;
@@ -159,5 +252,4 @@
   --juice-l-shake: 0px;
   --juice-press-scale: 1;
   --juice-stamp-scale: 1;
-  --juice-tilt: 0deg;
 }

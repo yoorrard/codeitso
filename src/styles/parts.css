@@ -44,13 +44,13 @@
 }
 
 .copy-btn[data-state='done'] {
-  border-color: var(--go);
-  color: var(--go);
+  border-color: var(--flow);
+  color: var(--flow);
 }
 
 .copy-fail {
   font-size: var(--text-sm);
-  color: var(--stop);
+  color: var(--jam);
 }
 
 /* 첫 수업 단계 */
@@ -138,7 +138,7 @@
   inline-size: 88px;
   block-size: 88px;
   border-radius: var(--radius-pill);
-  border: 4px double var(--taxi);
+  border: 4px double var(--gold);
   background: var(--card);
   transform: rotate(-8deg);
 }
@@ -157,9 +157,9 @@
   position: absolute;
   inset: -4px;
   border-radius: var(--radius-pill);
-  border: 3px solid var(--taxi);
+  border: 3px solid var(--gold);
   opacity: 0;
-  animation: ink-ring var(--dur-base) var(--ease-out) var(--dur-stamp) both;
+  animation: ink-ring var(--dur-ui) var(--ease-out) var(--dur-stamp) both;
 }
 
 @keyframes stamp-in {
@@ -185,7 +185,7 @@
 }
 
 .lesson-stamp.just-now {
-  animation: thump var(--dur-fast) var(--ease-out) var(--dur-stamp) both;
+  animation: thump var(--dur-tap) var(--ease-out) var(--dur-stamp) both;
 }
 
 @keyframes thump {
@@ -206,7 +206,7 @@
   padding: 0 var(--space-2);
   border-radius: var(--radius-pill);
   background: var(--navy);
-  color: var(--taxi);
+  color: var(--gold);
   font-family: var(--font-receipt);
   font-weight: var(--weight-strong);
 }
@@ -245,7 +245,7 @@
   justify-items: start;
   padding: var(--space-4);
   border-radius: var(--radius-lg);
-  border: 2px solid var(--taxi);
+  border: 2px solid var(--gold);
   background: var(--gold-soft);
 }
 
@@ -278,7 +278,7 @@
   /* 새 질문은 살짝 떠오르며 나타난다 (M5와 같은 결, 동작 줄이기면 페이드만) */
   transition:
     opacity var(--dur-fade) var(--ease-out),
-    translate var(--dur-base) var(--ease-out);
+    translate var(--dur-ui) var(--ease-out);
 }
 
 @starting-style {
@@ -365,8 +365,8 @@
   text-align: start;
   font-weight: var(--weight-strong);
   transition:
-    transform var(--dur-fast) var(--ease-out),
-    background-color var(--dur-fast) var(--ease-out);
+    transform var(--dur-tap) var(--ease-out),
+    background-color var(--dur-tap) var(--ease-out);
 }
 
 .option:active {
@@ -444,7 +444,7 @@
   padding: 8px;
   border-radius: var(--sw-radius, 8px);
   background: var(--sw-bg);
-  box-shadow: 0 0 0 1px var(--line);
+  box-shadow: 0 0 0 1px var(--hairline);
 }
 
 .sw-title {
@@ -502,7 +502,7 @@
 }
 
 .narrowing summary .icon-wrap {
-  transition: transform var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-tap) var(--ease-out);
 }
 
 .narrowing[open] summary .icon-wrap {
@@ -570,7 +570,7 @@
 
 /* M5: 바뀐 후보 카드가 뒤집히며 나타난다 (동작 줄이기면 페이드만) */
 .flip-in {
-  animation: flip-in var(--dur-base) var(--ease-out) both;
+  animation: flip-in var(--dur-ui) var(--ease-out) both;
 }
 
 @keyframes flip-in {
@@ -616,7 +616,7 @@
   gap: var(--space-1);
   min-inline-size: 72px;
   padding: var(--space-2);
-  border: 2px solid var(--line);
+  border: 2px solid var(--hairline);
   border-radius: var(--radius);
   background: var(--card);
   font-size: var(--text-sm);
@@ -634,7 +634,7 @@
 
 /* M3 끝: 상자가 닿은 칸이 한 번 통통 (0.9 → 1.03 → 1, 노선 핀과 같은 pin-hop) */
 .inventory li.bump .inv-icon {
-  animation: pin-hop var(--dur-base) var(--ease-spring);
+  animation: pin-hop var(--dur-ui) var(--ease-spring);
 }
 
 .inv-icon {
@@ -682,7 +682,8 @@
 }
 
 .badge-top {
-  background: var(--taxi);
+  background: var(--gold);
+  color: var(--on-gold);
   margin-block-end: var(--space-1);
 }
 
@@ -726,7 +727,7 @@
 
 .product-top {
   box-shadow:
-    0 0 0 3px var(--taxi),
+    0 0 0 3px var(--gold),
     var(--shadow);
 }
 
@@ -824,7 +825,7 @@
 }
 
 .stamp-banner.just-now {
-  animation: thump var(--dur-fast) var(--ease-out) var(--dur-stamp) both;
+  animation: thump var(--dur-tap) var(--ease-out) var(--dur-stamp) both;
 }
 
 .all-required {
@@ -877,13 +878,13 @@
   border-radius: var(--radius-lg);
   background: var(--card);
   box-shadow: var(--shadow);
-  border-inline-start: 6px solid var(--stop);
+  border-inline-start: 6px solid var(--jam);
   animation: nudge var(--dur-stamp) var(--ease-out) both;
 }
 
 .conflict.kept,
 .no-conflict {
-  border-inline-start-color: var(--go);
+  border-inline-start-color: var(--flow);
   animation: none;
 }
 
@@ -916,11 +917,11 @@
 .conflict-status {
   font-size: var(--text-sm);
   font-weight: var(--weight-heading);
-  color: var(--stop);
+  color: var(--jam);
 }
 
 .conflict.kept .conflict-status {
-  color: var(--go);
+  color: var(--flow);
 }
 
 .conflict-msg {
@@ -934,7 +935,7 @@
 }
 
 .kept-note {
-  color: var(--go);
+  color: var(--flow);
   font-weight: var(--weight-strong);
 }
 
@@ -957,7 +958,7 @@
 }
 
 .is-jam .lamp-red {
-  background: var(--stop);
+  background: var(--jam);
 }
 
 .is-slow .lamp-yellow {
@@ -969,7 +970,7 @@
 }
 
 .is-flow .lamp-green {
-  background: var(--go);
+  background: var(--flow);
   animation: lamp-green var(--dur-signal) linear var(--dur-signal) both;
 }
 
@@ -985,7 +986,7 @@
     background: var(--navy);
   }
   to {
-    background: var(--go);
+    background: var(--flow);
   }
 }
 
@@ -1018,8 +1019,8 @@
 }
 
 .btn-issue[aria-disabled='true'] {
-  border-color: var(--line);
-  background: var(--line);
+  border-color: var(--hairline);
+  background: var(--hairline);
   color: var(--ink-soft);
 }
 
@@ -1062,6 +1063,10 @@
   margin-block-end: var(--space-3);
   padding: var(--space-4) var(--space-4) var(--space-5);
   background: var(--receipt);
+  /* 영수증 종이는 밤 지도에서도 흰 감열지라서, 종이 안의 글자색을 종이 전용 값으로 바꿔 둔다 */
+  --ink: var(--receipt-ink);
+  --ink-soft: var(--receipt-soft);
+  --jam: var(--seal);
   color: var(--ink);
   box-shadow: var(--shadow);
   animation: print var(--dur-print) steps(14, end) both;
@@ -1147,9 +1152,9 @@
   inline-size: max-content;
   margin: var(--space-3) auto var(--space-2);
   padding: var(--space-1) var(--space-3);
-  border: 3px double var(--stop);
+  border: 3px double var(--jam);
   border-radius: var(--radius-sm);
-  color: var(--stop);
+  color: var(--jam);
   font-weight: var(--weight-strong);
   transform: rotate(-6deg);
   animation: stamp-in var(--dur-stamp) var(--ease-spring) var(--dur-print) both;
@@ -1176,7 +1181,7 @@
   display: flex;
   gap: var(--space-1);
   overflow-x: auto;
-  border-block-end: 2px solid var(--line);
+  border-block-end: 2px solid var(--hairline);
 }
 
 .tabs [role='tab'] {
@@ -1192,7 +1197,7 @@
 
 .tabs [role='tab'][aria-selected='true'] {
   color: var(--ink);
-  border-block-end-color: var(--taxi);
+  border-block-end-color: var(--gold);
 }
 
 .tab-panel {
@@ -1296,12 +1301,12 @@
 }
 
 .option.is-answer {
-  border-color: var(--go);
-  box-shadow: inset 0 0 0 2px var(--go);
+  border-color: var(--flow);
+  box-shadow: inset 0 0 0 2px var(--flow);
 }
 
 .option.is-wrong {
-  border-color: var(--stop);
+  border-color: var(--jam);
   background: var(--card);
 }
 
@@ -1322,8 +1327,8 @@
   block-size: 28px;
   margin-inline-start: var(--space-2);
   border-radius: var(--radius-pill);
-  border: 3px double var(--taxi);
-  color: var(--go);
+  border: 3px double var(--gold);
+  color: var(--flow);
   transform: rotate(-8deg);
 }
 
@@ -1417,21 +1422,21 @@
 
 .json-row[aria-pressed='true'] {
   background: var(--navy);
-  outline: 2px solid var(--taxi);
+  outline: 2px solid var(--gold);
 }
 
 .json-key {
-  color: var(--taxi);
+  color: var(--gold);
 }
 
 .devtools.leak {
   padding: var(--space-2);
   border-radius: var(--radius);
-  border: 2px solid var(--stop);
+  border: 2px solid var(--jam);
 }
 
 .leak-note {
-  color: var(--stop);
+  color: var(--jam);
   font-weight: var(--weight-strong);
 }
 
@@ -1456,7 +1461,7 @@
   background: var(--paper);
   text-align: center;
   font-size: var(--text-sm);
-  transition: background-color var(--dur-base) var(--ease-out);
+  transition: background-color var(--dur-ui) var(--ease-out);
 }
 
 .deploy-steps li.on {
@@ -1548,7 +1553,7 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   transition:
-    translate var(--dur-base) var(--ease-drawer),
+    translate var(--dur-ui) var(--ease-drawer),
     opacity var(--dur-fade) var(--ease-out);
 }
 
@@ -1625,7 +1630,7 @@
 .prose th,
 .prose td {
   padding: var(--space-2) var(--space-3);
-  border-block-end: 1px solid var(--line);
+  border-block-end: 1px solid var(--hairline);
   text-align: start;
   vertical-align: top;
 }

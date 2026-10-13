@@ -1,7 +1,7 @@
 /* 기본 틀 (T05, docs/CONCEPT.md 5.8): 머리줄(브랜드·단계 줄·설정), 무대, 아래 막대, 설정 창.
    섬(Preact)도 같은 클래스를 쓰므로 범위 없는 전역 스타일로 둔다. 값은 tokens.css 변수만 쓴다. */
 
-/* 문서 간 View Transitions: 머리말은 제자리, 무대만 바뀐다 (D25). 동작 줄이기면 --dur-page가 0 */
+/* 문서 간 View Transitions: 머리줄은 제자리, 무대만 바뀐다 (D25, CONCEPT S7). 동작 줄이기면 --dur-ui가 0 */
 @view-transition {
   navigation: auto;
 }
@@ -9,7 +9,7 @@
 ::view-transition-group(root),
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: var(--dur-page);
+  animation-duration: var(--dur-ui);
 }
 
 .masthead {
@@ -23,7 +23,7 @@
 
 ::view-transition-old(masthead),
 ::view-transition-new(masthead) {
-  animation-duration: var(--dur-page);
+  animation-duration: var(--dur-ui);
 }
 
 /* ── 머리말 ─────────────────────────────────────────────── */
@@ -32,8 +32,8 @@
   max-inline-size: var(--content-max);
   margin: 0 auto var(--space-2);
   padding-block-end: var(--space-1);
-  border-block-end: 1px dashed var(--taxi);
-  color: var(--taxi);
+  border-block-end: 1px dashed var(--gold);
+  color: var(--gold);
   font-size: var(--text-sm);
   text-align: center;
 }
@@ -73,7 +73,7 @@
 .brand-mark {
   inline-size: 28px;
   block-size: 28px;
-  border: 4px solid var(--taxi);
+  border: 4px solid var(--gold);
   border-inline-end-color: transparent;
   border-radius: var(--radius-pill);
 }
@@ -106,12 +106,12 @@
 }
 
 .step.current a {
-  background: var(--taxi);
-  color: var(--ink);
+  background: var(--gold);
+  color: var(--on-gold);
 }
 
 .step.done a .icon {
-  color: var(--taxi);
+  color: var(--gold);
 }
 
 .step.locked button {
@@ -121,7 +121,7 @@
 }
 
 .step.just-opened :is(a, button) {
-  animation: step-open var(--dur-base) var(--ease-spring);
+  animation: step-open var(--dur-ui) var(--ease-spring);
 }
 
 @keyframes step-open {
@@ -235,7 +235,7 @@
 }
 
 .menu-row.danger {
-  color: var(--stop);
+  color: var(--jam);
 }
 
 /* ── 대화 창 (<dialog>) ─────────────────────────────────── */
@@ -288,23 +288,24 @@
   color: var(--ink);
   font-weight: var(--weight-strong);
   text-decoration: none;
-  transition: transform var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-tap) var(--ease-out);
 }
 
 .btn:active {
   transform: scale(var(--juice-press-scale));
 }
 
+/* 주 버튼은 먹색 채움 (CONCEPT 5.3: 금색 큰 버튼은 쓰지 않는다). 밤 지도에서는 밝은 먹색 위 어두운 글자 */
 .btn-primary {
-  border-color: var(--taxi);
-  background: var(--taxi);
-  color: var(--ink);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-ink);
 }
 
 .btn-danger {
-  border-color: var(--stop);
-  background: var(--stop);
-  color: var(--on-stop);
+  border-color: var(--jam);
+  background: var(--jam);
+  color: var(--on-jam);
 }
 
 /* ── 무대 ───────────────────────────────────────────────── */
@@ -326,9 +327,15 @@
   inset-block-end: 0;
   z-index: 20;
   background: var(--paper);
-  box-shadow: 0 -1px 0 var(--line);
+  box-shadow: 0 -1px 0 var(--hairline);
   padding-block: var(--space-3) max(var(--space-3), env(safe-area-inset-bottom));
   padding-inline: var(--gutter);
+}
+
+/* 단계가 아닌 화면(홈·도구 모음·용어 카드·소개)은 아래 막대를 붙박이로 두지 않는다 (CONCEPT 5.8: 붙박이 아래 막대는 단계 화면만).
+   목록 화면의 거르기 단추를 붙박이 막대가 가리지 않게 (WCAG 2.5.8) */
+.action-bar.is-static {
+  position: static;
 }
 
 .action-inner {

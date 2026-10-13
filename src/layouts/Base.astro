@@ -71,7 +71,7 @@ const hasAction = Astro.slots.has('action');
     <main id="main" tabindex="-1" class="stage">
       <slot />
     </main>
-    <div class="action-bar" role="region" aria-label={ko.layout.actionBar}>
+    <div class:list={['action-bar', { 'is-static': stage === null }]} role="region" aria-label={ko.layout.actionBar}>
       <div class="action-inner">
         {hasAction && <slot name="action" />}
         <a class="dict-btn" href={ROUTES.dictionary}>

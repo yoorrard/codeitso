@@ -385,6 +385,11 @@
   block-size: 92%;
 }
 
+/* 64px 이하 타일에서는 청사진의 치수선이 0.5px 잡선으로 보여 뺀다 */
+.art-tile .bp-dim {
+  display: none;
+}
+
 .art-tile.tile-sm {
   inline-size: 36px;
   block-size: 36px;

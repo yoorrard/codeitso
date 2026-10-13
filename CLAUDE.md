@@ -49,6 +49,7 @@
 | `npm run words` | 쓰지 않는 말 (옛 비유·바꾼 말·영어 섞어 쓰기, CONCEPT 3.9절). 화면 문구와 자료 문장 |
 | `npm run qa:shots -- [라우트]` | 빌드 결과를 360·768·1280px와 동작 줄이기로 찍고 axe·가로 스크롤·작은 버튼·외부 요청 검사 → `.qa/` |
 | `npm run qa:budget` | 성능 예산 (첫 화면 JS, 페이지 그림, 지연 묶음) |
+| `npm run art` / `art:sheet` | 소유자 GLB·PNG(`assets-src/art/`)를 같은 조명으로 구워 `src/assets/art/`에 / 구운 그림 견본 `.qa/art-sheet.png`. `-- --self-test`로 장치 확인 |
 | `npm run e2e` | Playwright 주요 흐름(레시피 5개, 키보드만으로 인터뷰, 공유 링크), 검색, 모션 건너뛰기·동작 줄이기, axe. 먼저 `npm run build` |
 
 `npm run dev`, `npm run build`도 쓴다. Node 22.18 이상. `.ts` 스크립트를 빌드 없이 바로 실행한다. Playwright는 컨테이너의 Chromium과 맞춘 1.56.1로 고정한다.

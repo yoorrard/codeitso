@@ -106,6 +106,10 @@ function check(file: string): Finding[] {
       }
       if (/\.localeCompare\(/.test(line)) add(i, 'engine-cmp', '정렬은 cmp()를 쓴다 (localeCompare 금지)');
     }
+    // 8. three는 렌더 장치(scripts/assets/render-art.ts) 전용 devDependency다. 화면에서 실행 중 WebGL을 쓰지 않는다 (D26·D54, CONCEPT 5.6)
+    if (rel.startsWith('src/') && /(\bfrom\s*|\bimport\s*\(?\s*)['"]three(\/[^'"]*)?['"]/.test(line)) {
+      add(i, 'no-three', 'three는 화면에서 쓰지 않는다. 3D는 npm run art로 미리 구운 그림만 싣는다');
+    }
     // 7. 화면 코드 속 한국어 문장 (문구는 src/copy/ko.ts, 엔진 문장은 data/templates.json)
     if (isUi && (ext === '.tsx' || ext === '.astro' || ext === '.ts') && /[가-힣]/.test(line)) {
       add(i, 'copy-in-code', '화면 문구는 src/copy/ko.ts에 두고 가져다 쓴다');

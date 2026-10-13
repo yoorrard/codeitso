@@ -1702,3 +1702,32 @@
   min-block-size: var(--tap);
   min-inline-size: var(--tap);
 }
+
+/* ── 미리 구운 그림과 그 자리 표시 (Art.astro, CONCEPT 9절) ─────────────
+   그림 위에 그림자·외곽선·필터를 더하지 않는다. 크기는 놓이는 자리의 CSS가 정한다 */
+.art {
+  display: block;
+  max-inline-size: 100%;
+}
+
+.art img,
+img.art {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+/* 렌더가 오기 전: 남색 둥근 타일 위에 밝은 청사진 선 (L01~L06, P01) */
+.art-placeholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+.art-placeholder .glyph {
+  inline-size: 92%;
+  block-size: 92%;
+}

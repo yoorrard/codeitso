@@ -25,5 +25,12 @@
 |---|---|---|---|
 | Pretendard Variable 1.3.9 (가변 글꼴 동적 하위 집합 92조각, 고치지 않음) | orioncactus/pretendard (npm `pretendard`) | SIL OFL 1.1 | `public/fonts/pretendard/` + `OFL.txt` |
 | 영수증 글꼴 `CC Receipt` | naver/d2-coding-font VER1.4.0 (D2Coding)에서 글자를 골라 이름을 바꾼 수정본 (`scripts/fonts/build-fonts.ts`) | SIL OFL 1.1 | `public/fonts/receipt/` + `OFL.txt` |
-| UI 아이콘 (duotone, 등록한 것만) | phosphor-icons/core 2.1.1 (npm `@phosphor-icons/core`) | MIT | 빌드 때 HTML에 인라인 (`src/lib/icons.ts`), 라이선스는 `node_modules/@phosphor-icons/core/LICENSE`와 `/about/credits` |
+| UI 아이콘 (Regular, 등록한 것만) | phosphor-icons/core 2.1.1 (npm `@phosphor-icons/core`) | MIT | 빌드 때 HTML에 인라인 (`src/lib/icons.ts`), 라이선스는 `node_modules/@phosphor-icons/core/LICENSE`와 `/about/credits` |
 | 효과음 합성 | KilledByAPixel/ZzFX (쓸 경우) | MIT | npm 의존성 |
+
+## 개발 도구 (빌드 결과에 실리지 않음)
+
+| 도구 | 출처 | 라이선스 | 쓰임 |
+|---|---|---|---|
+| three 0.186.1 | mrdoob/three.js (npm `three`, devDependency) | MIT | 렌더 장치 `scripts/assets/render-art.ts`(`npm run art`)가 GLB를 같은 조명으로 구울 때만 쓴다. 화면에서 불러오면 품질 바닥선 검사가 막는다 (`no-three`) |
+| sharp | lovell/sharp (Astro 이미지 처리 의존성) | Apache-2.0 | 구운 그림 줄이기·투명 바탕 정리 |

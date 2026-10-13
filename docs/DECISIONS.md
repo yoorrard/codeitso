@@ -301,3 +301,9 @@ MCP 서버와 비공식 패키지는 이용자 컴퓨터에서 남의 코드를 
   - (7) 문구 26건: 버튼 이름과 접근성 이름 맞추기('바꾸기'), '그대로 가기 취소', 못 가는 곳에 여는 방법, '요금'은 이용료에만, '좁혀 보기', 다른 후보 이름에 따옴표, '목적지 말하기', '고를 것이 n개 생겼어요', 영문 id 순서, '추천 기준'·'미리 정해 둔 사례'.
 - 이유: ko-copy-editor·engine-guardian의 T24 검토. 지도(T28)가 막힌 곳을 열리지 않은 칸에 달 수 없고, 진행 줄이 시킨 대로 한 사람을 탓하면 안 된다.
 - 틀렸을 때 비용: 낮음. 자료 두 줄, 엔진 몇 줄과 시험. 골든은 id 비교라 그대로다. 예시(docs/examples)는 다시 만들었다.
+
+## D59 렌더 장치: three는 개발용으로만, GLB 정리 도구는 더하지 않음 (2026-10-13, 자동 결정)
+- 결정: `three@0.186.1`(2026-09-24 판, 정확히 고정)을 devDependency로 더하고 `scripts/assets/render-art.ts`(`npm run art`, `art:sheet`, `--self-test`)가 Playwright Chromium(SwiftShader)에서 GLB를 굽는다. 카메라·빛·톤은 `scripts/assets/art-manifest.ts` 한 곳(직교, 3/4는 방위 45°·고도 35°, 위에서 본 차는 앞이 오른쪽, 열쇠 빛 화면 왼쪽 위, ACES·노출 1.0, RoomEnvironment, 접지 그림자 0.18). 2배로 그려 sharp로 줄인다. GLB가 없고 참고 PNG만 있으면 가장자리에서 이어진 흰 바탕을 지우고 잘라 틀에 맞춘다. 화면은 `Art.astro`가 구운 PNG를 AVIF·WebP로 싣고, 없으면 청사진 자리 표시를 낸다. CONCEPT 9(b)의 `@gltf-transform`은 더하지 않았다: 가운데 맞춤·바닥 맞춤·틀 맞춤을 렌더 장치 안에서 상자 계산으로 해서 필요가 없다. GLB 크기(2MB 이하)는 받을 때 확인한다.
+- 크기: 화면에 실리는 JS 0KB (devDependency, `no-three` 검사). node_modules 23MB.
+- 이유: 그림마다 빛이 달라 싸 보이는 일을 막는 핵심이 '한 벌의 조명 장치'다 (CONCEPT 5.6). 컨테이너에서 실제로 구워지는 것을 `--self-test`(절차로 만든 차 → GLB → 투명 PNG, 모서리 투명·가운데 물체 확인)로 늘 확인할 수 있다.
+- 틀렸을 때 비용: 낮음. 스크립트 두 파일과 devDependency 하나. 실제 GLB의 앞 방향이 다르면 art-manifest에 돌림 값을 더한다.

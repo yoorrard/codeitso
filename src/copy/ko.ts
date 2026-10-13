@@ -253,6 +253,8 @@ export const ko = {
     statusOpen: '막힘',
     statusOk: '원활',
     statusKept: '서행',
+    wholeRoute: '길 전체',
+    fixLabel: '고치는 법:',
     keptNote: "'알아볼 것'에 적어 뒀어요. 도착하면 무엇을 알아볼지 알려 드려요.",
     undoKeep: '그대로 가기 취소',
     keptAnnounce: "그대로 가요. '알아볼 것'에 적어 뒀어요.",

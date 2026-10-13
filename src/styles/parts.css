@@ -65,9 +65,9 @@
   display: grid;
   gap: var(--space-3);
   padding: var(--space-4);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
   background: var(--card);
-  box-shadow: var(--shadow);
 }
 
 .step-title {
@@ -220,14 +220,15 @@
   padding: 0;
 }
 
+/* 시트 안 카드는 그림자 없이 가는 선과 바탕색으로 나눈다 (CONCEPT 5.5) */
 .card {
   display: grid;
   align-content: start;
   gap: var(--space-2);
   padding: var(--space-4);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
   background: var(--card);
-  box-shadow: var(--shadow);
 }
 
 .card h3 {
@@ -272,9 +273,9 @@
   display: grid;
   gap: var(--space-3);
   padding: var(--space-4);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
   background: var(--card);
-  box-shadow: var(--shadow);
   /* 새 질문은 살짝 떠오르며 나타난다 (M5와 같은 결, 동작 줄이기면 페이드만) */
   transition:
     opacity var(--dur-fade) var(--ease-out),
@@ -1003,57 +1004,39 @@
 }
 
 .conflict {
-  display: flex;
-  gap: var(--space-3);
-  align-items: flex-start;
   padding: var(--space-4);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
   background: var(--card);
-  box-shadow: var(--shadow);
-  border-inline-start: 6px solid var(--jam);
-  animation: nudge var(--dur-stamp) var(--ease-out) both;
 }
 
-.conflict.kept,
-.no-conflict {
-  border-inline-start-color: var(--flow);
-  animation: none;
+.conflict.kept {
+  background: var(--surface-2);
 }
 
 .no-conflict {
+  display: flex;
   align-items: center;
+  gap: var(--space-3);
   margin-block-start: var(--space-2);
-}
-
-/* 충돌이 처음 보일 때 한 번 살짝 흔들림 (동작 줄이기면 흔들림 0) */
-@keyframes nudge {
-  0%,
-  100% {
-    transform: none;
-  }
-  30% {
-    transform: translateX(var(--juice-s-shake));
-  }
-  60% {
-    transform: translateX(calc(-1 * var(--juice-s-shake)));
-  }
+  font-weight: var(--weight-strong);
 }
 
 .conflict-body {
   display: grid;
   gap: var(--space-2);
-  flex: 1;
   min-inline-size: 0;
 }
 
-.conflict-status {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-heading);
-  color: var(--jam);
+.conflict-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-.conflict.kept .conflict-status {
-  color: var(--flow);
+.conflict-where {
+  font-weight: var(--weight-heading);
 }
 
 .conflict-msg {
@@ -1067,59 +1050,57 @@
 }
 
 .kept-note {
-  color: var(--flow);
-  font-weight: var(--weight-strong);
+  color: var(--ink-soft);
 }
 
-/* 교통 정보 (CONCEPT 5.3·S4): 막힘 빨강 · 서행 노랑 · 원활 초록(노랑을 거쳐). 불 하나가 --dur-signal 이상 켜진다.
-   S4의 길 위 색 덮기는 T28 지도에서 한다 */
-.light {
-  display: grid;
-  gap: 4px;
-  padding: 6px;
+/* 교통 정보 알약 (CONCEPT 5.3·6.5): 색 + 그림 + 글. 지도 위 길 색은 T28 지도가 같은 색으로 칠한다 */
+.traffic {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: 28px;
+  padding: 0 var(--space-3) 0 var(--space-2);
   border-radius: var(--radius-pill);
-  background: var(--navy-deep);
-  flex-shrink: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-heading);
 }
 
-.lamp {
-  inline-size: 16px;
-  block-size: 16px;
-  border-radius: var(--radius-pill);
-  background: var(--navy);
-}
-
-.is-jam .lamp-red {
+.traffic.is-jam {
   background: var(--jam);
+  color: var(--on-jam);
 }
 
-.is-slow .lamp-yellow {
-  background: var(--caution);
+.traffic.is-slow {
+  background: var(--slow);
+  color: var(--on-slow);
 }
 
-.is-flow .lamp-yellow {
-  animation: lamp-yellow var(--dur-signal) linear both;
-}
-
-.is-flow .lamp-green {
+.traffic.is-flow {
   background: var(--flow);
-  animation: lamp-green var(--dur-signal) linear var(--dur-signal) both;
+  color: var(--on-flow);
 }
 
-@keyframes lamp-yellow {
-  from,
-  to {
-    background: var(--caution);
-  }
+/* '이렇게 이해했어요'는 접어 둔다 (CONCEPT 6.5) */
+.understood summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  cursor: pointer;
+  list-style: none;
 }
 
-@keyframes lamp-green {
-  from {
-    background: var(--navy);
-  }
-  to {
-    background: var(--flow);
-  }
+.understood summary::-webkit-details-marker {
+  display: none;
+}
+
+.understood summary h2 {
+  margin: 0;
+}
+
+.understood[open] summary .icon {
+  transform: rotate(180deg);
 }
 
 .split-list {

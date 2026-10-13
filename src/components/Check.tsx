@@ -15,6 +15,7 @@ import { sfx } from '../lib/sfx.ts';
 import { ROUTES, waypointPath } from '../lib/routes.ts';
 import { gate } from '../lib/stages.ts';
 import { DispatchNote } from './DispatchNote.tsx';
+import { Icon } from './Icon.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const T = catalog.data.templates;
@@ -22,14 +23,15 @@ const T = catalog.data.templates;
 const productName = (id: string): string => catalog.product.get(id)?.name ?? id;
 const slotLabel = (id: string): string => catalog.data.rules.rules.flatMap((r) => (r.type === 'slot' && r.slot.id === id ? [r.slot.label] : []))[0] ?? id;
 
-/** 교통 정보 표시: 막힘 빨강, 서행(알고 그대로 감) 노랑, 원활 초록. 색만으로 뜻을 전하지 않게 늘 글이 함께 붙는다 (CONCEPT 5.3) */
+/** 교통 정보 알약: 막힘 빨강 + 경고, 서행(알고 그대로 감) 노랑 + 물음표, 원활 초록 + ✓. 색만으로 뜻을 전하지 않게 그림과 글이 늘 함께 (CONCEPT 5.3) */
 type Traffic = 'jam' | 'slow' | 'flow';
-function Light({ state }: { state: Traffic }) {
+const TRAFFIC_ICON = { jam: 'warning', slow: 'help', flow: 'check' } as const;
+function TrafficPill({ state }: { state: Traffic }) {
+  const label = state === 'jam' ? ko.check.statusOpen : state === 'slow' ? ko.check.statusKept : ko.check.statusOk;
   return (
-    <span class={`light is-${state}`} aria-hidden="true">
-      <span class="lamp lamp-red" />
-      <span class="lamp lamp-yellow" />
-      <span class="lamp lamp-green" />
+    <span class={`traffic is-${state}`}>
+      <Icon name={TRAFFIC_ICON[state]} size="16px" />
+      {label}
     </span>
   );
 }
@@ -52,11 +54,17 @@ function ConflictItem({ c }: { c: Conflict }) {
   const toShop = waypointPath(c.slotId);
   return (
     <li class={`conflict${c.kept ? ' kept' : ''}`}>
-      <Light state={c.kept ? 'slow' : 'jam'} />
       <div class="conflict-body">
-        <p class="conflict-status">{c.kept ? ko.check.statusKept : ko.check.statusOpen}</p>
+        <p class="conflict-head">
+          <TrafficPill state={c.kept ? 'slow' : 'jam'} />
+          <span class="conflict-where">{c.anchorSlot ? slotLabel(c.anchorSlot) : ko.check.wholeRoute}</span>
+        </p>
         <p class="conflict-msg">{c.message}</p>
-        <p class="q-help">{c.fixHint}</p>
+        {!c.kept && (
+          <p class="q-help">
+            <strong>{ko.check.fixLabel}</strong> {c.fixHint}
+          </p>
+        )}
         {c.kept ? (
           <>
             <p class="kept-note">{ko.check.keptNote}</p>
@@ -141,8 +149,11 @@ export default function Check() {
       <h1>{ko.check.pageTitle}</h1>
       <DispatchNote text={ko.dispatch.check} />
 
-      <section class="card" aria-labelledby="understood">
-        <h2 id="understood">{ko.check.understood}</h2>
+      <details class="card understood">
+        <summary>
+          <h2 id="understood">{ko.check.understood}</h2>
+          <Icon name="expand" />
+        </summary>
         <ul class="chips">
           {chips.map((c) => (
             <li class="chip">
@@ -162,7 +173,7 @@ export default function Check() {
         </ul>
         {r.orphans.length > 0 && <p class="q-help">{fill(ko.check.orphans, { names: r.orphans.map(productName).join(', ') })}</p>}
         <p class="q-help">{fill(ko.check.size, { level: difficultyWord(catalog, r.split.difficultyFirst), time: formatMinutes(r.minutes, T.receipt.timeFormat) })}</p>
-      </section>
+      </details>
 
       {alternative && (
         <section class="card" aria-labelledby="alternative">
@@ -175,7 +186,7 @@ export default function Check() {
         <h2 id="lights">{ko.check.lightsTitle}</h2>
         {r.conflicts.length === 0 ? (
           <p class="conflict no-conflict">
-            <Light state="flow" />
+            <TrafficPill state="flow" />
             <span>{ko.check.noConflicts}</span>
           </p>
         ) : (

@@ -4,7 +4,7 @@
 import { persistentAtom, setPersistentEngine } from '@nanostores/persistent';
 import { atom } from 'nanostores';
 import type { Session } from './engine/types.ts';
-import type { Meta, Prefs, Seen, StudyRecord } from './saved.ts';
+import type { Meta, Prefs, ReceiptEntry, Seen, StudyRecord } from './saved.ts';
 import {
   DEFAULT_PREFS,
   EMPTY_META,
@@ -13,13 +13,16 @@ import {
   KEYS,
   LEGACY_KEYS,
   SENT_MAX,
+  addReceiptEntry,
   isDefaultPrefs,
   isEmptyMeta,
   isEmptySession,
   isEmptyStudy,
+  isEmptyReceipts,
   isEmptySeen,
   readMeta,
   readPrefs,
+  readReceipts,
   readSession,
   readStudy,
   readSeen,
@@ -64,6 +67,18 @@ export const $study = persistentAtom<StudyRecord>(KEYS.study, {}, codec(readStud
 export const $meta = persistentAtom<Meta>(KEYS.meta, EMPTY_META, codec(readMeta, isEmptyMeta));
 export const $prefs = persistentAtom<Prefs>(KEYS.prefs, DEFAULT_PREFS, codec(readPrefs, isDefaultPrefs));
 export const $seen = persistentAtom<Seen>(KEYS.seen, EMPTY_SEEN, codec(readSeen, isEmptySeen));
+export const $receipts = persistentAtom<ReceiptEntry[]>(KEYS.receipts, [], codec(readReceipts, isEmptyReceipts));
+
+/** 받은 영수증을 지난 영수증에 더한다. 30장을 넘어 가장 오래된 것을 뺐으면 true */
+export function rememberReceipt(entry: ReceiptEntry): boolean {
+  const { list, dropped } = addReceiptEntry($receipts.get(), entry);
+  $receipts.set(list);
+  return dropped;
+}
+
+export function forgetReceipt(r: string): void {
+  $receipts.set($receipts.get().filter((x) => x.r !== r));
+}
 
 export function setPrefs(patch: Partial<Prefs>): void {
   $prefs.set(readPrefs({ ...$prefs.get(), ...patch }));
@@ -100,7 +115,7 @@ export function markSceneSeen(id: string): void {
 }
 
 /**
- * '저장한 기록 지우기': 진행 기록 네 키(답·읽은 용어·메타·본 장면)를 지운다 (처음 값으로 돌리면 codec이 키를 지운다).
+ * '저장한 기록 지우기': 진행 기록 다섯 키(답·읽은 용어·메타·본 장면·지난 영수증)를 지운다 (처음 값으로 돌리면 codec이 키를 지운다).
  * 설정(동작 줄이기·효과음)은 기록이 아니라서 남긴다: 멀미 때문에 켠 동작 줄이기가 지우기로 풀리면 안 된다.
  */
 export function clearAll(): void {
@@ -108,4 +123,5 @@ export function clearAll(): void {
   $study.set({});
   $meta.set(EMPTY_META);
   $seen.set(EMPTY_SEEN);
+  $receipts.set([]);
 }

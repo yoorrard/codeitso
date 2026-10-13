@@ -1,0 +1,12 @@
+---
+// 지난 영수증 /receipts (docs/CONCEPT.md 6.11, T32): 이 브라우저에서 받은 영수증을 최근 것부터 30장까지.
+import Base from '../layouts/Base.astro';
+import ReceiptsList from '../components/ReceiptsList.tsx';
+import { ko } from '../copy/ko.ts';
+---
+
+<Base title={ko.receipts.pageTitle} description={ko.receipts.description}>
+  <h1>{ko.receipts.title}</h1>
+  <p class="lead">{ko.receipts.lead}</p>
+  <ReceiptsList client:load />
+</Base>

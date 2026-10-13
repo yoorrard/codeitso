@@ -5,7 +5,8 @@ import { fromShareState, toShareState } from './engine/index.ts';
 import type { Session } from './engine/types.ts';
 import { ROUTES } from './routes.ts';
 
-const PREFIX = '#r=';
+export const SHARE_PREFIX = '#r=';
+const PREFIX = SHARE_PREFIX;
 /** 이보다 긴 해시는 열어 보지 않는다 (정상 링크는 수백 자) */
 const HASH_MAX = 8000;
 

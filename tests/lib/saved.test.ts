@@ -3,7 +3,9 @@ import { describe, expect, it } from 'vitest';
 import {
   DEFAULT_PREFS,
   FREE_TEXT_MAX,
+  RECEIPTS_MAX,
   SENT_MAX,
+  addReceiptEntry,
   isDefaultPrefs,
   isEmptyMeta,
   isEmptySession,
@@ -11,6 +13,7 @@ import {
   isEmptySeen,
   readMeta,
   readPrefs,
+  readReceipts,
   readSession,
   readStudy,
   readSeen,
@@ -93,5 +96,36 @@ describe('처음 값 판단 (처음 값이면 저장 키를 지운다)', () => {
     expect(isDefaultPrefs({ motion: 'reduce', sound: false })).toBe(false);
     expect(isEmptySeen({ scenes: [] })).toBe(true);
     expect(isEmptySeen({ scenes: ['s5'] })).toBe(false);
+  });
+});
+
+describe('지난 영수증 (CONCEPT 6.11·8절)', () => {
+  const e = (r: string, type?: string) => ({ r, at: '2026-10-13 09:00', ...(type ? { type } : {}) });
+
+  it('모양이 맞는 장만 읽고, 같은 조각은 하나만', () => {
+    expect(
+      readReceipts([e('abc', 'record'), e('abc'), { r: 'x y', at: 't' }, { r: 'ok' }, { r: 'good', at: 't', type: 'Not Valid!' }, 'junk', null]),
+    ).toEqual([e('abc', 'record'), { r: 'good', at: 't' }]);
+    expect(readReceipts('nope')).toEqual([]);
+  });
+
+  it(`${RECEIPTS_MAX}장까지만 읽는다`, () => {
+    expect(readReceipts(Array.from({ length: RECEIPTS_MAX + 5 }, (_, i) => e(`r${i}`))).length).toBe(RECEIPTS_MAX);
+  });
+
+  it('새 장은 맨 앞에, 같은 조각은 앞으로 옮기기만', () => {
+    const { list, dropped } = addReceiptEntry([e('a'), e('b')], e('b', 'quiz'));
+    expect(list.map((x) => x.r)).toEqual(['b', 'a']);
+    expect(list[0]?.type).toBe('quiz');
+    expect(dropped).toBe(false);
+  });
+
+  it(`${RECEIPTS_MAX}장을 넘으면 가장 오래된 장을 빼고 알린다`, () => {
+    const full = Array.from({ length: RECEIPTS_MAX }, (_, i) => e(`r${i}`));
+    const { list, dropped } = addReceiptEntry(full, e('new'));
+    expect(list.length).toBe(RECEIPTS_MAX);
+    expect(list[0]?.r).toBe('new');
+    expect(list.some((x) => x.r === `r${RECEIPTS_MAX - 1}`)).toBe(false);
+    expect(dropped).toBe(true);
   });
 });

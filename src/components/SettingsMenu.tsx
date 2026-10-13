@@ -3,6 +3,7 @@
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
+import { ROUTES } from '../lib/routes.ts';
 import { announce } from '../lib/announce.ts';
 import { applyMotionPref } from '../lib/motion.ts';
 import { $prefs, clearAll, setPrefs } from '../lib/store.ts';
@@ -57,6 +58,10 @@ export default function SettingsMenu({ onCleared }: Props) {
           <span>{ko.settings.sound}</span>
           <span class="switch" aria-hidden="true">{prefs.sound ? ko.settings.on : ko.settings.off}</span>
         </button>
+        <a class="menu-row" href={ROUTES.receipts}>
+          <Icon name="share" />
+          <span>{ko.settings.receipts}</span>
+        </a>
         <button type="button" class="menu-row danger" onClick={() => openDialog(clearDialog.current)}>
           <Icon name="warning" />
           <span>{ko.settings.clear}</span>

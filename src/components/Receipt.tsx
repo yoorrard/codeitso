@@ -16,10 +16,10 @@ import { stateKey, track } from '../lib/track.ts';
 import { reduced, skipAll, skippable } from '../lib/motion.ts';
 import { $result, commitSession } from '../lib/result.ts';
 import { sfx } from '../lib/sfx.ts';
-import { consumeShareHash, shareUrl } from '../lib/share.ts';
+import { SHARE_PREFIX, consumeShareHash, shareHash, shareUrl } from '../lib/share.ts';
 import { ROUTES, termPath } from '../lib/routes.ts';
 import { hasProgress, sameSession } from '../lib/stages.ts';
-import { $meta, $seen, $session, markSceneSeen, patchMeta } from '../lib/store.ts';
+import { $meta, $seen, $session, markSceneSeen, patchMeta, rememberReceipt } from '../lib/store.ts';
 import CopyButton from './CopyButton.tsx';
 import { ArtTile } from './Glyph.tsx';
 import { Icon } from './Icon.tsx';
@@ -180,6 +180,10 @@ export default function Receipt() {
   useEffect(() => {
     if (mode.kind !== 'own' || !meta.issued || !r.canIssue) return;
     track('receipt_issued', elapsedBucket(meta.interviewStartedAt, Date.now()), stateId);
+    // 지난 영수증에 한 장 (같은 상태면 앞으로 옮기기만). 넘쳐서 가장 오래된 것을 뺐으면 알린다
+    const type = r.session.answers['q.type'];
+    const entry = { r: shareHash(r.session).slice(SHARE_PREFIX.length), at: issuedNow(), ...(type ? { type } : {}) };
+    if (rememberReceipt(entry)) announce(ko.receipts.dropped);
   }, [mode.kind, meta.issued, r.canIssue, stateId]);
 
   if (mode.kind === 'loading') {

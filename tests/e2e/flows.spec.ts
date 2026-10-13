@@ -24,6 +24,31 @@ for (const recipe of recipes) {
   });
 }
 
+test('받은 영수증은 지난 영수증에 쌓이고, 줄을 누르면 다시 열리며, 지울 수 있다', async ({ page }) => {
+  const recipe = recipes[0];
+  if (!recipe) throw new Error('코스가 없다');
+  await page.goto('/courses');
+  await (await hydrated(page.getByRole('button', { name: fill(ko.home.recipeGoLabel, { title: recipe.title }) }))).click();
+  await page.waitForURL(/\/check$/);
+  await islandsReady(page);
+  await page.locator('.action-bar .btn-issue').click();
+  await page.waitForURL(/\/arrival$/);
+  await islandsReady(page);
+  await expect(page.locator('.paper')).toBeVisible();
+  await page.goto('/receipts');
+  await islandsReady(page);
+  const rows = page.locator('.receipts-row');
+  await expect(rows).toHaveCount(1);
+  await rows.first().locator('.receipts-open').click();
+  await page.waitForURL(/\/arrival/);
+  await islandsReady(page);
+  await expect(page.locator('.paper')).toBeVisible();
+  await page.goto('/receipts');
+  await islandsReady(page);
+  await page.locator('.receipts-row button').first().click();
+  await expect(page.locator('.receipts-empty')).toBeVisible();
+});
+
 test('목적지를 처음부터 끝까지 키보드만으로 정하고 경유지·점검·도착까지 간다 (case-01)', async ({ page }) => {
   const kase = golden('case-01');
   await page.goto('/destination');

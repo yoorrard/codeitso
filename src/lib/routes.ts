@@ -11,6 +11,7 @@ export const ROUTES = {
   tools: '/tools',
   terms: '/terms',
   courses: '/courses',
+  receipts: '/receipts',
   dictionary: '/dictionary',
   about: '/about',
   criteria: '/about/criteria',

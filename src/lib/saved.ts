@@ -8,6 +8,7 @@ export const KEYS = {
   meta: 'cc:meta:v1',
   prefs: 'cc:prefs:v1',
   seen: 'cc:seen:v1',
+  receipts: 'cc:receipts:v1',
 } as const;
 
 /** 더는 쓰지 않는 옛 키. 옮길 값이 없어 읽지 않고, 남아 있으면 지운다 (cc:trip:v1 = 옛 도장 장면 기록, D56) */
@@ -36,7 +37,17 @@ export interface Seen {
   scenes: string[];
 }
 
+/** 지난 영수증 한 장 (CONCEPT 8절): 영수증 링크 조각(#r= 뒤), 앱 종류(q.type 답), 받은 때만 둔다. 한 줄 입력은 넣지 않는다 */
+export interface ReceiptEntry {
+  r: string;
+  type?: string;
+  at: string;
+}
+
 export const SENT_MAX = 20;
+export const RECEIPTS_MAX = 30;
+/** 영수증 링크 조각의 최대 길이 (share.ts HASH_MAX와 같다) */
+const RECEIPT_HASH_MAX = 8000;
 export const FREE_TEXT_MAX = 200;
 const LIST_MAX = 200;
 
@@ -92,6 +103,32 @@ export function readPrefs(raw: unknown): Prefs {
   return { motion: o['motion'] === 'reduce' ? 'reduce' : 'auto', sound: o['sound'] === true };
 }
 
+/** 지난 영수증: 모양이 맞는 것만, 같은 조각은 하나만, 최근 것부터 RECEIPTS_MAX장까지 */
+export function readReceipts(raw: unknown): ReceiptEntry[] {
+  if (!Array.isArray(raw)) return [];
+  const out: ReceiptEntry[] = [];
+  const seen = new Set<string>();
+  for (const item of raw) {
+    const o = obj(item);
+    const r = o['r'];
+    const at = o['at'];
+    if (typeof r !== 'string' || r.length === 0 || r.length > RECEIPT_HASH_MAX || !/^[A-Za-z0-9+\-$_]+$/.test(r) || seen.has(r)) continue;
+    if (typeof at !== 'string' || at.length === 0 || at.length > 32) continue;
+    const type = o['type'];
+    seen.add(r);
+    out.push(typeof type === 'string' && /^[a-z0-9-]{1,40}$/.test(type) ? { r, type, at } : { r, at });
+    if (out.length === RECEIPTS_MAX) break;
+  }
+  return out;
+}
+
+/** 새 영수증을 맨 앞에 더한다. 같은 조각이 있으면 앞으로 옮기고, 넘치면 가장 오래된 것을 뺀다 (dropped: 뺐는지) */
+export function addReceiptEntry(list: ReceiptEntry[], entry: ReceiptEntry): { list: ReceiptEntry[]; dropped: boolean } {
+  const rest = list.filter((x) => x.r !== entry.r);
+  const next = [entry, ...rest];
+  return { list: next.slice(0, RECEIPTS_MAX), dropped: next.length > RECEIPTS_MAX };
+}
+
 export function readSeen(raw: unknown): Seen {
   return { scenes: strings(obj(raw)['scenes']) };
 }
@@ -108,6 +145,9 @@ export function isEmptyMeta(m: Meta): boolean {
 }
 export function isDefaultPrefs(p: Prefs): boolean {
   return p.motion === DEFAULT_PREFS.motion && p.sound === DEFAULT_PREFS.sound;
+}
+export function isEmptyReceipts(l: ReceiptEntry[]): boolean {
+  return l.length === 0;
 }
 export function isEmptySeen(t: Seen): boolean {
   return t.scenes.length === 0;

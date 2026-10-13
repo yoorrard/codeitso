@@ -1855,3 +1855,66 @@ img.art {
   inline-size: 92%;
   block-size: 92%;
 }
+
+/* ── 지난 영수증 (CONCEPT 6.11) ─────────────────────────── */
+.receipts-count {
+  margin-block: var(--space-3) var(--space-2);
+  color: var(--ink-soft);
+}
+
+.receipts-list {
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.receipts-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+}
+
+.receipts-row + .receipts-row {
+  border-block-start: 1px solid var(--hairline);
+}
+
+.receipts-open {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-3);
+  min-inline-size: 0;
+  min-block-size: 56px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.receipts-text {
+  display: grid;
+}
+
+.receipts-name {
+  font-size: var(--text-md);
+  font-weight: var(--weight-strong);
+}
+
+.receipts-at {
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.receipts-empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+  text-align: center;
+}
+
+.receipts-empty .receipts-empty-art {
+  inline-size: 120px;
+}

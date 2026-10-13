@@ -1,0 +1,20 @@
+---
+// 소유자 로고를 손으로 다시 그린 벡터(D65, brief 3.1·3.5)를 인라인 SVG로 싣는다. 섬 안에서는 Logo.tsx.
+// 경로에는 클래스만 있고 색은 frame.css의 .logo-* 규칙이 --logo-* 토큰으로 칠한다 (밤 모드도 토큰을 따른다).
+// label이 없으면 장식(aria-hidden)이다. 머리줄은 링크 안의 숨은 글 '코드쇼퍼'가 이름을 전한다.
+import { LOGO } from '../lib/logo-paths.ts';
+import type { LogoVariant } from '../lib/logo-paths.ts';
+import { logoA11y, logoWidth } from '../lib/logo.ts';
+
+interface Props {
+  variant: LogoVariant;
+  /** 그릴 높이(CSS px). 폭은 viewBox 비율로 정한다 */
+  height: number;
+  label?: string;
+  class?: string;
+}
+const { variant, height, label, class: cls } = Astro.props;
+const art = LOGO[variant];
+---
+
+<svg class:list={['logo', `logo--${variant}`, cls]} viewBox={art.viewBox} width={logoWidth(art, height)} height={height} {...logoA11y(label)} set:html={art.markup} />

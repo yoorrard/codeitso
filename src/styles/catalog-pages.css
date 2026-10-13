@@ -123,36 +123,78 @@
   block-size: 24px;
 }
 
-/* 선반 판: 카드 줄 아래 굵은 선 */
-.shelf-list {
-  padding-block-end: var(--space-3);
-  border-block-end: 6px solid var(--hairline);
+/* 줄 목록 (CONCEPT 6.7): 가는 선으로 나눈 줄. 카드 격자를 쓰지 않는다 */
+.tool-list {
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--card);
 }
 
-.shelf-card {
+.tool-row {
   position: relative;
-}
-
-.shelf-card-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
 }
 
-.shelf-card-head h3 {
+.tool-row + .tool-row {
+  border-block-start: 1px solid var(--hairline);
+}
+
+.tool-row-main {
+  display: grid;
+  flex: 1;
+  gap: var(--space-1);
   min-inline-size: 0;
 }
 
-/* 진열대 카드의 사실 목록은 항목이 짧아 좁은 화면에서도 두 칸으로 둔다 (카드를 낮게) */
-.shelf-card .product-facts {
-  grid-template-columns: max-content 1fr;
+.tool-row-name {
+  font-size: var(--text-md);
+  font-weight: var(--weight-strong);
 }
 
-.shelf-card .product-facts dd + dt {
-  margin-block-start: 0;
+.tool-row-summary {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
 }
 
-/* 이름 링크가 카드 전체를 덮어 어디를 눌러도 상세로 간다 (카드 안에 다른 누르는 곳이 없다) */
+.tool-row-side {
+  display: grid;
+  justify-items: end;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  text-align: end;
+}
+
+.tool-cost {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+  color: var(--flow);
+}
+
+.tool-cost.is-paid {
+  color: var(--slow);
+}
+
+/* 360px에서는 오른쪽 칸을 설명 아래로 (이름이 좁아지지 않게) */
+@media (max-width: 30rem) {
+  .tool-row {
+    flex-wrap: wrap;
+  }
+
+  .tool-row-side {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--space-3);
+    padding-inline-start: calc(48px + var(--space-3));
+  }
+}
+
+/* 이름 링크가 줄 전체를 덮어 어디를 눌러도 상세로 간다 (줄 안에 다른 누르는 곳이 없다) */
 .shelf-card-link {
   color: var(--ink);
   text-decoration: none;
@@ -162,24 +204,32 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
 }
 
-.shelf-card:hover .shelf-card-link {
+.tool-row:hover .shelf-card-link {
   color: var(--link);
   text-decoration: underline;
 }
 
-/* 초점 테두리는 카드 둘레에 (:has를 모르는 브라우저는 링크 글자 둘레에 그대로) */
+/* 초점 테두리는 줄 둘레에 (:has를 모르는 브라우저는 링크 글자 둘레에 그대로) */
 @supports selector(:has(*)) {
   .shelf-card-link:focus-visible {
     outline: none;
   }
 
-  .shelf-card:has(.shelf-card-link:focus-visible) {
+  .tool-row:has(.shelf-card-link:focus-visible) {
     outline: 3px solid var(--focus);
-    outline-offset: 2px;
+    outline-offset: -3px;
+    border-radius: var(--radius);
   }
+}
+
+.tool-row-more summary {
+  min-block-size: var(--tap);
+  display: flex;
+  align-items: center;
+  font-weight: var(--weight-strong);
+  color: var(--link);
 }
 
 .shelf-tags {
@@ -199,11 +249,6 @@
   padding-inline-start: var(--space-3);
   background: var(--caution);
   color: var(--on-gold);
-}
-
-.shelf-card-index {
-  box-shadow: none;
-  border: 2px dashed var(--caution);
 }
 
 .badge.badge-caution {
@@ -340,7 +385,7 @@
 }
 
 /* 거르기로 새로 진열된 카드: 자주 하는 조작이라 작게 기울여(30도) 차례로 */
-.shelf-card.flip-in {
+.tool-row.flip-in {
   --flip-from: 30deg;
   animation-delay: calc(var(--i, 0) * var(--dur-tap) / 4);
 }

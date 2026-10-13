@@ -39,7 +39,7 @@ const groups = corners(shelfProducts);
           <Glyph name={g.art} />
           <span>{g.label}</span>
         </h2>
-        <ul class="card-list shelf-list">
+        <ul class="tool-list">
           {g.products.map((p) => (
             <ShelfCard product={p} />
           ))}
@@ -55,7 +55,7 @@ const groups = corners(shelfProducts);
           <span>{S.indexTitle}</span>
         </h2>
         <p class="shelf-index-lead">{S.indexLead}</p>
-        <ul class="card-list shelf-list">
+        <ul class="tool-list">
           {indexProducts.map((p) => (
             <ShelfCard product={p} />
           ))}

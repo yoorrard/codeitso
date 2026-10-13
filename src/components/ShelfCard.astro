@@ -1,15 +1,15 @@
 ---
-// 진열대 카드 하나 (T13, docs/UX.md 3.8). 진열 상품은 이름이 상세 페이지 링크이고(카드 어디를 눌러도 간다),
-// 기본 항목(이름·설명, 이럴 때 써요, 비용, 난이도)과 배지만 보인다 (R-23·R-24. 추천 이유는 장보기에서만 나온다).
-// 색인 상품은 상세 페이지가 없어서 정해진 항목(이름, 설명, 배지, 제공, 원문 링크)만 보인다.
+// 도구 모음의 줄 하나 (T32, docs/CONCEPT.md 6.7): 48px 기능 타일 + 이름 + 한 줄 설명, 오른쪽에 '0원으로 시작'/'유료'와 난이도 막대.
+// 카드 격자 대신 가는 선으로 나눈 줄 목록이라 360px에서 진열대 길이가 크게 준다. 진열 도구는 이름이 상세 링크이고 줄 어디를 눌러도 간다.
+// 원문만 있는 도구(색인)는 상세 페이지가 없어 제공과 원문 링크를 '자세히' 안에 둔다.
 // data-domains·data-caps는 거르기 섬(ShelfFilter)이 읽는다.
 import Glyph from './Glyph.astro';
 import Icon from './Icon.astro';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
-import { badges, toolDifficultyWord } from '../lib/engine/index.ts';
+import { fill, toolDifficultyWord } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/index.ts';
-import { capabilityLabel, domainLabel, productArt } from '../lib/shelf.ts';
+import { productArt } from '../lib/shelf.ts';
 import { toolPath } from '../lib/routes.ts';
 
 interface Props {
@@ -17,70 +17,52 @@ interface Props {
 }
 const { product: p } = Astro.props;
 const isShelf = p.layer === 'shelf';
-const caution = catalog.data.templates.badges.caution;
-const caps = p.capabilities.map(capabilityLabel).join(', ');
-const domains = (p.domains ?? []).map(domainLabel).join(', ');
+const T = catalog.data.templates;
 ---
 
-<li class:list={['card', 'shelf-card', { 'shelf-card-index': !isShelf }]} data-shelf-item data-id={p.id} data-domains={(p.domains ?? []).join(' ')} data-caps={p.capabilities.join(' ')}>
-  <div class="shelf-card-head">
-    <Glyph name={productArt(p)} tile="md" class="product-thumb" />
-    <h3>{isShelf ? <a class="shelf-card-link" href={toolPath(p.id)}>{p.name}</a> : p.name}</h3>
-  </div>
-  <p class="product-summary">{p.summary}</p>
-  <ul class="badge-row">
+<li class:list={['tool-row', { 'tool-row-index': !isShelf }]} data-shelf-item data-id={p.id} data-domains={(p.domains ?? []).join(' ')} data-caps={p.capabilities.join(' ')}>
+  <Glyph name={productArt(p)} tile="lg" class="tool-row-art" />
+  <div class="tool-row-main">
+    <h3 class="tool-row-name">{isShelf ? <a class="shelf-card-link" href={toolPath(p.id)}>{p.name}</a> : p.name}</h3>
+    <p class="tool-row-summary">{p.summary}</p>
     {
-      badges(catalog, p).map((b) =>
-        b === caution ? (
-          <li class="badge badge-caution">
-            <Icon name="warning" size="1.1em" />
-            {b}
-          </li>
-        ) : (
-          <li class="badge">{b}</li>
-        ),
-      )
-    }
-  </ul>
-  {
-    isShelf ? (
-      <dl class="product-facts">
-        {p.useWhen && (
-          <>
-            <dt>{ko.shop.useWhen}</dt>
-            <dd>{p.useWhen}</dd>
-          </>
-        )}
-        <dt>{ko.shop.cost}</dt>
-        <dd>{p.cost.note}</dd>
-        <dt>{ko.shop.difficulty}</dt>
-        <dd>{toolDifficultyWord(catalog, p.difficulty)}</dd>
-      </dl>
-    ) : (
-      <dl class="product-facts">
-        <dt>{ko.shop.provider}</dt>
-        <dd>
-          {p.provider.name} ({ko.shop.providerWords[p.provider.type]})
-        </dd>
-        <dt>{ko.shelf.source}</dt>
-        <dd>
+      !isShelf && (
+        <details class="tool-row-more">
+          <summary>{ko.shop.details}</summary>
+          <p>
+            {ko.shop.provider}: {p.provider.name} ({ko.shop.providerWords[p.provider.type]})
+          </p>
           <ul class="link-list">
             {p.links.map((l) => (
               <li>
                 <a href={l.url} target="_blank" rel="noopener noreferrer">
                   {l.label}
                   <Icon name="external" size="1em" />
-<span class="visually-hidden"> ({ko.shelf.newTab})</span>
+                  <span class="visually-hidden"> ({ko.shelf.newTab})</span>
                 </a>
               </li>
             ))}
           </ul>
-        </dd>
-      </dl>
-    )
-  }
-  <p class="shelf-tags">
-    <span>{ko.shelf.capability}: {caps}</span>{' '}
-    {domains && <span>{ko.shelf.domain}: {domains}</span>}
-  </p>
+        </details>
+      )
+    }
+  </div>
+  <div class="tool-row-side">
+    {
+      isShelf ? (
+        <span class:list={['tool-cost', { 'is-paid': !p.cost.free }]}>{p.cost.free ? T.badges.free : T.receipt.paid}</span>
+      ) : (
+        <span class="badge badge-caution">
+          <Icon name="warning" size="1.1em" />
+          {T.badges.caution}
+        </span>
+      )
+    }
+    <span class="level">
+      <span class="level-bar" aria-hidden="true">
+        {[1, 2, 3].map((n) => <span class:list={{ on: n <= p.difficulty }} />)}
+      </span>
+      {fill(ko.shop.levelLine, { level: toolDifficultyWord(catalog, p.difficulty) })}
+    </span>
+  </div>
 </li>

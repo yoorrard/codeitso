@@ -1137,6 +1137,41 @@
   color: var(--ink-soft);
 }
 
+/* ── 도착: 건네드릴 것 (CONCEPT 6.6) ───────────────────── */
+.handover {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.handover .handover-art {
+  inline-size: 96px;
+}
+
+.handover-text {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.handover-text h2 {
+  margin: 0;
+  font-size: var(--text-md);
+}
+
+.handover-text p {
+  color: var(--ink-soft);
+}
+
+@media (min-width: 768px) {
+  .handover .handover-art {
+    inline-size: 140px;
+  }
+}
+
 /* ── 계산대 (T11) ───────────────────────────────────── */
 .receipt {
   display: grid;

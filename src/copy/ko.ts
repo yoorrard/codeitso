@@ -283,6 +283,8 @@ export const ko = {
     pageTitle: '도착',
     loading: '영수증을 출력하는 중이에요.',
     tabsLabel: '도착해서 받는 것',
+    handoverTitle: '건네드릴 것',
+    handoverList: '설계도 1부 · 영수증 1장 · AI에게 할 말 {{cards}}장 · 읽어 둘 용어 {{study}}개',
     tabs: { receipt: '영수증', pack: '설계도', study: '읽어 둘 용어', cards: 'AI에게 할 말' },
     copyReceipt: '영수증 복사',
     copyLink: '영수증 링크 복사',

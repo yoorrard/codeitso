@@ -21,6 +21,7 @@ import { ROUTES, termPath } from '../lib/routes.ts';
 import { hasProgress, sameSession } from '../lib/stages.ts';
 import { $meta, $seen, $session, markSceneSeen, patchMeta } from '../lib/store.ts';
 import CopyButton from './CopyButton.tsx';
+import { ArtTile } from './Glyph.tsx';
 import { Icon } from './Icon.tsx';
 
 const T = catalog.data.templates;
@@ -272,6 +273,14 @@ export default function Receipt() {
         {shared ? ko.receipt.pageTitle : ko.dispatch.arrival}
       </h1>
       {!shared && <p class="lead">{ko.dispatch.arrivalNext}</p>}
+      {/* 건네드릴 것 (CONCEPT 6.6): 빈 터 그림(렌더가 오기 전에는 청사진) + 받는 것 한 줄 */}
+      <section class="handover" aria-labelledby="handover-title">
+        <ArtTile name="P01" size="hero" class="handover-art" />
+        <div class="handover-text">
+          <h2 id="handover-title">{ko.receipt.handoverTitle}</h2>
+          <p>{fill(ko.receipt.handoverList, { cards: cards.length, study: r.study.all.length })}</p>
+        </div>
+      </section>
       {shared && (
         <div class="shared-note">
           <p>{ko.receipt.sharedNote}</p>

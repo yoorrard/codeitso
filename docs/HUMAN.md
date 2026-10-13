@@ -25,37 +25,22 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 - [ ] C01 진열 상품 46개를 공식 문서와 대조해 `needsReview: false`로 — 정식 배포(`npm run validate:release`) — T22. 대조표는 이 파일 아래 'C01 대조표'에 에이전트가 채운다.
 
-## 기사님(마스코트)
+## 그림 (D56)
 
-- [ ] M01 기사님 그림 권리 확인 — 이 그림을 만든 도구의 약관상 공개 웹 서비스에 써도 되는지, 그림의 라이선스(데이터처럼 CC BY 4.0으로 열지, 권리 유보할지) — 정식 출시 전 — (2026-10-12)
-- [ ] M02 기사님 자세·표정 추가 그림 (아래 'M02 요청서') — 게임 연출의 완성도. 없어도 진행은 된다 (지금은 한 장 + CSS 연출) — T07·T16 다듬기 — (2026-10-12)
-- [ ] M03 기사님 이름 정하기 (지금 화면에서는 '기사님'으로 부른다) — 막지 않음
+기사님 그림은 쓰지 않기로 했다 (D56). 화면은 직접 그린 SVG 지도·청사진 그림만으로 완성되고, 아래 그림이 오면 더 고급스러워진다. 프롬프트·크기·넣는 곳·받아들이는 기준은 `docs/CONCEPT.md` 9절 (c) '소유자 요청서'가 정본이다.
+
+- [x] M01~M03 기사님 그림 권리·추가 자세·이름 — 기사님 그림을 쓰지 않기로 해서 닫음 (2026-10-13, D56)
+- [ ] A01 그림체 기준판 K00 (이미지 생성 1장) — 그림 세트의 취향을 먼저 맞춘다. 사이트에 싣지 않는다 — 막지 않음 — (2026-10-13)
+- [ ] A02 쇼퍼 카 V01·V01b (이미지 생성 → Tripo3D) — 모든 지도와 홈·시운전 머리의 차 — 막지 않음 (지금은 SVG 차) — (2026-10-13)
+- [ ] A03 도착한 빈 터 P01 (이미지 생성 → Tripo3D) — 도착 화면의 주인공 — 막지 않음 (지금은 청사진 SVG) — (2026-10-13)
+- [ ] A04 앱 종류 건물 L01~L06 (이미지 생성 → Tripo3D, 같은 그림체로 여섯) — 목적지 첫 질문, 코스 카드, 도착 '완성 예상' — 막지 않음 (지금은 청사진 SVG) — (2026-10-13)
+- [ ] A05 이미지 생성 AI·Tripo3D 결과물을 공개 웹사이트에 써도 되는지 쓰는 요금제의 약관 확인, 그림의 라이선스(CC BY 4.0으로 열지, 권리 유보할지) — 받은 그림을 싣기 전 — (2026-10-13)
+
+받을 순서: K00 → V01·V01b → P01 → L01~L06. 참고 그림 PNG와 GLB를 `assets-src/art/<id>.png`, `assets-src/art/<id>.glb`로 올려 주시거나 대화에 첨부해 주세요. 에이전트가 같은 조명으로 구워(`npm run art`) 크기별 그림을 만든다. GLB가 어렵다면 참고 그림 PNG만 주셔도 된다.
 
 ## 관찰 시험
 
 - [ ] H05 교사 5명 관찰 시험, 처음 써 본 10명의 첫 결과물 확인 — 2단계로 넘어가는 기준 — T22 뒤
-
----
-
-## M02 요청서: 기사님 추가 그림
-
-지금 그림(`src/assets/mascot/chauffeur-wave.webp`)을 **참고 이미지로 첨부**하고, 같은 도구로 아래 그림을 만들어 주세요. 모든 그림을 같은 크기(1254×1254 정사각), 같은 비율, 발끝이 같은 높이, **배경 투명 PNG**로 받으면 바로 끼울 수 있습니다.
-
-모든 요청 앞에 붙일 문장:
-
-> Use the attached character as the exact reference. Same chibi chauffeur boy: navy peaked cap with gold band and round gold '</>' badge, short dark-brown hair, big navy eyes, rosy cheeks, navy jacket with gold cuff stripes and gold buttons, white shirt, blue tie, teal map-pin lapel pin, white cartoon gloves, black shoes, dark tablet with glowing '</>'. Same art style: thick dark-navy outline, soft cel shading, 2.5-head proportions. Full body, centered, same scale and feet baseline as the reference, square 1254×1254, transparent background, no ground shadow, no text or letters except the existing '</>' marks.
-
-| 순서 | 자세 | 쓰는 곳 | 요청 문장 |
-|---|---|---|---|
-| 1 | 안내(가리키기) | 정류장 안내, 다음 정류장 | Standing three-quarter view, free hand stretched out pointing to the viewer's right with index finger, tablet held at his side, confident friendly smile, both eyes open. |
-| 2 | 축하 | 영수증 발행, 도장 완성 | Small jump with both arms raised overhead cheering, tablet held up high, eyes happily squeezed shut, wide open-mouth smile. No confetti. |
-| 3 | 운전 | 노선도의 차, 홈 출발 장면 | Side view facing right, seated in a small rounded toy-like car (navy body, gold trim, round headlights), both gloved hands on the steering wheel, cheerful smile, visible from chest up; whole car visible, wheels resting near the bottom edge. (가능하면 같은 차, 운전자 없이 한 장 더) |
-| 4 | 생각 | 인터뷰 | Tablet held at chest, free gloved hand on chin, head slightly tilted, eyes looking up, small closed-mouth smile. No thought bubbles or question marks. |
-| 5 | 걱정·주의 | 재확인 충돌 | Both hands holding the tablet in front of chest, eyebrows raised in concern, small sweat drop at temple, slight frown, eyes open: gentle 'be careful' mood, not scared. |
-| 6 | 도장 찍기 | 계산대 | Three-quarter view, gripping a large wooden rubber stamp with both hands and pressing it onto a blank white paper receipt at the bottom of the frame, determined happy face. Receipt and stamp face completely blank. |
-| 7 | 눈 뜬/감은 같은 그림 (선택) | 눈 깜빡임 연출 | Exactly the same image as the reference, identical pose and position, but both eyes open. → 그다음 같은 요청에서 "but both eyes closed in relaxed arcs." |
-
-우선순위는 1·2·3이 먼저입니다. 받은 그림은 `src/assets/mascot/`에 올려 주시거나 대화에 첨부해 주시면 에이전트가 알파 정리·자르기·크기별 변환을 합니다.
 
 ---
 

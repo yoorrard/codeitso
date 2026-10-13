@@ -157,6 +157,15 @@ const hasAction = Astro.slots.has('action');
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') skip();
       });
+
+      // 아래 막대 높이를 재서 --bar-bottom으로 (WCAG 2.4.11): 막대는 상태 줄·안내 글에 따라 112px보다 커지므로,
+      // 고정값이면 키보드로 옮긴 초점이 막대 뒤에 숨는다. scroll-padding이 실제 높이를 따라가게 한다.
+      const bar = document.querySelector('.action-bar:not(.is-static)');
+      if (bar && 'ResizeObserver' in window) {
+        new ResizeObserver(() => {
+          document.documentElement.style.setProperty('--bar-bottom', `calc(${Math.ceil(bar.getBoundingClientRect().height)}px + var(--space-3))`);
+        }).observe(bar);
+      }
     </script>
   </body>
 </html>

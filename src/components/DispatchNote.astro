@@ -12,5 +12,5 @@ const { text } = Astro.props;
 
 <aside class="dispatch-note" aria-label={ko.dispatch.label}>
   <Logo variant="badge" height={32} class="dispatch-badge" />
-  <p>{sentences(text).map((t) => <span class="line">{t}</span>)}</p>
+  <p>{sentences(text).map((t, i) => <>{i > 0 && ' '}<span class="line">{t}</span></>)}</p>
 </aside>

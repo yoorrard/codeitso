@@ -1,6 +1,6 @@
 // 그림 이름 정하기 (docs/CONCEPT.md 5.7): 질문 보기 → 질문 그림(q-*), 앱 종류 → 청사진 자리 표시(L01~L06, 받기 전),
 // 기능 → 기능 그림(fn-*). 그림은 src/assets/의 직접 그린 SVG이고 늘 장식이다 (보기 이름·기능 이름이 뜻을 전한다).
-// '느낌' 질문은 그림 대신 자료의 색으로 화면 견본을 그린다.
+// '느낌' 질문은 그림 대신 내 지도를 그 보기의 팔레트로 칠한 견본을 그린다 (Interview.tsx, D70).
 export const OPTION_ART: Record<string, Record<string, string>> = {
   'q.type': {
     record: 'L01',

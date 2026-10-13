@@ -1,44 +1,33 @@
-// '이 코스로 출발' 섬: 답·고른 도구·그대로 간 막힌 곳·한 줄 입력을 채우고 도구끼리 맞춰 보기(/check)로 간다 (docs/CONCEPT.md 6.10).
-// 저장된 진행이 있고 코스와 다르면 바꿀지 먼저 묻는다.
+// '이 코스로 출발' 섬 (코스 모음 /courses의 카드마다, docs/CONCEPT.md 6.10): 답·고른 도구·그대로 간 막힌 곳·한 줄 입력을 채우고
+// 도구끼리 맞춰 보기(/check)로 간다. 저장된 진행이 있고 코스와 다르면 바꿀지 먼저 묻는다. 채우는 일은 src/lib/course.ts가 한다.
+// 홈의 코스 미리 보기 시트는 같은 모듈을 누를 때 늦게 불러오는 페이지 스크립트를 쓴다 (첫 화면 JS를 늘리지 않는다, D70).
 import { useRef } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
 import { fill } from '../lib/engine/index.ts';
-import type { Session } from '../lib/engine/types.ts';
-import { commitSession } from '../lib/result.ts';
-import { hasProgress, sameSession, stageById } from '../lib/stages.ts';
-import { $session, patchMeta } from '../lib/store.ts';
+import { courseSession, startCourse, wouldOverwrite } from '../lib/course.ts';
 
 interface Props {
   recipeId: string;
-  /** 주 버튼으로 (한 화면에 하나만). 홈의 카드에서는 보통 버튼 */
-  primary?: boolean;
 }
 
-export default function RecipeStart({ recipeId, primary = false }: Props) {
+export default function RecipeStart({ recipeId }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
   const button = useRef<HTMLButtonElement>(null);
   const recipe = catalog.data.recipes.recipes.find((r) => r.id === recipeId);
-  if (!recipe) return null;
-  const target: Session = { answers: recipe.answers, cart: recipe.cart, kept: recipe.kept ?? [], deferred: [] };
-  if (recipe.freeText) target.freeText = recipe.freeText;
+  const target = courseSession(recipeId);
+  if (!recipe || !target) return null;
 
-  const go = (): void => {
-    commitSession(target);
-    // 코스로 채운 상태는 목적지 시작 시각이 없다 (발행 집계 구간 none)
-    patchMeta({ interviewStartedAt: undefined });
-    window.location.assign(stageById('check').path);
-  };
+  const go = (): void => startCourse(target);
   const start = (): void => {
-    const now = $session.get();
-    if (hasProgress(now) && !sameSession(catalog, now, target)) dialog.current?.showModal();
+    if (wouldOverwrite(target)) dialog.current?.showModal();
     else go();
   };
   const titleId = `cc-recipe-${recipe.id}-title`;
 
   return (
     <>
-      <button ref={button} type="button" class={primary ? 'btn btn-primary' : 'btn'} onClick={start} aria-label={fill(ko.home.recipeGoLabel, { title: recipe.title })}>
+      <button ref={button} type="button" class="btn" onClick={start} aria-label={fill(ko.home.recipeGoLabel, { title: recipe.title })}>
         {ko.home.recipeGo}
       </button>
       <dialog ref={dialog} class="sheet" aria-labelledby={titleId} onClose={() => button.current?.focus()}>

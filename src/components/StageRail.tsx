@@ -32,6 +32,8 @@ type StepState = 'current' | 'done' | 'open' | 'locked';
 type OpenedId = keyof typeof ko.layout.opened;
 const isOpenedId = (id: StageId): id is OpenedId => id in ko.layout.opened;
 const PRACTICE = stageById('test-drive');
+/** 다음 단계가 열린 것을 화면 섬이 이미 알리는 단계: 만들 앱 정하기('기능마다 도구를 골라요.'), 도구끼리 맞춰 보기('막힌 곳이 없어요. 출발할까요?') */
+const SAID_BY_SCREEN: StageId[] = ['destination', 'check'];
 
 export default function StageRail({ stage, initial }: Props) {
   const [ready, setReady] = useState(false);
@@ -62,7 +64,9 @@ export default function StageRail({ stage, initial }: Props) {
   const p = view.progress;
   const openIds = STAGES.filter((s) => view.gates[s.id].open).map((s) => s.id);
 
-  // 붙은 뒤 처음 읽은 저장 상태는 기준으로만 삼고, 그 뒤 이 화면에서 새로 열린 단계만 알린다 (앞선 단계 하나)
+  // 붙은 뒤 처음 읽은 저장 상태는 기준으로만 삼고, 그 뒤 이 화면에서 새로 열린 단계를 원으로 비춘다.
+  // 알림은 바로 다음 단계가 열렸을 때만 하고(도구를 다 골랐다고 아직 맞춰 보지 않은 설계도 받기를 알리지 않는다),
+  // 화면 섬이 같은 일을 이미 알리는 단계에서는 하지 않는다 (알림이 겹쳐 길어지지 않게). 소리는 '정함'(도착 차임은 도착에만)
   useEffect(() => {
     if (!ready) return;
     const before = seen.current;
@@ -71,9 +75,9 @@ export default function StageRail({ stage, initial }: Props) {
     const opened = openIds.filter((id) => !before.includes(id));
     if (opened.length === 0) return;
     setFresh(opened);
-    const first = opened.find(isOpenedId);
-    if (first) announce(ko.layout.opened[first]);
-    void sfx('arrive');
+    const next = STAGES[STAGES.findIndex((s) => s.id === stage) + 1]?.id;
+    if (next && opened.includes(next) && isOpenedId(next) && !SAID_BY_SCREEN.includes(stage)) announce(ko.layout.opened[next]);
+    void sfx('add');
   }, [ready, openIds.join(' ')]);
 
   const stateOf = (id: StageId): StepState => (id === stage ? 'current' : p.stages[id] ? 'done' : view.gates[id].open ? 'open' : 'locked');

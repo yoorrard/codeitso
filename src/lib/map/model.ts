@@ -192,6 +192,8 @@ export interface MapInput {
   conflicts?: MapInputConflict[];
   traffic?: boolean;
   arrived?: boolean;
+  /** 홈 본보기 (brief 6.3): 길은 고른 대로 그리고 차만 출발 위에 세운다. 도착(arrived)보다 앞선다 */
+  parked?: boolean;
   lot?: { type: LotType | null; label: string };
   houses?: HouseKind | null;
   tunnel?: 'open' | 'ghost' | null;
@@ -624,7 +626,8 @@ function carHits(p: Pt & { angle: number }, b: Box, gap: number): boolean {
 /** 마디 수에 맞는 배치에 마디를 앉히고 길·굴·차·이름표·표지를 계산한다. 시험이 기능 조합을 바로 넣어 볼 수 있게 나눈 안쪽 함수 */
 export function layoutMap(input: MapInput): MapModel {
   const traffic = input.traffic === true;
-  const arrived = input.arrived === true;
+  const parked = input.parked === true;
+  const arrived = input.arrived === true && !parked;
   const nodesIn = input.nodes.slice(0, LAYOUTS.length - 1);
   const layout = LAYOUTS[nodesIn.length] ?? [];
 
@@ -706,10 +709,12 @@ export function layoutMap(input: MapInput): MapModel {
   }
   const solids = tunnel ? [...fixed, tunnel.box] : fixed;
 
-  // 2. 차: 출발부터 이어서 끝난 마지막 점(미룬 마디의 갈림목은 건너뛴다). 첫 자리에서 앞으로, 막히면 뒤로 2씩 옮겨 빈 곳에 선다.
+  // 2. 차: 출발부터 이어서 끝난 마지막 점(미룬 마디의 갈림목은 건너뛴다). 막힌 마디(교통 정보)에 닿으면 그 앞에서 기다린다.
+  // 첫 자리에서 앞으로, 막히면 뒤로 2씩 옮겨 빈 곳에 선다.
   // 출발부터 지금까지 점마다 차례로 자리를 잡아, 앞 점에서 선 자리보다 뒤로는 가지 않는다 (고를수록 앞으로만 간다)
+  // 본보기(parked)는 출발에 선다: 이름표가 출발에 선 차를 비키도록 차부터 그 자리에 둔다
   let carK = 0;
-  for (let k = 1; k < last && prefix[k] === true; k += 1) if (!work[k - 1]?.later) carK = k;
+  if (!parked) for (let k = 1; k < last && prefix[k] === true && work[k - 1]?.state !== 'jam'; k += 1) if (!work[k - 1]?.later) carK = k;
   const chain = [0, ...work.flatMap((w, i) => (i < carK && !w.later ? [i + 1] : [])), ...(arrived ? [last] : [])];
   const neighbor = (k: number, step: number): number => {
     let j = k + step;
@@ -869,6 +874,8 @@ const SHAPES: NodeShape[] = ['screen', 'store', 'auth', 'data', 'notify', 'host'
 const LOT_TYPES: LotType[] = ['record', 'form', 'page', 'quiz', 'tool', 'board', 'unknown'];
 /** 느낌 질문(q.style)의 보기 id → 지도 팔레트 */
 const PALETTE_OF: Record<string, Palette> = { clean: 'clean', cute: 'cute', serious: 'calm', bold: 'bold' };
+/** 느낌 보기 id의 지도 팔레트 (모르면 기본). 만들 앱 정하기의 느낌 견본도 이것으로 칠한다 */
+export const paletteOf = (id: string | undefined): Palette => PALETTE_OF[id ?? ''] ?? 'clean';
 /** 막힌 곳 id → 사고 표시 (나머지는 alert) */
 const MARKER_OF: Record<string, MarkerKind> = {
   'conflict.paid-on-free': 'toll',
@@ -891,6 +898,8 @@ export interface MapOptions {
   traffic?: boolean;
   /** 도착: 차가 빈 터 앞에, 윤곽이 실선으로 */
   arrived?: boolean;
+  /** 홈 본보기 (brief 6.3): 길은 그대로, 차는 출발 위에 */
+  parked?: boolean;
 }
 
 /**
@@ -930,10 +939,11 @@ export function mapModel(r: EngineResult, opts: MapOptions = {}): MapModel {
     conflicts: traffic || arrived ? r.conflicts.map((c) => ({ id: c.id, kind: markerKind(c), anchor: c.anchorSlot ?? null })) : [],
     traffic,
     arrived,
+    parked: opts.parked === true,
     lot: { type: LOT_TYPES.find((t) => t === typeAnswer) ?? null, label: typeLabel ?? ko.map.destination },
     houses: hasTag(r, 'audience.public') ? 'many' : hasTag(r, 'audience.few') ? '3' : hasTag(r, 'audience.me') ? '1' : null,
     tunnel: proxy ? 'open' : r.conflicts.some((c) => c.id === 'conflict.key-in-static-page') ? 'ghost' : null,
-    palette: PALETTE_OF[r.interview.answers['q.style'] ?? ''] ?? 'clean',
+    palette: paletteOf(r.interview.answers['q.style']),
     summary: mapSummary(r, { traffic, arrived, typeLabel }),
   });
 }

@@ -33,7 +33,7 @@ for (const mode of ['기기 설정', '사이트 설정'] as const) {
     await still();
     await page.goto('/test-drive');
     await islandsReady(page);
-    const finish = await hydrated(page.locator('main button.btn-primary').last());
+    const finish = await hydrated(page.locator('.action-bar button.lesson-go'));
     await finish.click();
     await still();
     // 접힌 단계 줄(360px)의 단계 시트로 옮겨 간다: 시트도 동작 줄이기면 움직이지 않는다
@@ -46,7 +46,7 @@ for (const mode of ['기기 설정', '사이트 설정'] as const) {
     await still();
     await answerInterview(page, kase.answers);
     await still();
-    await page.locator('.q-done a.btn-primary').click();
+    await page.locator('.action-bar a.q-go').click();
     await page.waitForURL(/\/waypoints$/);
     await islandsReady(page);
     await addToCart(page, kase.cart);

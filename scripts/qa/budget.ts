@@ -52,12 +52,13 @@ function pages(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-/** JS 파일이 정적으로 import하는 다른 JS 조각까지 따라간다 (처음 불러올 때 함께 내려온다). */
+/** JS 파일이 정적으로 import하는(또는 export … from으로 다시 내보내는) 다른 JS 조각까지 따라간다 (처음 불러올 때 함께 내려온다).
+ *  여러 곳이 쓰는 섬(MapBoard: 지도 띠·지난 영수증·느낌 견본)은 빌드가 'export{…}from"./조각.js"' 한 줄짜리 입구로 만든다 (D70) */
 function withStaticImports(file: string, seen: Set<string>): void {
   if (seen.has(file) || !existsSync(file)) return;
   seen.add(file);
   const src = readFileSync(file, 'utf8');
-  for (const m of src.matchAll(/(?:^|[;\n}])\s*import\s*(?:[^'"()]*?from\s*)?["']([^"']+\.m?js)["']/g)) {
+  for (const m of src.matchAll(/(?:^|[;\n}])\s*(?:import|export)\s*(?:[^'"()]*?from\s*)?["']([^"']+\.m?js)["']/g)) {
     const spec = m[1];
     if (!spec) continue;
     const next = spec.startsWith('/') ? join(DIST, spec) : join(file, '..', spec);

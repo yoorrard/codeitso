@@ -1,0 +1,549 @@
+/* 4단계 설계도 받기 /arrival (brief 6.8, D70): 지도 띠 260 → 16 겹친 내용 시트(사건 메시지 → H1 22/700 + 한 줄 → 건네드릴 것 카드
+   → 칸 고르개 4칸 → 칸 내용 → 맺음 한 줄) → 아래 막대(상태 한 줄 + [설계도 내려받기 (.md)]).
+   카드는 '건네드릴 것' 하나와 영수증 종이뿐이다. 칸 안의 묶음은 상자 없이 제목과 나눔 선으로.
+   부품(.content-sheet.on-map·.seg·.list·.fold·.paste·.tag·.empty-state·.btn)은 parts.css·frame.css. 이 파일은 이 페이지만 싣는다. */
+
+/* 다시 온 손님·영수증 링크: 섬이 붙어 링크를 읽기 전에는 빌드 때 그린 잠김 화면을 감춘다 (기본 틀의 첫 그림 전 스크립트) */
+:root:is([data-resume], [data-receipt-link]) :is(.arrival, .ar-go):not([data-ready]),
+:root:is([data-resume], [data-receipt-link]) .arrival:not([data-ready]) > * {
+  visibility: hidden;
+}
+
+:root[data-receipt-link] .status-line:not([data-ready]) .status-text {
+  visibility: hidden;
+}
+
+/* ── 시트 안 흐름 (brief 5.2): H1 → 8 → 한 줄 → 24 → 내용 ── */
+.arrival > * + * {
+  margin-block-start: var(--space-5);
+}
+
+.arrival > h1 + .lead {
+  margin-block-start: var(--space-2);
+}
+
+/* 꼬리표·사건 메시지 다음의 제목은 16 */
+.arrival > :is(.ar-shared-tag, .ar-note) + h1 {
+  margin-block-start: var(--space-4);
+}
+
+.arrival h1:focus {
+  outline: none;
+}
+
+.ar-empty {
+  padding-block: var(--space-4) var(--space-5);
+}
+
+.ar-empty .empty-state-title:focus {
+  outline: none;
+}
+
+.ar-sub {
+  color: var(--text-2);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+/* ── 건네드릴 것 (화면에 단 하나의 카드, brief 5.6): 모서리 16, 그림자 없음, 1px 나눔 선. 왼쪽 빈 터 그림 72(옅은 판), 768px부터 240 ── */
+.ar-handover {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.ar-handover .ar-handover-art {
+  inline-size: 72px;
+  border-radius: var(--radius-sm);
+}
+
+/* 72에서는 청사진의 치수선이 잡선으로 보여 뺀다 (frame.css의 64 이하 타일과 같다) */
+.ar-handover-art .bp-dim {
+  display: none;
+}
+
+.ar-handover-text {
+  display: grid;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+
+.ar-handover-title {
+  font-size: var(--size-body-lg);
+  line-height: 1.5rem;
+  font-weight: var(--weight-strong);
+}
+
+.ar-handover-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-2);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+/* 휴대폰: 가운뎃점으로 이어 쓰고, 줄은 항목 사이에서만 바꾼다 */
+.ar-handover-list > li {
+  display: inline;
+  white-space: nowrap;
+}
+
+/* 가운뎃점은 그림으로 (낭독기가 '가운뎃점'을 읽지 않게). 항목 끝에 붙여 줄 머리에 점이 오지 않게 한다 */
+.ar-handover-list > li:not(:last-child)::after {
+  content: '';
+  display: inline-block;
+  inline-size: 3px;
+  block-size: 3px;
+  margin-inline: 6px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  vertical-align: middle;
+}
+
+@media (min-width: 768px) {
+  .ar-handover {
+    gap: var(--space-5);
+    padding: var(--space-4);
+  }
+
+  .ar-handover .ar-handover-art {
+    inline-size: 240px;
+    border-radius: var(--radius-md);
+  }
+
+  .ar-handover-art .bp-dim {
+    display: inline;
+  }
+
+  .ar-handover-title {
+    font-size: var(--size-title-3);
+    line-height: var(--leading-title-3);
+  }
+
+  /* 넓으면 받는 것을 한 줄에 하나씩 (건네받는 목록처럼) */
+  .ar-handover-text {
+    gap: var(--space-3);
+  }
+
+  .ar-handover-list {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--text);
+    font-size: var(--size-body);
+    line-height: var(--leading-body);
+  }
+
+  .ar-handover-list > li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .ar-handover-list > li:not(:last-child)::after {
+    content: none;
+  }
+
+  .ar-handover-list > li::before {
+    content: '';
+    flex: none;
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--chosen);
+  }
+}
+
+/* ── 영수증 링크로 열었을 때: 맨 위 꼬리표 + 한 줄 + 중립 버튼 [이 영수증으로 이어서 가기] ── */
+.ar-shared {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+/* ── 칸 고르개 + 칸 ── */
+.ar-panel {
+  display: grid;
+  gap: var(--space-4);
+  margin-block-start: var(--space-4);
+}
+
+.ar-panel[hidden] {
+  display: none;
+}
+
+.ar-panel:focus-visible {
+  outline-offset: var(--space-1);
+}
+
+.ar-h2 {
+  margin-block-start: var(--space-2);
+  font-size: var(--size-title-3);
+  line-height: var(--leading-title-3);
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-title-sm);
+}
+
+.ar-h2 + .ar-sub {
+  margin-block-start: calc(-1 * var(--space-3));
+}
+
+.ar-h3 {
+  margin-block-end: calc(-1 * var(--space-3));
+  color: var(--text-2);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-strong);
+}
+
+.ar-row-name {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.ar-terms {
+  justify-self: start;
+  margin-inline-start: calc(-1 * var(--space-2));
+}
+
+/* 같은 크기 중립 버튼 둘 (링크 복사 · PC로 보내기). 좁거나 글자를 키우면 위아래로 */
+.ar-pair {
+  container: ar-pair / inline-size;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.ar-pair .copy-wrap {
+  display: grid;
+}
+
+/* 360에서 '영수증 링크 복사'가 한 줄에 들도록 둘 다 그림 없이 좌우 12 */
+.ar-pair .btn {
+  padding-inline: var(--space-3);
+}
+
+.ar-pair .copy-btn .icon {
+  display: none;
+}
+
+/* 칸 고르개: 'AI에게 할 말'(68)이 한 줄로 들도록 좌우 4 (brief 5.6). 칸 폭은 글 폭 + 남는 폭을 나눠 가진다(같은 폭이면
+   긴 칸의 손잡이가 글에 붙는다). 좁거나 글자 200%로 세로 줄 목록이 되면 parts.css의 좌우 16을 그대로 쓴다 */
+@container seg (width >= 20rem) {
+  .ar-seg .seg-list {
+    grid-auto-columns: auto;
+  }
+
+  .ar-seg .seg-opt {
+    padding-inline: var(--space-1);
+    white-space: nowrap;
+  }
+}
+
+@container ar-pair (width < 18rem) {
+  .ar-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 덜 쓰는 둘(영수증 글 복사 · 메일)은 글 버튼 줄 */
+.ar-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: calc(-1 * var(--space-2));
+}
+
+.ar-more .copy-btn {
+  --btn-bg: transparent;
+  --btn-bg-press: var(--fill);
+  --btn-fg: var(--link);
+  min-block-size: var(--tap);
+  padding-inline: var(--space-2);
+}
+
+.ar-more .copy-wrap:first-child .copy-btn {
+  margin-inline-start: calc(-1 * var(--space-2));
+}
+
+.ar-more .copy-btn .icon {
+  display: none;
+}
+
+.ar-folds > .fold {
+  border-block-start: 1px solid var(--hairline);
+}
+
+.ar-folds > .fold:last-child {
+  border-block-end: 1px solid var(--hairline);
+}
+
+.ar-bullets {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0 0 var(--space-4) var(--space-5);
+}
+
+/* 설계도 미리 보기: 접기 안 --fill 상자 (붙여 넣을 말 상자와 같은 면) */
+.pack-preview {
+  border-block: 1px solid var(--hairline);
+}
+
+.pack-pre {
+  max-block-size: 28rem;
+  overflow: auto;
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  font-family: var(--font-body);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* AI에게 할 말: 항목마다 제목 17/600 + '언제' 14 + 붙여 넣을 말 상자. 사이는 24 + 나눔 선 (상자 안 상자 없음) */
+.ar-talks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ar-talk {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ar-talk + .ar-talk {
+  margin-block-start: var(--space-5);
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--hairline);
+}
+
+.ar-talk-title {
+  font-size: var(--size-body-lg);
+  line-height: 1.5rem;
+  font-weight: var(--weight-strong);
+}
+
+.ar-talk .paste {
+  margin-block-start: var(--space-1);
+}
+
+/* ── 맺음 한 줄 + 알림 글 ── */
+.ar-end {
+  font-weight: var(--weight-strong);
+}
+
+.arrival > .ar-end {
+  margin-block-start: var(--space-6);
+}
+
+.ar-fine {
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.arrival > .ar-end + .ar-fine {
+  margin-block-start: var(--space-2);
+}
+
+/* ── 영수증 종이 (brief 6.8, D65): 흰 감열지(낮·밤 같음), CC Receipt 14/20, 36칸(최대 폭 360), 아래 톱니 8, 남색 도장 ── */
+.receipt-scene {
+  position: relative;
+}
+
+/* 프린터 틈: 종이가 위에서 아래로 덜컥덜컥 뽑혀 나온다 (S6). 틈은 --tile (밤에 남색이 바탕에 묻히지 않게).
+   틈은 종이보다 양옆 12씩만 넓다 (영수증 글꼴의 ch로 종이와 같은 셈) */
+.printer {
+  position: relative;
+  inline-size: min(100%, calc(36ch + 2 * var(--space-5) + 2 * var(--space-3)));
+  margin-inline: auto;
+  overflow: hidden;
+  font-family: var(--font-receipt);
+  font-size: var(--size-caption);
+  padding-block-start: var(--space-2);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: linear-gradient(var(--tile) 0 var(--space-2), transparent var(--space-2));
+}
+
+.paper {
+  container-type: inline-size;
+  position: relative;
+  inline-size: min(100%, calc(36ch + 2 * var(--space-5)));
+  max-inline-size: 360px;
+  margin-inline: auto;
+  margin-block-end: var(--space-2);
+  padding: var(--space-5) var(--space-5) var(--space-5);
+  background: var(--receipt);
+  /* 영수증 종이는 밤 지도에서도 흰 감열지라서, 종이 안의 글자색을 종이 전용 값으로 바꿔 둔다 */
+  --text: var(--receipt-ink);
+  --text-2: var(--receipt-soft);
+  /* 종이 위 막힘 표시는 도장(--seal, 남색)과 따로 둔다 (D65) */
+  --bad-ink: var(--receipt-bad);
+  color: var(--text);
+  font-family: var(--font-receipt);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  box-shadow: var(--elev-1);
+  animation: print var(--dur-print) steps(14, end) both;
+}
+
+/* 아래쪽 톱니 가장자리 8 (찢어 낸 영수증) */
+.paper::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: calc(-1 * var(--space-2));
+  block-size: var(--space-2);
+  background:
+    linear-gradient(135deg, var(--receipt) 50%, transparent 50%) 0 0 / var(--space-4) var(--space-2) repeat-x,
+    linear-gradient(225deg, var(--receipt) 50%, transparent 50%) var(--space-2) 0 / var(--space-4) var(--space-2) repeat-x;
+}
+
+@keyframes print {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.r-fixed {
+  font-family: var(--font-receipt);
+}
+
+.r-var {
+  font-family: var(--font-body);
+}
+
+.r-mark {
+  display: block;
+  margin-inline: auto;
+  margin-block-end: var(--space-2);
+}
+
+.r-title {
+  text-align: center;
+  font-weight: var(--weight-heading);
+}
+
+.r-meta {
+  margin-block-start: var(--space-2);
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.r-center {
+  text-align: center;
+}
+
+.r-rule {
+  margin-block: var(--space-3);
+  border: 0;
+  border-block-start: 1px dashed var(--text-2);
+}
+
+.r-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 var(--space-2);
+}
+
+.r-total {
+  font-weight: var(--weight-heading);
+}
+
+.r-items {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.r-items li {
+  display: grid;
+  grid-template-columns: minmax(0, 5.5em) minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.r-slot {
+  color: var(--text-2);
+}
+
+/* 글자를 키워 종이 안쪽이 좁아지면(14글자 폭 밑, 보통은 36칸 = 18글자 폭) 기능 이름을 위 줄로 올려 도구 이름이 한 글자씩 끊기지 않게 한다 */
+@container (width < 14em) {
+  .r-items li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 0;
+  }
+
+  .r-slot {
+    grid-column: 1 / -1;
+  }
+}
+
+.r-name {
+  overflow-wrap: anywhere;
+}
+
+/* 남색 도장 (D65, brief 4.8): 3px 겹줄 둥근 네모, −6° 기울임, 단색 모자 마크 20 + '코드쇼퍼 · 요금 0원' */
+.r-stamp {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+  /* 글자를 키워도 종이 폭을 넘지 않게: 넘으면 마크와 글이 줄을 바꾼다 (WCAG 1.4.10) */
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  /* 기울인 도장의 양 끝이 위아래로 약 12px 솟으므로 그만큼 비운다 */
+  margin: var(--space-5) auto;
+  padding: var(--space-1) var(--space-3);
+  border: 3px double var(--seal);
+  border-radius: var(--radius-sm);
+  color: var(--seal);
+  font-weight: var(--weight-heading);
+  transform: rotate(-6deg);
+  animation: stamp-press var(--dur-stamp) var(--ease-spring) var(--dur-print) both;
+}
+
+/* 한 번 뽑은 영수증은 다시 뽑지 않는다: 영수증 칸으로 돌아올 때, 도착 장면을 이미 본 뒤 다시 열 때 (섬이 data-printed를 붙인다) */
+.receipt-scene[data-printed] :is(.paper, .r-stamp) {
+  animation: none;
+}
+
+/* S6: 1.3배에서 1배로 누르기만 한다. 'to'가 없어 끝 상태는 요소 자기 값(−6°)이다 */
+@keyframes stamp-press {
+  from {
+    opacity: 0;
+    transform: rotate(-6deg) scale(var(--juice-stamp-scale));
+  }
+}
+
+.r-footer {
+  color: var(--text-2);
+}
+
+/* 출력 장면 [건너뛰기]: 종이 오른쪽 위 (누르는 곳 44) */
+.scene-skip-btn {
+  position: absolute;
+  inset-block-start: var(--space-3);
+  inset-inline-end: 0;
+}
+
+/* ── 아래 막대: 주 버튼 하나가 막대 폭을 채운다 (섬의 맨 바깥이 버튼이라 .action-main의 flex 항목이다) ── */
+.action-main .ar-go {
+  flex: 1 1 100%;
+}

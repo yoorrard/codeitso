@@ -15,8 +15,9 @@ const PORT = 4399;
 const BASE = `http://127.0.0.1:${PORT}`;
 const OUT = join(ROOT, '.qa');
 const SHOTS = join(OUT, 'shots');
-/** 주 버튼이 하나뿐이어야 하는 화면. 둘러보는 곳부터 시작하고, 단계 화면은 W4가 화면을 다시 짠 뒤 더한다 */
-const PRIMARY_ONE_ROUTES: readonly string[] = ['/tools', '/tools/supabase', '/terms', '/terms/api', '/receipts', '/dictionary', '/about'];
+/** 주 버튼이 하나뿐이어야 하는 화면. 둘러보는 곳부터 시작하고, 단계 화면은 W4가 화면을 다시 짤 때마다 더한다
+ *  (W4a: 홈, 내 AI 써 보기 · W4b: 만들 앱 정하기 · W4c: 도구 고르기 · W4d: 도구끼리 맞춰 보기, 설계도 받기) */
+const PRIMARY_ONE_ROUTES: readonly string[] = ['/', '/test-drive', '/destination', '/waypoints', '/check', '/arrival', '/tools', '/tools/supabase', '/terms', '/terms/api', '/receipts', '/dictionary', '/about'];
 
 const VIEWPORTS = [
   { name: '360', width: 360, height: 800 },

@@ -57,6 +57,13 @@ describe('상태 한 줄: 1 만들 앱 정하기', () => {
   it('다 됨: 시간 없음', () => {
     expect(statusLine('destination', ready, {})).toBe('만들 앱 정하기 · 다 정했어요');
   });
+
+  it('[이전]으로 돌아가 보는 질문이 n번째가 되고, 시간은 그대로 남은 질문 수로 센다 (brief 6.5)', () => {
+    const rest = (halfway.interview.total - halfway.interview.answered) * SECONDS_PER_QUESTION;
+    expect(statusLine('destination', halfway, {}, 0)).toBe(`만들 앱 정하기 · 1번째 질문${about(rest)}`);
+    // 다 정한 뒤 돌아가 봐도 '다 정했어요'
+    expect(statusLine('destination', ready, {}, 0)).toBe('만들 앱 정하기 · 다 정했어요');
+  });
 });
 
 describe('상태 한 줄: 2 도구 고르기', () => {
@@ -101,5 +108,13 @@ describe('상태 한 줄: 4 설계도 받기', () => {
     expect(statusLine('arrival', blocked, {})).toBe('설계도 받기 · 막힌 곳을 풀면 열려요');
     expect(statusLine('arrival', ready, {})).toBe('설계도 받기 · 받을 준비가 됐어요');
     expect(statusLine('arrival', ready, { issued: true })).toBe('설계도 받기 · 영수증을 받았어요');
+  });
+
+  it('영수증 링크로 연 영수증·깨진 링크는 내 진행 대신 그 사실을 쓴다 (주 버튼과 같은 까닭, D70)', () => {
+    expect(statusLine('arrival', empty, {}, undefined, 'shared')).toBe('설계도 받기 · 받은 영수증을 보고 있어요');
+    expect(statusLine('arrival', ready, { issued: true }, undefined, 'broken')).toBe('설계도 받기 · 영수증 링크를 열지 못했어요');
+    expect(statusLine('arrival', ready, { issued: true }, undefined, 'own')).toBe('설계도 받기 · 영수증을 받았어요');
+    // 다른 단계는 보는 영수증과 상관없다
+    expect(statusLine('check', blocked, {}, undefined, 'shared')).toBe(statusLine('check', blocked, {}));
   });
 });

@@ -145,6 +145,11 @@ export function readSeen(raw: unknown): Seen {
   return { scenes: strings(obj(raw)['scenes']) };
 }
 
+/** 저장된 진행이 있는가 (홈의 이어서 가기, 코스로 덮어쓸 때 묻기). 엔진을 부르지 않아 홈 첫 화면 JS에 엔진이 들지 않는다 */
+export function hasProgress(s: Session): boolean {
+  return Object.keys(s.answers).length > 0 || s.cart.length > 0;
+}
+
 /** 처음 값과 같으면 저장할 필요가 없다 (키를 지운다) */
 export function isEmptySession(s: Session): boolean {
   return Object.keys(s.answers).length === 0 && s.cart.length === 0 && s.kept.length === 0 && s.deferred.length === 0 && !s.freeText;

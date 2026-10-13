@@ -1,14 +1,15 @@
 // 이름 뒤 조사를 받침에 맞게 고른다 (.claude/rules/copy.md '자리 표시와 조사').
 // 마지막 한글 글자의 받침을 본다. 한글이 없으면 숫자·영문 끝소리로 어림하고, 그래도 모르면 '을(를)' 꼴.
 
-/** 조사 종류: obj 을/를, subj 이/가, topic 은/는, and 과/와, dir 으로/로 */
-export type JosaKind = 'obj' | 'subj' | 'topic' | 'and' | 'dir';
+/** 조사 종류: obj 을/를, subj 이/가, topic 은/는, and 과/와, dir 으로/로, cop 이에요/예요 */
+export type JosaKind = 'obj' | 'subj' | 'topic' | 'and' | 'dir' | 'cop';
 const PAIRS: Record<JosaKind, [string, string]> = {
   obj: ['을', '를'],
   subj: ['이', '가'],
   topic: ['은', '는'],
   and: ['과', '와'],
   dir: ['으로', '로'],
+  cop: ['이에요', '예요'],
 };
 
 /** 받침이 있으면 true, ㄹ받침이면 'rieul', 모르면 null */
@@ -22,7 +23,13 @@ function batchim(word: string): boolean | 'rieul' | null {
     }
     const ch = word[i] ?? '';
     if (/[0-9]/.test(ch)) return '013678'.includes(ch) ? (ch === '1' || ch === '7' || ch === '8' ? 'rieul' : true) : false;
-    if (/[a-zA-Z]/.test(ch)) return /[lmnr]/i.test(ch) ? (/[lr]/i.test(ch) ? 'rieul' : true) : false;
+    if (/[a-zA-Z]/.test(ch)) {
+      // 끝 'ng'는 ㅇ받침(Hosting 호스팅), 'le'는 ㄹ받침(Airtable 에어테이블)
+      const end = word.slice(0, i + 1);
+      if (/ng$/i.test(end)) return true;
+      if (/le$/i.test(end)) return 'rieul';
+      return /[lmnr]/i.test(ch) ? (/[lr]/i.test(ch) ? 'rieul' : true) : false;
+    }
   }
   return null;
 }

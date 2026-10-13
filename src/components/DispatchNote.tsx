@@ -42,9 +42,23 @@ export function DispatchNote({ title, text, closable = true, class: cls }: Props
     <aside ref={box} class={cls ? `dispatch-note ${cls}` : 'dispatch-note'} aria-label={ko.dispatch.label}>
       <Logo variant="badge" art={LOGO_BADGE} height={32} class="dispatch-badge" />
       <p>
-        {title && <span class="line">{title}</span>}
-        {sentences(text).map((t) => (
-          <span class="line">{t}</span>
+        {/* 알림 줄이 두 문장이면 좁은 폭에서 어구 중간이 아니라 문장 사이에서 줄을 바꾼다 (Lead.tsx와 같은 .lead-s) */}
+        {title && (
+          <span class="line">
+            {sentences(title).map((t, i) => (
+              <>
+                {i > 0 && ' '}
+                <span class="lead-s">{t}</span>
+              </>
+            ))}
+          </span>
+        )}
+        {/* 줄 사이 빈칸: 줄은 블록이라 보이지 않지만, 글을 복사하거나 이어 읽을 때 문장이 붙지 않게 */}
+        {sentences(text).map((t, i) => (
+          <>
+            {(i > 0 || title) && ' '}
+            <span class="line">{t}</span>
+          </>
         ))}
       </p>
       {closable && (

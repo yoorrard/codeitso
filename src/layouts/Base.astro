@@ -30,16 +30,19 @@ interface Props {
   description?: string;
   /** 지금 단계. 단계가 아닌 화면은 비워 둔다 */
   stage?: StageId | null;
+  /** 단계 밖 화면에 지도(MapSvg)를 그릴 때: 지도 표지 묶음을 싣는다 (홈의 본보기 지도·코스 미니 지도) */
+  map?: boolean;
 }
-const { title, description = ko.site.description, stage = null } = Astro.props;
+const { title, description = ko.site.description, stage = null, map = false } = Astro.props;
 const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
 // 배포 서버는 끝 빗금을 뗀 주소(/check)로 맞춘다 (wrangler.jsonc html_handling, D50)
 const canonical = Astro.site ? new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href : undefined;
 // 처음 온 사람 기준 단계 줄 값 (빌드 때 한 번)
 const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {});
 const hasAction = Astro.slots.has('action');
-// 지도 띠가 있는 단계에만 지도 표지 묶음을 숨겨 넣는다 (내 AI 써 보기에는 지도가 없다). 지도 CSS는 지도 섬(MapBoard.tsx)이 불러온다 (D68)
-const hasMap = stage !== null && stage !== 'test-drive';
+// 지도 띠가 있는 단계와 지도를 그리는 화면(홈)에만 지도 표지 묶음을 숨겨 넣는다 (내 AI 써 보기에는 지도가 없다).
+// 지도 CSS는 지도를 그리는 MapBoard.tsx가 불러온다 (D68)
+const hasMap = map || (stage !== null && stage !== 'test-drive');
 ---
 
 <!doctype html>
@@ -59,7 +62,8 @@ const hasMap = stage !== null && stage !== 'test-drive';
     <link rel="manifest" href="/manifest.webmanifest" />
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
-      // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게)를 붙인다.
+      // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게), 이어 갈 진행(data-resume),
+      // 연습을 마침(data-lesson-done: 내 AI 써 보기의 주 버튼이 붙기 전 바뀌어 보이지 않게), 영수증 링크(data-receipt-link)를 붙인다.
       // 읽기만 한다 (저장은 src/lib/store.ts).
       try {
         var p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}');
@@ -67,7 +71,10 @@ const hasMap = stage !== null && stage !== 'test-drive';
         var saved = localStorage.getItem('cc:session:v1');
         if (saved || localStorage.getItem('cc:seen:v1')) document.documentElement.setAttribute('data-visit', 'again');
         if (saved && Object.keys(JSON.parse(saved).answers || {}).length > 0) document.documentElement.setAttribute('data-resume', '');
+        if (JSON.parse(localStorage.getItem('cc:meta:v1') || '{}').lessonDone === true) document.documentElement.setAttribute('data-lesson-done', '');
       } catch (e) {}
+      // 영수증 링크(#r=)로 열었으면: 설계도 받기 섬이 링크를 읽을 때까지 빌드 때 그린 잠김 화면을 감춘다 (arrival.css)
+      if (location.hash.indexOf('#r=') === 0) document.documentElement.setAttribute('data-receipt-link', '');
       // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 홈 장면을 짧게 (자주 볼수록 짧게)
       try {
         var nav = performance.getEntriesByType('navigation')[0];
@@ -121,7 +128,7 @@ const hasMap = stage !== null && stage !== 'test-drive';
     <footer class="site-footer" aria-label={ko.footer.label}>
       <Logo variant="wordmark" height={16} label={ko.site.name} class="footer-mark" />
       <p class="footer-line">{ko.footer.license}</p>
-      {STAGE === 'preview' && <p class="footer-line">{ko.footer.trial}</p>}
+      {STAGE === 'preview' && <p class="footer-line footer-trial">{ko.footer.trial}</p>}
       <ul class="footer-links">
         <li><a href={ROUTES.about}>{ko.footer.about}</a></li>
         <li><a href={ROUTES.criteria}>{ko.footer.scoring}</a></li>

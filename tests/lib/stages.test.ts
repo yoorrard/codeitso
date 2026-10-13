@@ -5,6 +5,7 @@ import { evaluate } from '../../src/lib/engine/index.ts';
 import type { Golden } from '../../scripts/lib/golden.ts';
 import { goldenSession } from '../../scripts/lib/golden.ts';
 import { goldenFiles, readJson } from '../../scripts/lib/load-data.ts';
+import { progress } from '../../src/lib/progress.ts';
 import { NUMBERED, STAGES, continueTarget, gate, hasProgress, sameSession, stageById, stageNumber } from '../../src/lib/stages.ts';
 import { realCatalog } from '../fixtures/tiny.ts';
 
@@ -75,6 +76,35 @@ describe('이어서 가기', () => {
     expect(continueTarget(ready)).toEqual({ stage: 'arrival' });
   });
 
+  it('도구를 하나라도 골랐어도 꼭 고를 것이 남았으면 도구 고르기로 (도구끼리 맞춰 보기가 아니라)', () => {
+    // 고를 수 있는 꼭 고를 것이 둘 이상인 골든 사례에서 도구를 하나만 남긴다
+    const base = find((r) => {
+      if (!r.done || r.session.cart.length < 2) return false;
+      const one = evaluate(cat, { ...r.session, cart: r.session.cart.slice(0, 1) });
+      const p = progress(one, {});
+      return p.requiredLeft - p.requiredNoTool > 0;
+    }, '꼭 고를 것이 둘 이상인');
+    const partial = evaluate(cat, { ...base.session, cart: base.session.cart.slice(0, 1) });
+    expect(partial.session.cart.length).toBe(1);
+    expect(continueTarget(partial)).toEqual({ stage: 'waypoints' });
+  });
+
+  it('남은 꼭 고를 것이 모두 맞는 도구가 없는 기능이면 도구끼리 맞춰 보기로 (거기서 그대로 가기를 고른다)', () => {
+    const noTool = results.find((r) => {
+      const p = progress(r, {});
+      return r.done && r.session.cart.length > 0 && p.requiredLeft > 0 && p.requiredLeft === p.requiredNoTool;
+    });
+    if (!noTool) return;
+    expect(continueTarget(noTool).stage).not.toBe('waypoints');
+  });
+
+  it('미룬 칸은 남은 것으로 세지 않는다', () => {
+    for (const r of results.filter((x) => x.session.deferred.length > 0 && x.session.cart.length > 0)) {
+      const p = progress(r, {});
+      if (p.requiredLeft - p.requiredNoTool === 0) expect(continueTarget(r).stage).not.toBe('waypoints');
+    }
+  });
+
   it('진행이 있는지', () => {
     expect(hasProgress(empty.session)).toBe(false);
     expect(hasProgress(halfway.session)).toBe(true);
@@ -102,5 +132,30 @@ describe('두 상태가 같은지', () => {
   it('장바구니는 담은 순서도 본다', () => {
     if (s.cart.length < 2) return;
     expect(sameSession(cat, s, { ...s, cart: [...s.cart].reverse() })).toBe(false);
+  });
+});
+
+describe('홈 이어서 가기의 갈 곳과 둘째 줄 (continue.ts, D70)', () => {
+  it('꼭 고를 것이 남으면 도구 고르기, 만들 앱을 정하는 중이면 몇 번째 질문인지', async () => {
+    const { continueInfo } = await import('../../src/lib/continue.ts');
+    const { ko } = await import('../../src/copy/ko.ts');
+    const base = find((r) => r.done && r.session.cart.length >= 2, '도구를 둘 이상 고른');
+    const one = evaluate(cat, { ...base.session, cart: base.session.cart.slice(0, 1) });
+    const p = progress(one, {});
+    if (p.requiredLeft - p.requiredNoTool > 0) expect(continueInfo(one.session)).toEqual({ path: '/waypoints', where: `2/4 · ${ko.stages.waypoints}` });
+    expect(continueInfo(halfway.session)).toEqual({ path: '/destination', where: `1/4 · ${ko.stages.destination} · ${halfway.interview.answered + 1}번째 질문` });
+    expect(continueInfo(ready.session).path).toBe('/arrival');
+  });
+
+  it('코스로 채울 상태: 코스의 답·도구·그대로 간 막힌 곳·한 줄 입력 (course.ts)', async () => {
+    const { courseSession } = await import('../../src/lib/course.ts');
+    const { data } = await import('../../src/lib/data.ts');
+    for (const r of data.recipes.recipes) {
+      const s = courseSession(r.id);
+      expect(s?.cart).toEqual(r.cart);
+      expect(s?.kept).toEqual(r.kept ?? []);
+      expect(s?.freeText).toBe(r.freeText);
+    }
+    expect(courseSession('no-such-course')).toBeNull();
   });
 });

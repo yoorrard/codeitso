@@ -747,7 +747,7 @@
   color: var(--plate-line);
 }
 
-/* 큰 청사진 타일: 놓인 칸의 폭을 채우되 140px까지 (목적지 첫 질문, CONCEPT 6.3) */
+/* 큰 청사진 타일: 놓인 칸의 폭을 채우되 140px까지 (빈 상태, 설계도 받기의 건네드릴 것) */
 .art-tile.tile-hero {
   inline-size: min(100%, 140px);
   block-size: auto;
@@ -877,13 +877,6 @@
   --btn-bg: var(--bad-soft);
   --btn-bg-press: color-mix(in srgb, var(--bad-soft) 88%, var(--bad));
   --btn-fg: var(--bad-ink);
-}
-
-/* 조용한 버튼 (옛 이름, 단계 화면이 쓴다): 바탕 없는 글 버튼. 새 코드는 .btn-text */
-.btn-quiet {
-  --btn-bg: transparent;
-  --btn-bg-press: var(--fill);
-  padding-inline: var(--space-2);
 }
 
 .btn-lg {

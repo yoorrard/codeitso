@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 영수증 | 이용자 | `receiptModel` → `renderReceiptText` | 화면: 모델로 그린 종이 / 복사: 고정폭 텍스트 |
 | 설계도 (내 AI에게 주는 설계 문서) | 이용자의 AI | `renderPack`, `packFileName` | 마크다운. 복사, `.md` 내려받기 |
-| 읽어 둘 용어 | 이용자 | `evaluate().study`, `steps[].concepts` | 설계도 받기의 탭과 `/terms` 맨 위 묶음 |
+| 읽어 둘 용어 | 이용자 | `evaluate().study`, `steps[].concepts` | 설계도 받기의 '용어' 칸과 `/terms` 맨 위 묶음 |
 | AI에게 할 말 (대화 카드) | 이용자 → 자기 AI | `conversationCards` | 카드별 복사 |
 
 ## 1. 영수증

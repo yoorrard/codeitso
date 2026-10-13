@@ -2,6 +2,8 @@
 import type { Catalog, EngineResult } from './engine/index.ts';
 import { normalizeSession } from './engine/index.ts';
 import type { Session } from './engine/types.ts';
+// progress.ts도 이 파일의 STAGES를 쓴다. 서로 함수 안에서만 부르므로 순환 import여도 처음 평가 때 문제가 없다
+import { progress } from './progress.ts';
 import { ROUTES } from './routes.ts';
 
 export type StageId = 'test-drive' | 'destination' | 'waypoints' | 'check' | 'arrival';
@@ -65,18 +67,23 @@ export interface ContinueTarget {
   questionNumber?: number;
 }
 
-/** 홈의 '이어서 가기': 만들 앱 정하기 → 도구 고르기(고른 도구가 없을 때) → 도구끼리 맞춰 보기(출발할 수 없을 때) → 설계도 받기 */
+/**
+ * 홈의 '이어서 가기': 만들 앱 정하기 → 도구 고르기(고른 도구가 없거나, 지금 고를 수 있는 꼭 고를 것이 남았을 때)
+ * → 도구끼리 맞춰 보기(출발할 수 없을 때) → 설계도 받기.
+ * 맞는 도구가 없는 꼭 고를 것은 도구 고르기에서 고를 수 없으므로(도구끼리 맞춰 보기에서 '그대로 가기') 남은 수에서 뺀다.
+ * 수는 상태 한 줄과 같은 progress()로 센다
+ */
 export function continueTarget(r: EngineResult): ContinueTarget {
   if (!r.done) return { stage: 'destination', questionNumber: r.interview.answered + 1 };
   if (r.session.cart.length === 0) return { stage: 'waypoints' };
+  const p = progress(r, {});
+  if (p.requiredLeft - p.requiredNoTool > 0) return { stage: 'waypoints' };
   if (!r.canIssue) return { stage: 'check' };
   return { stage: 'arrival' };
 }
 
-/** 저장된 진행이 있는가 (이어서 가기를 보여 줄지) */
-export function hasProgress(s: Session): boolean {
-  return Object.keys(s.answers).length > 0 || s.cart.length > 0;
-}
+/** 저장된 진행이 있는가 (이어서 가기를 보여 줄지). 엔진 없이 쓰도록 saved.ts에 두고 여기서도 내보낸다 */
+export { hasProgress } from './saved.ts';
 
 /** 두 상태가 같은지: normalizeSession 결과의 answers·cart·kept·deferred를 비교 (자유 입력은 보지 않는다) */
 export function sameSession(cat: Catalog, a: Partial<Session>, b: Partial<Session>): boolean {

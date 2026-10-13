@@ -67,9 +67,9 @@ test('만들 앱을 처음부터 끝까지 키보드만으로 정하고 도구 �
   await page.goto('/destination');
   await islandsReady(page);
   await answerInterview(page, kase.answers, { keyboard: true, freeText: '우리 반 급식 안내' });
-  await expect(page.locator('.q-done h1')).toBeFocused();
-  await page.keyboard.press('Tab');
-  await expect(page.locator('.q-done a.btn-primary')).toBeFocused();
+  // 한 줄 쓰기에서 Enter → 아래 막대의 주 버튼 [도구 고르러 가기]로 초점 (brief 6.5)
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.action-bar a.q-go')).toBeFocused();
   await page.keyboard.press('Enter');
   await page.waitForURL(/\/waypoints$/);
   await islandsReady(page);

@@ -28,6 +28,25 @@ describe('조사 고르기', () => {
     expect(josa('2', 'obj')).toBe('2를');
   });
 
+  it("영문 끝 'ng'는 ㅇ받침, 'le'는 ㄹ받침으로 (호스팅, 에어테이블)", () => {
+    expect(josa('Firebase Hosting', 'dir')).toBe('Firebase Hosting으로');
+    expect(josa('Firebase Hosting', 'obj')).toBe('Firebase Hosting을');
+    expect(josa('Airtable', 'obj')).toBe('Airtable을');
+    expect(josa('Airtable', 'subj')).toBe('Airtable이');
+    expect(josa('Airtable', 'dir')).toBe('Airtable로');
+    // 'e'로 끝나도 받침이 없는 이름은 그대로
+    expect(josa('React + Vite', 'dir')).toBe('React + Vite로');
+    expect(josa('Supabase', 'obj')).toBe('Supabase를');
+  });
+
+  it('이에요/예요 (추천 이름 알림)', () => {
+    expect(josa('Supabase', 'cop')).toBe('Supabase예요');
+    expect(josa('나이스 급식식단정보', 'cop')).toBe('나이스 급식식단정보예요');
+    expect(josa('Cloud Firestore', 'cop')).toBe('Cloud Firestore예요');
+    expect(josa('Firebase Hosting', 'cop')).toBe('Firebase Hosting이에요');
+    expect(josa('서울', 'cop')).toBe('서울이에요');
+  });
+
   it('모르면 둘 다 적는다', () => {
     expect(josa('!!', 'obj')).toBe('!!을(를)');
   });

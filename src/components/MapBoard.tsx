@@ -7,6 +7,7 @@
 import { useStore } from '@nanostores/preact';
 import '../styles/map-land.css';
 import '../styles/map.css';
+import { $arrivalView, resultFor } from '../lib/arrival-view.ts';
 import { catalog } from '../lib/data.ts';
 import { evaluate } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
@@ -42,11 +43,14 @@ interface SvgProps {
   variant?: MapVariant;
   /** false면 땅 판만 그린다: 섬이 붙기 전(빌드 때 HTML)에는 저장된 진행을 모르므로, 처음 온 사람의 길을 보였다가 바꾸지 않는다 */
   live?: boolean;
+  /** 장식 그림 (홈 본보기 지도, 코스 미리 보기): 뜻은 옆 글이 전하므로 요약 글 없이 aria-hidden */
+  decorative?: boolean;
 }
 
 /** 모형을 그리는 순수 컴포넌트. 정적으로도(코스 썸네일) 섬 안에서도 쓴다. mini는 길과 마디만 */
-export function MapSvg({ model: m, variant = 'band', live = true }: SvgProps) {
+export function MapSvg({ model: m, variant = 'band', live = true, decorative = false }: SvgProps) {
   const mini = variant === 'mini';
+  const hidden = mini || !live || decorative;
   const l = m.lot;
   const labels = [m.start.label, l.label, ...m.nodes.map((n) => n.label)];
   const main = m.roads.filter((r) => r.kind === 'main');
@@ -65,25 +69,11 @@ export function MapSvg({ model: m, variant = 'band', live = true }: SvgProps) {
       viewBox={mini ? '60 32 312 176' : `0 0 ${m.width} ${m.height}`}
       preserveAspectRatio={mini ? 'xMidYMid meet' : 'xMidYMid slice'}
       data-palette={m.palette}
-      role={mini || !live ? undefined : 'img'}
-      aria-label={mini || !live ? undefined : m.summary}
-      aria-hidden={mini || !live ? 'true' : undefined}
+      role={hidden ? undefined : 'img'}
+      aria-label={hidden ? undefined : m.summary}
+      aria-hidden={hidden ? 'true' : undefined}
       focusable="false"
     >
-      {!mini && (
-        <defs>
-          {/* 차 그림자: 돌지 않는 부모에 걸어 빛이 늘 왼쪽 위에서 오게 (2, 3) 흐림 없이 */}
-          <filter id="mb-shade" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
-            <feFlood class="mb-shade-color" result="c" />
-            <feComposite in="c" in2="SourceAlpha" operator="in" />
-            <feOffset dx="2" dy="3" result="s" />
-            <feMerge>
-              <feMergeNode in="s" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-      )}
       <g aria-hidden="true">
         {/* 땅 판(1296×720) 밖까지 아주 넓은 화면에서도 같은 땅색이 이어지게 (느낌 팔레트를 따른다) */}
         {!mini && <rect class="ml-land" x={-4320} y={-2400} width={9072} height={5040} />}
@@ -186,7 +176,8 @@ export function MapSvg({ model: m, variant = 'band', live = true }: SvgProps) {
               </g>
             )}
             {!mini && (
-              // 차: 그림자는 돌지 않는 바깥 묶음의 필터가, 자리·방향은 안쪽 묶음이. S3·S5는 안쪽 묶음에 offset-path(routeD)를 준다
+              // 차: 그림자는 돌지 않는 바깥 묶음의 필터(#mb-shade, 페이지에 한 번 MapSprite.astro)가, 자리·방향은 안쪽 묶음이.
+              // S3·S5는 안쪽 묶음에 offset-path(routeD)를 준다
               <g class="mb-car-wrap" filter="url(#mb-shade)">
                 <g class="mb-car" transform={`${tr(car.x, car.y)} rotate(${car.angle})`}>
                   <use href="#mk-car-top" x={-18} y={-9} width={36} height={18} />
@@ -216,12 +207,15 @@ export default function MapBoard({ stage, variant = 'band' }: Props) {
   const live = useStore($result);
   const meta = useStore($meta);
   const open = useStore($mapFocus);
-  const r = ready ? live : FIRST_VISIT;
+  // 설계도 받기를 영수증 링크로 열었으면 그 영수증의 지도를 그린다 (아래 시트와 같은 상태)
+  const view = useStore($arrivalView);
+  const shared = stage === 'arrival' && view.kind === 'shared';
+  const r = ready ? (shared ? resultFor(catalog, view, live) : live) : FIRST_VISIT;
   const model = mapModel(r, {
     // 교통 정보는 도구끼리 맞춰 보기가 열렸을 때만 (만들 앱을 정하기 전에는 빈 칸마다 막힘이 되어 지도가 온통 빨개진다)
     traffic: stage === 'check' && r.done,
-    // 도착 그림은 설계도 받기 문이 열려 있을 때만 (영수증을 받은 뒤 도구를 바꿔 막힌 곳이 생기면 다시 길 위로)
-    arrived: ready && stage === 'arrival' && meta.issued === true && r.canIssue,
+    // 도착 그림은 설계도 받기 문이 열려 있을 때만 (영수증을 받은 뒤 도구를 바꿔 막힌 곳이 생기면 다시 길 위로). 받은 영수증은 도착한 그림
+    arrived: ready && stage === 'arrival' && (shared || meta.issued === true) && r.canIssue,
     // 지금 여는 곳 고리는 도구 고르기가 열렸을 때만 (만들 앱을 정하기 전에는 펼친 칸이 없다)
     focus: ready && stage === 'waypoints' && r.done ? (open ?? undefined) : undefined,
   });

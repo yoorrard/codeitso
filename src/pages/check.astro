@@ -1,14 +1,19 @@
 ---
-// 3단계 도구끼리 맞춰 보기 /check (docs/CONCEPT.md 6.5, T10): 요약·교통 정보·나누기 섬과, 아래 막대의 '설계도 받으러 출발하기' 섬.
+// 3단계 도구끼리 맞춰 보기 /check (brief 6.7, D70): 지도 띠 200(교통 색과 표지) → 16 겹친 내용 시트 안의 섬
+// → 아래 막대(상태 한 줄 + 주 버튼 하나 [설계도 받으러 출발하기], 막힌 곳이 있으면 꺼짐 + 상태 한 줄이 까닭).
+// 빌드 때는 처음 온 사람 기준이라 잠김(빈 상태 + [만들 앱 정하러 가기])을 그린다.
 import Base from '../layouts/Base.astro';
 import MapBoard from '../components/MapBoard.tsx';
 import Check from '../components/Check.tsx';
 import IssueButton from '../components/IssueButton.tsx';
 import { ko } from '../copy/ko.ts';
+import '../styles/check.css';
 ---
 
 <Base title={ko.check.pageTitle} stage="check">
   <div class="map-band is-check"><MapBoard client:load stage="check" /></div>
-  <Check client:load />
+  <div class="content-sheet on-map">
+    <Check client:load />
+  </div>
   <IssueButton client:load slot="action" />
 </Base>

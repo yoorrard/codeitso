@@ -26,7 +26,7 @@ const cards = data.recipes.recipes.map((recipe) => {
   <ul class="card-list recipe-list">
     {
       cards.map(({ recipe, model, products }) => (
-        <li class="card recipe-card">
+        <li class="card recipe-card" id={recipe.id}>
           <h2>{recipe.title}</h2>
           <p class="meta">
             {ko.home.recipeFor}: {recipe.forWho}

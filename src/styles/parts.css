@@ -122,6 +122,56 @@
   box-shadow: var(--elev-2);
 }
 
+/* 지도 띠 위 내용 시트 (단계 화면, brief 6 공통 뼈대): 띠와 16 겹친다(무대의 흐름 간격보다 앞서게 두 클래스로).
+   360px은 화면 끝에서 끝까지, 680px부터 읽는 폭(640 + 여백)의 둥근 판. 시트 안 목록 줄의 누름 면은 글 시작선 밖으로 16 나간다 */
+.content-sheet.on-map {
+  margin-block-start: calc(-1 * var(--space-4));
+  margin-inline: calc(-1 * var(--gutter));
+}
+
+/* 360px: 시트가 아래 막대까지 이어지게 무대 아래 여백을 시트가 낸다 (회색 띠가 남지 않게) */
+.stage:has(> .on-map) {
+  padding-block-end: 0;
+}
+
+.on-map .list {
+  margin-inline: calc(-1 * var(--space-4));
+}
+
+.on-map :is(.list > li + li > .list-row, .list > .list-row + .list-row)::before {
+  inset-inline-end: var(--space-4);
+}
+
+/* 680px부터: 지도 위에 뜬 둥근 판. 아래 막대와 사이를 두어 판의 아래 모서리가 보이게 */
+@media (min-width: 680px) {
+  .content-sheet.on-map {
+    margin-inline: 0;
+    border-radius: var(--radius-xl);
+  }
+
+  .stage:has(> .on-map) {
+    padding-block-end: var(--space-6);
+  }
+}
+
+/* 번호 원 24 (홈 '이렇게 가요', 내 AI 써 보기의 세로 번호 단계): 단계 줄의 '아직' 원과 같은 꼴.
+   --surface + 1px --border(3.64:1) + --text-2 숫자 14/600 tabular */
+.num-dot {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 24px;
+  block-size: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: 1;
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── 줄 목록 (brief 5.6, 5.5): <ul class="list"> 안의 .list-row(한 줄 56, 두 줄 72). 줄 전체가 하나의 누르는 곳.
    앞: 타일 40(.list-tile) 또는 미니 지도 56×40(.list-map). 가운데: .list-text(.list-name 17/600 + .list-sub 14/20).
    뒤: .list-value(17/600 tabular) · .list-chev(› 20) · .switch 중 하나. 고름: aria-pressed/aria-checked/aria-selected="true"
@@ -387,8 +437,9 @@
   transform: scale(var(--juice-press-scale));
 }
 
+/* 올림은 고르지 않은 칩만: 고른 칩(남색 + 흰 글자)에 회색 면을 올리면 글자가 흐려진다 */
 @media (hover: hover) {
-  :is(a, button).chip:hover::before {
+  :is(a, button).chip:not([aria-pressed='true'], [aria-checked='true'], [aria-selected='true'], .is-chosen):hover::before {
     background: var(--fill-press);
   }
 }
@@ -431,9 +482,8 @@
 }
 
 /* ── 꼬리표 (brief 5.6, 4.8): 높이 26, 모서리 6, 좌우 8, 14/600. 색이 있는 꼬리표는 '추천'(.tag-reco) 하나다.
-   나머지('꼭 고를 것', '공식', '실시간')는 --fill + --text-2. 한 줄에 둘까지. .badge는 옛 이름 ── */
-.tag,
-.badge {
+   나머지('꼭 고를 것', '공식', '실시간')는 --fill + --text-2. 한 줄에 둘까지. 한 줄로 둔다 ── */
+.tag {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
@@ -446,23 +496,17 @@
   line-height: var(--leading-caption);
   font-weight: var(--weight-strong);
   letter-spacing: 0;
-}
-
-/* 새 꼬리표는 한 줄로 (옛 .badge는 좁은 칸에서 줄을 바꾼다) */
-.tag {
   white-space: nowrap;
 }
 
-.tag-reco,
-.badge-top {
+.tag-reco {
   background: var(--accent-soft);
   color: var(--on-accent-soft);
 }
 
 /* ── 상태 알약 (교통, brief 5.6): 높이 28, 알약, 14/600, 아이콘 16 + 글. 색만으로 뜻을 전하지 않는다(그림 + 글).
-   막힘 .pill-bad · 서행 .pill-warn · 원활 .pill-ok. .traffic.is-jam/-slow/-flow는 옛 이름 ── */
-.pill,
-.traffic {
+   막힘 .pill-bad · 서행 .pill-warn · 원활 .pill-ok ── */
+.pill {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
@@ -478,27 +522,23 @@
 }
 
 .pill svg,
-.traffic svg,
 .pill .i-mask {
   --i-size: 16px;
   inline-size: 16px;
   block-size: 16px;
 }
 
-.pill-bad,
-.traffic.is-jam {
+.pill-bad {
   background: var(--bad-soft);
   color: var(--bad-ink);
 }
 
-.pill-warn,
-.traffic.is-slow {
+.pill-warn {
   background: var(--warn-soft);
   color: var(--warn-ink);
 }
 
-.pill-ok,
-.traffic.is-flow {
+.pill-ok {
   background: var(--ok-soft);
   color: var(--ok-ink);
 }
@@ -747,9 +787,8 @@
 }
 
 /* ── 입력·검색 칸 (brief 5.6): 48, 모서리 14, --surface + 1px --border(3.64 / 3.85), 16px 글(iOS 확대 방지).
-   초점은 2px(테두리 + 안쪽 1px). 앞 아이콘 20은 .field-wrap > .field-icon. .line-input은 옛 이름 ── */
-.field,
-.line-input {
+   초점은 2px(테두리 + 안쪽 1px). 앞 아이콘 20은 .field-wrap > .field-icon ── */
+.field {
   inline-size: 100%;
   min-block-size: var(--btn-md);
   padding: var(--space-2) var(--space-4);
@@ -761,15 +800,13 @@
   line-height: var(--leading-body);
 }
 
-.field:focus-visible,
-.line-input:focus-visible {
+.field:focus-visible {
   border-color: var(--focus);
   outline: 1px solid var(--focus);
   outline-offset: -2px;
 }
 
-.field::placeholder,
-.line-input::placeholder {
+.field::placeholder {
   color: var(--text-3);
 }
 
@@ -789,7 +826,7 @@
   pointer-events: none;
 }
 
-.field-wrap > :is(.field, .line-input) {
+.field-wrap > .field {
   padding-inline-start: calc(var(--space-3) + 20px + var(--space-2));
 }
 
@@ -829,7 +866,8 @@
   text-align: center;
 }
 
-.empty-state-art {
+.empty-state-art,
+.empty-state-art.art-tile {
   inline-size: 96px;
   block-size: 96px;
 }
@@ -858,7 +896,8 @@
 
 /* ══ 화면마다 쓰던 조각 ═══════════════════════════════════════════════════ */
 
-.stage > * + * {
+/* 무대의 흐름 간격. 모달(<dialog>)은 맨 위 층이라 자기 자리(frame.css의 margin)를 지킨다 */
+.stage > * + *:not(dialog) {
   margin-block-start: var(--space-4);
 }
 
@@ -903,154 +942,6 @@
   color: var(--bad-ink);
 }
 
-/* 첫 수업 단계 */
-.lesson-steps {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: var(--space-5);
-}
-
-.lesson-step {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-.step-title {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--size-title-3);
-}
-
-.step-no {
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-sm);
-  background: var(--navy);
-  color: var(--on-navy);
-  font-size: var(--size-caption);
-}
-
-.step-after {
-  color: var(--text-2);
-}
-
-/* 접힘 안내 */
-.stuck {
-  border-radius: var(--radius-lg);
-  background: var(--selected);
-  padding: 0 var(--space-4);
-}
-
-.stuck summary {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-weight: var(--weight-strong);
-}
-
-.stuck ul {
-  display: grid;
-  gap: var(--space-2);
-  padding-block: 0 var(--space-4);
-  padding-inline-start: var(--space-5);
-}
-
-/* 첫 수업 끝 */
-.lesson-done h2 {
-  /* 균형 줄바꿈이 '방금 한 / 게'처럼 낱말 묶음을 가르지 않게 */
-  text-wrap: pretty;
-}
-
-.lesson-done {
-  padding: var(--space-5);
-  border-radius: var(--radius-lg);
-  background: var(--accent-soft);
-  display: grid;
-  gap: var(--space-3);
-}
-
-.lesson-stamp {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-3);
-}
-
-/* 도장: 금빛 점선 원 안의 그림, 살짝 기울임 */
-.stamp-mark {
-  display: grid;
-  place-items: center;
-  inline-size: 88px;
-  block-size: 88px;
-  border-radius: var(--radius-pill);
-  border: 4px double var(--accent);
-  background: var(--surface);
-  transform: rotate(-8deg);
-}
-
-.stamp-mark {
-  position: relative;
-}
-
-/* 도장 쾅: 크게 기울어 내려와 자리에 앉고, 잉크 고리가 퍼진다 (처음 한 번만, 동작 줄이기면 바로 끝) */
-.stamp-in {
-  animation: stamp-in var(--dur-stamp) var(--ease-spring) both;
-}
-
-.stamp-in::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: var(--radius-pill);
-  border: 3px solid var(--accent);
-  opacity: 0;
-  animation: ink-ring var(--dur-ui) var(--ease-out) var(--dur-stamp) both;
-}
-
-@keyframes stamp-in {
-  from {
-    opacity: 0;
-    transform: rotate(-20deg) scale(var(--juice-stamp-scale));
-  }
-  to {
-    opacity: 1;
-    transform: rotate(-8deg) scale(1);
-  }
-}
-
-@keyframes ink-ring {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(1.35);
-  }
-}
-
-.lesson-stamp.just-now {
-  animation: thump var(--dur-tap) var(--ease-out) var(--dur-stamp) both;
-}
-
-@keyframes thump {
-  0%,
-  100% {
-    transform: none;
-  }
-  33% {
-    transform: translateX(var(--juice-m-shake));
-  }
-  66% {
-    transform: translateX(calc(-1 * var(--juice-m-shake)));
-  }
-}
-
 /* 카드 (레시피·이어서 하기) */
 .card-list {
   display: grid;
@@ -1071,32 +962,9 @@
   background: var(--surface);
 }
 
-.card h3 {
-  font-size: var(--size-title-3);
-}
-
 .card .meta {
   font-size: var(--size-caption);
   color: var(--text-2);
-}
-
-.continue-card {
-  display: grid;
-  gap: var(--space-2);
-  justify-items: start;
-  padding: var(--space-4);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--hairline);
-  background: var(--surface);
-}
-
-.continue-card h2 {
-  font-size: var(--size-title-3);
-}
-
-.trip-line {
-  font-weight: var(--weight-strong);
-  font-variant-numeric: tabular-nums;
 }
 
 .dispatch-note .line {
@@ -1129,67 +997,8 @@
   background: var(--cyan);
 }
 
-/* ── 인터뷰 (T08) ───────────────────────────────────── */
-.interview {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.q-card {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  /* 새 질문은 살짝 떠오르며 나타난다 (M5와 같은 결, 동작 줄이기면 페이드만) */
-  transition:
-    opacity var(--dur-fade) var(--ease-out),
-    translate var(--dur-ui) var(--ease-out);
-}
-
-@starting-style {
-  .q-card {
-    opacity: 0;
-    translate: 0 12px;
-  }
-}
-
-:root[data-motion='reduce'] .q-card {
-  translate: none;
-}
-
-.q-card h1 {
-  font-size: var(--size-title-1);
-}
-
-.q-card h1:focus {
-  outline: none;
-}
-
-.q-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  min-block-size: var(--tap);
-}
-
-.q-no {
-  margin-inline-start: auto;
-  font-variant-numeric: tabular-nums;
-  font-weight: var(--weight-strong);
-  color: var(--text-2);
-}
-
 .q-help {
   color: var(--text-2);
-}
-
-.btn-quiet {
-  border-color: transparent;
-  background: transparent;
-  padding-inline: var(--space-2);
 }
 
 /* 기사 메시지 (CONCEPT 4.1, brief 6.1): 모자 배지 원 32 + 15/22 글 + 닫기 44, --fill 면, 모서리 14, 안쪽 12·16.
@@ -1241,1026 +1050,6 @@
     opacity: 0;
     transform: translateY(var(--juice-m-shake));
   }
-}
-
-.options {
-  display: grid;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-}
-
-/* 넓으면 2~4열, 글자를 키워 좁아지면 1열로 */
-.options-pic {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
-}
-
-/* 앱 종류: 360px에서 2열 큰 타일 (CONCEPT 6.3) */
-.options-hero {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
-}
-
-/* 네·아니요·아마·모르겠어요: 2×2 (글자를 키우면 1열) */
-.options-grid {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
-}
-
-.options-grid .option {
-  justify-content: center;
-  text-align: center;
-}
-
-/* 그림 보기의 '모르겠어요'는 아래 전체 폭 줄 */
-.options .option-row {
-  grid-column: 1 / -1;
-}
-
-.option {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  inline-size: 100%;
-  min-block-size: var(--btn-lg);
-  padding: var(--space-3) var(--space-4);
-  border: 0;
-  border-radius: var(--radius-lg);
-  background: var(--fill);
-  color: var(--text);
-  text-align: start;
-  font-size: var(--size-body);
-  font-weight: var(--weight-strong);
-  transition:
-    transform var(--dur-tap) var(--ease-out),
-    background-color var(--dur-tap) var(--ease-out);
-}
-
-.option:active {
-  transform: scale(var(--juice-press-scale));
-}
-
-.option-pic {
-  flex-direction: column;
-  justify-content: center;
-  block-size: 100%;
-  padding: var(--space-3);
-  text-align: center;
-}
-
-.option-pic .art-tile {
-  margin-block-end: var(--space-1);
-}
-
-.option-unknown {
-  border: 1.5px dashed var(--border);
-}
-
-.option {
-  position: relative;
-}
-
-@media (hover: hover) {
-  .option:hover {
-    background: var(--fill-press);
-  }
-}
-
-.option[aria-pressed='true'] {
-  background: var(--selected);
-  box-shadow: inset 0 0 0 2px var(--accent);
-}
-
-.picked-mark {
-  position: absolute;
-  inset-block-start: var(--space-1);
-  inset-inline-end: var(--space-1);
-  display: grid;
-  place-items: center;
-  inline-size: 24px;
-  block-size: 24px;
-  border-radius: var(--radius-pill);
-  background: var(--navy);
-  color: var(--on-navy);
-}
-
-/* 고대비 모드: 배경색이 사라져도 고른 보기가 보이게 */
-@media (forced-colors: active) {
-  .option,
-  .btn {
-    border: 1px solid ButtonText;
-  }
-
-  .option[aria-pressed='true'] {
-    border: 3px solid Highlight;
-  }
-}
-
-/* 이어서 하는 사람: 섬이 붙기 전 첫 질문이 잠깐 보이지 않게 (머리 스크립트가 data-resume을 붙인다) */
-:root[data-resume] .interview:not([data-ready]) > .q-card {
-  visibility: hidden;
-}
-
-.line-form {
-  display: grid;
-  gap: var(--space-2);
-}
-
-/* '느낌' 보기: 자료의 색으로 그린 작은 화면 견본 */
-.style-preview {
-  display: grid;
-  gap: 6px;
-  inline-size: 72px;
-  padding: 8px;
-  border-radius: var(--sw-radius, 8px);
-  background: var(--sw-bg);
-  box-shadow: 0 0 0 1px var(--hairline);
-}
-
-.sw-title {
-  block-size: 8px;
-  inline-size: 70%;
-  border-radius: 4px;
-  background: var(--sw-text);
-}
-
-.sw-line {
-  block-size: 14px;
-  border-radius: 4px;
-  background: var(--sw-surface);
-}
-
-.sw-button {
-  block-size: 12px;
-  inline-size: 55%;
-  border-radius: var(--sw-radius, 6px);
-  background: var(--sw-accent);
-}
-
-.line-count {
-  font-size: var(--size-caption);
-  color: var(--text-2);
-  text-align: end;
-}
-
-.q-done {
-  justify-items: start;
-}
-
-/* 좁혀지는 중 상자 */
-.narrowing {
-  padding: 0 var(--space-4) var(--space-2);
-  border-radius: var(--radius-lg);
-  background: var(--selected);
-}
-
-.narrowing summary {
-  font-weight: var(--weight-strong);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-}
-
-.narrowing summary .icon-wrap {
-  transition: transform var(--dur-tap) var(--ease-out);
-}
-
-.narrowing[open] summary .icon-wrap {
-  transform: rotate(180deg);
-}
-
-.narrowing h2 {
-  font-size: var(--size-body);
-  margin-block: var(--space-3) var(--space-2);
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-}
-
-/* 옛 낱말 묶음 (.chips > .chip, 단계 화면): 누르지 않는 작은 낱말. 위의 v2 칩(누르는 것)과 갈라 둔다. W4에서 꼬리표로 옮긴다 */
-.chips > .chip {
-  display: inline-block;
-  min-block-size: 0;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--surface);
-  font-size: var(--size-caption);
-  font-weight: var(--weight-body);
-  white-space: normal;
-}
-
-.chips > .chip::before {
-  content: none;
-}
-
-.chip-key {
-  color: var(--text-2);
-}
-
-.card .chips > .chip {
-  background: var(--bg);
-}
-
-.slot-icons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  list-style: none;
-  padding: 0;
-}
-
-.slot-icons li {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  font-size: var(--size-caption);
-}
-
-.slot-icons .glyph {
-  inline-size: 24px;
-  block-size: 24px;
-  color: var(--navy);
-}
-
-.maybe-list {
-  display: grid;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-  perspective: 600px;
-}
-
-.maybe {
-  display: grid;
-  gap: var(--space-1);
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-/* M5: 바뀐 후보 카드가 뒤집히며 나타난다 (동작 줄이기면 페이드만) */
-.flip-in {
-  animation: flip-in var(--dur-ui) var(--ease-out) both;
-}
-
-@keyframes flip-in {
-  from {
-    opacity: 0;
-    transform: rotateY(var(--flip-from, 90deg));
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-:root[data-motion='reduce'] .flip-in {
-  --flip-from: 0deg;
-  animation-duration: var(--dur-fade);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .flip-in {
-    --flip-from: 0deg;
-    animation-duration: var(--dur-fade);
-  }
-}
-
-/* ── 장보기 (T09) ───────────────────────────────────── */
-.shop {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.inventory {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-}
-
-.inventory button {
-  display: grid;
-  justify-items: center;
-  gap: var(--space-1);
-  min-inline-size: 72px;
-  padding: var(--space-2);
-  border: 2px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  font-size: var(--size-caption);
-  font-weight: var(--weight-strong);
-}
-
-.inventory button[aria-expanded='true'] {
-  border-color: var(--navy);
-  box-shadow: inset 0 0 0 2px var(--navy);
-}
-
-.inventory .filled button {
-  background: var(--fill);
-}
-
-/* M3 끝: 상자가 닿은 칸이 한 번 통통 (0.9 → 1.03 → 1, 노선 핀과 같은 pin-hop) */
-.inventory li.bump .inv-icon {
-  animation: pin-hop var(--dur-ui) var(--ease-spring);
-}
-
-.inv-icon {
-  position: relative;
-  display: grid;
-  place-items: center;
-}
-
-
-
-.slot-panel {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.slot-panel.open {
-  transition: opacity var(--dur-fade) var(--ease-out);
-}
-
-@starting-style {
-  .slot-panel.open {
-    opacity: 0;
-  }
-}
-
-.slot-head {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.slot-head h2 {
-  font-size: var(--size-title-1);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.badge-top {
-  background: var(--accent-soft);
-  color: var(--on-accent-soft);
-  margin-block-end: var(--space-1);
-}
-
-.badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-  list-style: none;
-  padding: 0;
-}
-
-.in-cart-line,
-.share-line {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  background: var(--accent-soft);
-  font-weight: var(--weight-strong);
-}
-
-.share-line {
-  background: var(--selected);
-}
-
-.empty-line {
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--fill);
-}
-
-.product {
-  display: grid;
-  gap: var(--space-2);
-}
-
-/* 추천 카드: 2px 먹색 테두리, 금색 '추천' 꼬리표. 시트 안이라 그림자 없음 (CONCEPT 5.5·6.4) */
-.product-top {
-  padding: var(--space-4);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-/* 다른 도구: 테두리 없는 줄을 가는 선으로 나눈 목록 (우버 차종 목록 모양) */
-.product-list {
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-.product-row {
-  padding: var(--space-3) var(--space-4);
-}
-
-.product-row + .product-row {
-  border-block-start: 1px solid var(--hairline);
-}
-
-.product-head {
-  display: flex;
-  gap: var(--space-3);
-  align-items: center;
-}
-
-.product-top .product-head {
-  align-items: flex-start;
-}
-
-.product-title {
-  display: grid;
-  flex: 1;
-  gap: var(--space-1);
-  min-inline-size: 0;
-}
-
-.product-title .badge-top {
-  justify-self: start;
-  margin: 0;
-}
-
-.product-head h3 {
-  font-size: var(--size-body-lg);
-  font-weight: var(--weight-strong);
-}
-
-.product-top .product-head h3 {
-  font-size: var(--size-title-3);
-}
-
-.product-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-3);
-}
-
-.product-meta .badge-row {
-  margin: 0;
-}
-
-/* 난이도: 칸 셋 막대 + 말 */
-.level {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--size-caption);
-  font-weight: var(--weight-strong);
-  color: var(--text-2);
-}
-
-.level-bar {
-  display: inline-flex;
-  gap: 2px;
-}
-
-.level-bar span {
-  inline-size: 10px;
-  block-size: 6px;
-  border-radius: 2px;
-  background: var(--hairline);
-}
-
-.level-bar .on {
-  background: var(--text-2);
-}
-
-.product-line {
-  font-size: var(--size-caption);
-  color: var(--text-2);
-}
-
-.product-head .btn-pick {
-  flex-shrink: 0;
-  margin-inline-start: auto;
-}
-
-/* 고르기: 고르면 먹색 채움 '고름 ✓' (CONCEPT 6.4) */
-.btn-pick {
-  min-block-size: var(--btn-sm);
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: var(--accent-soft);
-  color: var(--on-accent-soft);
-  padding-inline: var(--space-3);
-}
-
-.btn-pick.is-picked {
-  background: var(--chosen);
-  color: var(--on-chosen);
-}
-
-.product-thumb {
-  flex-shrink: 0;
-}
-
-.product-summary {
-  color: var(--text-2);
-}
-
-.product-facts {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: var(--space-1) var(--space-3);
-}
-
-.product-facts dt {
-  font-weight: var(--weight-strong);
-  color: var(--text-2);
-}
-
-.product-facts ul {
-  padding-inline-start: var(--space-4);
-}
-
-.product-facts .chips {
-  padding: 0;
-}
-
-.compare-line {
-  font-size: var(--size-caption);
-  color: var(--text-2);
-}
-
-.product-more summary {
-  font-weight: var(--weight-strong);
-  color: var(--link);
-}
-
-.product-more .product-facts {
-  margin-block-start: var(--space-2);
-}
-
-.fragment {
-  padding: var(--space-2);
-  border-radius: var(--radius-sm);
-  background: var(--bg);
-  font-size: var(--size-caption);
-}
-
-.index-list {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  border: 2px dashed var(--warn);
-}
-
-.index-list summary {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-weight: var(--weight-strong);
-  color: var(--warn-ink);
-}
-
-.stamp-banner {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--accent-soft);
-}
-
-.stamp-banner.just-now {
-  animation: thump var(--dur-tap) var(--ease-out) var(--dur-stamp) both;
-}
-
-.all-required {
-  font-weight: var(--weight-strong);
-}
-
-@media (max-width: 420px) {
-  .product-facts {
-    grid-template-columns: 1fr;
-  }
-
-  .product-facts dd + dt {
-    margin-block-start: var(--space-2);
-  }
-}
-
-/* ── 재확인 (T10) ───────────────────────────────────── */
-.check {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.check h2 {
-  font-size: var(--size-title-3);
-}
-
-.free-line {
-  font-weight: var(--weight-strong);
-}
-
-.cart-by-slot {
-  display: grid;
-  gap: var(--space-1);
-  padding-inline-start: var(--space-4);
-}
-
-.conflicts {
-  display: grid;
-  gap: var(--space-3);
-  list-style: none;
-  padding: 0;
-  margin-block-start: var(--space-2);
-}
-
-.conflict {
-  padding: var(--space-4);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-.conflict.kept {
-  background: var(--fill);
-}
-
-.no-conflict {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-block-start: var(--space-2);
-  font-weight: var(--weight-strong);
-}
-
-.conflict-body {
-  display: grid;
-  gap: var(--space-2);
-  min-inline-size: 0;
-}
-
-.conflict-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.conflict-where {
-  font-weight: var(--weight-heading);
-}
-
-.conflict-msg {
-  font-weight: var(--weight-strong);
-}
-
-.conflict-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.kept-note {
-  color: var(--text-2);
-}
-
-/* '이렇게 이해했어요'는 접어 둔다 (CONCEPT 6.5) */
-.understood summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  min-block-size: var(--tap);
-  cursor: pointer;
-  list-style: none;
-}
-
-.understood summary::-webkit-details-marker {
-  display: none;
-}
-
-.understood summary h2 {
-  margin: 0;
-}
-
-.understood[open] summary .icon {
-  transform: rotate(180deg);
-}
-
-.split-list {
-  display: grid;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-}
-
-.split-list li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--bg);
-}
-
-.issue-wrap {
-  display: grid;
-  gap: var(--space-1);
-}
-
-.issue-reason {
-  font-size: var(--size-caption);
-  color: var(--text-2);
-}
-
-/* ── 도착: 건네드릴 것 (CONCEPT 6.6) ───────────────────── */
-.handover {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-3);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-
-.handover .handover-art {
-  inline-size: 96px;
-}
-
-.handover-text {
-  display: grid;
-  gap: var(--space-1);
-}
-
-.handover-text h2 {
-  margin: 0;
-  font-size: var(--size-body-lg);
-}
-
-.handover-text p {
-  color: var(--text-2);
-}
-
-@media (min-width: 768px) {
-  .handover .handover-art {
-    inline-size: 140px;
-  }
-}
-
-/* ── 계산대 (T11) ───────────────────────────────────── */
-.receipt {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.receipt h1:focus {
-  outline: none;
-}
-
-.shared-note {
-  display: grid;
-  gap: var(--space-2);
-  justify-items: start;
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--selected);
-}
-
-.receipt-scene {
-  position: relative;
-}
-
-/* 프린터 틈: 종이가 위에서 아래로 덜컥덜컥 뽑혀 나온다 (M4). 틈은 --tile (밤에 남색이 바탕에 묻히지 않게) */
-.printer {
-  position: relative;
-  overflow: hidden;
-  padding-block-start: var(--space-3);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: linear-gradient(var(--tile) 0 var(--space-3), transparent var(--space-3));
-}
-
-.paper {
-  position: relative;
-  inline-size: min(100%, 23rem);
-  margin-inline: auto;
-  margin-block-end: var(--space-3);
-  padding: var(--space-4) var(--space-4) var(--space-5);
-  background: var(--receipt);
-  /* 영수증 종이는 밤 지도에서도 흰 감열지라서, 종이 안의 글자색을 종이 전용 값으로 바꿔 둔다 */
-  --text: var(--receipt-ink);
-  --text-2: var(--receipt-soft);
-  /* 종이 위 막힘 표시는 도장(--seal, 남색)과 따로 둔다 (D65) */
-  --bad-ink: var(--receipt-bad);
-  color: var(--text);
-  box-shadow: var(--elev-1);
-  animation: print var(--dur-print) steps(14, end) both;
-}
-
-/* 아래쪽 톱니 가장자리 (찢어 낸 영수증) */
-.paper::after {
-  content: '';
-  position: absolute;
-  inset-inline: 0;
-  inset-block-end: -10px;
-  block-size: 10px;
-  background:
-    linear-gradient(135deg, var(--receipt) 50%, transparent 50%) 0 0 / 16px 10px repeat-x,
-    linear-gradient(225deg, var(--receipt) 50%, transparent 50%) 8px 0 / 16px 10px repeat-x;
-}
-
-@keyframes print {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-.r-fixed {
-  font-family: var(--font-receipt);
-}
-
-.r-var {
-  font-family: var(--font-body);
-}
-
-.r-mark {
-  margin-inline: auto;
-  margin-block-end: var(--space-1);
-}
-
-.r-title {
-  text-align: center;
-  font-weight: var(--weight-strong);
-  font-size: var(--size-title-3);
-}
-
-.r-center {
-  text-align: center;
-}
-
-.r-rule {
-  border: 0;
-  border-block-start: 2px dashed var(--text-2);
-  margin-block: var(--space-2);
-}
-
-.r-row {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-2);
-}
-
-.r-counts {
-  flex-wrap: wrap;
-  font-size: var(--size-caption);
-}
-
-.r-items {
-  display: grid;
-  gap: var(--space-1);
-  list-style: none;
-  padding: 0;
-}
-
-.r-items li {
-  display: grid;
-  grid-template-columns: minmax(0, 5.5em) minmax(0, 1fr) auto;
-  gap: var(--space-2);
-  align-items: baseline;
-}
-
-.r-slot {
-  color: var(--text-2);
-  font-size: var(--size-caption);
-}
-
-/* 남색 도장 (D65, brief 4.8): 3px 겹줄 둥근 네모, −6° 기울임, 단색 모자 마크 20 + '코드쇼퍼 · 요금 0원' */
-.r-stamp {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-  justify-content: center;
-  /* 글자를 키워도 종이 폭을 넘지 않게: 넘으면 마크와 글이 줄을 바꾼다 (WCAG 1.4.10) */
-  inline-size: fit-content;
-  max-inline-size: 100%;
-  /* 기울인 도장의 양 끝이 위아래로 약 12px 솟으므로 그만큼 비운다 */
-  margin: var(--space-5) auto;
-  padding: var(--space-1) var(--space-3);
-  border: 3px double var(--seal);
-  border-radius: var(--radius-sm);
-  color: var(--seal);
-  font-weight: var(--weight-strong);
-  transform: rotate(-6deg);
-  animation: stamp-press var(--dur-stamp) var(--ease-spring) var(--dur-print) both;
-}
-
-/* S6: 1.3배에서 1배로 누르기만 한다. 'to'가 없어 끝 상태는 요소 자기 값(−6°)이다 */
-@keyframes stamp-press {
-  from {
-    opacity: 0;
-    transform: rotate(-6deg) scale(var(--juice-stamp-scale));
-  }
-}
-
-.r-footer {
-  font-size: var(--size-caption);
-}
-
-.scene-skip-btn {
-  position: absolute;
-  inset-block-start: var(--space-4);
-  inset-inline-end: 0;
-}
-
-.action-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-/* 탭 */
-.tabs {
-  display: flex;
-  gap: var(--space-1);
-  overflow-x: auto;
-  border-block-end: 2px solid var(--hairline);
-}
-
-.tabs [role='tab'] {
-  flex-shrink: 0;
-  min-block-size: var(--tap);
-  padding: var(--space-2) var(--space-3);
-  border: 0;
-  border-block-end: 4px solid transparent;
-  background: none;
-  font-weight: var(--weight-strong);
-  color: var(--text-2);
-}
-
-.tabs [role='tab'][aria-selected='true'] {
-  color: var(--text);
-  border-block-end-color: var(--accent);
-}
-
-.tab-panel {
-  display: grid;
-  gap: var(--space-3);
-  padding-block: var(--space-3);
-}
-
-.tab-panel h2 {
-  font-size: var(--size-title-3);
-}
-
-.pack-preview summary {
-  font-weight: var(--weight-strong);
-  color: var(--link);
-}
-
-.pack-pre {
-  max-block-size: 28rem;
-  overflow: auto;
-  margin-block-start: var(--space-2);
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  font-family: var(--font-body);
-  font-size: var(--size-caption);
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-.concept-links,
-.step-concepts {
-  display: grid;
-  gap: var(--space-1);
-  padding-inline-start: var(--space-5);
-}
-
-.talk-cards {
-  display: grid;
-  gap: var(--space-3);
-  list-style: none;
-  padding: 0;
-}
-
-.receipt-end {
-  font-weight: var(--weight-strong);
 }
 
 .card h2 {

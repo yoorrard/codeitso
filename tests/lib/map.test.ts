@@ -664,6 +664,18 @@ describe('차', () => {
     expect(m.nodes.find((n) => n.id === 'slot.host')?.passed).toBe(false);
   });
 
+  it('교통 정보에서 막힌 마디(고른 도구끼리 부딪침)에 닿으면 그 앞에서 기다린다 (서행은 지나간다)', () => {
+    const shapes: NodeShape[] = ['screen', 'store', 'data', 'host'];
+    const jamAt = (j: number, t: 'jam' | 'slow') => shapes.map((s, i) => node(s, { filled: true, traffic: i === j ? t : null }));
+    for (let j = 0; j < shapes.length; j += 1) {
+      const m = layoutMap({ nodes: jamAt(j, 'jam'), traffic: true });
+      expect(m.car.at, `막힘 ${j}`).toBe(j === 0 ? 'start' : `slot.${shapes[j - 1]}`);
+      expect(m.nodes[j]?.passed, `막힘 ${j}`).toBe(false);
+      expectValid(m, `막힘 ${j}`);
+      expect(layoutMap({ nodes: jamAt(j, 'slow'), traffic: true }).car.at, `서행 ${j}`).toBe('slot.host');
+    }
+  });
+
   it('마디 1~6개, 앞에서부터 k개를 골랐을 때마다 어느 마디에도 닿지 않고 뒤로 가지 않는다 (마디 4개까지는 늘 앞으로)', () => {
     for (let n = 1; n <= 6; n += 1) {
       const shapes = SHAPES.slice(0, n);
@@ -719,6 +731,22 @@ describe('차', () => {
     expect(a.lot.state).toBe('drawn');
     expect(a.nodes.every((n) => n.passed)).toBe(true);
     expect(a.roads.filter((x) => x.kind === 'main').every((x) => x.state === 'built')).toBe(true);
+  });
+
+  it('홈 본보기(parked): 길은 다 이어 그리고 차는 출발 위에 세운다 (마디 1~6개, 이름표는 출발에 선 차를 비킨다)', () => {
+    const start = mapModel(evaluate(cat, { answers }));
+    for (let n = 1; n <= 6; n += 1) {
+      const m = layoutMap({ nodes: SHAPES.slice(0, n).map((s) => node(s, { filled: true })), parked: true });
+      const tag = `${n}개`;
+      expect(m.car.at, tag).toBe('start');
+      expect(m.car.dist, tag).toBe(start.car.dist);
+      expect(m.roads.filter((x) => x.kind === 'main').every((x) => x.state === 'built'), tag).toBe(true);
+      expect(clear(m), tag).toBe(true);
+      expectValid(m, tag);
+    }
+    const r = evaluate(cat, golden('case-19'));
+    expect(mapModel(r, { parked: true }).car.at).toBe('start');
+    expect(mapModel(r).car.at).not.toBe('start');
   });
 
   it('마디 거리는 길 순서대로 늘어난다', () => {

@@ -91,6 +91,20 @@ test.describe('S5+S6 출발 → 도착', () => {
     });
   }
 
+  test('장면 동안 Tab을 누르면 장면이 끝나고 시트가 열려, 키보드로 칸 고르개에 닿는다 (WCAG 2.1.1)', async ({ page }) => {
+    await seed(page, { ...SEEN, ...session(c1) });
+    await slow(page);
+    await depart(page);
+    expect(await page.evaluate(() => document.querySelector<HTMLElement>('.content-sheet.on-map')?.inert)).toBe(true);
+    await page.keyboard.press('Tab');
+    await arrivedEnd(page);
+    for (let i = 0; i < 40; i++) {
+      if (await page.evaluate(() => document.activeElement?.matches('[role="tab"][aria-selected="true"]') ?? false)) break;
+      await page.keyboard.press('Tab');
+    }
+    await expect(page.locator('[role="tab"][aria-selected="true"]')).toBeFocused();
+  });
+
   test('처음 한 번만: 다시 출발해도 장면 없이 끝 모습', async ({ page }) => {
     await seed(page, { ...SEEN, ...session(c1) });
     await slow(page);

@@ -198,6 +198,15 @@ const hasMap = map || (stage !== null && stage !== 'test-drive');
       );
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') skip();
+        // 장면이 시트를 내려 두고 inert로 막아 둔 동안 Tab을 누르면 장면을 끝내고 시트를 연다:
+        // 키보드로 움직이기 시작한 사람이 머리줄·아래 막대만 돌며 본문에 닿지 못하는 일을 막는다 (WCAG 2.1.1)
+        if (e.key === 'Tab') {
+          const held = document.querySelectorAll<HTMLElement>('.content-sheet[inert]');
+          if (held.length > 0) {
+            skip();
+            held.forEach((s) => (s.inert = false));
+          }
+        }
       });
 
       // 아래 막대 높이를 재서 --bar-bottom으로 (WCAG 2.4.11): 막대는 상태 줄·안내 글에 따라 112px보다 커지므로,

@@ -51,9 +51,24 @@ interface CardProps {
   slotId: string;
   capability: string;
   inCart: boolean;
+  /** 추천 카드(2px 먹색 테두리, 금색 꼬리표)인지, 가는 선으로 나눈 줄인지 (CONCEPT 6.4, 우버 차종 목록 모양) */
   recommended: boolean;
   compare: string | null;
   onToggle: (p: Product, from: HTMLElement | null) => void;
+}
+
+/** 난이도: 칸 셋 막대 + 말 (별은 쓰지 않는다, CONCEPT 5.9) */
+function Level({ d }: { d: number }) {
+  return (
+    <span class="level">
+      <span class="level-bar" aria-hidden="true">
+        {[1, 2, 3].map((n) => (
+          <span class={n <= d ? 'on' : ''} />
+        ))}
+      </span>
+      {fill(ko.shop.levelLine, { level: toolDifficultyWord(catalog, d) })}
+    </span>
+  );
 }
 
 function ProductCard({ s, slotId, capability, inCart, recommended, compare, onToggle }: CardProps) {
@@ -61,48 +76,60 @@ function ProductCard({ s, slotId, capability, inCart, recommended, compare, onTo
   const thumb = useRef<HTMLSpanElement>(null);
   const concepts = (p.needsConcepts ?? []).map((id) => catalog.concept.get(id)).filter((c) => c !== undefined);
   return (
-    <article class={`product${recommended ? ' product-top' : ''}${inCart ? ' in-cart' : ''}`} aria-labelledby={`p-${slotId}-${p.id}`}>
+    <article class={`product${recommended ? ' product-top' : ' product-row'}${inCart ? ' in-cart' : ''}`} aria-labelledby={`p-${slotId}-${p.id}`}>
       <header class="product-head">
-        <ArtTile name={slotArt(capability)} tileRef={thumb} class="product-thumb" />
-        <div>
+        <ArtTile name={slotArt(capability)} tileRef={thumb} size={recommended ? 'lg' : 'md'} class="product-thumb" />
+        <div class="product-title">
           {recommended && <span class="badge badge-top">{ko.shop.recommended}</span>}
           <h3 id={`p-${slotId}-${p.id}`}>{p.name}</h3>
-          <p class="product-summary">{p.summary}</p>
         </div>
+        <button
+          type="button"
+          class={inCart ? 'btn btn-pick is-picked' : 'btn btn-pick'}
+          aria-label={fill(inCart ? ko.shop.removeLabel : ko.shop.addLabel, { name: p.name })}
+          onClick={() => onToggle(p, thumb.current)}
+        >
+          {inCart && <Icon name="check" />}
+          <span>{inCart ? ko.shop.remove : ko.shop.add}</span>
+        </button>
       </header>
-      <ul class="badge-row">
-        {badges(catalog, p).map((b) => (
-          <li class="badge">{b}</li>
-        ))}
-      </ul>
-      <dl class="product-facts">
-        {p.useWhen && (
-          <>
-            <dt>{ko.shop.useWhen}</dt>
-            <dd>{p.useWhen}</dd>
-          </>
-        )}
-        <dt>{ko.shop.cost}</dt>
-        <dd>{p.cost.note}</dd>
-        <dt>{ko.shop.difficulty}</dt>
-        <dd>{toolDifficultyWord(catalog, p.difficulty)}</dd>
-        {s.reasons.length > 0 && (
-          <>
-            <dt>{ko.shop.reasons}</dt>
-            <dd>
-              <ul class="chips">
-                {s.reasons.map((k) => (
-                  <li class="chip">{T.reasonLabels[k]}</li>
-                ))}
-              </ul>
-            </dd>
-          </>
-        )}
-      </dl>
+      {recommended && <p class="product-summary">{p.summary}</p>}
+      <div class="product-meta">
+        <ul class="badge-row">
+          {badges(catalog, p).map((b) => (
+            <li class="badge">{b}</li>
+          ))}
+        </ul>
+        <Level d={p.difficulty} />
+      </div>
+      {recommended && (p.freeLimit ?? p.cost.note) && <p class="product-line">{p.freeLimit ?? p.cost.note}</p>}
+      {recommended && s.reasons.length > 0 && (
+        <p class="product-line">{fill(ko.shop.reasonsLine, { labels: s.reasons.map((k) => T.reasonLabels[k]).join(' · ') })}</p>
+      )}
       {compare && <p class="compare-line">{compare}</p>}
       <details class="product-more">
         <summary>{ko.shop.details}</summary>
         <dl class="product-facts">
+          {!recommended && (
+            <>
+              <dt>{ko.shop.summary}</dt>
+              <dd>{p.summary}</dd>
+            </>
+          )}
+          {p.useWhen && (
+            <>
+              <dt>{ko.shop.useWhen}</dt>
+              <dd>{p.useWhen}</dd>
+            </>
+          )}
+          <dt>{ko.shop.cost}</dt>
+          <dd>{p.cost.note}</dd>
+          {s.reasons.length > 0 && !recommended && (
+            <>
+              <dt>{ko.shop.reasons}</dt>
+              <dd>{s.reasons.map((k) => T.reasonLabels[k]).join(' · ')}</dd>
+            </>
+          )}
           <dt>{ko.shop.provider}</dt>
           <dd>
             {p.provider.name} ({ko.shop.providerWords[p.provider.type]})
@@ -178,15 +205,6 @@ function ProductCard({ s, slotId, capability, inCart, recommended, compare, onTo
           </dd>
         </dl>
       </details>
-      <button
-        type="button"
-        class={inCart ? 'btn' : 'btn btn-primary'}
-        aria-label={fill(inCart ? ko.shop.removeLabel : ko.shop.addLabel, { name: p.name })}
-        onClick={() => onToggle(p, thumb.current)}
-      >
-        <Icon name={inCart ? 'close' : 'download'} />
-        <span>{inCart ? ko.shop.remove : ko.shop.add}</span>
-      </button>
     </article>
   );
 }
@@ -314,18 +332,24 @@ export default function Shop() {
                 onToggle={toggle(ranking)}
               />
             )}
-            {others.map((s) => (
-              <ProductCard s={s} slotId={id} capability={ranking.slot.capability} inCart={r.session.cart.includes(s.product.id)} recommended={false} compare={null} onToggle={toggle(ranking)} />
-            ))}
+            {others.length > 0 && (
+              <div class="product-list">
+                {others.map((s) => (
+                  <ProductCard s={s} slotId={id} capability={ranking.slot.capability} inCart={r.session.cart.includes(s.product.id)} recommended={false} compare={null} onToggle={toggle(ranking)} />
+                ))}
+              </div>
+            )}
             {ranking.index.length > 0 && (
               <details class="index-list">
                 <summary>
                   <Icon name="warning" /> {fill(ko.shop.indexTitle, { n: ranking.index.length })}
                 </summary>
                 <p class="q-help">{ko.shop.indexNote}</p>
-                {ranking.index.map((s) => (
-                  <ProductCard s={s} slotId={id} capability={ranking.slot.capability} inCart={r.session.cart.includes(s.product.id)} recommended={false} compare={null} onToggle={toggle(ranking)} />
-                ))}
+                <div class="product-list">
+                  {ranking.index.map((s) => (
+                    <ProductCard s={s} slotId={id} capability={ranking.slot.capability} inCart={r.session.cart.includes(s.product.id)} recommended={false} compare={null} onToggle={toggle(ranking)} />
+                  ))}
+                </div>
               </details>
             )}
           </section>

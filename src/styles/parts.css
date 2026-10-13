@@ -682,7 +682,7 @@
 }
 
 .inventory .filled button {
-  background: var(--gold-soft);
+  background: var(--surface-2);
 }
 
 /* M3 끝: 상자가 닿은 칸이 한 번 통통 (0.9 → 1.03 → 1, 노선 핀과 같은 pin-hop) */
@@ -768,35 +768,123 @@
 
 .product {
   display: grid;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  border-radius: var(--radius-lg);
-  background: var(--card);
-  box-shadow: var(--shadow);
+  gap: var(--space-2);
 }
 
+/* 추천 카드: 2px 먹색 테두리, 금색 '추천' 꼬리표. 시트 안이라 그림자 없음 (CONCEPT 5.5·6.4) */
 .product-top {
-  box-shadow:
-    0 0 0 3px var(--gold),
-    var(--shadow);
+  padding: var(--space-4);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--card);
 }
 
-.product.in-cart {
-  background: var(--gold-soft);
+/* 다른 도구: 테두리 없는 줄을 가는 선으로 나눈 목록 (우버 차종 목록 모양) */
+.product-list {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.product-row {
+  padding: var(--space-3) var(--space-4);
+}
+
+.product-row + .product-row {
+  border-block-start: 1px solid var(--hairline);
 }
 
 .product-head {
   display: flex;
   gap: var(--space-3);
+  align-items: center;
+}
+
+.product-top .product-head {
   align-items: flex-start;
 }
 
+.product-title {
+  display: grid;
+  flex: 1;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+
+.product-title .badge-top {
+  justify-self: start;
+  margin: 0;
+}
+
 .product-head h3 {
+  font-size: var(--text-md);
+  font-weight: var(--weight-strong);
+}
+
+.product-top .product-head h3 {
   font-size: var(--text-lg);
 }
 
+.product-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.product-meta .badge-row {
+  margin: 0;
+}
+
+/* 난이도: 칸 셋 막대 + 말 */
+.level {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+  color: var(--ink-soft);
+}
+
+.level-bar {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.level-bar span {
+  inline-size: 10px;
+  block-size: 6px;
+  border-radius: 2px;
+  background: var(--hairline);
+}
+
+.level-bar .on {
+  background: var(--ink);
+}
+
+.product-line {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.product-head .btn-pick {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+
+/* 고르기: 고르면 먹색 채움 '고름 ✓' (CONCEPT 6.4) */
+.btn-pick {
+  border-color: var(--ink);
+  padding-inline: var(--space-3);
+}
+
+.btn-pick.is-picked {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
 .product-thumb {
-  margin-block-start: var(--space-1);
+  flex-shrink: 0;
 }
 
 .product-summary {

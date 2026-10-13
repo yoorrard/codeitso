@@ -78,7 +78,7 @@ export async function answerInterview(page: Page, answers: Record<string, string
 export async function addToCart(page: Page, ids: string[]): Promise<void> {
   for (const id of ids) {
     const name = products.find((p) => p.id === id)?.name ?? id;
-    const add = page.locator(`button.btn-primary[aria-label="${fill(ko.shop.addLabel, { name })}"]`).first();
+    const add = page.locator(`button.btn-pick[aria-label="${fill(ko.shop.addLabel, { name })}"]`).first();
     const slots = page.locator('.inventory li button');
     for (let k = 0; k < (await slots.count()) && !(await add.isVisible()); k++) await slots.nth(k).click();
     await add.scrollIntoViewIfNeeded();

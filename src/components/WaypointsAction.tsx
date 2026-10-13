@@ -84,6 +84,13 @@ export default function WaypointsAction() {
     refocus.current = true;
   };
 
+  // 누른 때의 상태로 정한다: 그린 때의 도구(닫힌 값)를 쓰면, 앞서 정한 뒤 이 버튼이 다시 그려지기 전에 Enter가 오면
+  // (느린 기기·빠르게 두 번 누르기) 앞 칸의 도구로 다음 칸을 채운다. 그사이 정할 것이 없어졌으면 아무것도 하지 않는다
+  const press = (): void => {
+    const now = barState($result.get(), $openSlot.get(), $pending.get());
+    if (now.kind === 'save') save(now.product, now.change);
+  };
+
   const skip = (): void => {
     const slotId = $openSlot.get();
     if (slotId === null) return;
@@ -151,7 +158,7 @@ export default function WaypointsAction() {
           type="button"
           class="btn btn-primary w-save"
           aria-label={short === null ? fill(change ? ko.shop.changeLongLabel : ko.shop.pickLongLabel, { name: product.name }) : undefined}
-          onClick={() => save(product, change)}
+          onClick={press}
         >
           {short === null ? (b.change ? ko.shop.changeGeneric : ko.shop.pickGeneric) : text(short)}
         </button>

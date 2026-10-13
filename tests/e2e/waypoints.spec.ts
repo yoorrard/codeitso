@@ -189,7 +189,13 @@ test('키보드만으로: 줄 → 자세히 → 아래 막대, Enter 세 번으�
   await expect(save(page)).toBeFocused();
   for (let n = 1; n <= 3; n++) {
     await page.keyboard.press('Enter');
-    await expect.poll(async () => (await savedCart(page)).length).toBe(n);
+    // 실패하면 초점·버튼 글·여는 칸을 함께 보인다 (CI에서만 한 번 난 실패를 다시 보면 원인을 읽을 수 있게)
+    const state = (): Promise<string> =>
+      page.evaluate(() => {
+        const a = document.activeElement;
+        return `초점=${a?.tagName}.${a?.className} "${(a?.textContent ?? '').trim().slice(0, 30)}" 칩=${document.querySelector('.w-chip[aria-current="true"]')?.textContent?.trim() ?? '-'}`;
+      });
+    await expect.poll(async () => (await savedCart(page)).length, { message: `Enter ${n}번째 뒤 장바구니 (${await state()})` }).toBe(n);
   }
   // 정하기 → 맞춰 보러 가기로 바뀌어도 초점은 주 버튼에 남는다
   await expect(go(page)).toBeFocused();

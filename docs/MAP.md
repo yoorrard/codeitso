@@ -5,7 +5,7 @@
 ## 1. 좌표
 
 - **지도 세계**: `viewBox="0 0 432 240"` (24px 격자 18×10칸). 휴대폰 360px에서 배율이 0.83~1.1이 되도록 정한 크기다.
-- 지도 띠는 `preserveAspectRatio="xMidYMid slice"`로 그린다. 띠 높이(홈 264, 시운전·목적지 160, 경유지·점검 220, 도착 260, 768px에서 320)에 따라 위아래나 양옆이 잘린다.
+- 지도 띠는 `preserveAspectRatio="xMidYMid slice"`로 그린다. 띠 높이(홈 264, 내 AI 써 보기·만들 앱 정하기 160, 도구 고르기·도구끼리 맞춰 보기 220, 설계도 받기 260, 768px에서 320)에 따라 위아래나 양옆이 잘린다.
 - **안전 구역**: 길·마디·이름표·빈 터·집·표지는 모두 **x 60~372, y 32~208** 안에 둔다. 위 띠 높이 어느 것에서도 잘리지 않는 구역이다 (360×264에서 양옆 52씩, 360×160에서 위아래 24씩, 768×320에서 위아래 30씩 잘린다).
 - 넓은 화면(나눈 화면의 오른쪽 지도)은 `xMidYMid meet`로 세계 전체를 보이고, 남는 자리는 땅 판이 채운다. 그래서 땅 판은 세계보다 크다 (2절).
 - 길은 45°·90°만 쓴다. 굽는 곳은 반지름 12로 둥글게, 선 끝과 이음은 둥글게.
@@ -64,7 +64,7 @@
 순수 함수다 (DOM·저장소 없음, 같은 입력이면 같은 출력, 시험 있음). 계산은 `evaluate()` 결과를 읽기만 한다.
 
 ```ts
-mapModel(r: EngineResult, opts?: { focus?: string /* 지금 여는 칸 id */; traffic?: boolean /* 점검: 교통 색 */; arrived?: boolean }): MapModel
+mapModel(r: EngineResult, opts?: { focus?: string /* 지금 여는 칸 id */; traffic?: boolean /* 도구끼리 맞춰 보기: 교통 색 */; arrived?: boolean }): MapModel
 layoutMap(input: MapInput): MapModel   // 시험이 32가지 기능 조합을 바로 넣어 볼 수 있게 나눈 안쪽 함수
 ```
 

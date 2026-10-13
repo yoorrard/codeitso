@@ -5,7 +5,7 @@ import { fill } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { progress } from '../lib/progress.ts';
 import { $result } from '../lib/result.ts';
-import { continueTarget, hasProgress, stageById } from '../lib/stages.ts';
+import { continueTarget, hasProgress, stageById, stageNumber } from '../lib/stages.ts';
 import { $meta } from '../lib/store.ts';
 
 export default function HomeContinue() {
@@ -16,17 +16,15 @@ export default function HomeContinue() {
 
   const t = continueTarget(r);
   const p = progress(r, meta);
-  const where = t.stage === 'destination' && t.questionNumber ? fill(ko.home.continueInterview, { n: t.questionNumber }) : fill(ko.home.continueAt, { stage: ko.stages[t.stage] });
+  const stage = ko.stages[t.stage];
+  const where = t.stage === 'destination' && t.questionNumber ? fill(ko.home.continueInterview, { stage, n: t.questionNumber }) : fill(ko.home.continueAt, { stage, n: stageNumber(t.stage) ?? 1 });
   const left = p.requiredLeft > 0 ? fill(ko.progress.requiredLeft, { n: p.requiredLeft }) : p.blocked > 0 ? fill(ko.progress.blocked, { n: p.blocked }) : '';
 
   return (
     <section class="continue-card" aria-labelledby="cc-continue-title">
       <h2 id="cc-continue-title">{ko.home.continueTitle}</h2>
       <p>{where}</p>
-      <p class="trip-line">
-        {fill(ko.home.continueProgress, { passed: p.passed })}
-        {left && ` · ${left}`}
-      </p>
+      {left && <p class="trip-line">{left}</p>}
       <a class="btn btn-primary" href={stageById(t.stage).path}>
         {ko.home.continueGo}
       </a>

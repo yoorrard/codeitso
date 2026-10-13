@@ -30,7 +30,7 @@ export function termPath(id: string): string {
   return `${ROUTES.terms}/${encodeURIComponent(id)}`;
 }
 
-/** 경유지 단계에서 고를 것 하나를 펼친 채로 */
+/** 도구 고르기 단계에서 고를 것 하나를 펼친 채로 */
 export function waypointPath(slotId?: string): string {
   return slotId ? `${ROUTES.waypoints}?slot=${encodeURIComponent(slotId)}` : ROUTES.waypoints;
 }

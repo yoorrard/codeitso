@@ -1,4 +1,4 @@
-// '이 코스로 출발' 섬: 답·고른 도구·그대로 간 막힌 곳·한 줄 입력을 채우고 점검(/check)으로 간다 (docs/CONCEPT.md 6.10).
+// '이 코스로 출발' 섬: 답·고른 도구·그대로 간 막힌 곳·한 줄 입력을 채우고 도구끼리 맞춰 보기(/check)로 간다 (docs/CONCEPT.md 6.10).
 // 저장된 진행이 있고 코스와 다르면 바꿀지 먼저 묻는다.
 import { useRef } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';

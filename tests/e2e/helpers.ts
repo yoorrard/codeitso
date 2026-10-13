@@ -1,4 +1,4 @@
-// e2e 도우미: 섬이 붙기를 기다리기, 자료 읽기, 사례 하나로 목적지·경유지를 걷기.
+// e2e 도우미: 섬이 붙기를 기다리기, 자료 읽기, 사례 하나로 만들 앱 정하기·도구 고르기를 걷기.
 import { readFileSync } from 'node:fs';
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
@@ -43,7 +43,7 @@ export async function hydrated(target: Locator): Promise<Locator> {
   return target;
 }
 
-/** 보이는 질문 제목으로 사례의 답을 골라 목적지 질문을 끝까지. keyboard면 Tab·Enter만 쓴다 */
+/** 보이는 질문 제목으로 사례의 답을 골라 만들 앱 정하기 질문을 끝까지. keyboard면 Tab·Enter만 쓴다 */
 export async function answerInterview(page: Page, answers: Record<string, string>, opts: { keyboard?: boolean; freeText?: string } = {}): Promise<void> {
   for (let step = 0; step < 30; step++) {
     if ((await page.locator('.q-done').count()) > 0) return;
@@ -71,10 +71,10 @@ export async function answerInterview(page: Page, answers: Record<string, string
     } else await option.click();
     await expect(page.locator('#q-title')).not.toHaveText(title);
   }
-  throw new Error('목적지 질문이 끝나지 않았다');
+  throw new Error('만들 앱 정하기 질문이 끝나지 않았다');
 }
 
-/** 경유지에서 도구를 고른다 (다른 고를 것이면 하나씩 열어 찾는다) */
+/** 도구 고르기에서 도구를 고른다 (다른 고를 것이면 하나씩 열어 찾는다) */
 export async function addToCart(page: Page, ids: string[]): Promise<void> {
   for (const id of ids) {
     const name = products.find((p) => p.id === id)?.name ?? id;

@@ -1,4 +1,4 @@
-// 주요 흐름 (T20): 코스 5개로 영수증까지, 목적지 처음부터 끝까지(키보드만), 영수증 링크 다시 열기.
+// 주요 흐름 (T20): 코스 5개로 영수증까지, 만들 앱 정하기 처음부터 끝까지(키보드만), 영수증 링크 다시 열기.
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/engine/index.ts';
@@ -49,7 +49,7 @@ test('받은 영수증은 지난 영수증에 쌓이고, 줄을 누르면 다시
   await expect(page.locator('.receipts-empty')).toBeVisible();
 });
 
-test('목적지를 처음부터 끝까지 키보드만으로 정하고 경유지·점검·도착까지 간다 (case-01)', async ({ page }) => {
+test('만들 앱을 처음부터 끝까지 키보드만으로 정하고 도구 고르기·도구끼리 맞춰 보기·설계도 받기까지 간다 (case-01)', async ({ page }) => {
   const kase = golden('case-01');
   await page.goto('/destination');
   await islandsReady(page);
@@ -95,7 +95,7 @@ test('영수증 링크를 다른 기기에서 열면 같은 영수증을 읽기 
   // 읽자마자 주소의 조각을 지운다
   await expect.poll(() => new URL(pc.url()).hash).toBe('');
   const sharedPaper = (await pc.locator('.paper').innerText()).split('\n').filter((l) => !/\d{4}-\d{2}-\d{2}/.test(l));
-  // 한 줄 입력(freeText)은 공유 링크에 넣지 않으므로 목적지 줄만 다르다 (RECEIPT.md 5절)
+  // 한 줄 입력(freeText)은 공유 링크에 넣지 않으므로 영수증의 목적지 줄만 다르다 (RECEIPT.md 5절)
   const withoutDestination = (lines: string[]): string[] => lines.filter((_, i) => lines[i - 1] !== receiptWords.destination);
   expect(withoutDestination(sharedPaper)).toEqual(withoutDestination(paper));
   expect(sharedPaper).not.toContain(first.freeText);

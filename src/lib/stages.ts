@@ -1,4 +1,4 @@
-// 단계 다섯과 열리는 조건 (docs/CONCEPT.md 2·2.1절). evaluate() 결과로만 정한다 (부작용 없음, 시험 있음).
+// 단계 다섯과 열리는 조건 (docs/CONCEPT.md 2·2.1절, D64: 연습 하나 + 번호 단계 넷). evaluate() 결과로만 정한다 (부작용 없음, 시험 있음).
 import type { Catalog, EngineResult } from './engine/index.ts';
 import { normalizeSession } from './engine/index.ts';
 import type { Session } from './engine/types.ts';
@@ -11,7 +11,7 @@ export interface Stage {
   path: string;
 }
 
-/** 시운전(선택) → 목적지 → 경유지 → 점검 → 도착 */
+/** 내 AI 써 보기(연습, 선택) → 1 만들 앱 정하기 → 2 도구 고르기 → 3 도구끼리 맞춰 보기 → 4 설계도 받기. 주소와 id는 옛 이름 그대로 둔다 (D64) */
 export const STAGES: readonly Stage[] = [
   { id: 'test-drive', path: ROUTES.testDrive },
   { id: 'destination', path: ROUTES.destination },
@@ -20,13 +20,22 @@ export const STAGES: readonly Stage[] = [
   { id: 'arrival', path: ROUTES.arrival },
 ];
 
+/** 번호가 붙는 단계 넷 (연습 '내 AI 써 보기'는 번호 밖) */
+export const NUMBERED: readonly Stage[] = STAGES.filter((s) => s.id !== 'test-drive');
+
+/** 단계 번호 1~4. 연습이면 null */
+export function stageNumber(id: StageId): number | null {
+  const i = NUMBERED.findIndex((s) => s.id === id);
+  return i < 0 ? null : i + 1;
+}
+
 export function stageById(id: StageId): Stage {
   const s = STAGES.find((x) => x.id === id);
   if (!s) throw new Error(`없는 단계 ${id}`);
   return s;
 }
 
-/** 아직 못 가는 이유: destination = 목적지를 정하면 열림, fix = 점검에서 막힌 곳이 남음 */
+/** 아직 못 가는 이유: destination = 만들 앱을 정하면 열림, fix = 도구끼리 맞춰 보기에서 막힌 곳이 남음 */
 export type LockReason = 'destination' | 'fix';
 
 export interface Gate {
@@ -52,11 +61,11 @@ export function gate(id: StageId, r: EngineResult): Gate {
 
 export interface ContinueTarget {
   stage: StageId;
-  /** 목적지라면 다음 질문이 몇 번째인지 (1부터) */
+  /** 만들 앱 정하기라면 다음 질문이 몇 번째인지 (1부터) */
   questionNumber?: number;
 }
 
-/** 홈의 '이어서 가기': 목적지 → 경유지(고른 도구가 없을 때) → 점검(출발할 수 없을 때) → 도착 */
+/** 홈의 '이어서 가기': 만들 앱 정하기 → 도구 고르기(고른 도구가 없을 때) → 도구끼리 맞춰 보기(출발할 수 없을 때) → 설계도 받기 */
 export function continueTarget(r: EngineResult): ContinueTarget {
   if (!r.done) return { stage: 'destination', questionNumber: r.interview.answered + 1 };
   if (r.session.cart.length === 0) return { stage: 'waypoints' };

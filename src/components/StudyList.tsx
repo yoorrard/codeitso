@@ -1,5 +1,5 @@
 // 읽어 둘 용어 섬 (T12, docs/CONCEPT.md 6.8): 먼저 읽어 둘 용어 → 만들면서 볼 용어. 용어마다 읽음 표시와 맞힌 문제 수.
-// 목적지를 정하기 전이면 모든 용어 카드를 필수부터 보여 준다.
+// 만들 앱을 정하기 전이면 모든 용어 카드를 필수부터 보여 준다.
 import { useStore } from '@nanostores/preact';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';

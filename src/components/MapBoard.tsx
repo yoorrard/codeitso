@@ -189,10 +189,10 @@ export function MapSvg({ model: m, variant = 'band' }: { model: MapModel; varian
 }
 
 interface Props {
-  /** 지금 단계: 점검은 교통 색과 표지, 도착은(영수증을 받았으면) 빈 터 앞의 차와 실선 윤곽 */
+  /** 지금 단계: 도구끼리 맞춰 보기는 교통 색과 표지, 설계도 받기는(영수증을 받았으면) 빈 터 앞의 차와 실선 윤곽 */
   stage?: StageId;
   variant?: MapVariant;
-  /** 지금 여는 칸 id (경유지) */
+  /** 지금 여는 칸 id (도구 고르기) */
   focus?: string;
 }
 
@@ -202,7 +202,7 @@ export default function MapBoard({ stage, variant = 'band', focus }: Props) {
   const live = useStore($result);
   const meta = useStore($meta);
   const r = ready ? live : FIRST_VISIT;
-  // 교통 정보는 점검이 열렸을 때만 (목적지를 정하기 전에는 빈 칸마다 막힘이 되어 지도가 온통 빨개진다)
+  // 교통 정보는 도구끼리 맞춰 보기가 열렸을 때만 (만들 앱을 정하기 전에는 빈 칸마다 막힘이 되어 지도가 온통 빨개진다)
   const model = mapModel(r, { traffic: stage === 'check' && r.done, arrived: ready && stage === 'arrival' && meta.issued === true, focus });
   return <MapSvg model={model} variant={variant} />;
 }

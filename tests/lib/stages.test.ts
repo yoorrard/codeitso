@@ -5,7 +5,7 @@ import { evaluate } from '../../src/lib/engine/index.ts';
 import type { Golden } from '../../scripts/lib/golden.ts';
 import { goldenSession } from '../../scripts/lib/golden.ts';
 import { goldenFiles, readJson } from '../../scripts/lib/load-data.ts';
-import { STAGES, continueTarget, gate, hasProgress, sameSession, stageById } from '../../src/lib/stages.ts';
+import { NUMBERED, STAGES, continueTarget, gate, hasProgress, sameSession, stageById, stageNumber } from '../../src/lib/stages.ts';
 import { realCatalog } from '../fixtures/tiny.ts';
 
 const cat = realCatalog();
@@ -29,41 +29,46 @@ describe('단계 목록', () => {
     expect(STAGES.map((s) => s.path)).toEqual(['/test-drive', '/destination', '/waypoints', '/check', '/arrival']);
     expect(stageById('waypoints').path).toBe('/waypoints');
   });
+
+  it('연습(내 AI 써 보기)은 번호 밖, 나머지 넷이 1~4 (D64)', () => {
+    expect(NUMBERED.map((s) => s.id)).toEqual(['destination', 'waypoints', 'check', 'arrival']);
+    expect(STAGES.map((s) => stageNumber(s.id))).toEqual([null, 1, 2, 3, 4]);
+  });
 });
 
 describe('열리는 조건', () => {
-  it('시운전·목적지는 늘 열림', () => {
+  it('내 AI 써 보기·만들 앱 정하기는 늘 열림', () => {
     for (const r of [empty, halfway, ready]) {
       expect(gate('test-drive', r).open).toBe(true);
       expect(gate('destination', r).open).toBe(true);
     }
   });
 
-  it('목적지를 정하지 않았으면 경유지·점검·도착은 목적지로', () => {
+  it('만들 앱을 정하지 않았으면 도구 고르기·도구끼리 맞춰 보기·설계도 받기는 만들 앱 정하기로', () => {
     expect(halfway.done).toBe(false);
     for (const id of ['waypoints', 'check', 'arrival'] as const) {
       expect(gate(id, halfway)).toEqual({ open: false, redirect: 'destination', reason: 'destination' });
     }
   });
 
-  it('목적지를 정하면 경유지·점검이 열린다', () => {
+  it('만들 앱을 정하면 도구 고르기·도구끼리 맞춰 보기가 열린다', () => {
     expect(gate('waypoints', doneNoCart).open).toBe(true);
     expect(gate('check', doneNoCart).open).toBe(true);
   });
 
-  it('막힌 곳이 남으면 도착은 점검으로', () => {
+  it('막힌 곳이 남으면 설계도 받기는 도구끼리 맞춰 보기로', () => {
     expect(gate('arrival', blocked)).toEqual({ open: false, redirect: 'check', reason: 'fix' });
     expect(gate('arrival', ready)).toEqual({ open: true });
   });
 });
 
 describe('이어서 가기', () => {
-  it('목적지를 정하는 중이면 다음 질문 번호와 함께 목적지로', () => {
+  it('만들 앱을 정하는 중이면 다음 질문 번호와 함께 만들 앱 정하기로', () => {
     expect(continueTarget(empty)).toEqual({ stage: 'destination', questionNumber: 1 });
     expect(continueTarget(halfway)).toEqual({ stage: 'destination', questionNumber: halfway.interview.answered + 1 });
   });
 
-  it('고른 도구가 없으면 경유지, 출발할 수 없으면 점검, 아니면 도착', () => {
+  it('고른 도구가 없으면 도구 고르기, 출발할 수 없으면 도구끼리 맞춰 보기, 아니면 설계도 받기', () => {
     expect(doneNoCart.done).toBe(true);
     expect(continueTarget(doneNoCart)).toEqual({ stage: 'waypoints' });
     expect(continueTarget(blocked)).toEqual({ stage: 'check' });

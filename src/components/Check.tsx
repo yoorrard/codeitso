@@ -1,4 +1,4 @@
-// 점검 섬 (T10, docs/CONCEPT.md 6.5): 이해한 내용 요약 → 교통 정보(막힘·서행·원활, 도구 바꾸기 / 그대로 가기) → 먼저 만들 것·나중에 붙일 것.
+// 3단계 도구끼리 맞춰 보기 섬 (T10, docs/CONCEPT.md 6.5): 이해한 내용 요약 → 교통 정보(막힘·서행·원활, 도구 바꾸기 / 그대로 가기) → 먼저 만들 것·나중에 붙일 것.
 // 막힌 곳·출발 가능·나누기 제안은 모두 엔진 결과다. 화면은 고른 것(kept·deferred·고른 도구 바꾸기)만 저장한다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -16,6 +16,7 @@ import { ROUTES, waypointPath } from '../lib/routes.ts';
 import { gate } from '../lib/stages.ts';
 import { DispatchNote } from './DispatchNote.tsx';
 import { Icon } from './Icon.tsx';
+import { Lead } from './Lead.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const T = catalog.data.templates;
@@ -146,8 +147,8 @@ export default function Check() {
 
   return (
     <div class="check">
-      <h1>{ko.check.pageTitle}</h1>
-      <DispatchNote text={ko.dispatch.check} />
+      <h1>{ko.check.title}</h1>
+      <Lead text={ko.check.lead} />
 
       <details class="card understood">
         <summary>

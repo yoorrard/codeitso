@@ -1,4 +1,4 @@
-// 경유지 섬 (T09, docs/CONCEPT.md 6.4): 고를 것 목록 → 하나씩 펼쳐 추천·다른 도구·원문만 있는 도구를 보고 고른다.
+// 2단계 도구 고르기 섬 (T09, docs/CONCEPT.md 6.4): 고를 것 목록 → 하나씩 펼쳐 추천·다른 도구·원문만 있는 도구를 보고 고른다.
 // 점수·추천·이유·다른 후보 비교·꼬리표는 모두 엔진 결과(evaluate, badges). 화면은 글로 옮겨 보여 주기만 한다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -18,7 +18,7 @@ import { sfx } from '../lib/sfx.ts';
 import { ROUTES, termPath } from '../lib/routes.ts';
 import { gate } from '../lib/stages.ts';
 import { Icon } from './Icon.tsx';
-import { DispatchNote } from './DispatchNote.tsx';
+import { Lead } from './Lead.tsx';
 import { ArtTile } from './Glyph.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
@@ -219,7 +219,7 @@ export default function Shop() {
   const required = r.slots.filter((s) => s.slot.required);
   const allRequired = required.length > 0 && required.every((s) => s.filledBy.length > 0);
 
-  // 처음 펼칠 것: 주소의 ?slot=(점검의 '도구 바꾸기'), 아직 고르지 않은 첫 꼭 고를 것, 첫 것 순
+  // 처음 펼칠 것: 주소의 ?slot=(도구끼리 맞춰 보기의 '도구 바꾸기'), 아직 고르지 않은 첫 꼭 고를 것, 첫 것 순
   useEffect(() => {
     if (!ready || open !== null) return;
     const asked = new URLSearchParams(window.location.search).get('slot');
@@ -228,7 +228,7 @@ export default function Shop() {
   }, [ready]);
 
   const g = gate('waypoints', r);
-  // 빌드 때(처음 온 사람)도 못 가는 안내를 그린다: 목적지를 정하지 않은 사람에게 빈 경유지를 보이지 않게
+  // 빌드 때(처음 온 사람)도 못 가는 안내를 그린다: 만들 앱을 정하지 않은 사람에게 빈 도구 고르기를 보이지 않게
   if (!g.open) {
     return (
       <section class="q-card" aria-labelledby="shop-locked">
@@ -259,7 +259,7 @@ export default function Shop() {
     updateSession((s) => ({ cart: [...s.cart, p.id] }));
     void sfx('add');
     const after = $result.get();
-    // 남은 일을 바로 말한다 (CONCEPT 3.2): '○○ 골랐어요. 꼭 고를 것이 n개 남았어요.' 다 골랐으면 점검으로
+    // 남은 일을 바로 말한다 (CONCEPT 3.2): '○○ 골랐어요. 꼭 고를 것이 n개 남았어요.' 다 골랐으면 도구끼리 맞춰 보기로
     const left = after.slots.filter((s) => s.slot.required && s.filledBy.length === 0).length;
     const next = left > 0 ? fill(ko.shop.requiredLeft, { n: left }) : ko.shop.allRequired;
     announce(`${fill(ko.shop.added, { obj: josa(p.name, 'obj') })} ${next}`);
@@ -268,7 +268,7 @@ export default function Shop() {
   return (
     <div class="shop">
       <h1>{ko.shop.title}</h1>
-      <DispatchNote text={ko.dispatch.waypoints} />
+      <Lead text={ko.shop.lead} />
       <nav aria-label={ko.shop.inventory}>
         <ul class="inventory" ref={inventory}>
           {r.slots.map((s) => {

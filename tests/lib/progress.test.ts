@@ -5,7 +5,7 @@ import type { Golden } from '../../scripts/lib/golden.ts';
 import { goldenSession } from '../../scripts/lib/golden.ts';
 import { goldenFiles, readJson } from '../../scripts/lib/load-data.ts';
 import { progress } from '../../src/lib/progress.ts';
-import { realCatalog } from '../fixtures/tiny.ts';
+import { option, question, realCatalog, slotRule, tinyCatalog } from '../fixtures/tiny.ts';
 
 const cat = realCatalog();
 const results = goldenFiles().map((f) => evaluate(cat, goldenSession(readJson<Golden>(f))));
@@ -16,17 +16,18 @@ if (!blocked) throw new Error('막힌 곳이 남은 사례가 없습니다');
 const empty = evaluate(cat, {});
 
 describe('단계 마침', () => {
-  it('처음에는 0단계, 남은 일도 0 (목적지를 정하기 전)', () => {
+  it('처음에는 0단계, 남은 일도 0 (만들 앱을 정하기 전)', () => {
     expect(progress(empty, {})).toEqual({
       stages: { 'test-drive': false, destination: false, waypoints: false, check: false, arrival: false },
       passed: 0,
       requiredTotal: 0,
       requiredLeft: 0,
+      requiredNoTool: 0,
       blocked: 0,
     });
   });
 
-  it('목적지·경유지·점검을 마친 사례', () => {
+  it('만들 앱 정하기·도구 고르기·도구끼리 맞춰 보기를 마친 사례', () => {
     const p = progress(ready, {});
     expect(p.stages).toEqual({ 'test-drive': false, destination: true, waypoints: true, check: true, arrival: false });
     expect(p.passed).toBe(3);
@@ -35,23 +36,34 @@ describe('단계 마침', () => {
     expect(p.blocked).toBe(0);
   });
 
-  it('시운전과 영수증을 받으면 다섯 단계', () => {
+  it('내 AI 써 보기와 영수증까지 받으면 다섯 단계 (연습 포함)', () => {
     expect(progress(ready, { lessonDone: true, issued: true }).passed).toBe(5);
   });
 
-  it('영수증을 받은 뒤 막힌 곳이 생기면 도착은 마침이 아니다', () => {
+  it('영수증을 받은 뒤 막힌 곳이 생기면 설계도 받기는 마침이 아니다', () => {
     const p = progress(blocked, { issued: true });
     expect(p.stages.arrival).toBe(false);
     expect(p.blocked).toBe(blocked.conflicts.filter((c) => !c.kept).length);
     expect(p.blocked).toBeGreaterThan(0);
   });
 
-  it('꼭 고를 것이 비어 있으면 경유지는 마침이 아니고, 남은 수를 센다', () => {
+  it('꼭 고를 것이 비어 있으면 도구 고르기는 마침이 아니고, 남은 수를 센다', () => {
     const answersOnly = evaluate(cat, { answers: ready.session.answers });
     const p = progress(answersOnly, {});
     expect(p.stages.waypoints).toBe(false);
     expect(p.requiredLeft).toBe(p.requiredTotal);
     expect(p.requiredTotal).toBeGreaterThan(0);
+    expect(p.requiredNoTool).toBe(0);
+  });
+
+  it('맞는 도구가 없는 꼭 고를 것은 남은 수에 들고, 따로도 센다', () => {
+    const tiny = tinyCatalog({
+      questions: [question('q.a', [option('x')])],
+      rules: [slotRule('slot-rule.screen', { id: 'slot.screen', capability: 'screen', required: true })],
+    });
+    const p = progress(evaluate(tiny, { answers: { 'q.a': 'x' } }), {});
+    expect(p.requiredLeft).toBe(1);
+    expect(p.requiredNoTool).toBe(1);
   });
 
   it('나중으로 미룬 꼭 고를 것은 남은 수에 넣지 않는다 (case-04에서 로그인을 미룸)', () => {

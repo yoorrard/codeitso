@@ -1,4 +1,4 @@
-// 쓰지 않는 말 (docs/CONCEPT.md 3.9절). 화면 문구와 자료 문장에서 옛 비유·흩어진 단계 이름·영어 섞어 쓰기를 찾는다.
+// 쓰지 않는 말 (docs/CONCEPT.md 3.9절, D64). 화면 문구와 자료 문장에서 옛 비유·옛 단계 이름·탈것 앱 말·영어 섞어 쓰기를 찾는다.
 // 부작용 없는 도우미: scripts/guard/check-words.ts와 시험이 함께 쓴다.
 
 export interface BannedWord {
@@ -20,11 +20,11 @@ export const BANNED: readonly BannedWord[] = [
   { re: /주행 거리|\d\s*km\b|\bkm\b/, instead: '남은 일의 개수 ("꼭 고를 것 1개 남음")' },
   { re: /도장/, instead: '✓·읽음 (영수증의 "코드쇼퍼 · 요금 0원"은 글에 \'도장\'이라 쓰지 않는다)' },
   { re: /기사님/, instead: '기사 메시지(문서 안 이름) 또는 빼기' },
-  { re: /첫 수업/, instead: '시운전' },
-  { re: /인터뷰/, instead: '목적지' },
-  { re: /장보기/, instead: '경유지' },
-  { re: /재확인/, instead: '점검(출발 전 점검)' },
-  { re: /계산대/, instead: '도착' },
+  { re: /첫 수업/, instead: '내 AI 써 보기' },
+  { re: /인터뷰/, instead: '만들 앱 정하기' },
+  { re: /장보기/, instead: '도구 고르기' },
+  { re: /재확인/, instead: '도구끼리 맞춰 보기' },
+  { re: /계산대/, instead: '설계도 받기' },
   { re: /장바구니/, instead: '고른 도구' },
   { re: /(?<![부])담(?:기\b|기를|았|은 |을 |아 |아서|아요|겨|는 )/, instead: '고르기 / 골랐어요', uiOnly: true },
   { re: /진열대|진열 상품/, instead: '도구 모음 / 도구' },
@@ -45,6 +45,16 @@ export const BANNED: readonly BannedWord[] = [
   { re: /초록불|빨간불|신호등/, instead: '원활 / 막힘 / 교통 정보' },
   { re: /충돌/, instead: '막힌 곳' },
   { re: /체크|클릭|큐레이션|오픈(?!소스| 소스|스트리트맵| API| 데이터|사전|AI)/, instead: '확인 / 누르기 / 고르기 / 열기 (copy.md)' },
+  // D64: 단계 이름은 할 일을 말한다. 비유 단계 이름(시운전·경유지·점검)과 탈것 앱 말(호출·배차·탑승), 가짜 기다림을 쓰지 않는다.
+  // '목적지'는 홈 소개 문장·지도의 빈 터 이름표·영수증 줄에 남는다. '점검'·'호출'은 기술 뜻(개발자 도구의 점검, API 호출)이 있어 화면·설계도 문장에만 건다
+  { re: /시운전/, instead: '내 AI 써 보기' },
+  { re: /경유지/, instead: "도구 고르기 (기능 하나는 '고를 것')" },
+  { re: /점검/, instead: '도구끼리 맞춰 보기 (단계 이름) / 확인', uiOnly: true },
+  { re: /들르는 곳/, instead: '필요한 기능마다 / 기능마다' },
+  { re: /길 찾는 중/, instead: '빼기 (가짜 기다림을 쓰지 않는다) / 지금까지 정한 것' },
+  { re: /호출/, instead: '빼기 (탈것 앱 말)', uiOnly: true, allowIf: /API|호출 한도|호출 수|호출이 안|함수/ },
+  { re: /배차/, instead: '빼기 (탈것 앱 말)' },
+  { re: /탑승/, instead: '빼기 (탈것 앱 말)' },
 ];
 
 export interface WordHit {

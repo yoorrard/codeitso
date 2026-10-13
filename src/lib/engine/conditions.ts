@@ -8,7 +8,7 @@ export interface Ctx {
   answers: Record<string, string>;
   /** 장바구니 상품 */
   cart: Product[];
-  /** 나중으로 미룬 칸 id (점검 뒤에만 쓴다. 칸 규칙·질문 조건에서는 늘 빈 배열) */
+  /** 나중으로 미룬 칸 id (도구끼리 맞춰 보기 뒤에만 쓴다. 칸 규칙·질문 조건에서는 늘 빈 배열) */
   deferred: string[];
 }
 

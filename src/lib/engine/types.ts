@@ -115,7 +115,7 @@ export interface SlotDef {
   deferrable?: boolean;
   /** true면 비워 둔 채로 출발할 수 없다 ('그대로 가기' 불가, 화면: 통행 불가) */
   mustFill?: boolean;
-  /** 경유지에서 칸 제목 아래 한 줄 설명 */
+  /** 도구 고르기에서 칸 제목 아래 한 줄 설명 */
   help?: string;
   emptyMessage?: string;
   emptyFix?: string;
@@ -419,9 +419,9 @@ export interface Session {
   answers: Record<string, string>;
   /** 고른 도구(상품) id (고른 순서) */
   cart: string[];
-  /** 점검에서 '그대로 가기'를 고른 충돌(막힌 곳) id */
+  /** 도구끼리 맞춰 보기에서 '그대로 가기'를 고른 충돌(막힌 곳) id */
   kept: string[];
-  /** 점검에서 '나중으로 미루기'를 고른 칸 id (나중에 붙일 것) */
+  /** 도구끼리 맞춰 보기에서 '나중으로 미루기'를 고른 칸 id (나중에 붙일 것) */
   deferred: string[];
   /** "만들고 싶은 걸 한 줄로". 영수증 링크에는 넣지 않는다 */
   freeText?: string;

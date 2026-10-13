@@ -5,19 +5,7 @@ import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/engine/index.ts';
 import { hydrated } from './helpers.ts';
 
-test('단계 줄: 지금 단계가 표시되고, 다른 단계 링크로 옮겨 간다', async ({ page }) => {
-  await page.goto('/test-drive');
-  await islandsReady(page);
-  await expect(page.locator('.rail-list a[aria-current="step"]')).toHaveAttribute('href', '/test-drive');
-  await page.locator('.rail-list a[href="/destination"]').click();
-  await page.waitForURL(/\/destination$/);
-  await islandsReady(page);
-  await expect(page.locator('.rail-list a[aria-current="step"]')).toHaveAttribute('href', '/destination');
-  // 목적지를 정하기 전에는 경유지로 갈 수 없다: 링크가 아니라 이유를 알려 주는 버튼
-  await expect(page.locator('.rail-list .step.locked button').first()).toHaveAttribute('aria-disabled', 'true');
-});
-
-test('도착: 영수증 출력 중에 누르면 다 나온 영수증이 바로 보인다', async ({ page }) => {
+test('설계도 받기: 영수증 출력 중에 누르면 다 나온 영수증이 바로 보인다', async ({ page }) => {
   const first = recipes[0];
   if (!first) throw new Error('코스가 없다');
   await page.goto('/courses');
@@ -35,7 +23,7 @@ test('도착: 영수증 출력 중에 누르면 다 나온 영수증이 바로 �
 });
 
 for (const mode of ['기기 설정', '사이트 설정'] as const) {
-  test(`동작 줄이기(${mode}): 이동 없이 시운전부터 영수증까지 간다`, async ({ browser }) => {
+  test(`동작 줄이기(${mode}): 이동 없이 내 AI 써 보기부터 영수증까지 간다`, async ({ browser }) => {
     const context = await browser.newContext({ viewport: { width: 360, height: 800 }, reducedMotion: mode === '기기 설정' ? 'reduce' : 'no-preference' });
     if (mode === '사이트 설정') await context.addInitScript(() => localStorage.getItem('cc:prefs:v1') ?? localStorage.setItem('cc:prefs:v1', JSON.stringify({ motion: 'reduce', sound: false })));
     const page = await context.newPage();
@@ -48,7 +36,11 @@ for (const mode of ['기기 설정', '사이트 설정'] as const) {
     const finish = await hydrated(page.locator('main button.btn-primary').last());
     await finish.click();
     await still();
-    await page.locator('.rail-list a[href="/destination"]').click();
+    // 접힌 단계 줄(360px)의 단계 시트로 옮겨 간다: 시트도 동작 줄이기면 움직이지 않는다
+    await page.locator('.rail-toggle').click();
+    await expect(page.locator('.stage-sheet')).toBeVisible();
+    await still();
+    await page.locator('.stage-sheet a[href="/destination"]').click();
     await page.waitForURL(/\/destination$/);
     await islandsReady(page);
     await still();

@@ -11,8 +11,7 @@ import MapSprite from '../components/MapSprite.astro';
 import Icon from '../components/Icon.astro';
 import DictionaryPanel from '../components/DictionaryPanel.tsx';
 import TermPopover from '../components/TermPopover.tsx';
-import BrandMark from '../components/BrandMark.astro';
-import Wordmark from '../components/Wordmark.astro';
+import Logo from '../components/Logo.astro';
 import SettingsMenu from '../components/SettingsMenu.tsx';
 import StageRail from '../components/StageRail.tsx';
 import StatusLine from '../components/StatusLine.tsx';
@@ -49,12 +48,14 @@ const hasAction = Astro.slots.has('action');
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--card 낮) 값을 그대로 쓴다 -->
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141a2b" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--card 밤) 값을 그대로 쓴다 -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 낮) 값을 그대로 쓴다 -->
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f1724" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 밤) 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png" />
+    <!-- 파비콘·앱 아이콘은 모자 배지 타일 (D65, brief 3.3). npm run logo가 만든다 -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
       // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 다시 온 사람 표시(홈 출발 장면을 짧게)를 붙인다.
@@ -81,12 +82,12 @@ const hasAction = Astro.slots.has('action');
     <header class="topbar">
       <div class="topbar-inner">
         <a class="brand" href={ROUTES.home}>
-          <BrandMark />
-          <Wordmark />
+          <Logo variant="lockup" height={44} />
+          <span class="visually-hidden">{ko.site.name}</span>
         </a>
         <div class="top-actions">
           <a class="dict-btn" href={ROUTES.dictionary}>
-            <Icon name="dictionary" />
+            <Icon name="dictionary" size="20px" />
             <span>{ko.layout.dictionary}</span>
           </a>
           <SettingsMenu client:idle />
@@ -95,7 +96,7 @@ const hasAction = Astro.slots.has('action');
       {
         stage && (
           <div class="rail-wrap">
-            <StageRail client:idle stage={stage} initial={initial} />
+            <StageRail client:load stage={stage} initial={initial} />
           </div>
         )
       }
@@ -107,7 +108,7 @@ const hasAction = Astro.slots.has('action');
       (stage || hasAction) && (
         <div class:list={['action-bar', { 'is-static': stage === null }]} role="region" aria-label={ko.layout.actionBar}>
           <div class="action-inner">
-            {stage && <StatusLine client:idle stage={stage} />}
+            {stage && <StatusLine client:load stage={stage} />}
             {hasAction && (
               <div class="action-main">
                 <slot name="action" />
@@ -118,6 +119,7 @@ const hasAction = Astro.slots.has('action');
       )
     }
     <footer class="site-footer" aria-label={ko.footer.label}>
+      <Logo variant="wordmark" height={16} label={ko.site.name} class="footer-mark" />
       <p>{ko.footer.license}</p>
       <ul>
         <li><a href={ROUTES.about}>{ko.footer.about}</a></li>

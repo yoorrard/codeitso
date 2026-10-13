@@ -1,4 +1,4 @@
-// 시운전 끝: '시운전 마치기'를 누르면 시운전 단계를 마침으로 적고, 목적지로 가는 길을 보인다 (docs/CONCEPT.md 6.2).
+// 내 AI 써 보기 끝: '다 했어요'를 누르면 연습을 마침으로 적고, '만들 앱 정하러 가기'를 보인다 (docs/CONCEPT.md 6.2, D64).
 // S8(차가 연습 고리를 한 바퀴)은 지도와 함께 T31에서 더한다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -17,7 +17,7 @@ export default function LessonFinish() {
   const next = useRef<HTMLAnchorElement>(null);
   const done = ready && meta.lessonDone === true;
 
-  // 누른 버튼이 사라지니 새로 나온 '목적지로' 링크로 초점을 옮긴다
+  // 누른 버튼이 사라지니 새로 나온 '만들 앱 정하러 가기' 링크로 초점을 옮긴다
   useEffect(() => {
     if (pressed && done) next.current?.focus();
   }, [pressed, done]);

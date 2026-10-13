@@ -21,7 +21,7 @@ export interface Meta {
   interviewStartedAt?: number;
   /** 보낸 집계 이벤트 열쇠 (최근 SENT_MAX개) */
   sent: string[];
-  /** 시운전을 끝까지 함 (시운전 단계 마침) */
+  /** 내 AI 써 보기를 끝까지 함 (연습 마침) */
   lessonDone?: boolean;
   /** 영수증을 한 번 이상 받음 (도착 단계 마침) */
   issued?: boolean;

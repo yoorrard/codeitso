@@ -328,7 +328,7 @@ describe('표지', () => {
     expect(whole?.conflicts).toEqual(['conflict.shared-without-login']);
   });
 
-  it('표지는 점검(traffic)과 도착에서만 그린다', () => {
+  it('표지는 도구끼리 맞춰 보기(traffic)와 설계도 받기에서만 그린다', () => {
     const r = evaluate(cat, golden('case-04'));
     expect(mapModel(r).markers).toEqual([]);
     expect(mapModel(r, { focus: 'slot.store' }).markers).toEqual([]);

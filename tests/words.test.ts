@@ -13,8 +13,26 @@ describe('쓰지 않는 말', () => {
     expect(words('영수증 뽑기')).toEqual(['뽑기']);
   });
 
+  it('옛 단계 이름과 탈것 앱 말을 잡는다 (D64)', () => {
+    expect(words('다음은 경유지예요. 들르는 곳마다 도구를 골라요.')).toEqual(['경유지', '들르는 곳']);
+    expect(words('10분 시운전부터 해 보세요')).toEqual(['시운전']);
+    expect(words('출발 전 점검')).toEqual(['점검']);
+    expect(words('길 찾는 중')).toEqual(['길 찾는 중']);
+    expect(words('기사 호출하기')).toEqual(['호출']);
+    expect(words('배차 완료, 탑승하세요')).toEqual(['배차', '탑승']);
+  });
+
+  it("기술 뜻의 '점검'·'호출'은 화면 밖 자료에서, 'API 호출'은 어디서나 놓아준다", () => {
+    expect(words('브라우저에 들어 있는 점검 도구예요.', false)).toEqual([]);
+    expect(words('하루 호출 한도가 있어요.')).toEqual([]);
+    expect(words('한 달 API 호출이 1,000번이에요.')).toEqual([]);
+  });
+
   it('새 말은 통과한다', () => {
-    expect(words('다음은 경유지예요. 들르는 곳마다 도구를 골라요.')).toEqual([]);
+    expect(words('도구 고르기 · 1개만 더 고르면 돼요 · 약 1분')).toEqual([]);
+    expect(words('고른 도구끼리 잘 맞을까요?')).toEqual([]);
+    expect(words('코드는 몰라도 됩니다. 목적지만 말하세요.')).toEqual([]);
+    expect(words('설계도 받으러 출발하기')).toEqual([]);
     expect(words('막힌 곳이 없어요. 모두 원활해요.')).toEqual([]);
     expect(words('도착했습니다. 요금은 0원입니다.')).toEqual([]);
   });

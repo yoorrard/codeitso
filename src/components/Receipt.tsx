@@ -1,4 +1,4 @@
-// 도착 섬 (T11, docs/CONCEPT.md 6.6, docs/RECEIPT.md): 영수증 출력 장면(S6) → 탭 네 개(영수증·설계도·읽어 둘 용어·AI에게 할 말).
+// 4단계 설계도 받기 섬 (T11, docs/CONCEPT.md 6.6, docs/RECEIPT.md): 영수증 출력 장면(S6) → 탭 네 개(영수증·설계도·읽어 둘 용어·AI에게 할 말).
 // 영수증·설계도·AI에게 할 말은 모두 엔진(receiptModel·renderPack·conversationCards)이 만든다. 화면은 그리고 복사·내려받기만 한다.
 // 영수증 링크(#r=)로 열면 읽자마자 주소에서 지우고, 읽기 전용으로 보여 준다. '이어서 가기'를 누를 때만 저장한다.
 import { useStore } from '@nanostores/preact';
@@ -13,6 +13,7 @@ import { conversationCards, evaluate, fill, packFileName, receiptModel, renderPa
 import type { Session } from '../lib/engine/types.ts';
 import { elapsedBucket, isBucket } from '../lib/event-spec.ts';
 import { stateKey, track } from '../lib/track.ts';
+import { LOGO_MONO_MARK } from '../lib/logo-paths.ts';
 import { reduced, skipAll, skippable } from '../lib/motion.ts';
 import { $result, commitSession } from '../lib/result.ts';
 import { sfx } from '../lib/sfx.ts';
@@ -21,8 +22,11 @@ import { ROUTES, termPath } from '../lib/routes.ts';
 import { hasProgress, sameSession } from '../lib/stages.ts';
 import { $meta, $seen, $session, markSceneSeen, patchMeta, rememberReceipt } from '../lib/store.ts';
 import CopyButton from './CopyButton.tsx';
+import { DispatchNote } from './DispatchNote.tsx';
 import { ArtTile } from './Glyph.tsx';
 import { Icon } from './Icon.tsx';
+import { Lead } from './Lead.tsx';
+import { Logo } from './Logo.tsx';
 
 const T = catalog.data.templates;
 /** 처음 받은 영수증의 도착 알림은 한 번만 (CONCEPT 7절 S6) */
@@ -43,6 +47,8 @@ function Paper({ r, issuedAt, onPrinted }: { r: EngineResult; issuedAt: string; 
   return (
     <div class="printer">
       <div class="paper" role="group" aria-label={ko.receipt.paperLabel}>
+        {/* 감열 영수증 머리의 로고처럼 한 가지 잉크로 찍은 모자 마크 (단색판 E, D65) */}
+        <Logo variant="monoMark" art={LOGO_MONO_MARK} height={24} class="r-mark" />
         <p class="r-title r-fixed">{m.title}</p>
         <p class="r-center r-fixed">{m.issuedAt}</p>
         <hr class="r-rule" />
@@ -88,6 +94,7 @@ function Paper({ r, issuedAt, onPrinted }: { r: EngineResult; issuedAt: string; 
         </p>
         <hr class="r-rule" />
         <p class="r-stamp r-fixed" onAnimationEnd={onPrinted}>
+          <Logo variant="monoMark" art={LOGO_MONO_MARK} height={20} />
           {m.stamp}
         </p>
         <p class="r-center r-fixed r-footer">{m.footer}</p>
@@ -273,10 +280,12 @@ export default function Receipt() {
 
   return (
     <div class="receipt">
+      {/* 도착은 사건이라 기사 메시지로 알리고, H1은 이 단계의 할 일을 말한다 (D64) */}
+      {!shared && <DispatchNote title={ko.dispatch.arrival} text={ko.dispatch.arrivalNext} closable={false} />}
       <h1 id="receipt-title" tabIndex={-1}>
-        {shared ? ko.receipt.pageTitle : ko.dispatch.arrival}
+        {ko.receipt.title}
       </h1>
-      {!shared && <p class="lead">{ko.dispatch.arrivalNext}</p>}
+      <Lead text={ko.receipt.lead} />
       {/* 건네드릴 것 (CONCEPT 6.6): 빈 터 그림(렌더가 오기 전에는 청사진) + 받는 것 한 줄 */}
       <section class="handover" aria-labelledby="handover-title">
         <ArtTile name="P01" size="hero" class="handover-art" />

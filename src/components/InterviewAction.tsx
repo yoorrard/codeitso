@@ -1,4 +1,4 @@
-// 목적지 아래 막대의 주 버튼: 목적지를 정했으면 '경유지로 가기', 아니면 '도구 먼저 둘러볼게요'(답은 저장해 둔다).
+// 만들 앱 정하기 아래 막대의 주 버튼: 다 정했으면 '도구 고르러 가기', 아니면 '도구 먼저 둘러볼게요'(답은 저장해 둔다).
 import { useStore } from '@nanostores/preact';
 import { ko } from '../copy/ko.ts';
 import { useHydrated } from '../lib/hydrated.ts';

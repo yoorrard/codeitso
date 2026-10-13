@@ -60,7 +60,7 @@ export function normalizeSession(cat: Catalog, s: Partial<Session>): Session {
   return out;
 }
 
-/** 목적지 질문부터 도착까지 한 번에 계산한다. 화면은 이 결과만 읽는다. */
+/** 만들 앱 정하기 질문부터 설계도 받기까지 한 번에 계산한다. 화면은 이 결과만 읽는다. */
 export function evaluate(cat: Catalog, input: Partial<Session>): EngineResult {
   const base = normalizeSession(cat, input);
   const interview = runInterview(cat, base.answers);

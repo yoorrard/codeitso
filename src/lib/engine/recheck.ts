@@ -49,7 +49,7 @@ export function emptySlotId(slotId: string): string {
   return `conflict.empty-slot:${slotId}`;
 }
 
-/** 출발 전 점검: 규칙 충돌(규칙 순서) 다음에 빈 필수 칸(칸 순서). 화면에서는 '막힌 곳' */
+/** 도구끼리 맞춰 보기: 규칙 충돌(규칙 순서) 다음에 빈 필수 칸(칸 순서). 화면에서는 '막힌 곳' */
 export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: Slot[]): Conflict[] {
   const out: Conflict[] = [];
   const open = new Set(slots.map((s) => s.id));

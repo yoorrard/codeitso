@@ -1,4 +1,4 @@
-// '출발하기' 주 버튼 (점검 아래 막대, CONCEPT 6.5). 출발할 수 있을 때만 켜지고, 꺼져 있으면 aria-disabled와 이유 글.
+// '설계도 받으러 출발하기' 주 버튼 (도구끼리 맞춰 보기 아래 막대, CONCEPT 6.5, D64). 출발할 수 있을 때만 켜지고, 꺼져 있으면 aria-disabled와 이유 글.
 import { useStore } from '@nanostores/preact';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';

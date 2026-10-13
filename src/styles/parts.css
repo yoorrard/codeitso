@@ -14,6 +14,24 @@
   color: var(--ink-soft);
 }
 
+/* 단계 화면의 H1(기사가 묻는 말)과 그 아래 한 줄 (brief 2.1·5.1): 22/31·700, 17/27 --text-2. 홈 H1(32)보다 한 단 낮다 */
+.stage.has-bar h1 {
+  font-size: var(--size-title-2);
+  line-height: var(--leading-title-2);
+  letter-spacing: var(--tracking-title-sm);
+}
+
+.stage.has-bar .lead {
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body-lg);
+  color: var(--text-2);
+}
+
+/* 한 줄을 문장마다 묶어, 좁은 화면에서 어구 중간이 아니라 문장 사이에서 줄을 바꾼다 (Lead.tsx) */
+.lead-s {
+  display: inline-block;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -263,6 +281,32 @@
   display: block;
 }
 
+/* '요금 0원' 칩 (홈, D65·brief 4.8): 남색 알약 32 + 청록 점 8 + 흰 글자 14/600 (15.75:1, 점 6.68:1).
+   로고의 '남색 차 + 청록 전조등'을 칩 하나로 옮긴 것. 밤에는 윗변 빛줄로 바탕과 가른다 */
+.fare-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 32px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--navy);
+  box-shadow: var(--edge-light);
+  color: var(--on-navy);
+  font-family: var(--font-body);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-strong);
+}
+
+.fare-dot {
+  flex-shrink: 0;
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--cyan);
+}
+
 /* ── 인터뷰 (T08) ───────────────────────────────────── */
 .interview {
   display: grid;
@@ -326,27 +370,42 @@
   padding-inline: var(--space-2);
 }
 
-/* 기사 메시지 (CONCEPT 4.1): 왼쪽에 브랜드 마크(40px), 오른쪽에 두 문장 이하의 글, 닫기 단추.
-   가는 선으로 나눈 시트 안 상자라 그림자를 두지 않는다 (CONCEPT 5.5) */
+/* 기사 메시지 (CONCEPT 4.1, brief 6.1): 모자 배지 원 32 + 15/22 글 + 닫기 44, --fill 면, 모서리 14, 안쪽 12·16.
+   테두리·그림자 없이 면 하나로 둔다 (CONCEPT 5.5). 첫 줄(알림)은 600, 둘째 줄(다음 할 일)은 400 --text-2 */
 .dispatch-note {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
-  background: var(--surface-2);
-  color: var(--ink);
-  font-weight: var(--weight-strong);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  color: var(--text);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
   animation: note-in var(--dur-ui) var(--ease-out) both;
+}
+
+.dispatch-note .line:first-child {
+  font-weight: var(--weight-strong);
+}
+
+.dispatch-note .line + .line {
+  color: var(--text-2);
 }
 
 .dispatch-note > p {
   flex: 1;
 }
 
-.dispatch-note .brand-mark {
-  inline-size: 44px;
+.dispatch-badge {
+  border-radius: var(--radius-pill);
+}
+
+/* 밤에는 남색 원이 --fill 바탕에 묻혀서(1.05:1) 가는 테를 두른다 (brief 3.4, brand.md 7.3) */
+@media (prefers-color-scheme: dark) {
+  .dispatch-badge {
+    outline: 1px solid var(--hairline);
+  }
 }
 
 .dispatch-close {
@@ -1217,7 +1276,8 @@
   /* 영수증 종이는 밤 지도에서도 흰 감열지라서, 종이 안의 글자색을 종이 전용 값으로 바꿔 둔다 */
   --ink: var(--receipt-ink);
   --ink-soft: var(--receipt-soft);
-  --jam: var(--seal);
+  /* 종이 위 막힘 표시는 도장(--seal, 남색)과 따로 둔다 (D65) */
+  --jam: var(--receipt-bad);
   color: var(--ink);
   box-shadow: var(--shadow);
   animation: print var(--dur-print) steps(14, end) both;
@@ -1250,6 +1310,11 @@
 
 .r-var {
   font-family: var(--font-body);
+}
+
+.r-mark {
+  margin-inline: auto;
+  margin-block-end: var(--space-1);
 }
 
 .r-title {
@@ -1298,17 +1363,33 @@
   font-size: var(--text-sm);
 }
 
+/* 남색 도장 (D65, brief 4.8): 3px 겹줄 둥근 네모, −6° 기울임, 단색 모자 마크 20 + '코드쇼퍼 · 요금 0원' */
 .r-stamp {
-  justify-self: center;
-  inline-size: max-content;
-  margin: var(--space-3) auto var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+  /* 글자를 키워도 종이 폭을 넘지 않게: 넘으면 마크와 글이 줄을 바꾼다 (WCAG 1.4.10) */
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  /* 기울인 도장의 양 끝이 위아래로 약 12px 솟으므로 그만큼 비운다 */
+  margin: var(--space-5) auto;
   padding: var(--space-1) var(--space-3);
-  border: 3px double var(--jam);
+  border: 3px double var(--seal);
   border-radius: var(--radius-sm);
-  color: var(--jam);
+  color: var(--seal);
   font-weight: var(--weight-strong);
   transform: rotate(-6deg);
-  animation: stamp-in var(--dur-stamp) var(--ease-spring) var(--dur-print) both;
+  animation: stamp-press var(--dur-stamp) var(--ease-spring) var(--dur-print) both;
+}
+
+/* S6: 1.3배에서 1배로 누르기만 한다. 'to'가 없어 끝 상태는 요소 자기 값(−6°)이다 */
+@keyframes stamp-press {
+  from {
+    opacity: 0;
+    transform: rotate(-6deg) scale(var(--juice-stamp-scale));
+  }
 }
 
 .r-footer {
@@ -1811,6 +1892,10 @@
   padding: var(--space-5) var(--gutter) var(--space-6);
   font-size: var(--text-sm);
   color: var(--ink-soft);
+}
+
+.footer-mark {
+  margin-block-end: var(--space-3);
 }
 
 .site-footer ul {

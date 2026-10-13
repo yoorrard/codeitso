@@ -26,7 +26,7 @@
   animation-duration: var(--dur-ui);
 }
 
-/* ── 머리줄 (CONCEPT 5.8): 마크 + 글자 상표, 사전, 설정. 붙박이가 아니다 (D41) ── */
+/* ── 머리줄 (CONCEPT 5.8, brief 3.2): 가로 묶음 로고(그림 52×44 + 8 + 글자 상표 82×20), 사전, 설정. 높이 56. 붙박이가 아니다 (D41) ── */
 /* 미리 보기 배포의 '검토 중인 시험판' 띠 (D53). 머리줄 위 한 줄 */
 .stage-banner {
   padding: var(--space-1) var(--gutter);
@@ -57,52 +57,100 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
   min-block-size: var(--tap);
-  color: var(--ink);
+  border-radius: var(--radius-sm);
+  color: var(--text);
   text-decoration: none;
+  transition: scale var(--dur-tap) var(--ease-out);
 }
 
-/* 글자 상표와 브랜드 마크: 소유자 로고 그림 (D60). 크기만 정한다 (그림 위에 그림자·외곽선을 더하지 않는다) */
-.wordmark,
-.brand-mark {
+/* 머리줄 로고는 움직이지 않는다. 눌렀을 때 다른 버튼처럼 0.98로 눌리기만 한다 (brief 3.1) */
+.brand:active {
+  scale: var(--juice-press-scale);
+}
+
+/* ── 로고 (D65, brief 3.1·3.4·3.5): 인라인 SVG. 경로 클래스를 --logo-* 토큰으로 칠한다.
+   로고 위에 그림자·외곽선·필터를 더하지 않는다. 크기는 Logo의 height가 정한다 ── */
+.logo {
   display: block;
   flex-shrink: 0;
 }
 
-.wordmark img,
-.brand-mark img {
-  display: block;
-  inline-size: 100%;
-  block-size: auto;
+.logo-body {
+  fill: var(--logo-body);
 }
 
-.wordmark {
-  inline-size: 92px;
+.logo-letter {
+  fill: var(--logo-letter);
 }
 
-.brand .brand-mark {
-  inline-size: 40px;
+.logo-accent {
+  fill: var(--logo-accent);
+}
+
+.logo-light {
+  fill: var(--logo-light);
+}
+
+.logo-white {
+  fill: var(--logo-white);
+}
+
+/* 모자 배지는 남색 타일을 스스로 가져서 낮·밤이 같다 */
+.logo--badge {
+  --logo-body: var(--navy);
+  --logo-accent: var(--brand-blue);
+  --logo-light: var(--cyan);
+  --logo-white: var(--brand-white);
 }
 
 .top-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
 }
 
+/* 사전: 보이는 알약은 36(--btn-sm), 누르는 곳은 44. 알약은 ::before로 그리고 링크 자체는 44 높이로 둔다 (brief 3.2) */
 .dict-btn {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   min-block-size: var(--tap);
   padding: 0 var(--space-3);
-  border: 1px solid var(--hairline);
   border-radius: var(--radius-pill);
-  background: var(--card);
-  color: var(--ink);
+  color: var(--text);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
   font-weight: var(--weight-strong);
   text-decoration: none;
+  transition: scale var(--dur-tap) var(--ease-out);
+}
+
+.dict-btn::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--tap) - var(--btn-sm)) / 2);
+  z-index: -1;
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+  transition: background-color var(--dur-tap) var(--ease-out);
+}
+
+.dict-btn:active {
+  scale: var(--juice-press-scale);
+}
+
+.dict-btn:active::before {
+  background: var(--fill-press);
+}
+
+@media (hover: hover) {
+  .dict-btn:hover::before {
+    background: var(--fill-press);
+  }
 }
 
 /* 글자를 키워 머리줄 폭이 모자라면 '사전' 글자를 숨기고 그림 단추로 (이름은 화면 낭독기에 그대로 남는다) */
@@ -123,85 +171,174 @@
   }
 }
 
-/* ── 단계 줄 (CONCEPT 5.8): 다섯 단계 이름을 가는 선으로 잇는다 ───────────────
-   지금 단계는 먹색 알약 + aria-current, 마친 단계는 ✓, 못 가는 단계는 흐린 글자. 시운전은 선택이라 작은 고리를 붙인다.
-   폭이 모자라면(글자를 키우거나 좁은 화면) 컨테이너 쿼리로 '경유지 · 3/5' 단추 하나로 접힌다 */
+/* ── 단계 줄 (D64, docs/review/v2/brief.md 6.2) ─────────────────────────────
+   접힘(컨테이너 40rem 미만, 360px 기본): '2/4 · 도구 고르기' 버튼 하나 + 4칸 막대. 누르면 단계 시트.
+   펼침(40rem 이상): 연습 글 링크 | 원 넷(24)을 가는 선으로 잇는다. 원: 마침 = 남색(내 것) + ✓, 지금 = 파랑(지금) + 흰 숫자, 아직 = 흰 원.
+   펼친 줄은 원·연습 링크까지 약 625px가 들어서, 읽는 폭(640px)을 다 쓸 때만 펼친다 (D64: 설계서의 34rem은 이름만 잰 값).
+   rem 기준이라 글자를 키우면(200%) 어느 폭이든 접힌다 */
 .rail-wrap {
   max-inline-size: var(--content-max);
   margin-inline: auto;
-  padding-block-end: var(--space-2);
+  padding-block-end: var(--space-1);
 }
 
 .rail {
   container: rail / inline-size;
 }
 
-.rail-list {
-  position: relative;
-  display: flex;
+.rail-full {
+  display: none;
   align-items: center;
-  justify-content: space-between;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  gap: var(--space-2);
+  min-block-size: 48px;
 }
 
-.rail-list::before {
-  content: '';
-  position: absolute;
-  inset-inline: var(--space-5);
-  inset-block-start: 50%;
-  border-block-start: 2px solid var(--hairline);
+.rail-toggle {
+  display: flex;
 }
 
-.step {
-  position: relative;
+@container rail (min-width: 40rem) {
+  .rail-full {
+    display: flex;
+  }
+
+  .rail-toggle {
+    display: none;
+  }
 }
 
-.step :is(a, button) {
+/* 펼침: 연습은 번호 밖이라 작은 글 링크 + 세로 나눔 선 */
+.rail-practice {
   display: inline-flex;
+  flex: none;
   align-items: center;
   gap: var(--space-1);
   min-block-size: var(--tap);
-  padding: 0 var(--space-2);
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: var(--card);
-  color: var(--ink-soft);
-  font: inherit;
-  font-size: var(--text-sm);
+  /* 번호 밖 연습이라 지금 단계(파랑 원)보다 조용하게 */
+  color: var(--text-2);
+  font-size: var(--size-caption);
   font-weight: var(--weight-strong);
   white-space: nowrap;
   text-decoration: none;
 }
 
-.step.done a {
-  color: var(--ink);
+.rail-practice.current {
+  color: var(--text);
 }
 
-.step.done .icon {
-  color: var(--flow);
+.rail-practice-opt {
+  color: var(--text-2);
+  font-weight: var(--weight-body);
 }
 
-.step.current a {
-  padding-inline: var(--space-3);
-  background: var(--chosen);
-  color: var(--on-chosen);
+.rail-divider {
+  flex: none;
+  inline-size: 1px;
+  block-size: 24px;
+  background: var(--hairline);
+}
+
+.rail-list {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rail-list > li {
+  display: flex;
+  align-items: center;
+}
+
+/* 원과 원 사이를 잇는 선: 1px --hairline. 지나온 구간은 2px --brand-blue */
+.rail-list > li + li {
+  flex: 1 1 auto;
+}
+
+.rail-list > li + li::before {
+  content: '';
+  flex: 1 1 auto;
+  min-inline-size: var(--space-3);
+  block-size: 1px;
+  margin-inline: var(--space-1);
+  background: var(--hairline);
+}
+
+.rail-list > li.reached::before {
+  block-size: 2px;
+  background: var(--brand-blue);
+}
+
+.step :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font: inherit;
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.step:is(.current, .done) a {
+  color: var(--text);
 }
 
 .step.locked button {
-  color: var(--ink-faint);
+  color: var(--text-3);
 }
 
-.step.optional :is(a, button)::before {
-  content: '';
+/* 원 24 (펼친 줄과 단계 시트가 같이 쓴다). rem이라 글자를 키우면 원도 같이 커진다 (WCAG 1.4.4) */
+.step-dot {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+:is(.step, .sheet-step).done .step-dot {
+  background: var(--chosen);
+  box-shadow: none;
+  color: var(--on-chosen);
+}
+
+:is(.step, .sheet-step).current .step-dot {
+  background: var(--accent);
+  box-shadow: none;
+  color: var(--on-accent);
+}
+
+.step-dot .icon-wrap {
+  display: block;
+}
+
+/* 연습(번호 없음)의 빈 고리 */
+.step-ring {
   inline-size: 8px;
   block-size: 8px;
   border: 2px solid currentColor;
   border-radius: var(--radius-pill);
 }
 
-.step.just-opened :is(a, button) {
+.step-dot.just-opened {
   animation: step-open var(--dur-pop) var(--ease-spring);
 }
 
@@ -211,54 +348,132 @@
   }
 }
 
+/* 접힘: 글 줄 44 + 4칸 막대 4 + 아래 여백 4 = 52 */
 .rail-toggle {
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
+  flex-direction: column;
+  align-items: stretch;
   inline-size: 100%;
-  min-block-size: var(--tap);
-  padding: 0 var(--space-3);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-pill);
-  background: var(--card);
-  color: var(--ink);
+  padding: 0 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text);
   font: inherit;
-  font-size: var(--text-sm);
+  text-align: start;
+  cursor: pointer;
+}
+
+.rail-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
   font-weight: var(--weight-strong);
 }
 
+.rail-count {
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.rail-sep {
+  color: var(--text-3);
+}
+
+.rail-name {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.rail-toggle-row .icon-wrap {
+  color: var(--text-2);
+}
+
 .rail-bars {
-  display: flex;
-  gap: 3px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-1);
 }
 
 .rail-bars .bar {
-  inline-size: 14px;
-  block-size: 6px;
+  block-size: 4px;
   border-radius: var(--radius-pill);
-  background: var(--hairline);
+  background: var(--fill);
 }
 
+/* 마친 칸은 남색(내 것), 지금 칸은 파랑(지금): 펼친 줄의 원과 같은 문법이라, 뒤로 돌아와도 지금 위치가 보인다 (D64 검토 반영) */
 .rail-bars .bar.done {
-  background: var(--flow);
+  background: var(--chosen);
 }
 
-.rail-bars .bar.here {
+.rail-bars .bar.now {
   background: var(--brand-blue);
 }
 
-@container rail (max-width: 19rem) {
-  .rail-list {
-    display: none;
-  }
-
-  .rail-toggle {
-    display: flex;
+/* 밤에는 --fill이 머리줄 바탕과 거의 같아(1.19:1) 네 칸 구조가 안 읽혀서, 빈 칸을 한 단 밝은 선 색으로 */
+@media (prefers-color-scheme: dark) {
+  .rail-bars .bar {
+    background: var(--hairline);
   }
 }
 
-/* 접은 단계 줄을 누르면 열리는 창: 다섯 단계가 56px 줄로 */
+/* 다시 온 손님(Base.astro의 data-resume): 빌드 때 그린 진행 표시는 처음 온 사람 기준이라 틀린 상태가 잠깐 보인다.
+   섬이 붙어 data-ready가 달릴 때까지 감췄다가 흐리게 나타낸다. 처음 온 사람과 스크립트 없는 화면은 그대로 보인다 */
+:root[data-resume] .rail:not([data-ready]) :is(.rail-bars, .rail-list),
+:root[data-resume] .status-line:not([data-ready]) .status-text {
+  opacity: 0;
+}
+
+.rail-bars,
+.rail-list,
+.status-text {
+  transition: opacity var(--dur-fade) var(--ease-out);
+}
+
+/* 단계 시트: 360px에서는 아래에서 올라오는 시트, 768px부터 가운데. 끌지 않으므로 손잡이를 그리지 않는다 */
+.stage-sheet {
+  inline-size: 100%;
+  max-inline-size: 640px;
+  max-block-size: calc(100dvh - var(--space-6));
+  overscroll-behavior: contain;
+  margin: auto auto 0;
+  padding: 0 var(--gutter) max(var(--space-5), env(safe-area-inset-bottom));
+  border: 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: var(--elev-3);
+}
+
+.stage-sheet[open] {
+  animation: stage-sheet-in var(--dur-sheet) var(--ease-drawer);
+}
+
+@keyframes stage-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-6));
+  }
+}
+
+.stage-sheet::backdrop {
+  background: var(--scrim);
+}
+
+.stage-sheet :focus-visible {
+  outline-color: var(--focus);
+}
+
+@media (min-width: 768px) {
+  .stage-sheet {
+    margin: auto;
+    border-radius: var(--radius-xl);
+  }
+}
+
 .sheet-head {
   display: flex;
   align-items: center;
@@ -271,44 +486,123 @@
   margin: 0;
 }
 
-.stage-sheet-list {
+.stage-sheet .sheet-head {
+  min-block-size: 56px;
+  margin: 0;
+  padding-block-start: var(--space-2);
+}
+
+.stage-sheet .sheet-head h2 {
+  font-size: var(--size-title-2);
+  line-height: var(--leading-title-2);
+  font-weight: var(--weight-heading);
+}
+
+.stage-sheet .sheet-head .icon-btn {
+  margin-inline-end: calc(-1 * var(--space-3));
+}
+
+.sheet-steps {
   display: grid;
-  gap: var(--space-1);
   margin: 0;
   padding: 0;
   list-style: none;
+  container: sheet-steps / inline-size;
 }
 
-.stage-sheet-list .step :is(a, button) {
-  flex-wrap: wrap;
-  justify-content: flex-start;
+.sheet-step + .sheet-step {
+  border-block-start: 1px solid var(--hairline);
+}
+
+/* 못 가는 줄(.sheet-step-row)은 이유를 줄에 적어 두고 누를 수 없게 둔다 */
+.sheet-step :is(a, .sheet-step-row) {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr auto;
+  align-items: center;
+  column-gap: var(--space-3);
   inline-size: 100%;
   min-block-size: 56px;
-  padding-inline: var(--space-4);
-  border-radius: var(--radius-btn);
-  background: var(--surface-2);
-  font-size: var(--text-base);
-  white-space: normal;
-}
-
-.stage-sheet-list .step.current a {
-  background: var(--chosen);
-}
-
-.step-reason {
-  inline-size: 100%;
-  font-size: var(--text-sm);
-  font-weight: var(--weight-body);
+  padding: var(--space-3) 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
   text-align: start;
+  text-decoration: none;
+}
+
+.sheet-step a {
+  cursor: pointer;
+}
+
+.sheet-step-text {
+  display: grid;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+.sheet-step-name {
+  font-size: var(--size-body-lg);
+  /* 단위 없는 줄 높이: 글자를 키워 두 줄로 넘어가도 겹치지 않는다 (WCAG 1.4.12) */
+  line-height: var(--leading-body);
+  font-weight: var(--weight-strong);
+}
+
+.sheet-step-opt {
+  color: var(--text-2);
+  font-weight: var(--weight-body);
+}
+
+.sheet-step.locked .sheet-step-name {
+  color: var(--text-2);
+}
+
+.sheet-step-sub {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.sheet-step-state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+  white-space: nowrap;
+}
+
+.sheet-step.done .sheet-step-state {
+  color: var(--ok-ink);
+}
+
+.sheet-step.current .sheet-step-state {
+  color: var(--link);
+}
+
+.sheet-step.locked .sheet-step-state {
+  color: var(--text-3);
+}
+
+/* 좁거나 글자를 키우면(200%) 오른쪽 상태 글을 이름 아래로 내린다: 글 칸이 한 낱말 폭으로 줄지 않게 */
+@container sheet-steps (width < 18rem) {
+  .sheet-step :is(a, .sheet-step-row) {
+    grid-template-columns: 1.5rem 1fr;
+  }
+
+  .sheet-step-state {
+    grid-column: 2;
+    white-space: normal;
+  }
 }
 
 .route-hint {
   margin-block-start: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
-  background: var(--surface-2);
-  color: var(--ink);
-  font-size: var(--text-sm);
+  background: var(--fill);
+  color: var(--text);
+  font-size: var(--size-caption);
 }
 
 .icon-btn {
@@ -622,49 +916,14 @@
   inline-size: 100%;
 }
 
+/* 상태 한 줄 (D64): '도구 고르기 · 1개만 더 고르면 돼요 · 약 1분'. 미니 길은 없앴다 (지도와 이 줄이 같은 일을 한다) */
 .status-line {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-block-size: 24px;
-  color: var(--ink-soft);
-  font-size: var(--text-sm);
+  min-block-size: 20px;
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
   font-weight: var(--weight-strong);
-}
-
-/* 미니 길: 고를 것마다 기능 그림. 고르면 남색 채움, 아직은 점선 */
-.mini-path {
-  display: inline-flex;
-  flex-shrink: 0;
-  gap: 3px;
-}
-
-.mini-node {
-  display: grid;
-  place-items: center;
-  inline-size: 20px;
-  block-size: 20px;
-  border: 1.5px dashed var(--map-ghost);
-  border-radius: 6px;
-  color: var(--map-ghost);
-}
-
-.mini-node.picked {
-  border: 0;
-  background: var(--node-fill);
-  color: var(--on-node);
-}
-
-.mini-node.later {
-  border-style: dotted;
-  opacity: 0.6;
-}
-
-.mini-node .glyph,
-.mini-node svg {
-  display: block;
-  inline-size: 14px;
-  block-size: 14px;
+  font-variant-numeric: tabular-nums;
 }
 
 /* 아주 낮은 화면(가로로 든 휴대폰)이나 글자를 크게 키운 좁은 화면에서는 아래 막대도 붙박이를 푼다.

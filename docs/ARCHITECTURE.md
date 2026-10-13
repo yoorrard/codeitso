@@ -7,7 +7,7 @@
 | 영역 | 선택 | 메모 |
 |---|---|---|
 | 사이트 | Astro (정적 출력) + TypeScript strict | 서버 없이 HTML로 빌드한다. 판은 D35. |
-| 움직이는 부분 | Preact 섬(island) | 목적지·경유지·점검·도착·사전·지도처럼 상태가 있는 곳만 섬으로 만든다. 홈 첫 화면은 섬 없이 정적 SVG와 작은 스크립트(2KB 안쪽)로 돈다 (CONCEPT 6.1). 나머지는 정적 HTML. |
+| 움직이는 부분 | Preact 섬(island) | 만들 앱 정하기·도구 고르기·도구끼리 맞춰 보기·설계도 받기·사전·지도처럼 상태가 있는 곳만 섬으로 만든다. 홈 첫 화면은 섬 없이 정적 SVG와 작은 스크립트(2KB 안쪽)로 돈다 (CONCEPT 6.1). 나머지는 정적 HTML. |
 | 상태 | nanostores + @nanostores/persistent | 브라우저 localStorage에 저장. 키 이름은 아래 4절. |
 | 판단 | `src/lib/engine/` | 데이터와 규칙만으로 계산하는 순수 함수. 명세는 `docs/ENGINE.md`. |
 | 지도 | (T28) `src/lib/map/model.ts`의 `mapModel(session, evaluate())` + `MapBoard.tsx` 섬 | 엔진 결과를 그대로 그리는 순수 함수다. 땅 판과 표지는 SVG이고 색은 모두 CSS 변수라 낮·밤·느낌 팔레트가 같은 파일을 쓴다. 홈, 다섯 단계, 코스·지난 영수증 썸네일, 공유 미리 보기 그림이 같은 모형을 쓴다 (CONCEPT 6절 머리, 9절). |
@@ -17,7 +17,7 @@
 | 배포 | Cloudflare Workers 정적 파일(static assets) 무료 플랜 | 정적 파일 요청은 무료·무제한. 주소는 처음엔 `이름.하위도메인.workers.dev`. |
 | 옛 주소 넘기기 | `public/_redirects` | Workers 정적 파일이 읽어 옛 주소 10개를 301로 넘긴다 (3.1절, D56). |
 | 집계 | Worker 함수 `/api/event` + D1 | 날짜별 이벤트 횟수만. 무료 플랜: Worker 요청 하루 10만 건, D1 쓰기 하루 10만 행. |
-| 방문 통계 | Cloudflare Web Analytics | 쿠키 없음. 도착 화면 `/arrival`에는 싣지 않는다 (D17). |
+| 방문 통계 | Cloudflare Web Analytics | 쿠키 없음. 설계도 받기 화면 `/arrival`에는 싣지 않는다 (D17). |
 | 자동화 | GitHub Actions | 검사·시험·배포, 2단계부터 색인 갱신. 공개 저장소는 무료. |
 | 시험 | Vitest(엔진·자료), Playwright 1.56.1 + @axe-core/playwright(화면·접근성) | Playwright는 컨테이너 Chromium에 맞춰 고정 (D33). 시각 점검·예산은 `scripts/qa/` |
 | 글꼴 | Pretendard(모든 화면 글), `CC Receipt`(영수증 종이와 '요금 0원' 칩, D2Coding에서 글자를 골라 이름을 바꿈) | 둘 다 OFL. Pretendard는 가변 글꼴 동적 하위 집합(D38), 영수증 글꼴은 고정 문구 글자만 고른 하위 집합 (D29·D37). 쓰는 곳은 CONCEPT 5.4. `public/fonts/`에 직접 두고 라이선스 파일을 함께 둔다. |
@@ -67,12 +67,12 @@ code-chauffeur/
 
 | 주소 | 화면 | 만드는 방식 |
 |---|---|---|
-| `/` | 홈: "어디로 모실까요?", 목적지 말하기·도구 둘러보기, 미리 짠 코스 3개, 이어서 가기 | 정적 + 작은 스크립트 (첫 화면에는 섬 없음) |
-| `/test-drive` | 시운전 (연습 1·2·3) | 정적 + 복사 버튼 섬 |
-| `/destination` | 목적지 질문 | 섬 |
-| `/waypoints` | 경유지: 기능마다 도구 고르기 | 섬 |
-| `/check` | 점검 (제목 '출발 전 점검') | 섬 |
-| `/arrival` | 도착: 영수증·설계도·읽어 둘 용어·AI에게 할 말. `#r=`로 다시 열기 | 섬 |
+| `/` | 홈: "어디로 모실까요?", 만들 앱 정하기·도구 둘러보기, 미리 짠 코스 3개, 이어서 가기 | 정적 + 작은 스크립트 (첫 화면에는 섬 없음) |
+| `/test-drive` | 내 AI 써 보기 (연습, 번호 밖. 연습 1·2·3) | 정적 + 복사 버튼 섬 |
+| `/destination` | 1단계 만들 앱 정하기: 질문 | 섬 |
+| `/waypoints` | 2단계 도구 고르기: 기능마다 도구 고르기 | 섬 |
+| `/check` | 3단계 도구끼리 맞춰 보기 (H1 '고른 도구끼리 잘 맞을까요?') | 섬 |
+| `/arrival` | 4단계 설계도 받기: 영수증·설계도·읽어 둘 용어·AI에게 할 말. `#r=`로 다시 열기 | 섬 |
 | `/receipts` | (T32) 지난 영수증: 최대 30장, 줄을 누르면 `/arrival#r=…` | 섬 |
 | `/terms` | 용어 카드 20장. 목적지를 정했으면 맨 위에 읽어 둘 용어(먼저 읽어 둘 용어 → 만들면서 볼 용어) | 정적 + 섬 |
 | `/terms/[id]` | 용어 카드 (검색 유입용 정적 페이지 + 확인 문제 섬) | 정적 생성 |
@@ -120,7 +120,7 @@ code-chauffeur/
 |---|---|
 | `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers(목적지 답), cart(고른 도구), kept(그대로 간 막힌 곳), deferred(나중으로 미룬 기능), freeText(한 줄 입력). 이름이 바뀌어도 키와 모양은 그대로라 저장된 답이 살아남는다 (D56) |
 | `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 용어 카드 읽음과 정답 맞힌 문제 번호 |
-| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true }` 목적지 첫 답 시각, 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 시운전을 끝까지 함·영수증을 한 번 이상 받음 (단계 상태 계산용, D40·D56) |
+| `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true }` 만들 앱 정하기 첫 답 시각, 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 내 AI 써 보기를 끝까지 함·영수증을 한 번 이상 받음 (단계 상태 계산용, D40·D56) |
 | `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean }` (효과음 기본 false) |
 | `cc:seen:v1` | `{ scenes: string[] }` 처음 한 번만 다 보이는 큰 장면(S1 배차, S5 출발 → 도착)을 이미 본 기록. 다시 열면 끝 상태가 바로 보인다 (CONCEPT 7절) |
 | `cc:receipts:v1` | (T25) 지난 영수증 최대 30장. 장마다 영수증 링크 조각(`#r=` 뒤), 앱 종류 id(`q.type`의 답), 받은 날만 둔다. 넘치면 가장 오래된 것을 빼고 그렇다고 알린다 (CONCEPT 8절) |
@@ -138,13 +138,13 @@ code-chauffeur/
 - 압축: `LZString.compressToEncodedURIComponent(JSON.stringify(state))`
 - 여는 쪽: 압축 풀기 → `fromShareState()`로 모양 검사 → `evaluate()`가 모르는 id를 버린다. 읽자마자 `history.replaceState`로 주소에서 `#r=`를 지운다. 실패하면 "링크가 깨졌어요" 안내 후 홈으로.
 - 링크로 연 영수증은 읽기 전용으로 보여 주고, "이 영수증으로 이어서 가기"를 누를 때만 저장한다 (지금 상태와 다르면 묻는다).
-- 지난 영수증(`/receipts`)의 줄을 누르면 저장해 둔 조각으로 `/arrival#r=…`를 연다. 이렇게 다시 열 때는 대표 장면 S5가 돌지 않는다 (S5는 점검의 [출발하기]로 왔을 때만, `history.state` 표시로 가린다).
+- 지난 영수증(`/receipts`)의 줄을 누르면 저장해 둔 조각으로 `/arrival#r=…`를 연다. 이렇게 다시 열 때는 대표 장면 S5가 돌지 않는다 (S5는 도구끼리 맞춰 보기의 [설계도 받으러 출발하기]로 왔을 때만, `history.state` 표시로 가린다).
 
 ## 6. 자료를 화면에 싣는 법
 
 - 빌드 때 `data/*.json`을 import해 `Data` 모양으로 묶는 `src/lib/data.ts`를 만든다. 섬은 여기서 `makeCatalog(data)`를 한 번 만들어 쓴다.
 - 자료 전체(지금 약 120KB, gzip 약 30KB)는 섬이 필요한 화면에서만 불러온다. 진열 상품(`layer: shelf`)이 늘어 200KB를 넘으면 기능(칸)별로 나누는 방법을 `docs/DECISIONS.md`에 정하고 바꾼다.
-- `data/index/`(T19 자동 색인)는 분야별 JSON으로 `public/index/분야.json`에 내보내고, 경유지·도구 모음에서 필요한 분야만 불러온다. 화면에서는 '원문만 있는 도구'로 보인다. 파일 수 2만 개, 파일당 25MiB 한도를 지킨다.
+- `data/index/`(T19 자동 색인)는 분야별 JSON으로 `public/index/분야.json`에 내보내고, 도구 고르기·도구 모음에서 필요한 분야만 불러온다. 화면에서는 '원문만 있는 도구'로 보인다. 파일 수 2만 개, 파일당 25MiB 한도를 지킨다.
 
 ## 7. 검색 (사전·도구 모음)
 
@@ -173,7 +173,7 @@ code-chauffeur/
 | 이벤트 | 구간(bucket) | 보내는 때 |
 |---|---|---|
 | `interview_start` | 없음 | 답이 하나도 없던 상태에서 목적지 첫 답을 고를 때. 이때 `interviewStartedAt`을 적는다 |
-| `receipt_issued` | `m00-05`, `m05-10`, `m10-15`, `m15-20`, `m20-30`, `m30+`, `none` | 처음 보는 상태의 영수증이 도착 화면에 나올 때. 구간은 `interviewStartedAt`부터 걸린 시간(시운전 제외), 시작 시각이 없으면(미리 짠 코스·영수증 링크) `none` |
+| `receipt_issued` | `m00-05`, `m05-10`, `m10-15`, `m15-20`, `m20-30`, `m30+`, `none` | 처음 보는 상태의 영수증이 설계도 받기 화면에 나올 때. 구간은 `interviewStartedAt`부터 걸린 시간(시운전 제외), 시작 시각이 없으면(미리 짠 코스·영수증 링크) `none` |
 | `card_copy` | `first`, `next`, `verify`, `error`, `change` | AI에게 할 말 한 장을 복사 |
 | `required_done` | 없음 | 그 영수증의 먼저 읽어 둘 용어를 모두 읽었을 때 |
 | `quiz_answer` | `ok`, `ng` | 용어 카드 확인 문제 답 (같은 문제는 처음 한 번만) |

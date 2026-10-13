@@ -37,6 +37,15 @@
   --navy-raised: #0b2d74; /* 남색 위 누름·겹친 면 */
   --brand-blue: #0082fa; /* 그림 전용(글자 아님): 진행 막대 채움(바탕은 --fill), 지금 위치, 로고. 대비: --surface 3, --bg 3, --fill 3, --navy 3 */
   --cyan: #00b4fa; /* 남색 위에서만 글자로 쓴다. 밝은 바탕에서는 장식(전조등 빛, 길 심). 대비: --navy 4.5 */
+  --brand-white: #f6f8fa; /* 로고의 흰색(얼굴·손·운전대), 모자 배지의 모자. 대비: --navy 4.5 */
+
+  /* 로고 칠 (D65, brief 3.4): 인라인 SVG 로고(Logo.astro·Logo.tsx)의 경로 클래스가 이 다섯 변수로 칠한다.
+     밤에는 색마다 한 단씩 밝게, 몸은 채도를 낮춰 빛이 위에 뜨게. 흰색은 바꾸지 않는다. 모자 배지·영수증은 낮 값 그대로 */
+  --logo-body: var(--navy); /* 모자, 옷, 차 몸. 대비: --surface 3, --bg 3 */
+  --logo-letter: var(--navy); /* 글자 '코드'. 대비: --surface 4.5, --bg 4.5 */
+  --logo-accent: var(--brand-blue); /* 모자 띠, 넥타이, 괄호, 글자 '쇼퍼'. 대비: --surface 3, --bg 3 */
+  --logo-light: var(--cyan); /* 전조등, 그릴 띠. 대비: --logo-body 3 */
+  --logo-white: var(--brand-white); /* 얼굴, 손, 운전대. 대비: --logo-body 4.5 */
 
   /* 면 */
   --bg: var(--gray-2); /* 페이지 바탕 (흰 묶음 뒤 회색) */
@@ -88,7 +97,8 @@
   --receipt: #ffffff;
   --receipt-ink: #111c2c; /* 대비: --receipt 4.5 */
   --receipt-soft: #515c6c; /* 대비: --receipt 4.5 */
-  --seal: #d42e3a; /* 도장 그림. 대비: --receipt 3 */
+  --seal: var(--navy); /* 도장 잉크 = 로고 남색 (D65: 다 끝난 순간에 오류 빨강을 쓰지 않는다). 대비: --receipt 3 */
+  --receipt-bad: #c0262f; /* 종이 위 막힘 표시 (낮 --bad-ink 값. 종이가 늘 희어서 밤에도 같다). 대비: --receipt 4.5 */
 
   /* 지도. 땅·블록·길·물·공원은 장식 */
   --map-land: #eef2f6;
@@ -323,6 +333,10 @@
     --you: var(--cyan);
     --map-car: #4a6699; /* 로고 밤 팔레트의 강철 남색 (docs/review/v2/brand.md 7절) */
     --map-car-light: #8fe3ff;
+    --logo-body: #4a6699; /* 강철 남색 (brand.md 7절). --map-car 밤 값과 같다 */
+    --logo-letter: var(--gray-12);
+    --logo-accent: var(--blue-10);
+    --logo-light: #8fe3ff;
     --elev-1: 0 1px 2px rgb(0 0 0 / 0.4);
     --elev-2: 0 0 0 1px rgb(255 255 255 / 0.06), 0 8px 24px -4px rgb(0 0 0 / 0.5);
     --elev-3: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 48px -12px rgb(0 0 0 / 0.7);

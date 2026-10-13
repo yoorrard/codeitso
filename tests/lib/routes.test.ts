@@ -24,7 +24,7 @@ describe('옛 주소 넘기기', () => {
 });
 
 describe('주소 만들기', () => {
-  it('도구·용어·경유지', () => {
+  it('도구·용어·도구 고르기', () => {
     expect(toolPath('github-pages')).toBe('/tools/github-pages');
     expect(termPath('api-key')).toBe('/terms/api-key');
     expect(waypointPath()).toBe('/waypoints');

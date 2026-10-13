@@ -9,7 +9,7 @@ export interface InterviewState {
   answers: Record<string, string>;
   /** 태그 → 합계 */
   tags: Record<string, number>;
-  /** 다음에 물을 질문. 없으면 목적지 질문 끝 */
+  /** 다음에 물을 질문. 없으면 만들 앱 정하기 질문 끝 */
   next: Question | null;
   answered: number;
   total: number;
@@ -37,7 +37,7 @@ export function runInterview(cat: Catalog, rawAnswers: Record<string, string>): 
   return { visible, answers, tags, next, answered: Object.keys(answers).length, total: visible.length };
 }
 
-/** 목적지 화면 위 '길 찾는 중' 칩: 답한 질문의 짧은 이름과 고른 보기 (설계도 1번 '고른 답'에도 쓴다) */
+/** 만들 앱 정하기 화면의 '지금까지 정한 것' 칩: 답한 질문의 짧은 이름과 고른 보기 (설계도 1번 '고른 답'에도 쓴다) */
 export function answerChips(cat: Catalog, state: InterviewState): { questionId: string; chip: string; label: string }[] {
   const out: { questionId: string; chip: string; label: string }[] = [];
   for (const q of state.visible) {

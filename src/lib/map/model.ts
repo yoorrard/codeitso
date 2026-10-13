@@ -156,7 +156,7 @@ export interface MapInputNode {
   filled: boolean;
   /** 나중으로 미뤘다 */
   later?: boolean;
-  /** 지금 여는 마디 (경유지의 focus) */
+  /** 지금 여는 마디 (도구 고르기의 focus) */
   open?: boolean;
   /** 교통 정보: 풀지 않은 막힌 곳(jam) / 그대로 가기로 둔 막힌 곳(slow). input.traffic일 때만 쓴다 */
   traffic?: 'jam' | 'slow' | null;
@@ -857,17 +857,17 @@ function oneLine(text: string, max: number): string {
 }
 
 export interface MapOptions {
-  /** 지금 여는 칸 id (경유지) */
+  /** 지금 여는 칸 id (도구 고르기) */
   focus?: string;
-  /** 점검: 교통 색과 사고 표시 */
+  /** 도구끼리 맞춰 보기: 교통 색과 사고 표시 */
   traffic?: boolean;
   /** 도착: 차가 빈 터 앞에, 윤곽이 실선으로 */
   arrived?: boolean;
 }
 
 /**
- * 엔진 결과를 지도로. 사고 표시는 교통 정보를 보는 점검(traffic)과 도착(arrived)에서만 그린다.
- * 경유지에서는 빈 마디가 곧 남은 일이라, 빈 칸마다 표시를 달면 지도가 시끄러워진다.
+ * 엔진 결과를 지도로. 사고 표시는 교통 정보를 보는 도구끼리 맞춰 보기(traffic)와 설계도 받기(arrived)에서만 그린다.
+ * 도구 고르기에서는 빈 마디가 곧 남은 일이라, 빈 칸마다 표시를 달면 지도가 시끄러워진다.
  */
 export function mapModel(r: EngineResult, opts: MapOptions = {}): MapModel {
   const traffic = opts.traffic === true;

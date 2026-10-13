@@ -46,7 +46,7 @@ GitHub 저장소 → Settings → Secrets and variables → Actions → **Variab
 1. `main`에 합치거나, Actions → deploy → Run workflow.
 2. 끝나면 `https://code-chauffeur.<하위도메인>.workers.dev`에서:
    - 모든 화면 맨 위에 '검토 중인 시험판' 띠가 보인다.
-   - 홈 → 목적지 → 경유지 → 점검 → 도착(영수증)까지 간다.
+   - 홈 → 만들 앱 정하기 → 도구 고르기 → 도구끼리 맞춰 보기 → 설계도 받기(영수증)까지 간다.
    - 옛 주소 하나(예: `/receipt`)를 열면 새 주소(`/arrival`)로 넘어간다 (`public/_redirects`의 301).
    - 방문 통계를 켰다면(5단계), 다른 화면에는 `cloudflareinsights` 스크립트가 있고 도착 화면의 페이지 소스에는 없다.
    - `/robots.txt`가 `Disallow: /`이다.

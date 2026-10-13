@@ -1,5 +1,6 @@
-// 목적지 섬 (T08, docs/CONCEPT.md 6.3): 한 화면에 질문 하나. 보기 하나하나가 버튼이고 누르면 바로 다음 질문.
-// 이전으로 돌아가 바꾸기, 'n번째 질문', 길 찾는 중 상자(답 칩·생긴 고를 것·혹시 이 코스), 마지막 한 줄 입력, 목적지 정하기.
+// 1단계 만들 앱 정하기 섬 (T08, docs/CONCEPT.md 6.3): 한 화면에 질문 하나. 보기 하나하나가 버튼이고 누르면 바로 다음 질문.
+// 첫 질문 위에만 단계 한 줄(D64), 이전으로 돌아가 바꾸기, 'n번째 질문', 지금까지 정한 것 상자(답 칩·생긴 고를 것·혹시 이 코스),
+// 마지막 한 줄 입력, 다 정했어요.
 // 계산은 모두 엔진(evaluate·answerChips·matchingRecipes). 화면은 보여 주기만 한다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
@@ -17,7 +18,7 @@ import { sfx } from '../lib/sfx.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { patchMeta } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
-import { DispatchNote } from './DispatchNote.tsx';
+import { Lead } from './Lead.tsx';
 import { ArtTile, Glyph } from './Glyph.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
@@ -68,7 +69,6 @@ export default function Interview() {
   const r = ready ? live : FIRST_VISIT;
   const [pos, setPos] = useState<number | null>(null);
   const moved = useRef(false);
-  const [bubble, setBubble] = useState(true);
   const [finished, setFinished] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const narrow = useRef<HTMLDetailsElement>(null);
@@ -113,7 +113,6 @@ export default function Interview() {
     }
     announce(fill(ko.interview.answered, { label: option.label }));
     void sfx('tap');
-    setBubble(false);
     const after = $result.get().interview.visible;
     const idx = after.findIndex((v) => v.id === q.id);
     go(idx < 0 ? after.length : idx + 1);
@@ -159,9 +158,7 @@ export default function Interview() {
               {fill(ko.interview.questionNo, { n: at + 1 })}
             </p>
           </div>
-          {at === 0 && bubble && Object.keys(r.session.answers).length === 0 && (
-            <DispatchNote text={ko.dispatch.destination} />
-          )}
+          {at === 0 && <Lead text={ko.interview.lead} class="q-lead" />}
           <h1 id="q-title" ref={heading} tabIndex={-1}>
             <span class="visually-hidden">{fill(ko.interview.questionNo, { n: at + 1 })}. </span>
             {q.text}

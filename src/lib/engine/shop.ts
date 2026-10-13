@@ -120,7 +120,7 @@ export function scoreProduct(cat: Catalog, p: Product, slot: Slot, tags: Record<
   add('access', w.accessPenalty[p.access]);
   const others = cart.filter((c) => !c.capabilities.includes(slot.capability));
   if (p.capabilities.includes('proxy') && others.some((c) => c.keyExposureRisk)) add('proxy', w.proxyNeeded);
-  // 이미 담은 상품이 '앞선 칸'도 맡으면 이 칸에서 더한다. 경유지는 위 칸부터 채우므로,
+  // 이미 담은 상품이 '앞선 칸'도 맡으면 이 칸에서 더한다. 도구 고르기는 위 칸부터 채우므로,
   // 앞 칸을 채우려고 담은 상품이 뒤 칸도 맡을 수 있다는 뜻이다. 담은 칸 자체에서는 더하지 않는다.
   const inCart = cart.some((c) => c.id === p.id);
   if (inCart && slots.some((s) => s.order < slot.order && p.capabilities.includes(s.capability))) add('shared', w.sharedTool);
@@ -213,7 +213,7 @@ export function rankSlot(cat: Catalog, slot: Slot, tags: Record<string, number>,
   return { slot, shelf, index, recommended, runnerUp, compare, filledBy };
 }
 
-/** 열린 칸마다 순위를 낸다 (경유지 화면 전체) */
+/** 열린 칸마다 순위를 낸다 (도구 고르기 화면 전체) */
 export function rankAll(cat: Catalog, ctx: Ctx): SlotRanking[] {
   const slots = buildSlots(cat, ctx);
   return slots.map((s) => rankSlot(cat, s, ctx.tags, ctx.cart, slots));

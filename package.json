@@ -31,10 +31,12 @@
     "tokens": "node scripts/check-tokens.ts",
     "fonts": "node scripts/fonts/build-fonts.ts",
     "fonts:check": "node scripts/fonts/build-fonts.ts --check",
+    "map": "node scripts/assets/make-map.ts",
     "e2e": "playwright test",
     "words": "node scripts/guard/check-words.ts",
     "art": "node scripts/assets/render-art.ts",
-    "art:sheet": "node scripts/assets/render-art.ts --sheet"
+    "art:sheet": "node scripts/assets/render-art.ts --sheet",
+    "logo": "node scripts/assets/make-logo.ts"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",

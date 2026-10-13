@@ -4,6 +4,7 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import type { Catalog, Condition, Data } from '../../src/lib/engine/index.ts';
 import { evaluate, makeCatalog } from '../../src/lib/engine/index.ts';
 import { usesCart } from '../../src/lib/engine/conditions.ts';
+import type { Glossary } from '../../src/lib/glossary.ts';
 import { contrast } from './contrast.ts';
 import { DATA_FILES } from './data-files.ts';
 
@@ -14,6 +15,8 @@ export interface Sources {
 export interface ValidationInput {
   data: Data;
   sources: Sources;
+  /** data/glossary.json (어려운 말 풀이). 엔진은 쓰지 않아 data와 따로 둔다 */
+  glossary: Glossary;
   /** schemas/*.schema.json 내용 */
   schemas: object[];
   goldens: { name: string; value: unknown }[];
@@ -54,6 +57,7 @@ export function validateAll(input: ValidationInput): ValidationResult {
     'recipes.json': 'recipes.schema.json',
     'errors.json': 'errors.schema.json',
     'sources.json': 'sources.schema.json',
+    'glossary.json': 'glossary.schema.json',
   };
   const validateValue = (name: string, value: unknown, schemaId: string): void => {
     const validate = ajv.getSchema(schemaId);
@@ -67,6 +71,7 @@ export function validateAll(input: ValidationInput): ValidationResult {
   };
   const fileValue = (file: string): unknown => {
     if (file === 'sources.json') return input.sources;
+    if (file === 'glossary.json') return input.glossary;
     const key = (Object.keys(DATA_FILES) as (keyof typeof DATA_FILES)[]).find((k) => DATA_FILES[k] === file);
     return key ? input.data[key] : undefined;
   };
@@ -342,6 +347,18 @@ export function validateAll(input: ValidationInput): ValidationResult {
       }
     }
     for (const c of e.concepts ?? []) if (!conceptIds.has(c)) err(`${where}: 없는 개념 ${c}`);
+  }
+
+  // 어려운 말 풀이: 잇는 카드·도구·에러·상위 용어가 있는지 (문장 규칙과 이름 겹침은 tests/lib/glossary.test.ts가 매처로 본다)
+  const glossaryIds = new Set(input.glossary.terms.map((t) => t.id));
+  const errorIds = new Set(data.errors.errors.map((e) => e.id));
+  dupes('glossary', input.glossary.terms.map((t) => t.id));
+  for (const t of input.glossary.terms) {
+    const where = `glossary/${t.id}`;
+    if (t.concept && !conceptIds.has(t.concept)) err(`${where}: 없는 용어 카드 ${t.concept}`);
+    if (t.tool && !productIds.has(t.tool)) err(`${where}: 없는 도구 ${t.tool}`);
+    if (t.error && !errorIds.has(t.error)) err(`${where}: 없는 에러 안내 ${t.error}`);
+    if (t.see && (t.see === t.id || !glossaryIds.has(t.see))) err(`${where}: 상위 용어 ${t.see}가 없거나 자기 자신입니다`);
   }
 
   // 출처 대응표

@@ -17,7 +17,7 @@ paths:
 > - Replaced "ask" steps and the closing message to the user with "decide, record in `docs/DECISIONS.md`, continue".
 > - Evidence comes from `/visual-qa`, values from `src/styles/tokens.css`, budgets and copy rules from the project docs.
 > - Resolved conflicts: the D2Coding monospace receipt is intentional and never flagged; "no new font families (Pretendard + D2Coding, self-hosted)" replaces "source and self-host a display face"; the project's motion rules (game-like scenes within limits) replace "one authored moment"; dark-mode criteria dropped (one token theme); 44px targets.
-> - Aligned with the project's icon decision (Fluent 3D emoji images + Phosphor SVG) and scene list (M1–M8).
+> - Aligned with the project's icon decision (Phosphor Regular for UI controls + hand-drawn SVG glyphs, no emoji, CONCEPT 5.7) and scene list (S1–S9).
 > - Added: Korean line breaking and measure, the reduced-motion policy check, a fix policy (P0/P1 fixed before done; the original audit only reported), and out-of-scope findings going to `docs/BACKLOG.md`.
 
 # Polish: the last pass before a UI task is done
@@ -113,7 +113,7 @@ Surface habits:
 - Sparklines, progress rings or soft rounded rectangles standing in for content (the interview shows "n번째 질문", not a percent bar).
 - Monospace as a costume for "technical". D2Coding belongs to the receipt and to real code, commands and keys (terminal-sim, prompt fragments); don't spread it as decoration. The receipt itself is never a finding.
 - Any new font family. The display voice comes from Pretendard's weights and the token scale.
-- Unicode glyphs or emoji *text characters* standing in for icons. UI controls use Phosphor SVG in one style and weight; stations, slots and rewards use the project's Fluent 3D emoji images (`public/emoji/`, see `docs/DESIGN.md` §8). The ✓ and ★ in `docs/UX.md` describe meaning, not the glyph to ship.
+- Unicode glyphs or emoji *text characters* standing in for icons. UI controls use Phosphor Regular SVG; functions, question options and blueprint placeholders use the hand-drawn SVGs in `src/assets/` (`Glyph`/`ArtTile`, navy tile with light lines). No emoji images or characters anywhere (CONCEPT 5.7, 5.9).
 - Geometric masks approximating an organic outline (a circle cropped around a render). Use an asset with a real alpha edge, or no cut-out.
 
 The floor holds the mechanics; it never picks the direction. With every check green, spend the remaining effort on the committed world (road, taxi, receipt), and when torn between refined and committed, commit.
@@ -136,7 +136,7 @@ The floor holds the mechanics; it never picks the direction. With every check gr
 
 - Semantic tokens with stable meanings: `--flow` clear/done, `--slow` kept on purpose, `--jam` blocked/error, `--caution` warning fill, `--gold` emphasis fill.
 - Verify text, control and focus contrast in every state, hover and disabled included.
-- Icons stay coherent: Phosphor SVG for UI controls in one style and weight, Fluent 3D emoji images only for stations, slots and rewards; sizes and optical alignment consistent within each set.
+- Icons stay coherent: Phosphor Regular for UI controls, hand-drawn SVG glyphs (24px grid, 1.5px stroke) for functions and options; sizes and optical alignment consistent within each set.
 - No image layout shift: dimensions or `aspect-ratio` on every image, Astro's `<Image>` for raster assets, useful alt (or `alt=""` when decorative).
 
 ### Interaction and state

@@ -6,11 +6,12 @@ import { getSearchIndex, productHits } from '../lib/search-client.ts';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { fill } from '../lib/engine/index.ts';
+import { Glyph } from './Glyph.tsx';
 
 export interface FilterChoice {
   id: string;
   label: string;
-  /** public/emoji/<art>.webp. 없으면 그림 없이 */
+  /** 그림 이름 (src/lib/glyphs.ts). 없으면 그림 없이 */
   art?: string;
 }
 
@@ -77,7 +78,7 @@ function Group({ id, label, options, value, onPick, firstRef }: GroupProps) {
         {options.map((o, i) => (
           <li>
             <button type="button" class="filter-btn" aria-pressed={value === o.id} onClick={() => onPick(o.id)} ref={i === 0 ? firstRef : undefined}>
-              {o.art && <img src={`/emoji/${o.art}.webp`} width={22} height={22} alt="" />}
+              {o.art && <Glyph name={o.art} />}
               <span>{o.label}</span>
             </button>
           </li>

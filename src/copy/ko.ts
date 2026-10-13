@@ -195,7 +195,6 @@ export const ko = {
     useWhen: '이럴 때 써요',
     cost: '비용',
     difficulty: '난이도',
-    difficultyText: '난이도 {{level}}',
     compare: "다른 후보 '{{name}}'보다 나은 점: {{labels}}",
     compareTie: "다른 후보 '{{name}}': 점수가 같아 {{why}} 골랐어요.",
     tieWhy: {
@@ -238,8 +237,6 @@ export const ko = {
     allRequired: '꼭 고를 것을 다 골랐어요. 점검하러 가요.',
     realtimeWords: { realtime: '실시간', frequent: '자주 (몇 분~몇 시간)', daily: '하루 한 번', static: '거의 바뀌지 않음' },
     providerWords: { official: '공식', community: '커뮤니티', unofficial: '비공식', generic: '일반 기술' },
-    stars: '★',
-    starsOff: '☆',
   },
   check: {
     pageTitle: '출발 전 점검',

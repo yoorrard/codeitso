@@ -187,7 +187,7 @@
 - 할 일: 3절의 모든 말 바꾸기(`ko.ts`, `templates.json`, 질문·규칙 문장), 페이지 옮기기(/test-drive, /destination, /waypoints, /check, /arrival, /tools, /terms, /courses, /about/criteria, /receipts는 T32), `stations.ts` → `stages.ts`, 설계도 파일 이름, `public/_redirects` 301, 금지어 검사(3.9절), copy.md 세계관 낱말(3.8절), e2e, UX 7절·RECEIPT·ARCHITECTURE 라우트.
 - 완성 확인: `npm run check`, 금지어 0, 골든 그대로(바뀌면 `골든:`), `npm run examples`, 영수증 36칸, 옛 주소 10개 시험, `ko-copy-editor`·`engine-guardian` 검토.
 
-### [ ] T25 걷어 내기
+### [x] T25 걷어 내기
 - 읽을 것: CONCEPT 9절 '빼는 것' · 먼저: T24
 - 할 일: 기사님 그림·Mascot·Car·Emoji·`public/emoji/`·색종이·전광판·주행 거리·단계 도장을 걷어 내고, `progress.ts`는 단계 상태와 남은 개수만, 저장 키 `cc:seen:v1`·`cc:receipts:v1`. 크레딧·THIRD_PARTY·rules·agents의 기사님 줄.
 - 완성 확인: `rg "mascot|Mascot|Emoji|confetti" src` 0, 빌드, 깨진 그림 0, 지연 묶음 줄어듦.
@@ -306,3 +306,4 @@
 2026-10-13 T26 토큰과 바탕: CONCEPT 5.3~5.5·7절 값으로 tokens.css를 다시 씀(낮 지도·밤 지도, 지도·교통·청사진 색, 크기 7단, 모서리·버튼 높이·높이 네 층, 모션 길이 S1~S9용). 대비 검사를 낮·밤 두 모드로(106쌍), qa:shots에 360-dark와 그 axe. 주 버튼 먹색, 금색 위 글자 --on-gold, 영수증 종이 전용 글자색, 단계 밖 화면의 아래 막대는 붙박이를 풂, 개념 그림 20장의 색 변수도 새 이름으로 (D57)
 2026-10-13 T27 틀: 머리줄(브랜드 마크·글자 상표, 사전, 설정), 단계 줄(지금 단계 먹색 알약, 마친 단계 ✓, 못 가는 단계는 누르면 여는 방법을 알림, 폭이 모자라면 '경유지 · 3/5' 단추로 접히고 다섯 단계 창이 열림), 아래 막대 위 줄의 상태 한 줄과 미니 길(src/lib/status-line.ts, 시험), 기사 메시지(브랜드 마크 + 두 문장 이하, 닫기), 직접 그린 SVG를 HTML에 바로 넣는 그림 체계(src/lib/glyphs.ts, Glyph), Phosphor Regular. 글자 200%에서는 '사전' 글자를 숨기고 그림 단추로. e2e 43개, qa:shots 낮·밤·동작 줄이기 axe 0
 2026-10-13 T24 검토 반영(D58): 막힌 곳 자리는 열린 칸일 때만(key-in-static-page → 배포·공유, shared-without-login → 길 전체), '꼭 고를 것 남음'에서 미룬 칸·그대로 둔 빈 칸 뺌, 빈 칸 막힌 곳에 '도구 고르기'·'나중으로 미루기', 난이도는 말로(영수증 '보통', 도구 '쉬움'), 영수증 개수 '2개', 설계도 2번 '만들 것'(미룬 것 없을 때)·10번 '이 단계에서 볼 용어', '(나중)'이 잘리지 않게, 그림 문자 2칸, 옛 키 cc:trip:v1 지움, 문구 26건. 예시 다시 만듦
+2026-10-13 T25 걷어 내기: Fluent 3D 그림 문자 53개(public/emoji, Emoji.astro, fetch-emoji.ts, THIRD_PARTY 줄)를 빼고 직접 그린 SVG로: 앱 종류는 청사진 자리 표시(L00~L06), 누가·AI·분야는 질문 그림(q-*), 기능은 기능 그림(fn-*), 모두 남색 타일에 밝은 선(ArtTile, Glyph tile). 별 난이도(★)를 빼고 '쉬움·보통·어려움' 글로. 옛 키 cc:trip:v1 지움(T24 검토 반영 커밋). 영수증 보관 키 cc:receipts:v1은 지난 영수증 화면과 함께 T32에서. 깨진 그림 0, e2e 43, 예산 통과

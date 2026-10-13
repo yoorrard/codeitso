@@ -3,9 +3,9 @@
 import { ko } from '../copy/ko.ts';
 import { data } from './data.ts';
 import type { Capability, Product, Recipe, SlotDef } from './engine/index.ts';
-import { SLOT_ART, optionArt } from './option-art.ts';
+import { DEFAULT_DOMAIN_ART, optionArt, slotArt } from './option-art.ts';
 
-/** 거르기 단추 하나: 값, 이름, 3D 그림(public/emoji/<art>.webp) */
+/** 거르기 단추 하나: 값, 이름, 그림 이름(src/assets/의 SVG, src/lib/glyphs.ts) */
 export interface ShelfChoice {
   id: string;
   label: string;
@@ -34,7 +34,7 @@ function capabilityOrder(c: Capability): number {
 }
 
 export function capabilityArt(c: Capability): string {
-  return SLOT_ART[c] ?? 'tools';
+  return slotArt(c);
 }
 
 export function domainLabel(tagId: string): string {
@@ -42,7 +42,7 @@ export function domainLabel(tagId: string): string {
 }
 
 export function domainArt(tagId: string): string {
-  return optionArt('q.domain', tagId.slice(DOMAIN_PREFIX.length)) ?? 'package';
+  return optionArt('q.domain', tagId.slice(DOMAIN_PREFIX.length)) ?? DEFAULT_DOMAIN_ART;
 }
 
 /** 상품 그림: 분야가 있으면 첫 분야, 없으면 첫 기능 */
@@ -50,7 +50,7 @@ export function productArt(p: Product): string {
   const d = p.domains?.[0];
   if (d) return domainArt(d);
   const c = p.capabilities[0];
-  return c ? capabilityArt(c) : 'package';
+  return c ? capabilityArt(c) : DEFAULT_DOMAIN_ART;
 }
 
 /** 진열된(진열·색인) 상품에 실제로 있는 기능만, 칸 순서대로 */

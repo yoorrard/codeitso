@@ -11,7 +11,7 @@ import type { Product } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
 import { flip } from '../lib/motion.ts';
-import { SLOT_ART } from '../lib/option-art.ts';
+import { slotArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import { sfx } from '../lib/sfx.ts';
@@ -19,14 +19,11 @@ import { ROUTES, termPath } from '../lib/routes.ts';
 import { gate } from '../lib/stages.ts';
 import { Icon } from './Icon.tsx';
 import { DispatchNote } from './DispatchNote.tsx';
+import { ArtTile } from './Glyph.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const T = catalog.data.templates;
 
-/** 칸 그림은 칸의 기능으로 고른다 (칸 id는 'slot.screen'처럼 점이 들어 있다) */
-function slotArt(capability: string): string {
-  return SLOT_ART[capability] ?? 'tools';
-}
 
 /** 추천이 2위보다 앞선 점을 한 줄로 (엔진의 compare를 글로 옮김) */
 function compareLine(ranking: SlotRanking): string | null {
@@ -61,13 +58,12 @@ interface CardProps {
 
 function ProductCard({ s, slotId, capability, inCart, recommended, compare, onToggle }: CardProps) {
   const p = s.product;
-  const thumb = useRef<HTMLImageElement>(null);
+  const thumb = useRef<HTMLSpanElement>(null);
   const concepts = (p.needsConcepts ?? []).map((id) => catalog.concept.get(id)).filter((c) => c !== undefined);
-  const stars = ko.shop.stars.repeat(p.difficulty) + ko.shop.starsOff.repeat(3 - p.difficulty);
   return (
     <article class={`product${recommended ? ' product-top' : ''}${inCart ? ' in-cart' : ''}`} aria-labelledby={`p-${slotId}-${p.id}`}>
       <header class="product-head">
-        <img ref={thumb} class="product-thumb" src={`/emoji/${slotArt(capability)}.webp`} width={40} height={40} alt="" />
+        <ArtTile name={slotArt(capability)} tileRef={thumb} class="product-thumb" />
         <div>
           {recommended && <span class="badge badge-top">{ko.shop.recommended}</span>}
           <h3 id={`p-${slotId}-${p.id}`}>{p.name}</h3>
@@ -89,12 +85,7 @@ function ProductCard({ s, slotId, capability, inCart, recommended, compare, onTo
         <dt>{ko.shop.cost}</dt>
         <dd>{p.cost.note}</dd>
         <dt>{ko.shop.difficulty}</dt>
-        <dd>
-          <span aria-hidden="true" class="stars">
-            {stars}
-          </span>
-          <span class="visually-hidden">{fill(ko.shop.difficultyText, { level: toolDifficultyWord(catalog, p.difficulty) })}</span>
-        </dd>
+        <dd>{toolDifficultyWord(catalog, p.difficulty)}</dd>
         {s.reasons.length > 0 && (
           <>
             <dt>{ko.shop.reasons}</dt>
@@ -268,7 +259,7 @@ export default function Shop() {
               <li data-slot={s.slot.id} class={filled ? 'filled' : ''}>
                 <button type="button" aria-expanded={open === s.slot.id} aria-controls={`slot-${s.slot.id}`} onClick={() => setOpen(open === s.slot.id ? null : s.slot.id)}>
                   <span class="inv-icon">
-                    <img src={`/emoji/${slotArt(s.slot.capability)}.webp`} width={36} height={36} alt="" />
+                    <ArtTile name={slotArt(s.slot.capability)} size="sm" />
                     {filled && (
                       <span class="done-mark" aria-hidden="true">
                         <Icon name="check" size="14px" />
@@ -295,7 +286,7 @@ export default function Shop() {
         return (
           <section class={`slot-panel${isOpen ? ' open' : ''}`} id={`slot-${id}`} aria-labelledby={`slot-title-${id}`} hidden={!isOpen}>
             <header class="slot-head">
-              <img src={`/emoji/${slotArt(ranking.slot.capability)}.webp`} width={48} height={48} alt="" />
+              <ArtTile name={slotArt(ranking.slot.capability)} size="lg" />
               <div>
                 <h2 id={`slot-title-${id}`}>
                   {ranking.slot.label} <span class={ranking.slot.required ? 'badge' : 'badge badge-soft'}>{ranking.slot.required ? ko.shop.required : ko.shop.optional}</span>

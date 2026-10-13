@@ -3,7 +3,7 @@
 // 카드의 모든 항목과 "이 상품이 들어간 레시피". 섬은 레시피 출발 단추(RecipeStart)뿐이다.
 import Base from '../../layouts/Base.astro';
 import '../../styles/catalog-pages.css';
-import Emoji from '../../components/Emoji.astro';
+import Glyph from '../../components/Glyph.astro';
 import Icon from '../../components/Icon.astro';
 import RecipeStart from '../../components/RecipeStart.tsx';
 import { ko } from '../../copy/ko.ts';
@@ -23,7 +23,6 @@ interface Props {
 const { product: p } = Astro.props;
 const P = ko.product;
 const T = catalog.data.templates;
-const stars = ko.shop.stars.repeat(p.difficulty) + ko.shop.starsOff.repeat(3 - p.difficulty);
 const concepts = (p.needsConcepts ?? []).map((id) => catalog.concept.get(id)).filter((c) => c !== undefined);
 const related = (p.related ?? []).map((id) => catalog.product.get(id)).filter((r) => r !== undefined);
 const recipes = recipesWith(p.id);
@@ -39,7 +38,7 @@ const domains = (p.domains ?? []).map(domainLabel);
   </p>
   <header class="product-hero">
     <div class="product-hero-title">
-      <Emoji id={productArt(p)} size={64} />
+      <Glyph name={productArt(p)} tile="xl" />
       <h1>{p.name}</h1>
     </div>
     <p class="lead">{p.summary}</p>
@@ -84,10 +83,7 @@ const domains = (p.domains ?? []).map(domainLabel);
         )
       }
       <dt>{ko.shop.difficulty}</dt>
-      <dd>
-        <span aria-hidden="true" class="stars">{stars}</span>
-        <span class="visually-hidden">{fill(ko.shop.difficultyText, { level: toolDifficultyWord(catalog, p.difficulty) })}</span>
-      </dd>
+      <dd>{toolDifficultyWord(catalog, p.difficulty)}</dd>
       <dt>{P.capabilities}</dt>
       <dd>{p.capabilities.map(capabilityLabel).join(', ')}</dd>
       {

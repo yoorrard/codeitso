@@ -4,7 +4,6 @@
 import Base from '../../layouts/Base.astro';
 import ConceptActions from '../../components/ConceptActions.tsx';
 import TryIt from '../../components/TryIt.tsx';
-import Emoji from '../../components/Emoji.astro';
 import { ko } from '../../copy/ko.ts';
 import { ROUTES, termPath, toolPath } from '../../lib/routes.ts';
 import { catalog, data } from '../../lib/data.ts';
@@ -41,7 +40,7 @@ const figureSvg = figures[`../../assets/concepts/${c.id}.svg`];
     {
       c.figure && (
         <figure class={figureSvg ? 'concept-figure has-art' : 'concept-figure'}>
-          {figureSvg ? <div class="concept-art" role="img" aria-label={c.figure} set:html={figureSvg} /> : <Emoji id="light-bulb" size={56} />}
+          {figureSvg && <div class="concept-art" role="img" aria-label={c.figure} set:html={figureSvg} />}
           <figcaption>
             <strong>{ko.concept.figure}</strong> {c.figure}
           </figcaption>

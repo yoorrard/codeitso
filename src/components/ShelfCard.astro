@@ -3,11 +3,11 @@
 // 기본 항목(이름·설명, 이럴 때 써요, 비용, 난이도)과 배지만 보인다 (R-23·R-24. 추천 이유는 장보기에서만 나온다).
 // 색인 상품은 상세 페이지가 없어서 정해진 항목(이름, 설명, 배지, 제공, 원문 링크)만 보인다.
 // data-domains·data-caps는 거르기 섬(ShelfFilter)이 읽는다.
-import Emoji from './Emoji.astro';
+import Glyph from './Glyph.astro';
 import Icon from './Icon.astro';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
-import { badges, fill, toolDifficultyWord } from '../lib/engine/index.ts';
+import { badges, toolDifficultyWord } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/index.ts';
 import { capabilityLabel, domainLabel, productArt } from '../lib/shelf.ts';
 import { toolPath } from '../lib/routes.ts';
@@ -18,14 +18,13 @@ interface Props {
 const { product: p } = Astro.props;
 const isShelf = p.layer === 'shelf';
 const caution = catalog.data.templates.badges.caution;
-const stars = ko.shop.stars.repeat(p.difficulty) + ko.shop.starsOff.repeat(3 - p.difficulty);
 const caps = p.capabilities.map(capabilityLabel).join(', ');
 const domains = (p.domains ?? []).map(domainLabel).join(', ');
 ---
 
 <li class:list={['card', 'shelf-card', { 'shelf-card-index': !isShelf }]} data-shelf-item data-id={p.id} data-domains={(p.domains ?? []).join(' ')} data-caps={p.capabilities.join(' ')}>
   <div class="shelf-card-head">
-    <Emoji id={productArt(p)} size={40} class="product-thumb" />
+    <Glyph name={productArt(p)} tile="md" class="product-thumb" />
     <h3>{isShelf ? <a class="shelf-card-link" href={toolPath(p.id)}>{p.name}</a> : p.name}</h3>
   </div>
   <p class="product-summary">{p.summary}</p>
@@ -55,12 +54,7 @@ const domains = (p.domains ?? []).map(domainLabel).join(', ');
         <dt>{ko.shop.cost}</dt>
         <dd>{p.cost.note}</dd>
         <dt>{ko.shop.difficulty}</dt>
-        <dd>
-          <span aria-hidden="true" class="stars">
-            {stars}
-          </span>
-          <span class="visually-hidden">{fill(ko.shop.difficultyText, { level: toolDifficultyWord(catalog, p.difficulty) })}</span>
-        </dd>
+        <dd>{toolDifficultyWord(catalog, p.difficulty)}</dd>
       </dl>
     ) : (
       <dl class="product-facts">

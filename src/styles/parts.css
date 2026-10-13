@@ -409,9 +409,8 @@
   text-align: center;
 }
 
-.option-pic img {
-  inline-size: 56px;
-  block-size: 56px;
+.option-pic .art-tile {
+  margin-block-end: var(--space-1);
 }
 
 .option-unknown {
@@ -580,6 +579,12 @@
   font-size: var(--text-sm);
 }
 
+.slot-icons .glyph {
+  inline-size: 24px;
+  block-size: 24px;
+  color: var(--navy);
+}
+
 .maybe-list {
   display: grid;
   gap: var(--space-2);
@@ -671,10 +676,7 @@
   place-items: center;
 }
 
-.inv-icon img {
-  inline-size: 36px;
-  block-size: 36px;
-}
+
 
 .slot-panel {
   display: grid;
@@ -774,8 +776,7 @@
 }
 
 .product-thumb {
-  inline-size: 40px;
-  block-size: 40px;
+  margin-block-start: var(--space-1);
 }
 
 .product-summary {
@@ -799,11 +800,6 @@
 
 .product-facts .chips {
   padding: 0;
-}
-
-.stars {
-  color: var(--caution-ink);
-  letter-spacing: 2px;
 }
 
 .compare-line {

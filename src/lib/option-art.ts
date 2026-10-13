@@ -1,45 +1,61 @@
-// 인터뷰 그림 보기의 그림 (D44): 보기 id → public/emoji/의 Fluent 3D 그림. '느낌' 질문은 자료의 색으로 화면 견본을 그린다.
-// 그림은 보기 이름과 함께 나오는 장식이라 버튼 안에서는 alt를 비운다 (이름은 보기 글자가 전한다).
+// 그림 이름 정하기 (docs/CONCEPT.md 5.7): 질문 보기 → 질문 그림(q-*), 앱 종류 → 청사진 자리 표시(L01~L06, 받기 전),
+// 기능 → 기능 그림(fn-*). 그림은 src/assets/의 직접 그린 SVG이고 늘 장식이다 (보기 이름·기능 이름이 뜻을 전한다).
+// '느낌' 질문은 그림 대신 자료의 색으로 화면 견본을 그린다.
 export const OPTION_ART: Record<string, Record<string, string>> = {
   'q.type': {
-    record: 'notebook',
-    form: 'clipboard',
-    page: 'newspaper',
-    quiz: 'ballot-check',
-    tool: 'abacus',
-    board: 'bar-chart',
-    unknown: 'thinking-face',
+    record: 'L01',
+    form: 'L02',
+    page: 'L03',
+    quiz: 'L04',
+    tool: 'L05',
+    board: 'L06',
+    unknown: 'L00',
   },
-  'q.audience': { me: 'mobile-phone', few: 'busts', anyone: 'globe', unknown: 'thinking-face' },
-  'q.ai': { 'chat-free': 'speech-balloon', 'chat-paid': 'glowing-star', agent: 'desktop', unknown: 'thinking-face' },
+  'q.audience': { me: 'q-audience-me', few: 'q-audience-few', anyone: 'q-audience-anyone', unknown: 'q-unknown' },
+  'q.ai': { 'chat-free': 'q-ai-chat-free', 'chat-paid': 'q-ai-chat-paid', agent: 'q-ai-agent', unknown: 'q-unknown' },
   'q.domain': {
-    none: 'package',
-    education: 'school',
-    finance: 'chart-up',
-    weather: 'sun-cloud',
-    map: 'station-interview',
-    transport: 'bus',
-    book: 'books',
-    language: 'latin-letters',
-    image: 'framed-picture',
-    culture: 'performing-arts',
-    public: 'classical-building',
-    unknown: 'thinking-face',
+    none: 'q-domain-none',
+    education: 'q-domain-education',
+    finance: 'q-domain-finance',
+    weather: 'q-domain-weather',
+    map: 'q-domain-map',
+    transport: 'q-domain-transport',
+    book: 'q-domain-book',
+    language: 'q-domain-language',
+    image: 'q-domain-image',
+    culture: 'q-domain-culture',
+    public: 'q-domain-public',
+    unknown: 'q-unknown',
   },
-  'q.style': { unknown: 'artist-palette' },
+  'q.style': { unknown: 'q-style-unknown' },
 };
 
-/** 칸의 기능(capability) → 칸 그림 */
+/** 기능(capability) → 기능 그림 */
 export const SLOT_ART: Record<string, string> = {
-  screen: 'slot-screen',
-  store: 'slot-store',
-  auth: 'slot-auth',
-  data: 'slot-data',
-  notify: 'slot-notify',
-  host: 'slot-host',
-  proxy: 'tools',
+  screen: 'fn-screen',
+  store: 'fn-store',
+  auth: 'fn-auth',
+  data: 'fn-data',
+  notify: 'fn-notify',
+  host: 'fn-host',
+  proxy: 'fn-proxy',
 };
+
+/** 기능 그림이 없는 기능의 기본 그림 */
+export const DEFAULT_SLOT_ART = 'fn-data';
+
+/** 분야가 없거나 모를 때의 그림 */
+export const DEFAULT_DOMAIN_ART = 'q-domain-none';
+
+export function slotArt(capability: string): string {
+  return SLOT_ART[capability] ?? DEFAULT_SLOT_ART;
+}
 
 export function optionArt(questionId: string, optionId: string): string | null {
   return OPTION_ART[questionId]?.[optionId] ?? null;
+}
+
+/** 청사진 자리 표시인지 (남색 판 위에 흰 선으로 그린다) */
+export function isBlueprint(name: string): boolean {
+  return /^(L0\d|P01)$/.test(name);
 }

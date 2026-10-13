@@ -15,9 +15,8 @@
   color: var(--ink-soft);
 }
 
-.shelf-note img {
-  inline-size: 28px;
-  block-size: 28px;
+.shelf-note svg {
+  flex-shrink: 0;
 }
 
 /* 거르기: 360px에서 단추가 한 줄에 셋쯤 들어가게 바탕 상자 없이 화면 폭을 다 쓴다.
@@ -64,9 +63,9 @@
     background-color var(--dur-tap) var(--ease-out);
 }
 
-.filter-btn img {
-  inline-size: 22px;
-  block-size: 22px;
+.filter-btn .glyph {
+  inline-size: 20px;
+  block-size: 20px;
 }
 
 .filter-btn:active {
@@ -119,9 +118,9 @@
   font-size: var(--text-lg);
 }
 
-.corner-sign img {
-  inline-size: 32px;
-  block-size: 32px;
+.corner-sign .glyph {
+  inline-size: 24px;
+  block-size: 24px;
 }
 
 /* 선반 판: 카드 줄 아래 굵은 선 */

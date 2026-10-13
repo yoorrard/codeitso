@@ -10,7 +10,7 @@ import { answerChips, evaluate, fill, matchingRecipes } from '../lib/engine/inde
 import type { Option, Question } from '../lib/engine/types.ts';
 import { track } from '../lib/track.ts';
 import { useHydrated } from '../lib/hydrated.ts';
-import { SLOT_ART, optionArt } from '../lib/option-art.ts';
+import { optionArt, slotArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { EMPTY_SESSION, FREE_TEXT_MAX } from '../lib/saved.ts';
 import { sfx } from '../lib/sfx.ts';
@@ -18,6 +18,7 @@ import { ROUTES } from '../lib/routes.ts';
 import { patchMeta } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
 import { DispatchNote } from './DispatchNote.tsx';
+import { ArtTile, Glyph } from './Glyph.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
 const LINE_MAX = Math.min(80, FREE_TEXT_MAX);
@@ -46,7 +47,7 @@ function OptionButton({ q, option, picked, onPick }: { q: Question; option: Opti
   return (
     <li>
       <button type="button" class={`option${hasArt ? ' option-pic' : ''}${option.isUnknown ? ' option-unknown' : ''}`} aria-pressed={picked} onClick={() => onPick(option)}>
-        {hasArt && (art ? <img src={`/emoji/${art}.webp`} width={64} height={64} alt="" /> : <StylePreview option={option} />)}
+        {hasArt && (art ? <ArtTile name={art} size="xl" /> : <StylePreview option={option} />)}
         <span class="option-label">{option.label}</span>
         {picked && (
           <span class="picked-mark" aria-hidden="true">
@@ -253,7 +254,7 @@ export default function Interview() {
             <ul class="slot-icons">
               {r.slots.map((s) => (
                 <li>
-                  <img src={`/emoji/${SLOT_ART[s.slot.capability] ?? 'tools'}.webp`} width={32} height={32} alt="" />
+                  <Glyph name={slotArt(s.slot.capability)} />
                   <span>{s.slot.label}</span>
                 </li>
               ))}

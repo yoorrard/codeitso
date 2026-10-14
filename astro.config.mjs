@@ -4,7 +4,6 @@ import preact from '@astrojs/preact';
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import { basePathProblem, envProblems, hostProblem, oneLine, scanBuild } from './scripts/lib/build-guard.ts';
-import { dataParts } from './scripts/lib/data-parts-plugin.ts';
 
 // 빌드 변수: 셸·배포 환경 변수와 .env 파일 (화면의 import.meta.env와 같은 값을 보려고 Vite 규칙대로 읽는다)
 const env = loadEnv(process.env.NODE_ENV === 'development' ? 'development' : 'production', process.cwd(), 'PUBLIC_');
@@ -39,7 +38,8 @@ function buildGuard() {
 // 정적 호스트(PUBLIC_HOST=static)는 방문 통계를 싣지 않으므로 CSP에서도 Cloudflare Web Analytics를 뺀다 (설계서 9.4절)
 const analytics = env.PUBLIC_HOST !== 'static';
 
-// 사이트는 전부 정적 HTML로 빌드한다 (docs/ARCHITECTURE.md 1절, D03).
+// 사이트는 전부 정적 파일로 빌드한다 (docs/ARCHITECTURE.md 1절, D03). v5 (D103): 목록 쪽은 소분류마다 하나(1쪽은 HTML에 그린다),
+// 다른 쪽·정렬과 상세는 빌드가 만든 JSON(/data/list/…, /data/item/<n>.json)을 섬이 받아 그린다. 파일 수는 Cloudflare 한 판 2만 개 아래.
 // 페이지 전환은 Astro ClientRouter 대신 CSS 문서 간 View Transitions로 한다 (D25).
 export default defineConfig({
   // 저장소 변수가 비어 있어도(빈 글자) 예시 주소로. 정식 빌드는 빌드 지킴이 예시 주소를 막는다
@@ -51,15 +51,15 @@ export default defineConfig({
   integrations: [buildGuard(), preact()],
   build: { format: 'directory' },
   devToolbar: { enabled: false },
-  // 용어 카드를 칸으로 나눠 단계 화면에는 엔진이 쓰는 칸만 싣는다 (D82, 설계서 L-08, src/lib/data.ts)
-  vite: { plugins: [dataParts()] },
   // 보안 헤더 (T21, D53): 스크립트·스타일은 Astro가 빌드 때 해시를 모아 CSP <meta>로 넣는다.
-  // 외부는 쿠키 없는 Cloudflare Web Analytics 둘뿐이다 (R-61, CLAUDE.md 꼭 지킬 것 1). frame-ancestors는 meta에서 안 되므로 public/_headers에 둔다.
+  // 외부 스크립트는 쿠키 없는 Cloudflare Web Analytics 하나뿐이다 (R-61). frame-ancestors는 meta에서 안 되므로 public/_headers에 둔다.
+  // v5 (brief 5절, D107): 상품 미리 보기 그림은 출처의 공식 주소에서 지연 로드하므로 img-src에 https:를 연다 (그림은 스크립트를 돌리지 못한다).
+  // 폰트 견본의 원본 글꼴(fonts.googleapis.com·fonts.gstatic.com 등)은 S3에서 더한다.
   security: {
     csp: {
       directives: [
         "default-src 'self'",
-        "img-src 'self' data:",
+        "img-src 'self' data: https:",
         "font-src 'self'",
         analytics ? "connect-src 'self' https://cloudflareinsights.com" : "connect-src 'self'",
         "base-uri 'self'",
@@ -67,7 +67,7 @@ export default defineConfig({
         "object-src 'none'",
       ],
       scriptDirective: { resources: analytics ? ["'self'", 'https://static.cloudflareinsights.com'] : ["'self'"] },
-      // 노선 띠의 --here 같은 인라인 style 속성만 허용 (스타일 요소는 해시)
+      // 상품 미리 보기의 색 띠·그라디언트 같은 인라인 style 속성만 허용 (스타일 요소는 해시)
       styleDirective: { resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }] },
     },
   },

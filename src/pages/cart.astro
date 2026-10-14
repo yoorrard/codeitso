@@ -1,0 +1,14 @@
+---
+// 장바구니 /cart (S1 최소판): 담은 재료 목록·빼기. 서랍·계산·영수증·.md 받기는 S2에서 더한다.
+import Base from '../layouts/Base.astro';
+import CartList from '../components/CartList.tsx';
+import { ko } from '../copy/ko.ts';
+import { navData } from '../lib/catalog/site.ts';
+---
+
+<Base title={ko.cart.pageTitle}>
+  <header class="list-head">
+    <h1>{ko.cart.title}</h1>
+  </header>
+  <CartList client:load nav={navData()} />
+</Base>

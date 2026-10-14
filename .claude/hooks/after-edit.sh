@@ -16,13 +16,7 @@ fail() {
 }
 
 case "$rel" in
-  data/*.json|data/golden/*.json|schemas/*.json)
-    out="$(node scripts/validate-data.ts 2>&1)" || fail "자료 검사 실패 ($rel). 아래를 고친다:" "$out"
-    out="$(node scripts/check-golden.ts 2>&1)" || fail "골든 사례가 달라졌다 ($rel). 의도한 변경인지 docs/ENGINE.md 8절대로 따진다:" "$out"
-    ;;
-  src/lib/engine/*.ts)
-    out="$(node scripts/check-golden.ts 2>&1)" || fail "엔진을 고친 뒤 골든 사례가 달라졌다 ($rel):" "$out"
-    ;;
+  # 진열대 자료(data/catalog/**)는 npm run import가 쓰고 tests/import가 스키마를 본다 (v5, 손으로 고치지 않는다)
   src/*|tests/*|scripts/*)
     if [ -f scripts/guard/floor-guard.ts ]; then
       out="$(node scripts/guard/floor-guard.ts "$rel" 2>&1)" || fail "품질 바닥선 위반 ($rel):" "$out"

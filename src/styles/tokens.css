@@ -1,145 +1,135 @@
-/* 디자인 토큰 v2 (D60, docs/review/v2/systems.md): 로고의 남색 #001E5A · 파랑 #0082FA · 청록 #00B4FA에서 만든 값.
+/* 디자인 토큰 v5 (docs/review/v5/brief.md 4절, D104): 장바구니 로고(assets-src/brand/logo-cart-source.webp)에서 뽑은 색.
+   로고 파랑 #0364F5 = 주색, 로고 남색 #142A4C = 글자, 카드 네 색(보라 #7050EC·노랑 #FFB505·코랄 #FF6982·초록 #25B085)은 대분류 강조색.
    색·글꼴·크기·모서리·그림자·모션 길이는 이 변수만 쓴다 (품질 바닥선 검사). 글자색 줄의 '대비:' 주석은 scripts/check-tokens.ts가
-   낮·밤 두 값으로 검사한다. 화면 코드는 뜻 색(--text, --surface, --accent…)만 쓰고 원색(--gray-*, --blue-*)은 이 파일 안에서만 쓴다. */
+   낮·밤 두 값으로 검사한다. 화면 코드는 뜻 색(--text, --surface, --primary…)만 쓰고 원색(--gray-*, --blue-*)은 이 파일 안에서만 쓴다. */
 :root {
   color-scheme: light;
 
-  /* 원색 1: 길 회색. 남색 기운(OKLCH 색상각 258). 1·2 바탕, 3~5 부품 면, 6~8 선, 9·10 그림·꼬리 글, 11·12 글자 */
-  --gray-1: #f8fafc;
-  --gray-2: #f2f5f8;
-  --gray-3: #eaedf2;
-  --gray-4: #e2e5eb;
-  --gray-5: #d9dde4;
-  --gray-6: #d0d5de;
-  --gray-7: #c2c8d3;
-  --gray-8: #a9b2be;
-  --gray-9: #7d8795;
-  --gray-10: #656f7f;
-  --gray-11: #515c6c;
-  --gray-12: #111c2c;
+  /* 원색 1: 남색 기운 회색. 1·2 바탕, 3~5 부품 면, 6·7 선, 8~10 꼬리·보조 글, 12 = 로고 남색 */
+  --gray-1: #f6f8fb;
+  --gray-2: #eff2f7;
+  --gray-3: #e6eaf1;
+  --gray-4: #dce1ea;
+  --gray-5: #cdd4df;
+  --gray-6: #b3bccb;
+  --gray-7: #848fa4;
+  --gray-8: #5d6a82;
+  --gray-9: #4d5c77;
+  --gray-10: #34435f;
+  --gray-11: #1f3051;
+  --gray-12: #142a4c;
 
-  /* 원색 2: 파랑. 9 = 로고 파랑, 12 = 로고 남색 */
-  --blue-1: #f6fbff;
-  --blue-2: #eaf5ff;
-  --blue-3: #d9eeff;
-  --blue-4: #c7e5ff;
-  --blue-5: #b3dcff;
-  --blue-6: #9dcfff;
-  --blue-7: #7fbdff;
-  --blue-8: #5aa5ff;
-  --blue-9: #0082fa;
-  --blue-10: #0a6fdc;
-  --blue-11: #0f61c3;
-  --blue-12: #001e5a;
+  /* 원색 2: 파랑. 8 = 로고 파랑 */
+  --blue-1: #f3f7ff;
+  --blue-2: #e7efff;
+  --blue-3: #d4e3ff;
+  --blue-4: #b9d1ff;
+  --blue-5: #90b5fb;
+  --blue-6: #5d93f7;
+  --blue-7: #2f77f6;
+  --blue-8: #0364f5;
+  --blue-9: #0258d6;
+  --blue-10: #034bb5;
+  --blue-11: #0a3d8f;
+  --blue-12: #142a4c;
 
-  /* 브랜드 세 색 (로고 값 그대로) */
-  --navy: #001e5a; /* 브랜드 면: 머리 띠, 영수증 머리, 내 길 바깥선, 고른 곳 */
-  --navy-raised: #0b2d74; /* 남색 위 누름·겹친 면 */
-  --brand-blue: #0082fa; /* 그림 전용(글자 아님): 진행 막대 채움(바탕은 --fill), 지금 위치, 로고. 대비: --surface 3, --bg 3, --fill 3, --navy 3 */
-  --cyan: #00b4fa; /* 남색 위에서만 글자로 쓴다. 밝은 바탕에서는 장식(전조등 빛, 길 심). 대비: --navy 4.5 */
-  --brand-white: #f6f8fa; /* 로고의 흰색(얼굴·손·운전대), 모자 배지의 모자. 대비: --navy 4.5 */
-
-  /* 로고 칠 (D65, brief 3.4): 인라인 SVG 로고(Logo.astro·Logo.tsx)의 경로 클래스가 이 다섯 변수로 칠한다.
-     밤에는 색마다 한 단씩 밝게, 몸은 채도를 낮춰 빛이 위에 뜨게. 흰색은 바꾸지 않는다. 모자 배지·영수증은 낮 값 그대로 */
-  --logo-body: var(--navy); /* 모자, 옷, 차 몸. 대비: --surface 3, --bg 3 */
-  --logo-letter: var(--navy); /* 글자 '코드'. 대비: --surface 4.5, --bg 4.5 */
-  --logo-accent: var(--brand-blue); /* 모자 띠, 넥타이, 괄호, 글자 '쇼퍼'. 대비: --surface 3, --bg 3 */
-  --logo-light: var(--cyan); /* 전조등, 그릴 띠. 대비: --logo-body 3 */
-  --logo-white: var(--brand-white); /* 얼굴, 손, 운전대. 대비: --logo-body 4.5 */
+  /* 로고 색 (값 그대로). 글자로 쓸 때는 대비 쌍을 지킨다 */
+  --brand-blue: #0364f5; /* 로고 파랑. 대비: --surface 4.5 */
+  --brand-navy: #142a4c; /* 로고 남색. 대비: --surface 4.5 */
 
   /* 면 */
-  --bg: var(--gray-2); /* 페이지 바탕 (흰 묶음 뒤 회색) */
-  --surface: #ffffff; /* 묶음 목록·카드·아래 막대 */
-  --surface-raised: #ffffff; /* 시트·대화 상자·떠 있는 것 (밤에는 한 단 밝다) */
-  --fill: var(--gray-3); /* 칩·보조 버튼·입력 칸의 면 */
-  --fill-press: var(--gray-4); /* 누름 */
-  --selected: var(--blue-2); /* 고른 줄·고른 보기의 옅은 면 */
-  --chosen: var(--navy); /* 고른 칩·칸 고르개 손잡이의 채움 (밤에는 밝은 회색). 대비: --fill 3, --surface 3, --bg 3 */
-  --on-chosen: #ffffff; /* 대비: --chosen 4.5 */
-  --hairline: var(--gray-4); /* 장식 선 (묶음 안 나눔 선) */
-  --border: var(--gray-9); /* 입력 칸 테두리. 대비: --surface 3, --bg 3 */
-  --scrim: rgb(8 16 27 / 0.4); /* 시트 뒤 어둡게 */
+  --bg: var(--gray-1); /* 페이지 바탕 */
+  --surface: #ffffff; /* 카드·머리줄·표 */
+  --surface-raised: #ffffff; /* 메뉴·풀이 상자처럼 떠 있는 것 (밤에는 한 단 밝다) */
+  --surface-sunken: var(--gray-2); /* 카드 안 미리 보기 판, 코드 덩어리 */
+  --fill: var(--gray-2); /* 칩·보조 버튼·입력 칸의 면 */
+  --fill-press: var(--gray-3);
+  --selected: var(--blue-2); /* 고른 칩·지금 쪽 번호의 옅은 면 */
+  --hairline: var(--gray-4); /* 카드 테두리, 나눔 선 */
+  --border: var(--gray-7); /* 입력 칸 테두리. 대비: --surface 3, --bg 3 */
+  --scrim: rgb(8 16 32 / 0.45);
 
   /* 글자 */
-  --text: var(--gray-12); /* 대비: --bg 4.5, --surface 4.5, --surface-raised 4.5, --fill 4.5, --selected 4.5 */
-  --text-2: var(--gray-11); /* 보조 글. 대비: --bg 4.5, --surface 4.5, --surface-raised 4.5, --fill 4.5 */
-  --text-3: var(--gray-10); /* 꼬리 글. --fill 위에는 쓰지 않는다. 대비: --bg 4.5, --surface 4.5 */
-  --text-disabled: var(--gray-9); /* 꺼진 버튼 글. 꺼진 부품은 대비 예외지만 초점을 받고 할 일을 말하는 주 버튼이라 3:1을 지킨다 (D70 검토 반영). 대비: --fill 3 */
-  --link: var(--blue-11); /* 대비: --bg 4.5, --surface 4.5, --selected 4.5 */
-  --on-navy: #ffffff; /* 대비: --navy 4.5 */
-  --on-navy-2: #a9c3e6; /* 남색 위 보조 글. 대비: --navy 4.5 */
+  --text: var(--gray-12); /* 대비: --bg 4.5, --surface 4.5, --surface-sunken 4.5, --fill 4.5, --selected 4.5 */
+  --text-2: var(--gray-9); /* 보조 글. 대비: --bg 4.5, --surface 4.5, --surface-sunken 4.5, --fill 4.5 */
+  --text-3: var(--gray-8); /* 꼬리 글(출처·숫자). 대비: --bg 4.5, --surface 4.5, --surface-sunken 4.5 */
+  --link: var(--blue-9); /* 대비: --bg 4.5, --surface 4.5, --selected 4.5 */
 
-  /* 행동: 화면마다 주 버튼 하나 */
-  --accent: var(--blue-10); /* 주 버튼 채움. 대비: --surface 3, --bg 3 */
-  --accent-press: var(--blue-11);
-  --on-accent: #ffffff; /* 대비: --accent 4.5, --accent-press 4.5 */
-  --accent-soft: var(--blue-2); /* 옅은 버튼 면 */
-  --on-accent-soft: var(--blue-11); /* 대비: --accent-soft 4.5 */
+  /* 행동: 주 버튼(담기·검색)은 로고 파랑 */
+  --primary: var(--blue-8); /* 주 버튼 채움. 대비: --surface 3, --bg 3 */
+  --primary-press: var(--blue-9);
+  --on-primary: #ffffff; /* 대비: --primary 4.5, --primary-press 4.5 */
+  --primary-soft: var(--blue-2); /* 옅은 버튼·담은 상태 */
+  --on-primary-soft: var(--blue-10); /* 대비: --primary-soft 4.5 */
 
-  /* 상태: 원활·서행·막힘. 늘 그림 + 글과 함께 (색만으로 뜻을 전하지 않는다) */
-  --ok: #0e8f50; /* 그림. 대비: --surface 3 */
+  /* 장바구니 개수 배지: 로고 코랄 위 남색 글자 */
+  --badge: #ff6982;
+  --on-badge: #142a4c; /* 대비: --badge 4.5 */
+
+  /* 대분류 강조색 (로고 카드 색). 면(-soft) 위 글자는 -ink, 그림·띠는 기본 값 */
+  --cat-design: #ff6982; /* 디자인 = 코랄 (아이콘 카드) */
+  --cat-design-soft: #ffeef1;
+  --cat-design-ink: #b42744; /* 대비: --cat-design-soft 4.5, --surface 4.5 */
+  --cat-ai: #0364f5; /* AI 확장 = 파랑 (MD 문서 카드) */
+  --cat-ai-soft: #e7efff;
+  --cat-ai-ink: #034bb5; /* 대비: --cat-ai-soft 4.5, --surface 4.5 */
+  --cat-api: #7050ec; /* API = 보라 (API 카드) */
+  --cat-api-soft: #f0edff;
+  --cat-api-ink: #5236c9; /* 대비: --cat-api-soft 4.5, --surface 4.5 */
+  --cat-opensource: #25b085; /* 오픈소스 = 초록 */
+  --cat-opensource-soft: #e3f6ef;
+  --cat-opensource-ink: #0b6e4f; /* 대비: --cat-opensource-soft 4.5, --surface 4.5 */
+  --cat-datasets: #ffb505; /* 데이터셋 = 노랑 (차트 카드) */
+  --cat-datasets-soft: #fff4d6;
+  --cat-datasets-ink: #7a4f00; /* 대비: --cat-datasets-soft 4.5, --surface 4.5 */
+  --cat-templates: #142a4c; /* 템플릿 = 남색 (장바구니 바퀴) */
+  --cat-templates-soft: #e8ecf4;
+  --cat-templates-ink: #142a4c; /* 대비: --cat-templates-soft 4.5, --surface 4.5 */
+
+  /* 상태. 늘 글과 함께 (색만으로 뜻을 전하지 않는다) */
+  --ok: #0e8f50;
   --ok-ink: #0b7a43; /* 대비: --surface 4.5, --ok-soft 4.5 */
   --ok-soft: #e4f6ec;
-  --warn: #f5a524; /* 채움 전용. 위 글자는 --on-warn */
-  --warn-ink: #8f5a00; /* 대비: --surface 4.5, --warn-soft 4.5 */
+  --warn-ink: #8a5a00; /* 대비: --surface 4.5, --warn-soft 4.5 */
   --warn-soft: #fff4dc;
-  --on-warn: #111c2c; /* 대비: --warn 4.5 */
-  --bad: #d42e3a; /* 대비: --surface 3 */
   --bad-ink: #c0262f; /* 대비: --surface 4.5, --bad-soft 4.5 */
   --bad-soft: #fdecec;
-  --on-bad: #ffffff; /* 대비: --bad 4.5 */
 
   /* 초점: 2px 고리 + 2px 띄움 */
-  --focus: var(--blue-10); /* 대비: --surface 3, --bg 3, --surface-raised 3 */
-  --focus-on-navy: var(--cyan); /* 대비: --navy 3 */
+  --focus: var(--blue-8); /* 대비: --surface 3, --bg 3, --surface-raised 3 */
 
-  /* 그림 판 (brief 4.3·5.7): 48px 이하 그림 타일은 남색 채움(--tile), 64px 이상 청사진 그림은 옅은 판(--plate)에 선(--plate-line).
-     밤에는 남색 면이 바탕에 묻혀(1.14:1) 둘 다 한 단 밝은 남색 판 + 밝은 파랑 선으로 바뀐다. 요금 칩·영수증 프린터 틈도 --tile */
-  --tile: var(--navy); /* 그림 타일·요금 칩·프린터 틈의 면 */
-  --on-tile: #ffffff; /* 타일 위 그림·글자. 대비: --tile 4.5 */
-  --plate: var(--blue-2); /* 큰 청사진 그림의 옅은 판 */
-  --plate-line: var(--navy); /* 판 위 선 1.5. 대비: --plate 4.5, --plate-read 4.5 */
-  --plate-read: var(--blue-4); /* 읽은 용어 카드의 판 */
-  --plate-ring: var(--navy); /* 다 맞힌 용어 카드 판의 2px 고리 (brief 4.8, 금테 자리). 대비: --plate-read 3, --surface 3, --bg 3 */
-
-  /* 영수증 종이 (낮·밤 모두 흰 종이) */
+  /* 영수증 종이 (낮·밤 모두 흰 종이, S2) */
   --receipt: #ffffff;
-  --receipt-ink: #111c2c; /* 대비: --receipt 4.5 */
-  --receipt-soft: #515c6c; /* 대비: --receipt 4.5 */
-  --seal: var(--navy); /* 도장 잉크 = 로고 남색 (D65: 다 끝난 순간에 오류 빨강을 쓰지 않는다). 대비: --receipt 3 */
-  --receipt-bad: #c0262f; /* 종이 위 막힘 표시 (낮 --bad-ink 값. 종이가 늘 희어서 밤에도 같다). 대비: --receipt 4.5 */
+  --receipt-ink: #142a4c; /* 대비: --receipt 4.5 */
 
   /* 글꼴 */
   --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  --font-receipt: 'CC Receipt', 'Pretendard Variable', ui-monospace, 'Courier New', monospace; /* 영수증 종이 안에서만 */
+  --font-mono: 'CC Receipt', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; /* 설치 명령·설정 조각·영수증 */
+  --font-preview-serif: Georgia, 'Times New Roman', 'Noto Serif KR', serif; /* 폰트 카드의 일반 모양 견본 (원본 글꼴은 S3에서 지연 로드) */
   --weight-body: 400;
-  --weight-strong: 600; /* 버튼·칩·줄 이름·숫자 */
-  --weight-heading: 700; /* 제목 */
+  --weight-strong: 600;
+  --weight-heading: 700;
+  --weight-brand: 800;
 
-  /* 글자 단계 (rem이라 기기 글자 크기를 따른다). 줄 높이는 18px 이하 1.5배, 19px 이상 '크기 + 9px' (토스 TDS 표와 같은 규칙) */
-  --size-display: clamp(1.75rem, 1.4rem + 1vw, 2.25rem); /* 28~36 홈 첫 줄만 (v4 D98 유동 척도: rem이 들어 있어 글자 200%에서도 커진다) */
+  /* 글자 단계 (rem이라 기기 글자 크기를 따른다, 유동 척도) */
+  --size-display: clamp(1.625rem, 1.3rem + 1.1vw, 2.25rem); /* 26~36 홈 첫 줄 */
+  --size-title-1: clamp(1.375rem, 1.2rem + 0.6vw, 1.875rem); /* 22~30 화면 제목 */
+  --size-title-2: clamp(1.1875rem, 1.1rem + 0.35vw, 1.4375rem); /* 19~23 묶음 제목 */
+  --size-title-3: 1.0625rem; /* 17 카드 이름 */
+  --size-body-lg: 1.0625rem; /* 17 읽는 글 */
+  --size-body: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem); /* 15~16 기본 */
+  --size-label: 0.9375rem; /* 15 버튼·칩 */
+  --size-caption: 0.8125rem; /* 13 꼬리 글(출처·숫자). 이 아래로 내리지 않는다 */
   --leading-display: 1.25;
-  --size-title-1: clamp(1.5rem, 1.3rem + 0.6vw, 2rem); /* 24~32 화면 제목 */
-  --leading-title-1: 1.3;
-  --size-title-2: clamp(1.375rem, 1.2rem + 0.45vw, 1.75rem); /* 22~28 단계 화면 H1, 묶음 제목, 시트 제목 */
-  --leading-title-2: 1.4;
-  --size-title-3: 1.1875rem; /* 19 카드 제목 */
-  --leading-title-3: 1.75rem; /* 28 */
-  --size-body-lg: 1.0625rem; /* 17 읽는 글(설명, 용어 풀이) */
-  --leading-body-lg: 1.6; /* 27. 초심자가 읽는 긴 글이라 토스(1.5)보다 한 단 넓게 */
-  --size-body: clamp(1rem, 0.95rem + 0.15vw, 1.0625rem); /* 16~17 기본 */
-  --leading-body: 1.5;
-  --size-label: 0.9375rem; /* 15 버튼·칩·줄 이름 */
-  --leading-label: 1.375rem; /* 22 */
-  --size-caption: 0.875rem; /* 14 꼬리 글. 이 아래로 내리지 않는다 */
-  --leading-caption: 1.25rem; /* 20 */
-  --size-number: 2.5rem; /* 40 영수증 합계 같은 큰 숫자 (tabular-nums) */
+  --leading-title: 1.35;
+  --leading-body: 1.55;
+  --leading-tight: 1.35;
+  --leading-label: 1.375rem; /* 22: 버튼·칩 */
+  --leading-caption: 1.25rem; /* 20: 꼬리 글 */
   --tracking-display: -0.025em;
-  --tracking-title: -0.02em; /* 26 이상 */
-  --tracking-title-sm: -0.01em; /* 19~22 */
-  --tracking-body: 0; /* Pretendard는 본문 자간 조정이 필요 없게 만들어졌다 (README) */
+  --tracking-title: -0.015em;
 
-  /* 간격: 4px 바탕. 옛 이름·값(1~7)은 그대로 두고 64만 더한다 (조용히 값이 바뀌는 일을 막으려고) */
+  /* 간격: 4px 바탕 */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -148,146 +138,113 @@
   --space-6: 32px;
   --space-7: 48px;
   --space-8: 64px;
-  --gutter: 20px; /* 360px부터. 359px 이하는 16px (320px 다시 흐름) */
-  --content-max: 640px; /* 좁은 읽는 폭 (시트·대화 상자 안) */
-  /* 레이아웃 (v4 D98, brief 3절). 구간은 문서용이다(미디어 조건에는 변수를 못 쓴다):
-     compact <600 · medium 600~1023 · expanded 1024~1439 · large ≥1440 */
+  --gutter: clamp(16px, 2.5vw, 32px);
+
+  /* 레이아웃 (brief 4절). 구간은 문서용이다(미디어 조건에는 변수를 못 쓴다):
+     휴대폰 <600 · 태블릿 600~1023 · PC 1024~1439 · 넓은 PC ≥1440 */
   --bp-medium: 600px;
   --bp-expanded: 1024px;
   --bp-large: 1440px;
-  --container-max: 1360px; /* 머리줄·단계 화면 두 칸·둘러보는 곳 카드 격자의 최대 폭 */
-  --pane-left: minmax(420px, 560px); /* 단계 화면 왼쪽 칸 (질문·도구 목록 + 주 버튼). 오른쪽은 설계도 창 */
-  --read-max: 72ch; /* 읽는 글 한 줄 최대 */
-  --card-min: 280px; /* 둘러보는 곳 카드 격자의 최소 칸 폭: repeat(auto-fill, minmax(var(--card-min), 1fr)) */
+  --container-max: 1440px;
+  --read-max: 72ch;
+  --header-h: 64px;
+  --thumb-h: 132px; /* 카드 미리 보기 판 높이 */
   --tap: 44px;
-  --bar-top: 16px;
-  --bar-bottom: calc(7rem + env(safe-area-inset-bottom));
 
-  /* 모서리: 네 단 + 알약. 안쪽 모서리 = 바깥 모서리 - 안쪽 여백 */
-  --radius-xs: 6px; /* 꼬리표, 뼈대 막대 */
-  --radius-sm: 10px; /* 작은 버튼(36), 칸 안 작은 면 */
-  --radius-md: 14px; /* 보통 버튼(48), 입력 칸, 토스트 */
-  --radius-lg: 16px; /* 큰 버튼(56), 묶음 목록, 카드 */
-  --radius-xl: 20px; /* 시트 위 모서리, 큰 그림 카드 */
-  --radius-pill: 999px; /* 칩, 진행 막대 */
+  /* 모서리 */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
 
   /* 버튼 높이 */
-  --btn-lg: 56px;
-  --btn-md: 48px;
-  --btn-sm: 36px; /* 누르는 곳은 --tap으로 넓힌다 */
-  --row-1: 56px; /* 한 줄 목록 행 */
-  --row-2: 72px; /* 두 줄 목록 행 */
+  --btn-lg: 52px;
+  --btn-md: 44px;
+  --btn-sm: 36px;
 
-  /* 높이(그림자). 남색 기운 그림자, 투명도 4~22%. 밤에는 면 밝기와 윗변 빛줄로 높이를 보인다 */
-  --elev-1: 0 1px 2px rgb(0 20 60 / 0.06), 0 1px 1px rgb(0 20 60 / 0.04); /* 쉬는 것: 칸 고르개 손잡이 */
-  --elev-2: 0 0 0 1px rgb(0 20 60 / 0.04), 0 2px 8px -2px rgb(0 20 60 / 0.08), 0 8px 24px -4px rgb(0 20 60 / 0.1); /* 떠 있는 것: 아래 막대, 토스트 */
-  --elev-3: 0 0 0 1px rgb(0 20 60 / 0.04), 0 24px 48px -12px rgb(0 20 60 / 0.22); /* 대화 상자 */
-  --elev-sheet: 0 -1px 0 rgb(0 20 60 / 0.04), 0 -12px 32px -8px rgb(0 20 60 / 0.14); /* 아래에서 올라온 시트 */
-  --edge-light: inset 0 0 0 0 transparent; /* 밤에만: 윗변 빛줄 */
+  /* 높이(그림자): 남색 기운 */
+  --elev-1: 0 1px 2px rgb(20 42 76 / 0.06), 0 1px 1px rgb(20 42 76 / 0.04);
+  --elev-2: 0 0 0 1px rgb(20 42 76 / 0.05), 0 4px 12px -2px rgb(20 42 76 / 0.1), 0 12px 32px -8px rgb(20 42 76 / 0.12);
+  --elev-3: 0 0 0 1px rgb(20 42 76 / 0.05), 0 24px 48px -12px rgb(20 42 76 / 0.24);
 
-  /* 모션 길이: 자주 하는 동작일수록 짧게. 나갈 때는 들어올 때의 약 70% */
-  --dur-tap: 100ms; /* 누르기, 색 바뀜 */
-  --dur-ui: 200ms; /* 칩 고르기, 접고 펴기, 토스트 */
-  --dur-exit: 200ms; /* 시트·대화 상자 나가기 */
-  --dur-sheet: 320ms; /* 시트·대화 상자 들어오기 */
-  --dur-pop: 300ms; /* 마디 생기기 */
-  --dur-settle: 400ms;
-  --dur-draw: 400ms; /* 길 한 토막 */
-  --dur-signal: 350ms;
+  /* 모션 길이: 자주 하는 동작일수록 짧게 */
+  --dur-tap: 100ms;
+  --dur-ui: 200ms;
+  --dur-exit: 160ms;
+  --dur-sheet: 280ms;
   --dur-fade: 150ms; /* 동작 줄이기에서도 남긴다 (D30) */
 
   /* 곡선 */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* 들어오기 (Base easeDecelerate) */
-  --ease-in: cubic-bezier(0.64, 0, 0.78, 0); /* 나가기 (Base easeAccelerate) */
-  --ease-in-out: cubic-bezier(0.2, 0, 0, 1); /* 화면 위 이동 (Material 3 standard) */
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* 시트 */
-  --ease-linear: linear; /* 같은 빠르기 */
-  --ease-spring: linear(0, 0.06, 0.195, 0.358, 0.518, 0.66, 0.776, 0.866, 0.93, 0.974, 1.001, 1.016, 1.023, 1.024, 1.023, 1.019, 1.015, 1.011, 1.008, 1.005, 1); /* 강성 270·감쇠 25 (TDS 'medium'과 같은 값), 넘침 2.4%, 460ms */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-in-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  /* 손맛: 드문 순간일수록 크게 */
-  --juice-s-scale: 1.03;
-  --juice-m-scale: 1.06;
-  --juice-l-scale: 1.12;
-  --juice-s-shake: 2px;
-  --juice-m-shake: 3px;
-  --juice-l-shake: 4px;
-  --juice-press-scale: 0.98;
-  /* 옛 별명은 모두 지웠다 (D67): 개념 그림 20장도 옅은 판 색(--plate·--plate-line·--surface·--brand-blue)으로 옮겼다 (W3b) */
+  /* 손맛 */
+  --juice-press-scale: 0.97;
 }
 
 /* 밤: 기기가 어두운 모드일 때. 같은 '대비:' 쌍을 이 값으로도 검사한다 */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --gray-1: #08101b;
-    --gray-2: #0f1724;
-    --gray-3: #17202d;
-    --gray-4: #1d2735;
-    --gray-5: #242e3d;
-    --gray-6: #2d3746;
-    --gray-7: #3b4655;
-    --gray-8: #515c6b;
-    --gray-9: #6b7584;
-    --gray-10: #848d9a;
-    --gray-11: #b2bac4;
-    --gray-12: #eef0f4;
-    --blue-1: #0a1628;
-    --blue-2: #0c1e38;
-    --blue-3: #0c284f;
-    --blue-4: #093164;
-    --blue-5: #0b3b78;
-    --blue-6: #0a478d;
-    --blue-7: #0d57ab;
-    --blue-8: #0d6bcc;
-    --blue-10: #3496f8;
-    --blue-11: #73b6fa;
-    --blue-12: #cbe5fe;
+    --gray-1: #0a1120;
+    --gray-2: #0f1829;
+    --gray-3: #152036;
+    --gray-4: #1d2a44;
+    --gray-5: #263552;
+    --gray-6: #3a4a68;
+    --gray-7: #6f7d97;
+    --gray-8: #9aa6bc;
+    --gray-9: #b9c3d5;
+    --gray-10: #d3dae6;
+    --gray-11: #e3e8f1;
+    --gray-12: #eef2f9;
+    --blue-1: #0b1530;
+    --blue-2: #10204a;
+    --blue-3: #152a5e;
+    --blue-9: #79a9ff;
+    --blue-10: #a9c7ff;
     --bg: var(--gray-1);
-    --surface: var(--gray-2);
-    --surface-raised: var(--gray-3);
-    --fill: var(--gray-4);
-    --fill-press: var(--gray-5);
+    --surface: #111a2d;
+    --surface-raised: #18233a;
+    --surface-sunken: #0d1526;
+    --fill: var(--gray-3);
+    --fill-press: var(--gray-4);
     --selected: var(--blue-3);
-    --chosen: var(--gray-12);
-    --on-chosen: var(--gray-1);
-    --hairline: var(--gray-6);
+    --hairline: #233150;
     --scrim: rgb(0 0 0 / 0.6);
-    --accent: #0a6fdc;
-    --accent-press: #0f61c3;
-    --accent-soft: var(--blue-3);
-    --ok: #2bc37a;
-    --ok-ink: #2bc37a;
+    --brand-blue: #6ea0ff;
+    --brand-navy: #eef2f9;
+    --primary: #0364f5;
+    --primary-press: #0258d6;
+    --primary-soft: var(--blue-2);
+    --on-primary-soft: var(--blue-10);
+    --cat-design-soft: #3a1621;
+    --cat-design-ink: #ff9aad;
+    --cat-ai-soft: #10204a;
+    --cat-ai-ink: #9cc0ff;
+    --cat-api-soft: #231a52;
+    --cat-api-ink: #b9a8ff;
+    --cat-opensource-soft: #0c2e25;
+    --cat-opensource-ink: #6fdcb8;
+    --cat-datasets-soft: #33260a;
+    --cat-datasets-ink: #ffcf5c;
+    --cat-templates: #8fa3c7;
+    --cat-templates-soft: #1b2843;
+    --cat-templates-ink: #c9d5ea;
+    --ok-ink: #3fcf8a;
     --ok-soft: #0e2a1f;
-    --warn: #f5b43c;
-    --warn-ink: #f5b43c;
+    --warn-ink: #f5c04c;
     --warn-soft: #2b2311;
-    --on-warn: #08101b;
-    --bad: #ff6b6b;
-    --bad-ink: #ff6b6b;
+    --bad-ink: #ff7b7b;
     --bad-soft: #3a1518;
-    --on-bad: #08101b;
-    --focus: var(--blue-11);
-    --tile: var(--blue-3);
-    --on-tile: var(--blue-11);
-    --plate: var(--blue-3);
-    --plate-line: var(--blue-11);
-    --plate-read: var(--blue-5);
-    --plate-ring: var(--blue-11);
-    --logo-body: #4a6699; /* 강철 남색 (brand.md 7절) */
-    --logo-letter: var(--gray-12);
-    --logo-accent: var(--blue-10);
-    --logo-light: #8fe3ff;
+    --focus: #79a9ff;
     --elev-1: 0 1px 2px rgb(0 0 0 / 0.4);
     --elev-2: 0 0 0 1px rgb(255 255 255 / 0.06), 0 8px 24px -4px rgb(0 0 0 / 0.5);
     --elev-3: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 48px -12px rgb(0 0 0 / 0.7);
-    --elev-sheet: 0 0 0 1px rgb(255 255 255 / 0.06), 0 -12px 32px -8px rgb(0 0 0 / 0.6);
-    --edge-light: inset 0 1px 0 rgb(255 255 255 / 0.06);
-  }
-}
-
-@supports not (transition-timing-function: linear(0, 1)) {
-  :root {
-    --ease-spring: var(--ease-out);
   }
 }
 
@@ -297,16 +254,6 @@
     --dur-ui: 0ms;
     --dur-exit: 0ms;
     --dur-sheet: 0ms;
-    --dur-pop: 0ms;
-    --dur-settle: 0ms;
-    --dur-draw: 0ms;
-    --dur-signal: 0ms;
-    --juice-s-scale: 1;
-    --juice-m-scale: 1;
-    --juice-l-scale: 1;
-    --juice-s-shake: 0px;
-    --juice-m-shake: 0px;
-    --juice-l-shake: 0px;
     --juice-press-scale: 1;
   }
 }
@@ -316,15 +263,5 @@
   --dur-ui: 0ms;
   --dur-exit: 0ms;
   --dur-sheet: 0ms;
-  --dur-pop: 0ms;
-  --dur-settle: 0ms;
-  --dur-draw: 0ms;
-  --dur-signal: 0ms;
-  --juice-s-scale: 1;
-  --juice-m-scale: 1;
-  --juice-l-scale: 1;
-  --juice-s-shake: 0px;
-  --juice-m-shake: 0px;
-  --juice-l-shake: 0px;
   --juice-press-scale: 1;
 }

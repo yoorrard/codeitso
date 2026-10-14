@@ -93,12 +93,13 @@ export function hitProblem(h: ForbiddenHit): string {
 
 const TEXT_EXT = new Set(['.html', '.js', '.mjs', '.css', '.json', '.txt', '.xml', '.webmanifest', '.svg']);
 
-/** 빌드 폴더의 글 파일을 모두 읽는다 */
+/** 빌드 폴더의 글 파일을 모두 읽는다. 진열대 자료 JSON(맨 위 catalog/, 300MB 남짓)은 화면 문구가 아니라서 건너뛴다 (D103) */
 export function readBuild(dir: string): BuildFile[] {
   const out: BuildFile[] = [];
   const walk = (d: string): void => {
     for (const name of readdirSync(d)) {
       const p = join(d, name);
+      if (d === dir && name === 'catalog') continue;
       if (statSync(p).isDirectory()) walk(p);
       else if (TEXT_EXT.has(extname(p))) out.push({ path: relative(dir, p).split('\\').join('/'), text: readFileSync(p, 'utf8') });
     }

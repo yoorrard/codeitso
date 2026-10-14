@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { DATA_DIR, ROOT, readJson } from '../lib/load-data.ts';
+import { ROOT, readJson } from '../lib/load-data.ts';
 import { readName, renameFont } from './sfnt-name.ts';
 import type { NameRecords } from './sfnt-name.ts';
 
@@ -25,7 +25,7 @@ const D2_FILES: { weight: number; style: string; file: string; sha256: string }[
 ];
 const RECEIPT_FAMILY = 'CC Receipt';
 
-/** 영수증 글꼴에 넣을 글자: 출력 가능한 ASCII + 기호 + 영수증의 고정 글자 */
+/** 영수증 글꼴에 넣을 글자: 출력 가능한 ASCII + 기호 + 화면 문구의 장바구니·영수증 묶음 (v5: S2가 ko.receipt를 더하면 함께 넣는다) */
 export async function receiptChars(): Promise<string> {
   const set = new Set<string>();
   const add = (s: string): void => {
@@ -33,11 +33,9 @@ export async function receiptChars(): Promise<string> {
   };
   for (let c = 0x20; c <= 0x7e; c += 1) add(String.fromCharCode(c));
   add('·…─—–₩×•↑↓←→✓★%°');
-  const templates = readJson<{ receipt: unknown }>(join(DATA_DIR, 'templates.json'));
-  add(JSON.stringify(templates.receipt).replace(/\{\{[a-z]+\}\}/g, ''));
-  const rules = readJson<{ rules: { type: string; slot?: { label: string } }[] }>(join(DATA_DIR, 'rules.json'));
-  for (const r of rules.rules) if (r.type === 'slot' && r.slot) add(r.slot.label);
-  // 화면에서 영수증 글꼴을 쓰는 곳은 영수증 종이뿐이다 ('요금 0원' 칩은 v4 D96에서 걷었다)
+  const { ko } = await import('../../src/copy/ko.ts');
+  const copy = ko as unknown as Record<string, unknown>;
+  add(JSON.stringify([copy['cart'], copy['receipt'] ?? null]).replace(/\{\{[a-z]+\}\}/g, ''));
   return [...set].sort().join('');
 }
 

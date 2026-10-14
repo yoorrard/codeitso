@@ -9,10 +9,8 @@ import { FILES } from './routes.ts';
 import type { MarkBudget, TermSegment } from './term-marks.ts';
 import { segmentTerms } from './term-marks.ts';
 
-/** 빌드 때 만드는 자료: 손으로 쓴 용어 212개 + 에러 안내 글 (src/pages/glossary.json.ts) */
+/** 빌드 때 만드는 자료: 손으로 쓴 용어 (src/pages/glossary.json.ts) */
 export const GLOSSARY_URL = FILES.glossary;
-/** 빌드 때 products.json에서 만드는 도구 이름 항목 (src/pages/glossary-tools.json.ts). 같은 때 나란히 받는다 */
-export const GLOSSARY_TOOLS_URL = FILES.glossaryTools;
 
 export interface TermEngine {
   get(id: string): GlossaryEntry | undefined;
@@ -51,7 +49,5 @@ async function getPack(url: string): Promise<TermPack> {
 }
 
 export async function loadTermEngine(): Promise<TermEngine> {
-  // 도구 이름 묶음을 못 받아도 용어 풀이는 된다
-  const [pack, tools] = await Promise.all([getPack(GLOSSARY_URL), getPack(GLOSSARY_TOOLS_URL).catch(() => undefined)]);
-  return makeTermEngine(pack, tools);
+  return makeTermEngine(await getPack(GLOSSARY_URL));
 }

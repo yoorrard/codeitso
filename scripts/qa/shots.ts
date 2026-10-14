@@ -1,6 +1,6 @@
 // 시각 점검: 빌드한 dist/를 헤드리스 Chromium으로 열어 화면을 찍고 기계로 볼 수 있는 문제를 찾는다.
 //   npm run qa:shots                 dist의 모든 페이지
-//   npm run qa:shots -- / /interview 주어진 라우트만
+//   npm run qa:shots -- / /c/ai   주어진 라우트만
 // 결과: .qa/shots/*.png, .qa/axe.json, .qa/report.md. 심각한 문제가 있으면 종료 코드 1.
 // 화면마다 보이는 주 버튼(.btn-primary) 수를 센다. PRIMARY_ONE_ROUTES의 화면은 2개 이상이면 실패 (brief 5.6 '화면마다 주 버튼은 하나', D67).
 import { mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs';
@@ -15,9 +15,8 @@ const PORT = 4399;
 const BASE = `http://127.0.0.1:${PORT}`;
 const OUT = join(ROOT, '.qa');
 const SHOTS = join(OUT, 'shots');
-/** 주 버튼이 하나뿐이어야 하는 화면. 둘러보는 곳부터 시작하고, 단계 화면은 W4가 화면을 다시 짤 때마다 더한다
- *  (W4a: 홈, 내 AI 써 보기 · W4b: 만들 앱 정하기 · W4c: 도구 고르기 · W4d: 도구끼리 맞춰 보기, 설계도 받기) */
-const PRIMARY_ONE_ROUTES: readonly string[] = ['/', '/test-drive', '/destination', '/waypoints', '/check', '/arrival', '/tools', '/tools/supabase', '/terms', '/terms/api', '/receipts', '/dictionary', '/about'];
+/** 주 버튼이 하나뿐이어야 하는 화면 (v5: 홈의 검색, 정보 화면). 목록·상세는 카드마다 [담기]가 있어 세지 않는다 */
+const PRIMARY_ONE_ROUTES: readonly string[] = ['/', '/terms', '/about', '/cart'];
 
 const VIEWPORTS = [
   { name: '360', width: 360, height: 800 },

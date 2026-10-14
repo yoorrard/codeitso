@@ -1,0 +1,38 @@
+---
+// 머리줄 (brief 3절): 로고 · 카테고리 메뉴 · 전체 검색창 · 장바구니(담은 개수 배지).
+// 휴대폰(<600)은 메뉴 · 로고 · 검색 아이콘 · 장바구니, 검색창은 /search 쪽에서 연다. 위에 붙어 따라온다.
+import CartLink from './CartLink.tsx';
+import CategoryMenu from './CategoryMenu.astro';
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { ko } from '../copy/ko.ts';
+import type { NavCategory } from '../lib/catalog/types.ts';
+import { ROUTES } from '../lib/routes.ts';
+
+interface Props {
+  nav: NavCategory[];
+  /** 검색 쪽에서 검색창에 미리 넣을 글 (빌드 때는 비어 있고 섬이 채운다) */
+  query?: string;
+}
+const { nav, query = '' } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="hd-inner">
+    <CategoryMenu nav={nav} />
+    <a class="brand" href={ROUTES.home} aria-label={ko.layout.home}>
+      <Logo height={36} />
+    </a>
+    <form class="hd-search" role="search" action={ROUTES.search} method="get">
+      <label class="visually-hidden" for="hd-q">{ko.layout.searchLabel}</label>
+      <input id="hd-q" name="q" type="search" value={query} placeholder={ko.layout.searchPlaceholder} enterkeyhint="search" autocomplete="off" />
+      <button type="submit" class="hd-search-btn" aria-label={ko.layout.searchButton}>
+        <Icon name="search" size="20px" />
+      </button>
+    </form>
+    <a class="hd-search-link" href={ROUTES.search} aria-label={ko.layout.searchLabel}>
+      <Icon name="search" size="24px" />
+    </a>
+    <CartLink client:load />
+  </div>
+</header>

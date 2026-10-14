@@ -4,6 +4,8 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 형식: `- [ ] 무엇을 — 왜 필요한가 — 막히는 작업 — (적은 날)`
 
+> **v5 메모 (2026-10-14, D102):** 코드쇼퍼는 바이브코딩 재료 쇼핑몰로 바뀌었다(`docs/review/v5/brief.md`). v4 기능에 걸린 항목(H14의 안내 카드 주소, H08·H09·T19 색인 수집, H17 글꼴 견본 SVG, H23 안내의 제품 이름, C01 상품 사실 대조)은 v5에서 할 일이 없어 멈춘다. 계정·배포(H01·H11·H13·H22)와 법·상표(H03·H04)는 그대로다. 진열대 자료의 출처별 이용 조건은 각 대분류 `data/catalog/<대분류>/index.json`과 `/about/credits`에 있다.
+
 ## 맨 먼저 (5분)
 
 - [ ] **H14 허용 주소 더하기 (가장 먼저, 5분)** — 클라우드 환경 설정 **Network access**의 **Allowed domains**에 아래 주소를 더해 주세요: `docs.github.com` `cursor.com` `developers.openai.com` `docs.devin.ai` `docs.windsurf.com` `antigravity.google` `docs.lovable.dev` `support.bolt.new` `v0.app` `docs.replit.com` `ai.google.dev` `help.openai.com` `openai.com` `support.claude.com` `www.anthropic.com` `policies.google.com` `support.google.com` `nodejs.org` `git-scm.com` `support.apple.com` `vercel.com` `docs.netlify.com` `firebase.google.com` `www.data.go.kr` `api.odcloud.kr` `infuser.odcloud.kr` `open.neis.go.kr` `developers.kakao.com` `www.ncloud.com` `mobbin.com` `refero.design` `nicelydone.club` `www.lazyweb.com` `inspoai.io` `vibe-design-one.vercel.app` `lucianlabs.dev` — 에이전트가 공식 원문을 직접 읽어야 안내 카드 약 23장(약 40%)을 단계 안내로 바꾸고, C01 증거와 가입 나이 숫자를 채울 수 있다. 이번 세션에서도 `docs.github.com`·`firebase.google.com`이 열리지 않았다(`getaddrinfo ENOTFOUND`, 응답 코드 000). 이 오류는 '주소가 없다'가 아니라 '허용 목록 밖'일 수 있다 — **출시**(v3 설계서 8.1 H14, T39의 C01 증거 채우기·2순위 안내 승격) — (2026-10-14, v3 설계서 12절. 짝 문서의 aitools H12 · services H14 · companions H-C1과 옛 H10을 이 줄 하나로 합침)

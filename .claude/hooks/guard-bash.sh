@@ -61,17 +61,4 @@ if printf '%s' "$bare" | grep -Eq 'wrangler[^|;&]*(deploy|secret[[:space:]]+put)
   block "Cloudflare 실제 배포·원격 D1·비밀 값 명령" "로컬(--local)로 시험하고, 실제 배포는 docs/HUMAN.md의 계정 준비 뒤 GitHub Actions가 한다."
 fi
 
-# 5. 골든 기대값을 바꾸는 커밋에는 이유가 있어야 한다
-# 'git commit'·'git -C 폴더 commit'·'/usr/bin/git commit'·"bash -c 'git commit …'"·'$(git commit …)'을 잡는다.
-# 'git-commit.svg' 같은 파일 이름은 잡지 않는다. 따옴표가 섞여 있어 정규식은 변수에 담는다.
-commit_re="(^|[;&|[:space:]/'\"(])git([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:]][^[:space:]]*)?)*[[:space:]]+commit([[:space:]]|\$|['\")])"
-if printf '%s' "$cmd" | grep -Eq "$commit_re"; then
-  # 내용이 바뀐 골든 파일만 본다 (이름만 옮긴 것은 제외). 'git add -A && git commit'처럼 한 줄에 쓰는 경우도 잡으려고 HEAD와 비교한다.
-  # name-status에서 R100(내용 그대로 이름만 옮김)은 빼고, 나머지 줄의 마지막 경로가 data/golden/이면 내용이 바뀐 것이다.
-  if git -C "${CLAUDE_PROJECT_DIR:-.}" diff HEAD -M --name-status 2>/dev/null | awk '$1 != "R100" {print $NF}' | grep -q '^data/golden/'; then
-    if ! printf '%s' "$cmd" | grep -q '골든'; then
-      block "골든 기대값 변경을 이유 없이 커밋" "커밋 메시지에 '골든: case-NN 무엇을 왜 바꿨는지'를 적는다 (docs/ENGINE.md 8절)."
-    fi
-  fi
-fi
 exit 0

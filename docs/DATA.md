@@ -1,228 +1,37 @@
-# 자료 안내
+# 자료 안내 (v5 진열대)
 
-코드쇼퍼의 판단은 모두 `data/`의 JSON에서 나온다. 화면에 나가는 문장도 대부분 여기 있다. 자료를 고친 뒤에는 반드시 `npm run check`를 돌린다.
+진열대 자료는 `data/catalog/<대분류>/<출처>.json`에 있다. 가져오기 스크립트가 공개 목록·API에서 받아 쓰고, 사람은 손으로 고치지 않는다. 규칙은 `.claude/rules/data.md`. v4의 상품·질문·규칙 자료 안내는 `docs/archive/v4/docs/DATA.md`.
 
-이 문서는 파일과 필드의 내부 이름(상품, 장바구니, 칸, 충돌, 레시피, 개념, 조사 카드, 꾸러미)을 쓴다. 화면에서는 각각 도구, 고른 도구, 고를 것, 막힌 곳, 미리 짠 코스, 용어 카드, 알아볼 것, 설계도라고 부른다 (`docs/CONCEPT.md` 3절, 대응표는 `docs/ENGINE.md` 맨 위). 자료의 **문장**에는 화면 이름만 쓴다. 쓰지 않는 말은 `node scripts/guard/check-words.ts`가 막는다.
+## 1. 파일
 
-## 1. 파일 지도
+| 파일 | 담는 것 |
+|---|---|
+| `data/catalog/<대분류>/index.json` | 대분류 이름(`nameKo`), 받은 날, 소분류 목록(id·이름·설명·출처별 개수), 뺀 출처와 이유(`rejected`) |
+| `data/catalog/<대분류>/<출처>.json` | `{ source, fetchedAt, count, available?, cut?, note?, items[] }`. `source.license`는 이 목록을 실어도 되는 이유, `cut`은 너무 큰 출처의 상위 기준 |
+| `data/glossary.json` | 어려운 말 풀이·용어 사전 (204개) |
+| `schemas/catalog-*.json` | 대분류마다 출처 파일·`index.json` 스키마 |
 
-| 파일 | 담는 것 | 스키마 | 지금 개수 |
-|---|---|---|---|
-| `taxonomy.json` | 태그 분류표 (유형·사용자·AI·쓰는 AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 72개(쓰는 AI `aitool.*` 15개, 느낌 6개 포함), 분야 10개 |
-| `questions.json` | 목적지 질문, 보기, 보기별 태그, 노출 조건, 질문마다 직접 쓰기 보기 | `questions.schema.json` | 20문항 (만들 앱 17 + 고르지 않아도 되는 '쓰는 AI' 3, 한 번에 하나만 보임) |
-| `rules.json` | 칸·충돌(막힌 곳)·알아볼 것·안전·막히기 쉬운 곳 규칙 | `rules.schema.json` | 39개 |
-| `scoring.json` | 추천 가중치와 기준값 (사이트에 공개) | `scoring.schema.json` | |
-| `products.json` | 상품 카드 = 화면의 도구 (진열·색인) | `products.schema.json` | 49개 (진열 48) |
-| `concepts.json` | 개념 카드 = 화면의 용어 카드 (읽어 둘 용어, 사전) | `concepts.schema.json` | 20장 |
-| `research-cards.json` | 조사 카드 (알아볼 것). 규칙이 붙이는 것 + 빈틈 넷(`research.gap-*`) + 직접 쓴 도구(`research.custom-tool`) + 빌더의 게시 기능(`research.builder-publish`, B-02) + 직접 고른 글꼴(`research.look-font`, T38) | `research-cards.schema.json` | 20장 |
-| `templates.json` | 영수증·설계도·AI에게 할 말 문장 틀. `look`은 설계도 6번·DESIGN.md 문장(디자인 묶음만 싣는다), `types.*.screens[].components`는 화면마다 부품 id(`looks.json` components) | `templates.schema.json` | |
-| `recipes.json` | 레시피 = 화면의 미리 짠 코스 (답 + 고른 도구 완성 세트) | `recipes.schema.json` | 5개 |
-| `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 20개 |
-| `glossary.json` | 어려운 말 풀이: 용어마다 한 문장 풀이, 다른 이름, 읽는 법, 짧은 예, 묶음(`kind`), 상위 용어, 용어 카드·도구·에러 안내 연결. 화면에서 글을 고르거나 점선 밑줄 말을 누르면 뜬다 (D60, D66). 엔진은 쓰지 않는다. 13절 | `glossary.schema.json` (+ `tests/lib/glossary.test.ts`가 매처로 문장 규칙·이름 겹침·상위 용어를 막는다) | 213개 |
-| `aliases.json` | 낱말표: 이용자가 칠 말을 화면 말·자료에 잇는 표 (AI 아님, D74·D83). 사전 검색 동의어와 직접 쓰기 낱말(보기 낱말·예·아니요·AI 이름·도구 이름 짐작·빈틈). 엔진 계산(`evaluate`)은 쓰지 않는다. 14절 | `aliases.schema.json` | 검색 동의어 10줄, 직접 쓰기 낱말 약 770개 |
-| `looks.json` | 디자인 정하기 값과 이름표 (T38, D76·D96): 느낌·바탕 묶음·대표 색(대비는 80쌍 4.6:1 이상, 테두리 3.1:1)·글꼴 짝과 글꼴(판·라이선스·받는 줄·확인한 날)·모서리·촘촘함·움직임·깊이·아이콘·그림·말투·첫 화면 배치·앱 종류별 기본값·화면 부품 이름과 규칙·느낌·색·밝기 낱말(`keywords`, 낱말표 규칙 그대로)·참고 사이트(첫 화면 주소, 모두 `needsReview`). 설계도 6번 문장은 `templates.json` `look`. 엔진 계산(`evaluate`)은 쓰지 않는다(ENGINE.md 11절) | `looks.schema.json` (+ 대비·라이선스(OFL-1.1·MIT·ISC)·참조 id는 `npm run validate`) | 느낌 6, 바탕 4, 대표 색 10, 글꼴 짝 8, 부품 25 |
-| `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
-| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 23개 |
-
-공통 정의(id 모양, 조건 문법 등)는 `schemas/defs.schema.json`에 있다.
-
-## 2. id 규칙
-
-- 소문자·숫자·하이픈·점만 쓴다. 예: `neis-meal`, `slot.data`, `domain.education`
-- 태그: `종류.이름` (`type.page`, `need.save`). 질문: `q.이름`. 칸: `slot.이름`. 조사 카드: `research.이름`.
-- 규칙 id는 종류를 앞에 붙인다: `slot-rule.`, `conflict.`, `research-rule.`, `safety.`, `stuck.`
-- 한 번 공개한 id는 바꾸지 않는다. 영수증 링크와 저장된 상태(지난 영수증 포함)가 id를 기억한다. 화면 이름이 바뀌어도 id는 그대로 둔다 (예: 앱 종류 '계산기·도우미'의 보기 id는 `tool`). 꼭 바꿔야 하면 옛 id를 새 id로 옮기는 표를 `src/lib/store.ts`에 둔다.
-
-## 3. 조건 문법
-
-질문의 `showIf`, 규칙의 `when`, `notBuildRules`의 `when`은 아래 모양 중 하나다.
-
-```jsonc
-{ "always": true }
-{ "answer": "q.type", "is": "form" }              // 그 질문에 그 보기를 골랐다
-{ "answer": "q.type", "in": ["form", "record"] }
-{ "tag": "need.save", "gte": 1 }                    // 태그 합계가 1 이상
-{ "cartHas": "cloudflare-workers" }                 // 장바구니에 그 상품이 있다
-{ "cartAny": { "capability": "store", "field": "serverRegion", "in": ["overseas"] } }
-                                                    // 조건을 모두 만족하는 상품이 하나라도 있다
-{ "all": [ ... ] }  { "any": [ ... ] }  { "not": { ... } }
-{ "deferred": "slot.notify" }                       // 그 칸을 나중으로 미뤘다 (맞춰 보기 뒤 규칙에서만)
-```
-
-- `cartAny`에서 쓸 수 있는 field: `provider.type`, `access`, `realtime`, `serverRegion`, `layer`, `cost.free`, `keyExposureRisk`, `publicKey`, `recommendable`, `custom`(이용자가 직접 쓴 도구면 참, 진열·색인 도구는 늘 거짓, D74)
-- 고르지 않아도 되는 질문(`optional`, '쓰는 AI')의 답과 그 태그(`aitool.*`)는 어떤 조건에도 쓰지 않는다 (검사가 막는다, D87).
-- 질문 노출 조건과 칸 규칙에는 장바구니 조건과 `deferred`를 쓸 수 없다 (검사가 막는다).
-- 질문 노출 조건은 앞선 질문이 만드는 태그와 답만 볼 수 있다.
-- '모르겠어요' 보기(`isUnknown: true`)는 태그를 줄 수도 있다: 앱 종류(→ 안내 페이지), 만드는 AI, 예산, 그리고 날씨·말과 글·금융 갈래(→ 가장 흔한 쪽인 예보·번역·주식 시세)는 기본 태그를 주고, 교육 주제의 '모르겠어요'는 태그를 주지 않는다(교육 상품은 주제가 서로 달라 하나로 보낼 수 없다). 미리 짠 코스 미리 보기('혹시 이걸 만드시나요?')는 '모르겠어요'를 어긋남으로 세지 않는다.
-- '아마 그럴 거예요'(`maybe`) 보기는 '네'와 같은 태그를 준다. 화면은 보기 묶음 아래에 이 사실을 한 줄로 밝힌다.
-
-### 3.1 직접 쓰기 보기와 '쓰는 AI' (T36, D74·D75·D87)
-
-- **직접 쓰기 보기**: 질문마다 정확히 하나, `id: "custom"`, `isCustom: true`, '모르겠어요' 바로 앞. 화면은 보기 줄이 아니라 펼치는 글 칸으로 그린다(T37). 칸: `field`(칸 라벨, 40자 안) · `hint`(예시. 화면이 끝에 "이름·연락처는 쓰지 마세요."를 붙인다) · `like`(그대로 둘 때 같게 계산할 보기, `tags`가 그 보기와 똑같아야 한다) · `keep`(`like`가 없을 때 화면이 말하는 계산 한 줄). `like` 없는 예외 둘: `q.type` → `type.custom`(새 종류 '직접 쓴 앱', 이때 `q.notify`도 묻는다), `q.domain` → `need.data`만. `q.audience`는 `like: "few"`, 나머지는 `like: "unknown"`. 그림 질문이라도 직접 쓰기 보기에는 `alt`가 없어도 된다. `field`·`hint`·`keep`은 `npm run words`가 본다.
-- **고르지 않아도 되는 질문**(`optional: true`): '쓰는 AI' 셋 `q.aitool-chat`·`q.aitool-builder`·`q.aitool-agent`. `showIf`로 `q.ai`의 답에 따라 하나만 보인다. 태그 없는 '모르겠어요' 보기('아직 안 정했어요')가 하나 있어야 하고, 보기 태그는 `aitool.<도구 id>`뿐이다. 답하지 않아도 만들 앱 정하기가 끝난다(ENGINE 1절 6).
-- **보기 무리**(`groups` + 보기의 `group`): 무리 이름을 적힌 순서대로 보인다. 보기는 무리 순서대로 두고, 직접 쓰기·모르겠어요는 무리 밖. 지금은 코딩 에이전트 세 무리(앱 안에서(터미널 없이) · 편집기 안 · 터미널)뿐이다.
-- **`aiTool`**(쓰는 AI 보기마다): `tool`(도구 id = 태그 `aitool.<tool>` = `guides.json` `tools[].id`) · `surface`(`cli`·`desktop`·`ide-extension`·`editor`·`web`·`mobile`) · `paidOnly`(유료 구독이 있어야 쓰는 곳, 출처 필수) · `needsReview`(확인 못 한 사실이 있음, 출처 필수, 화면은 무료·유료 꼬리표를 달지 않는다) · `sources`. AI 설정 파일은 도구로, 설치 안내는 쓰는 곳으로 고른다.
-- **`sub`**: 보기 둘째 줄(아는 이름 몇 개, P1). 이름만 쓰고 로고는 쓰지 않는다.
-
-## 4. 상품 카드 (화면: 도구)
-
-| 필드 | 뜻 | 필수 |
-|---|---|---|
-| `id`, `name`, `summary` | 이름과 한 줄 설명 | 모두 |
-| `layer` | `shelf` 진열(쉬운 설명 있음, 추천 대상) / `index` 색인(원문 정보만, 추천 안 함, 화면: 원문만 있는 도구) | 모두 |
-| `useWhen` | 이럴 때 써요 | 진열 |
-| `capabilities` | 맡을 수 있는 칸의 기능: screen, store, auth, data, host, proxy, notify | 모두 |
-| `domains`, `topics` | 분야·주제 태그 | 데이터 상품은 domains 필수 |
-| `goodFor` | 이 AI로 만들기 쉬움 (ai 태그) | |
-| `provider` | `official` 공식 / `community` 오픈소스·개인 / `unofficial` 비공식 래퍼 / `generic` 특정 회사 아님 | 모두 |
-| `access` | 필요한 자격: none, signup, key, approval, account-or-business | 모두 |
-| `cost` | `free`(0원으로 시작 가능, 화면 꼬리표 '0원으로 시작') + 쉬운 설명 | 모두 |
-| `freeLimit` | 무료 한도 설명 | |
-| `realtime` | realtime 실시간 / frequent 하루 여러 번 / daily 하루 단위 / static 거의 안 바뀜 | 데이터 상품 |
-| `serverRegion` | 이용자가 입력한 데이터가 저장되는 곳: none, local, kr, overseas, selectable, unknown | 모두 |
-| `difficulty` | 1 쉬움 ~ 3 어려움 | 모두 |
-| `setupMinutes` | 처음 붙이는 데 걸리는 어림 시간(분) | 진열 |
-| `keyExposureRisk` | 키를 화면 코드에 넣으면 안 되고 중간 서버에서만 써야 하는 상품 (혼자 쓸 때의 예외는 `safety.local-key`) | 모두 |
-| `publicKey` | 화면 코드에 넣도록 만든 공개 키를 쓰는 상품 (예: 지도 JavaScript 키, 사이트 주소로 사용을 제한). `keyExposureRisk`와 함께 켤 수 없다 | |
-| `paymentCard` | 가입하거나 키를 받으려면 결제 카드(결제 수단)를 등록해야 하는 상품. 도구 고르기 꼬리표 '결제 카드 필요'만 그리고 점수·규칙 조건에는 쓰지 않는다 (T37, 설계서 5.6절, `services.md` 7.6절). 지금은 `google-maps-js`·`naver-maps`·`papago-translation`·`heroku` 넷이고, 넷 다 상품 `prep`·`cost.note`에 이미 적힌 사실이며 `needsReview: true`다 | |
-| `recommendable` | false면 추천 표시를 붙이지 않는다 (MCP 서버, 비공식 패키지, 색인 상품) | 모두 |
-| `license` | 이름 + 쉬운 풀이 + 원문 링크 | 오픈소스면 |
-| `prep` | 준비물과 걸리는 시간(instant, hours, days) | 진열 |
-| `promptFragment` | 설계도에 들어갈 지시 한두 문장 (이용자 AI에게 하는 말) | 진열 |
-| `needsConcepts` | 필요 개념 id (화면: 필요한 용어) | 진열 |
-| `stuck` | 막히기 쉬운 곳 문장 | |
-| `related` | 관련 상품 id | |
-| `links` | 공식 링크. 첫 링크가 설계도 7번 표에 들어간다 | 모두 |
-| `checkedAt` | 사람이 원문으로 확인한 달 (YYYY-MM) | 모두 |
-| `needsReview` | true면 사람 확인 전. 배포용 검사(`npm run validate:release`)에서 진열 상품은 막힌다 | 모두 |
-| `sources` | 사실을 확인한 출처 링크 | |
-
-검사가 확인하는 것: 태그·개념·관련 상품이 실제로 있는지, 키 노출 위험 상품에 `env-var` 개념이 있는지, 공개 키와 키 노출 위험을 함께 켜지 않았는지, 색인 상품이 추천 대상이 아닌지, 확인한 달이 미래가 아닌지.
-
-`promptFragment`에는 키를 어디에 둘지(환경 변수, 중간 서버의 비밀 값, 스크립트 속성) 적지 않는다. 그 말은 상황(중간 서버가 있는지, 혼자 쓰는지)에 따라 안전 규칙과 막히기 쉬운 곳 규칙이 붙인다. 상품 고유의 키 구분(예: Supabase의 공개용 키와 비밀 키)은 적어도 된다. 저장처럼 상황에 따라 필요 없는 기능은 "저장할 데이터가 있으면"처럼 조건을 붙여 쓴다 (D34).
-
-### 상품을 추가하는 법
-
-1. 공식 문서를 연다. 블로그나 요약 글로 사실을 정하지 않는다.
-2. `/add-product` 스킬을 쓰거나 위 표를 보고 카드를 쓴다. 모르는 값은 지어내지 말고 비워 두거나 보수적으로 적은 뒤 `needsReview: true`로 둔다.
-3. 무료 한도·자격 같은 숫자는 원문을 확인한 경우에만 적고, `sources`에 링크를 남긴다.
-4. `npm run check`. 골든 사례가 바뀌면 왜 바뀌었는지 읽고 판단한다 (`docs/ENGINE.md` 8절).
-5. 사람이 원문과 대조한 뒤 `needsReview: false`, `checkedAt`을 그달로 바꾼다.
-
-## 5. 규칙
-
-- `slot`: 칸을 연다. 같은 칸을 여러 규칙이 열 수 있고(예: 배포·공유는 '여럿이 씀'이면 필수, '나만 씀'이면 선택), `required` 말고는 같아야 한다. `mustFill`(비워 둔 채 출발 불가 = 화면의 통행 불가, 필수 칸에만), `help`(칸 설명 한 줄), `deferrable`(나중으로 미룰 수 있음), `emptyMessage`·`emptyFix`(비었을 때 점검 문장).
-- `conflict`: 도구끼리 맞춰 보기에서 '막힌 곳'으로 보일 충돌. `message`(무엇이 문제인지), `fixHint`(고치는 법), `researchCard`('그대로 가기'를 고르면 '알아볼 것'에 붙는 조사 카드)가 모두 있어야 한다. `anchorSlot`(선택)은 지도에서 막힌 곳을 붙일 칸 id다. 없으면 길 전체에 붙는다 (예: 유료 도구). 있으면 어떤 칸 규칙이 만드는 칸이어야 한다 (검사가 확인).
-- `research`: 조건이 맞으면 조사 카드(알아볼 것)를 붙인다.
-- `safety`: 조건이 맞으면 설계도 11번에 안전 지시를 더한다. "-ㄴ다"체로 쓴다.
-- `stuck`: 조건이 맞으면 막히기 쉬운 곳을 더한다. "-요"체로 쓴다. `concepts`는 사전 링크용.
-
-### 문장 체 (자리마다)
-
-- 화면에 나오는 안내: 해요체 "-요". 규칙의 `message`·`fixHint`·`emptyMessage`·`emptyFix`, 질문 `help`, 상품 `stuck`, `stuck` 규칙, `templates.emptySlot.message`·`fixHint`. 칸 `help`와 상품 `useWhen`은 짧은 명사구("~하는 곳", "~할 때")로 써도 된다. 버튼 이름을 가리킬 때는 화면 이름 그대로 따옴표로 쓴다 (예: '그대로 가기'를 누르세요).
-- 설계도 머리말과 면책: "-습니다"체 (`pack.intro`, `disclaimer`).
-- 설계도 목록: "-ㄴ다"체. 안전 지시(`safety.line`, `safetyDefaults`, 11번), 작업 방식(`workStyle`, 12번), `indexMemo`, 조사 카드의 `why`·`doneWhen`. 만들지 않을 것(`notBuildRules`)과 화면·기능 이름은 명사로 끝낸다.
-- 설계도 지시문과 AI에게 하는 말: 반말 "~해 줘"체. 9·10번 머리(`researchIntro`, `noResearch`, `stepRule`), `promptFragment`, 대화 카드(AI에게 할 말), 개념·에러의 `askAI`.
-- 도구에 드는 돈은 '비용'으로 쓰고 '요금'은 코드쇼퍼 이용료(늘 0원)에만 쓴다. 다만 도구 회사가 쓰는 요금제 이름이나 요금 안내 페이지처럼 원문의 사실을 옮길 때는 그대로 둔다.
-
-## 6. 개념 카드 (화면: 용어 카드)
-
-- 화면 주소는 `/terms/아이디`이고, 설계도 10번의 '먼저 볼 용어' 링크도 이 주소다.
-- `level`: `must`면 '먼저 읽어 둘 용어' 후보, `good`이면 알아 두면 좋은 것.
-- `order`: 선후 관계가 없을 때 먼저 배울 순서 (작을수록 먼저).
-- `prerequisites`: 선수 개념. 순환하면 검사가 막는다.
-- `stepHint`: 진행 순서에서 붙일 칸의 기능 (예: 배포 개념은 host). `proxy`면 중간 서버 준비 단계에 붙는다 (환경 변수).
-- `summary`는 3분 안에 읽을 분량. 그림 설명(`figure`)은 그림을 만들 때 대체 텍스트로도 쓴다.
-- `quiz`는 2~3문제, 보기 2~4개, `answer`는 0부터 센 번호. 정답 위치를 섞는다 (한 자리에 60% 넘게 몰리면 검사가 경고). 오답도 그럴듯하게 쓴다.
-- `askAI`에는 `{{project}}` 자리를 둔다. 이용자가 만들 것이 들어간다. 자리 바로 뒤에 조사를 붙이지 않는다 ('기록장를'처럼 틀린다). `내가 만들려는 것: {{project}}.`로 시작한다.
-- `tryIt.kind`는 해 보기 모형 다섯 가지 중 하나: env-var-form, api-key-form, json-reader, terminal-sim, deploy-sim.
-
-## 7. 문장 틀 (`templates.json`)
-
-- 유형별 화면·기능·데이터 구조, 칸별 단계 문장(칸이 더하는 화면 포함), 중간 서버 준비 단계, 느낌별 색·글꼴, 기기·사용자·AI별 문장, 추천 이유 말, 배지, 만들지 않을 것, 영수증 글자(도구 비용 합계 포함), 설계도 머리말·제목·안내, 안전 기본 지시, 대화 카드(AI에게 할 말), 빈 칸·색인 상품용 알아볼 것 항목.
-- 유형 이름(`types.*.label`)은 질문 `q.type`의 보기 이름과 같게 둔다 (예: `type.tool` = '계산기·도우미'). 설계도 1번 '종류'와 영수증 목적지에 나온다.
-- 자리 표시는 정해진 것만 쓴다: 설계도 제목 `{{project}}`, 머리말 `{{saveAs}}`, 용어 카드 링크 `{{site}}`·`{{id}}` (`{{site}}/terms/{{id}}`), 외부 데이터 줄 `{{names}}`, 빈 칸 `{{label}}`·`{{note}}`(가져올 정보를 직접 썼을 때 `emptySlot.researchWithNote`), 색인 상품 `{{name}}`·`{{link}}`, 직접 쓴 도구 `{{name}}`(`customTool`), 설계도 1번 '내 말 그대로' `{{chip}}`·`{{text}}`·`{{label}}`·`{{as}}`(`pack.mine`), 대화 카드 `{{packRef}}`, 영수증 `{{n}}`. 검사가 확인한다.
-- 직접 쓰기 묶음 (T36, D74): `types["type.custom"]`('직접 쓴 앱': 화면·기능은 출발점만), `customAnswer.hidden`(링크로 받아 내 말이 없을 때 이름), `customTool.*`(목록에 없는 도구: 제공·비용 '확인 필요'·설계도 7번 표시 '(직접 씀)'·서행 문장·알아볼 것 이름 `researchArea`, 본문은 조사 카드 `researchCard`), `pack.mine`(설계도 1번 '내 말 그대로' 줄), `receipt.unknown`('모름')·`receipt.totalUnchecked`('0원 + 확인 필요'), `aiTools["ai.builder"]`(웹에서 만드는 도구: 프로젝트 지식 칸에 붙여 넣기). `builderPublish.*`(B-02, D89: 웹에서 만드는 도구를 고르면 엔진이 배포 칸에 채우는 가짜 상품 '빌더의 게시 기능'의 이름·제공·요약·설계도 7번 메모와 조사 카드 id. `products.json`에 넣지 않고, 같은 id `builder-publish`의 상품을 검사가 막는다. 숫자를 싣지 않는다).
-- 느낌별 색은 글자/배경, 글자/면, 강조 글자/강조 대비가 4.5:1 이상이어야 한다. 검사가 확인한다.
-
-## 8. 레시피 (화면: 미리 짠 코스)
-
-- `answers`는 보이는 질문에 모두 답해야 하고, `cart`의 충돌은 모두 해결되었거나 `kept`에 있어야 한다. 검사가 엔진으로 끝까지 돌려 확인한다.
-- `freeText`는 레시피의 '만들고 싶은 것 한 줄'이다. 설계도 제목과 영수증 목적지가 된다.
-- 미리 짠 코스는 홈(앞의 3개)과 `/courses`에 나오고, '이 코스로 출발'을 누르면 답·고른 도구·그대로 둔 충돌·한 줄 입력을 채운 채 도구끼리 맞춰 보기(`/check`)로 간다. 레시피 `title`·`summary`·`forWho`는 화면 문장이라 화면 이름만 쓴다.
-
-## 9. 에러 안내
-
-- `patterns`: 대소문자 무시 정규식. `examples`: 실제 에러 문장. 예시가 자기 패턴에 맞는지, 다른 항목에도 걸리는지 검사가 확인한다.
-- 키가 찍힐 수 있는 에러(401, 403, 404, 429, 500, CORS, 키 만료, 공공데이터포털 오류 코드, JSON이 아님, 네트워크 실패)의 `askAI`에는 키를 지우고 붙여 넣는다는 말을 둔다.
-- 좁은 항목을 앞에 둔다: `matchErrors`는 파일 순서대로 맞는 것을 모두 돌려준다 (예: SSH 키 거절은 `git-auth-failed`, 파일 권한은 `permission-denied`). 모든 예시가 자기 항목에만 걸리는지 `tests/engine/errors-data.test.ts`가 본다.
-- 위험한 해결(sudo, `chmod 777`, `--force`, `--legacy-peer-deps`)을 권하지 않는다. 필요하면 'AI에게 이유를 먼저 묻기'로 쓴다.
-
-## 10. 골든 사례
-
-- 대표 목적지 답 + 최종 장바구니(+ 그대로 둔 충돌, 나중으로 미룬 칸)를 넣으면 엔진이 내야 하는 결과: 물어본 질문, 칸별 추천·점수·다른 후보(`runnerUp`)·이유·채운 상품, 충돌, 출발 가능 여부(`canIssue`), 알아볼 것, 안전 규칙, 읽어 둘 용어, 진행 순서, 준비물, 켜진 막히기 쉬운 곳 규칙(`stuckRules`, 적은 사례만), 난이도, 먼저 만들 것의 난이도(`difficultyFirst`), 예상 시간, 나누기(미룰 칸, 더 쉬운 길).
-- 기대값은 id와 숫자만 비교한다. 문장을 바꿔도 골든 사례는 그대로다. 사례의 `title`·`note`는 사람용 설명이다.
-- 비교 코드는 `scripts/lib/golden.ts`에 있어서 Vitest에서도 그대로 쓴다.
-- 새 사례는 `npm run golden:print`로 엔진 결과를 뽑은 뒤, **손으로 맞는지 따져 보고** 파일로 만든다. 엔진 결과를 그대로 복사해 넣기만 하면 회귀 검사가 아니다.
-- 1단계 목표 20개. 새 규칙을 넣으면 그 규칙이 켜지는 사례를 하나 이상 만든다 (`npm run golden` 끝에 한 번도 안 켜진 규칙이 나온다).
-
-## 11. 출처 대응표와 색인 (T19)
-
-- 출처마다 약관 주소와 재배포 조건(`redistribution`)을 적는다. `unknown`이나 `link-only`면 이름과 링크만 싣는다.
-- 출처의 원래 분류를 우리 분야 태그로 옮기는 표(`categoryMap`)와, 맞는 분류가 없을 때 쓸 `fallbackDomain`을 둔다.
-- 수집은 공식 목록 API·RSS만 쓴다. robots.txt와 약관을 먼저 확인한다.
-- 수집 결과는 `data/index/`에 만들고 저장소 기록에는 올리지 않는다 (`.gitignore`). 마지막 정상 색인은 GitHub Release의 첨부 파일(`index-latest.tar.gz`)로 덮어써 두고, 수집이 실패하면 빌드가 그것을 내려받아 쓴다 (T19).
-- 색인 상품은 수집기가 정해진 값으로 채운다: `layer: index`, `recommendable: false`, `needsReview: true`, `provider.name`은 제공 기관 이름, `cost.note`는 "원문 확인", `links`는 원문 주소 하나. 외부 설명문은 `summary` 한 줄에만 두고 설계도에는 넣지 않는다. 화면에서는 '원문만 있는 도구'로 보인다.
-
-## 12. 라이선스
-
-`data/`의 자료는 저작권자에게 있다(All rights reserved, D72). 상품 카드가 가리키는 외부 자료의 조건은 각 출처를 따른다. 공공데이터는 이용허락범위를 함께 적는다.
-
-## 13. 어려운 말 풀이 (`glossary.json`)
-
-손으로 쓴 용어만 둔다. 도구 이름(`products.json`의 `name`)은 빌드 때 `kind: 'tool'` 항목으로 더하고, 열쇠가 겹치면 손으로 쓴 쪽이 이긴다. 찾는 법(매처)은 `src/lib/glossary.ts`, 설계는 `docs/review/v2/glossary.md` 5절.
-
-| 필드 | 뜻 | 규칙 |
-|---|---|---|
-| `id` | 용어 id | 한 번 공개하면 바꾸지 않는다 (밑줄을 거두는 `termsSeen`이 기억한다) |
-| `term` | 보이는 이름 | 한 글자도 된다('봇'). 한 글자 이름은 고른 글 전체가 그 말일 때만 맞는다 |
-| `aliases` | 다른 이름 (영어 이름, 줄임말, 자료에 쓰인 표기) | 정규화(NFKC·소문자·공백과 문장 부호 빼기) 뒤 2자 이상. 다른 용어의 이름·다른 이름과 겹치지 않는다. 띄어쓰기만 다른 이름은 넣지 않는다 (매처가 같은 열쇠로 본다). 엉뚱하게 풀리는 이름은 빼고 새 항목으로 옮긴다 (예: '시크릿'은 '시크릿 창' 때문에 어디에도 두지 않는다) |
-| `say` | 읽는 법 (영문 용어) | 한글만. 열쇠로 쓰지 않는다 ('코스'는 CORS로 풀리지 않는다) |
-| `plain` | 쉬운 풀이 | 한 문장, 해요체, '요.'로 끝, 70자 이하(목표 45자, 지금 평균 33자). 기본 낱말(앱·화면·코드·파일·주소·브라우저·키·API·서버·데이터·요청·명령·저장소 따위)과 서비스 이름 밖의 용어는 하나까지만 쓰고 `see`로 잇는다 |
-| `example` | 짧은 예 | 한 문장, 60자 이하. 풀이를 두 문장으로 쓰고 싶으면 둘째 문장을 여기로 옮긴다 |
-| `kind` | 묶음 | `key` 키·로그인·안전, `money` 돈·요금제·한도, `data` 공공 API·자료·지도, `code` 도구·코드·Git·브라우저, `ai` AI, `law` 권리·약관, `site` 코드쇼퍼 말 |
-| `see` | 풀이 속 상위 용어 id | 풀이 문장에서 매처로 실제로 찾혀야 한다. 풀이 창이 그 말에 밑줄을 긋고 같은 상자에서 2겹까지 연다 |
-| `concept` · `tool` · `error` | 용어 카드 · 도구 카드 · 에러 안내 id | 있는 id만 (`npm run validate`). 풀이 창의 첫 이어 가기 버튼은 이 순서로 하나 |
-| `noMark` | 점선 밑줄을 긋지 않음 | 흔한 말(요청·응답·명령어·변수)과 코드쇼퍼 말(`site`). 고르기로는 풀린다 |
-| `risk` | 위험을 품은 용어 | 풀이 안에 위험을 숨기지 않는 말을 둔다: '넣으면 안 돼요', '올리면 안 돼요', '지워질 수 있어요', '꺼야 해요', '숨겨야 해요', '돈이 나가요' 따위 |
-
-- 상품의 사실(무료 한도·요금·자격)을 풀이에 넣지 않는다. 요금제 이름(Hobby·Spark·Blaze·Eco)과 일반 사실(부가세 10%, UTC+9, 종목 코드 6자리)만 쓰고, `products.json`이 바뀌면 같이 본다. 금액은 도구 카드로 잇는다.
-- 코드쇼퍼 말(`site`)은 단계 이름에 맞춰 쓴다. 단계 이름 자체(내 AI 써 보기, 만들 앱 정하기, 도구 고르기, 도구끼리 맞춰 보기, 설계도 받기)는 할 일을 말하므로 용어로 넣지 않는다.
-- 크기: 212개가 gzip 약 14.6KB(줄인 JSON). 250개를 넘어 20KB에 닿으면 `kind`별로 나눠 불러오는 것을 다시 본다.
-
-## 14. 낱말표 (`aliases.json`)
-
-이용자가 칠 말(검색어, T36부터 직접 쓴 말)을 화면 말과 자료 id에 잇는 표다. 사이트는 AI를 부르지 않으므로(R-01) 이 표가 맞추는 일을 다 맡는다. 파일 하나에 쓰임별 칸을 두고, 칸마다 `{ id, aliases, … }` 모양을 같이 쓴다. 모양은 `src/lib/aliases.ts`, 정본 설계는 `docs/review/v3/brief.md` 3.5·7.3절과 `docs/review/v3/input.md` 9.2절.
-
-| 칸 | 뜻 | 규칙 |
-|---|---|---|
-| `searchSynonyms[].id` | 동의어 줄 id | 겹치지 않는다 |
-| `searchSynonyms[].aliases` | 이용자가 칠 말 (화면 문구에서 쓰지 않는 말 포함: 테마·폰트·가이드·다크 모드…) | 띄어쓰기·대소문자를 뺀 꼴이 2자 이상, 다른 줄과 겹치지 않음(`npm run validate`). 띄어 쓴 말은 붙여 쓴 꼴도 함께 찾히므로 하나만 적는다 |
-| `searchSynonyms[].to` | 대신 찾을 화면 말·문서 이름 | 용어 카드(이름·다른 이름)·풀이 용어(이름·다른 이름)·에러 안내·도구의 이름과 띄어쓰기·대소문자를 빼고 같으면 그 문서에 `aliases`가 열쇠 말로 붙는다. 아직 없는 화면(만들기 안내·디자인 둘러보기·어두운 화면 등)의 이름도 미리 적어 둔다: 그 문서가 색인에 들어오면 저절로 붙는다 |
-
-- 펼치는 곳은 색인을 만드는 `src/lib/search-index.ts`의 `applySynonyms`다(빌드 때 `/search-index.json`). 브라우저에 싣는 코드는 늘지 않는다. 동의어마다 지금 붙은 문서는 `node scripts/build-search.ts`가 찍는다.
-- `npm run words`는 이 파일의 열쇠와 대상 이름을 보지 않고, 화면에 보이는 문장 칸(`message`, T36의 `gaps`)만 본다. 다른 자료의 `aliases`·`keywords` 칸(다른 이름, 느낌 낱말)도 같은 까닭으로 보지 않는다 (D83).
-
-직접 쓰기 낱말 (T36, `input.md` 6·9.2절). 낱말 찾기(`src/lib/engine/match.ts`)는 직접 쓰기 칸을 처음 열 때 이 표와 함께 늦게 받는다(찾기 묶음 8KB, D82). 말 앞의 `=`는 '어절 하나 전체가 같을 때만'이고(`=비`는 '비빔밥'에 걸리지 않는다), 한 글자 말은 반드시 `=`를 붙인다. 열쇠는 정규화(NFKC·소문자·글자와 숫자와 `+`·`#`만, `src/lib/aliases.ts` `aliasKey`)하고 띄어쓰기를 뺀 꼴로 견준다.
+## 2. 항목 하나의 모양 (`src/lib/catalog/types.ts`의 `CatalogItem`)
 
 | 칸 | 뜻 |
 |---|---|
-| `options["q.…"][]` | 질문의 보기마다 낱말 `{ id: 보기 id, aliases }`. '모르겠어요'·'직접 쓰기' 보기, 예·아니요 질문, `q.ai`는 두지 않는다. `q.style`의 느낌 낱말은 T38의 `looks.json` `keywords`가 생기면 그쪽으로 옮길 수 있다 |
-| `yesNo.topics["q.…"]` | 예·아니요 질문(저장·로그인·알림·결제)의 주제어. 주제어만 있으면 '네' 쪽 증거, 바로 뒤 `negWindow`(6)글자 안에 `negAfter` 조각이 오면 '아니요' 쪽 |
-| `yesNo.answers[]` | 공통 말 넷. 적힌 순서(no → unknown → maybe → yes)대로 정한다 |
-| `aiNames[]` | `q.ai` 직접 쓰기: `agent`·`builder`·`chat`·`paid`·`free` 무리. 에이전트 이름 → 코딩 에이전트, 빌더 이름 → 웹에서 만드는 도구, 유료 말 → 유료 AI 구독, 채팅 이름·무료 말 → 무료 AI 채팅 |
-| `toolHints[]` | 목록에 없는 도구 이름 짐작: `product`(이미 목록에 있는 도구, "수파베이스" → `supabase`) 또는 갈래 `capability` + `domain`("OpenWeather" → 외부 데이터·날씨). 진열 상품의 공식 이름은 적지 않는다(목록 이름으로 찾는다). 한글 이름인 공공 API 도구도 적지 않는다 |
-| `gaps[]` | 코드쇼퍼가 아직 못 하는 바람(AI 기능 · 스토어 앱 · 채팅 · 파일 올리기). `where`(찾는 자리: 질문 id · `line`(마지막 한 줄) · `tool`(도구 이름)), `message`(화면 알림, 해요체). 조사 카드 `research.gap-<id>`가 있어야 한다 |
+| `id` | `<출처>:<slug>`, 소문자·숫자·점·하이픈. 주소에 그대로 쓴다. 바꾸지 않는다 |
+| `name`, `kind`(소분류), `category`(대분류) | |
+| `summary` | 출처 원문 그대로 (최대 300자) |
+| `summaryKo`, `written` | 한국어 한 줄. 코드쇼퍼가 쓴 것이면 `written: 'codeshopper'` |
+| `url`, `source{name,url}`, `license`(SPDX, 모르면 비움) | |
+| `metrics{stars,downloads,likes,updatedAt}` | 출처가 준 값만. `downloads`의 뜻은 출처마다 다르다(30일 조회·한 달 내려받기·전체 내려받기·활용신청 수) → 파일의 `note` |
+| `tags` | 출처의 분류·주제 |
+| `preview{type,…}` | 미리 보기 재료: font·palette·icons·asset·style·site·repo·template·model·dataset·api·mcp·skill·prompt… |
+| `use{install,snippet,docs}` | 출처가 준 설치 명령·설정 조각·문서 주소만 |
+| `fetchedAt` | 받은 날 |
 
-- **충돌 검사 (`npm run validate`):** 한 칸에서 함께 찾는 말끼리 같은 열쇠가 두 대상을 가리키면 오류다. 함께 찾는 말 = 그 질문의 보기 낱말 + 그 자리의 빈틈 말 / 예·아니요 질문이면 주제어 + 공통 말 넷 + 빈틈 말 / `q.ai`면 AI 이름 다섯 무리 / 도구 칸이면 도구 이름 짐작 + 빈틈 말 / 마지막 한 줄이면 빈틈 말. 다른 질문끼리는 겹쳐도 된다('알림'은 `q.type` 현황판과 `q.notify` 주제어에 다 있다). 그 밖에: 대상(질문·보기·도구·분야·조사 카드)이 있는지, 직접 쓰기가 있는 질문은 모두 읽을 낱말이 있는지, `q.ai`·'쓰는 AI' 질문에서는 빈틈을 찾지 않는지, `products.json`의 id가 `custom-`으로 시작하지 않는지.
-- `npm run words`는 `gaps[].message`만 본다.
+## 3. 다시 받기
+
+- `npm run import`(전체) 또는 `import:design`·`import:ai`·`import:api`·`import:oss`(오픈소스·데이터셋·템플릿). 네트워크가 필요하고 처음에는 오래 걸린다(공식 MCP 등록소 약 60분, 공공데이터포털 약 15분). 요청 캐시는 저장소 밖.
+- 같은 날 다시 돌리면 바이트가 같은 파일이 나온다. 다 받은 뒤 `npx vitest run tests/import`로 스키마·id·개수를 본다.
+- GitHub 검색 API가 막힌 환경에서는 repos.ecosyste.ms와 awesome 목록으로 대신 받는다. `GITHUB_TOKEN`이 있으면 GitHub 주제 검색을 더한다.
+
+## 4. 화면에 싣기
+
+`scripts/catalog/build.ts`가 이 자료를 읽어 목록 묶음·상세 조각·검색 색인·Astro 요약을 만든다 (`docs/ARCHITECTURE.md` 4절). 빌드는 네트워크를 쓰지 않는다.

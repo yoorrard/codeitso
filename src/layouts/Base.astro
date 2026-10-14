@@ -1,50 +1,35 @@
 ---
-// 모든 화면의 기본 틀 (v4 D96·D98, docs/review/v4/brief.md 3절): 본문 바로 가기 → 머리줄(로고 · 단계 줄(단계 화면) · 사전 · 설정)
-// → 본문 → 바닥글. 화면 낭독기 알림 자리(#cc-live)도 여기 있다. 지도·장면·효과음은 걷어 냈다 (D96).
-// 단계 화면(내 AI 써 보기 + 1~4단계)은 두 칸 격자다: 왼쪽 칸 = 본문 + 상태 한 줄과 주 버튼(왼쪽 칸 아래에 붙박이),
-// 오른쪽 칸 = 설계도 창(#blueprint-pane, sticky). 1024px 아래에서는 한 칸이고 설계도 창은 600~1023에서 위 카드, 600 아래에서는 본문 뒤.
-// 단계가 아닌 화면은 읽는 폭(72ch, width="read") 또는 둘러보는 폭(1360, width="wide")이다.
-// 머리줄의 사전·설정은 오른쪽 끝 고정 칸이라 단계 줄이 길어져도 밀리지 않는다.
+// 모든 화면의 기본 틀 (v5, brief 3절): 본문 바로 가기 → 머리줄(로고 · 카테고리 · 검색 · 장바구니) → 본문 → 바닥글.
+// 화면 낭독기 알림 자리(#cc-live)와 어려운 말 풀이 섬(TermPopover)도 여기 있다. 본문 폭은 최대 1440px (--container-max).
 import '../styles/global.css';
-import '../styles/frame.css';
-import '../styles/parts.css';
-import Icon from '../components/Icon.astro';
-import BlueprintPane from '../components/BlueprintPane.tsx';
-import DictionaryPanel from '../components/DictionaryPanel.tsx';
+import '../styles/shop.css';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 import TermPopover from '../components/TermPopover.tsx';
-import Logo from '../components/Logo.astro';
-import SettingsMenu from '../components/SettingsMenu.tsx';
-import StageRail from '../components/StageRail.tsx';
-import StatusLine from '../components/StatusLine.tsx';
 import { ko } from '../copy/ko.ts';
 import { LIVE_ID } from '../lib/announce.ts';
-import { catalog } from '../lib/data.ts';
-import { evaluate } from '../lib/engine/index.ts';
-import { mastheadState } from '../lib/masthead-state.ts';
-import { FILES, ROUTES, stripBase } from '../lib/routes.ts';
-import { EMPTY_SESSION } from '../lib/saved.ts';
-import type { StageId } from '../lib/stages.ts';
+import { navData, site, totalItems } from '../lib/catalog/site.ts';
+import { FILES, ROUTES, absoluteUrl, stripBase } from '../lib/routes.ts';
 import { analyticsAllowed, BEACON_TOKEN, STAGE } from '../lib/stage.ts';
 
 interface Props {
   /** 페이지 제목 (사이트 이름은 뒤에 붙는다). 없으면 홈 제목 */
   title?: string;
   description?: string;
-  /** 지금 단계. 단계가 아닌 화면은 비워 둔다 */
-  stage?: StageId | null;
-  /** 단계 밖 화면의 본문 폭: read = 읽는 글(72ch), wide = 둘러보는 곳의 카드 격자(1360) */
-  width?: 'read' | 'wide';
+  /** 검색 쪽: 머리줄 검색창 글 */
+  query?: string;
+  /** 읽는 글 폭(소개·처리방침)으로 줄인다 */
+  read?: boolean;
 }
-const { title, description = ko.site.description, stage = null, width = 'read' } = Astro.props;
+const { title, description = ko.site.description, query, read = false } = Astro.props;
 const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
-// 배포 서버는 끝 빗금을 뗀 주소(/check)로 맞춘다 (wrangler.jsonc html_handling, D50). 홈만 바탕 폴더 주소(/ 또는 /code-chauffeur/, 설계서 9.4절)
+// 배포 서버는 끝 빗금을 뗀 주소로 맞춘다 (wrangler.jsonc html_handling, D50). 홈만 바탕 폴더 주소
 const path = Astro.url.pathname.replace(/\/+$/, '');
 const canonical = Astro.site ? new URL(stripBase(path || '/') === '/' ? ROUTES.home : path, Astro.site).href : undefined;
-// 처음 온 사람 기준 단계 줄 값 (빌드 때 한 번)
-const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {});
-const hasAction = Astro.slots.has('action');
+const ogImage = Astro.site ? absoluteUrl(Astro.site, '/og.png') : undefined;
+const nav = navData();
+const fetched = site().fetched;
 ---
-
 
 <!doctype html>
 <html lang="ko">
@@ -54,129 +39,75 @@ const hasAction = Astro.slots.has('action');
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 낮) 값을 그대로 쓴다 -->
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f1724" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 밤) 값을 그대로 쓴다 -->
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111a2d" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 밤) 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
-    <!-- 파비콘·앱 아이콘은 모자 배지 타일 (D65, brief 3.3). npm run logo가 만든다. 주소는 바탕을 붙여 routes.ts FILES에서 (설계서 9.4절) -->
-    <link rel="icon" href={FILES.favicon} sizes="32x32" />
-    <link rel="icon" href={FILES.icon} type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={ko.site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <!-- 파비콘·앱 아이콘은 장바구니만 (D104, npm run logo). 주소는 바탕을 붙여 routes.ts FILES에서 -->
+    <link rel="icon" href={FILES.favicon} sizes="16x16 32x32 48x48" />
+    <link rel="icon" href={FILES.icon192} type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href={FILES.appleTouchIcon} />
     <link rel="manifest" href={FILES.manifest} />
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
-      // 첫 그림 전에: 사이트 설정의 '동작 줄이기'와 이어 갈 진행(data-resume), 연습을 마침(data-lesson-done: 내 AI 써 보기의 주 버튼이
-      // 붙기 전 바뀌어 보이지 않게), 영수증 링크(data-receipt-link)를 붙인다. 읽기만 한다 (저장은 src/lib/store.ts).
+      // 첫 그림 전에: 사이트 설정의 '동작 줄이기', 목록 쪽 주소가 인기순 1쪽이 아니면 빌드 때 그린 카드를 감춘다(목록 섬이 바꿔 그린 뒤 푼다,
+      // 섬이 4초 안에 깨어나지 못하면 그냥 푼다). 읽기만 한다 (저장은 src/lib/store.ts).
       try {
         var p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}') || {};
         if (p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
-        var saved = localStorage.getItem('cc:session:v1');
-        if (saved && Object.keys(JSON.parse(saved).answers || {}).length > 0) document.documentElement.setAttribute('data-resume', '');
-        if (JSON.parse(localStorage.getItem('cc:meta:v1') || '{}').lessonDone === true) document.documentElement.setAttribute('data-lesson-done', '');
       } catch (e) {}
-      // 영수증 링크(#r=)로 열었으면: 설계도 받기 섬이 링크를 읽을 때까지 빌드 때 그린 잠김 화면을 감춘다 (arrival.css)
-      if (location.hash.indexOf('#r=') === 0) document.documentElement.setAttribute('data-receipt-link', '');
+      // 출처 그림을 못 받으면(막힘·없어짐) 깨진 그림 대신 머리글자를 보인다 (그림 오류는 거품이 일지 않아 잡기 단계에서 듣는다)
+      document.addEventListener(
+        'error',
+        function (e) {
+          var t = e.target;
+          if (t && t.tagName === 'IMG' && t.closest) {
+            var box = t.closest('.thumb-img');
+            if (box) box.classList.add('is-broken');
+          }
+        },
+        true,
+      );
+      if (/[?&](sort=(name|recent)|page=([2-9]|[1-9][0-9]+))(&|$)/.test(location.search)) {
+        document.documentElement.setAttribute('data-list-pending', '');
+        setTimeout(function () {
+          document.documentElement.removeAttribute('data-list-pending');
+        }, 4000);
+      }
     </script>
   </head>
   <body>
     <a class="skip-link" href="#main">{ko.layout.skip}</a>
-    <header class="topbar">
-      <div class:list={['topbar-inner', { 'has-rail': stage !== null }]}>
-        <a class="brand" href={ROUTES.home}>
-          <Logo variant="lockup" height={40} />
-          <span class="visually-hidden">{ko.site.name}</span>
-        </a>
-        {
-          stage && (
-            <div class="rail-wrap">
-              <StageRail client:load stage={stage} initial={initial} />
-            </div>
-          )
-        }
-        <div class="top-actions">
-          <a class="dict-btn" href={ROUTES.dictionary}>
-            <Icon name="dictionary" size="20px" />
-            <span>{ko.layout.dictionary}</span>
-          </a>
-          <SettingsMenu client:idle />
-        </div>
-      </div>
-    </header>
-    {
-      stage ? (
-        <div class="stage-grid">
-          <div class="stage-left">
-            <main id="main" tabindex="-1" class="stage has-bar">
-              <slot />
-            </main>
-            <div class="action-bar" role="region" aria-label={ko.layout.actionBar}>
-              <div class="action-inner">
-                <StatusLine client:load stage={stage} />
-                {hasAction && (
-                  <div class="action-main">
-                    <slot name="action" />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-          <aside id="blueprint-pane" class="blueprint-pane" aria-labelledby="bp-title">
-            <BlueprintPane client:idle />
-          </aside>
-        </div>
-      ) : (
-        <>
-          <main id="main" tabindex="-1" class:list={['stage', width === 'wide' ? 'is-wide' : 'is-read']}>
-            <slot />
-          </main>
-          {hasAction && (
-            <div class:list={['action-bar is-static', width === 'wide' ? 'is-wide' : 'is-read']} role="region" aria-label={ko.layout.actionBar}>
-              <div class="action-inner">
-                <div class="action-main">
-                  <slot name="action" />
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )
-    }
-    <footer class="site-footer" aria-label={ko.footer.label}>
-      <Logo variant="wordmark" height={16} label={ko.site.name} class="footer-mark" />
-      <ul class="footer-links">
-        <li><a href={ROUTES.about}>{ko.footer.about}</a></li>
-        <li><a href={ROUTES.criteria}>{ko.footer.scoring}</a></li>
-        <li><a href={ROUTES.credits}>{ko.footer.credits}</a></li>
-        <li><a href={ROUTES.privacy}>{ko.footer.privacy}</a></li>
-        <li><a href={ROUTES.notice}>{ko.footer.notice}</a></li>
-      </ul>
-      <p class="footer-line">{ko.footer.license}</p>
-      {STAGE === 'preview' && <p class="footer-line footer-trial">{ko.footer.trial}</p>}
-    </footer>
-    <DictionaryPanel client:idle />
+    <SiteHeader nav={nav} query={query} />
+    <main id="main" tabindex="-1" class:list={['page', { 'is-read': read }]}>
+      <slot />
+    </main>
+    <SiteFooter fetched={fetched} total={totalItems()} />
     <TermPopover client:idle />
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
     {
       analyticsAllowed(Astro.url.pathname) && (
-        <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: BEACON_TOKEN })}></script><!-- floor-guard-ignore: 쿠키 없는 Cloudflare Web Analytics, CLAUDE.md 꼭 지킬 것 1의 허용 예외(R-61). 토큰이 있을 때만, 영수증 화면 제외 -->
+        <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: BEACON_TOKEN })}></script><!-- floor-guard-ignore: 쿠키 없는 Cloudflare Web Analytics, CLAUDE.md 꼭 지킬 것 1의 허용 예외(R-61). 토큰이 있을 때만, 장바구니 쪽 제외 -->
       )
     }
     <script>
-      // 움직임 건너뛰기 (CLAUDE.md 8): 화면 어디든 누르거나 Esc면 돌고 있는 짧은 전환을 끝 상태로. 누르기는 click(잡기 단계)에서 끝낸다:
-      // 누르기가 시작될 때 끝내면 움직이던 시트가 손가락 밑에서 튀어 click이 사라진다 (WCAG 2.5.2)
-      import { skipAll } from '../lib/motion.ts';
+      // [담기] 버튼 (src/lib/cart-buttons.ts)과 카테고리 메뉴 닫기 (Esc·바깥 누르기, 닫으면 단추로 초점)
+      import { wireAddButtons } from '../lib/cart-buttons.ts';
 
-      document.addEventListener('click', () => skipAll(document), { capture: true, passive: true });
+      wireAddButtons();
+      const menu = document.querySelector<HTMLDetailsElement>('details[data-menu]');
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') skipAll(document);
+        if (e.key === 'Escape' && menu?.open) {
+          menu.open = false;
+          menu.querySelector('summary')?.focus();
+        }
       });
-
-      // 아래 막대 높이를 재서 --bar-bottom으로 (WCAG 2.4.11): 막대는 상태 줄·안내 글에 따라 커지므로,
-      // 고정값이면 키보드로 옮긴 초점이 막대 뒤에 숨는다. scroll-padding이 실제 높이를 따라가게 한다.
-      const bar = document.querySelector('.action-bar:not(.is-static)');
-      if (bar && 'ResizeObserver' in window) {
-        new ResizeObserver(() => {
-          document.documentElement.style.setProperty('--bar-bottom', `calc(${Math.ceil(bar.getBoundingClientRect().height)}px + var(--space-3))`);
-        }).observe(bar);
-      }
+      document.addEventListener('click', (e) => {
+        if (menu?.open && e.target instanceof Node && !menu.contains(e.target)) menu.open = false;
+      });
     </script>
   </body>
 </html>

@@ -1,7 +1,8 @@
 // 어려운 말 풀이 (D60, v2 D66): 고른 글에서 용어 찾기(매처)와 자료(data/glossary.json)의 약속.
 // 사례는 docs/review/v2/glossary.md 5.2절 표와 5.13절 목록을 그대로 옮겼다.
-import { beforeAll, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { join } from 'node:path';
+import Ajv2020 from 'ajv/dist/2020.js';
 import type { Glossary, GlossaryHit } from '../../src/lib/glossary.ts';
 import {
   ALSO_MAX,
@@ -16,16 +17,9 @@ import {
   missAction,
   normalizeTerm,
 } from '../../src/lib/glossary.ts';
-import { DATA_DIR, loadValidationInput, readJson } from '../../scripts/lib/load-data.ts';
-import type { ValidationInput } from '../../scripts/lib/validate.ts';
-import { validateAll } from '../../scripts/lib/validate.ts';
+import { DATA_DIR, ROOT, readJson } from '../../scripts/lib/load-data.ts';
 
 const glossary = readJson<Glossary>(join(DATA_DIR, 'glossary.json'));
-const concepts = new Set(readJson<{ concepts: { id: string }[] }>(join(DATA_DIR, 'concepts.json')).concepts.map((c) => c.id));
-const products = new Set(readJson<{ products: { id: string }[] }>(join(DATA_DIR, 'products.json')).products.map((p) => p.id));
-const errorEntries = readJson<{ errors: { id: string; patterns: string[] }[] }>(join(DATA_DIR, 'errors.json')).errors;
-const errorIds = new Set(errorEntries.map((e) => e.id));
-const errorPatterns = errorEntries.flatMap((e) => e.patterns.map((p) => new RegExp(p, 'i')));
 const index = buildIndex(glossary);
 
 /** 고른 글만 (문맥 없음) */
@@ -139,7 +133,6 @@ describe('어절 첫머리와 꼬리 (거짓 양성 막기)', () => {
     ['Firebase CLI', 'cli'],
     ['웹후크', 'webhook'],
     ['깃헙에', 'github'],
-    ['미리 짠 코스', 'site-course'],
     ['푸시 알림', 'push-notify'],
   ])("다른 이름·고친 이름: '%s' → %s", (text, id) => {
     expect(pick(text)?.entry.id).toBe(id);
@@ -215,7 +208,6 @@ describe('찾지 않는 것과 모르는 말', () => {
     expect(looksLikeError('Edge Functions')).toBe(false);
     expect(looksLikeError('하루 500건')).toBe(false);
     expect(looksLikeError(`Error ${'x'.repeat(ERROR_MAX)}`)).toBe(false);
-    expect(looksLikeError('SERVICE_KEY_IS_NOT_REGISTERED_ERROR', errorPatterns)).toBe(true);
   });
 
   it('모르는 말: 에러 → 에러 안내, 영문·숫자 섞임 → 사전, 한글만 → 아무것도', () => {
@@ -240,20 +232,27 @@ describe('자료 약속 (data/glossary.json)', () => {
   /** 풀이에 써도 되는 기본 낱말(브라우저·API·서버·요청·명령·저장소)과 서비스 이름. 이 밖의 용어는 상위 용어 하나(see)까지 */
   const BASIC = new Set(['api', 'server', 'browser', 'request', 'command', 'git-repo', 'github', 'git', 'firebase', 'cloudflare', 'google-sheets', 'neis', 'tago', 'ecos', 'osm', 'data-portal']);
   /** 위험을 숨기지 않는 말 */
-  const RISK_WORDS = /안 돼요|안 되는|지워질 수 있어요|사라져요|꺼야 해요|숨겨야 해요|막아 둬야|돈이 나가|읽힐 수 있어요/;
-  const KINDS = new Set(['key', 'money', 'data', 'code', 'ai', 'law', 'site']);
+  const RISK_WORDS = /안 된다|안 되는|지워질 수 있다|사라진다|꺼야 한다|숨겨야 한다|막아 둬야|돈이 나간다|돈이 나가|읽힐 수 있다/;
+  const KINDS = new Set(['key', 'money', 'data', 'code', 'ai', 'law']);
 
-  it('손으로 쓴 용어는 213개, id가 겹치지 않고 kind가 있다', () => {
-    expect(glossary.terms).toHaveLength(213);
+  it('스키마(schemas/glossary.schema.json)를 지킨다', () => {
+    const ajv = new Ajv2020({ allErrors: true });
+    const validate = ajv.compile(readJson(join(ROOT, 'schemas', 'glossary.schema.json')));
+    expect(validate(glossary), JSON.stringify(validate.errors?.slice(0, 3))).toBe(true);
+  });
+
+  it('손으로 쓴 용어는 204개 (v5에서 옛 코드쇼퍼 말 9개를 뺐다), id가 겹치지 않고 kind가 있다', () => {
+    expect(glossary.terms).toHaveLength(204);
     const all = glossary.terms.map((t) => t.id);
     expect(new Set(all).size).toBe(all.length);
     for (const t of glossary.terms) expect(KINDS.has(t.kind), `${t.id}: ${t.kind}`).toBe(true);
   });
 
-  it('풀이는 한 문장 해요체, 70자 이하. 예는 한 문장 60자 이하', () => {
+  it('풀이는 한 문장 다체, 70자 이하. 예는 한 문장 60자 이하', () => {
     for (const t of glossary.terms) {
       expect(t.plain.length, t.id).toBeLessThanOrEqual(70);
-      expect(t.plain.endsWith('요.'), `${t.id}: ${t.plain}`).toBe(true);
+      expect(t.plain.endsWith('다.'), `${t.id}: ${t.plain}`).toBe(true);
+      if (t.example !== undefined) expect(/요\.$/.test(t.example), `${t.id}: ${t.example}`).toBe(false);
       expect(/[.?!]\s/.test(t.plain), `${t.id}: 두 문장`).toBe(false);
       if (t.example !== undefined) {
         expect(t.example.length, t.id).toBeLessThanOrEqual(60);
@@ -280,12 +279,10 @@ describe('자료 약속 (data/glossary.json)', () => {
     }
   });
 
-  it('잇는 곳은 있는 것만: 용어 카드, 도구, 에러 안내, 상위 용어', () => {
+  it('상위 용어(see)는 있는 용어만, 옛 카드·도구·에러 고리는 없다', () => {
     for (const t of glossary.terms) {
-      if (t.concept) expect(concepts.has(t.concept), `${t.id}: ${t.concept}`).toBe(true);
-      if (t.tool) expect(products.has(t.tool), `${t.id}: ${t.tool}`).toBe(true);
-      if (t.error) expect(errorIds.has(t.error), `${t.id}: ${t.error}`).toBe(true);
       if (t.see) expect(index.byId.has(t.see) && t.see !== t.id, `${t.id}: ${t.see}`).toBe(true);
+      expect(t.concept ?? t.tool ?? t.error, t.id).toBeUndefined();
     }
   });
 
@@ -315,9 +312,8 @@ describe('자료 약속 (data/glossary.json)', () => {
     }
   });
 
-  it('코드쇼퍼 말은 밑줄을 긋지 않고, 옛 단계 이름을 쓰지 않는다', () => {
+  it('옛 단계 이름을 쓰지 않는다', () => {
     for (const t of glossary.terms) {
-      if (t.kind === 'site') expect(t.noMark, t.id).toBe(true);
       const text = [t.term, ...(t.aliases ?? []), t.plain, t.example ?? ''].join(' ');
       expect(/시운전|경유지|점검|들르는 곳/.test(text), `${t.id}: ${text}`).toBe(false);
     }
@@ -330,40 +326,5 @@ describe('자료 약속 (data/glossary.json)', () => {
         expect(pick(name)?.entry.id, `${t.id}: '${name}'`).toBe(t.id);
       }
     }
-  });
-});
-
-describe('자료 검사가 망가뜨린 풀이 자료를 잡는다 (scripts/lib/validate.ts)', () => {
-  let base: ValidationInput;
-  beforeAll(() => {
-    base = loadValidationInput(false, new Date(2026, 9, 13));
-  });
-  function broken(change: (g: Glossary) => void): string[] {
-    const input = structuredClone(base);
-    change(input.glossary);
-    return validateAll(input).errors;
-  }
-  const first = (g: Glossary): Glossary['terms'][number] => {
-    const t = g.terms[0];
-    if (!t) throw new Error('자료가 비어 있습니다');
-    return t;
-  };
-
-  it('지금 자료는 통과한다', () => {
-    expect(validateAll(base).errors).toEqual([]);
-  });
-
-  it('스키마: 두 문장 풀이, 70자 넘는 풀이, 없는 kind, 한 글자 다른 이름', () => {
-    expect(broken((g) => (first(g).plain = '첫 문장이에요. 둘째 문장이에요.')).some((e) => e.startsWith('glossary.json'))).toBe(true);
-    expect(broken((g) => (first(g).plain = `${'가'.repeat(70)}요.`)).some((e) => e.startsWith('glossary.json'))).toBe(true);
-    expect(broken((g) => ((first(g) as unknown as Record<string, unknown>)['kind'] = 'tool')).some((e) => e.startsWith('glossary.json'))).toBe(true);
-    expect(broken((g) => (first(g).aliases = ['키'])).some((e) => e.startsWith('glossary.json'))).toBe(true);
-  });
-
-  it('없는 카드·도구·에러·상위 용어', () => {
-    expect(broken((g) => (first(g).concept = 'no-such')).some((e) => e.includes('없는 용어 카드'))).toBe(true);
-    expect(broken((g) => (first(g).tool = 'no-such')).some((e) => e.includes('없는 도구'))).toBe(true);
-    expect(broken((g) => (first(g).error = 'no-such')).some((e) => e.includes('없는 에러 안내'))).toBe(true);
-    expect(broken((g) => (first(g).see = first(g).id)).some((e) => e.includes('상위 용어'))).toBe(true);
   });
 });

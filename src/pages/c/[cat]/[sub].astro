@@ -1,0 +1,54 @@
+---
+// 목록 쪽 /c/<대분류>/<소분류>?sort=&page= (D103): 소분류마다 HTML 한 쪽. 빌드 때 인기순 1쪽을 그리고, 다른 쪽·정렬은
+// 목록 섬(Listing)이 진열대 빌드가 만든 JSON(/catalog/list/…)을 받아 그린다. 위: 위치 · 제목 · 출처 줄 · 같은 대분류의 다른 소분류(가로로 넘김).
+import Base from '../../../layouts/Base.astro';
+import Listing from '../../../components/Listing.tsx';
+import { ko } from '../../../copy/ko.ts';
+import { pageCount, withCommas } from '../../../lib/catalog/core.ts';
+import { categories, firstPage } from '../../../lib/catalog/site.ts';
+import type { CategoryMeta, SubMeta } from '../../../lib/catalog/types.ts';
+import { ROUTES, categoryPath, listPath } from '../../../lib/routes.ts';
+
+export function getStaticPaths() {
+  return categories().flatMap((c) => c.subcategories.map((s) => ({ params: { cat: c.id, sub: s.id }, props: { meta: c, sub: s } })));
+}
+
+interface Props {
+  meta: CategoryMeta;
+  sub: SubMeta;
+}
+const { meta, sub } = Astro.props;
+const initial = firstPage(meta.id, sub.id);
+const pages = pageCount(sub.count);
+---
+
+<Base title={`${sub.nameKo} · ${meta.nameKo}`} description={sub.descKo ?? `${meta.nameKo} › ${sub.nameKo}: ${ko.categories[meta.id]}`}>
+  <nav class="crumbs" aria-label={ko.list.breadcrumb}>
+    <ol>
+      <li><a href={ROUTES.home}>{ko.site.name}</a></li>
+      <li><a href={categoryPath(meta.id)}>{meta.nameKo}</a></li>
+    </ol>
+  </nav>
+  <header class="list-head" data-cat={meta.id}>
+    <h1>{sub.nameKo}</h1>
+    {sub.descKo && <p class="page-lead">{sub.descKo}</p>}
+    <p class="list-sources">
+      <span>{ko.list.sources}</span>
+      {sub.sources.map((s) => <span class="src-pill">{s.name} {withCommas(s.count)}</span>)}
+    </p>
+  </header>
+  <nav class="sub-strip" aria-label={meta.nameKo}>
+    <ul>
+      {
+        meta.subcategories.map((s) => (
+          <li>
+            <a class="chip" href={listPath(meta.id, s.id)} aria-current={s.id === sub.id ? 'page' : undefined}>
+              {s.nameKo}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <Listing client:load cat={meta.id} sub={sub.id} total={sub.count} pages={pages} initial={initial} />
+</Base>

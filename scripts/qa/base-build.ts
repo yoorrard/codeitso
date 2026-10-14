@@ -29,6 +29,7 @@ function run(what: string, file: string, argv: readonly string[], runEnv: NodeJS
 
 if (!args.includes('--no-build')) {
   console.log(`주소 바탕 ${BASE} · 정적 호스트로 빌드 → ${relative(ROOT, OUT)}`);
+  run('진열대 빌드', join(ROOT, 'scripts', 'catalog', 'build.ts'), ['--if-stale'], env);
   run('주소 바탕 빌드', join(ROOT, 'node_modules', 'astro', 'bin', 'astro.mjs'), ['build', '--outDir', OUT], env);
 }
 if (!existsSync(OUT)) {

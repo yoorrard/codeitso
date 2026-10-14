@@ -1,99 +1,91 @@
-# 코드쇼퍼 (Code Chauffeur)
+# 코드쇼퍼 (code-chauffeur)
 
-바이브코딩 초심자가 만들고 싶은 앱(목적지)을 말하고 필요한 기능마다 도구를 고르면, 자기 AI에게 줄 설계도와 요금 0원 영수증을 받아 가는 무료 웹 서비스다. 화면은 **게임처럼** 움직인다: 답할 때마다 내 앱 지도가 자라고, 고른 도구로 길이 이어지고, 코드쇼퍼 차가 그 길을 달려 설계도가 놓인 빈 터에 닿는다. 단계는 **내 AI 써 보기(연습, 선택) → 1 만들 앱 정하기 → 2 도구 고르기 → 3 도구끼리 맞춰 보기 → 4 설계도 받기**다 (D64. 주소와 `StageId`는 옛 이름 그대로). 세계관·용어·그림·모션의 정본은 `docs/CONCEPT.md` (D56·D64).
-슬로건: "어디로 모실까요? 요금은 0원입니다." · 소개: "코드는 몰라도 됩니다. 목적지만 말하세요."
+**바이브코딩 재료 쇼핑몰.** 앱을 만들 때 쓸 수 있는 공개 재료(폰트·색·아이콘·UI·API·MCP 서버·에이전트 스킬·오픈소스·템플릿·데이터셋)를 카테고리별로 진열하고, 이용자가 쇼핑하듯 둘러보며 장바구니에 담는다. 결제 대신 0원 영수증과 재료 목록(.md)을 받아 자기 AI에게 준다. 사이트는 AI를 부르지 않고, 소유자는 자료만 갱신한다.
+소개: "폰트·API·MCP·템플릿까지, 앱 만들 재료를 담아 내 AI에게 건넨다."
+
+정본은 `docs/review/v5/brief.md`(2026-10-14 소유자 결정)와 그것을 줄인 `docs/CONCEPT.md`다. v1~v4(기사·지도·단계·설계도·판단 엔진)는 버렸고 옛 문서·자료는 `docs/archive/v4/`에 있다.
 
 ## 지금 상태
 
-- 끝난 것: 판단 엔진(`src/lib/engine/`), 자료(도구 49개(진열 상품 48)·개념 카드 20·에러 안내 20·골든 사례 31), 스키마, 검사 스크립트, 결과물 예시, 디자인 토큰, 자율 작업 하네스(`.claude/`, `scripts/guard`, `scripts/qa`), 모든 화면(T05~T17), 익명 집계 Worker(T18), e2e(T20), 배포 작업 흐름·보안 머리글·관찰 시험 안내서(T21·T22 준비).
-- 끝난 것(v2, 소유자 로고 기반, D60~D71): 단계 이름, 벡터 로고·파비콘, 로고 색 토큰과 색 문법, 공용 부품, 모든 화면(홈·단계 다섯·둘러보는 곳), 길 지도, 장면 S1~S9, 어려운 말 풀이 2판(용어 213개). 설계 정본은 `docs/review/v2/brief.md`와 `docs/CONCEPT.md`.
-- 지금 하는 것: v3 '처음부터 공개한 뒤까지 모시기'(설계 정본 `docs/review/v3/brief.md` 2판, 결정 D73~D84). 작업 묶음 T35~T42를 `docs/TASKS.md` 순서대로 한다: T35 기반 → T36·T37 직접 쓰기 → T38 디자인 정하기 → T39 만들기 안내 → T40 다음 할 일·AI 설정 파일 → T41 출시 준비 → T42 실측 검수. T34(마지막 점검)는 T42에 합쳤다. 사람 몫은 `docs/HUMAN.md` 맨 위 H14(허용 주소, 5분)부터.
-- 남은 것: 사람 확인이 필요한 일(`docs/HUMAN.md`: 계정·배포 H01·H11, 공공데이터포털 H08·H09, 상품 사실 대조 C01, 법·상표, 그림 요청 A01~A05) 뒤의 실제 배포(T21)·색인 수집기(T19)·정식 출시(T22), 진열 상품 60개 이상(C02 이어서). `docs/TASKS.md` 순서대로 `/next-task`로 하나씩 끝까지 한다.
+- 끝난 것: **D1 자료 가져오기**(6개 대분류 131,370개, `data/catalog/**`, 가져오기 스크립트·스키마·시험), **S1 새 틀**(옛 단계·엔진·자료·화면 지우기, 장바구니 로고·토큰, 머리줄·홈·카테고리·소분류 목록·쪽 번호·상세·장바구니 최소판·임시 검색·용어 사전, 진열대 빌드).
+- 다음: **S2** 장바구니 서랍·계산·0원 영수증·.md 받기·복사·지난 영수증·집계 이벤트 교체 → **S3** 전체 검색·종류별 미리 보기(폰트 견본 글꼴 지연 로드 등)·거르기·반응형 점검·실제 사이트 QA. 더할 것은 brief 7절(최근 본 상품, 스타터 키트, 장바구니 공유 링크, 설치 명령 한꺼번에 복사).
+- 사람 몫은 `docs/HUMAN.md`(계정·배포 H01·H11, 법·상표 H03·H04). 푸시마다 https://code-chauffeur.yoorrard.workers.dev 에 배포되므로 검사가 통과한 것만 푸시한다.
 
 ## 일하는 방식 (사람 개입 최소)
 
 소유자는 개입을 최소로 원한다. **묻고 기다리지 말고, 정하고 기록하고 계속한다.**
 
-1. `/next-task`가 기본 고리다: 고르기 → 계획 3~5줄 → 구현 → 검사 → 전문가 검토 → 기록 → 커밋·푸시. 끝나면 다음 작업으로 바로 넘어간다.
-2. **되돌릴 수 있는 결정**(라이브러리, 배치, 문구, 연출, 파일 구조)은 문서와 원칙에 가장 맞는 쪽을 골라 `docs/DECISIONS.md`에 `(자동 결정)`으로 적고 계속한다. 형식: 결정 — 이유 — 틀렸을 때 비용.
-3. 문서끼리 어긋나면 PRD > CONCEPT > UX·DESIGN·ARCHITECTURE·ENGINE > TASKS 순으로 따르고, 어긋난 문서를 고친다.
-4. **사람만 할 수 있는 일**(계정, 돈, 법·약관, 상표·도메인, 상품 사실의 최종 확인, 이미지 생성·Tripo3D 그림)은 `docs/HUMAN.md`에 적고 **기다리지 않고** 다른 작업을 한다.
-5. 완료라고 말하기 전에 증거를 돌린다 (`verification-before-completion` 스킬). 하위 에이전트의 "끝났다"는 `git diff`로 확인한다.
-6. 진행 기록은 `docs/TASKS.md` 맨 아래 한 줄씩. `.claude/` 아래에는 진행 파일을 두지 않는다 (클라우드 세션에서 보호 경로라 무인 쓰기가 멈출 수 있다).
+1. **되돌릴 수 있는 결정**(라이브러리, 배치, 문구, 파일 구조)은 문서와 원칙에 가장 맞는 쪽을 골라 `docs/DECISIONS.md`에 `(자동 결정)`으로 적고 계속한다. 형식: 결정 — 이유 — 틀렸을 때 비용.
+2. 문서끼리 어긋나면 v5 brief > CONCEPT > ARCHITECTURE·DATA > TASKS 순으로 따르고, 어긋난 문서를 고친다.
+3. **사람만 할 수 있는 일**(계정, 돈, 법·약관, 상표·도메인, 그림 생성)은 `docs/HUMAN.md`에 적고 기다리지 않고 다른 작업을 한다.
+4. 완료라고 말하기 전에 증거를 돌린다 (`npm run check`, `npm run build`, 바꾼 것의 e2e, 화면은 390×844·1440×900 스크린샷을 직접 본다). 하위 에이전트의 "끝났다"는 `git diff`로 확인한다.
+5. 진행 기록은 `docs/TASKS.md` 맨 아래 한 줄씩. `.claude/` 아래에는 진행 파일을 두지 않는다.
 
 ## 꼭 지킬 것
 
-1. 사이트는 AI를 부르지 않는다. 화면에서 외부 API도 부르지 않는다. 예외는 자기 사이트의 `/api/event`(익명 집계)와 쿠키 없는 Cloudflare Web Analytics(영수증 화면 제외) 둘뿐이다. 글꼴·그림·스크립트도 외부 주소에서 불러오지 않는다.
-2. 쿠키·광고·제휴 링크·추적·회원가입이 없다. 이용자 상태는 브라우저 localStorage에만 두고, 저장 코드는 `src/lib/store.ts` 한 곳에만 둔다.
-3. 추천·점수·충돌·조사할 것·공부할 것 계산은 `src/lib/engine/`에서만 한다. 화면은 `evaluate()` 결과를 보여 주기만 한다.
-4. 엔진 동작이나 `data/scoring.json`을 바꾸면 `docs/ENGINE.md`와 `data/golden/`을 함께 고친다. 골든 기대값은 이유를 한 줄로 쓸 수 있을 때만 손으로 고치고, 커밋 메시지에 `골든: case-NN 이유`를 적는다 (훅이 확인한다). 이유를 쓸 수 없으면 바꾸지 않는다.
-5. 문장을 코드에 박지 않는다. 엔진이 쓰는 문장은 `data/templates.json`, 화면 고정 문구는 `src/copy/ko.ts`.
-6. 상품의 사실(무료 한도, 자격, 요금, 갱신 주기)을 지어내지 않는다. 공식 원문으로 확인하지 못했으면 `needsReview: true`로 두고 `sources`에 링크를 남긴다.
-7. 쉬운 한국어로 쓴다. 번역투를 쓰지 않는다. 기준은 `.claude/rules/copy.md`.
-8. 접근성 WCAG 2.2 AA, 휴대폰 360px 기준. 모션은 하나에 1초 안쪽, 공들인 장면도 3초 이하, 모두 누르면 건너뛰고 '동작 줄이기'(기기·사이트 설정)를 따른다.
-9. 색·글꼴·크기·모션 길이는 `src/styles/tokens.css`의 변수만 쓴다 (품질 바닥선 검사가 막는다).
-10. 새 의존성은 꼭 필요할 때만 더하고, 이유와 크기(gzip)를 `docs/DECISIONS.md`에 적는다. 첫 화면 JS 100KB(gzip), 페이지 그림 300KB.
-11. 비밀 값(Cloudflare API 토큰 같은 것)은 저장소에 넣지 않고 GitHub Secrets에만 둔다. 실제 배포·원격 D1·비밀 값 명령은 쓰지 않는다 (훅이 막는다). D1의 database_id는 비밀이 아니어서 `wrangler.jsonc`에 둔다.
-12. 사람 캐릭터 그림은 쓰지 않는다 (D56). 예외는 소유자가 준 **로고**(`assets-src/brand/logo-source.webp`: 운전대를 잡은 얼굴 없는 기사, 차, 코드 괄호, 글자 상표) 하나뿐이고, 로고 밖에 다른 사람 그림을 더하지 않는다 (D60). 그림은 CONCEPT 5·9절 체계만: 직접 그린 SVG 지도·청사진 그림, 그리고 소유자가 준 렌더 원본(`assets-src/art/`)을 같은 조명으로 구운 것. 새 렌더가 필요하면 `docs/HUMAN.md`에 요청하고, 그동안은 청사진 자리 표시로 낸다.
+1. 사이트는 AI를 부르지 않는다. 화면에서 부르는 API는 자기 사이트의 `/api/event`(익명 집계) 하나, 바깥 스크립트는 쿠키 없는 Cloudflare Web Analytics(장바구니·영수증 쪽 제외) 하나뿐이다. **예외(brief 5절):** 상품 미리 보기를 위해 출처의 공식 CDN에서 그림과 견본 글꼴을 지연 로드할 수 있다. 추적·광고 스크립트는 없다.
+2. 쿠키·광고·제휴 링크·추적·회원가입이 없다. 이용자 상태(장바구니·영수증·설정)는 localStorage에만 두고, 저장 코드는 `src/lib/store.ts` 한 곳에만 둔다.
+3. **상품의 사실(설명·라이선스·인증·무료 여부·인기 지표)은 출처 자료 그대로만 쓴다.** 지어내지 않고, 출처가 없으면 비운다. 진열대 자료(`data/catalog/**`)는 손으로 고치지 않고 가져오기 스크립트를 고쳐 다시 받는다.
+4. 정렬·인기 점수·쪽 나누기·카드 모양 같은 진열대 계산은 `src/lib/catalog/core.ts`(순수 함수)에서만 한다. 빌드(`scripts/catalog/build.ts`)와 화면 섬이 같은 함수를 쓴다.
+5. 문장을 코드에 박지 않는다. 화면 고정 문구는 `src/copy/ko.ts`. 문체는 **다체**, 표준 용어·외래어는 그대로 (`.claude/rules/copy.md`).
+6. 접근성 WCAG 2.2 AA. 휴대폰 360~390px부터 1440px 이상까지(구간 <600 · 600~1023 · 1024~1439 · ≥1440, 최대 폭 1440). 모션은 하나에 1초 안쪽, 누르면 끝, '동작 줄이기'를 따른다.
+7. 색·글꼴·크기·모션 길이는 `src/styles/tokens.css`의 변수만 쓴다 (품질 바닥선 검사가 막는다).
+8. **Cloudflare 정적 파일은 한 판 2만 개까지.** 상품마다 HTML을 만들지 않는다. 진열대 JSON은 5천 개 아래(`MAX_CATALOG_FILES`), 첫 화면 JS 100KB(gzip), 쪽마다 사이트 안 그림 300KB.
+9. 새 의존성은 꼭 필요할 때만 더하고, 이유와 크기(gzip)를 `docs/DECISIONS.md`에 적는다.
+10. 비밀 값(Cloudflare API 토큰 같은 것)은 저장소에 넣지 않는다. 실제 배포·원격 D1·비밀 값 명령은 쓰지 않는다 (훅이 막는다). D1의 database_id는 비밀이 아니어서 `wrangler.jsonc`에 둔다.
+11. 사람 캐릭터 그림은 쓰지 않는다. 로고는 소유자가 준 장바구니 로고(`assets-src/brand/logo-cart-source.webp`) 하나이고, 화면용은 `npm run logo`가 만든다. 옛 기사 로고는 쓰지 않는다.
 
 ## 명령
 
 | 명령 | 하는 일 |
 |---|---|
-| `npm run check` | 자료 검사 + 골든 + 토큰 + 글꼴 글자 + 품질 바닥선 + 쓰지 않는 말 + 하네스 검사 + 타입 검사 + 단위 시험. 커밋 전에 반드시 |
-| `npm test` / `test:coverage` | Vitest 단위 시험(골든·자료 검사·엔진) / 엔진 시험 범위 보고 (`coverage/`) |
-| `npm run validate` / `validate:release` | 자료 교차 검사 / 배포용 (사람 확인이 남은 진열 상품이 있으면 실패) |
-| `npm run golden` / `golden:print` | 추천 회귀 검사 / 엔진 결과를 골든 모양으로 출력 |
-| `npm run explain -- case-03` | 사례나 레시피 하나의 칸별 점수 풀이 |
-| `npm run examples` | `docs/examples/` 다시 만들기 (손으로 고치지 않는다) |
-| `npm run guard` | 품질 바닥선 (토큰 밖 값, 외부 자원, 코드 속 문장, any, 시험 건너뛰기, 엔진 순수성) |
-| `npm run words` | 쓰지 않는 말 (옛 비유·바꾼 말·영어 섞어 쓰기, CONCEPT 3.9절). 화면 문구와 자료 문장 |
-| `npm run qa:shots -- [라우트]` | 빌드 결과를 360·768·1280px와 동작 줄이기로 찍고 axe·가로 스크롤·작은 버튼·외부 요청 검사 → `.qa/` |
-| `npm run qa:budget` | 성능 예산 (첫 화면 JS, 페이지 그림, 지연 묶음) |
-| `npm run qa:base` / `e2e:base` | 주소 바탕 빌드 시험: `/code-chauffeur` 하위 주소·정적 호스트로 `.qa/dist-base`에 빌드해 모든 `href`·`src`가 바탕 안인지 / 그 위에서 `tests/e2e/base-path.spec.ts` (기본 `dist/`·`npm run e2e`는 그대로) |
-| `npm run art` / `art:sheet` | 소유자 GLB·PNG(`assets-src/art/`)를 같은 조명으로 구워 `src/assets/art/`에 / 구운 그림 견본 `.qa/art-sheet.png`. `-- --self-test`로 장치 확인 |
-| `npm run e2e` | Playwright 주요 흐름(레시피 5개, 키보드만으로 인터뷰, 공유 링크), 검색, 모션 건너뛰기·동작 줄이기, axe. 먼저 `npm run build` |
+| `npm run check` | 토큰 대비 + 글꼴 글자 + 품질 바닥선 + 쓰지 않는 말 + 하네스 + 타입 검사 + 단위 시험(진열대 계산·실제 자료 개수·가져온 자료 스키마 포함). 커밋 전에 반드시 |
+| `npm run build` | 진열대 빌드(`npm run catalog`, 자료·코드가 그대로면 건너뜀) → Astro 빌드 → `dist/` |
+| `npm run catalog` | `data/catalog/**` → `public/catalog/`(목록 묶음·상세 조각·임시 검색 색인) + `.cache/catalog/site.json`(Astro 요약) |
+| `npm run import` / `import:design` · `import:ai` · `import:api` · `import:oss` | 진열대 자료 다시 받기 (네트워크 필요, `docs/DATA.md`) |
+| `npm test` | Vitest 단위 시험 |
+| `npm run guard` / `words` | 품질 바닥선 (토큰 밖 값, 외부 자원, 코드 속 문장, any, 시험 건너뛰기, 주소 글자) / 쓰지 않는 말·해요체 |
+| `npm run e2e` | Playwright 주요 흐름(홈 → 카테고리 → 2쪽 → 상세 → 담기 → 장바구니, 390·1440), 정렬, 메뉴, 검색, 용어 풀이, CSP, axe. 먼저 `npm run build` |
+| `npm run qa:budget` / `qa:shots` / `qa:base` | 성능 예산 / 시각 점검 스크린샷·axe → `.qa/` / 하위 주소 빌드 시험 |
+| `npm run logo` / `fonts` | 로고 크기별 그림·파비콘 / 글꼴 |
 
-`npm run dev`, `npm run build`도 쓴다. Node 22.18 이상. `.ts` 스크립트를 빌드 없이 바로 실행한다. Playwright는 컨테이너의 Chromium과 맞춘 1.56.1로 고정한다.
+`npm run dev`도 쓴다(진열대 빌드를 먼저 돌린다). Node 22.18 이상. `.ts` 스크립트를 빌드 없이 바로 실행한다. Playwright는 컨테이너의 Chromium과 맞춘 1.56.1로 고정한다. e2e 포트 4400이 바쁘면 `E2E_PORT`를 바꾼다.
 
 ## 폴더
 
 ```text
-data/            자료 (상품, 질문, 규칙, 개념, 조사 카드, 문장 틀, 레시피, 에러, 출처, golden/)
+data/catalog/    진열대 자료 (<대분류>/index.json + <출처>.json), data/glossary.json 용어
 schemas/         자료 스키마
-src/lib/engine/  판단 엔진. 순수 함수, 화면·Node API 없음
-src/assets/      기사님 그림 원본 (Astro가 크기별로 만든다)
-src/styles/      디자인 토큰
-scripts/         검사·예시·풀이 / guard(품질 바닥선, 하네스) / qa(시각 점검, 예산, 정적 서버)
-docs/            문서 (아래)
+scripts/import/  가져오기 · scripts/catalog/ 진열대 읽기·빌드 · scripts/brand/ 로고 · guard·qa·lib·fonts·deploy
+src/lib/catalog/ 진열대 모양(types)·순수 계산(core)·Astro 요약 읽기(site)
+src/             components(머리줄·메뉴·카드·섬), pages(라우트), layouts/Base.astro, copy/ko.ts, styles/tokens.css
+public/catalog/  진열대 빌드 결과 (저장소에 올리지 않는다)
+docs/            문서 (아래), docs/archive/v4/ 옛 문서·자료
 .claude/         규칙(rules), 스킬(skills), 전문가 에이전트(agents), 훅(hooks), 설정(settings.json)
 ```
 
 ## 문서 (필요할 때 읽는다)
 
-- `docs/PRD.md` 요구사항(R-xx) · `docs/CONCEPT.md` 세계관·용어·아트 디렉션·장면 S1~S9·그림 요청서 (정본) · `docs/TASKS.md` 작업 순서와 진행 기록 · `docs/HUMAN.md` 사람 확인 대기열
-- `docs/DESIGN.md` 디자인 의뢰서(T34에서 CONCEPT을 가리키게 줄인다) · `docs/UX.md` 화면별 설계, 접근성 확인표, 고정 문구 (T24·T34에서 CONCEPT에 맞춘다)
-- `docs/ARCHITECTURE.md` 기술 구성, 라우트, 저장 키, 공유 링크, 검색, 집계, 배포, 성능 기준
-- `docs/ENGINE.md` 엔진 명세 · `docs/DATA.md` 자료 안내 · `docs/RECEIPT.md` 영수증·꾸러미 형식
-- `docs/DECISIONS.md` 정한 것과 이유 · `docs/BACKLOG.md` 다음 단계 일 · `docs/examples/` 엔진이 만든 실제 결과물
+- `docs/review/v5/brief.md` v5 설계서 (정본) · `docs/CONCEPT.md` 그 요약 · `docs/ARCHITECTURE.md` 기술 구성·라우트·진열대 자료 흐름·저장·배포·성능 · `docs/DATA.md` 진열대 자료 안내
+- `docs/DECISIONS.md` 정한 것과 이유 · `docs/TASKS.md` 진행 기록 · `docs/HUMAN.md` 사람 확인 대기열 · `docs/DEPLOY.md` Cloudflare 배포 안내 · `docs/RISKS.md`
 
 ## 하네스 지도
 
-- **스킬** (`.claude/skills/`): `/next-task`(작업 하나를 끝까지), `/verify`(모든 검사 보고), `/visual-qa`(화면을 찍어 직접 보기), `/add-product`(상품 카드 초안), `game-motion`(게임 연출 구현), 그리고 가져와 고친 것: `frontend-design`, `animate`, `web-interface-guidelines`, `accessibility`, `polish`, `test-driven-development`, `systematic-debugging`, `verification-before-completion`. 출처·라이선스는 각 폴더와 `THIRD_PARTY_NOTICES.md`.
-- **전문가 에이전트** (`.claude/agents/`, 검토는 고치지 않고 보고만): `engine-guardian`(엔진·자료·골든), `a11y-perf-auditor`(접근성·예산, 실제로 돌려 봄), `ko-copy-editor`(문장), `game-ux-designer`(연출 설계·검토), `reader-tester`(초심자 눈으로 꾸러미 읽기), `svg-illustrator`(SVG 그림 제작). 바뀐 것에 맞는 검토자만, 한 번에 나란히 부른다.
-- **훅** (`.claude/hooks/`): 세션 시작 때 의존성 설치와 진행 상황 알림, 위험한 git·배포 명령 차단, 만들어지는 파일 직접 수정 차단, 고친 파일 종류에 맞는 즉시 검사, 검사가 실패한 채 멈추지 못하게 한 번 붙잡기.
+- **스킬** (`.claude/skills/`): `/next-task`, `/verify`(모든 검사 보고), `/visual-qa`(화면을 찍어 직접 보기), 그리고 가져와 고친 것: `frontend-design`, `animate`, `web-interface-guidelines`, `accessibility`, `polish`, `test-driven-development`, `systematic-debugging`, `verification-before-completion`. `add-product`·`game-motion`은 v4 것이라 v5에서는 쓰지 않는다. 출처·라이선스는 각 폴더와 `THIRD_PARTY_NOTICES.md`.
+- **전문가 에이전트** (`.claude/agents/`, 검토는 보고만): `a11y-perf-auditor`(접근성·예산), `ko-copy-editor`(문장). `engine-guardian`·`game-ux-designer`·`reader-tester`·`svg-illustrator`는 v4 것이다.
+- **훅** (`.claude/hooks/`): 세션 시작 때 의존성 설치와 진행 상황 알림, 위험한 git·배포 명령 차단, 만들어지는 파일(`public/catalog/`·`dist/`·글꼴·로고 원본) 직접 수정 차단, 고친 파일에 품질 바닥선 즉시 검사, 검사가 실패한 채 멈추지 못하게 한 번 붙잡기.
 
 ## 작업 규칙
 
-- 작업은 한 번에 하나. 시작할 때 작업에 적힌 문서를 읽고, 무엇을 할지 3~5줄로 적은 뒤 진행한다.
-- 커밋 메시지는 한국어로, 작업 번호로 시작한다. 예: `T08 인터뷰: 질문 섬과 좁혀지는 중 미리 보기`
-- 작업 범위를 지킨다: 요청받지 않은 리팩터링·기능을 더하지 않는다. 고치는 김에 다른 곳을 건드리지 않는다. 가장 단순한 방법부터.
-- 화면을 만들면 `/visual-qa`로 360px·동작 줄이기 스크린샷을 직접 보고, 키보드만으로 끝까지 가 본다.
+- 작업은 한 번에 하나. 시작할 때 brief의 해당 절을 읽고, 무엇을 할지 3~5줄로 적은 뒤 진행한다.
+- 커밋 메시지는 한국어로, 작업 번호로 시작한다. 예: `S2 장바구니 서랍과 0원 영수증`
+- 작업 범위를 지킨다: 요청받지 않은 리팩터링·기능을 더하지 않는다. 가장 단순한 방법부터.
+- 화면을 만들면 390×844·1440×900 스크린샷을 직접 보고, 키보드만으로 끝까지 가 본다.
 
 ## 코드 규칙 (요약)
 
 - TypeScript strict. `any` 금지(불가피하면 `// any: 이유`). 타입만 쓰는 import는 `import type`.
-- 엔진과 스크립트는 지울 수 있는 타입 문법만 쓴다: enum·namespace·매개변수 속성 금지, 상대 경로 import에 `.ts` 확장자.
-- 정렬에 `localeCompare`를 쓰지 않는다. 엔진의 `cmp`를 쓴다.
-- 섬(Preact)은 상태가 필요한 곳에만. 나머지는 Astro 정적 HTML.
-- 자세한 규칙은 파일 종류에 따라 `.claude/rules/`에서 자동으로 붙는다: 자료(`data.md`), 엔진·스크립트·시험(`engine.md`), 화면(`ui.md`), 문장(`copy.md`).
+- 스크립트와 `src/lib/catalog/`는 지울 수 있는 타입 문법만 쓴다: enum·namespace·매개변수 속성 금지, 상대 경로 import에 `.ts` 확장자.
+- 정렬에 `localeCompare`를 쓰지 않는다. `cmpText`를 쓴다.
+- 섬(Preact)은 상태가 필요한 곳에만. 나머지는 Astro 정적 HTML. 주소는 `src/lib/routes.ts`에서.
+- 자세한 규칙은 파일 종류에 따라 `.claude/rules/`에서 자동으로 붙는다: 자료(`data.md`), 진열대 계산·스크립트·시험(`engine.md`), 화면(`ui.md`), 문장(`copy.md`).

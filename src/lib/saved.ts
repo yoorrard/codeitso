@@ -1,219 +1,117 @@
 // 브라우저에 저장하는 값의 모양과, 읽은 값을 믿지 않고 고르는 함수 (부작용 없음, 시험 있음).
-// 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 4절).
-import type { Capability, CustomTool, LookChoice, Session } from './engine/types.ts';
+// 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 4절). v5: 장바구니(담은 재료와 메모) + 설정 + 연 용어 + 집계 기록.
 
 export const KEYS = {
-  session: 'cc:session:v1',
-  study: 'cc:study:v1',
+  cart: 'cc:cart:v1',
   meta: 'cc:meta:v1',
   prefs: 'cc:prefs:v1',
-  seen: 'cc:seen:v1',
-  receipts: 'cc:receipts:v1',
 } as const;
 
-/** 더는 쓰지 않는 옛 키. 옮길 값이 없어 읽지 않고, 남아 있으면 지운다 (cc:trip:v1 = 옛 도장 장면 기록, D56) */
-export const LEGACY_KEYS = ['cc:trip:v1'] as const;
+/** 더는 쓰지 않는 옛 키(v4 단계 흐름의 답·용어 카드·장면·영수증). 옮길 값이 없어 읽지 않고, 남아 있으면 지운다 */
+export const LEGACY_KEYS = ['cc:trip:v1', 'cc:session:v1', 'cc:study:v1', 'cc:seen:v1', 'cc:receipts:v1'] as const;
 
-/** 개념 id → 읽음, 맞힌 확인 문제 번호 */
-export type StudyRecord = Record<string, { read: boolean; quiz: number[] }>;
+/** 장바구니 한 줄: 재료 id와 다시 그리기에 필요한 이름·자리, 이용자 메모(어디에 어떻게 쓸지) */
+export interface CartLine {
+  id: string;
+  name: string;
+  /** 대분류 id (design, ai, api…) */
+  cat: string;
+  /** 소분류 id */
+  sub: string;
+  memo?: string;
+  /** 담은 때 (ms) */
+  at: number;
+}
 
 export interface Meta {
-  interviewStartedAt?: number;
   /** 보낸 집계 이벤트 열쇠 (최근 SENT_MAX개) */
   sent: string[];
-  /** 내 AI 써 보기를 끝까지 함 (연습 마침) */
-  lessonDone?: boolean;
-  /** 영수증을 한 번 이상 받음 (도착 단계 마침) */
-  issued?: boolean;
 }
 
 export interface Prefs {
   motion: 'auto' | 'reduce';
-  /** 어려운 말 풀이 (brief 8절): 글을 골라 뜨는 풀이. 기본 켜짐 */
+  /** 어려운 말 풀이: 글을 골라 뜨는 풀이. 기본 켜짐 */
   glossary: boolean;
-  /** 점선 밑줄 (brief 8절): 사전에 있는 말 밑의 점선. 기본 켜짐 */
-  marks: boolean;
-}
-
-/** 처음 한 번만 다 보이는 큰 장면(S1 배차, S5 출발 → 도착)을 이미 본 기록 (CONCEPT 7절) */
-export interface Seen {
-  scenes: string[];
-}
-
-/** 지난 영수증 한 장 (CONCEPT 8절): 영수증 링크 조각(#r= 뒤), 앱 종류(q.type 답), 받은 때만 둔다. 한 줄 입력은 넣지 않는다 */
-export interface ReceiptEntry {
-  r: string;
-  type?: string;
-  at: string;
 }
 
 export const SENT_MAX = 20;
-export const RECEIPTS_MAX = 30;
-/** 영수증 링크 조각의 최대 길이 (share.ts HASH_MAX와 같다) */
-const RECEIPT_HASH_MAX = 8000;
-export const FREE_TEXT_MAX = 200;
-/** 직접 쓴 것 (input.md 7.1절): 내 말 20개·40자, 직접 쓴 도구 5개, 빈틈 10개. 모양·기능·질문 id는 엔진 normalizeSession이 다시 고른다 */
-export const NOTES_MAX = 20;
-export const NOTE_MAX = 40;
-export const CUSTOM_TOOLS_MAX = 5;
-export const GAPS_MAX = 10;
-/** 디자인 (T38): 글 칸 80자, 더하고 싶은 화면 3개. 칸 이름·id·#RRGGBB·글자 수는 엔진 normalizeSession(look-choice.ts)이 다시 고른다 */
-const LOOK_TEXT_MAX = 80;
-const LOOK_SCREENS_MAX = 3;
-const LIST_MAX = 200;
+/** 장바구니에 담을 수 있는 줄 수 (넘치면 가장 오래된 것부터 빠지지 않고 담기를 막는다) */
+export const CART_MAX = 300;
+export const MEMO_MAX = 200;
+const ID_MAX = 200;
+const NAME_MAX = 200;
 
-export const EMPTY_SESSION: Session = { answers: {}, cart: [], kept: [], deferred: [] };
-export const DEFAULT_PREFS: Prefs = { motion: 'auto', glossary: true, marks: true };
+export const DEFAULT_PREFS: Prefs = { motion: 'auto', glossary: true };
 export const EMPTY_META: Meta = { sent: [] };
-export const EMPTY_SEEN: Seen = { scenes: [] };
 
 function obj(raw: unknown): Record<string, unknown> {
   return typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? (raw as Record<string, unknown>) : {};
 }
 
-function strings(raw: unknown, max = LIST_MAX): string[] {
+function strings(raw: unknown, max: number): string[] {
   if (!Array.isArray(raw)) return [];
   return [...new Set(raw.filter((x): x is string => typeof x === 'string' && x.length > 0 && x.length <= 100))].slice(0, max);
 }
 
-export function readSession(raw: unknown): Session {
-  const o = obj(raw);
-  const answers: Record<string, string> = {};
-  for (const [k, v] of Object.entries(obj(o['answers']))) if (typeof v === 'string') answers[k] = v;
-  const out: Session = { answers, cart: strings(o['cart']), kept: strings(o['kept']), deferred: strings(o['deferred']) };
-  const free = o['freeText'];
-  if (typeof free === 'string' && free.trim() !== '') out.freeText = free.slice(0, FREE_TEXT_MAX);
-  const cut = (t: string): string => [...t].slice(0, NOTE_MAX).join('');
-  const notes: Record<string, string> = {};
-  for (const [k, v] of Object.entries(obj(o['notes']))) {
-    if (Object.keys(notes).length === NOTES_MAX) break;
-    if (/^q\.[a-z0-9-]+$/.test(k) && typeof v === 'string' && v.trim() !== '') notes[k] = cut(v);
-  }
-  if (Object.keys(notes).length > 0) out.notes = notes;
-  const tools: CustomTool[] = [];
-  for (const raw of Array.isArray(o['customTools']) ? o['customTools'] : []) {
-    const t = obj(raw);
-    const [id, name, capability] = [t['id'], t['name'], t['capability']];
-    // 기능 이름은 엔진(normalizeSession)이 고른다. 여기서는 글인지만 본다 (홈 첫 화면에 엔진을 싣지 않으려고)
-    if (typeof id === 'string' && typeof name === 'string' && typeof capability === 'string') tools.push({ id, name: cut(name), capability: capability as Capability });
-    if (tools.length === CUSTOM_TOOLS_MAX) break;
-  }
-  if (tools.length > 0) out.customTools = tools;
-  const gaps = strings(o['gaps']).filter((g) => /^[a-z0-9-]{1,40}$/.test(g)).slice(0, GAPS_MAX);
-  if (gaps.length > 0) out.gaps = gaps;
-  const look = readLook(o['look']);
-  if (look) out.look = look;
-  return out;
+const SLUG = /^[a-z0-9][a-z0-9-]{0,39}$/;
+
+/** 메모는 앞뒤 공백을 걷고 MEMO_MAX자(글자 단위)까지. 비면 없음 */
+export function cleanMemo(raw: unknown): string | undefined {
+  if (typeof raw !== 'string') return undefined;
+  const t = [...raw.trim()].slice(0, MEMO_MAX).join('');
+  return t === '' ? undefined : t;
 }
 
-/** 디자인: 글 칸(문자열)과 더하고 싶은 화면(문자열 3개)만 남긴다. 홈 첫 화면에 엔진을 싣지 않으려고 여기서는 모양만 본다 */
-function readLook(raw: unknown): LookChoice | undefined {
-  const look: Record<string, string | string[]> = {};
-  for (const [k, v] of Object.entries(obj(raw))) {
-    if (/^[a-zA-Z]{1,20}$/.test(k) && typeof v === 'string' && v.trim() !== '') look[k] = [...v].slice(0, LOOK_TEXT_MAX).join('');
-  }
-  const screens = strings(obj(raw)['screens']).slice(0, LOOK_SCREENS_MAX).map((x) => [...x].slice(0, LOOK_TEXT_MAX).join(''));
-  if (screens.length > 0) look['screens'] = screens;
-  return Object.keys(look).length > 0 ? (look as LookChoice) : undefined;
-}
-
-export function readStudy(raw: unknown): StudyRecord {
-  const out: StudyRecord = {};
-  for (const [id, v] of Object.entries(obj(raw))) {
-    const r = obj(v);
-    const quiz = Array.isArray(r['quiz'])
-      ? [...new Set(r['quiz'].filter((n): n is number => Number.isInteger(n) && n >= 0 && n < 100))].sort((a, b) => a - b)
-      : [];
-    const read = r['read'] === true;
-    if (read || quiz.length > 0) out[id] = { read, quiz };
+/** 장바구니: 모양이 맞는 줄만, 같은 id는 처음 것 하나, CART_MAX줄까지 */
+export function readCart(raw: unknown): CartLine[] {
+  if (!Array.isArray(raw)) return [];
+  const out: CartLine[] = [];
+  const seen = new Set<string>();
+  for (const item of raw) {
+    const o = obj(item);
+    const [id, name, cat, sub, at] = [o['id'], o['name'], o['cat'], o['sub'], o['at']];
+    if (typeof id !== 'string' || id.length === 0 || id.length > ID_MAX || seen.has(id)) continue;
+    if (typeof name !== 'string' || name.length === 0) continue;
+    if (typeof cat !== 'string' || !SLUG.test(cat) || typeof sub !== 'string' || !SLUG.test(sub)) continue;
+    const line: CartLine = { id, name: [...name].slice(0, NAME_MAX).join(''), cat, sub, at: typeof at === 'number' && Number.isFinite(at) && at > 0 ? at : 0 };
+    const memo = cleanMemo(o['memo']);
+    if (memo) line.memo = memo;
+    seen.add(id);
+    out.push(line);
+    if (out.length === CART_MAX) break;
   }
   return out;
 }
 
 export function readMeta(raw: unknown): Meta {
-  const o = obj(raw);
-  const out: Meta = { sent: strings(o['sent']).slice(-SENT_MAX) };
-  const t = o['interviewStartedAt'];
-  if (typeof t === 'number' && Number.isFinite(t) && t > 0) out.interviewStartedAt = t;
-  if (o['lessonDone'] === true) out.lessonDone = true;
-  if (o['issued'] === true) out.issued = true;
-  return out;
+  return { sent: strings(obj(raw)['sent'], 200).slice(-SENT_MAX) };
 }
 
 export function readPrefs(raw: unknown): Prefs {
   const o = obj(raw);
-  return {
-    motion: o['motion'] === 'reduce' ? 'reduce' : 'auto',
-    glossary: o['glossary'] !== false,
-    marks: o['marks'] !== false,
-  };
-}
-
-/** 지난 영수증: 모양이 맞는 것만, 같은 조각은 하나만, 최근 것부터 RECEIPTS_MAX장까지 */
-export function readReceipts(raw: unknown): ReceiptEntry[] {
-  if (!Array.isArray(raw)) return [];
-  const out: ReceiptEntry[] = [];
-  const seen = new Set<string>();
-  for (const item of raw) {
-    const o = obj(item);
-    const r = o['r'];
-    const at = o['at'];
-    if (typeof r !== 'string' || r.length === 0 || r.length > RECEIPT_HASH_MAX || !/^[A-Za-z0-9+\-$_]+$/.test(r) || seen.has(r)) continue;
-    if (typeof at !== 'string' || at.length === 0 || at.length > 32) continue;
-    const type = o['type'];
-    seen.add(r);
-    out.push(typeof type === 'string' && /^[a-z0-9-]{1,40}$/.test(type) ? { r, type, at } : { r, at });
-    if (out.length === RECEIPTS_MAX) break;
-  }
-  return out;
-}
-
-/** 새 영수증을 맨 앞에 더한다. 같은 조각이 있으면 앞으로 옮기고, 넘치면 가장 오래된 것을 뺀다 (dropped: 뺐는지) */
-export function addReceiptEntry(list: ReceiptEntry[], entry: ReceiptEntry): { list: ReceiptEntry[]; dropped: boolean } {
-  const rest = list.filter((x) => x.r !== entry.r);
-  const next = [entry, ...rest];
-  return { list: next.slice(0, RECEIPTS_MAX), dropped: next.length > RECEIPTS_MAX };
-}
-
-export function readSeen(raw: unknown): Seen {
-  return { scenes: strings(obj(raw)['scenes']) };
-}
-
-/** 저장된 진행이 있는가 (홈의 이어서 가기, 코스로 덮어쓸 때 묻기). 엔진을 부르지 않아 홈 첫 화면 JS에 엔진이 들지 않는다 */
-export function hasProgress(s: Session): boolean {
-  return Object.keys(s.answers).length > 0 || s.cart.length > 0;
+  return { motion: o['motion'] === 'reduce' ? 'reduce' : 'auto', glossary: o['glossary'] !== false };
 }
 
 /** 처음 값과 같으면 저장할 필요가 없다 (키를 지운다) */
-export function isEmptySession(s: Session): boolean {
-  return (
-    Object.keys(s.answers).length === 0 &&
-    s.cart.length === 0 &&
-    s.kept.length === 0 &&
-    s.deferred.length === 0 &&
-    !s.freeText &&
-    Object.keys(s.notes ?? {}).length === 0 &&
-    (s.customTools ?? []).length === 0 &&
-    (s.gaps ?? []).length === 0 &&
-    Object.keys(s.look ?? {}).length === 0
-  );
-}
-export function isEmptyStudy(s: StudyRecord): boolean {
-  return Object.keys(s).length === 0;
-}
-export function isEmptyMeta(m: Meta): boolean {
-  return m.sent.length === 0 && m.interviewStartedAt === undefined && !m.lessonDone && !m.issued;
-}
-export function isDefaultPrefs(p: Prefs): boolean {
-  return (
-    p.motion === DEFAULT_PREFS.motion &&
-    p.glossary === DEFAULT_PREFS.glossary &&
-    p.marks === DEFAULT_PREFS.marks
-  );
-}
-export function isEmptyReceipts(l: ReceiptEntry[]): boolean {
+export function isEmptyCart(l: CartLine[]): boolean {
   return l.length === 0;
 }
-export function isEmptySeen(t: Seen): boolean {
-  return t.scenes.length === 0;
+export function isEmptyMeta(m: Meta): boolean {
+  return m.sent.length === 0;
+}
+export function isDefaultPrefs(p: Prefs): boolean {
+  return p.motion === DEFAULT_PREFS.motion && p.glossary === DEFAULT_PREFS.glossary;
+}
+
+/** 줄 하나를 더한다. 이미 있으면 메모만 바꾸고 자리는 그대로. 가득 찼으면 그대로 돌려준다 (full: true) */
+export function addLine(list: readonly CartLine[], line: CartLine): { list: CartLine[]; full: boolean } {
+  const at = list.findIndex((x) => x.id === line.id);
+  if (at >= 0) {
+    const next = [...list];
+    const prev = next[at];
+    if (prev) next[at] = line.memo === undefined ? prev : { ...prev, memo: line.memo };
+    return { list: next, full: false };
+  }
+  if (list.length >= CART_MAX) return { list: [...list], full: true };
+  return { list: [...list, line], full: false };
 }

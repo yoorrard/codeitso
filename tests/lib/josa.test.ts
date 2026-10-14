@@ -74,13 +74,3 @@ describe('조사 고르기', () => {
     expect(josa('!!', 'obj')).toBe('!!을(를)');
   });
 });
-
-import { sentences } from '../../src/lib/sentences.ts';
-
-describe('문장 나누기', () => {
-  it('마침표·물음표·느낌표 뒤에서 나눈다', () => {
-    expect(sentences('어서 오세요. 어디로 모실까요?')).toEqual(['어서 오세요.', '어디로 모실까요?']);
-    expect(sentences("천천히 골라도 돼요. 정하지 못했으면 '아직 모르겠어요'를 누르세요.")).toHaveLength(2);
-    expect(sentences('한 문장')).toEqual(['한 문장']);
-  });
-});

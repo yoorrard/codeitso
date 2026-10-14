@@ -10,10 +10,9 @@
         "에이피아이"
       ],
       "say": "에이피아이",
-      "plain": "다른 서비스에 정보를 달라고 요청하는 정해진 창구예요.",
-      "example": "급식 API에 학교와 날짜를 보내면 그날 메뉴가 와요.",
-      "kind": "data",
-      "concept": "api"
+      "plain": "다른 서비스에 정보를 달라고 요청하는 정해진 창구다.",
+      "example": "급식 API에 학교와 날짜를 보내면 그날 메뉴가 온다.",
+      "kind": "data"
     },
     {
       "id": "api-key",
@@ -27,10 +26,9 @@
         "Access Key",
         "액세스 키"
       ],
-      "plain": "API를 쓸 때 내가 누구인지 알려 주는 긴 비밀번호라서, 남에게 보이면 안 돼요.",
-      "example": "남이 보면 내 이름으로 API를 쓸 수 있어서 숨겨야 해요.",
+      "plain": "API를 쓸 때 내가 누구인지 알려 주는 긴 비밀번호라서, 남에게 보이면 안 된다.",
+      "example": "남이 보면 내 이름으로 API를 쓸 수 있어서 숨겨야 한다.",
       "kind": "key",
-      "concept": "api-key",
       "risk": true
     },
     {
@@ -40,11 +38,9 @@
         "제이슨"
       ],
       "say": "제이슨",
-      "plain": "데이터를 '이름: 값' 짝으로 적는 글자 형식이에요.",
-      "example": "{\"메뉴\": \"카레\"}처럼 생겼어요.",
-      "kind": "data",
-      "concept": "json",
-      "error": "not-json"
+      "plain": "데이터를 '이름: 값' 짝으로 적는 글자 형식이다.",
+      "example": "{\"메뉴\": \"카레\"}처럼 생겼다.",
+      "kind": "data"
     },
     {
       "id": "cors",
@@ -54,11 +50,9 @@
         "교차 출처"
       ],
       "say": "코스",
-      "plain": "다른 주소의 서버가 내 화면의 요청을 허락했는지 브라우저가 확인하는 규칙이에요.",
-      "example": "허락이 없으면 브라우저가 응답을 막아요.",
-      "kind": "code",
-      "concept": "cors",
-      "error": "cors"
+      "plain": "다른 주소의 서버가 내 화면의 요청을 허락했는지 브라우저가 확인하는 규칙이다.",
+      "example": "허락이 없으면 브라우저가 응답을 막는다.",
+      "kind": "code"
     },
     {
       "id": "env-var",
@@ -66,9 +60,8 @@
       "aliases": [
         "environment variable"
       ],
-      "plain": "키처럼 코드에 직접 쓰면 안 되는 값을 코드 밖에 따로 적어 두는 곳이에요.",
-      "kind": "key",
-      "concept": "env-var"
+      "plain": "키처럼 코드에 직접 쓰면 안 되는 값을 코드 밖에 따로 적어 두는 곳이다.",
+      "kind": "key"
     },
     {
       "id": "terminal",
@@ -79,11 +72,9 @@
         "PowerShell",
         "명령 창"
       ],
-      "plain": "글자로 컴퓨터에 명령을 내리는 창이에요.",
-      "example": "npm install 같은 명령을 여기에 적어요.",
-      "kind": "code",
-      "concept": "terminal",
-      "error": "command-not-found"
+      "plain": "글자로 컴퓨터에 명령을 내리는 창이다.",
+      "example": "npm install 같은 명령을 여기에 적는다.",
+      "kind": "code"
     },
     {
       "id": "deploy",
@@ -92,9 +83,8 @@
         "디플로이",
         "deploy"
       ],
-      "plain": "내 앱을 인터넷 주소에 올려 다른 사람도 열 수 있게 하는 일이에요.",
-      "kind": "code",
-      "concept": "deploy"
+      "plain": "내 앱을 인터넷 주소에 올려 다른 사람도 열 수 있게 하는 일이다.",
+      "kind": "code"
     },
     {
       "id": "hosting",
@@ -103,10 +93,9 @@
         "hosting",
         "웹 호스팅"
       ],
-      "plain": "내 앱 파일을 인터넷에 올려 두고 늘 열어 주는 서비스예요.",
-      "example": "GitHub Pages나 Cloudflare 같은 곳이 해 줘요.",
-      "kind": "code",
-      "concept": "deploy"
+      "plain": "내 앱 파일을 인터넷에 올려 두고 늘 열어 주는 서비스다.",
+      "example": "GitHub Pages나 Cloudflare 같은 곳이 해 준다.",
+      "kind": "code"
     },
     {
       "id": "git-repo",
@@ -119,9 +108,8 @@
         "repository",
         "repo"
       ],
-      "plain": "코드 파일과 고친 기록을 보관하는 인터넷 폴더예요.",
-      "kind": "code",
-      "concept": "git-repo"
+      "plain": "코드 파일과 고친 기록을 보관하는 인터넷 폴더다.",
+      "kind": "code"
     },
     {
       "id": "github",
@@ -131,17 +119,15 @@
         "깃헙"
       ],
       "say": "깃허브",
-      "plain": "코드 저장소를 보관하고 함께 고칠 수 있는 서비스예요.",
-      "kind": "code",
-      "concept": "git-repo"
+      "plain": "코드 저장소를 보관하고 함께 고칠 수 있는 서비스다.",
+      "kind": "code"
     },
     {
       "id": "git",
       "term": "Git",
       "say": "깃",
-      "plain": "코드를 고칠 때마다 기록을 남겨 언제든 되돌릴 수 있게 하는 도구예요.",
-      "kind": "code",
-      "concept": "git-commit"
+      "plain": "코드를 고칠 때마다 기록을 남겨 언제든 되돌릴 수 있게 하는 도구다.",
+      "kind": "code"
     },
     {
       "id": "commit",
@@ -150,9 +136,8 @@
         "commit",
         "git commit"
       ],
-      "plain": "지금까지 고친 내용을 한 덩어리로 기록해 두는 일이에요.",
-      "kind": "code",
-      "concept": "git-commit"
+      "plain": "지금까지 고친 내용을 한 덩어리로 기록해 두는 일이다.",
+      "kind": "code"
     },
     {
       "id": "push",
@@ -161,11 +146,9 @@
         "push",
         "git push"
       ],
-      "plain": "내 컴퓨터의 커밋을 인터넷 저장소에 올리는 일이에요.",
+      "plain": "내 컴퓨터의 커밋을 인터넷 저장소에 올리는 일이다.",
       "kind": "code",
-      "see": "commit",
-      "concept": "git-commit",
-      "error": "git-push-rejected"
+      "see": "commit"
     },
     {
       "id": "free-tier",
@@ -180,9 +163,8 @@
         "무료 시험 요금제",
         "무료 요금제"
       ],
-      "plain": "돈을 내지 않고 쓸 수 있는 양으로, 넘으면 멈추거나 돈이 나가요.",
+      "plain": "돈을 내지 않고 쓸 수 있는 양으로, 넘으면 멈추거나 돈이 나간다.",
       "kind": "money",
-      "concept": "free-tier",
       "risk": true
     },
     {
@@ -193,10 +175,9 @@
         "로그인 기능",
         "로그인하기"
       ],
-      "plain": "지금 쓰는 사람이 누구인지 확인하는 기능이에요.",
-      "example": "각자 자기 기록만 보게 할 때 필요해요.",
-      "kind": "key",
-      "concept": "auth-login"
+      "plain": "지금 쓰는 사람이 누구인지 확인하는 기능이다.",
+      "example": "각자 자기 기록만 보게 할 때 필요하다.",
+      "kind": "key"
     },
     {
       "id": "server",
@@ -205,9 +186,8 @@
         "server",
         "웹 서버"
       ],
-      "plain": "요청을 받으면 알맞은 답을 돌려주는 컴퓨터예요.",
-      "kind": "code",
-      "concept": "server"
+      "plain": "요청을 받으면 알맞은 답을 돌려주는 컴퓨터다.",
+      "kind": "code"
     },
     {
       "id": "serverless",
@@ -219,9 +199,8 @@
         "Functions",
         "Edge Functions"
       ],
-      "plain": "서버를 늘 켜 두지 않고, 요청이 올 때만 잠깐 코드를 실행하는 방식이에요.",
-      "kind": "code",
-      "concept": "server"
+      "plain": "서버를 늘 켜 두지 않고, 요청이 올 때만 잠깐 코드를 실행하는 방식이다.",
+      "kind": "code"
     },
     {
       "id": "frontend",
@@ -231,9 +210,8 @@
         "frontend",
         "프론트"
       ],
-      "plain": "버튼과 입력 칸처럼 브라우저에서 보이는 화면 쪽이에요.",
-      "kind": "code",
-      "concept": "frontend-backend"
+      "plain": "버튼과 입력 칸처럼 브라우저에서 보이는 화면 쪽이다.",
+      "kind": "code"
     },
     {
       "id": "backend",
@@ -241,9 +219,8 @@
       "aliases": [
         "backend"
       ],
-      "plain": "화면 뒤에서 데이터를 저장하고 처리하는 쪽이에요.",
-      "kind": "code",
-      "concept": "frontend-backend"
+      "plain": "화면 뒤에서 데이터를 저장하고 처리하는 쪽이다.",
+      "kind": "code"
     },
     {
       "id": "localhost",
@@ -252,9 +229,8 @@
         "localhost",
         "127.0.0.1"
       ],
-      "plain": "'지금 이 컴퓨터'를 가리키는 주소로, 나만 열 수 있어요.",
-      "kind": "code",
-      "concept": "localhost"
+      "plain": "'지금 이 컴퓨터'를 가리키는 주소로, 나만 열 수 있다.",
+      "kind": "code"
     },
     {
       "id": "port",
@@ -263,11 +239,9 @@
         "포트 번호",
         "port"
       ],
-      "plain": "한 컴퓨터 안에서 프로그램마다 나눠 쓰는 문 번호예요.",
-      "example": "localhost:3000의 3000이 포트예요.",
-      "kind": "code",
-      "concept": "localhost",
-      "error": "port-in-use"
+      "plain": "한 컴퓨터 안에서 프로그램마다 나눠 쓰는 문 번호다.",
+      "example": "localhost:3000의 3000이 포트다.",
+      "kind": "code"
     },
     {
       "id": "npm",
@@ -277,10 +251,9 @@
         "npm install"
       ],
       "say": "엔피엠",
-      "plain": "남이 만든 코드 묶음(패키지)을 내려받아 설치하는 도구예요.",
+      "plain": "남이 만든 코드 묶음(패키지)을 내려받아 설치하는 도구다.",
       "kind": "code",
-      "see": "package",
-      "concept": "npm-package"
+      "see": "package"
     },
     {
       "id": "package",
@@ -291,10 +264,8 @@
         "library",
         "의존성"
       ],
-      "plain": "남이 미리 만들어 둔 코드 묶음이에요.",
-      "kind": "code",
-      "concept": "npm-package",
-      "error": "module-not-found"
+      "plain": "남이 미리 만들어 둔 코드 묶음이다.",
+      "kind": "code"
     },
     {
       "id": "domain",
@@ -304,9 +275,8 @@
         "domain",
         "웹 주소"
       ],
-      "plain": "example.com처럼 사람이 읽기 쉬운 인터넷 주소예요.",
-      "kind": "data",
-      "concept": "domain"
+      "plain": "example.com처럼 사람이 읽기 쉬운 인터넷 주소다.",
+      "kind": "data"
     },
     {
       "id": "https",
@@ -317,9 +287,8 @@
         "보안 연결"
       ],
       "say": "에이치티티피에스",
-      "plain": "주고받는 내용을 암호로 바꿔 안전하게 오가게 하는 연결이에요.",
-      "kind": "data",
-      "concept": "https"
+      "plain": "주고받는 내용을 암호로 바꿔 안전하게 오가게 하는 연결이다.",
+      "kind": "data"
     },
     {
       "id": "database",
@@ -329,9 +298,8 @@
         "디비",
         "database"
       ],
-      "plain": "앱의 데이터를 정리해서 모아 두는 곳이에요.",
-      "kind": "data",
-      "concept": "database"
+      "plain": "앱의 데이터를 정리해서 모아 두는 곳이다.",
+      "kind": "data"
     },
     {
       "id": "devtools",
@@ -341,9 +309,8 @@
         "devtools",
         "F12"
       ],
-      "plain": "브라우저에 들어 있는 도구로, 화면의 오류와 요청을 볼 수 있어요.",
-      "kind": "code",
-      "concept": "devtools"
+      "plain": "브라우저에 들어 있는 도구로, 화면의 오류와 요청을 볼 수 있다.",
+      "kind": "code"
     },
     {
       "id": "console",
@@ -352,11 +319,10 @@
         "console",
         "브라우저 콘솔"
       ],
-      "plain": "브라우저의 오류 기록 칸이나, 글자로 명령하는 창을 부르는 말이에요.",
-      "example": "서비스의 관리 화면을 콘솔이라 부르기도 해요.",
+      "plain": "브라우저의 오류 기록 칸이나, 글자로 명령하는 창을 부르는 말이다.",
+      "example": "서비스의 관리 화면을 콘솔이라 부르기도 한다.",
       "kind": "code",
-      "see": "logs",
-      "concept": "devtools"
+      "see": "logs"
     },
     {
       "id": "logs",
@@ -367,9 +333,8 @@
         "실행 기록",
         "오류 기록"
       ],
-      "plain": "프로그램이 실행되면서 남기는 기록이에요.",
-      "kind": "code",
-      "concept": "logs"
+      "plain": "프로그램이 실행되면서 남기는 기록이다.",
+      "kind": "code"
     },
     {
       "id": "token",
@@ -381,9 +346,8 @@
         "개인 액세스 토큰",
         "Access Token"
       ],
-      "plain": "허락받았다는 걸 보여 주는 긴 글자로, 키처럼 숨겨야 해요.",
+      "plain": "허락받았다는 걸 보여 주는 긴 글자로, 키처럼 숨겨야 한다.",
       "kind": "key",
-      "concept": "api-key",
       "risk": true
     },
     {
@@ -393,9 +357,8 @@
         "프록시",
         "proxy"
       ],
-      "plain": "내 화면과 외부 API 사이에서 키를 숨긴 채 대신 요청해 주는 작은 서버예요.",
-      "kind": "key",
-      "concept": "api-key"
+      "plain": "내 화면과 외부 API 사이에서 키를 숨긴 채 대신 요청해 주는 작은 서버다.",
+      "kind": "key"
     },
     {
       "id": "key-exposure",
@@ -403,10 +366,9 @@
       "aliases": [
         "키 노출 위험"
       ],
-      "plain": "숨겨야 할 API 키가 화면 코드에 드러나 누구나 볼 수 있게 되는 일이에요.",
+      "plain": "숨겨야 할 API 키가 화면 코드에 드러나 누구나 볼 수 있게 되는 일이다.",
       "kind": "key",
-      "see": "api-key",
-      "concept": "api-key"
+      "see": "api-key"
     },
     {
       "id": "static-site",
@@ -415,8 +377,8 @@
         "정적 사이트",
         "static site"
       ],
-      "plain": "미리 만들어 둔 파일을 그대로 보여 주는 웹페이지예요.",
-      "example": "서버가 계산하지 않아서 무료로 올리기 쉬워요.",
+      "plain": "미리 만들어 둔 파일을 그대로 보여 주는 웹페이지다.",
+      "example": "서버가 계산하지 않아서 무료로 올리기 쉽다.",
       "kind": "code"
     },
     {
@@ -426,14 +388,14 @@
         "에이치티엠엘"
       ],
       "say": "에이치티엠엘",
-      "plain": "웹페이지의 뼈대를 적는 글자 형식이에요.",
+      "plain": "웹페이지의 뼈대를 적는 글자 형식이다.",
       "kind": "code"
     },
     {
       "id": "css",
       "term": "CSS",
       "say": "씨에스에스",
-      "plain": "웹페이지의 색·글꼴·배치를 정하는 글이에요.",
+      "plain": "웹페이지의 색·글꼴·배치를 정하는 글이다.",
       "kind": "code"
     },
     {
@@ -443,7 +405,7 @@
         "JavaScript",
         "JS"
       ],
-      "plain": "웹페이지가 움직이고 반응하게 만드는 프로그래밍 언어예요.",
+      "plain": "웹페이지가 움직이고 반응하게 만드는 프로그래밍 언어다.",
       "kind": "code"
     },
     {
@@ -452,7 +414,7 @@
       "aliases": [
         "framework"
       ],
-      "plain": "앱의 기본 틀과 규칙을 미리 갖춰 둔 도구 묶음이에요.",
+      "plain": "앱의 기본 틀과 규칙을 미리 갖춰 둔 도구 묶음이다.",
       "kind": "code"
     },
     {
@@ -462,10 +424,9 @@
         "리액트"
       ],
       "say": "리액트",
-      "plain": "화면을 작은 부품으로 나눠 만드는 자바스크립트 도구예요.",
+      "plain": "화면을 작은 부품으로 나눠 만드는 자바스크립트 도구다.",
       "kind": "code",
-      "see": "javascript",
-      "tool": "react-vite"
+      "see": "javascript"
     },
     {
       "id": "component",
@@ -473,7 +434,7 @@
       "aliases": [
         "component"
       ],
-      "plain": "버튼이나 카드처럼 화면을 이루는 작은 부품이에요.",
+      "plain": "버튼이나 카드처럼 화면을 이루는 작은 부품이다.",
       "kind": "code"
     },
     {
@@ -483,8 +444,8 @@
         "real-time",
         "리얼타임"
       ],
-      "plain": "바뀌면 바로바로 새 값이 오는 방식이에요.",
-      "example": "하루 한 번 바뀌는 자료는 실시간이 아니에요.",
+      "plain": "바뀌면 바로바로 새 값이 오는 방식이다.",
+      "example": "하루 한 번 바뀌는 자료는 실시간이 아니다.",
       "kind": "data"
     },
     {
@@ -496,7 +457,7 @@
         "수신 웹후크",
         "웹후크 주소"
       ],
-      "plain": "무슨 일이 생기면 정해진 주소로 자동으로 알려 주는 방식으로, 그 주소는 키처럼 숨겨야 해요.",
+      "plain": "무슨 일이 생기면 정해진 주소로 자동으로 알려 주는 방식으로, 그 주소는 키처럼 숨겨야 한다.",
       "kind": "code",
       "risk": true
     },
@@ -510,7 +471,7 @@
         "Codex",
         "Cursor"
       ],
-      "plain": "파일을 직접 만들고 고치며 코드를 짜 주는 AI 도구예요.",
+      "plain": "파일을 직접 만들고 고치며 코드를 짜 주는 AI 도구다.",
       "kind": "ai"
     },
     {
@@ -519,7 +480,7 @@
       "aliases": [
         "prompt"
       ],
-      "plain": "AI에게 보내는 지시 글이에요.",
+      "plain": "AI에게 보내는 지시 글이다.",
       "kind": "ai"
     },
     {
@@ -530,28 +491,16 @@
         ".md",
         "md 파일"
       ],
-      "plain": "제목과 목록을 #, - 같은 기호로 적는 간단한 글 형식이에요.",
-      "example": "코드쇼퍼 설계도가 이 형식이에요.",
+      "plain": "제목과 목록을 #, - 같은 기호로 적는 간단한 글 형식이다.",
+      "example": "코드쇼퍼 재료 목록(.md)이 이 형식이다.",
       "kind": "code"
-    },
-    {
-      "id": "blueprint",
-      "term": "설계도",
-      "aliases": [
-        "설계 문서"
-      ],
-      "plain": "내 AI가 읽고 무엇을 어떤 순서로 만들지 알게 하는 코드쇼퍼의 문서예요.",
-      "kind": "site",
-      "noMark": true
     },
     {
       "id": "open-data",
       "term": "공공데이터",
-      "plain": "나라와 기관이 누구나 쓰라고 열어 둔 자료예요.",
-      "example": "보통 API 키를 받아서 써요.",
-      "kind": "data",
-      "concept": "api",
-      "tool": "data-go-kr"
+      "plain": "나라와 기관이 누구나 쓰라고 열어 둔 자료다.",
+      "example": "보통 API 키를 받아서 쓴다.",
+      "kind": "data"
     },
     {
       "id": "rate-limit",
@@ -566,16 +515,14 @@
         "이용 한도",
         "호출 수"
       ],
-      "plain": "하루나 한 달에 API를 부를 수 있는 횟수예요.",
-      "kind": "money",
-      "concept": "free-tier",
-      "error": "http-429"
+      "plain": "하루나 한 달에 API를 부를 수 있는 횟수다.",
+      "kind": "money"
     },
     {
       "id": "personal-info",
       "term": "개인정보",
-      "plain": "이름·연락처처럼 누구인지 알 수 있는 정보예요.",
-      "example": "모을 때는 꼭 필요한 것만 받아요.",
+      "plain": "이름·연락처처럼 누구인지 알 수 있는 정보다.",
+      "example": "모을 때는 꼭 필요한 것만 받는다.",
       "kind": "law"
     },
     {
@@ -587,9 +534,8 @@
         "서버 위치",
         "데이터베이스 위치"
       ],
-      "plain": "데이터가 실제로 저장되는 나라와 지역이에요.",
-      "kind": "data",
-      "concept": "server"
+      "plain": "데이터가 실제로 저장되는 나라와 지역이다.",
+      "kind": "data"
     },
     {
       "id": "license",
@@ -598,7 +544,7 @@
         "license",
         "오픈 소스 라이선스"
       ],
-      "plain": "남의 코드나 자료를 쓸 때 지켜야 할 조건이에요.",
+      "plain": "남의 코드나 자료를 쓸 때 지켜야 할 조건이다.",
       "kind": "law"
     },
     {
@@ -607,7 +553,7 @@
       "aliases": [
         "open source"
       ],
-      "plain": "누구나 코드를 보고 고쳐 쓸 수 있게 공개한 소프트웨어예요.",
+      "plain": "누구나 코드를 보고 고쳐 쓸 수 있게 공개한 소프트웨어다.",
       "kind": "law"
     },
     {
@@ -618,9 +564,8 @@
         "링크 주소"
       ],
       "say": "유알엘",
-      "plain": "인터넷에서 페이지나 자료가 있는 자리를 가리키는 주소예요.",
-      "kind": "data",
-      "concept": "domain"
+      "plain": "인터넷에서 페이지나 자료가 있는 자리를 가리키는 주소다.",
+      "kind": "data"
     },
     {
       "id": "browser",
@@ -634,7 +579,7 @@
         "Microsoft Edge",
         "웨일"
       ],
-      "plain": "웹페이지를 열어 보는 프로그램이에요.",
+      "plain": "웹페이지를 열어 보는 프로그램이다.",
       "kind": "code"
     },
     {
@@ -643,8 +588,8 @@
       "aliases": [
         "cache"
       ],
-      "plain": "다시 빨리 열려고 브라우저가 잠깐 저장해 둔 사본이에요.",
-      "example": "고쳤는데 그대로 보이면 새로 고침을 해 보세요.",
+      "plain": "다시 빨리 열려고 브라우저가 잠깐 저장해 둔 사본이다.",
+      "example": "고쳤는데 그대로 보이면 새로 고침을 해 본다.",
       "kind": "code"
     },
     {
@@ -653,11 +598,9 @@
       "aliases": [
         "build"
       ],
-      "plain": "고친 코드를 배포할 수 있는 파일로 바꾸는 과정이에요.",
+      "plain": "고친 코드를 배포할 수 있는 파일로 바꾸는 과정이다.",
       "kind": "code",
-      "see": "deploy",
-      "concept": "deploy",
-      "error": "build-type-error"
+      "see": "deploy"
     },
     {
       "id": "bug",
@@ -665,9 +608,8 @@
       "aliases": [
         "bug"
       ],
-      "plain": "프로그램이 뜻대로 움직이지 않는 잘못이에요.",
-      "kind": "code",
-      "concept": "logs"
+      "plain": "프로그램이 뜻대로 움직이지 않는 잘못이다.",
+      "kind": "code"
     },
     {
       "id": "error-message",
@@ -676,10 +618,9 @@
         "오류 메시지",
         "에러 문장"
       ],
-      "plain": "문제가 생겼을 때 프로그램이 알려 주는 글이에요.",
-      "example": "키 값은 지우고 AI에게 보여 주면 도움이 돼요.",
-      "kind": "code",
-      "concept": "logs"
+      "plain": "문제가 생겼을 때 프로그램이 알려 주는 글이다.",
+      "example": "키 값은 지우고 AI에게 보여 주면 도움이 된다.",
+      "kind": "code"
     },
     {
       "id": "responsive",
@@ -688,7 +629,7 @@
         "반응형 디자인",
         "responsive"
       ],
-      "plain": "휴대폰·PC 같은 화면 크기에 맞춰 배치가 바뀌는 방식이에요.",
+      "plain": "휴대폰·PC 같은 화면 크기에 맞춰 배치가 바뀌는 방식이다.",
       "kind": "code"
     },
     {
@@ -697,7 +638,7 @@
       "aliases": [
         "vibe coding"
       ],
-      "plain": "코드를 직접 쓰지 않고 AI에게 말로 시켜 앱을 만드는 방법이에요.",
+      "plain": "코드를 직접 쓰지 않고 AI에게 말로 시켜 앱을 만드는 방법이다.",
       "kind": "ai"
     },
     {
@@ -706,7 +647,7 @@
       "aliases": [
         "no-code"
       ],
-      "plain": "코드를 쓰지 않고 화면에서 끌어다 놓으며 만드는 방식이에요.",
+      "plain": "코드를 쓰지 않고 화면에서 끌어다 놓으며 만드는 방식이다.",
       "kind": "code"
     },
     {
@@ -716,10 +657,9 @@
         "Apps Script",
         "구글 앱스 스크립트"
       ],
-      "plain": "구글 시트 같은 구글 서비스에 붙여 쓰는 작은 프로그램이에요.",
+      "plain": "구글 시트 같은 구글 서비스에 붙여 쓰는 작은 프로그램이다.",
       "kind": "code",
-      "see": "google-sheets",
-      "tool": "google-sheets-apps-script"
+      "see": "google-sheets"
     },
     {
       "id": "sdk",
@@ -728,9 +668,8 @@
         "에스디케이"
       ],
       "say": "에스디케이",
-      "plain": "어떤 서비스를 쉽게 쓰도록 그 회사가 준비해 둔 코드 묶음이에요.",
-      "kind": "code",
-      "concept": "npm-package"
+      "plain": "어떤 서비스를 쉽게 쓰도록 그 회사가 준비해 둔 코드 묶음이다.",
+      "kind": "code"
     },
     {
       "id": "endpoint",
@@ -740,9 +679,8 @@
         "요청 주소",
         "API 주소"
       ],
-      "plain": "API에서 요청을 보내는 정해진 주소 하나예요.",
-      "kind": "data",
-      "concept": "api"
+      "plain": "API에서 요청을 보내는 정해진 주소 하나다.",
+      "kind": "data"
     },
     {
       "id": "cloud",
@@ -750,9 +688,8 @@
       "aliases": [
         "cloud"
       ],
-      "plain": "내 컴퓨터 대신 인터넷 너머 회사의 컴퓨터를 빌려 쓰는 거예요.",
-      "kind": "code",
-      "concept": "server"
+      "plain": "내 컴퓨터 대신 인터넷 너머 회사의 컴퓨터를 빌려 쓰는 것이다.",
+      "kind": "code"
     },
     {
       "id": "secret",
@@ -765,10 +702,9 @@
         "Private Key",
         "secret key"
       ],
-      "plain": "남에게 보이면 안 되는 키나 비밀번호 같은 값이에요.",
-      "example": "화면 코드가 아니라 서버 쪽 비밀 칸에 넣어요.",
+      "plain": "남에게 보이면 안 되는 키나 비밀번호 같은 값이다.",
+      "example": "화면 코드가 아니라 서버 쪽 비밀 칸에 넣는다.",
       "kind": "key",
-      "concept": "env-var",
       "risk": true
     },
     {
@@ -781,9 +717,8 @@
         "anon key",
         "JavaScript 키"
       ],
-      "plain": "화면에 넣어도 되는 키지만, 남이 함부로 못 쓰게 따로 막아 둬야 해요.",
+      "plain": "화면에 넣어도 되는 키지만, 남이 함부로 못 쓰게 따로 막아 둬야 한다.",
       "kind": "key",
-      "concept": "api-key",
       "risk": true
     },
     {
@@ -795,9 +730,8 @@
         "어드민 키",
         "admin key"
       ],
-      "plain": "모든 데이터를 읽고 고칠 수 있는 키라서 화면 코드에 넣으면 안 돼요.",
+      "plain": "모든 데이터를 읽고 고칠 수 있는 키라서 화면 코드에 넣으면 안 된다.",
       "kind": "key",
-      "concept": "api-key",
       "risk": true
     },
     {
@@ -808,9 +742,8 @@
         "클라이언트 ID"
       ],
       "say": "클라이언트 아이디",
-      "plain": "서비스가 내 앱에 붙여 준 이름표 번호로, 남이 봐도 괜찮아요.",
-      "kind": "key",
-      "concept": "api-key"
+      "plain": "서비스가 내 앱에 붙여 준 이름표 번호로, 남이 봐도 괜찮다.",
+      "kind": "key"
     },
     {
       "id": "issue",
@@ -820,9 +753,8 @@
         "인증키 발급",
         "재발급"
       ],
-      "plain": "서비스가 나에게 쓸 키나 번호를 새로 만들어 내주는 일이에요.",
-      "kind": "key",
-      "concept": "api-key"
+      "plain": "서비스가 나에게 쓸 키나 번호를 새로 만들어 내주는 일이다.",
+      "kind": "key"
     },
     {
       "id": "apply-use",
@@ -830,16 +762,14 @@
       "aliases": [
         "API 활용 신청"
       ],
-      "plain": "공공 API를 쓰겠다고 신청하는 일로, 승인이 나야 키가 동작해요.",
-      "kind": "key",
-      "tool": "data-go-kr"
+      "plain": "공공 API를 쓰겠다고 신청하는 일로, 승인이 나야 키가 동작한다.",
+      "kind": "key"
     },
     {
       "id": "auto-approve",
       "term": "자동 승인",
-      "plain": "신청하면 사람이 살펴보지 않고 바로 허락되는 방식이에요.",
-      "kind": "key",
-      "tool": "data-go-kr"
+      "plain": "신청하면 사람이 살펴보지 않고 바로 허락되는 방식이다.",
+      "kind": "key"
     },
     {
       "id": "manual-approve",
@@ -848,22 +778,20 @@
         "담당자 승인",
         "수동 승인"
       ],
-      "plain": "담당자가 신청을 직접 보고 허락해야 쓸 수 있다는 뜻이에요.",
+      "plain": "담당자가 신청을 직접 보고 허락해야 쓸 수 있다는 뜻이다.",
       "kind": "key"
     },
     {
       "id": "dev-account",
       "term": "개발계정",
-      "plain": "공공 API를 시험 삼아 쓰는 단계로, 하루에 부를 수 있는 횟수가 적어요.",
-      "kind": "key",
-      "tool": "data-go-kr"
+      "plain": "공공 API를 시험 삼아 쓰는 단계로, 하루에 부를 수 있는 횟수가 적다.",
+      "kind": "key"
     },
     {
       "id": "prod-account",
       "term": "운영계정",
-      "plain": "실제 서비스용으로 하루 횟수를 늘려 받는 단계로, 따로 신청해야 해요.",
-      "kind": "key",
-      "tool": "data-go-kr"
+      "plain": "실제 서비스용으로 하루 횟수를 늘려 받는 단계로, 따로 신청해야 한다.",
+      "kind": "key"
     },
     {
       "id": "review",
@@ -871,7 +799,7 @@
       "aliases": [
         "심의"
       ],
-      "plain": "사용량을 늘리거나 정식으로 열 때 서비스가 내 앱을 살펴보는 절차예요.",
+      "plain": "사용량을 늘리거나 정식으로 열 때 서비스가 내 앱을 살펴보는 절차다.",
       "kind": "key"
     },
     {
@@ -881,11 +809,9 @@
         "Encoding 키",
         "일반 인증키(Encoding)"
       ],
-      "plain": "주소에 바로 붙일 수 있게 특수 문자를 바꿔 둔 모양의 키예요.",
-      "example": "코드가 이 키를 한 번 더 바꾸면 키 오류가 나요.",
-      "kind": "key",
-      "tool": "data-go-kr",
-      "error": "http-401"
+      "plain": "주소에 바로 붙일 수 있게 특수 문자를 바꿔 둔 모양의 키다.",
+      "example": "코드가 이 키를 한 번 더 바꾸면 키 오류가 난다.",
+      "kind": "key"
     },
     {
       "id": "decoding-key",
@@ -894,10 +820,8 @@
         "Decoding 키",
         "일반 인증키(Decoding)"
       ],
-      "plain": "특수 문자를 바꾸지 않은 원래 모양의 키로, 보통 이쪽을 넣어 써요.",
-      "kind": "key",
-      "tool": "data-go-kr",
-      "error": "http-401"
+      "plain": "특수 문자를 바꾸지 않은 원래 모양의 키로, 보통 이쪽을 넣어 쓴다.",
+      "kind": "key"
     },
     {
       "id": "sample-key",
@@ -906,7 +830,7 @@
         "맛보기 키",
         "sample 키"
       ],
-      "plain": "가입하지 않고 몇 건만 받아 보게 열어 둔 시험용 키예요.",
+      "plain": "가입하지 않고 몇 건만 받아 보게 열어 둔 시험용 키다.",
       "kind": "key"
     },
     {
@@ -918,10 +842,9 @@
         "expired",
         "기한 만료"
       ],
-      "plain": "키나 토큰을 쓸 수 있는 기한으로, 지나면 다시 받아야 해요.",
+      "plain": "키나 토큰을 쓸 수 있는 기한으로, 지나면 다시 받아야 한다.",
       "kind": "key",
-      "see": "token",
-      "error": "key-expired"
+      "see": "token"
     },
     {
       "id": "permission",
@@ -931,7 +854,7 @@
         "액세스 권한",
         "permission"
       ],
-      "plain": "누가 무엇을 보고 고칠 수 있는지 정해 둔 허락이에요.",
+      "plain": "누가 무엇을 보고 고칠 수 있는지 정해 둔 허락이다.",
       "kind": "key"
     },
     {
@@ -940,11 +863,9 @@
       "aliases": [
         "Security Rules"
       ],
-      "plain": "데이터베이스에서 누가 무엇을 읽고 쓸 수 있는지 정해 두는 규칙이에요.",
+      "plain": "데이터베이스에서 누가 무엇을 읽고 쓸 수 있는지 정해 두는 규칙이다.",
       "kind": "key",
-      "see": "database",
-      "concept": "database",
-      "tool": "firebase-firestore"
+      "see": "database"
     },
     {
       "id": "test-mode",
@@ -953,8 +874,8 @@
         "test mode",
         "시험 모드"
       ],
-      "plain": "진짜가 아니라 시험으로 돌려 보는 설정으로, 공개하기 전에 꺼야 해요.",
-      "example": "Firebase에선 이 설정이면 누구나 데이터를 고칠 수 있어요.",
+      "plain": "진짜가 아니라 시험으로 돌려 보는 설정으로, 공개하기 전에 꺼야 한다.",
+      "example": "Firebase에선 이 설정이면 누구나 데이터를 고칠 수 있다.",
       "kind": "key",
       "risk": true
     },
@@ -967,9 +888,8 @@
         "Row Level Security"
       ],
       "say": "알엘에스",
-      "plain": "표의 줄마다 누가 읽고 쓸 수 있는지 정하는 설정으로, 켜지 않으면 남의 데이터가 읽힐 수 있어요.",
+      "plain": "표의 줄마다 누가 읽고 쓸 수 있는지 정하는 설정으로, 켜지 않으면 남의 데이터가 읽힐 수 있다.",
       "kind": "key",
-      "tool": "supabase",
       "risk": true
     },
     {
@@ -979,7 +899,7 @@
         "휴대폰 인증",
         "휴대폰 본인 인증"
       ],
-      "plain": "휴대폰 같은 것으로 내가 정말 그 사람인지 확인하는 일이에요.",
+      "plain": "휴대폰 같은 것으로 내가 정말 그 사람인지 확인하는 일이다.",
       "kind": "key"
     },
     {
@@ -989,10 +909,9 @@
         "SSH"
       ],
       "say": "에스에스에이치 키",
-      "plain": "비밀번호 대신 내 컴퓨터임을 GitHub에 알려 주는 한 쌍의 키로, 비밀 쪽은 남에게 주면 안 돼요.",
+      "plain": "비밀번호 대신 내 컴퓨터임을 GitHub에 알려 주는 한 쌍의 키로, 비밀 쪽은 남에게 주면 안 된다.",
       "kind": "key",
       "see": "github",
-      "error": "git-auth-failed",
       "risk": true
     },
     {
@@ -1003,11 +922,9 @@
         "authorized domains",
         "허용 도메인"
       ],
-      "plain": "로그인을 허락한 사이트 주소 목록으로, 여기 없는 주소에선 로그인이 막혀요.",
+      "plain": "로그인을 허락한 사이트 주소 목록으로, 여기 없는 주소에선 로그인이 막힌다.",
       "kind": "key",
-      "see": "auth",
-      "concept": "auth-login",
-      "tool": "firebase-auth"
+      "see": "auth"
     },
     {
       "id": "site-restriction",
@@ -1020,10 +937,8 @@
         "리퍼러",
         "referrer"
       ],
-      "plain": "키가 내 사이트 주소에서만 동작하도록 묶어 두는 설정이에요.",
-      "kind": "key",
-      "concept": "api-key",
-      "error": "http-403"
+      "plain": "키가 내 사이트 주소에서만 동작하도록 묶어 두는 설정이다.",
+      "kind": "key"
     },
     {
       "id": "app-register",
@@ -1032,7 +947,7 @@
         "애플리케이션 등록",
         "애플리케이션"
       ],
-      "plain": "서비스의 관리 화면에 내 앱을 올리고 키를 받는 일이에요.",
+      "plain": "서비스의 관리 화면에 내 앱을 올리고 키를 받는 일이다.",
       "kind": "key",
       "see": "dashboard"
     },
@@ -1046,9 +961,8 @@
         "결제 정보",
         "billing"
       ],
-      "plain": "쓴 만큼 돈이 나가도록 카드를 연결해 둔 계정이에요.",
+      "plain": "쓴 만큼 돈이 나가도록 카드를 연결해 둔 계정이다.",
       "kind": "money",
-      "concept": "free-tier",
       "risk": true
     },
     {
@@ -1060,9 +974,8 @@
         "플랜",
         "plan"
       ],
-      "plain": "돈을 내고 더 많이 쓰거나 기능을 더 받는 이용 단계예요.",
-      "kind": "money",
-      "concept": "free-tier"
+      "plain": "돈을 내고 더 많이 쓰거나 기능을 더 받는 이용 단계다.",
+      "kind": "money"
     },
     {
       "id": "pay-as-you-go",
@@ -1071,9 +984,8 @@
         "쓴 만큼 요금",
         "사용량 기반 요금"
       ],
-      "plain": "정해진 값 대신 쓴 만큼 돈이 나가는 방식이에요.",
+      "plain": "정해진 값 대신 쓴 만큼 돈이 나가는 방식이다.",
       "kind": "money",
-      "concept": "free-tier",
       "risk": true
     },
     {
@@ -1082,9 +994,8 @@
       "aliases": [
         "credit"
       ],
-      "plain": "서비스 안에서 쓰는 이용 점수로, 다 쓰면 기능이 멈춰요.",
-      "kind": "money",
-      "tool": "netlify"
+      "plain": "서비스 안에서 쓰는 이용 점수로, 다 쓰면 기능이 멈춘다.",
+      "kind": "money"
     },
     {
       "id": "hobby-plan",
@@ -1094,10 +1005,9 @@
         "하비 플랜"
       ],
       "say": "하비 플랜",
-      "plain": "Vercel의 무료 요금제 이름으로, 개인·비상업 용도로만 쓸 수 있어요.",
+      "plain": "Vercel의 무료 요금제 이름으로, 개인·비상업 용도로만 쓸 수 있다.",
       "kind": "money",
-      "see": "free-tier",
-      "tool": "vercel"
+      "see": "free-tier"
     },
     {
       "id": "spark-plan",
@@ -1107,10 +1017,9 @@
         "스파크 플랜"
       ],
       "say": "스파크 플랜",
-      "plain": "Firebase의 무료 요금제 이름으로, 카드를 넣지 않고 시작해요.",
+      "plain": "Firebase의 무료 요금제 이름으로, 카드를 넣지 않고 시작한다.",
       "kind": "money",
-      "see": "free-tier",
-      "tool": "firebase-hosting"
+      "see": "free-tier"
     },
     {
       "id": "blaze-plan",
@@ -1120,10 +1029,9 @@
         "블레이즈 플랜"
       ],
       "say": "블레이즈 플랜",
-      "plain": "Firebase에서 쓴 만큼 돈을 내는 유료 요금제 이름이에요.",
+      "plain": "Firebase에서 쓴 만큼 돈을 내는 유료 요금제 이름이다.",
       "kind": "money",
-      "see": "paid-plan",
-      "tool": "firebase-hosting"
+      "see": "paid-plan"
     },
     {
       "id": "eco-plan",
@@ -1133,10 +1041,9 @@
         "에코 플랜"
       ],
       "say": "에코 플랜",
-      "plain": "Heroku에서 가장 싼 유료 요금제 이름이에요.",
+      "plain": "Heroku에서 가장 싼 유료 요금제 이름이다.",
       "kind": "money",
-      "see": "paid-plan",
-      "tool": "heroku"
+      "see": "paid-plan"
     },
     {
       "id": "dyno",
@@ -1146,9 +1053,8 @@
         "Eco 다이노",
         "무료 다이노"
       ],
-      "plain": "Heroku에서 내 앱을 돌리는 작은 서버 한 대를 부르는 이름이에요.",
-      "kind": "money",
-      "tool": "heroku"
+      "plain": "Heroku에서 내 앱을 돌리는 작은 서버 한 대를 부르는 이름이다.",
+      "kind": "money"
     },
     {
       "id": "vat",
@@ -1157,7 +1063,7 @@
         "부가세",
         "VAT 별도"
       ],
-      "plain": "적힌 값에 세금 10%가 더 붙는다는 뜻이에요.",
+      "plain": "적힌 값에 세금 10%가 더 붙는다는 뜻이다.",
       "kind": "money"
     },
     {
@@ -1167,7 +1073,7 @@
         "상업적 이용",
         "상업 용도"
       ],
-      "plain": "돈을 벌려고 쓰는 것으로, 광고를 붙인 사이트도 여기에 들 수 있어요.",
+      "plain": "돈을 벌려고 쓰는 것으로, 광고를 붙인 사이트도 여기에 들 수 있다.",
       "kind": "money"
     },
     {
@@ -1176,7 +1082,7 @@
       "aliases": [
         "사업자"
       ],
-      "plain": "장사를 하겠다고 나라에 알리는 일로, 돈을 받는 앱이면 필요할 수 있어요.",
+      "plain": "장사를 하겠다고 나라에 알리는 일로, 돈을 받는 앱이면 필요할 수 있다.",
       "kind": "money"
     },
     {
@@ -1187,9 +1093,8 @@
         "월간 활성 사용자",
         "활성 사용자"
       ],
-      "plain": "한 달 동안 한 번이라도 들어와 쓴 사람 수예요.",
-      "kind": "money",
-      "tool": "supabase"
+      "plain": "한 달 동안 한 번이라도 들어와 쓴 사람 수다.",
+      "kind": "money"
     },
     {
       "id": "transfer",
@@ -1201,9 +1106,8 @@
         "대역폭",
         "bandwidth"
       ],
-      "plain": "방문자에게 보낸 파일의 양으로, 많이 열릴수록 늘어나요.",
-      "kind": "money",
-      "concept": "free-tier"
+      "plain": "방문자에게 보낸 파일의 양으로, 많이 열릴수록 늘어난다.",
+      "kind": "money"
     },
     {
       "id": "cpu-time",
@@ -1213,10 +1117,9 @@
         "밀리초"
       ],
       "say": "씨피유 시간",
-      "plain": "서버가 요청 하나를 계산하는 데 쓴 시간이에요.",
-      "example": "10ms는 0.01초예요.",
-      "kind": "money",
-      "tool": "cloudflare-workers"
+      "plain": "서버가 요청 하나를 계산하는 데 쓴 시간이다.",
+      "example": "10ms는 0.01초다.",
+      "kind": "money"
     },
     {
       "id": "mb-gb",
@@ -1229,8 +1132,8 @@
         "기가바이트"
       ],
       "say": "메가바이트·기가바이트",
-      "plain": "파일 크기를 재는 단위로, 1GB는 1,000MB쯤이에요.",
-      "example": "사진 한 장은 보통 몇 MB예요.",
+      "plain": "파일 크기를 재는 단위로, 1GB는 1,000MB쯤이다.",
+      "example": "사진 한 장은 보통 몇 MB다.",
       "kind": "money"
     },
     {
@@ -1240,9 +1143,8 @@
         "일시 중지",
         "휴면"
       ],
-      "plain": "한동안 안 쓰면 서비스가 프로젝트를 잠시 꺼 두는 일로, 다시 켤 수 있어요.",
-      "kind": "money",
-      "tool": "supabase"
+      "plain": "한동안 안 쓰면 서비스가 프로젝트를 잠시 꺼 두는 일로, 다시 켤 수 있다.",
+      "kind": "money"
     },
     {
       "id": "update-cycle",
@@ -1251,7 +1153,7 @@
         "갱신 주기",
         "갱신 시각"
       ],
-      "plain": "정보가 새 값으로 바뀌는 일로, 하루 한 번처럼 주기가 정해져 있어요.",
+      "plain": "정보가 새 값으로 바뀌는 일로, 하루 한 번처럼 주기가 정해져 있다.",
       "kind": "data"
     },
     {
@@ -1260,11 +1162,8 @@
       "aliases": [
         "data.go.kr"
       ],
-      "plain": "나라 기관들의 API를 한곳에 모아 두고 키를 내주는 사이트예요.",
-      "kind": "data",
-      "concept": "api",
-      "tool": "data-go-kr",
-      "error": "data-go-kr-error"
+      "plain": "나라 기관들의 API를 한곳에 모아 두고 키를 내주는 사이트다.",
+      "kind": "data"
     },
     {
       "id": "neis",
@@ -1274,9 +1173,8 @@
         "교육정보 개방 포털",
         "나이스 교육정보 개방 포털"
       ],
-      "plain": "교육부의 학교 정보 시스템으로, 급식·시간표 같은 자료를 API로 줘요.",
-      "kind": "data",
-      "tool": "neis-school-info"
+      "plain": "교육부의 학교 정보 시스템으로, 급식·시간표 같은 자료를 API로 준다.",
+      "kind": "data"
     },
     {
       "id": "school-code",
@@ -1287,18 +1185,16 @@
         "교육청 코드",
         "ATPT_OFCDC_SC_CODE"
       ],
-      "plain": "나이스가 학교마다 붙인 번호로, 급식·시간표를 받으려면 먼저 알아야 해요.",
+      "plain": "나이스가 학교마다 붙인 번호로, 급식·시간표를 받으려면 먼저 알아야 한다.",
       "kind": "data",
-      "see": "neis",
-      "tool": "neis-school-info"
+      "see": "neis"
     },
     {
       "id": "tago",
       "term": "TAGO",
       "say": "타고",
-      "plain": "국토교통부가 버스 같은 교통 정보를 모아 주는 곳의 이름이에요.",
-      "kind": "data",
-      "tool": "tago-bus-arrival"
+      "plain": "국토교통부가 버스 같은 교통 정보를 모아 주는 곳의 이름이다.",
+      "kind": "data"
     },
     {
       "id": "stop-id",
@@ -1306,9 +1202,8 @@
       "aliases": [
         "도시코드"
       ],
-      "plain": "버스 정보 API가 정류소와 도시를 가리킬 때 쓰는 번호예요.",
-      "kind": "data",
-      "tool": "tago-bus-arrival"
+      "plain": "버스 정보 API가 정류소와 도시를 가리킬 때 쓰는 번호다.",
+      "kind": "data"
     },
     {
       "id": "ecos",
@@ -1317,9 +1212,8 @@
         "한국은행 경제통계"
       ],
       "say": "에코스",
-      "plain": "한국은행이 금리·환율 같은 경제 통계를 내주는 사이트와 API 이름이에요.",
-      "kind": "data",
-      "tool": "bok-ecos"
+      "plain": "한국은행이 금리·환율 같은 경제 통계를 내주는 사이트와 API 이름이다.",
+      "kind": "data"
     },
     {
       "id": "grid-coord",
@@ -1329,10 +1223,9 @@
         "nx",
         "ny"
       ],
-      "plain": "기상청이 전국을 바둑판처럼 나눈 칸의 번호예요.",
-      "example": "위도·경도를 이 번호(nx, ny)로 바꿔 넣어요.",
-      "kind": "data",
-      "tool": "kma-forecast"
+      "plain": "기상청이 전국을 바둑판처럼 나눈 칸의 번호다.",
+      "example": "위도·경도를 이 번호(nx, ny)로 바꿔 넣는다.",
+      "kind": "data"
     },
     {
       "id": "latlng",
@@ -1345,7 +1238,7 @@
         "latitude",
         "longitude"
       ],
-      "plain": "지구 위 자리를 남북(위도)과 동서(경도) 숫자로 나타낸 값이에요.",
+      "plain": "지구 위 자리를 남북(위도)과 동서(경도) 숫자로 나타낸 값이다.",
       "kind": "data"
     },
     {
@@ -1354,7 +1247,7 @@
       "aliases": [
         "geocoding"
       ],
-      "plain": "주소나 지명을 위도·경도 숫자로 바꾸는 일이에요.",
+      "plain": "주소나 지명을 위도·경도 숫자로 바꾸는 일이다.",
       "kind": "data",
       "see": "latlng"
     },
@@ -1364,9 +1257,8 @@
       "aliases": [
         "base_time"
       ],
-      "plain": "기상청이 예보를 새로 내는 정해진 시각으로, 아직 발표 전인 시각을 넣으면 빈 답이 와요.",
-      "kind": "data",
-      "tool": "kma-forecast"
+      "plain": "기상청이 예보를 새로 내는 정해진 시각으로, 아직 발표 전인 시각을 넣으면 빈 답이 온다.",
+      "kind": "data"
     },
     {
       "id": "short-forecast",
@@ -1375,9 +1267,8 @@
         "기상청 단기예보",
         "동네예보"
       ],
-      "plain": "기상청이 오늘부터 며칠 뒤까지 동네 날씨를 알려 주는 예보예요.",
-      "kind": "data",
-      "tool": "kma-forecast"
+      "plain": "기상청이 오늘부터 며칠 뒤까지 동네 날씨를 알려 주는 예보다.",
+      "kind": "data"
     },
     {
       "id": "station",
@@ -1386,9 +1277,8 @@
         "측정소정보",
         "대기 측정소"
       ],
-      "plain": "공기 질을 재는 기계가 놓인 곳으로, 값은 측정소마다 따로 나와요.",
-      "kind": "data",
-      "tool": "airkorea"
+      "plain": "공기 질을 재는 기계가 놓인 곳으로, 값은 측정소마다 따로 나온다.",
+      "kind": "data"
     },
     {
       "id": "utc",
@@ -1399,7 +1289,7 @@
         "GMT"
       ],
       "say": "유티씨",
-      "plain": "세계가 함께 쓰는 기준 시각으로, 한국 시간은 여기에 9시간을 더해요.",
+      "plain": "세계가 함께 쓰는 기준 시각으로, 한국 시간은 여기에 9시간을 더한다.",
       "kind": "data"
     },
     {
@@ -1410,7 +1300,7 @@
         "timezone",
         "Asia/Seoul"
       ],
-      "plain": "나라마다 다른 시계 기준으로, 한국은 Asia/Seoul이에요.",
+      "plain": "나라마다 다른 시계 기준으로, 한국은 Asia/Seoul이다.",
       "kind": "data"
     },
     {
@@ -1419,8 +1309,8 @@
       "aliases": [
         "날짜 형식"
       ],
-      "plain": "날짜를 연·월·일 숫자 여덟 자리로 붙여 쓰는 꼴이에요.",
-      "example": "2026년 10월 12일은 20261012예요.",
+      "plain": "날짜를 연·월·일 숫자 여덟 자리로 붙여 쓰는 꼴이다.",
+      "example": "2026년 10월 12일은 20261012다.",
       "kind": "data"
     },
     {
@@ -1429,7 +1319,7 @@
       "aliases": [
         "영업일 기준"
       ],
-      "plain": "토요일·일요일과 공휴일을 뺀, 은행과 관공서가 일하는 날이에요.",
+      "plain": "토요일·일요일과 공휴일을 뺀, 은행과 관공서가 일하는 날이다.",
       "kind": "data"
     },
     {
@@ -1439,9 +1329,8 @@
         "상장",
         "종목"
       ],
-      "plain": "증권 시장에서 사고팔 수 있게 등록된 회사 주식이에요.",
-      "kind": "data",
-      "tool": "fsc-stock"
+      "plain": "증권 시장에서 사고팔 수 있게 등록된 회사 주식이다.",
+      "kind": "data"
     },
     {
       "id": "stock-code",
@@ -1449,10 +1338,9 @@
       "aliases": [
         "단축코드"
       ],
-      "plain": "주식마다 붙은 여섯 자리 번호예요.",
-      "example": "삼성전자는 005930이에요.",
-      "kind": "data",
-      "tool": "fsc-stock"
+      "plain": "주식마다 붙은 여섯 자리 번호다.",
+      "example": "삼성전자는 005930이다.",
+      "kind": "data"
     },
     {
       "id": "stock-price",
@@ -1460,9 +1348,8 @@
       "aliases": [
         "주식 시세"
       ],
-      "plain": "주식이나 돈이 시장에서 사고팔리는 그때그때의 값이에요.",
-      "kind": "data",
-      "tool": "fsc-stock"
+      "plain": "주식이나 돈이 시장에서 사고팔리는 그때그때의 값이다.",
+      "kind": "data"
     },
     {
       "id": "mock-trading",
@@ -1470,16 +1357,14 @@
       "aliases": [
         "모의투자 키"
       ],
-      "plain": "진짜 돈 없이 연습용으로 주식을 사고파는 거예요.",
-      "kind": "data",
-      "tool": "kis-open-api"
+      "plain": "진짜 돈 없이 연습용으로 주식을 사고파는 것이다.",
+      "kind": "data"
     },
     {
       "id": "achievement-std",
       "term": "성취기준",
-      "plain": "교육과정에서 학생이 배우고 나서 할 수 있어야 할 것을 적은 문장이에요.",
-      "kind": "data",
-      "tool": "korean-elementary-learning-map-mcp"
+      "plain": "교육과정에서 학생이 배우고 나서 할 수 있어야 할 것을 적은 문장이다.",
+      "kind": "data"
     },
     {
       "id": "api-doc",
@@ -1491,9 +1376,8 @@
         "개발 안내서",
         "API docs"
       ],
-      "plain": "API를 어떤 주소로 무엇을 넣어 부르는지 적어 둔 설명서예요.",
-      "kind": "data",
-      "concept": "api"
+      "plain": "API를 어떤 주소로 무엇을 넣어 부르는지 적어 둔 설명서다.",
+      "kind": "data"
     },
     {
       "id": "official-docs",
@@ -1502,7 +1386,7 @@
         "공식 안내",
         "원문"
       ],
-      "plain": "도구를 만든 곳이 직접 쓴 설명서예요.",
+      "plain": "도구를 만든 곳이 직접 쓴 설명서다.",
       "kind": "data"
     },
     {
@@ -1513,10 +1397,9 @@
         "parameter",
         "요청 변수"
       ],
-      "plain": "요청할 때 함께 보내는 조건 값이에요.",
-      "example": "날짜=20261012처럼 붙여 보내요.",
-      "kind": "data",
-      "concept": "api"
+      "plain": "요청할 때 함께 보내는 조건 값이다.",
+      "example": "날짜=20261012처럼 붙여 보낸다.",
+      "kind": "data"
     },
     {
       "id": "header",
@@ -1527,9 +1410,8 @@
         "요청 헤더",
         "머리글"
       ],
-      "plain": "요청에 덧붙여 보내는 숨은 정보 칸으로, 키를 여기 넣기도 해요.",
-      "kind": "data",
-      "concept": "api"
+      "plain": "요청에 덧붙여 보내는 숨은 정보 칸으로, 키를 여기 넣기도 한다.",
+      "kind": "data"
     },
     {
       "id": "xml",
@@ -1538,10 +1420,9 @@
         "엑스엠엘"
       ],
       "say": "엑스엠엘",
-      "plain": "데이터를 꺾쇠 괄호 이름표로 감싸 적는 글자 형식이에요.",
-      "example": "<메뉴>카레</메뉴>처럼 생겼어요.",
-      "kind": "data",
-      "concept": "json"
+      "plain": "데이터를 꺾쇠 괄호 이름표로 감싸 적는 글자 형식이다.",
+      "example": "<메뉴>카레</메뉴>처럼 생겼다.",
+      "kind": "data"
     },
     {
       "id": "status-code",
@@ -1552,8 +1433,8 @@
         "결과 코드",
         "status code"
       ],
-      "plain": "요청이 어떻게 됐는지 알려 주는 세 자리 숫자예요.",
-      "example": "200은 잘 됐다는 뜻, 404는 그 주소에 없다는 뜻이에요.",
+      "plain": "요청이 어떻게 됐는지 알려 주는 세 자리 숫자다.",
+      "example": "200은 잘 됐다는 뜻, 404는 그 주소에 없다는 뜻이다.",
       "kind": "data"
     },
     {
@@ -1564,9 +1445,8 @@
         "API 호출",
         "request"
       ],
-      "plain": "내 앱이 서버나 API에 무언가를 달라고 한 번 묻는 일이에요.",
+      "plain": "내 앱이 서버나 API에 무언가를 달라고 한 번 묻는 일이다.",
       "kind": "data",
-      "concept": "api",
       "noMark": true
     },
     {
@@ -1576,7 +1456,7 @@
         "response",
         "응답 형식"
       ],
-      "plain": "서버가 요청에 돌려준 답, 또는 설문에서 사람들이 낸 답이에요.",
+      "plain": "서버가 요청에 돌려준 답, 또는 설문에서 사람들이 낸 답이다.",
       "kind": "data",
       "noMark": true
     },
@@ -1584,11 +1464,9 @@
       "id": "http",
       "term": "HTTP",
       "say": "에이치티티피",
-      "plain": "암호로 감싸지 않은 연결 방식으로, https 사이트에서 부르면 막혀요.",
+      "plain": "암호로 감싸지 않은 연결 방식으로, https 사이트에서 부르면 막힌다.",
       "kind": "data",
-      "see": "https",
-      "concept": "https",
-      "error": "network-failed"
+      "see": "https"
     },
     {
       "id": "mixed-content",
@@ -1596,11 +1474,9 @@
       "aliases": [
         "Mixed Content"
       ],
-      "plain": "https 페이지에서 암호로 감싸지 않은 주소를 부르면 브라우저가 막는 일이에요.",
+      "plain": "https 페이지에서 암호로 감싸지 않은 주소를 부르면 브라우저가 막는 일이다.",
       "kind": "data",
-      "see": "https",
-      "concept": "https",
-      "error": "network-failed"
+      "see": "https"
     },
     {
       "id": "dns",
@@ -1609,10 +1485,9 @@
         "디엔에스"
       ],
       "say": "디엔에스",
-      "plain": "도메인 이름을 서버의 숫자 주소로 바꿔 주는 인터넷 전화번호부예요.",
+      "plain": "도메인 이름을 서버의 숫자 주소로 바꿔 주는 인터넷 전화번호부다.",
       "kind": "data",
-      "see": "domain",
-      "concept": "domain"
+      "see": "domain"
     },
     {
       "id": "ip-address",
@@ -1622,14 +1497,13 @@
         "아이피"
       ],
       "say": "아이피 주소",
-      "plain": "인터넷에 연결된 기기마다 붙는 숫자 주소예요.",
-      "kind": "data",
-      "concept": "domain"
+      "plain": "인터넷에 연결된 기기마다 붙는 숫자 주소다.",
+      "kind": "data"
     },
     {
       "id": "nurijip",
       "term": "누리집",
-      "plain": "웹사이트를 우리말로 부르는 이름이에요.",
+      "plain": "웹사이트를 우리말로 부르는 이름이다.",
       "kind": "data"
     },
     {
@@ -1640,9 +1514,8 @@
         "tile",
         "타일 제공처"
       ],
-      "plain": "지도를 작은 네모 그림으로 나눈 조각으로, 화면에 이어 붙여 보여 줘요.",
-      "kind": "data",
-      "tool": "leaflet-osm"
+      "plain": "지도를 작은 네모 그림으로 나눈 조각으로, 화면에 이어 붙여 보여 준다.",
+      "kind": "data"
     },
     {
       "id": "marker",
@@ -1651,9 +1524,8 @@
         "marker",
         "지도 핀"
       ],
-      "plain": "지도 위에 장소를 가리키려고 꽂는 표시예요.",
-      "kind": "data",
-      "tool": "kakao-maps"
+      "plain": "지도 위에 장소를 가리키려고 꽂는 표시다.",
+      "kind": "data"
     },
     {
       "id": "osm",
@@ -1662,9 +1534,8 @@
         "OpenStreetMap",
         "OSM"
       ],
-      "plain": "누구나 함께 그려 만드는 무료 세계 지도예요.",
-      "kind": "data",
-      "tool": "leaflet-osm"
+      "plain": "누구나 함께 그려 만드는 무료 세계 지도다.",
+      "kind": "data"
     },
     {
       "id": "encoding",
@@ -1673,7 +1544,7 @@
         "encoding",
         "URL 인코딩"
       ],
-      "plain": "글자를 정해진 규칙에 따라 다른 모양으로 바꾸는 일이에요.",
+      "plain": "글자를 정해진 규칙에 따라 다른 모양으로 바꾸는 일이다.",
       "kind": "code"
     },
     {
@@ -1685,10 +1556,9 @@
         "Node.js LTS"
       ],
       "say": "노드 제이에스",
-      "plain": "브라우저 밖, 내 컴퓨터에서 자바스크립트를 돌리게 해 주는 프로그램이에요.",
+      "plain": "브라우저 밖, 내 컴퓨터에서 자바스크립트를 돌리게 해 주는 프로그램이다.",
       "kind": "code",
-      "see": "javascript",
-      "concept": "npm-package"
+      "see": "javascript"
     },
     {
       "id": "lts",
@@ -1698,17 +1568,16 @@
         "장기 지원"
       ],
       "say": "엘티에스",
-      "plain": "오래 손봐 주기로 약속한 안정된 판이에요.",
+      "plain": "오래 손봐 주기로 약속한 안정된 판이다.",
       "kind": "code"
     },
     {
       "id": "vite",
       "term": "Vite",
       "say": "비트",
-      "plain": "React 같은 앱을 내 컴퓨터에서 미리 열어 보고, 올릴 파일로 묶어 주는 도구예요.",
+      "plain": "React 같은 앱을 내 컴퓨터에서 미리 열어 보고, 올릴 파일로 묶어 주는 도구다.",
       "kind": "code",
-      "see": "react",
-      "tool": "react-vite"
+      "see": "react"
     },
     {
       "id": "nextjs",
@@ -1717,7 +1586,7 @@
         "넥스트제이에스"
       ],
       "say": "넥스트 제이에스",
-      "plain": "React 앱에 서버 쪽 기능과 페이지 주소 정하기를 더해 주는 도구 묶음이에요.",
+      "plain": "React 앱에 서버 쪽 기능과 페이지 주소 정하기를 더해 주는 도구 묶음이다.",
       "kind": "code",
       "see": "react"
     },
@@ -1731,10 +1600,9 @@
         "명령줄 도구"
       ],
       "say": "씨엘아이",
-      "plain": "버튼 화면 대신 터미널에 명령을 적어 쓰는 프로그램이에요.",
+      "plain": "버튼 화면 대신 터미널에 명령을 적어 쓰는 프로그램이다.",
       "kind": "code",
-      "see": "terminal",
-      "concept": "terminal"
+      "see": "terminal"
     },
     {
       "id": "npx",
@@ -1743,10 +1611,9 @@
         "엔피엑스"
       ],
       "say": "엔피엑스",
-      "plain": "패키지를 설치하지 않고 한 번만 바로 실행하는 명령이에요.",
+      "plain": "패키지를 설치하지 않고 한 번만 바로 실행하는 명령이다.",
       "kind": "code",
-      "see": "package",
-      "concept": "npm-package"
+      "see": "package"
     },
     {
       "id": "dev-server",
@@ -1755,10 +1622,8 @@
         "npm run dev",
         "dev 서버"
       ],
-      "plain": "고치는 대로 바로 보이도록 내 컴퓨터에서 켜 둔 미리 보기 서버예요.",
-      "kind": "code",
-      "concept": "localhost",
-      "error": "port-in-use"
+      "plain": "고치는 대로 바로 보이도록 내 컴퓨터에서 켜 둔 미리 보기 서버다.",
+      "kind": "code"
     },
     {
       "id": "package-json",
@@ -1767,10 +1632,9 @@
         "패키지 제이슨"
       ],
       "say": "패키지 제이슨",
-      "plain": "내 앱이 쓰는 패키지 목록과 실행 명령을 적어 둔 파일이에요.",
+      "plain": "내 앱이 쓰는 패키지 목록과 실행 명령을 적어 둔 파일이다.",
       "kind": "code",
-      "see": "package",
-      "concept": "npm-package"
+      "see": "package"
     },
     {
       "id": "node-modules",
@@ -1779,10 +1643,9 @@
         "노드 모듈스"
       ],
       "say": "노드 모듈스",
-      "plain": "설치한 패키지가 모이는 아주 큰 폴더로, 저장소에 올리지 않아요.",
+      "plain": "설치한 패키지가 모이는 아주 큰 폴더로, 저장소에 올리지 않는다.",
       "kind": "code",
-      "see": "package",
-      "concept": "npm-package"
+      "see": "package"
     },
     {
       "id": "gitignore",
@@ -1791,10 +1654,9 @@
         "깃이그노어"
       ],
       "say": "깃 이그노어",
-      "plain": "Git에 올리지 않을 파일 이름을 적어 두는 목록 파일이에요.",
+      "plain": "Git에 올리지 않을 파일 이름을 적어 두는 목록 파일이다.",
       "kind": "code",
-      "see": "git",
-      "concept": "git-commit"
+      "see": "git"
     },
     {
       "id": "env-file",
@@ -1805,10 +1667,9 @@
         "닷엔브"
       ],
       "say": "닷 엔브",
-      "plain": "환경 변수 값을 적어 두는 내 컴퓨터의 파일로, 저장소에 올리면 안 돼요.",
+      "plain": "환경 변수 값을 적어 두는 내 컴퓨터의 파일로, 저장소에 올리면 안 된다.",
       "kind": "key",
       "see": "env-var",
-      "concept": "env-var",
       "risk": true
     },
     {
@@ -1818,11 +1679,10 @@
         "VITE_ 환경 변수",
         "NEXT_PUBLIC_"
       ],
-      "plain": "화면 코드에도 그대로 드러나는 환경 변수라서 숨길 키를 넣으면 안 돼요.",
-      "example": "VITE_나 NEXT_PUBLIC_으로 시작하는 이름이 그래요.",
+      "plain": "화면 코드에도 그대로 드러나는 환경 변수라서 숨길 키를 넣으면 안 된다.",
+      "example": "VITE_나 NEXT_PUBLIC_으로 시작하는 이름이 그렇다.",
       "kind": "key",
       "see": "env-var",
-      "concept": "env-var",
       "risk": true
     },
     {
@@ -1832,11 +1692,9 @@
         "Script Properties",
         "PropertiesService"
       ],
-      "plain": "앱스 스크립트에서 키 같은 숨길 값을 코드 밖에 넣어 두는 칸이에요.",
+      "plain": "앱스 스크립트에서 키 같은 숨길 값을 코드 밖에 넣어 두는 칸이다.",
       "kind": "key",
-      "see": "apps-script",
-      "concept": "env-var",
-      "tool": "google-sheets-apps-script"
+      "see": "apps-script"
     },
     {
       "id": "firebase-config",
@@ -1846,10 +1704,9 @@
         "Firebase 설정 값"
       ],
       "say": "파이어베이스 컨피그",
-      "plain": "Firebase에 연결하는 설정 값으로, 화면 코드에 넣어도 되지만 데이터는 따로 막아 둬야 해요.",
+      "plain": "Firebase에 연결하는 설정 값으로, 화면 코드에 넣어도 되지만 데이터는 따로 막아 둬야 한다.",
       "kind": "key",
       "see": "firebase",
-      "tool": "firebase-firestore",
       "risk": true
     },
     {
@@ -1860,7 +1717,7 @@
         "wrangler.toml",
         "config 파일"
       ],
-      "plain": "프로그램이 어떻게 움직일지 적어 두는 파일이에요.",
+      "plain": "프로그램이 어떻게 움직일지 적어 두는 파일이다.",
       "kind": "code"
     },
     {
@@ -1870,11 +1727,9 @@
         "파일 경로",
         "path"
       ],
-      "plain": "파일이나 폴더가 컴퓨터 어디에 있는지 적은 주소예요.",
-      "example": "C:\\Users\\나\\my-app 같은 꼴이에요.",
-      "kind": "code",
-      "concept": "terminal",
-      "error": "no-such-file"
+      "plain": "파일이나 폴더가 컴퓨터 어디에 있는지 적은 주소다.",
+      "example": "C:\\Users\\나\\my-app 같은 꼴이다.",
+      "kind": "code"
     },
     {
       "id": "project-folder",
@@ -1883,10 +1738,8 @@
         "프로젝트 루트",
         "루트 폴더"
       ],
-      "plain": "앱의 파일이 모두 들어 있는 맨 위 폴더예요.",
-      "kind": "code",
-      "concept": "terminal",
-      "error": "no-such-file"
+      "plain": "앱의 파일이 모두 들어 있는 맨 위 폴더다.",
+      "kind": "code"
     },
     {
       "id": "command",
@@ -1895,11 +1748,9 @@
         "명령",
         "command"
       ],
-      "plain": "터미널에 적어 컴퓨터에게 일을 시키는 글이에요.",
+      "plain": "터미널에 적어 컴퓨터에게 일을 시키는 글이다.",
       "kind": "code",
       "see": "terminal",
-      "concept": "terminal",
-      "error": "command-not-found",
       "noMark": true
     },
     {
@@ -1908,7 +1759,7 @@
       "aliases": [
         "function"
       ],
-      "plain": "정해진 일을 하도록 이름을 붙여 묶어 둔 코드 한 덩어리예요.",
+      "plain": "정해진 일을 하도록 이름을 붙여 묶어 둔 코드 한 덩어리다.",
       "kind": "code"
     },
     {
@@ -1917,7 +1768,7 @@
       "aliases": [
         "variable"
       ],
-      "plain": "이름을 붙여 값을 넣어 두는 칸이에요.",
+      "plain": "이름을 붙여 값을 넣어 두는 칸이다.",
       "kind": "code",
       "noMark": true
     },
@@ -1927,9 +1778,8 @@
       "aliases": [
         "자료형"
       ],
-      "plain": "숫자인지 글자인지처럼 값의 종류를 말해요.",
-      "kind": "code",
-      "error": "build-type-error"
+      "plain": "숫자인지 글자인지처럼 값의 종류를 말한다.",
+      "kind": "code"
     },
     {
       "id": "version",
@@ -1937,7 +1787,7 @@
       "aliases": [
         "version"
       ],
-      "plain": "같은 프로그램을 고쳐 낼 때마다 붙이는 번호예요.",
+      "plain": "같은 프로그램을 고쳐 낼 때마다 붙이는 번호다.",
       "kind": "code"
     },
     {
@@ -1947,9 +1797,8 @@
         "template",
         "이메일 템플릿"
       ],
-      "plain": "미리 짜 둔 틀로, 내용만 바꿔 넣어 써요.",
-      "kind": "code",
-      "tool": "emailjs"
+      "plain": "미리 짜 둔 틀로, 내용만 바꿔 넣어 쓴다.",
+      "kind": "code"
     },
     {
       "id": "ui",
@@ -1958,9 +1807,8 @@
         "유아이"
       ],
       "say": "유아이",
-      "plain": "버튼·글자·입력 칸처럼 이용자가 보고 만지는 화면 부분이에요.",
-      "kind": "code",
-      "concept": "frontend-backend"
+      "plain": "버튼·글자·입력 칸처럼 이용자가 보고 만지는 화면 부분이다.",
+      "kind": "code"
     },
     {
       "id": "accessibility",
@@ -1969,7 +1817,7 @@
         "웹 접근성",
         "a11y"
       ],
-      "plain": "눈이나 손이 불편한 사람도 앱을 쓸 수 있게 만드는 정도예요.",
+      "plain": "눈이나 손이 불편한 사람도 앱을 쓸 수 있게 만드는 정도다.",
       "kind": "code"
     },
     {
@@ -1980,9 +1828,8 @@
         "main 브랜치",
         "master 브랜치"
       ],
-      "plain": "저장소 안에서 갈라 놓은 작업 줄기로, 기본 줄기 이름은 보통 main이에요.",
-      "kind": "code",
-      "concept": "git-commit"
+      "plain": "저장소 안에서 갈라 놓은 작업 줄기로, 기본 줄기 이름은 보통 main이다.",
+      "kind": "code"
     },
     {
       "id": "remote",
@@ -1991,10 +1838,9 @@
         "remote",
         "리모트"
       ],
-      "plain": "내 컴퓨터 쪽에서 GitHub에 있는 저장소를 부르는 이름이에요.",
+      "plain": "내 컴퓨터 쪽에서 GitHub에 있는 저장소를 부르는 이름이다.",
       "kind": "code",
-      "see": "github",
-      "concept": "git-repo"
+      "see": "github"
     },
     {
       "id": "public-repo",
@@ -2004,9 +1850,8 @@
         "퍼블릭 저장소",
         "public repo"
       ],
-      "plain": "누구나 들어와 코드를 볼 수 있게 열어 둔 저장소예요.",
-      "kind": "code",
-      "concept": "git-repo"
+      "plain": "누구나 들어와 코드를 볼 수 있게 열어 둔 저장소다.",
+      "kind": "code"
     },
     {
       "id": "private-repo",
@@ -2016,9 +1861,8 @@
         "프라이빗 저장소",
         "private repo"
       ],
-      "plain": "나와 내가 허락한 사람만 볼 수 있는 저장소예요.",
-      "kind": "code",
-      "concept": "git-repo"
+      "plain": "나와 내가 허락한 사람만 볼 수 있는 저장소다.",
+      "kind": "code"
     },
     {
       "id": "pull",
@@ -2028,10 +1872,8 @@
         "풀 받기"
       ],
       "say": "깃 풀",
-      "plain": "인터넷 저장소의 새 기록을 내 컴퓨터로 받아 오는 일이에요.",
-      "kind": "code",
-      "concept": "git-commit",
-      "error": "git-push-rejected"
+      "plain": "인터넷 저장소의 새 기록을 내 컴퓨터로 받아 오는 일이다.",
+      "kind": "code"
     },
     {
       "id": "force-push",
@@ -2041,10 +1883,9 @@
         "force push",
         "강제로 올리기"
       ],
-      "plain": "GitHub 기록을 내 기록으로 덮어쓰는 일이라, 남의 기록이 지워질 수 있어요.",
+      "plain": "GitHub 기록을 내 기록으로 덮어쓰는 일이라, 남의 기록이 지워질 수 있다.",
       "kind": "code",
       "see": "github",
-      "error": "git-push-rejected",
       "risk": true
     },
     {
@@ -2054,10 +1895,9 @@
         "Network 탭",
         "네트워크 패널"
       ],
-      "plain": "개발자 도구에서 앱이 보낸 요청과 받은 답을 보는 칸이에요.",
+      "plain": "개발자 도구에서 앱이 보낸 요청과 받은 답을 보는 칸이다.",
       "kind": "code",
-      "see": "devtools",
-      "concept": "devtools"
+      "see": "devtools"
     },
     {
       "id": "site-data",
@@ -2067,9 +1907,8 @@
         "방문 기록 지우기",
         "인터넷 사용 기록 삭제"
       ],
-      "plain": "브라우저가 사이트마다 따로 저장해 둔 내용으로, 지우면 기록도 사라져요.",
+      "plain": "브라우저가 사이트마다 따로 저장해 둔 내용으로, 지우면 기록도 사라진다.",
       "kind": "code",
-      "tool": "browser-storage",
       "risk": true
     },
     {
@@ -2081,10 +1920,8 @@
         "브라우저 저장",
         "웹 스토리지"
       ],
-      "plain": "서버 없이 지금 쓰는 브라우저 안에 기록을 남겨 두는 자리예요.",
-      "kind": "code",
-      "concept": "database",
-      "tool": "browser-storage"
+      "plain": "서버 없이 지금 쓰는 브라우저 안에 기록을 남겨 두는 자리다.",
+      "kind": "code"
     },
     {
       "id": "cookie",
@@ -2092,7 +1929,7 @@
       "aliases": [
         "cookie"
       ],
-      "plain": "사이트가 브라우저에 남겨 두는 작은 기록으로, 다시 왔을 때 나를 알아봐요.",
+      "plain": "사이트가 브라우저에 남겨 두는 작은 기록으로, 다시 왔을 때 나를 알아본다.",
       "kind": "code"
     },
     {
@@ -2102,10 +1939,9 @@
         "Web app",
         "웹 애플리케이션"
       ],
-      "plain": "설치하지 않고 브라우저에서 주소로 여는 앱이에요.",
-      "example": "앱스 스크립트에선 공개한 스크립트 주소를 말해요.",
-      "kind": "code",
-      "tool": "google-sheets-apps-script"
+      "plain": "설치하지 않고 브라우저에서 주소로 여는 앱이다.",
+      "example": "앱스 스크립트에선 공개한 스크립트 주소를 말한다.",
+      "kind": "code"
     },
     {
       "id": "unverified-app",
@@ -2114,10 +1950,9 @@
         "Google에서 확인하지 않은 앱",
         "확인하지 않은 앱"
       ],
-      "plain": "구글이 검사하지 않은 스크립트를 처음 실행할 때 뜨는 경고예요.",
-      "example": "내가 만든 스크립트면 '고급'을 눌러 넘어가요.",
-      "kind": "code",
-      "tool": "google-sheets-apps-script"
+      "plain": "구글이 검사하지 않은 스크립트를 처음 실행할 때 뜨는 경고다.",
+      "example": "내가 만든 스크립트면 '고급'을 눌러 넘어간다.",
+      "kind": "code"
     },
     {
       "id": "drag-drop",
@@ -2126,7 +1961,7 @@
         "드래그 앤 드롭",
         "drag and drop"
       ],
-      "plain": "파일을 마우스로 집어 원하는 곳에 옮겨 놓는 일이에요.",
+      "plain": "파일을 마우스로 집어 원하는 곳에 옮겨 놓는 일이다.",
       "kind": "code"
     },
     {
@@ -2139,7 +1974,7 @@
         "구글 클라우드 콘솔",
         "네이버 클라우드 콘솔"
       ],
-      "plain": "서비스의 설정과 사용량을 보고 바꾸는 웹 화면이에요.",
+      "plain": "서비스의 설정과 사용량을 보고 바꾸는 웹 화면이다.",
       "kind": "code"
     },
     {
@@ -2149,10 +1984,9 @@
         "파이어베이스"
       ],
       "say": "파이어베이스",
-      "plain": "구글이 만든 앱 도구 모음으로, 공개·저장·로그인 기능을 따로 골라 써요.",
+      "plain": "구글이 만든 앱 도구 모음으로, 공개·저장·로그인 기능을 따로 골라 쓴다.",
       "kind": "code",
-      "see": "auth",
-      "tool": "firebase-hosting"
+      "see": "auth"
     },
     {
       "id": "cloudflare",
@@ -2161,10 +1995,9 @@
         "클라우드플레어"
       ],
       "say": "클라우드플레어",
-      "plain": "웹사이트를 빠르고 안전하게 보여 주는 회사로, Workers라는 배포 도구가 있어요.",
+      "plain": "웹사이트를 빠르고 안전하게 보여 주는 회사로, Workers라는 배포 도구가 있다.",
       "kind": "code",
-      "see": "deploy",
-      "tool": "cloudflare-workers"
+      "see": "deploy"
     },
     {
       "id": "google-sheets",
@@ -2173,9 +2006,8 @@
         "Google Sheets",
         "구글 스프레드시트"
       ],
-      "plain": "구글의 온라인 표 프로그램으로, 앱의 기록을 모아 두는 데 쓰기도 해요.",
-      "kind": "code",
-      "tool": "google-sheets-apps-script"
+      "plain": "구글의 온라인 표 프로그램으로, 앱의 기록을 모아 두는 데 쓰기도 한다.",
+      "kind": "code"
     },
     {
       "id": "table",
@@ -2183,9 +2015,8 @@
       "aliases": [
         "table"
       ],
-      "plain": "데이터를 줄과 칸으로 나눠 넣는 표예요.",
-      "kind": "code",
-      "concept": "database"
+      "plain": "데이터를 줄과 칸으로 나눠 넣는 표다.",
+      "kind": "code"
     },
     {
       "id": "workspace",
@@ -2194,8 +2025,8 @@
         "workspace",
         "구글 워크스페이스"
       ],
-      "plain": "회사나 학교, 팀이 함께 쓰는 서비스 공간이에요.",
-      "example": "학교 계정은 관리자가 막아 둔 기능이 있을 수 있어요.",
+      "plain": "회사나 학교, 팀이 함께 쓰는 서비스 공간이다.",
+      "example": "학교 계정은 관리자가 막아 둔 기능이 있을 수 있다.",
       "kind": "code"
     },
     {
@@ -2207,7 +2038,7 @@
         "cron",
         "시간 기반 트리거"
       ],
-      "plain": "정해 둔 시간마다 코드가 저절로 돌게 하는 기능이에요.",
+      "plain": "정해 둔 시간마다 코드가 저절로 돌게 하는 기능이다.",
       "kind": "code"
     },
     {
@@ -2216,9 +2047,8 @@
       "aliases": [
         "trigger"
       ],
-      "plain": "어떤 때가 되면 코드가 저절로 실행되게 걸어 두는 장치예요.",
-      "kind": "code",
-      "tool": "google-sheets-apps-script"
+      "plain": "어떤 때가 되면 코드가 저절로 실행되게 걸어 두는 장치다.",
+      "kind": "code"
     },
     {
       "id": "push-notify",
@@ -2228,7 +2058,7 @@
         "웹 푸시",
         "push notification"
       ],
-      "plain": "앱을 열지 않아도 휴대폰이나 컴퓨터에 뜨는 알림이에요.",
+      "plain": "앱을 열지 않아도 휴대폰이나 컴퓨터에 뜨는 알림이다.",
       "kind": "code"
     },
     {
@@ -2239,9 +2069,8 @@
         "텔레그램 봇",
         "챗봇"
       ],
-      "plain": "사람 대신 정해진 메시지를 자동으로 보내는 계정이에요.",
-      "kind": "code",
-      "tool": "telegram-bot"
+      "plain": "사람 대신 정해진 메시지를 자동으로 보내는 계정이다.",
+      "kind": "code"
     },
     {
       "id": "chat-id",
@@ -2250,9 +2079,8 @@
         "대화방 번호"
       ],
       "say": "챗 아이디",
-      "plain": "텔레그램에서 메시지를 받을 대화방의 번호예요.",
-      "kind": "code",
-      "tool": "telegram-bot"
+      "plain": "텔레그램에서 메시지를 받을 대화방의 번호다.",
+      "kind": "code"
     },
     {
       "id": "mcp",
@@ -2262,9 +2090,8 @@
         "엠씨피"
       ],
       "say": "엠씨피",
-      "plain": "AI 도구에 바깥 자료나 기능을 붙이는 약속된 연결 방식이에요.",
-      "kind": "ai",
-      "tool": "korean-elementary-learning-map-mcp"
+      "plain": "AI 도구에 바깥 자료나 기능을 붙이는 약속된 연결 방식이다.",
+      "kind": "ai"
     },
     {
       "id": "instruction-file",
@@ -2274,7 +2101,7 @@
         "AGENTS.md",
         "규칙 파일"
       ],
-      "plain": "코딩 에이전트가 일을 시작할 때 먼저 읽는 규칙 파일이에요.",
+      "plain": "코딩 에이전트가 일을 시작할 때 먼저 읽는 규칙 파일이다.",
       "kind": "ai",
       "see": "ai-agent"
     },
@@ -2286,7 +2113,7 @@
         "채팅 AI",
         "무료 AI 채팅"
       ],
-      "plain": "대화창에 글을 써서 묻고 답을 받는 AI 서비스예요.",
+      "plain": "대화창에 글을 써서 묻고 답을 받는 AI 서비스다.",
       "kind": "ai"
     },
     {
@@ -2297,8 +2124,8 @@
         "웹에서 만드는 도구",
         "앱 빌더"
       ],
-      "plain": "설치 없이 브라우저에서 AI에게 말로 앱을 만들게 하는 도구예요.",
-      "example": "Lovable, Bolt.new, v0 같은 도구가 여기에 들어요.",
+      "plain": "설치 없이 브라우저에서 AI에게 말로 앱을 만들게 하는 도구다.",
+      "example": "Lovable, Bolt.new, v0 같은 도구가 여기에 든다.",
       "kind": "ai"
     },
     {
@@ -2307,8 +2134,8 @@
       "aliases": [
         "copyright"
       ],
-      "plain": "글·그림·코드를 만든 사람이 자기 작품에 갖는 권리예요.",
-      "example": "쓰려면 허락이 필요하고, 허락 조건은 라이선스에 적혀 있어요.",
+      "plain": "글·그림·코드를 만든 사람이 자기 작품에 갖는 권리다.",
+      "example": "쓰려면 허락이 필요하고, 허락 조건은 라이선스에 적혀 있다.",
       "kind": "law"
     },
     {
@@ -2319,7 +2146,7 @@
         "저작자 표시",
         "attribution"
       ],
-      "plain": "가져다 쓴 자료가 어디서 왔는지 화면에 적어 두는 일이에요.",
+      "plain": "가져다 쓴 자료가 어디서 왔는지 화면에 적어 두는 일이다.",
       "kind": "law"
     },
     {
@@ -2330,8 +2157,8 @@
         "크리에이티브 커먼즈"
       ],
       "say": "씨씨 바이",
-      "plain": "출처만 밝히면 누구나 쓸 수 있게 허락한다는 표시예요.",
-      "example": "SA가 붙으면 고친 것도 같은 조건으로 나눠야 해요.",
+      "plain": "출처만 밝히면 누구나 쓸 수 있게 허락한다는 표시다.",
+      "example": "SA가 붙으면 고친 것도 같은 조건으로 나눠야 한다.",
       "kind": "law",
       "see": "attribution"
     },
@@ -2342,7 +2169,7 @@
         "공공누리 제1유형",
         "공공누리 제3유형"
       ],
-      "plain": "공공기관 자료에 붙는 이용 허락 표시로, 유형마다 조건이 달라요.",
+      "plain": "공공기관 자료에 붙는 이용 허락 표시로, 유형마다 조건이 다르다.",
       "kind": "law"
     },
     {
@@ -2353,7 +2180,7 @@
         "MIT License"
       ],
       "say": "엠아이티 라이선스",
-      "plain": "허락 문구만 남기면 누구나 자유롭게 고쳐 쓸 수 있게 한 조건이에요.",
+      "plain": "허락 문구만 남기면 누구나 자유롭게 고쳐 쓸 수 있게 한 조건이다.",
       "kind": "law"
     },
     {
@@ -2362,7 +2189,7 @@
       "aliases": [
         "약관"
       ],
-      "plain": "서비스를 쓸 때 지킬 규칙과 책임을 적어 둔 글이에요.",
+      "plain": "서비스를 쓸 때 지킬 규칙과 책임을 적어 둔 글이다.",
       "kind": "law"
     },
     {
@@ -2371,78 +2198,16 @@
       "aliases": [
         "사용 조건"
       ],
-      "plain": "도구를 쓸 때 지켜야 할 조건으로, 출처 표시 같은 것이 있어요.",
+      "plain": "도구를 쓸 때 지켜야 할 조건으로, 출처 표시 같은 것이 있다.",
       "kind": "law",
       "see": "attribution"
     },
     {
       "id": "privacy-policy",
       "term": "개인정보 처리방침",
-      "plain": "어떤 개인정보를 왜 받고 얼마나 두는지 이용자에게 알리는 글이에요.",
+      "plain": "어떤 개인정보를 왜 받고 얼마나 두는지 이용자에게 알리는 글이다.",
       "kind": "law",
       "see": "personal-info"
-    },
-    {
-      "id": "site-receipt",
-      "term": "영수증",
-      "plain": "설계도와 함께 받는 요약표로, 고른 도구와 드는 비용이 적혀 있어요.",
-      "kind": "site",
-      "see": "blueprint",
-      "noMark": true
-    },
-    {
-      "id": "site-blocked",
-      "term": "막힌 곳",
-      "aliases": [
-        "막힘"
-      ],
-      "plain": "고른 도구끼리 맞지 않아 그대로 만들면 문제가 생길 곳이에요.",
-      "kind": "site",
-      "noMark": true
-    },
-    {
-      "id": "site-slow",
-      "term": "서행",
-      "plain": "문제가 남았지만 '알아볼 것'에 적어 두고 그대로 가기로 한 곳이에요.",
-      "kind": "site",
-      "see": "site-research",
-      "noMark": true
-    },
-    {
-      "id": "site-no-entry",
-      "term": "통행 불가",
-      "plain": "꼭 있어야 하는 기능이라 도구를 고르지 않고는 지나갈 수 없다는 뜻이에요.",
-      "kind": "site",
-      "noMark": true
-    },
-    {
-      "id": "site-shortcut",
-      "term": "지름길",
-      "plain": "코딩 없이 비슷한 앱을 만들 수 있는 다른 방법이에요.",
-      "kind": "site",
-      "noMark": true
-    },
-    {
-      "id": "site-research",
-      "term": "알아볼 것",
-      "plain": "만들기 전에 내 AI와 함께 찾아볼 일로, 설계도 9번에 들어가요.",
-      "kind": "site",
-      "see": "blueprint",
-      "noMark": true
-    },
-    {
-      "id": "site-later",
-      "term": "나중에 붙일 것",
-      "plain": "처음엔 빼 두고 앱이 돌아간 뒤에 더할 기능이에요.",
-      "kind": "site",
-      "noMark": true
-    },
-    {
-      "id": "site-course",
-      "term": "미리 짠 코스",
-      "plain": "자주 만드는 앱의 답과 도구를 미리 골라 둔 것으로, 도구끼리 맞춰 보는 데서 시작해요.",
-      "kind": "site",
-      "noMark": true
     }
   ]
 }

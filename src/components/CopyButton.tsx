@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
-import { fill } from '../lib/engine/text.ts';
+import { fill } from '../lib/text.ts';
 import { Icon } from './Icon.tsx';
 
 interface Props {

@@ -1,7 +1,5 @@
 ---
-// 소개 /about (docs/UX.md 3.11, T17). '틀린 곳을 알려 주세요'는 연락 주소가 있을 때만 (v3 L-01, D80).
-// 메일 본문은 '틀린 곳(도구나 용어 이름): ' 빈칸 줄 하나: 이 화면은 늘 /about이라 보던 화면 줄은 도움이 되지 않는다 (D85).
-// 정적 호스트(PUBLIC_HOST=static)는 집계를 보내지 않으므로 '하지 않는 것'의 끝 줄을 처리방침과 같은 사실로 바꾼다 (설계서 9.4절).
+// 소개 /about: 무엇을 하나 · 하지 않는 것 · 자료는 어디서 오나 · (연락 주소가 있으면) 틀린 곳 알리기.
 import Base from '../../layouts/Base.astro';
 import { ko } from '../../copy/ko.ts';
 import { CONTACT_EMAIL, mailtoFor } from '../../lib/feedback.ts';
@@ -13,15 +11,15 @@ const notBody = [...A.notBody, HOST === 'static' ? A.storedStatic : A.stored];
 const mailto = CONTACT_EMAIL ? mailtoFor({ email: CONTACT_EMAIL, subject: ko.feedback.subject, lines: [ko.feedback.reportLine] }) : '';
 ---
 
-<Base title={A.pageTitle}>
+<Base title={A.pageTitle} read>
   <article class="prose">
     <h1>{A.title}</h1>
     <h2>{A.what}</h2>
     {A.whatBody.map((t) => <p>{t}</p>)}
     <h2>{A.not}</h2>
     <ul>{notBody.map((t) => <li>{t}</li>)}</ul>
-    <h2>{A.whyNoAI}</h2>
-    {A.whyNoAIBody.map((t) => <p>{t}</p>)}
+    <h2>{A.data}</h2>
+    {A.dataBody.map((t) => <p>{t}</p>)}
     {
       mailto && (
         <>
@@ -35,6 +33,6 @@ const mailto = CONTACT_EMAIL ? mailtoFor({ email: CONTACT_EMAIL, subject: ko.fee
         </>
       )
     }
-    <p><a href={ROUTES.criteria}>{A.scoringLink}</a> · <a href={ROUTES.credits}>{A.creditsLink}</a></p>
+    <p><a href={ROUTES.credits}>{A.creditsLink}</a></p>
   </article>
 </Base>

@@ -1,6 +1,6 @@
 # 예비 배포 (T21·T22, docs/ARCHITECTURE.md 9절, D53·D72): 손으로 돌리면 Cloudflare Workers(정적 파일 + /api/event)로 올린다.
-# 단계는 저장소 변수 SITE_STAGE로 정한다: 없거나 preview면 미리 보기(바닥글 '시험판이에요' 줄·noindex, npm run validate),
-# release면 정식(npm run validate:release를 통과해야 함). 계정이 연결되지 않았으면(비밀 값 없음) 빌드까지만 하고 건너뛴다.
+# 단계는 저장소 변수 SITE_STAGE로 정한다: 없거나 preview면 미리 보기(바닥글 시험판 줄·noindex), release면 정식.
+# 계정이 연결되지 않았으면(비밀 값 없음) 빌드까지만 하고 건너뛴다.
 # 비밀 값은 저장소 Settings → Secrets에만 둔다: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID. 사람용 안내는 docs/DEPLOY.md.
 name: deploy
 
@@ -36,9 +36,6 @@ jobs:
       - run: npm ci
       - name: 검사
         run: npm run check
-      - name: 자료 검사 (정식이면 사람 확인이 남은 진열 상품이 없어야 함)
-        run: |
-          if [ "$STAGE" = release ]; then npm run validate:release; else npm run validate; fi
       - name: 빌드
         run: npm run build
         env:

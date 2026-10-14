@@ -1,40 +1,9 @@
-// e2e 도우미: 섬이 붙기를 기다리기, 자료 읽기, 사례 하나로 만들 앱 정하기·도구 고르기를 걷기.
-import { readFileSync } from 'node:fs';
+// e2e 도우미: 섬이 붙기를 기다리기, 바깥 요청 막기 (출처 그림·글꼴은 시험에서 부르지 않는다).
 import type { Locator, Page } from '@playwright/test';
-import { expect } from '@playwright/test';
-
-function json<T>(path: string): T {
-  return JSON.parse(readFileSync(path, 'utf8')) as T;
-}
-
-export interface Question {
-  id: string;
-  text: string;
-  help?: string;
-  chip?: string;
-  /** 고르지 않아도 되는 질문('쓰는 AI', D87): 골든·코스의 답에는 없다 */
-  optional?: boolean;
-  options?: { id: string; label: string; isUnknown?: boolean; isCustom?: boolean }[];
-}
-export const questions = json<{ questions: Question[] }>('data/questions.json').questions;
-export const products = json<{ products: { id: string; name: string; layer: string }[] }>('data/products.json').products;
-export const recipes = json<{ recipes: { id: string; title: string; freeText?: string }[] }>('data/recipes.json').recipes;
-export const receiptWords = json<{ receipt: { destination: string } }>('data/templates.json').receipt;
-export function golden(id: string): { answers: Record<string, string>; cart: string[] } {
-  return json(`data/golden/${id}.json`);
-}
 
 /** 바로 붙는 섬(client:load·idle)이 다 붙을 때까지 */
 export async function islandsReady(page: Page): Promise<void> {
   await page.waitForFunction(() => [...document.querySelectorAll('astro-island[client="load"], astro-island[client="idle"]')].every((i) => !i.hasAttribute('ssr')));
-}
-
-/**
- * 끝이 있는 애니메이션이 다 끝날 때까지 (scripts/qa/shots.ts의 settle과 같은 기준, 되풀이 애니메이션은 뺀다).
- * axe는 다 그려진 화면을 재야 한다: 나타나는 중(기사 메시지 note-in 같은)의 옅은 글은 대비가 낮게 잡힌다
- */
-export async function animationsSettled(page: Page): Promise<void> {
-  await page.waitForFunction(() => document.getAnimations().every((a) => a.playState !== 'running' || a.effect?.getTiming().iterations === Infinity));
 }
 
 /** 보일 때 붙는 섬(client:visible) 안의 요소: 보이게 굴리고 그 섬이 붙을 때까지 */
@@ -53,72 +22,34 @@ export async function hydrated(target: Locator): Promise<Locator> {
   return target;
 }
 
-/**
- * 보이는 질문 제목으로 사례의 답을 골라 만들 앱 정하기 질문을 끝까지 (brief 6.5: 보기를 누르면 바로 다음 질문).
- * 마지막 한 줄 쓰기(선택)에 닿으면 freeText를 쓰고 돌아온다. 주 버튼 [도구 고르러 가기]는 아래 막대(.q-go)에 있다.
- * keyboard면 Tab·Enter·글자 치기만 쓴다
- */
-export async function answerInterview(page: Page, answers: Record<string, string>, opts: { keyboard?: boolean; freeText?: string } = {}): Promise<void> {
-  for (let step = 0; step < 30; step++) {
-    const title = ((await page.locator('#q-title').textContent()) ?? '').trim();
-    const q = questions.find((x) => title.endsWith(x.text));
-    if (!q) {
-      // 마지막 한 줄 쓰기 (선택): 질문 제목에서 Tab 한 번이면 입력 칸이다
-      const line = page.locator('#free-line');
-      await expect(line).toBeVisible();
-      if (opts.freeText) {
-        if (opts.keyboard) {
-          await expect(page.locator('#q-title')).toBeFocused();
-          await page.keyboard.press('Tab');
-          await expect(line).toBeFocused();
-          await page.keyboard.type(opts.freeText);
-        } else await line.fill(opts.freeText);
-      }
+/** 시험 서버 밖으로 나가는 요청(출처 미리 보기 그림 따위)을 막는다: 망 상태와 상관없이 같은 결과가 나오게 */
+export async function blockExternal(page: Page): Promise<void> {
+  await page.route(/^https?:\/\/(?!127\.0\.0\.1[:/]|localhost[:/])/, (route) => route.abort());
+}
+
+/** 상품 카드 이름 (목록 격자 안 n번째) */
+export function cardName(page: Page, n = 0): Locator {
+  return page.locator('.listing-grid .card-name').nth(n);
+}
+
+/** 글 일부를 마우스로 고른 것처럼: 범위를 고르고 손 떼기(pointerup)를 보낸다. 두 번 누르기는 누른 자리의 낱말이 화면 폭마다 달라 쓰지 않는다 */
+export async function selectText(target: Locator, text: string): Promise<void> {
+  await target.scrollIntoViewIfNeeded();
+  await target.evaluate((el, t) => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const i = n.textContent?.indexOf(t) ?? -1;
+      if (i < 0) continue;
+      const r = document.createRange();
+      r.setStart(n, i);
+      r.setEnd(n, i + t.length);
+      const sel = document.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(r);
+      const b = r.getBoundingClientRect();
+      document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerType: 'mouse', clientX: b.right, clientY: b.bottom }));
       return;
     }
-    // 고르지 않아도 되는 질문은 답이 없으면 '아직 안 정했어요'(isUnknown)를 고른다 (골든은 그 질문을 고르지 않은 채로 둔다)
-    const answer = answers[q.id] ?? (q.optional === true ? q.options?.find((o) => o.isUnknown === true)?.id : undefined);
-    const label = q.options?.find((o) => o.id === answer)?.label;
-    expect(label, `${q.id}의 답 ${answer}`).toBeTruthy();
-    const option = page.locator('.q').getByRole('button', { name: label ?? '', exact: true });
-    if (opts.keyboard) {
-      await option.focus();
-      await expect(option).toBeFocused();
-      await page.keyboard.press('Enter');
-    } else await option.click();
-    await expect(page.locator('#q-title')).not.toHaveText(title);
-  }
-  throw new Error('만들 앱 정하기 질문이 끝나지 않았다');
-}
-
-/**
- * 도구 고르기에서 도구를 정한다 (brief 6.6): 그 도구 줄이 있는 칸을 칩으로 열고, 줄을 눌러 '고를 예정'으로 옮긴 뒤
- * 아래 막대의 [{도구}로 정하기]를 누른다. 정하면 다음 남은 꼭 고를 것이 열린다. 정한 도구는 칩이 남색 ✓(.is-chosen)이 된다
- */
-export async function addToCart(page: Page, ids: string[]): Promise<void> {
-  for (const id of ids) {
-    const row = page.locator(`#w-slot button.w-row[data-product="${id}"]`);
-    const chips = page.locator('.w-chips .w-chip');
-    for (let k = 0; k < (await chips.count()) && (await row.count()) === 0; k++) await chips.nth(k).click();
-    // 원문만 있는 도구는 접기 안에 있다
-    if (!(await row.isVisible())) await page.locator('#w-slot .w-index > summary').click();
-    if ((await row.getAttribute('aria-pressed')) !== 'true') await row.click();
-    await expect(row).toHaveAttribute('aria-pressed', 'true');
-    const save = page.locator('.action-bar button.w-save');
-    await expect(save).toBeVisible();
-    await save.click();
-    await expect.poll(async () => page.evaluate(() => (JSON.parse(localStorage.getItem('cc:session:v1') ?? '{}') as { cart?: string[] }).cart ?? [])).toContain(id);
-  }
-}
-
-/** 지금 도는 애니메이션 중 길이가 limit(ms)보다 긴 것 */
-export async function longAnimations(page: Page, limit = 150): Promise<string[]> {
-  return page.evaluate(
-    (max) =>
-      document
-        .getAnimations()
-        .filter((a) => a.playState === 'running' && Number(a.effect?.getComputedTiming().duration ?? 0) > max)
-        .map((a) => (a as CSSAnimation).animationName ?? 'waapi'),
-    limit,
-  );
+    throw new Error(`글이 없다: ${t}`);
+  }, text);
 }

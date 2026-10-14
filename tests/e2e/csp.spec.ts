@@ -1,10 +1,10 @@
-// 보안 헤더 (T21, D53): CSP를 켠 채로 주요 조작(영수증 출력, 설계도 내려받기, 사전 옆 창, 도구 모음 검색, 확인 문제)에서
+// 보안 헤더 (T21, D53·D107): CSP를 켠 채로 주요 조작(목록 쪽 바꾸기, 상세 조각 받기, 담기, 검색, 용어 풀이)에서
 // 막히는 스크립트·스타일·연결이 없는지 본다. 브라우저의 securitypolicyviolation 이벤트를 모은다.
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
-import { fill } from '../../src/lib/engine/index.ts';
-import { hydrated, islandsReady, longAnimations, recipes } from './helpers.ts';
+import { fill } from '../../src/lib/text.ts';
+import { blockExternal, islandsReady, selectText } from './helpers.ts';
 
 async function watchCsp(page: Page): Promise<() => Promise<string[]>> {
   await page.addInitScript(() => {
@@ -15,44 +15,24 @@ async function watchCsp(page: Page): Promise<() => Promise<string[]>> {
   return () => page.evaluate(() => (window as unknown as { __csp?: string[] }).__csp ?? []);
 }
 
-test('CSP: 코스 → 설계도 받기 → 설계도 내려받기', async ({ page }) => {
+test('CSP: 목록 2쪽 → 상세 → 담기 → 검색 → 용어 풀이에서 막힌 것이 없다', async ({ page }) => {
+  await blockExternal(page);
   const violations = await watchCsp(page);
-  const first = recipes[0];
-  if (!first) throw new Error('코스가 없다');
-  await page.goto('/courses');
-  await (await hydrated(page.getByRole('button', { name: fill(ko.home.recipeGoLabel, { title: first.title }) }))).click();
-  await page.waitForURL(/\/check$/);
+  await page.goto('/c/design/palettes');
   await islandsReady(page);
-  await page.locator('.action-bar .btn-issue').click();
-  await page.waitForURL(/\/arrival$/);
+  await page.locator('.pager').getByRole('link', { name: fill(ko.list.pageLabel, { n: 2 }) }).click();
+  await expect(page).toHaveURL(/page=2$/);
+  await page.locator('.listing-grid .card-link').first().click();
   await islandsReady(page);
-  // 처음 받은 설계도 알림이 한 번 나온다 (출력 연출은 v4 D96에서 걷었다).
-  // 알림이 바로 나오므로 단계 줄·상태 한 줄의 150ms 나타나기가 아직 돌 수 있다: 그보다 긴 연출만 없으면 된다
-  await expect(page.locator('#cc-live')).toContainText(ko.receipt.arrived);
-  expect(await longAnimations(page)).toEqual([]);
-  await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
-  const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: ko.receipt.download }).click();
-  expect((await download).suggestedFilename()).toMatch(/\.md$/);
-  expect(await violations()).toEqual([]);
-});
-
-test('CSP: 사전 옆 창 검색, 도구 모음 검색, 확인 문제', async ({ page }) => {
-  const violations = await watchCsp(page);
-  await page.goto('/waypoints');
+  await expect(page.locator('.swatches')).toBeVisible();
+  await page.getByRole('button', { name: ko.item.add }).click();
+  await expect(page.locator('.hd-badge')).toHaveText('1');
+  await page.goto('/search?q=weather');
   await islandsReady(page);
-  await page.locator('.topbar .dict-btn').click();
-  await page.locator('#dict-q').fill('CORS');
-  await expect(page.locator('.dict .error-card').first()).toBeVisible();
-  await page.keyboard.press('Escape');
-  await page.goto('/tools');
+  await expect(page.locator('.search-results')).toBeVisible();
+  await page.goto('/terms');
   await islandsReady(page);
-  await page.locator('#shelf-q').fill('지도');
-  await expect(page.locator('[data-shelf-item][data-id="kakao-maps"]')).toBeVisible();
-  await expect(page.locator('[data-shelf-item][data-id="html-single"]')).toBeHidden();
-  await page.goto('/terms/api');
-  const option = await hydrated(page.locator('.quiz-item .quiz-opt').first());
-  await option.click();
-  await expect(page.locator('.quiz-result').first()).toBeVisible();
+  await selectText(page.locator('#api-key dd p').first(), 'API');
+  await expect(page.locator('#term-pop')).toBeVisible();
   expect(await violations()).toEqual([]);
 });

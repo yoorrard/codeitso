@@ -10,6 +10,11 @@ export interface Conflict {
   id: string;
   /** 규칙 충돌 · 빈 필수 칸 · 직접 쓴 도구(처음부터 서행, D74) */
   kind: 'rule' | 'empty-slot' | 'custom-tool';
+  /**
+   * 충돌(conflict): 공식 문서로 확인한, 이대로는 안 되는 조합. 고치거나 '그대로 가기'를 골라야 출발한다.
+   * 주의(warning): 설정·선택으로 풀 수 있는 것(D101). 처음부터 kept이고 출발을 막지 않는다. 직접 쓴 도구도 주의다
+   */
+  severity: 'conflict' | 'warning';
   message: string;
   fixHint: string;
   /** 규칙 충돌을 '그대로 가기'로 두면 '알아볼 것'에 붙는 조사 카드 */
@@ -58,24 +63,27 @@ export function customToolConflictId(toolId: string): string {
 }
 
 /**
- * 도구끼리 맞춰 보기: 규칙 충돌(규칙 순서) → 빈 필수 칸(칸 순서) → 열린 칸을 채운 직접 쓴 도구(장바구니 순서).
- * 화면에서는 '막힌 곳'. 직접 쓴 도구는 쓰는 순간 확인 못 한 길을 고른 것이라 처음부터 그대로 가기(kept, 서행)이고 출발을 막지 않는다.
+ * 도구끼리 맞춰 보기: 규칙 충돌·주의(규칙 순서) → 빈 필수 칸(칸 순서) → 열린 칸을 채운 직접 쓴 도구(장바구니 순서).
+ * 주의 규칙(severity warning, D101)과 직접 쓴 도구는 처음부터 그대로 가기(kept)이고 출발을 막지 않는다:
+ * 주의는 설정·선택으로 풀 수 있고(할 일은 조사 카드로 확인할 것에 붙는다), 직접 쓴 도구는 쓰는 순간 확인 못 한 길을 고른 것이다.
  */
 export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: Slot[]): Conflict[] {
   const out: Conflict[] = [];
   const open = new Set(slots.map((s) => s.id));
   for (const r of cat.data.rules.rules) {
     if (r.type !== 'conflict' || !evalCondition(r.when, ctx)) continue;
+    const warning = r.severity === 'warning';
     out.push({
       id: r.id,
       kind: 'rule',
+      severity: warning ? 'warning' : 'conflict',
       message: r.message,
       fixHint: r.fixHint,
       researchCard: r.researchCard,
       // 열리지 않은 칸은 지도에 없으므로 길 전체에 단다
       ...(r.anchorSlot && open.has(r.anchorSlot) ? { anchorSlot: r.anchorSlot } : {}),
       keepable: true,
-      kept: session.kept.includes(r.id),
+      kept: warning || session.kept.includes(r.id),
     });
   }
   const t = cat.data.templates.emptySlot;
@@ -87,6 +95,7 @@ export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: S
     out.push({
       id,
       kind: 'empty-slot',
+      severity: 'conflict',
       message: s.emptyMessage ?? fill(t.message, { label: s.label }),
       fixHint: s.emptyFix ?? fill(t.fixHint, { label: s.label }),
       slotId: s.id,
@@ -103,6 +112,7 @@ export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: S
     out.push({
       id: customToolConflictId(p.id),
       kind: 'custom-tool',
+      severity: 'warning',
       message: nameHidden(cat, p) ? ct.messageHidden : fill(ct.message, { name: p.name }),
       fixHint: ct.fixHint,
       anchorSlot: slot.id,

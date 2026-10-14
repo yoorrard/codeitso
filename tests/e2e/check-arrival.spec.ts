@@ -52,7 +52,8 @@ test.describe('도구끼리 맞춰 보기', () => {
   });
 
   test('그대로 가기: 막힌 곳이 그대로 가는 곳(서행)으로 옮겨 가고, 사건 메시지 뒤 주 버튼이 켜진다. [되돌리기]로 되돌린다', async ({ page }) => {
-    await open(page, '/check', golden('case-04'));
+    // case-09: 중간 서버 없이 키를 쓰는 공개 페이지 (키 노출 충돌, 배포 칸). 개인정보 서버 위치는 주의라 막지 않는다 (D101)
+    await open(page, '/check', golden('case-09'));
     const jam = page.locator('.ck-jam');
     await expect(page.locator('#ck-jams')).toHaveText(fill(ko.check.jamTitle, { n: 1 }));
     await expect(jam).toHaveCount(1);
@@ -60,7 +61,7 @@ test.describe('도구끼리 맞춰 보기', () => {
     // 같은 크기 중립 버튼 둘이 나란히 (한쪽으로 몰지 않는다)
     const [change, keep] = [jam.locator('.ck-pair > *').nth(0), jam.locator('.ck-pair > *').nth(1)];
     await expect(change).toHaveText(ko.check.change);
-    await expect(change).toHaveAttribute('href', '/waypoints?slot=slot.store');
+    await expect(change).toHaveAttribute('href', '/waypoints?slot=slot.host');
     await expect(keep).toHaveText(ko.check.keep);
     const [a, b] = [await change.boundingBox(), await keep.boundingBox()];
     expect(Math.round(a?.width ?? 0)).toBe(Math.round(b?.width ?? 1));
@@ -83,22 +84,22 @@ test.describe('도구끼리 맞춰 보기', () => {
     await expect(issue(page)).toBeFocused();
     const row = page.locator('.ck-row', { has: page.locator('.pill-warn') });
     await expect(row).toHaveCount(1);
-    await expect(row).toContainText('저장');
+    await expect(row).toContainText('배포·공유');
     // 둘째 줄: 무엇을 알고 그대로 가는지 (막힌 곳 설명의 첫 문장)
     await expect(row.locator('.list-sub')).not.toBeEmpty();
     await expect(page.locator('.notice.ck-done')).toContainText(ko.check.allClear);
     await expect(issue(page)).not.toHaveAttribute('aria-disabled', 'true');
     await expect(issue(page)).not.toHaveAttribute('aria-describedby', /./);
-    expect((await saved(page)).kept).toContain('conflict.personal-server');
+    expect((await saved(page)).kept).toContain('conflict.key-in-static-page');
 
-    const undo = row.getByRole('button', { name: fill(ko.check.undoKeepLabel, { where: '저장' }) });
+    const undo = row.getByRole('button', { name: fill(ko.check.undoKeepLabel, { where: '배포·공유' }) });
     await expect(undo).toHaveText(ko.check.undoKeep);
     await undo.click();
     await expect(jam).toHaveCount(1);
     // 누른 줄이 사라지면 초점은 되돌아온 막힌 곳의 첫 버튼으로 (WCAG 2.4.3)
     await expect(jam.locator('.ck-pair > *').first()).toBeFocused();
     await expect(issue(page)).toHaveAttribute('aria-disabled', 'true');
-    expect((await saved(page)).kept).not.toContain('conflict.personal-server');
+    expect((await saved(page)).kept).not.toContain('conflict.key-in-static-page');
   });
 
   test('미룰 수 있는 빈 기능은 [나중으로 미루기]: 나중에 붙일 것에 적히고 [되돌리기]로 돌아온다', async ({ page }) => {
@@ -155,7 +156,7 @@ test.describe('설계도 받기', () => {
   });
 
   test('막힌 곳이 남으면 [도구끼리 맞춰 보러 가기] 하나', async ({ page }) => {
-    await open(page, '/arrival', golden('case-04'));
+    await open(page, '/arrival', golden('case-09'));
     await expect(page.locator('h1')).toHaveText(ko.receipt.blocked);
     await expect(primary(page)).toHaveCount(1);
     await expect(primary(page)).toHaveText(ko.receipt.toCheck);
@@ -380,7 +381,7 @@ async function tabTo(page: Page, selector: string, max = 80): Promise<void> {
 }
 
 test('키보드만으로: 막힌 곳 [그대로 가기] → [설계도 받으러 출발하기] → 칸 고르개 → [설계도 내려받기 (.md)]', async ({ page }) => {
-  await open(page, '/check', golden('case-04'));
+  await open(page, '/check', golden('case-09'));
   await tabTo(page, '.ck-jam .ck-pair button');
   await expect(page.locator(':focus')).toHaveText(ko.check.keep);
   await page.keyboard.press('Enter');

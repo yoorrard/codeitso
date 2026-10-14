@@ -78,6 +78,10 @@
             "additionalProperties": false,
             "properties": {
               "free": { "type": "boolean", "description": "무료로 시작할 수 있으면 true" },
+              "freeUsage": {
+                "const": true,
+                "description": "free가 false인데 매달 무료 사용량이 있어 그 안에서는 0원이면 true (결제 수단 등록이 필요한 지도 API 같은 것). 공식 요금 문서로 확인한 것만 (D101)"
+              },
               "note": { "$ref": "defs.schema.json#/$defs/nonEmptyText" }
             }
           },

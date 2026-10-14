@@ -99,12 +99,15 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 
 **충돌 순서**: 조건이 맞는 `conflict` 규칙(규칙 순서) → 비어 있는 필수 칸(칸 순서) → 열린 칸을 채운 직접 쓴 도구(고른 순서, 처음부터 kept, 9절). 빈 칸 충돌 id는 `conflict.empty-slot:칸id`이고, 문장은 칸의 `emptyMessage`/`emptyFix`, 없으면 `templates.emptySlot`. 화면은 충돌을 '막힌 곳'으로 보이고, 상태를 막힘(빨강) · 서행(노랑, kept) · 원활(초록)로 그린다.
 
+- **충돌과 주의** (`severity`, D101): 규칙에 `"severity": "warning"`이 있으면 주의다. 주의는 설정·선택으로 풀 수 있는 것이라 **처음부터 `kept: true`**이고 출발(`canIssue`)을 막지 않는다. 규칙의 `fixHint`가 할 일이고, `researchCard`는 알아볼 것에 붙는다(5절). 주의 id는 이용자가 고른 것이 아니므로 `session.kept`에 남기지 않는다(옛 링크의 kept도 버린다). 충돌(`severity: 'conflict'`)은 공식 문서로 '이대로는 안 된다'가 확인된 조합만: 지금 자료에서 `conflict.paid-on-free`(무료 사용량이 없는 유료 도구: Heroku·Papago Translation), `conflict.key-in-static-page`·`conflict.key-on-public-host`(비밀 키가 화면 코드에 드러남, 제공처 문서가 금지: DeepL CORS 안내·Unsplash 가이드라인)뿐이다. 주의: `conflict.paid-free-usage`(매달 무료 사용량이 있는 도구, `cost.plan` = `free-usage`), `conflict.realtime-mismatch`, `conflict.personal-server`(해외·모름: 개인정보 보호법 제28조의8의 동의·처리방침 공개로 할 수 있음), `conflict.personal-region`(지역을 고르는 저장 도구: 서울을 고른다), `conflict.shared-without-login`(기록을 화면에 다시 보여 주지 않으면 됨, 같은 조건의 `safety.no-login-personal`이 설계도에 붙는다). 빈 칸 충돌은 늘 충돌, 직접 쓴 도구는 늘 주의다. 모든 충돌은 `Conflict.severity`에 적힌다.
+- **비용 갈래** (`cost.plan`, `conditions.ts` costPlan): `cost.free`면 `free`, 아니고 `cost.freeUsage`면 `free-usage`, 둘 다 아니면 `paid`. `freeUsage`는 공식 요금 문서로 확인한 것만 적는다(구글 지도 Dynamic Maps 월 1만 건, 네이버 지도 Dynamic Map 월 600만 건). 직접 쓴 도구는 모른다(값 없음).
+- **막힘 감사** (`node scripts/audit-blocks.ts [--list] [--seed n]`): 미리 짠 코스 다섯 + 무작위 답 300개마다 칸별 도구를 하나씩 바꿔 끼워(빈 칸은 이용자처럼 이름 없는 직접 쓴 도구로) `canIssue`가 거짓인 조합을 센다. 규칙을 바꾸면 돌려서 되는 조합이 막히지 않는지 본다. 2026-10-14 기준 4,116개 중 막힘 2,373개 → 476개(코스 22 → 10, 남은 것은 모두 Heroku·Papago 0원 충돌과 키 노출 충돌).
 - 나중으로 미룬 칸은 비어 있어도 충돌이 아니다.
 - 이용자가 '그대로 가기'(아래 한 줄: "'알아볼 것'에 적어 둘게요.")를 고르면 `session.kept`에 충돌 id가 들어간다. 화면 상태는 서행이다.
 - `mustFill` 칸(화면)이 비면 그 충돌은 `keepable: false`다. 그대로 갈 수 없고, 상품을 골라야 한다 (화면: 통행 불가).
-- **`anchorSlot`**: 지도에서 막힌 곳을 붙일 칸. 규칙 충돌은 규칙의 `anchorSlot`이 **지금 열린 칸일 때만** 넘긴다. 없거나 열리지 않은 칸이면 키도 없다 = 길 전체 (예: 유료 도구). 빈 칸 충돌은 그 칸 id다. 지금 자료: realtime-mismatch → `slot.data`, personal-server → `slot.store`, key-in-static-page·key-on-public-host → `slot.host`(고치는 곳이 배포·공유), shared-without-login·paid-on-free → 없음 (고치는 곳이 목적지 답이나 길 전체). 엔진이 채운 빌더의 게시 기능은 어떤 규칙 조건에도 맞지 않는다(10절).
+- **`anchorSlot`**: 지도에서 막힌 곳을 붙일 칸. 규칙 충돌은 규칙의 `anchorSlot`이 **지금 열린 칸일 때만** 넘긴다. 없거나 열리지 않은 칸이면 키도 없다 = 길 전체 (예: 유료 도구). 빈 칸 충돌은 그 칸 id다. 지금 자료: realtime-mismatch → `slot.data`, personal-server·personal-region → `slot.store`, key-in-static-page·key-on-public-host → `slot.host`(고치는 곳이 배포·공유), shared-without-login·paid-on-free·paid-free-usage → 없음 (고치는 곳이 목적지 답이나 길 전체). 엔진이 채운 빌더의 게시 기능은 어떤 규칙 조건에도 맞지 않는다(10절).
 - **`deferrable`**: 빈 칸 충돌에서 그 칸이 나중으로 미룰 수 있는 칸(`deferrable`)이면 `true`. 화면은 이 막힌 곳에 '나중으로 미루기'를 함께 보인다. 미루면 그 칸은 충돌이 아니므로 막힌 곳이 사라진다.
-- **출발 가능** (`canIssue`) = 목적지 질문이 끝났고, 모든 충돌이 kept. 화면의 '출발하기' 버튼이 이 값으로 켜진다.
+- **출발 가능** (`canIssue`) = 목적지 질문이 끝났고, 모든 충돌이 kept (주의는 처음부터 kept). 화면의 '출발하기' 버튼이 이 값으로 켜진다.
 
 **먼저 만들 것 / 나중에 붙일 것 나누기** (`suggestSplit`):
 - 난이도 = 장바구니 상품 난이도의 합 (같은 상품은 한 번).
@@ -122,7 +125,7 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 
 **알아볼 것** (`research`, 설계도 9번 '만들기 전에 알아볼 것'. id가 같으면 앞의 것만):
 1. 조건이 맞는 `research` 규칙의 카드 (규칙 순서)
-2. kept인 규칙 충돌의 `researchCard`
+2. kept인 규칙 충돌·주의의 `researchCard`
 3. kept인 빈 칸 충돌 → `templates.emptySlot.research`로 만든 항목, id `research.empty:칸id`
 4. 장바구니의 색인 상품(원문만 있는 도구) → `templates.indexResearch`로 만든 항목, id `research.index:상품id` (직접 쓴 도구는 빼고)
 5. 장바구니의 직접 쓴 도구 → `research.custom:custom-n` (9절)
@@ -197,7 +200,7 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 
 **직접 쓴 도구** (`customProduct`, 카탈로그에 넣지 않는다):
 - `cartProducts(cat, ids, customTools)`가 `custom-n`을 '모름' 도구로 만든다: `custom: true`, `layer: 'index'`, 기능 = 쓴 칸의 기능, `serverRegion: 'unknown'`, `recommendable: false`, 제공 `generic`, 난이도 `scoring.unknownDifficulty`(2), 준비 시간 없음(→ `unknownSetupMinutes` 60), 링크·필요 개념·막힘·지시 없음. 준비물은 한 줄 `templates.customTool.prep`("{{name}}: 가입이나 키가 필요한지 먼저 확인", `lead: 'unknown'` → `leadLabels.unknown` '걸리는 시간 모름'): 설계도 8번이 '따로 가입하거나 발급받을 것이 없다'고 단정하지 않게(T37 검토, 골든 case-28·29). 이름이 비면 `templates.customTool.hiddenName`('직접 쓴 도구').
-- **규칙 조건**: 모르는 사실(`provider.type`·`access`·`realtime`·`cost.free`·`keyExposureRisk`·`publicKey`)은 `productField`가 값 없음을 돌려줘 `is`·`in`이 맞지 않는다. 그래서 유료·키 노출·실시간 막힌 곳이 켜지지 않는다(모르는 도구에 사실을 단정하지 않는다). 서버 위치만 `unknown`이라 개인정보 막힌 곳(`conflict.personal-server`)은 켜진다. `custom` 칸은 참이라 `safety.custom-tool`이 켜진다.
+- **규칙 조건**: 모르는 사실(`provider.type`·`access`·`realtime`·`cost.free`·`cost.plan`·`keyExposureRisk`·`publicKey`)은 `productField`가 값 없음을 돌려줘 `is`·`in`이 맞지 않는다. 그래서 유료·키 노출·실시간 막힌 곳이 켜지지 않는다(모르는 도구에 사실을 단정하지 않는다). 서버 위치만 `unknown`이라 개인정보 주의(`conflict.personal-server`)는 켜진다. `custom` 칸은 참이라 `safety.custom-tool`이 켜진다.
 - **도구 고르기** (`rankSlot`): 칸을 채운다(`filledBy`에 `custom-n`). 후보·점수·추천·비교에는 끼지 않는다. `SlotRanking.custom` = 그 칸 기능의 직접 쓴 도구(쓴 순서, 장바구니에 없어도).
 - **맞춰 보기**: 열린 칸을 채운 직접 쓴 도구마다 `conflict.custom-tool:custom-n`(`kind: 'custom-tool'`, `customTool`, `anchorSlot` = 그 칸, `keepable: true`, **늘 `kept: true`**). 쓰는 순간 확인 못 한 길을 고른 것이라 출발(`canIssue`)을 막지 않는다. 문장 `templates.customTool.message`·`fixHint`(이름 없이 받은 도구는 `messageHidden`, 아래). 칸이 사라진 직접 쓴 도구는 서행 없이 '어디에도 쓰이지 않는 도구'(`orphans`)다.
 - **알아볼 것**: 도구마다 `research.custom:custom-n` = 조사 카드 `templates.customTool.researchCard`의 본문 + 머리 `templates.customTool.researchArea`({{name}}). 영수증 링크로 받아 이름 자리가 `hiddenName`인 도구(`nameHidden`)는 '직접 쓴 도구 확인하기: 직접 쓴 도구'처럼 겹치지 않게 `researchAreaHidden`·`messageHidden`을 쓰고 7번에 `customTool.mark`를 붙이지 않는다. 그 도구의 '무엇을 확인' 앞과 7번 메모에는 `customTool.memoHidden`(어떤 도구인지 먼저 물어보게)을 쓴다. `research.index:*`는 만들지 않는다.

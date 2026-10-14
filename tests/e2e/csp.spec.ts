@@ -26,9 +26,10 @@ test('CSP: 코스 → 설계도 받기 → 설계도 내려받기', async ({ pag
   await page.locator('.action-bar .btn-issue').click();
   await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
-  // 처음 받은 설계도 알림이 한 번 나온다 (출력 연출은 v4 D96에서 걷었다)
+  // 처음 받은 설계도 알림이 한 번 나온다 (출력 연출은 v4 D96에서 걷었다).
+  // 알림이 바로 나오므로 단계 줄·상태 한 줄의 150ms 나타나기가 아직 돌 수 있다: 그보다 긴 연출만 없으면 된다
   await expect(page.locator('#cc-live')).toContainText(ko.receipt.arrived);
-  expect(await longAnimations(page, 0)).toEqual([]);
+  expect(await longAnimations(page)).toEqual([]);
   await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: ko.receipt.download }).click();

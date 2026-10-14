@@ -113,7 +113,7 @@ for (const size of SIZES) {
     });
 
     test('도구끼리 맞춰 보기: 제목·막힌 곳의 버튼·주 버튼', async ({ page }) => {
-      await open(page, '/check', golden('case-04'));
+      await open(page, '/check', golden('case-09'));
       await expectTop(page);
       await expectVisibleNow(page, page.locator('.check h1'), 'H1');
       await expectVisibleNow(page, page.locator('#ck-jams'), '막힌 곳 제목');

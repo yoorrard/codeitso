@@ -14,6 +14,8 @@ export type ProductField =
   | 'serverRegion'
   | 'layer'
   | 'cost.free'
+  /** cost에서 정하는 값: free · free-usage(매달 무료 사용량, 결제 수단 필요) · paid (D101) */
+  | 'cost.plan'
   | 'keyExposureRisk'
   | 'publicKey'
   | 'recommendable'
@@ -128,7 +130,8 @@ export interface Product {
   goodFor?: string[];
   provider: { type: 'official' | 'community' | 'unofficial' | 'generic'; name: string };
   access: Access;
-  cost: { free: boolean; note: string };
+  /** freeUsage: free가 false인데 매달 무료 사용량이 있다 (공식 요금 문서로 확인, D101) */
+  cost: { free: boolean; freeUsage?: true; note: string };
   freeLimit?: string;
   realtime?: 'realtime' | 'frequent' | 'daily' | 'static';
   serverRegion: 'none' | 'local' | 'kr' | 'overseas' | 'selectable' | 'unknown';
@@ -194,6 +197,8 @@ export interface ConflictRule extends RuleBase {
   researchCard: string;
   /** 지도에서 이 막힌 곳을 붙일 칸 id. 없으면 길 전체 (예: 유료 도구) */
   anchorSlot?: string;
+  /** 'warning'이면 주의: 설정·선택으로 풀 수 있어 출발을 막지 않는다 (처음부터 kept). 없으면 충돌 (D101) */
+  severity?: 'warning';
 }
 export interface ResearchRule extends RuleBase {
   type: 'research';

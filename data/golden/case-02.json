@@ -1,6 +1,6 @@
 {
   "id": "case-02",
-  "title": "학급 신청서 (학생 정보, 해외 서버 충돌을 그대로 둠)",
+  "title": "학급 신청서 (학생 정보, 해외 서버 주의)",
   "note": "앱스 스크립트 하나가 저장과 배포 칸을 함께 맡는다.",
   "answers": {
     "q.type": "form",
@@ -15,7 +15,6 @@
     "q.style": "cute"
   },
   "cart": ["html-single", "google-sheets-apps-script"],
-  "kept": ["conflict.personal-server"],
   "expect": {
     "asked": [
       "q.type",

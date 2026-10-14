@@ -44,13 +44,13 @@ function ctxOf(parts: Partial<Ctx> = {}): Ctx {
 }
 
 function ruleConflict(id: string, kept: boolean, researchCard?: string): Conflict {
-  const c: Conflict = { id, kind: 'rule', message: `${id} 충돌`, fixHint: `${id} 고치기`, keepable: true, kept };
+  const c: Conflict = { id, kind: 'rule', severity: 'conflict', message: `${id} 충돌`, fixHint: `${id} 고치기`, keepable: true, kept };
   if (researchCard !== undefined) c.researchCard = researchCard;
   return c;
 }
 
 function emptyConflict(slotId: string, kept: boolean): Conflict {
-  return { id: `conflict.empty-slot:${slotId}`, kind: 'empty-slot', message: '빈 칸', fixHint: '담기', slotId, keepable: true, kept };
+  return { id: `conflict.empty-slot:${slotId}`, kind: 'empty-slot', severity: 'conflict', message: '빈 칸', fixHint: '담기', slotId, keepable: true, kept };
 }
 
 /** 답 하나로 태그를 한꺼번에 주는 질문 */

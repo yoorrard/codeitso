@@ -24,7 +24,13 @@ export function tagsWithPrefix(tags: Record<string, number>, prefix: string): st
 }
 
 /** 직접 쓴 도구(custom)가 모르는 사실: 규칙 조건에서 값이 없다 → is·in 조건이 맞지 않는다 (input.md 8.2절) */
-const UNKNOWN_FOR_CUSTOM: ReadonlySet<ProductField> = new Set<ProductField>(['provider.type', 'access', 'realtime', 'cost.free', 'keyExposureRisk', 'publicKey']);
+const UNKNOWN_FOR_CUSTOM: ReadonlySet<ProductField> = new Set<ProductField>(['provider.type', 'access', 'realtime', 'cost.free', 'cost.plan', 'keyExposureRisk', 'publicKey']);
+
+/** 비용 갈래 (D101): 무료로 시작 · 매달 무료 사용량이 있지만 결제 수단을 건다 · 처음부터 돈이 든다 */
+export function costPlan(p: Product): 'free' | 'free-usage' | 'paid' {
+  if (p.cost.free) return 'free';
+  return p.cost.freeUsage === true ? 'free-usage' : 'paid';
+}
 
 export function productField(p: Product, field: ProductField): Scalar | undefined {
   if (p.custom === true && UNKNOWN_FOR_CUSTOM.has(field)) return undefined;
@@ -41,6 +47,8 @@ export function productField(p: Product, field: ProductField): Scalar | undefine
       return p.layer;
     case 'cost.free':
       return p.cost.free;
+    case 'cost.plan':
+      return costPlan(p);
     case 'keyExposureRisk':
       return p.keyExposureRisk;
     case 'publicKey':

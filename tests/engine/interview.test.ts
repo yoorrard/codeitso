@@ -97,6 +97,8 @@ describe('조건: 장바구니', () => {
     { field: 'serverRegion', hit: { serverRegion: 'kr' }, miss: {}, is: 'kr', in: ['kr', 'local'] },
     { field: 'layer', hit: { layer: 'index' }, miss: {}, is: 'index', in: ['index'] },
     { field: 'cost.free', hit: { cost: { free: false, note: '유료' } }, miss: {}, is: false, in: [false] },
+    { field: 'cost.plan', hit: { cost: { free: false, note: '유료' } }, miss: {}, is: 'paid', in: ['paid'] },
+    { field: 'cost.plan', hit: { cost: { free: false, freeUsage: true, note: '매달 1만 건 무료' } }, miss: { cost: { free: false, note: '유료' } }, is: 'free-usage', in: ['free-usage'] },
     { field: 'keyExposureRisk', hit: { keyExposureRisk: true }, miss: {}, is: true, in: [true] },
     { field: 'publicKey', hit: { publicKey: true }, miss: {}, is: true, in: [true] },
     { field: 'recommendable', hit: { recommendable: false }, miss: {}, is: false, in: [false] },
@@ -116,6 +118,14 @@ describe('조건: 장바구니', () => {
     const free = product('p.free');
     expect(evalCondition({ cartAny: { field: 'cost.free', is: true } }, ctx({ cart: [paid] }))).toBe(false);
     expect(evalCondition({ cartAny: { field: 'cost.free', is: true } }, ctx({ cart: [paid, free] }))).toBe(true);
+  });
+
+  it('cost.plan: 무료로 시작하면 free, 무료 사용량이 있으면 free-usage, 아니면 paid (D101)', () => {
+    expect(productField(product('p.free'), 'cost.plan')).toBe('free');
+    // free가 참이면 freeUsage는 보지 않는다
+    expect(productField(product('p.both', { cost: { free: true, freeUsage: true, note: '무료' } }), 'cost.plan')).toBe('free');
+    expect(productField(product('p.quota', { cost: { free: false, freeUsage: true, note: '매달 무료' } }), 'cost.plan')).toBe('free-usage');
+    expect(productField(product('p.paid', { cost: { free: false, note: '유료' } }), 'cost.plan')).toBe('paid');
   });
 
   it('갱신 주기가 없는 상품은 realtime is·in 모두 거짓', () => {

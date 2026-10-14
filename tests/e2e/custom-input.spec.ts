@@ -513,10 +513,10 @@ test('"수파베이스" → 이미 목록에 있는 도구예요: Supabase → [
 });
 
 test("막힌 곳 '바꾸기' 끝 [목록에 없는 도구 쓰기 ›] → 2단계 그 칸, 도구 이름 칸이 펼쳐지고 초점이 글 칸 (주소의 write는 뗀다)", async ({ page }) => {
-  // 사례 03: 실시간이 필요한데 고른 데이터 도구가 하루 단위 → 외부 데이터를 직접 쓴 도구로 바꾸면 풀린다
+  // 사례 03에서 데이터 도구를 빼면 외부 데이터 칸이 빈다 → 직접 쓴 도구로 채우면 풀린다 (실시간 차이는 D101 뒤로 주의라 막지 않는다)
   const c = golden('case-03');
-  await openAt(page, '/check', { answers: c.answers, cart: c.cart });
-  const jam = page.locator('.ck-jam[data-conflict="conflict.realtime-mismatch"]');
+  await openAt(page, '/check', { answers: c.answers, cart: c.cart.filter((id) => id !== 'fsc-stock') });
+  const jam = page.locator('.ck-jam[data-conflict="conflict.empty-slot:slot.data"]');
   const write = jam.locator('.ck-write');
   await expect(write).toContainText(ko.check.writeTool);
   await expect(write).toHaveAttribute('href', '/waypoints?slot=slot.data&write=1');
@@ -530,10 +530,10 @@ test("막힌 곳 '바꾸기' 끝 [목록에 없는 도구 쓰기 ›] → 2단�
   await expect.poll(() => new URL(page.url()).search).toBe('?slot=slot.data');
 });
 
-test("직접 써도 풀리지 않는 막힌 곳(서버 위치를 몰라 남는 개인정보 막힌 곳)에는 [목록에 없는 도구 쓰기 ›]를 달지 않는다", async ({ page }) => {
-  const c = golden('case-04');
+test("직접 써도 풀리지 않는 막힌 곳(직접 쓴 배포 도구로는 키를 숨길 수 없어 남는 키 노출 충돌)에는 [목록에 없는 도구 쓰기 ›]를 달지 않는다", async ({ page }) => {
+  const c = golden('case-09');
   await openAt(page, '/check', { answers: c.answers, cart: c.cart });
-  const jam = page.locator('.ck-jam[data-conflict="conflict.personal-server"]');
+  const jam = page.locator('.ck-jam[data-conflict="conflict.key-in-static-page"]');
   await expect(jam).toBeVisible();
   await expect(jam.locator('.ck-write')).toHaveCount(0);
   // 바꾸기·그대로 가기는 그대로 있다
@@ -657,7 +657,7 @@ for (const scheme of ['light', 'dark'] as const) {
     expect(await layoutIssues(page)).toEqual([]);
     expect(await serious(page)).toEqual([]);
     const c = golden('case-03');
-    await page.evaluate((s) => localStorage.setItem('cc:session:v1', JSON.stringify({ kept: [], deferred: [], ...s })), { answers: c.answers, cart: c.cart });
+    await page.evaluate((s) => localStorage.setItem('cc:session:v1', JSON.stringify({ kept: [], deferred: [], ...s })), { answers: c.answers, cart: c.cart.filter((id) => id !== 'fsc-stock') });
     await page.goto('/check');
     await islandsReady(page);
     await expect(page.locator('.ck-jam .ck-write').first()).toBeVisible();

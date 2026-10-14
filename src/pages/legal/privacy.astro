@@ -1,9 +1,14 @@
 ---
 // 개인정보 처리방침 초안 /legal/privacy (R-74, T17). 정식 출시 전 사람이 최종 문구를 확인한다 (docs/HUMAN.md H04).
+// 정적 호스트(PUBLIC_HOST=static)는 집계·방문 통계가 없으므로 해당 묶음 본문을 ko.legal.privacyStatic으로 바꿔 낸다.
 import Base from '../../layouts/Base.astro';
 import { ko } from '../../copy/ko.ts';
+import { HOST } from '../../lib/stage.ts';
 
 const L = ko.legal;
+// 서버 없는 정적 호스트면 익명 집계·방문 통계·맡기는 곳 묶음을 '이 주소에서는 세지 않아요'로 바꾼다 (설계서 9.4절)
+const swap: Partial<Record<string, string>> = HOST === 'static' ? L.privacyStatic : {};
+const items = L.privacy.map((x) => ({ h: x.h, p: swap[x.id] ?? x.p }));
 ---
 
 <Base title={L.privacyTitle}>
@@ -11,7 +16,7 @@ const L = ko.legal;
     <p class="review-banner" role="note">{L.reviewing}</p>
     <h1>{L.privacyTitle}</h1>
     {
-      L.privacy.map((x) => (
+      items.map((x) => (
         <>
           <h2>{x.h}</h2>
           <p>{x.p}</p>

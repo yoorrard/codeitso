@@ -228,9 +228,93 @@
 - 할 일: 렌더 장치 `npm run art`(three는 devDependency만), `Art.astro`, 청사진 자리 표시. 소유자 그림이 오면 굽는다.
 - 완성 확인: GLB 하나를 구워 투명 PNG가 나옴, 예산, `art:sheet` 견본을 직접 봄.
 
-### [ ] T34 점검과 문서
+### [ ] T34 점검과 문서 (v3에서 T42에 합침)
 - 읽을 것: CONCEPT 10절 · 먼저: T24~T33
 - 완성 확인: check·build·e2e·qa:shots(밤 포함)·qa:budget, `a11y-perf-auditor`·`ko-copy-editor`·`reader-tester` 검토, PRD·DESIGN·UX·OBSERVATION 정리.
+
+## v3: 처음부터 공개한 뒤까지 (D73~D84)
+
+정본은 `docs/review/v3/brief.md`(2판). 짝 문서(`docs/review/v3/` design·aitools·services·input·launch·companions)는 세부 값의 정본이고, 어긋나면 설계서를 따른다. 에이전트 하나가 한 묶음을 맡는다.
+
+```text
+T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 쓰기 화면 ─┐
+           ├─▶ T38 디자인 정하기 (자료·엔진은 바로, 화면은 T37 부품 뒤) ─┤
+           ├─▶ T39 만들기 안내 ─────────────────────────────────────────┤
+           └─▶ T41 출시 준비 (T40과 겹치는 4단계 아래 막대는 T40 뒤) ──┤
+                                         T36 + T38 + T39 ─▶ T40 다음 할 일·AI 설정 파일
+                                                         모두 ─▶ T42 실측 검수와 마무리
+```
+
+모든 묶음에 공통: 시작할 때 설계서의 해당 절을 DECISIONS·CONCEPT·PRD에 먼저 옮기고, 끝나면 맨 아래 진행 기록에 한 줄. `data/questions.json`·`data/templates.json`·`src/copy/ko.ts`는 한 번에 한 묶음만 커밋한다. 화면을 바꾼 묶음은 `/visual-qa`(360·768·1280, 밤, 동작 줄이기, 글자 200%)와 키보드만으로 끝까지. 새 지연 묶음은 만들 때 `qa:budget`에 줄을 더한다.
+
+### [ ] T35 기반: 덜기 · 주소 바탕 · 바로 고칠 것 (P0, M)
+- 읽을 것: 설계서 3.5·3.6·8.1·9·10·12·14절, `launch.md` L-01·L-04·L-08·L-30 · 먼저: 없음
+- 할 일:
+  - 문서 옮기기: D73~D84, PRD R-18a·R-33·R-35·R-36·R-37·R-60 주석·R-75 주석, CONCEPT 3절 새 낱말('모름' 계열 셋, 때 이름 다섯, 공개하기, 결제 카드, 화면 밝기), HUMAN H13~H23(H14를 맨 위로, H10 합침), 이 묶음 목록과 아래 날짜 줄
+  - `npm run words`에 쓰지 않는 말: 공개 저장소 · 누구나 고칠 · 테마 · 프리뷰 · 팔레트 · 커스텀 · 폰트 · 가이드 · 튜토리얼 · 체크리스트 · 온보딩 · 길잡이 · 다크 모드 · 화면 올리기('가이드'만 화면·설계도 문장, 나머지는 모든 자료 문장, D85). 낱말표(`aliases.json`·`looks.json` `keywords`)는 뺀다
+  - 같은 말들을 `data/aliases.json` `searchSynonyms`(+ 스키마)에 넣어 사전 검색이 받게 한다(3.5절)
+  - L-08 덜기: 4단계 칸 지연, 엔진·자료 묶음 쪼개기를 재 보고 효과 있는 것만(잰 값은 DECISIONS)
+  - 9.4절 주소 바탕(`PUBLIC_BASE_PATH`)과 호스트 종류(`PUBLIC_HOST`), `manifest` 끝점, 바닥선 규칙
+  - L-01 소개 문구, L-04 정식 빌드 지킴, 바닥글 한 줄(9.1), README, `_redirects` 옛 주소와 시험 지우기, L-30 문서 어긋남, `LICENSE` 옛 허락 문장(한국어·영어), CLAUDE.md '지금 상태' 숫자
+- 완성 확인: `qa:budget` 단계 화면 넷 모두 130KB 이하·홈 100KB 이하, `check`·`build`·`e2e`, 9.4절 빌드 시험과 `base-path.spec.ts`, `PUBLIC_STAGE=release`인데 `PUBLIC_SITE_URL`이 없으면 한국어 한 줄로 빌드 실패, `grep -rn "공개 저장소\|누구나 고칠" src dist`가 0줄, 사전 검색 단위 시험("테마"·"다크모드"·"폰트"·"가이드"가 결과를 냄)
+- 검토: a11y-perf-auditor, ko-copy-editor
+
+### [ ] T36 직접 쓰기: 자료와 엔진 (P0, L) — `input.md` I1·I2
+- 먼저: T35
+- 할 일: 설계서 7.7절 자료 전부 + '쓰는 AI' 세 질문(에이전트는 세 무리, 보기마다 `{ tool, surface }`) + `q.ai` `builder` 보기·`ai.builder` 자료 + `q.type` '아직 못 정했어요' → '아직 안 정했어요'. `aliases.json`(T35의 `searchSynonyms`와 같은 파일) 질문별 낱말·`toolHints`·`gaps` + 스키마 + 충돌 검사. 엔진 `match.ts`·`custom.ts`, 세션 `notes`·`customTools`·`gaps`, `normalizeSession` 한도, 영수증 링크 `x`·`g`. B-02: `ai.builder`의 배포 칸 = `builder-publish`, `research.builder-publish`, 배포 칸 막힌 곳 규칙 끄기. 골든 case-24~31, ENGINE.md 새 절 둘, `/about/criteria` 한 줄
+- 완성 확인: `golden` 기존 23개 그대로 + 새 8개, 찾기 표 단위 시험(맞춘 묶음 73 모두, 맞추지 않은 27 중 24 이상, 오답 0), 돈 읽기·영문 자판·부정어·직접 쓴 도구의 서행·'0원 + 확인 필요'·링크에 글 없음·`ai.builder`면 배포 칸에 GitHub Pages·Cloudflare 추천 없음, 엔진 시험 범위 90% 이상, `examples`의 1번이 "직접 쓰기"를 찍지 않음
+- 검토: engine-guardian, ko-copy-editor
+
+### [ ] T37 직접 쓰기: 화면 (P0, L) — `input.md` I3·I4
+- 먼저: T36
+- 할 일: `CustomAnswer.tsx`(찾기 + 낱말표는 `import()`), `Interview.tsx`, 연필 SVG 아이콘, '모름' 계열 셋, 2단계 '목록에 없는 도구 쓰기', 3단계 서행 줄과 막힌 곳 '바꾸기' 끝의 [목록에 없는 도구 쓰기 ›], 지난 영수증 이름, 지도 이름표, 도구 모음 0건 한 줄, 2단계 꼬리표 "승인 기다림 · 며칠"·"결제 카드 필요", UX.md 6.5~6.7·RECEIPT.md
+- 완성 확인: e2e `custom-input.spec.ts`, axe 심각·치명 0, 360px 가로 스크롤 0, 44px 미만 버튼 0, 찾기 묶음 8KB 이하·단계 화면 130KB 이하, 사진(360 밝게·어둡게, 글자 200%)
+- 검토: game-ux-designer, a11y-perf-auditor, ko-copy-editor, reader-tester
+
+### [ ] T38 디자인 정하기 (P0 + P1 `/looks`·견본, L) — `design.md`
+- 먼저: T35 (화면은 T37 부품 뒤)
+- 할 일: `looks.json` + 스키마 + 80쌍 대비 검사(4.6 이상) + 라이선스 허용 목록, `look.ts`, `templates.look`, `q.style` 보기 둘 · alt, 1단계 "색·글꼴 더 정하기" 시트(`LookSheet` 지연)·`LookPreview`·`look.css`, 4단계 디자인 묶음과 DESIGN.md 내려받기, 설계도 6번 11묶음 + CSS, AI에게 할 말 두 장. P1: `/looks`, 견본 SVG, '내 말로' 넓히기, THIRD_PARTY_NOTICES·크레딧
+- 완성 확인: `validate`(80쌍 4.6:1·테두리 3.1:1), DESIGN.md 린트 0/0, e2e `look.spec.ts`와 '바라는 점' 초점, 디자인 묶음 14KB·`/looks` 섬 4KB 이하, 사진
+- 검토: game-ux-designer, a11y-perf-auditor, ko-copy-editor, svg-illustrator
+
+### [ ] T39 만들기 안내 (P0 자료·화면, P1 2순위 승격, L) — `aitools.md` X1·X4 + `services.md` + `companions.md` 8
+- 먼저: T35
+- 할 일: `guides.json` + 스키마(5.2절) + 검사 여덟(5.3절), 5.4절 첫 안내 목록(업데이트·훅 안내와 앱 안 에이전트 카드 포함), `check-guides.ts`(`--strict`·`--coverage`)·`check-guide-versions.ts`·`guides-watch.yml`·`/add-guide` 스킬, 가입 나이 `minAge`(원문 없으면 숫자 없이), `/guides`·`/guides/[id]`, 도구 상세 '시작하기' 칸, 사전 '안내' 묶음과 색인, 에러 카드 여섯, 어려운 말 새 말(배포·어두운 화면의 같은 말), `cc:guides:v1`·`cc:prefs:v1.os`, `src/lib/progress.ts`의 `lineDone`·`progressCount`. C01 증거 채우기(H14 뒤, 막혀도 멈추지 않음)
+- 주의: 공식 메뉴·설정 이름에 쓰지 않는 말이 들어 있으면(VS Code '색 테마', 기기 설정 '다크 모드' 같은 것) 원문 그대로 `guides.json`의 따로 둔 칸(예: `menuPath`·`uiName`)에만 쓰고 `scripts/guard/check-words.ts` `SKIP`에 그 칸을 더한다. 설명 문장은 '어두운 화면'·'글꼴'로 쓴다 (D85). 새 화면 문장의 '배포'는 '공개하기'로 쓴다 (CONCEPT 3.10절)
+- 완성 확인: `validate`, `guides --today=2026-11-20` 경고·`--strict` 통과·`--coverage` 표, 단위 시험(`selectGuides`, `progressCount`, `minAge` 표시), e2e `guides.spec.ts`, 섬 5KB 이하·`/guides`에 엔진 없음, 사진
+- 검토: ko-copy-editor, reader-tester, a11y-perf-auditor
+
+### [ ] T40 다음 할 일 · AI 설정 파일 · 설계도 넓히기 (P0, L) — `aitools.md` X2·X3 + `services.md` 11 + `companions.md` 6.6·7
+- 먼저: T36, T38, T39
+- 할 일: 엔진 `nextSteps()`·`stepChecks()`·`renderAiSetup()`, 템플릿, R-35 `saveAs`·`packRef`를 `docs/codechauffeur-plan.md`로, AI 설정 파일(6.1절), 설계도 머리말·8·10·11·12번, 4단계 칸 넷과 아래 막대 주 버튼을 AI 종류별로(`arrival-view.ts`), '다음 할 일' 섬(지연), AI에게 할 말 9장 묶음 넷과 괄호 입력 칸, 연습 단계 AI 채팅 칩과 가입 카드, E-01 `card_copy` 구간 여섯 + Worker 시험 + 처리방침 문장, `cc:prep:v1`
+- 완성 확인: 6.4절 단위 시험, 영수증 '준비물 n개' 그대로, `golden` 그대로, `examples` 길이 상한, e2e `arrival-v3.spec.ts`, 다음 할 일 12KB·AI 설정 파일 10KB·`/arrival` 130KB 이하, 사진(360 + 글자 125%·200% 칸 고르개 라벨)
+- 검토: engine-guardian, reader-tester, ko-copy-editor, a11y-perf-auditor
+
+### [ ] T41 출시 준비 (P0 + P1, L) — `launch.md` R3~R8
+- 먼저: T35 (4단계 아래 막대는 T40 뒤)
+- 할 일: P0 L-02 공유 미리 보기 · L-03 사이트맵·robots·`noindex` · L-05 앱 안 브라우저 · L-06 의견 보내기([메일 주소 복사] 포함, `src/lib/feedback.ts`를 넓힘). P1 설계서 8.2절 전부(도움·정보, 설정의 화면 밝기·글자 크기·묶음, 기록, 인쇄, 운영, 앱 안 토큰 둘). 처리방침·이용 안내 초안(9.1·9.2절, 이용 안내 '라이선스'는 사이트 · 받아 간 결과물 두 문단), `launch:check`
+- 완성 확인: `launch:check`, e2e(앱 안 사용자 에이전트 셋, 의견 메일에 `#r=` 없음, 화면 밝기·글자 125%, 기록 왕복, 만들다 만 앱), 인쇄 A4 2~4쪽, Lighthouse 모바일 접근성 100, `/og/default.png` 1200×630·100KB 이하
+- 검토: a11y-perf-auditor, ko-copy-editor, game-ux-designer, reader-tester
+
+### [ ] T42 실측 검수와 마무리 (P0, M) — 소유자 요청 (7), T34를 합침
+- 먼저: T35~T41
+- 할 일: 브라우저 도구 고르기(Claude in Chrome · 내장 브라우저 · 컴퓨터 사용, 없으면 헤드리스 Chromium이라고 보고서 첫 줄에), 미리 짠 코스 다섯 + 직접 쓴 앱·도구 + 웹에서 만드는 도구로 홈부터 설계도 받기까지 실측, 360·768·1280·밝게·어둡게·동작 줄이기·글자 200%·키보드만·콘솔 오류 0·바깥 요청 0, 받은 AGENTS.md·설계도 직접 읽기, `docs/OBSERVATION.md` 표(사람 줄은 H19), PRD·DESIGN·UX를 CONCEPT와 설계서에 맞추고 CLAUDE.md '지금 상태'를 v3 끝으로
+- 완성 확인: 표가 모두 채워짐, `check`·`build`·`qa:budget`·`e2e`·`launch:check`·`validate:release`(C01만 남는지), `.qa/v3/` 사진을 직접 봄
+- 검토: reader-tester, a11y-perf-auditor, game-ux-designer, ko-copy-editor를 나란히
+
+### 날짜가 정해진 일 (설계서 5.7절)
+
+안내 자료(`data/guides.json`, T39)를 그날에 맞춰 다시 본다. '지남'은 안내를 처음 쓸 때 반영한다.
+
+- [x] 2026-06-02 (지남) Windsurf → Devin Desktop 이름 바뀜, Cascade는 2026-07-01에 끝남 → `devin-desktop-start` (Windsurf는 '예전 이름' 한 줄만) [검색 요약]
+- [x] 2026-06-22 (지남) Firebase Studio 새 가입·새 작업 공간 막힘(Firestore·Authentication·Hosting은 영향 없음) → 어디에서도 Firebase Studio로 시작하는 길을 내지 않는다, `firebase-*` 카드는 그대로 [검색 요약]
+- [x] 2026-07-09 (지남) Codex 앱이 새 ChatGPT 데스크톱 앱(Chat · Work · Codex)에 합쳐짐, 옛 앱은 'ChatGPT Classic' → `codex-app-start` 카드, `codex-install`의 '조심할 것' [검색 요약, 2차 자료]
+- [ ] 2026-10-19 Antigravity 옛 워크플로(`.agents/workflows/`) 멈춤 → `antigravity-start` [검색 요약]
+- [ ] 2026-10-20 Node 24가 유지보수 LTS로 [저장소: nodejs/Release `schedule.json`]
+- [ ] 2026-10-28 Node 26이 LTS로(같은 날 v27 알파) → `requires.node`는 그대로(최소 판), 'LTS를 고르세요' 문장은 판 번호가 없어 고칠 것 없음 [저장소]
+- [ ] 2026년 말 Supabase 옛 키 이름(`anon`·`service_role`) 지원 끝 → `supabase-keys` [문서 도구]
+- [ ] 2027-03-22 Firebase Studio 종료(남은 자료 지움) → 위 2026-06-22 줄과 같음 [검색 요약]
+- [ ] 2027-04-30 Node 22 지원 끝 → `requires.node`가 22인 도구의 안내 [저장소]
 
 ## 자료 채우기 (C)
 
@@ -337,3 +421,9 @@
 2026-10-13 v2 W5b 출발 → 도착·단계 이동·용어 카드·조용히 모시기·효과음(D71): S5+S6 3000(arrival-plan.ts 시간표, 지도는 장면 때만 부르는 map/arrive.ts: 밤 주행 색 넘김·1.2배 기울여 따라가기·마디마다 뛰기와 ✓·전조등 두 번 깜빡임 + 빛·윤곽 실선·두루마리·깃발·시트, 영수증 섬은 같은 장면 시계로 --print-at, 출력 clip-path steps(14)·도장 ease-in, [건너뛰기]는 지도 띠 하나로), 첫 그림 전 html[data-depart](맞춰 보기에서 처음 출발할 때만, still = 동작 줄이기·조용히 모시기), S7 문서 간 전환(map·rail·topbar 제자리, 켜기를 머리 인라인 style로: 바깥 CSS면 크롬이 건너뛰던 것) + 새로 마친 단계 ✓ 톡·막대 채움(본 기록 done:단계), S9 용어 판 읽음 칠·왼쪽부터 채움·'20장 중 n장' 굴리기·'다 맞혔어요 ✓' 고리 빛, 효과음 다섯(삼각파 C장조 0.12), 시간 상한 시험(S5 ≤ 3000, 마디 한 번 ≤ 400·합 ≤ 1200, 번쩍임 2번), e2e scenes-arrival.spec.ts 17개, 프레임 띠 .qa/w5/s5·s6·s7·s9
 2026-10-13 v2 W5 검토 반영(D71): [건너뛰기]는 남은 1초 넘는 장면만(--dur-skip-min, 초점은 H1), 누르기 건너뛰기는 click 잡기 단계로, S5 차는 도구끼리 맞춰 보기의 자리에서 떠나 되돌아보기(카메라) → 마지막 접근(--ease-drive 하나) · 장면 동안 띠 아래 자르기 풂(data-driving, 가로는 clip) · 시트 inert · 밤/낮 두 애니메이션 · 애니메이션 시작 시각을 장면 0에 박음 · 모듈 받기 전 건너뛰면 돌지 않음, S6 출력은 종이가 보일 때(data-print=wait, IO, 미루면 cc:print-later로 장면 2300에 끝), S7 문서 간 전환 끔, S3 '전' 마디 통째 사본·날기 그림자, S4 숨쉬기 고르게(토막 곡선) + 마디·표지, S1 차 --ease-out, S8 화면 밖이면 굴리지 않음, 조용히 모시기 낭독은 상태 한 줄, 어두운 밤 한 단 더 어둡게. check 893·e2e 150·qa:budget(설계도 받기 135.4/140)·qa:shots 9라우트 통과, 프레임 띠 .qa/w5/s5d-*·s6d-scroll-*·s3-*·s4-*·end5-sheet.
 2026-10-13 v2 정리: 소유자 로고 기반 컨셉(D60~D71) 적용 끝. 단계 이름 '내 AI 써 보기 · 만들 앱 정하기 · 도구 고르기 · 도구끼리 맞춰 보기 · 설계도 받기', 벡터 로고, 색 문법, 공용 부품, 모든 화면, 지도 2차, 장면 S1~S9, 어려운 말 풀이 2판(212개). 단위 시험 893, e2e 150, axe 0, 예산 통과. 남은 것: T34 마지막 점검(reader-tester 검토, PRD·DESIGN 정리), 사람 확인(HUMAN.md)
+2026-10-14 T35 (1/3) 문서·말·검색 동의어·라이선스 문장: D73~D84 옮김 + D85(세부), PRD R-18a·R-33·R-35~R-37·R-60·R-75 주석, CONCEPT 3.9·3.10절('모름' 계열 셋·때 이름 다섯·공개하기·결제 카드·화면 밝기), HUMAN H13~H23(H14 맨 위·H10 합침·H12 한 줄), 이 파일 T35~T42와 날짜 줄. npm run words에 쓰지 않는 말 열넷(낱말표는 message만, aliases·keywords 칸은 안 봄), data/aliases.json searchSynonyms + 스키마 + 검사 + 색인 때 펼침('테마'·'다크모드'·'폰트'·'가이드'가 결과를 냄, 시험), 소개 '틀린 곳을 알려 주세요' + [의견 보내기](PUBLIC_CONTACT_EMAIL, src/lib/feedback.ts), 바닥글 '© 2026 코드쇼퍼' 한 줄·홈 시험판 줄 뺌(L-40), 이용 안내 라이선스 사이트 문단, README·LICENSE 옛 허락 문장·CLAUDE.md 숫자(도구 49·골든 23), ARCHITECTURE 1·3·4·7·9·12절(L-30). check·build·qa:budget·e2e 153 통과
+2026-10-14 T35 (2/3) 주소 바탕·호스트 종류·정식 빌드 지킴·옛 주소 지우기(D86): PUBLIC_BASE_PATH(astro base)·PUBLIC_HOST(cloudflare|static), routes.ts withBase·siteRoot·absoluteUrl·stripBase와 PATHS·ROUTES·FILES(모든 주소가 바탕을 거침), 기본 틀 아이콘·설명서 4곳·검색 색인·풀이 자료·EVENT_URL·사전 시트·canonical·영수증 링크(siteRoot + PATHS.arrival)·설계도 용어 주소, manifest 끝점(정적 파일·make-logo 쓰기 지움), robots 바탕, 정적 호스트는 집계·방문 통계·CSP 줄을 끄고 처리방침 셋을 '이 주소에서는 세지 않아요'로. 정식 빌드 지킴(scripts/lib/build-guard.ts, astro 통합: 빈·예시 사이트 주소·빈 연락처·dist의 예시 주소·(초안)·검토 중인 초안 → 한국어 한 줄로 실패, 바탕·호스트 꼴은 늘). 품질 바닥선 base-path 규칙. 시험: routes·stage·build-guard·base-scan 단위, npm run qa:base(.qa/dist-base 빌드 + href·src 검사), npm run e2e:base(base-path.spec.ts, 서버 --base·--dist, CI main·PR). public/_redirects 옛 주소 10줄·REDIRECTS 시험 지움. ARCHITECTURE 1·2·3·3.1·5·9·12절, DEPLOY 빌드 변수 표·6·7단계, CONCEPT 2.2, RECEIPT, RISKS, BACKLOG. check(단위 939)·build·qa:budget·e2e 153(한 번은 S5 장면 Tab 시험이 부하로 흔들려 다시 돌려 통과)·qa:base·e2e:base 2 통과. 정식 빌드에 사이트 주소가 없으면 한 줄로 실패함을 확인
+2026-10-14 T35 (3/3) 단계 화면 JS 덜기(L-08, D82): 자료 두 판 — src/lib/data.ts(섬: 용어 카드 엔진 칸만·에러 안내 없음·상품 출처 칸 없음, 없는 칸을 읽으면 멈춤)와 src/lib/data-full.ts(사전·용어 화면·색인 끝점), 나누기는 Vite 플러그인 scripts/lib/data-parts-plugin.ts(가상 모듈 셋, 규칙 src/lib/data-parts.ts, 새 의존성 없음). 4단계 칸 셋은 ReceiptTabs.tsx로 떼어 처음 열 때 import()(칸 이름 초점·포인터에 미리, 받는 동안 aria-busy·한 줄), 내려받기는 src/lib/pack-file.ts를 버튼 뒤 미리 받음, conversationCards는 엔진 cards.ts로(동작 같음). qa:budget 단계 화면 130KB + 지연 묶음 줄 셋(첫 묶음에 끼면 실패). /arrival 136.0→115.0 · /check 133.8→114.7 · /waypoints 131.0→111.9 · /destination 130.0→110.8 · /test-drive 106.7→87.6 · 홈 41.7. 시험: data-parts 단위(골든 23개에서 두 판 결과·영수증·설계도·카드 같음), e2e '칸을 열기 전에는 받지 않는다'. check(단위 969, 엔진 줄 99.7%)·build·qa:budget·e2e 154·e2e:base 2 통과 (전체 e2e 한 번은 S2 장면 시험이 부하로 흔들려 실패, 그 spec 단독 3번·전체 다시 돌려 통과)
+2026-10-14 T35 확인: check(969)·build·qa:budget(단계 화면 /arrival 115.0·/check 114.7·/waypoints 111.9·/destination 110.8KB, 홈 41.7KB)·e2e 154/154·e2e:base(바탕 검사 85쪽 + base-path 2/2)·정식 빌드 지킴(사이트 주소 없으면 한 줄로 멈춤)·qa:shots 5화면·키보드만으로 걷기(홈·소개·이용 안내·설계도 받기 칸 넷과 내려받기·사전 시트) 통과. 'grep 공개 저장소|누구나 고칠 src dist' 0줄을 글자 그대로 지키도록 자료의 GitHub 용어를 '공개한 저장소'·'비공개로 둔 저장소'로 바꾸고 쓰지 않는 말 규칙을 모든 문장으로 넓힘(D85 고침, 예시 다시 만듦). 골든 바뀜 없음.
+2026-10-14 T35 검토 반영(a11y-perf-auditor·ko-copy-editor): 실패한 import()는 브라우저가 기억해 다시 받지 못하므로 — 설계도 묶음(pack-file + pack.ts)을 /arrival 아래 막대 섬 첫 묶음으로 되돌려 주 버튼 내려받기가 망과 상관없이 같은 누름 안에서 끝나게 하고(downloadFailed 지움, 예산 줄은 '/arrival 말고 다른 단계 화면 첫 묶음에 끼면 실패'), 4단계 칸 셋(ReceiptTabs)은 영수증을 그린 뒤 쉬는 시간에 미리 받고 못 받으면 열린 칸에 한 줄 + [새로 고치기](알림 같은 말, 영수증 링크면 #r=를 되돌려 놓고 새로 고침). 정적 호스트의 소개 끝 줄(ko.about.stored/storedStatic, qa:base·base-path.spec이 봄), 소개 의견 메일 본문 = 빈칸 줄 '틀린 곳(도구나 용어 이름): '와 본문 문장, 처리방침 '방문 수도 보지 않아요', 사전 Firebase 풀이, CONCEPT 3.9절(막는 범위·검사 대상)·3.10절('배포' 적용 범위)·copy.md·TASKS T35 확인 줄·T39 주의, D82·D85 보탬. check(969)·build·qa:budget(/arrival 117.1·/check 114.7·/waypoints 111.9·/destination 110.8KB, 홈 41.8KB)·e2e 156/156(실패 길 시험 둘 더함)·e2e:base(85쪽 + 2)·정식 빌드 한 줄 실패·grep 0줄 통과. 골든 바뀐 것 없음
+2026-10-14 v3 T35 v3 기반: 문서 옮기기·주소 바탕·호스트 종류·첫 화면 덜기: 문서 옮기기(D73~D86, PRD·CONCEPT 3.10·HUMAN H13~H23·TASKS T35~T42)·쓰지 않는 말 14개·검색 동의어 aliases.json·소개 의견 메일·저작권 줄·README·LICENSE, 주소 바탕(PUBLIC_BASE_PATH·withBase)·호스트 종류(PUBLIC_HOST=static이면 집계 없음)·정식 빌드 지킴·옛 주소 지움·바탕 경로 지킴 규칙, 단계 화면 JS 덜기(자료 두 판·4단계 칸 지연). check 단위 969·골든 23/23·e2e 156/156·e2e:base 85쪽+2·qa:budget /arrival 117.1·/check 114.7·/waypoints 111.9·/destination 110.8KB(모두 130 이하), 홈 41.8KB. 골든 바뀜 없음

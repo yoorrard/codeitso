@@ -1,5 +1,5 @@
 // 성능 예산 검사 (docs/ARCHITECTURE.md 11절): 빌드한 dist/의 페이지마다
-//  - 처음 불러오는 자바스크립트 합계(gzip): 홈 100KB 이하, 다른 페이지 140KB 이하
+//  - 처음 불러오는 자바스크립트 합계(gzip): 홈 100KB 이하, 단계 화면 130KB 이하(D82, 설계서 L-08: v3 기능을 얹을 자리), 다른 페이지 140KB 이하
 //  - 처음 불러오는 CSS 합계(gzip): 30KB 이하 (CSS는 첫 화면 그리기를 막는다)
 //  - 그림·애니메이션 파일 합계: 300KB 이하 (<picture>와 srcset은 실제로 내려오는 하나만 센다)
 // 나중에 동적으로 불러오는 묶음(예: 지연 3D 장면)은 HTML에 드러나지 않으므로 따로 LAZY_LIMIT으로 본다.
@@ -8,6 +8,7 @@
 // 섬에는 지도 장면(D71)의 움직임 모듈(map/scene.ts 바뀐 것 견주기, map/rest.ts 서는 자리, scene.ts 건너뛰기)도 넣어 잰다: 모형은 키우지 않는다.
 // 어려운 말 풀이(brief 8절, D69)도 따로 본다: 풀이 섬 5KB · 자료(/glossary.json) + 매처 묶음 17KB · 도구 이름(/glossary-tools.json) 4KB.
 // 사전 검색 색인(/search-index.json)은 처음 찾을 때 받는다: 100KB (gzip).
+// 단계 화면에서 나중에 받는 묶음(D82): 4단계 칸 셋 3KB · 설계도 묶음 5KB · 풀이 칸 + 에러 안내 22KB. 단계 화면의 첫 묶음에 끼면 실패한다.
 //   npm run qa:budget
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
@@ -18,6 +19,9 @@ const DIST = join(ROOT, 'dist');
 const KB = 1024;
 const HOME_JS = 100 * KB;
 const PAGE_JS = 140 * KB;
+const STAGE_JS = 130 * KB;
+/** 단계 화면 (내 AI 써 보기 + 1~4단계) */
+const STAGE_ROUTES = new Set(['/test-drive/', '/destination/', '/waypoints/', '/check/', '/arrival/']);
 const CSS_LIMIT = 30 * KB;
 const MEDIA = 300 * KB;
 const LAZY_LIMIT = 200 * KB;
@@ -78,6 +82,8 @@ const walkJs = (dir: string): void => {
 walkJs(DIST);
 
 const usedFirst = new Set<string>();
+/** 단계 화면이 처음 불러오는 JS 조각 (조각 → 그 조각을 처음에 부르는 단계 화면들) */
+const stageFirst = new Map<string, Set<string>>();
 const rows: string[] = [];
 let failed = 0;
 for (const html of pages(DIST).sort()) {
@@ -97,6 +103,7 @@ for (const html of pages(DIST).sort()) {
   let inline = 0;
   for (const m of text.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)) inline += gzipSync(Buffer.from(m[1] ?? '')).length;
   for (const f of js) usedFirst.add(f);
+  if (STAGE_ROUTES.has(route)) for (const f of js) stageFirst.set(f, (stageFirst.get(f) ?? new Set<string>()).add(route));
   const jsTotal = [...js].reduce((a, f) => a + gzSize(f), 0) + inline;
 
   let cssTotal = 0;
@@ -127,7 +134,7 @@ for (const html of pages(DIST).sort()) {
     if (biggest) media.add(biggest);
   }
   const mediaTotal = [...media].reduce((a, f) => a + rawSize(f), 0);
-  const jsLimit = route === '/' ? HOME_JS : PAGE_JS;
+  const jsLimit = route === '/' ? HOME_JS : STAGE_ROUTES.has(route) ? STAGE_JS : PAGE_JS;
   const ok = jsTotal <= jsLimit && cssTotal <= CSS_LIMIT && mediaTotal <= MEDIA;
   if (!ok) failed += 1;
   rows.push(
@@ -188,6 +195,22 @@ for (const [name, n, limit] of lazyRows) {
   const ok = n > 0 && n <= limit;
   if (!ok) failed += 1;
   console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB${n === 0 ? ' (빌드에 없다)' : ''}`);
+}
+
+// 단계 화면에서 나중에 받는 묶음 (D82, 설계서 L-08): 크기와 함께, 단계 화면의 첫 묶음에 끼지 않았는지 본다.
+// 넷째 칸은 첫 묶음에 있어도 되는 단계 화면 하나: 설계도 묶음은 4단계 주 버튼이 망과 상관없이 내려받도록 /arrival 첫 묶음에 싣는다 (D82 T35 확인 검토)
+const STAGE_LAZY: [string, RegExp, number, string?][] = [
+  ['4단계 칸 셋 ReceiptTabs (설계도·용어·AI에게 할 말, 영수증을 그린 뒤 미리 받음)', /[\\/]ReceiptTabs\.[^\\/]+\.js$/, 3 * KB],
+  ['설계도 묶음 pack-file + 엔진 pack.ts (/arrival 아래 막대 섬과 함께, 다른 단계 화면에는 없음)', /[\\/]pack-file\.[^\\/]+\.js$/, 5 * KB, '/arrival/'],
+  ['풀이 칸 + 에러 안내 data-full (사전 시트를 열 때)', /[\\/]data-full\.[^\\/]+\.js$/, 22 * KB],
+];
+for (const [name, re, limit, allowedAt] of STAGE_LAZY) {
+  const files = [...allJs].filter((f) => re.test(f));
+  const n = files.reduce((a, f) => a + gzSize(f), 0);
+  const early = files.some((f) => [...(stageFirst.get(f) ?? [])].some((route) => route !== allowedAt));
+  const ok = n > 0 && n <= limit && !early;
+  if (!ok) failed += 1;
+  console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB${n === 0 ? ' (빌드에 없다)' : ''}${early ? ' (단계 화면 첫 묶음에 끼었다)' : ''}`);
 }
 
 if (failed > 0) {

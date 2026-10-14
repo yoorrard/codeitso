@@ -202,6 +202,70 @@ test.describe('설계도 받기', () => {
     await expect(page.locator('.ar-end')).toHaveText(ko.receipt.end);
   });
 
+  test('영수증 밖 칸 셋은 첫 묶음 밖이고 영수증을 그린 뒤 한 번 미리 받는다 (D82, 설계서 L-08): 열면 내용이 바로 나오며 초점은 칸 이름에 남는다', async ({ page }) => {
+    const asked: string[] = [];
+    page.on('request', (req) => {
+      if (/ReceiptTabs\.[^/]+\.js$/.test(req.url())) asked.push(req.url());
+    });
+    await open(page, '/arrival', golden('case-01'), issued);
+    await expect(page.locator('#panel-receipt .paper')).toBeVisible();
+    // 칸을 누르지 않아도 쉬는 시간에 받는다 (실패할 틈과 '불러오는 중' 번쩍임을 줄인다)
+    await expect.poll(() => asked.length).toBe(1);
+    await page.getByRole('tab', { name: ko.receipt.tabs.study }).click();
+    await expect(page.locator('#panel-study a.list-row').first()).toBeVisible();
+    await expect(page.getByRole('tab', { name: ko.receipt.tabs.study })).toBeFocused();
+    await expect(page.locator('#panel-study')).not.toHaveAttribute('aria-busy', 'true');
+    // 다른 칸도 이미 받은 묶음으로 바로 그린다
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#panel-cards .paste').first()).toBeVisible();
+    expect(asked).toHaveLength(1);
+  });
+
+  test('칸 안을 못 받으면 열린 칸에 한 줄과 중립 버튼 [새로 고치기] (알림도 같은 말). 새로 고치면 칸 내용이 나오고, 주 버튼 내려받기는 망과 상관없다', async ({ page }) => {
+    const blocked = /ReceiptTabs\.[^/]+\.js$/;
+    await page.route(blocked, (route) => route.abort());
+    await open(page, '/arrival', golden('case-01'), issued);
+    await expect(page.locator('#panel-receipt .paper')).toBeVisible();
+    await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
+    const failed = page.locator('#panel-pack .ar-failed');
+    await expect(failed).toContainText(ko.receipt.tabFailed);
+    await expect(page.locator('#cc-live')).toHaveText(ko.receipt.tabFailed);
+    const again = failed.getByRole('button', { name: ko.receipt.tabReload });
+    await expect(again).not.toHaveClass(/btn-primary/);
+    await expect(primary(page)).toHaveCount(1);
+    // 설계도 쪽 묶음은 아래 막대 섬과 함께 왔으므로 칸을 못 받아도 내려받기는 된다
+    const file = page.waitForEvent('download');
+    await page.locator('.action-bar').getByRole('button', { name: ko.receipt.download }).click();
+    expect((await file).suggestedFilename()).toMatch(/\.md$/);
+
+    await page.unroute(blocked);
+    await Promise.all([page.waitForEvent('load'), again.click()]);
+    await islandsReady(page);
+    await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
+    await expect(page.locator('#panel-pack').getByRole('button', { name: ko.receipt.copyPack })).toBeVisible();
+    await expect(page.locator('#panel-pack .ar-failed')).toHaveCount(0);
+  });
+
+  test('영수증 링크로 연 것도 칸을 못 받아 [새로 고치기]를 누르면 같은 영수증이 다시 열린다 (읽자마자 지운 링크를 되돌려 놓는다)', async ({ page }) => {
+    const cat = makeCatalog(loadData());
+    const c = golden('case-03');
+    const hash = shareHash(evaluate(cat, { answers: c.answers, cart: c.cart, kept: ['conflict.realtime-mismatch'] }).session);
+    const blocked = /ReceiptTabs\.[^/]+\.js$/;
+    await page.route(blocked, (route) => route.abort());
+    await page.goto(`/arrival${hash}`);
+    await islandsReady(page);
+    await expect(page.locator('.ar-shared-tag')).toHaveText(ko.receipt.sharedTag);
+    const no = (await page.locator('.paper .r-meta').innerText()).match(/\d{4}$/)?.[0];
+    expect(no).toMatch(/^\d{4}$/);
+    await page.getByRole('tab', { name: ko.receipt.tabs.study }).click();
+    await page.unroute(blocked);
+    await Promise.all([page.waitForEvent('load'), page.locator('#panel-study').getByRole('button', { name: ko.receipt.tabReload }).click()]);
+    await islandsReady(page);
+    await expect(page.locator('.ar-shared-tag')).toHaveText(ko.receipt.sharedTag);
+    await expect(page.locator('.paper .r-meta')).toContainText(`${no}`);
+    expect(new URL(page.url()).hash).toBe('');
+  });
+
   test('영수증 머리의 번호 4자리는 지난 영수증 줄과 같다', async ({ page }) => {
     await open(page, '/arrival', golden('case-01'), issued);
     const no = (await page.locator('.paper .r-meta').innerText()).match(/\d{4}$/)?.[0];

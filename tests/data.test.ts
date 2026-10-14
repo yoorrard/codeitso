@@ -49,6 +49,17 @@ describe('망가뜨린 자료를 잡는다', () => {
     expect(errors.some((e) => e.includes(first(base.goldens).name))).toBe(true);
   });
 
+  it('낱말표: 검색 동의어의 말이 두 줄에 겹치거나 스키마에 없는 칸', () => {
+    const overlap = broken((x) => {
+      first(x.aliases.searchSynonyms).aliases.push('폰 트');
+    });
+    expect(overlap.some((e) => e.startsWith('aliases/searchSynonyms/') && e.includes('겹칩니다'))).toBe(true);
+    const shape = broken((x) => {
+      (first(x.aliases.searchSynonyms) as unknown as Record<string, unknown>)['words'] = ['테마'];
+    });
+    expect(shape.some((e) => e.startsWith('aliases.json'))).toBe(true);
+  });
+
   it('id 겹침', () => {
     const errors = broken((x) => {
       x.data.products.products.push(structuredClone(first(x.data.products.products)));

@@ -5,7 +5,7 @@
 import { useStore } from '@nanostores/preact';
 import { useEffect } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
-import { catalog } from '../lib/data.ts';
+import { catalog } from '../lib/data-full.ts';
 import { fill } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { $result } from '../lib/result.ts';

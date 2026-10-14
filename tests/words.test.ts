@@ -52,6 +52,34 @@ describe('쓰지 않는 말', () => {
   it('영어 섞어 쓰기를 잡는다', () => {
     expect(words('버튼을 클릭하세요')).toEqual(['클릭']);
   });
+
+  it('v3: 옛 소개 문구와 화면에서 쓰지 않는 영어 말을 잡는다 (D83, L-01)', () => {
+    expect(words('자료는 누구나 고칠 수 있어요')).toEqual(['누구나 고칠']);
+    expect(words('모두 공개 저장소의 data 폴더에 있어요.')).toEqual(['공개 저장소']);
+    expect(words('테마와 폰트를 골라요')).toEqual(['테마', '폰트']);
+    expect(words('프리뷰 · 팔레트 · 커스텀')).toEqual(['프리뷰', '팔레트', '커스텀']);
+    expect(words('가이드와 튜토리얼, 온보딩, 길잡이')).toEqual(['가이드', '튜토리얼', '온보딩', '길잡이']);
+    expect(words('다크 모드로 바꾸기')).toEqual(['다크 모드']);
+    expect(words('다크모드')).toEqual(['다크모드']);
+    expect(words('화면 올리기 전에')).toEqual(['화면 올리기']);
+    expect(words('체크리스트')).toEqual(['체크']);
+  });
+
+  it("v3: 문서 이름 '활용 가이드'는 화면 밖 설명에서 놓아주고, '공개 저장소'는 어디서나 막는다 (D85)", () => {
+    expect(words('공개 저장소는 누구나 볼 수 있으니 키를 올리면 안 돼요.', false)).toEqual(['공개 저장소']);
+    expect(words('비공개 저장소도 나중에 공개될 수 있어요.', false)).toEqual(['공개 저장소']);
+    expect(words('공개한 저장소는 누구나 볼 수 있어요. 비공개로 둔 저장소도 공유될 수 있어요.', false)).toEqual([]);
+    expect(words('변환 방법은 기상청 활용 가이드에 있어요.', false)).toEqual([]);
+    expect(words('화면 올리기·저장·로그인', false)).toEqual(['화면 올리기']);
+  });
+
+  it('v3: 바꾼 말은 통과한다', () => {
+    expect(words('틀린 곳을 알려 주세요')).toEqual([]);
+    expect(words('색·글꼴 더 정하기')).toEqual([]);
+    expect(words('화면 밝기: 기기 따라 · 밝게 · 어둡게')).toEqual([]);
+    expect(words('만들기 안내 · 공개하기 · 공개한 뒤')).toEqual([]);
+    expect(words('© 2026 코드쇼퍼')).toEqual([]);
+  });
 });
 
 describe('JSON 문장 꺼내기', () => {

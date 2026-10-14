@@ -1370,7 +1370,7 @@
   font-weight: var(--weight-strong);
 }
 
-/* 바닥글 (brief 6.13): 글자 상표 C(높이 16) → 14/20 --text-3 줄 둘(라이선스, 시험판 안내) → 링크 목록(밑줄 없음, 누르는 곳 44, 사이 12) */
+/* 바닥글 (brief 6.13, v3 설계서 3.5·9.1절): 글자 상표 C(높이 16) → 링크 목록(밑줄 없음, 누르는 곳 44, 사이 12) → 14/20 --text-3 줄('© 2026 코드쇼퍼' 한 줄, 미리 보기면 시험판 안내) */
 .site-footer {
   max-inline-size: calc(var(--content-max) + 2 * var(--gutter));
   margin-inline: auto;
@@ -1382,6 +1382,10 @@
 
 .footer-mark {
   margin-block-end: var(--space-3);
+}
+
+.footer-links + .footer-line {
+  margin-block-start: var(--space-2);
 }
 
 .footer-line + .footer-line {

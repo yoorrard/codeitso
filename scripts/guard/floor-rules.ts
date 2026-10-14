@@ -27,6 +27,23 @@ const GRAPHIC_STYLES = new Set(['src/styles/map.css', 'src/styles/map-land.css']
 /** 카드·상자에 두르면 싸 보이는 진한 테두리 색 (brief 5.5, 10절) */
 const HEAVY_INK = /var\(\s*--(text|chosen|navy)\s*\)/;
 
+/**
+ * 사이트 안 주소의 첫 마디 (설계서 9.4절, D81). 화면 부품·도우미(src/components·src/lib)에 이 글자로 시작하는 주소를 쓰면
+ * 주소 바탕(PUBLIC_BASE_PATH)이 빠져 하위 주소 호스트에서 404가 난다. 주소는 src/lib/routes.ts 한 곳에서만 쓴다.
+ * 단계·둘러보는 곳·정보 화면, v3 새 화면, public/ 파일, 빌드가 만드는 끝점.
+ */
+export const INTERNAL_PATHS = [
+  'test-drive', 'destination', 'waypoints', 'check', 'arrival', 'tools', 'terms', 'courses', 'receipts', 'dictionary',
+  'about', 'legal', 'guides', 'looks', 'look', 'help',
+  'fonts', 'og', '_astro', 'favicon.ico', 'icon', 'apple-touch-icon', 'manifest.webmanifest',
+  'search-index.json', 'glossary', 'robots.txt', 'sitemap.xml', 'api',
+] as const;
+
+const esc = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const INTERNAL_PATH_RE = new RegExp(`['"\`]/(${INTERNAL_PATHS.map(esc).join('|')})(?=[/'"\`?#.-]|$)`);
+/** 사이트 안 주소를 직접 쓰면 안 되는 파일: 화면 부품과 도우미. 시험(tests/)은 밖이고, 주소를 정하는 routes.ts만 뺀다 */
+const isRouteScope = (rel: string): boolean => /^src\/(components|lib)\//.test(rel) && rel !== 'src/lib/routes.ts';
+
 const OLD_TOKEN_RE = new RegExp(`var\\(\\s*--(${OLD_TOKENS.join('|')})\\s*[,)]`);
 const GOLD_RE = /--(on-)?gold(-[a-z]+)?\b/;
 const BRAND_TEXT_RE = /(^|[^-\w])color\s*:\s*['"]?\s*var\(\s*--(brand-blue|cyan)\s*\)/;
@@ -200,6 +217,10 @@ export function checkSource(rel: string, raw: string): Finding[] {
     // 7. 화면 코드 속 한국어 문장 (문구는 src/copy/ko.ts, 엔진 문장은 data/templates.json)
     if (isUi && (ext === '.tsx' || ext === '.astro' || ext === '.ts') && /[가-힣]/.test(line)) {
       add(i, 'copy-in-code', '화면 문구는 src/copy/ko.ts에 두고 가져다 쓴다');
+    }
+    // 13. 사이트 안 주소 글자 (설계서 9.4절): 주소 바탕이 빠지지 않게 routes.ts의 도우미만 쓴다
+    if (isRouteScope(rel) && INTERNAL_PATH_RE.test(line)) {
+      add(i, 'base-path', '사이트 안 주소를 글자로 쓰지 않는다. src/lib/routes.ts의 ROUTES·FILES·toolPath 같은 도우미를 쓴다 (그래야 하위 주소에서도 주소 바탕이 붙는다)');
     }
     // 9. 금색은 없앴다 (D61·D67): 이름도 쓰지 않는다
     if (isSrc && GOLD_RE.test(line)) add(i, 'no-gold', "금색 토큰(--gold…)은 없앴다. 행동은 --accent, 추천 꼬리표는 --accent-soft, 빛은 --cyan");

@@ -1,4 +1,4 @@
-// 출력 엔진 시험: 글자 도우미(text.ts), 영수증(receipt.ts), 설계도·대화 카드·파일 이름(pack.ts),
+// 출력 엔진 시험: 글자 도우미(text.ts), 영수증(receipt.ts), 설계도·파일 이름(pack.ts), 대화 카드(cards.ts),
 // 그 밖의 함수(extras.ts: 배지, 에러 사전, 공유 상태, 확인 문제).
 // 기대값은 docs/ENGINE.md 6·7절, docs/RECEIPT.md, data/templates.json, data/scoring.json
 // (phaseSplitDifficulty 6, baseMinutes 30)으로 손으로 계산했다.
@@ -8,7 +8,8 @@ import { describe, expect, it } from 'vitest';
 import type { Catalog, EngineResult, ReceiptModel, Session } from '../../src/lib/engine/index.ts';
 import { evaluate } from '../../src/lib/engine/index.ts';
 import { badges, checkQuiz, fromShareState, matchErrors, toShareState } from '../../src/lib/engine/extras.ts';
-import { conversationCards, packFileName, renderPack } from '../../src/lib/engine/pack.ts';
+import { conversationCards } from '../../src/lib/engine/cards.ts';
+import { packFileName, renderPack } from '../../src/lib/engine/pack.ts';
 import { difficultyWord, projectName, receiptModel, renderReceiptText, slotLabelFor } from '../../src/lib/engine/receipt.ts';
 import { cell, displayWidth, fill, formatMinutes, oneLine, padEndWidth, padStartWidth, truncateWidth } from '../../src/lib/engine/text.ts';
 import type { ErrorEntry, Product } from '../../src/lib/engine/types.ts';

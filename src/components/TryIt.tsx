@@ -57,7 +57,7 @@ function ApiKeyForm() {
       {where && (
         <div class={`devtools ${where === 'code' ? 'leak' : 'safe'}`}>
           <p class="sim-cap">{K.devtools}</p>
-          <pre class="sim-code">{where === 'code' ? `fetch('…?key=${K.keyFake}')` : "fetch('/api/meal')"}</pre>
+          <pre class="sim-code">{where === 'code' ? `fetch('…?key=${K.keyFake}')` : "fetch('/api/meal')"}</pre>{/* floor-guard-ignore: 화면에 보여 주는 예시 코드 글이고 이 사이트가 부르는 주소가 아니다 */}
           <p class="devtools-note">{where === 'code' ? K.keyShown : K.keyHidden}</p>
         </div>
       )}

@@ -1,11 +1,3 @@
-# 옛 주소 → 새 주소 (docs/CONCEPT.md 2.2절, D56). src/lib/routes.ts의 REDIRECTS와 같아야 한다 (tests/lib/routes.test.ts)
-/lesson /test-drive 301
-/interview /destination 301
-/shop /waypoints 301
-/receipt /arrival 301
-/shelf /tools 301
-/products/:id /tools/:id 301
-/concepts/:id /terms/:id 301
-/study /terms 301
-/recipes /courses 301
-/about/scoring /about/criteria 301
+# Cloudflare Workers 정적 파일 전용 주소 넘기기 (docs/ARCHITECTURE.md 3.1절).
+# 옛 주소 10줄(/lesson·/receipt 같은 v1 주소)은 T35에서 지웠다: 사이트를 공개 배포한 적이 없어 옛 주소를 가진 사람이 없다 (설계서 3.6절, D81).
+# 출시 뒤 주소를 바꾸면 영수증 링크가 주소째 퍼져 있으므로 여기에 301 줄을 더하고 끝까지 지킨다 (L-11).

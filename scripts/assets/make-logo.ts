@@ -3,7 +3,7 @@
 //      경로는 색 부류마다 하나로 묶고(칠하는 차례: 몸 → 빛 → 흰색 → 파랑), 정수 좌표·상대 명령으로 줄인다(svgo floatPrecision 0과 같은 셈).
 //      색 값은 넣지 않는다. 화면이 .logo-body { fill: var(--logo-body) }처럼 칠한다(brief 3.4·3.5).
 //   2. public/  favicon.ico(32px PNG를 담은 ICO), icon.svg, apple-touch-icon.png(180, 남색으로 꽉 채움), icon-192.png, icon-512.png,
-//      icon-maskable-512.png(모자와 괄호를 가운데 80% 원 안에), manifest.webmanifest (brief 3.3, brand.md 8절)
+//      icon-maskable-512.png(모자와 괄호를 가운데 80% 원 안에) (brief 3.3, brand.md 8절). manifest는 끝점이 만든다
 //   3. 끝에 scripts/assets/logo-diff.ts로 원본과의 겹침을 잰다(색 부류마다 0.97 이상).
 // 벡터 원본은 손으로 다시 그린 것이고, 소유자 원본(assets-src/brand/logo-source.webp)은 비교 기준으로만 둔다.
 // 원본 WebP를 다시 잘라 새 크기를 만들지 않는다(brief 3.7). 옛 연결(D62)이 잘라 낸 그림(public/brand/*.webp, favicon-32·48)은 지웠다.
@@ -11,7 +11,6 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
-import { ko } from '../../src/copy/ko.ts';
 import { ROOT } from '../lib/load-data.ts';
 
 const SRC_DIR = join(ROOT, 'assets-src', 'logo');
@@ -26,7 +25,6 @@ const HEX: Record<string, string> = {
   'logo-light': '#00B4FA',
   'logo-white': '#F6F8FA',
 };
-const MANIFEST_BG = '#F2F5F8';
 
 // ---------- 경로 읽기와 줄이기 ----------
 
@@ -421,24 +419,7 @@ async function icons(badge: LogoArt): Promise<void> {
   await png(tile, 512, 'icon-512.png');
   // 안드로이드 둥근 마스크: 괄호 꼭짓점까지(가운데서 22.4)가 가운데 80% 원(반지름 19.2) 안에 들게 0.82로 줄인다
   await png(badgeFile(badge, { rx: 0, scale: 0.82 }), 512, 'icon-maskable-512.png');
-  const manifest = {
-    name: ko.site.name,
-    short_name: ko.site.name,
-    description: ko.site.description,
-    lang: 'ko',
-    start_url: '/',
-    display: 'browser',
-    theme_color: HEX['logo-body'],
-    background_color: MANIFEST_BG,
-    icons: [
-      { src: '/icon.svg', type: 'image/svg+xml', sizes: 'any' },
-      { src: '/icon-192.png', type: 'image/png', sizes: '192x192' },
-      { src: '/icon-512.png', type: 'image/png', sizes: '512x512' },
-      { src: '/icon-maskable-512.png', type: 'image/png', sizes: '512x512', purpose: 'maskable' },
-    ],
-  };
-  writeFileSync(join(PUB, 'manifest.webmanifest'), `${JSON.stringify(manifest, null, 2)}\n`);
-  console.log('public/manifest.webmanifest');
+  // 웹 앱 설명서(manifest.webmanifest)는 주소 바탕을 넣으려고 끝점 src/pages/manifest.webmanifest.ts가 만든다 (설계서 9.4절, D81)
 }
 
 const { blocks, variants } = await buildVariants();

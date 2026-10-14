@@ -3,6 +3,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import type { Aliases } from '../../src/lib/aliases.ts';
 import type { Data } from '../../src/lib/engine/types.ts';
 import type { Glossary } from '../../src/lib/glossary.ts';
 import { DATA_FILES } from './data-files.ts';
@@ -31,13 +32,14 @@ export function goldenFiles(): string[] {
     .map((f) => join(dir, f));
 }
 
-/** 자료 검사에 넘길 것을 모두 읽는다 (data, sources, glossary, schemas, 골든) */
+/** 자료 검사에 넘길 것을 모두 읽는다 (data, sources, glossary, aliases, schemas, 골든) */
 export function loadValidationInput(release: boolean, now: Date = new Date()): ValidationInput {
   const schemaDir = join(ROOT, 'schemas');
   return {
     data: loadData(),
     sources: readJson<Sources>(join(DATA_DIR, 'sources.json')),
     glossary: readJson<Glossary>(join(DATA_DIR, 'glossary.json')),
+    aliases: readJson<Aliases>(join(DATA_DIR, 'aliases.json')),
     schemas: readdirSync(schemaDir)
       .filter((x) => x.endsWith('.schema.json'))
       .sort()

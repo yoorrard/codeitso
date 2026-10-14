@@ -45,6 +45,7 @@ jobs:
           PUBLIC_STAGE: ${{ env.STAGE }}
           PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
           PUBLIC_CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
+          PUBLIC_CONTACT_EMAIL: ${{ vars.CONTACT_EMAIL }}
       - name: 성능 예산
         run: npm run qa:budget
       - name: 계정이 아직 없으면 여기서 멈춤

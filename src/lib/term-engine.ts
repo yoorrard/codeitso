@@ -5,13 +5,14 @@ import type { GlossaryEntry, GlossaryHit, GlossaryIndex, LookupContext } from '.
 import { buildIndex, findAllTerms, lookupTerm, missAction } from './glossary.ts';
 import type { TermPack } from './term-data.ts';
 import { unpackTerms } from './term-data.ts';
+import { FILES } from './routes.ts';
 import type { MarkBudget, TermSegment } from './term-marks.ts';
 import { segmentTerms } from './term-marks.ts';
 
 /** 빌드 때 만드는 자료: 손으로 쓴 용어 212개 + 에러 안내 글 (src/pages/glossary.json.ts) */
-export const GLOSSARY_URL = '/glossary.json';
+export const GLOSSARY_URL = FILES.glossary;
 /** 빌드 때 products.json에서 만드는 도구 이름 항목 (src/pages/glossary-tools.json.ts). 같은 때 나란히 받는다 */
-export const GLOSSARY_TOOLS_URL = '/glossary-tools.json';
+export const GLOSSARY_TOOLS_URL = FILES.glossaryTools;
 
 export interface TermEngine {
   get(id: string): GlossaryEntry | undefined;

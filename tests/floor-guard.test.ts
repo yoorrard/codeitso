@@ -112,3 +112,25 @@ describe('있던 규칙', () => {
     expect(css('.a {\n  color: #fff; /* floor-guard-ignore: */\n}')).toEqual(['ignore-reason:2']);
   });
 });
+
+describe('사이트 안 주소 글자 (base-path, 설계서 9.4절)', () => {
+  it('화면 부품·도우미의 주소 글자를 막는다 (주소 바탕이 빠진다)', () => {
+    expect(rules('src/lib/search-client.ts', "fetch('/search-index.json')")).toEqual(['base-path:1']);
+    expect(rules('src/lib/track.ts', "export const EVENT_URL = '/api/event';")).toEqual(['base-path:1']);
+    expect(rules('src/components/X.tsx', 'const a = <a href="/tools">x</a>;')).toEqual(['base-path:1']);
+    expect(rules('src/components/X.tsx', 'const p = `/terms/${id}`;')).toEqual(['base-path:1']);
+    expect(rules('src/components/X.astro', '<img src="/og/default.png" alt="" />')).toEqual(['base-path:1']);
+    expect(rules('src/lib/x.ts', "const u = '/fonts/a.woff2';")).toEqual(['base-path:1']);
+    expect(rules('src/lib/x.ts', "if (p.startsWith('/dictionary')) {}")).toEqual(['base-path:1']);
+  });
+
+  it('routes.ts, 시험, 화면 밖, 정규식·비슷한 말·주석·이유 있는 예외는 놓아준다', () => {
+    expect(rules('src/lib/routes.ts', "  tools: '/tools',")).toEqual([]);
+    expect(rules('tests/lib/x.test.ts', "expect(toolPath('a')).toBe('/tools/a');")).toEqual([]);
+    expect(rules('scripts/qa/x.ts', "await page.goto('/tools');")).toEqual([]);
+    expect(rules('src/lib/x.ts', 'const re = /^\\/arrival\\/?$/;')).toEqual([]);
+    expect(rules('src/lib/x.ts', "const a = '/checkout'; const b = s.split('/');")).toEqual([]);
+    expect(rules('src/lib/x.ts', "// fetch('/search-index.json')")).toEqual([]);
+    expect(rules('src/components/X.tsx', `<pre>{"fetch('/api/meal')"}</pre>{/* floor-guard-ignore: 예시 코드 글 */}`)).toEqual([]);
+  });
+});

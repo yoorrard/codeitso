@@ -19,7 +19,7 @@ import { LIVE_ID } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import { evaluate } from '../lib/engine/index.ts';
 import { mastheadState } from '../lib/masthead-state.ts';
-import { ROUTES } from '../lib/routes.ts';
+import { FILES, ROUTES, stripBase } from '../lib/routes.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import type { StageId } from '../lib/stages.ts';
 import { analyticsAllowed, BEACON_TOKEN, STAGE } from '../lib/stage.ts';
@@ -35,8 +35,9 @@ interface Props {
 }
 const { title, description = ko.site.description, stage = null, map = false } = Astro.props;
 const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
-// 배포 서버는 끝 빗금을 뗀 주소(/check)로 맞춘다 (wrangler.jsonc html_handling, D50)
-const canonical = Astro.site ? new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href : undefined;
+// 배포 서버는 끝 빗금을 뗀 주소(/check)로 맞춘다 (wrangler.jsonc html_handling, D50). 홈만 바탕 폴더 주소(/ 또는 /code-chauffeur/, 설계서 9.4절)
+const path = Astro.url.pathname.replace(/\/+$/, '');
+const canonical = Astro.site ? new URL(stripBase(path || '/') === '/' ? ROUTES.home : path, Astro.site).href : undefined;
 // 처음 온 사람 기준 단계 줄 값 (빌드 때 한 번)
 const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {});
 const hasAction = Astro.slots.has('action');
@@ -55,11 +56,11 @@ const hasMap = map || (stage !== null && stage !== 'test-drive');
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 낮) 값을 그대로 쓴다 -->
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f1724" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 밤) 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
-    <!-- 파비콘·앱 아이콘은 모자 배지 타일 (D65, brief 3.3). npm run logo가 만든다 -->
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- 파비콘·앱 아이콘은 모자 배지 타일 (D65, brief 3.3). npm run logo가 만든다. 주소는 바탕을 붙여 routes.ts FILES에서 (설계서 9.4절) -->
+    <link rel="icon" href={FILES.favicon} sizes="32x32" />
+    <link rel="icon" href={FILES.icon} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={FILES.appleTouchIcon} />
+    <link rel="manifest" href={FILES.manifest} />
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
       // 첫 그림 전에: 사이트 설정의 '동작 줄이기'·'조용히 모시기'(data-quiet)와 다시 온 사람 표시, 이어 갈 진행(data-resume),
@@ -155,8 +156,6 @@ const hasMap = map || (stage !== null && stage !== 'test-drive');
     }
     <footer class="site-footer" aria-label={ko.footer.label}>
       <Logo variant="wordmark" height={16} label={ko.site.name} class="footer-mark" />
-      <p class="footer-line">{ko.footer.license}</p>
-      {STAGE === 'preview' && <p class="footer-line footer-trial">{ko.footer.trial}</p>}
       <ul class="footer-links">
         <li><a href={ROUTES.about}>{ko.footer.about}</a></li>
         <li><a href={ROUTES.criteria}>{ko.footer.scoring}</a></li>
@@ -164,6 +163,8 @@ const hasMap = map || (stage !== null && stage !== 'test-drive');
         <li><a href={ROUTES.privacy}>{ko.footer.privacy}</a></li>
         <li><a href={ROUTES.notice}>{ko.footer.notice}</a></li>
       </ul>
+      <p class="footer-line">{ko.footer.license}</p>
+      {STAGE === 'preview' && <p class="footer-line footer-trial">{ko.footer.trial}</p>}
     </footer>
     <DictionaryPanel client:idle />
     <TermPopover client:idle />

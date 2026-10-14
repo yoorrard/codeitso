@@ -3,6 +3,9 @@
 //   → 건네드릴 것 카드(화면에 단 하나의 카드) → (링크로 열면 [이 영수증으로 이어서 가기]) → 칸 고르개 4칸
 //   (영수증 · 설계도 · 용어 · AI에게 할 말, 처음은 영수증) → 맺음 한 줄. 주 버튼 [설계도 내려받기 (.md)]는 아래 막대(ArrivalAction).
 // 영수증·설계도·AI에게 할 말은 모두 엔진(receiptModel·renderPack·conversationCards)이 만든다. 화면은 그리고 복사만 한다.
+// 영수증 밖의 칸 셋(설계도·용어·AI에게 할 말)의 안은 첫 묶음 밖(ReceiptTabs.tsx, D82, 설계서 L-08)이고, 영수증을 그린 뒤 쉬는 시간에
+// import()로 미리 받는다(칸 이름에 초점·포인터가 가도). 그래서 보통 칸을 열기 전에 끝난다. 칸 틀(role="tabpanel"·칸 이름 잇기·초점)은 여기서 늘 그린다.
+// 못 받으면(망 끊김, 배포로 묶음 주소가 바뀜) 브라우저가 실패를 기억해 같은 주소로 다시 받을 수 없으므로, 열린 칸에 한 줄 + [새로 고치기]를 낸다.
 // 영수증 링크(#r=)로 열면 읽자마자 주소에서 지우고 읽기 전용으로 보인다. '이어서 가기'를 누를 때만 저장한다.
 // 잠김(만들 앱을 정하기 전·막힌 곳이 남음)은 빈 상태 하나: 까닭은 상태 한 줄, 행동은 아래 막대 주 버튼 하나와 같다.
 // 영수증 출력·도장(S6)은 arrival.css의 CSS 애니메이션이다. 뽑을 때까지 종이를 가려 두고(data-print=wait), 종이가 화면에 보일 때 뽑는다:
@@ -17,8 +20,8 @@ import { $arrivalView, $issuedAt, resultFor, viewOf } from '../lib/arrival-view.
 import { issuedNow } from '../lib/clock.ts';
 import { catalog } from '../lib/data.ts';
 import type { EngineResult } from '../lib/engine/index.ts';
-import { conversationCards, evaluate, fill, receiptModel, renderPack, renderReceiptText } from '../lib/engine/index.ts';
-import { elapsedBucket, isBucket } from '../lib/event-spec.ts';
+import { conversationCards, evaluate, fill, receiptModel, renderReceiptText } from '../lib/engine/index.ts';
+import { elapsedBucket } from '../lib/event-spec.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { LOGO_MONO_MARK } from '../lib/logo-paths.ts';
 import { arrivalPlan } from '../lib/arrival-plan.ts';
@@ -26,7 +29,7 @@ import { departing, inView, markChimed, markPrintLater, untilScene, wasChimed, w
 import { dur, quiet, reduced } from '../lib/motion.ts';
 import { receiptNo } from '../lib/receipt-no.ts';
 import { $result, commitSession } from '../lib/result.ts';
-import { ROUTES, termPath } from '../lib/routes.ts';
+import { siteRoot } from '../lib/routes.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import { sfx } from '../lib/sfx.ts';
 import { SHARE_PREFIX, consumeShareHash, shareHash, shareUrl } from '../lib/share.ts';
@@ -73,6 +76,17 @@ function calm(): boolean {
 }
 type Tab = 'receipt' | 'pack' | 'study' | 'cards';
 const TABS: Tab[] = ['receipt', 'pack', 'study', 'cards'];
+type TabParts = typeof import('./ReceiptTabs.tsx');
+let tabParts: Promise<TabParts> | null = null;
+/** 영수증 밖 칸의 안을 한 번만 불러온다. 실패하면 다음에 칸을 누를 때 다시 해 본다
+ *  (Chromium처럼 실패한 import()를 기억하는 브라우저에서는 다시 해도 실패한다: 화면은 새로 고치는 길을 준다) */
+function loadTabParts(): Promise<TabParts> {
+  tabParts ??= import('./ReceiptTabs.tsx').catch((e: unknown) => {
+    tabParts = null;
+    throw e;
+  });
+  return tabParts;
+}
 /** 칸 고르개의 화살표 키: 가로(←→)와 세로 줄 목록으로 바뀐 때(↑↓) 모두 */
 const STEP: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
 
@@ -145,7 +159,7 @@ function Paper({ r, issuedAt }: { r: EngineResult; issuedAt: string }) {
 }
 
 /** 칸 고르개 4칸 (brief 5.6 .seg): role="tablist", 화살표·Home·End. 좁거나 글자 200%면 세로 줄 목록 (parts.css)이고 그때는 aria-orientation도 세로 */
-function Tabs({ active, onChange }: { active: Tab; onChange: (t: Tab) => void }) {
+function Tabs({ active, onChange, onWarm }: { active: Tab; onChange: (t: Tab) => void; onWarm: () => void }) {
   const list = useRef<HTMLDivElement>(null);
   const [vertical, setVertical] = useState(false);
   useEffect(() => {
@@ -182,6 +196,8 @@ function Tabs({ active, onChange }: { active: Tab; onChange: (t: Tab) => void })
             aria-controls={`panel-${t}`}
             tabIndex={active === t ? 0 : -1}
             onClick={() => onChange(t)}
+            onFocus={onWarm}
+            onPointerEnter={onWarm}
           >
             {ko.receipt.tabs[t]}
           </button>
@@ -191,9 +207,9 @@ function Tabs({ active, onChange }: { active: Tab; onChange: (t: Tab) => void })
   );
 }
 
-function Panel({ id, active, children }: { id: Tab; active: Tab; children: ComponentChildren }) {
+function Panel({ id, active, busy = false, children }: { id: Tab; active: Tab; busy?: boolean; children: ComponentChildren }) {
   return (
-    <section role="tabpanel" id={`panel-${id}`} aria-labelledby={`tab-${id}`} hidden={active !== id} tabIndex={0} class="ar-panel">
+    <section role="tabpanel" id={`panel-${id}`} aria-labelledby={`tab-${id}`} aria-busy={busy || undefined} hidden={active !== id} tabIndex={0} class="ar-panel">
       {children}
     </section>
   );
@@ -222,6 +238,29 @@ export default function Receipt() {
   const meta = useStore($meta);
   const seen = useStore($seen);
   const [tab, setTab] = useState<Tab>('receipt');
+  /** 영수증 밖 칸의 안 (불러오기 전 null, 못 불러오면 'failed') */
+  const [parts, setParts] = useState<TabParts | 'failed' | null>(null);
+  /** 미리 받기(칸 이름에 초점·포인터)는 조용히, 칸을 열었는데 못 불러오면 알린다 */
+  const warm = (opened = false): void => {
+    if (parts !== null && parts !== 'failed') return;
+    if (parts === 'failed') setParts(null);
+    void loadTabParts().then(
+      (m) => setParts(() => m),
+      () => {
+        setParts('failed');
+        if (opened) announce(ko.receipt.tabFailed);
+      },
+    );
+  };
+  const changeTab = (t: Tab): void => {
+    setTab(t);
+    if (t !== 'receipt') warm(true);
+  };
+  /** 다시 불러오기: 영수증 링크로 연 것이면 읽자마자 지운 링크(#r=)를 주소에 되돌려 놓고 새로 고친다 (같은 영수증이 다시 열리게) */
+  const reload = (url: string): void => {
+    if (view.kind === 'shared') history.replaceState(history.state, '', url);
+    location.reload();
+  };
   // 출력은 한 번만: 도착 장면을 이미 봤거나 이 화면에서 한 번 뽑았으면, 영수증 칸으로 돌아오거나 다시 열어도 다시 뽑지 않는다 (arrival.css).
   // 본 기록은 화면을 열 때의 값만 쓴다: 도착 알림이 본 기록을 남겨도(장면 2300) 그 뒤에 뽑는 출력을 끊지 않게
   const [printedHere, setPrintedHere] = useState(false);
@@ -320,6 +359,17 @@ export default function Receipt() {
     });
   }, [printing]);
 
+  // 영수증을 그린 뒤 쉬는 시간에 칸 셋의 안을 미리 받는다 (1KB. 열 때 기다리지 않고, 실패할 틈을 줄인다)
+  useEffect(() => {
+    if (!loaded || !open) return;
+    const idle = 'requestIdleCallback' in window;
+    const id = idle ? window.requestIdleCallback(() => warm(), { timeout: 2000 }) : window.setTimeout(() => warm(), 200);
+    return () => {
+      if (idle) window.cancelIdleCallback(id);
+      else window.clearTimeout(id);
+    };
+  }, [loaded, open]);
+
   // 집계(R-60): 처음 보는 상태의 내 영수증이 화면에 나오면 한 번. 구간은 목적지 첫 답부터 걸린 시간
   const stateId = stateKey(r.session);
   useEffect(() => {
@@ -341,15 +391,29 @@ export default function Receipt() {
     );
   }
 
-  const url = shareUrl(window.location.origin, r.session);
-  const pack = renderPack(catalog, r, { siteUrl: window.location.origin, issuedAt });
+  // 사이트 첫 주소 = origin + 주소 바탕 (설계서 9.4절): 영수증 링크가 바탕을 품는다 (설계도 속 용어 주소는 src/lib/pack-file.ts)
+  const url = shareUrl(siteRoot(), r.session);
   const cards = conversationCards(catalog, r);
-  const aiTag = Object.keys(r.interview.tags).find((t) => t.startsWith('ai.'));
-  const saveAs = (aiTag ? T.aiTools[aiTag] : undefined)?.saveAs ?? T.aiTools['ai.chat-free']?.saveAs ?? '';
   const prep = [...r.prep].sort((a, b) => ['days', 'hours', 'instant'].indexOf(a.lead) - ['days', 'hours', 'instant'].indexOf(b.lead));
-  const conceptTitle = (id: string): string => catalog.concept.get(id)?.title ?? id;
-  // 만들면서 볼 용어: '먼저 읽어 둘 용어'에 이미 있는 것은 되풀이하지 않는다 (보여 주기만 거른다)
-  const steps = r.steps.map((s) => ({ ...s, concepts: s.concepts.filter((id) => !r.study.required.includes(id)) })).filter((s) => s.concepts.length > 0);
+  const got = parts !== null && parts !== 'failed' ? parts : null;
+  /** 영수증 밖 칸: 불러왔으면 안을, 아니면 열린 칸에만 기다림 한 줄, 또는 실패 한 줄 + [새로 고치기] (알림과 같은 말) */
+  const later = (id: Tab, body: (m: TabParts) => ComponentChildren) => (
+    <Panel id={id} active={tab} busy={tab === id && parts === null}>
+      {got
+        ? body(got)
+        : tab === id &&
+          (parts === 'failed' ? (
+            <div class="ar-failed">
+              <p class="ar-sub">{ko.receipt.tabFailed}</p>
+              <button type="button" class="btn btn-neutral" onClick={() => reload(url)}>
+                {ko.receipt.tabReload}
+              </button>
+            </div>
+          ) : (
+            <p class="ar-sub">{ko.receipt.tabLoading}</p>
+          ))}
+    </Panel>
+  );
   const arrived = view.kind === 'own' && meta.issued === true;
 
   const sendPc = async (): Promise<void> => {
@@ -440,7 +504,7 @@ export default function Receipt() {
         </div>
       )}
 
-      <Tabs active={tab} onChange={setTab} />
+      <Tabs active={tab} onChange={changeTab} onWarm={() => warm()} />
 
       <Panel id="receipt" active={tab}>
         <div class="receipt-scene" ref={sceneRef} data-printed={printed ? '' : undefined} data-print={hold ? 'wait' : undefined}>
@@ -482,90 +546,15 @@ export default function Receipt() {
         </div>
       </Panel>
 
-      <Panel id="pack" active={tab}>
-        <p>{ko.receipt.packLead}</p>
-        {saveAs && <p class="ar-sub">{saveAs}</p>}
-        <div class="ar-pair">
-          <CopyButton text={pack} label={ko.receipt.copyPack} />
-        </div>
-        <details class="fold pack-preview">
-          <summary>{ko.receipt.packPreview}</summary>
-          <pre class="pack-pre" tabIndex={0}>
-            {pack}
-          </pre>
-        </details>
-      </Panel>
-
-      <Panel id="study" active={tab}>
-        {r.study.all.length === 0 ? (
-          <p>{ko.receipt.studyNone}</p>
-        ) : (
-          <>
-            {r.study.required.length > 0 && (
-              <>
-                <h2 class="ar-h2">{ko.receipt.studyRequired}</h2>
-                <p class="ar-sub">{ko.receipt.studyMinutes}</p>
-                <ul class="list ar-list">
-                  {r.study.required.map((id) => (
-                    <li>
-                      <a class="list-row" href={termPath(id)}>
-                        <span class="list-name ar-row-name">{conceptTitle(id)}</span>
-                        <span class="list-chev" aria-hidden="true" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-            {steps.length > 0 && (
-              <>
-                <h2 class="ar-h2">{ko.receipt.studySteps}</h2>
-                {steps.map((s) => (
-                  <>
-                    <h3 class="ar-h3">{s.title}</h3>
-                    <ul class="list ar-list">
-                      {s.concepts.map((id) => (
-                        <li>
-                          <a class="list-row" href={termPath(id)}>
-                            <span class="list-name ar-row-name">{conceptTitle(id)}</span>
-                            <span class="list-chev" aria-hidden="true" />
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ))}
-              </>
-            )}
-            <a class="btn btn-text ar-terms" href={ROUTES.terms}>
-              {ko.receipt.studyGo}
-            </a>
-          </>
-        )}
-      </Panel>
-
-      <Panel id="cards" active={tab}>
-        <p class="ar-sub">{ko.receipt.cardsLead}</p>
-        <ul class="ar-talks">
-          {cards.map((c) => (
-            <li class="ar-talk">
-              <h3 class="ar-talk-title">{c.title}</h3>
-              <p class="ar-sub">{fill(ko.receipt.cardWhen, { when: c.when })}</p>
-              <div class="paste">
-                <div class="paste-head">
-                  <span class="paste-label">{ko.receipt.pasteLabel}</span>
-                  <CopyButton
-                    text={c.text}
-                    srLabel={`${c.title}: ${ko.common.copy}`}
-                    onCopied={() => isBucket('card_copy', c.id) && track('card_copy', c.id, `${c.id}:${stateId}`)}
-                  />
-                </div>
-                <p class="paste-body">{c.text}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Panel>
+      {later('pack', (m) => (
+        <m.PackTab r={r} issuedAt={issuedAt} />
+      ))}
+      {later('study', (m) => (
+        <m.StudyTab r={r} />
+      ))}
+      {later('cards', (m) => (
+        <m.CardsTab r={r} stateId={stateId} />
+      ))}
 
       <p class="ar-end">{ko.receipt.end}</p>
       {/* 설계도(.md) 끝의 면책(templates.disclaimer, 문서라 '-습니다'체)을 화면 말(해요체)로 */}

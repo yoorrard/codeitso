@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { termPath, toolPath } from '../lib/routes.ts';
 import { announce } from '../lib/announce.ts';
-import { catalog } from '../lib/data.ts';
+import { catalog } from '../lib/data-full.ts';
 import { fill, matchErrors } from '../lib/engine/index.ts';
 import type { ErrorEntry } from '../lib/engine/types.ts';
 import type { SearchDoc } from '../lib/search-index.ts';

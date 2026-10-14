@@ -8,7 +8,7 @@ import { useStore } from '@nanostores/preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
-import { catalog } from '../lib/data.ts';
+import { catalog } from '../lib/data-full.ts';
 import { fill, projectName } from '../lib/engine/index.ts';
 import type { QuizItem } from '../lib/engine/types.ts';
 import { track } from '../lib/track.ts';

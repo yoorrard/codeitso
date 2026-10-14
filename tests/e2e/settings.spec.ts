@@ -10,6 +10,26 @@ test('맨 위 시험판 띠가 없고, 미리 보기 안내는 바닥글 한 줄
   await expect(page.locator('footer.site-footer')).toContainText(ko.footer.trial);
 });
 
+test('바닥글은 링크 아래 "© 2026 코드쇼퍼" 한 줄이고, 홈도 시험판 안내는 바닥글에만 있다 (v3 설계서 3.5·9.1절, L-40)', async ({ page }) => {
+  await page.goto('/');
+  const footer = page.locator('footer.site-footer');
+  await expect(footer.locator('.footer-line').first()).toHaveText(ko.footer.license);
+  await expect(footer.getByText(ko.footer.trial)).toBeVisible();
+  await expect(page.locator('main').getByText(ko.footer.trial)).toHaveCount(0);
+});
+
+test('소개에 옛 공개 저장소 문단이 없고, 연락 주소가 없는 빌드는 의견 묶음을 그리지 않는다 (v3 L-01)', async ({ page }) => {
+  await page.goto('/about');
+  const main = page.locator('main');
+  await expect(main.getByRole('heading', { level: 1 })).toHaveText(ko.about.title);
+  await expect(main).not.toContainText('공개 저장소');
+  await expect(main).not.toContainText('누구나 고칠');
+  // 기본 호스트(Cloudflare)는 이름 없는 횟수를 보낸다고 말한다 (정적 호스트 문장은 base-path.spec.ts)
+  await expect(main).toContainText(ko.about.stored);
+  await expect(main.getByRole('heading', { name: ko.about.report })).toHaveCount(0);
+  await expect(main.locator('a[href^="mailto:"]')).toHaveCount(0);
+});
+
 test('설정 시트: 스위치를 켜면 저장되고, 확인 대화 상자는 겹쳐 뜨며, Esc로 닫으면 초점이 설정 버튼으로', async ({ page }) => {
   await page.goto('/tools');
   await islandsReady(page);

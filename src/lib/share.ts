@@ -3,7 +3,7 @@
 import LZString from 'lz-string';
 import { fromShareState, toShareState } from './engine/index.ts';
 import type { Session } from './engine/types.ts';
-import { ROUTES } from './routes.ts';
+import { PATHS } from './routes.ts';
 
 export const SHARE_PREFIX = '#r=';
 const PREFIX = SHARE_PREFIX;
@@ -16,8 +16,9 @@ export function shareHash(s: Session): string {
   return PREFIX + LZString.compressToEncodedURIComponent(JSON.stringify(toShareState(s)));
 }
 
+/** siteUrl은 사이트 첫 주소(origin + 주소 바탕, routes.ts siteRoot()). 바탕은 거기 들어 있으므로 바탕 없는 주소를 붙인다 */
 export function shareUrl(siteUrl: string, s: Session): string {
-  return `${siteUrl.replace(/\/+$/, '')}${ROUTES.arrival}${shareHash(s)}`;
+  return `${siteUrl.replace(/\/+$/, '')}${PATHS.arrival}${shareHash(s)}`;
 }
 
 /** location.hash 값을 읽는다. #r=가 없으면 none, 풀 수 없으면 broken */

@@ -1,12 +1,13 @@
-// 브라우저에서 검색 색인(/search-index.json)을 한 번만 불러와 함께 쓴다 (사전·진열대).
+// 브라우저에서 검색 색인(search-index.json, 주소는 routes.ts FILES)을 한 번만 불러와 함께 쓴다 (사전·진열대).
 import type MiniSearch from 'minisearch';
 import type { SearchDoc } from './search-index.ts';
+import { FILES } from './routes.ts';
 import { loadSearchIndex } from './search-index.ts';
 
 let indexPromise: Promise<MiniSearch<SearchDoc>> | null = null;
 
 export function getSearchIndex(): Promise<MiniSearch<SearchDoc>> {
-  indexPromise ??= fetch('/search-index.json')
+  indexPromise ??= fetch(FILES.searchIndex)
     .then((r) => {
       if (!r.ok) throw new Error(`search-index ${r.status}`);
       return r.text();

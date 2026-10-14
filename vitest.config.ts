@@ -1,7 +1,10 @@
 // 단위 시험 설정 (T03). 화면 흐름 시험(tests/e2e/)은 Playwright가 따로 돌린다.
 import { defineConfig } from 'vitest/config';
+import { dataParts } from './scripts/lib/data-parts-plugin.ts';
 
 export default defineConfig({
+  // src/lib/data.ts가 싣는 용어 카드 가상 모듈 (D82)
+  plugins: [dataParts()],
   test: {
     include: ['tests/**/*.test.ts'],
     exclude: ['tests/e2e/**', 'node_modules/**'],

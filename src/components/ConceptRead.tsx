@@ -6,7 +6,7 @@ import { useStore } from '@nanostores/preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
-import { catalog } from '../lib/data.ts';
+import { catalog } from '../lib/data-full.ts';
 import { fill } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { $result } from '../lib/result.ts';

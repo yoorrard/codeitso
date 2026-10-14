@@ -4,20 +4,14 @@ import type { EngineResult } from './evaluate.ts';
 import { answerChips } from './interview.ts';
 import { projectName, slotLabelFor } from './receipt.ts';
 import { firstPhaseProducts } from './recheck.ts';
-import { cell, fill, oneLine } from './text.ts';
+import { cell, fill, oneLine, pickTemplate } from './text.ts';
 import type { StyleTemplate, TypeTemplate } from './types.ts';
 
 export interface PackOptions {
-  /** 용어 카드 링크(/terms/아이디)에 쓸 사이트 주소 (끝에 / 없이). 화면에서는 location.origin */
+  /** 용어 카드 링크(/terms/아이디)에 쓸 사이트 첫 주소 (끝에 / 없이). 화면에서는 siteRoot() = origin + 주소 바탕 (src/lib/routes.ts) */
   siteUrl: string;
   /** 발행 시각 (이용자 기기 시간, 예: 2026-10-12 14:05) */
   issuedAt: string;
-}
-
-function pick<T>(record: Record<string, T>, tag: string | undefined, fallback: string): T {
-  const v = (tag !== undefined ? record[tag] : undefined) ?? record[fallback];
-  if (v === undefined) throw new Error(`문장 틀이 없습니다: ${tag ?? fallback}`);
-  return v;
 }
 
 /** 이용자 AI에게 넘길 설계도(.md, 내부 이름 pack). 문장은 모두 data/templates.json과 상품 카드에서 온다. */
@@ -28,10 +22,10 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   const tags = r.interview.tags;
   const site = opts.siteUrl.replace(/\/+$/, '');
   const project = projectName(cat, r);
-  const typeTpl: TypeTemplate = pick(T.types, tagsWithPrefix(tags, 'type.')[0], 'type.page');
-  const aiTpl = pick(T.aiTools, tagsWithPrefix(tags, 'ai.')[0], 'ai.chat-free');
-  const style: StyleTemplate = pick(T.styles, tagsWithPrefix(tags, 'style.')[0], 'style.clean');
-  const device = pick(T.devices, tagsWithPrefix(tags, 'device.')[0], 'device.both');
+  const typeTpl: TypeTemplate = pickTemplate(T.types, tagsWithPrefix(tags, 'type.')[0], 'type.page');
+  const aiTpl = pickTemplate(T.aiTools, tagsWithPrefix(tags, 'ai.')[0], 'ai.chat-free');
+  const style: StyleTemplate = pickTemplate(T.styles, tagsWithPrefix(tags, 'style.')[0], 'style.clean');
+  const device = pickTemplate(T.devices, tagsWithPrefix(tags, 'device.')[0], 'device.both');
   const audienceTag = tagsWithPrefix(tags, 'audience.')[0];
   const audience = audienceTag ? (T.audiences[audienceTag] ?? '') : '';
   const slotLabel = new Map(r.slots.map((s) => [s.slot.id, s.slot.label]));
@@ -198,13 +192,6 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
 
   out.push('', '---', '', T.disclaimer, '');
   return out.join('\n');
-}
-
-/** 대화 카드(화면: AI에게 할 말): 고른 AI에 맞게 설계도를 가리키는 말을 채운다 */
-export function conversationCards(cat: Catalog, r: EngineResult): { id: string; title: string; when: string; text: string }[] {
-  const T = cat.data.templates;
-  const aiTpl = pick(T.aiTools, tagsWithPrefix(r.interview.tags, 'ai.')[0], 'ai.chat-free');
-  return T.conversationCards.map((c) => ({ ...c, text: fill(c.text, { packRef: aiTpl.packRef }) }));
 }
 
 /** 설계도 파일 이름: codechauffeur-plan-YYYYMMDD-HHmm.md (이용자 기기 시간) */

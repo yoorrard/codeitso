@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { Icon } from './Icon.tsx';
 import { DICT_EVENT } from '../lib/dict-event.ts';
+import { ROUTES } from '../lib/routes.ts';
 
 type DictProps = { autoFocus?: boolean; initial?: string; level?: 2 | 3 };
 
@@ -19,7 +20,7 @@ export default function DictionaryPanel() {
   const [initial, setInitial] = useState({ q: '', n: 0 });
 
   useEffect(() => {
-    if (window.location.pathname.startsWith('/dictionary')) return;
+    if (window.location.pathname.startsWith(ROUTES.dictionary)) return;
     const onClick = (e: MouseEvent): void => {
       const link = (e.target as Element | null)?.closest<HTMLElement>('a.dict-btn');
       if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;

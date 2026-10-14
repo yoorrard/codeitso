@@ -55,6 +55,24 @@ export const BANNED: readonly BannedWord[] = [
   { re: /호출/, instead: '빼기 (탈것 앱 말)', uiOnly: true, allowIf: /API|호출 한도|호출 수|호출이 안|함수/ },
   { re: /배차/, instead: '빼기 (탈것 앱 말)' },
   { re: /탑승/, instead: '빼기 (탈것 앱 말)' },
+  // v3 (D83, L-01): 비공개·모든 권리 보유(D72)와 어긋난 옛 소개 문구, 영어 섞어 쓰기·같은 것의 다른 이름. 대신 쓸 말은 CONCEPT 3.10절.
+  // 이용자가 칠 말은 막지 않고 검색어로 받는다(data/aliases.json searchSynonyms, check-words.ts는 그 표를 보지 않는다).
+  // '가이드'(공식 문서 이름 '활용 가이드')는 도구 설명에 그대로 쓰여 화면·설계도 문장에만 건다.
+  // '공개 저장소'는 모든 문장에서 막는다(T35 확인 줄 `grep "공개 저장소" src dist` 0줄). GitHub 용어는 '공개한 저장소'·'비공개로 둔 저장소'로 쓴다(D85).
+  // '체크리스트'는 위의 '체크'가 이미 잡는다.
+  { re: /공개 저장소/, instead: "공개한 저장소 / 비공개로 둔 저장소 (GitHub 용어). 소개 문단은 빼기 (L-01)" },
+  { re: /누구나 고칠/, instead: "빼기 (소개는 '틀린 곳을 알려 주세요', L-01)" },
+  { re: /테마/, instead: '디자인 / 느낌 / 화면 밝기' },
+  { re: /프리뷰/, instead: '미리 보기' },
+  { re: /팔레트/, instead: '색 / 색 묶음' },
+  { re: /커스텀/, instead: '직접 쓰기 / 내 마음대로' },
+  { re: /폰트/, instead: '글꼴' },
+  { re: /가이드/, instead: '만들기 안내 / 안내', uiOnly: true },
+  { re: /튜토리얼/, instead: '만들기 안내 / 연습' },
+  { re: /온보딩/, instead: '처음 안내 / 내 AI 써 보기' },
+  { re: /길잡이/, instead: '만들기 안내 / 안내' },
+  { re: /다크\s?모드/, instead: '화면 밝기(사이트 설정) / 밝기: 어둡게만(내 앱) / 어두운 화면(사전)' },
+  { re: /화면 올리기/, instead: '공개하기 (배포는 사전에서 풀이)' },
 ];
 
 export interface WordHit {

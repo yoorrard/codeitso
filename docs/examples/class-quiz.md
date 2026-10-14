@@ -103,7 +103,7 @@
 | 맡는 일 | 도구 | 제공 | 필요한 자격 | 비용 | 라이선스 | 확인한 때 |
 |---|---|---|---|---|---|---|
 | 화면 | [HTML 파일 한 장](https://developer.mozilla.org/ko/docs/Web/HTML) | 웹 표준 (HTML·CSS·JavaScript) | 없음 | 무료 | - | 2026-10 |
-| 배포·공유 | [GitHub Pages](https://docs.github.com/ko/pages) | GitHub | 가입 | 공개 저장소는 무료 | - | 2026-10 |
+| 배포·공유 | [GitHub Pages](https://docs.github.com/ko/pages) | GitHub | 가입 | 공개한 저장소는 무료 | - | 2026-10 |
 
 ### 도구별 메모
 

@@ -7,6 +7,13 @@ export function fill(template: string, vars: Record<string, string | number>): s
   });
 }
 
+/** 꼬리표에 맞는 문장 틀을 고른다. 없으면 기본 틀, 기본 틀도 없으면 오류 (설계도·AI에게 할 말이 함께 쓴다) */
+export function pickTemplate<T>(record: Record<string, T>, tag: string | undefined, fallback: string): T {
+  const v = (tag !== undefined ? record[tag] : undefined) ?? record[fallback];
+  if (v === undefined) throw new Error(`문장 틀이 없습니다: ${tag ?? fallback}`);
+  return v;
+}
+
 /** 고정폭 글꼴에서 차지하는 칸 수. 한글·한자·전각 문자와 그림 문자는 2칸으로 센다. */
 export function displayWidth(s: string): number {
   let w = 0;

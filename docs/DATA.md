@@ -19,8 +19,9 @@
 | `recipes.json` | 레시피 = 화면의 미리 짠 코스 (답 + 고른 도구 완성 세트) | `recipes.schema.json` | 5개 |
 | `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 20개 |
 | `glossary.json` | 어려운 말 풀이: 용어마다 한 문장 풀이, 다른 이름, 읽는 법, 짧은 예, 묶음(`kind`), 상위 용어, 용어 카드·도구·에러 안내 연결. 화면에서 글을 고르거나 점선 밑줄 말을 누르면 뜬다 (D60, D66). 엔진은 쓰지 않는다. 13절 | `glossary.schema.json` (+ `tests/lib/glossary.test.ts`가 매처로 문장 규칙·이름 겹침·상위 용어를 막는다) | 212개 |
+| `aliases.json` | 낱말표: 이용자가 칠 말을 화면 말·자료에 잇는 표 (AI 아님, D74·D83). 지금은 사전 검색 동의어(`searchSynonyms`)만, T36이 직접 쓰기 낱말을 더한다. 엔진 계산(`evaluate`)은 쓰지 않는다. 14절 | `aliases.schema.json` | 검색 동의어 10줄 |
 | `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
-| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 21개 |
+| `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 23개 |
 
 공통 정의(id 모양, 조건 문법 등)는 `schemas/defs.schema.json`에 있다.
 
@@ -186,3 +187,17 @@
 - 상품의 사실(무료 한도·요금·자격)을 풀이에 넣지 않는다. 요금제 이름(Hobby·Spark·Blaze·Eco)과 일반 사실(부가세 10%, UTC+9, 종목 코드 6자리)만 쓰고, `products.json`이 바뀌면 같이 본다. 금액은 도구 카드로 잇는다.
 - 코드쇼퍼 말(`site`)은 단계 이름에 맞춰 쓴다. 단계 이름 자체(내 AI 써 보기, 만들 앱 정하기, 도구 고르기, 도구끼리 맞춰 보기, 설계도 받기)는 할 일을 말하므로 용어로 넣지 않는다.
 - 크기: 212개가 gzip 약 14.6KB(줄인 JSON). 250개를 넘어 20KB에 닿으면 `kind`별로 나눠 불러오는 것을 다시 본다.
+
+## 14. 낱말표 (`aliases.json`)
+
+이용자가 칠 말(검색어, T36부터 직접 쓴 말)을 화면 말과 자료 id에 잇는 표다. 사이트는 AI를 부르지 않으므로(R-01) 이 표가 맞추는 일을 다 맡는다. 파일 하나에 쓰임별 칸을 두고, 칸마다 `{ id, aliases, … }` 모양을 같이 쓴다. 모양은 `src/lib/aliases.ts`, 정본 설계는 `docs/review/v3/brief.md` 3.5·7.3절과 `docs/review/v3/input.md` 9.2절.
+
+| 칸 | 뜻 | 규칙 |
+|---|---|---|
+| `searchSynonyms[].id` | 동의어 줄 id | 겹치지 않는다 |
+| `searchSynonyms[].aliases` | 이용자가 칠 말 (화면 문구에서 쓰지 않는 말 포함: 테마·폰트·가이드·다크 모드…) | 띄어쓰기·대소문자를 뺀 꼴이 2자 이상, 다른 줄과 겹치지 않음(`npm run validate`). 띄어 쓴 말은 붙여 쓴 꼴도 함께 찾히므로 하나만 적는다 |
+| `searchSynonyms[].to` | 대신 찾을 화면 말·문서 이름 | 용어 카드(이름·다른 이름)·풀이 용어(이름·다른 이름)·에러 안내·도구의 이름과 띄어쓰기·대소문자를 빼고 같으면 그 문서에 `aliases`가 열쇠 말로 붙는다. 아직 없는 화면(만들기 안내·디자인 둘러보기·어두운 화면 등)의 이름도 미리 적어 둔다: 그 문서가 색인에 들어오면 저절로 붙는다 |
+
+- 펼치는 곳은 색인을 만드는 `src/lib/search-index.ts`의 `applySynonyms`다(빌드 때 `/search-index.json`). 브라우저에 싣는 코드는 늘지 않는다. 동의어마다 지금 붙은 문서는 `node scripts/build-search.ts`가 찍는다.
+- `npm run words`는 이 파일의 열쇠와 대상 이름을 보지 않고, 화면에 보이는 문장 칸(`message`, T36의 `gaps`)만 본다. 다른 자료의 `aliases`·`keywords` 칸(다른 이름, 느낌 낱말)도 같은 까닭으로 보지 않는다 (D83).
+- T36이 같은 파일에 질문별 낱말(`options`·`yesNo`·`aiNames`)·`products`·`toolHints`·`gaps`를 더하고 충돌 검사를 넓힌다.

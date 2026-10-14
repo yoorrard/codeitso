@@ -1,7 +1,7 @@
 // 빌드 때만 쓰는 어려운 말 풀이 자료 (D69): 손으로 쓴 용어 + 도구 이름 49개, 그 색인, 브라우저에 보낼 묶음,
 // 그리고 Astro 쪽 점선 밑줄 나누기(페이지마다 셈을 따로 둔다). 브라우저 묶음에는 들지 않는다 (data.ts를 통째로 부른다).
 import glossary from '../../data/glossary.json';
-import { catalog, data } from './data.ts';
+import { catalog, data } from './data-full.ts';
 import { matchErrors } from './engine/index.ts';
 import type { GlossaryEntry, GlossaryIndex } from './glossary.ts';
 import { buildIndex } from './glossary.ts';

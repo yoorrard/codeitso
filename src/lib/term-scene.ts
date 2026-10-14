@@ -3,7 +3,7 @@
 // [다 읽었어요]를 누르면 판이 왼쪽부터 채워진다(--dur-draw, terms.css의 data-fill). 판이 화면 밖이면 채운 모습으로 바로 바뀐다
 // (S3의 '마디가 화면 밖이면 날지 않는다'와 같다). 확인 문제를 다 맞히면 문제 끝의 '다 맞혔어요 ✓' 고리 위로 청록 빛 하나가
 // 한 바퀴 돈다(--dur-sweep, --ease-linear). 판 그림은 정적 HTML이라 섬(ConceptRead·StudyList)이 여기 함수로 칠한다.
-import { catalog } from './data.ts';
+import { catalog } from './data-full.ts';
 import { dur, ease, reduced } from './motion.ts';
 import type { StudyRecord } from './saved.ts';
 

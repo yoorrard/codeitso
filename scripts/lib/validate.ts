@@ -4,6 +4,8 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import type { Catalog, Condition, Data } from '../../src/lib/engine/index.ts';
 import { evaluate, makeCatalog } from '../../src/lib/engine/index.ts';
 import { usesCart } from '../../src/lib/engine/conditions.ts';
+import type { Aliases } from '../../src/lib/aliases.ts';
+import { nameKey } from '../../src/lib/aliases.ts';
 import type { Glossary } from '../../src/lib/glossary.ts';
 import { contrast } from './contrast.ts';
 import { DATA_FILES } from './data-files.ts';
@@ -17,6 +19,8 @@ export interface ValidationInput {
   sources: Sources;
   /** data/glossary.json (어려운 말 풀이). 엔진은 쓰지 않아 data와 따로 둔다 */
   glossary: Glossary;
+  /** data/aliases.json (낱말표: 검색 동의어, T36부터 직접 쓰기 낱말). 엔진 계산(evaluate)은 쓰지 않아 data와 따로 둔다 */
+  aliases: Aliases;
   /** schemas/*.schema.json 내용 */
   schemas: object[];
   goldens: { name: string; value: unknown }[];
@@ -58,6 +62,7 @@ export function validateAll(input: ValidationInput): ValidationResult {
     'errors.json': 'errors.schema.json',
     'sources.json': 'sources.schema.json',
     'glossary.json': 'glossary.schema.json',
+    'aliases.json': 'aliases.schema.json',
   };
   const validateValue = (name: string, value: unknown, schemaId: string): void => {
     const validate = ajv.getSchema(schemaId);
@@ -72,6 +77,7 @@ export function validateAll(input: ValidationInput): ValidationResult {
   const fileValue = (file: string): unknown => {
     if (file === 'sources.json') return input.sources;
     if (file === 'glossary.json') return input.glossary;
+    if (file === 'aliases.json') return input.aliases;
     const key = (Object.keys(DATA_FILES) as (keyof typeof DATA_FILES)[]).find((k) => DATA_FILES[k] === file);
     return key ? input.data[key] : undefined;
   };
@@ -359,6 +365,22 @@ export function validateAll(input: ValidationInput): ValidationResult {
     if (t.tool && !productIds.has(t.tool)) err(`${where}: 없는 도구 ${t.tool}`);
     if (t.error && !errorIds.has(t.error)) err(`${where}: 없는 에러 안내 ${t.error}`);
     if (t.see && (t.see === t.id || !glossaryIds.has(t.see))) err(`${where}: 상위 용어 ${t.see}가 없거나 자기 자신입니다`);
+  }
+
+  // 낱말표의 검색 동의어 (docs/review/v3/brief.md 3.5절): 한 검색어는 한 줄에만, 띄어쓰기·대소문자를 뺀 꼴도 2자 이상.
+  // 대상 이름(to)은 아직 없는 화면(만들기 안내 등)을 미리 적어 두므로 지금 색인에 있는지는 보지 않는다 (scripts/build-search.ts가 붙은 수를 찍는다)
+  dupes('aliases/searchSynonyms', input.aliases.searchSynonyms.map((s) => s.id));
+  const synonymOwner = new Map<string, string>();
+  for (const s of input.aliases.searchSynonyms) {
+    const where = `aliases/searchSynonyms/${s.id}`;
+    for (const a of s.aliases) {
+      const k = nameKey(a);
+      if ([...k].length < 2) err(`${where}: '${a}'는 띄어쓰기를 빼면 2자보다 짧습니다`);
+      const owner = synonymOwner.get(k);
+      if (owner !== undefined) err(`${where}: '${a}'가 ${owner === s.id ? '같은 줄에 두 번' : `${owner} 줄과 겹칩니다`} 있습니다 (띄어 쓴 말은 붙여 쓴 꼴도 함께 찾히니 하나만 적어요)`);
+      else synonymOwner.set(k, s.id);
+    }
+    for (const t of s.to) if (nameKey(t) === '') err(`${where}: 빈 대상 이름`);
   }
 
   // 출처 대응표

@@ -22,7 +22,6 @@ import { iconSvg } from '../lib/icons.ts';
 import { mapModel } from '../lib/map/model.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { shelfProducts } from '../lib/shelf.ts';
-import { STAGE } from '../lib/stage.ts';
 import { NUMBERED } from '../lib/stages.ts';
 
 const H = ko.home;
@@ -72,7 +71,6 @@ const icons = {
       <p class="home-explain">{H.explain}</p>
       <HomeStart client:load icons={icons} toolsSub={fill(H.browseSub, { n: shelfProducts.length })} />
       <p class="home-note">{H.trust}</p>
-      {STAGE === 'preview' && <p class="home-note">{ko.footer.trial}</p>}
 
       <section class="home-section" aria-labelledby="home-how">
         <h2 id="home-how" class="t-title-3">{H.howTitle}</h2>

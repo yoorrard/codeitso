@@ -6,13 +6,18 @@ import { answerChips } from './interview.ts';
 import { projectName, slotLabelFor } from './receipt.ts';
 import { firstPhaseProducts } from './recheck.ts';
 import { cell, fill, oneLine, pickTemplate } from './text.ts';
-import type { Option, Product, StyleTemplate, TypeTemplate } from './types.ts';
+import type { Option, Product, TypeTemplate } from './types.ts';
 
 export interface PackOptions {
   /** 용어 카드 링크(/terms/아이디)에 쓸 사이트 첫 주소 (끝에 / 없이). 화면에서는 siteRoot() = origin + 주소 바탕 (src/lib/routes.ts) */
   siteUrl: string;
   /** 발행 시각 (이용자 기기 시간, 예: 2026-10-12 14:05) */
   issuedAt: string;
+  /**
+   * 6번 '디자인 지시' 본문 (engine/look.ts renderLookSection). 디자인 값(data/looks.json)과 색 계산은 단계 화면 첫 묶음에
+   * 싣지 않아서 부르는 쪽이 디자인 묶음으로 만들어 넘긴다 (T38). 없으면 느낌·화면 크기·접근성 줄과 templates.pack.designPending 한 줄
+   */
+  design?: string[];
 }
 
 /** 이용자 AI에게 넘길 설계도(.md, 내부 이름 pack). 문장은 모두 data/templates.json과 상품 카드에서 온다. */
@@ -25,7 +30,6 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   const project = projectName(cat, r);
   const typeTpl: TypeTemplate = pickTemplate(T.types, tagsWithPrefix(tags, 'type.')[0], 'type.page');
   const aiTpl = pickTemplate(T.aiTools, tagsWithPrefix(tags, 'ai.')[0], 'ai.chat-free');
-  const style: StyleTemplate = pickTemplate(T.styles, tagsWithPrefix(tags, 'style.')[0], 'style.clean');
   const device = pickTemplate(T.devices, tagsWithPrefix(tags, 'device.')[0], 'device.both');
   const audienceTag = tagsWithPrefix(tags, 'audience.')[0];
   const audience = audienceTag ? (T.audiences[audienceTag] ?? '') : '';
@@ -52,6 +56,9 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   out.push(`- ${L.oneLine}: ${oneLine(r.session.freeText ?? '') || oneLine(notes[TYPE_Q] ?? '') || typeTpl.goal}`);
   out.push(`- ${L.kind}: ${typeTpl.label}`);
   if (audience) out.push(`- ${L.audience}: ${audience}`);
+  // 앱 이름 (T38 P1 '내 말로'): 직접 쓴 글이라 따옴표 안에 둔다 (영수증 링크에는 없다)
+  const appName = r.session.look?.appName;
+  if (appName) out.push(`- ${L.appName}: “${appName}”`);
   const aiName = usedAiName(r, notes);
   out.push(`- ${L.ai}: ${aiTpl.label}${aiName ? ` (${aiName})` : ''}`);
   out.push(`- ${L.answers}: ${chips.join(' · ')}`);
@@ -99,12 +106,14 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
 
   // 3. 화면 목록
   h2(P.headings.screens);
-  const screens = [...typeTpl.screens];
+  const screens: { name: string; parts: string[] }[] = [...typeTpl.screens];
   for (const s of r.steps) {
     const extra = T.slotSteps[s.slotId]?.screen;
     if (extra) screens.push(extra);
   }
   screens.forEach((s, i) => out.push(`${i + 1}. **${s.name}**: ${s.parts.join(', ')}`));
+  // 더하고 싶은 화면 (T38 P1 '내 말로'): 내 말 그대로 + '(내가 더함)'
+  (r.session.look?.screens ?? []).forEach((s, i) => out.push(`${screens.length + i + 1}. **“${s}”** ${P.screenAdded}`));
 
   // 4. 기능과 완성 확인 기준
   h2(P.headings.features);
@@ -127,17 +136,16 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   if (dataLines.length === 0) dataLines.push(`- ${P.dataLines.none}`);
   out.push(...dataLines);
 
-  // 6. 디자인 지시
+  // 6. 디자인 지시 (T38): 디자인 묶음이 만든 본문. 못 받았으면 느낌·화면 크기·접근성과 다시 받으라는 한 줄
   h2(P.headings.design);
-  const c = style.palette;
-  out.push(`- ${L.styleFeel}: ${style.label}. ${style.note}`);
-  out.push(
-    `- ${L.colors}: ${L.colorBackground} ${c.background}, ${L.colorSurface} ${c.surface}, ${L.colorText} ${c.text}, ${L.colorAccent} ${c.accent} (${L.colorAccentText} ${c.accentText})`,
-  );
-  out.push(`- ${L.font}: ${style.fontFamily}, ${L.fontSize} ${style.baseFontSize}`);
-  out.push(`- ${L.radius}: ${style.radius}`);
-  out.push(`- ${L.screenSize}: ${device}`);
-  out.push(`- ${L.a11y}: ${P.a11yLine}`);
+  if (opts.design && opts.design.length > 0) out.push(...opts.design);
+  else {
+    const mood = cat.question.get(STYLE_Q)?.options.find((o) => o.id === r.interview.answers[STYLE_Q] && o.isUnknown !== true && o.isCustom !== true);
+    if (mood) out.push(`- ${L.styleFeel}: ${mood.label}`);
+    out.push(`- ${P.designPending}`);
+    out.push(`- ${L.screenSize}: ${device}`);
+    out.push(`- ${L.a11y}: ${P.a11yLine}`);
+  }
 
   // 7. 쓸 도구
   h2(P.headings.tools);
@@ -246,6 +254,7 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
 }
 
 const TYPE_Q = 'q.type';
+const STYLE_Q = 'q.style';
 const CUSTOM_TYPE = 'type.custom';
 
 /** 그대로 둔 답을 무엇과 같게 계산했는지: like 보기의 이름, 없으면 그 보기 태그의 이름 ('직접 쓴 앱', '외부 데이터') */

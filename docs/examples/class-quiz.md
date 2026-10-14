@@ -91,12 +91,138 @@
 
 ## 6. 디자인 지시
 
-- 느낌: 귀엽게. 모서리를 크게 둥글리고, 직접 그린 작은 그림을 곁들인다.
-- 색: 배경 #FFF8F0, 면 #FFFFFF, 글자 #3D2C2E, 강조 #C2410C (강조색 위 글자 #FFFFFF)
-- 글꼴: Pretendard, 기본 글자 크기 17px
-- 모서리 둥글기: 16px
-- 화면 크기: 휴대폰 세로 화면(폭 360px)을 기준으로 만든다. 누르는 곳은 가로세로 44px 이상, 글자는 16px 이상으로 한다.
-- 접근성: 글자와 배경의 명도 대비는 4.5:1 이상으로 하고, 키보드로도 모든 기능을 쓸 수 있게 하고, 그림에는 대체 텍스트를 단다.
+### 6-1. 전체 느낌
+
+- 느낌: 귀엽게 (말랑한, 밝은, 둥근 / playful, soft, rounded)
+- 눈에 띄게 할 것 하나: 지금 문제와 보기. 진행 표시는 작게 둔다.
+- 아래 값은 출발점이야. 내 말에 더 맞게 바꿔도 되지만, 대비 4.5:1과 6-11의 하지 말 것은 지켜 줘.
+
+### 6-2. 색
+
+| 역할 | 밝은 화면 | 대비 |
+|---|---|---|
+| 바탕 | #FFFFFF | — |
+| 면(카드·묶음) | #FFF1F6 | — |
+| 글자 | #2B2130 | 15.40 |
+| 약한 글자 | #6B5A68 | 면 위 5.82 |
+| 입력 테두리 | #8E7C8B | 바탕 위 3.88 |
+| 나눔 선 | #F2DCE5 | — |
+| 주색(주 버튼) | #B8236F | — |
+| 주색 위 글자 | #FFFFFF | 5.98 |
+| 링크·강조 글자 | #B8236F | 면 위 5.46 |
+| 옅은 주색 | #FCEAF3 | — |
+| 성공 | #1B7A4A | — |
+| 오류 | #C42B36 | — |
+
+- 주색은 화면마다 주 버튼 하나와 링크에만 쓴다.
+- 밝은 화면만 만든다.
+- 대비 기준: 글자 4.5:1 이상, 글자가 아닌 것(입력 테두리·아이콘·초점 고리) 3:1 이상 (WCAG 2.2 AA). 표의 대비는 코드쇼퍼가 잰 값이다.
+
+### 6-3. 글자
+
+- 글꼴: 제목 주아 (Jua) + 본문 Pretendard. 고른 짝: 동글동글 제목.
+- 주아 (Jua): `<head>`에 이 줄을 넣어 줘 → `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />`
+- Pretendard: `<head>`에 이 줄을 넣어 줘 → `<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />`
+- 크기 (px/줄 높이): 제목 26/1.35/400 · 작은 제목 20/1.4/400 · 본문 크게 17/1.6 · 본문 16/1.6 · 버튼 글 15/1.4/600 · 작은 글 14/1.45
+- 한글: `word-break: keep-all`을 쓰고, 기울임 글꼴을 쓰지 않는다. 본문은 16px 아래로 내리지 않고, 굵기는 400·600·700만 쓴다.
+
+### 6-6. 모양
+
+- 모서리: 버튼·칩은 알약(9999px) · 카드 20px · 큰 판·대화 상자 24px.
+
+### 6-7. 부품
+
+- 주 버튼: 높이 48px, 주색 바탕에 주색 위 글자, 모서리 보통. 누르면 조금 진하게, 키보드 초점에는 2px 고리, 꺼지면 옅게 하고 이유를 한 줄로 쓴다.
+
+### 6-10. 접근성
+
+- 글자와 바탕은 4.5:1 이상, 큰 글자(24px 이상, 또는 굵게 18.66px 이상)는 3:1 이상으로 한다 (1.4.3).
+- 입력 칸 테두리·아이콘·초점 고리처럼 글자가 아닌 것은 3:1 이상으로 한다 (1.4.11).
+- 색만으로 뜻을 전하지 않는다. 오류는 색과 그림과 글로 함께 알린다 (1.4.1).
+- 키보드로 모든 기능을 쓸 수 있고, 초점이 늘 보이게 한다. 아래에 붙박은 버튼이 초점을 다 가리지 않게 한다 (2.1.1, 2.4.7, 2.4.11).
+- 누르는 곳은 최소 24×24px이고, 이 설계도는 44px 이상을 권한다 (2.5.8).
+- 끌어서만 되는 동작에는 누르는 방법도 둔다 (2.5.7).
+- 입력 칸마다 보이는 이름표를 달고, 오류는 무엇이 틀렸는지 글로 알린다. 이미 넣은 정보를 다시 묻지 않는다 (3.3.1, 3.3.2, 3.3.7).
+- 로그인이 있으면 붙여 넣기와 비밀번호 관리자를 막지 않는다 (3.3.8).
+- `<html lang="ko">`를 두고, 그림에 대체 글을 단다. 320px 폭과 글자 200%에서도 가로로 밀리지 않게 한다 (3.1.1, 1.1.1, 1.4.10, 1.4.4).
+- 움직임은 기기의 '동작 줄이기' 설정을 따른다 (2.3.3).
+
+### 6-11. 해도 되는 것·하지 말 것
+
+- 화면마다 주 버튼은 하나만 둔다.
+- 참고한 앱의 그림·로고·글을 그대로 가져오지 않는다.
+- 모서리를 크게 둥글리고, 단순한 도형 그림을 곁들인다.
+- 분홍은 버튼과 강조에만 쓰고, 바탕은 흰색으로 둔다.
+- 따뜻한 크림색 바탕에 큰 명조 제목과 테라코타(붉은 흙색) 강조를 얹은 꼴을 쓰지 않는다.
+- 먹색 바탕에 형광 초록이나 주홍 강조 하나만 얹은 꼴을 쓰지 않는다.
+- 신문처럼 가는 선과 빽빽한 여러 단으로 화면을 채우지 않는다.
+- 똑같은 둥근 카드를 줄줄이 늘어놓고 같은 회색 그림자나 그라데이션을 다는 꼴을 쓰지 않는다.
+- 모든 제목 위에 영어 대문자 꼬리표를 달거나, 버튼 글 끝에 '→'를 붙이지 않는다.
+
+### 디자인 값 (CSS)
+
+index.html의 `<style>` 맨 위에 넣고, 모든 색·크기는 이 변수로만 써 줘.
+
+```css
+/* 코드쇼퍼 디자인 값 · 귀엽게 · 분홍 */
+:root {
+  --color-bg: #FFFFFF;
+  --color-surface: #FFF1F6;
+  --color-text: #2B2130;
+  --color-text-muted: #6B5A68;
+  --color-border: #8E7C8B;
+  --color-line: #F2DCE5;
+  --color-primary: #B8236F;
+  --color-on-primary: #FFFFFF;
+  --color-link: #B8236F;
+  --color-primary-soft: #FCEAF3;
+  --color-success: #1B7A4A;
+  --color-error: #C42B36;
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-heading: Jua, "Pretendard Variable", Pretendard, sans-serif;
+  --font-weight-heading: 400;
+  --text-title: 26px;
+  --text-title--line-height: 1.35;
+  --text-subtitle: 20px;
+  --text-subtitle--line-height: 1.4;
+  --text-body-lg: 17px;
+  --text-body-lg--line-height: 1.6;
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+  --text-label: 15px;
+  --text-label--line-height: 1.4;
+  --text-caption: 14px;
+  --text-caption--line-height: 1.45;
+  --radius-sm: 9999px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  --radius-button: 9999px;
+  --spacing-gutter: 16px;
+  --spacing-section: 32px;
+  --spacing-row: 56px;
+  --spacing-tap: 48px;
+  --container-content: 720px;
+  --border-width: 1px;
+  --shadow-card: 0 2px 8px rgb(0 0 0 / 0.08);
+  --duration-press: 100ms;
+  --duration-screen: 200ms;
+  --duration-list: 150ms;
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+### AI에게 줄 예시 요청
+
+> 설계도 6번의 디자인 값으로 ‘시작 화면’ 하나만 먼저 만들어 줘. 색·글꼴·모서리는 CSS 변수로만 쓰고, 다 되면 휴대폰 폭에서 확인할 방법을 알려 줘.
 
 ## 7. 쓸 도구
 

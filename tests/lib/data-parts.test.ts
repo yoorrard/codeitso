@@ -2,7 +2,25 @@
 import { describe, expect, it } from 'vitest';
 import { catalog as stageCatalog, data as stageData } from '../../src/lib/data.ts';
 import { catalog as fullCatalog, data as fullData } from '../../src/lib/data-full.ts';
-import { ALIAS_TOOL_PART, CONCEPT_CORE, CONCEPT_DETAIL, PRODUCT_CHECK_ONLY, conceptPart, guardMissing, joinConcepts, screenProducts, toolAliases } from '../../src/lib/data-parts.ts';
+import {
+  ALIAS_TOOL_PART,
+  CONCEPT_CORE,
+  CONCEPT_DETAIL,
+  LOOK_CHECK_ONLY,
+  LOOK_FAMILY_SCREEN,
+  PRODUCT_CHECK_ONLY,
+  conceptPart,
+  guardMissing,
+  joinConcepts,
+  lookMoodWords,
+  looksRender,
+  looksScreen,
+  screenProducts,
+  templatesCore,
+  templatesLook,
+  toolAliases,
+} from '../../src/lib/data-parts.ts';
+import type { Looks } from '../../src/lib/engine/types.ts';
 import { conversationCards, evaluate, makeCatalog, receiptModel, renderPack, renderReceiptText } from '../../src/lib/engine/index.ts';
 import type { Golden } from '../../scripts/lib/golden.ts';
 import { goldenSession } from '../../scripts/lib/golden.ts';
@@ -59,6 +77,36 @@ describe('도구 이름 찾기 묶음의 낱말표 (virtual:cc-data/tool-aliases
     expect(Object.keys(part).sort()).toEqual([...ALIAS_TOOL_PART].sort());
     expect(part.toolHints).toEqual(full.toolHints);
     expect(part.gaps).toEqual(full.gaps);
+  });
+});
+
+describe('디자인 묶음 나누기 (T38)', () => {
+  const looks = readJson<Looks>(`${ROOT}/data/looks.json`);
+
+  it('문장 틀: 단계 화면에는 설계도 6번 문장(look)을 싣지 않고, 디자인 묶음이 따로 받는다', () => {
+    const core = templatesCore(nodeData.templates);
+    expect(Object.keys(core)).not.toContain('look');
+    expect({ ...core, ...templatesLook(nodeData.templates) }).toEqual(nodeData.templates);
+    expect(() => stageData.templates.look).toThrow(/data-full|싣지 않은/);
+    expect(stageData.templates.lookSummary).toBe(nodeData.templates.lookSummary);
+  });
+
+  it('디자인 값: 시트 묶음은 부품 규칙·글꼴 받는 법·출처 칸을 빼고, 설계도 6번 묶음이 더 받으면 출처 칸만 빠진 원본', () => {
+    const screen = looksScreen(looks);
+    expect(Object.keys(screen)).not.toContain('components');
+    for (const f of screen.families) expect(Object.keys(f).sort()).toEqual([...LOOK_FAMILY_SCREEN].sort());
+    for (const r of screen.references) expect(r).not.toHaveProperty('sources');
+    const render = looksRender(looks);
+    const back = { ...screen, ...render };
+    const strip = (o: unknown): unknown => JSON.parse(JSON.stringify(o, (k, v: unknown) => ((LOOK_CHECK_ONLY as readonly string[]).includes(k) && typeof v !== 'string' ? undefined : v)));
+    // 맨 위 checkedAt(문자열)은 남는다
+    expect(back.checkedAt).toBe(looks.checkedAt);
+    expect(strip({ ...back, checkedAt: undefined })).toEqual(strip({ ...looks, checkedAt: undefined, families: looks.families.map(({ checkedAt: _c, ...f }) => f), iconSets: looks.iconSets.map(({ checkedAt: _c, ...f }) => f), references: looks.references.map(({ checkedAt: _c, ...f }) => f) }));
+    expect(render.components).toEqual(looks.components);
+  });
+
+  it('직접 쓰기 찾기 묶음은 느낌 낱말만', () => {
+    expect(lookMoodWords(looks)).toEqual({ mood: looks.keywords.mood });
   });
 });
 

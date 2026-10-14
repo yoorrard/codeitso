@@ -100,13 +100,31 @@ describe('망가뜨린 자료를 잡는다', () => {
     expect(errors.some((e) => e.includes('선후 관계가 돕니다'))).toBe(true);
   });
 
-  it('스타일 색 대비 부족', () => {
+  it('디자인 대표 색 대비 부족 (견본 4.6:1, 고칠 값을 알려 준다)', () => {
     const errors = broken((x) => {
-      const style = Object.values(x.data.templates.styles)[0];
-      if (!style) throw new Error('스타일이 없습니다');
-      style.palette.text = style.palette.background;
+      const a = x.looks.accents[0];
+      if (!a) throw new Error('대표 색이 없습니다');
+      a.light = '#5B8EE6';
     });
-    expect(errors.some((e) => e.includes('대비'))).toBe(true);
+    expect(errors.some((e) => e.startsWith('looks/accents/') && e.includes('4.6:1') && e.includes('L을 0.01씩'))).toBe(true);
+  });
+
+  it('디자인 입력 테두리 대비 부족 (3.1:1)', () => {
+    const errors = broken((x) => {
+      const n = x.looks.neutrals[0];
+      if (!n) throw new Error('바탕 묶음이 없습니다');
+      n.light.border = '#C8CDD5';
+    });
+    expect(errors.some((e) => e.startsWith('looks/neutrals/') && e.includes('3.1:1'))).toBe(true);
+  });
+
+  it('허용하지 않는 글꼴 라이선스', () => {
+    const errors = broken((x) => {
+      const f = x.looks.families[0];
+      if (!f) throw new Error('글꼴이 없습니다');
+      f.license = 'Apache-2.0';
+    });
+    expect(errors.some((e) => e.includes('license') || e.includes('라이선스'))).toBe(true);
   });
 
   it('에러 안내 예시가 패턴에 맞지 않음', () => {

@@ -1,6 +1,6 @@
 // 브라우저에 저장하는 값의 모양과, 읽은 값을 믿지 않고 고르는 함수 (부작용 없음, 시험 있음).
 // 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 4절).
-import type { Capability, CustomTool, Session } from './engine/types.ts';
+import type { Capability, CustomTool, LookChoice, Session } from './engine/types.ts';
 
 export const KEYS = {
   session: 'cc:session:v1',
@@ -62,6 +62,9 @@ export const NOTES_MAX = 20;
 export const NOTE_MAX = 40;
 export const CUSTOM_TOOLS_MAX = 5;
 export const GAPS_MAX = 10;
+/** 디자인 (T38): 글 칸 80자, 더하고 싶은 화면 3개. 칸 이름·id·#RRGGBB·글자 수는 엔진 normalizeSession(look-choice.ts)이 다시 고른다 */
+const LOOK_TEXT_MAX = 80;
+const LOOK_SCREENS_MAX = 3;
 const LIST_MAX = 200;
 
 export const EMPTY_SESSION: Session = { answers: {}, cart: [], kept: [], deferred: [] };
@@ -103,7 +106,20 @@ export function readSession(raw: unknown): Session {
   if (tools.length > 0) out.customTools = tools;
   const gaps = strings(o['gaps']).filter((g) => /^[a-z0-9-]{1,40}$/.test(g)).slice(0, GAPS_MAX);
   if (gaps.length > 0) out.gaps = gaps;
+  const look = readLook(o['look']);
+  if (look) out.look = look;
   return out;
+}
+
+/** 디자인: 글 칸(문자열)과 더하고 싶은 화면(문자열 3개)만 남긴다. 홈 첫 화면에 엔진을 싣지 않으려고 여기서는 모양만 본다 */
+function readLook(raw: unknown): LookChoice | undefined {
+  const look: Record<string, string | string[]> = {};
+  for (const [k, v] of Object.entries(obj(raw))) {
+    if (/^[a-zA-Z]{1,20}$/.test(k) && typeof v === 'string' && v.trim() !== '') look[k] = [...v].slice(0, LOOK_TEXT_MAX).join('');
+  }
+  const screens = strings(obj(raw)['screens']).slice(0, LOOK_SCREENS_MAX).map((x) => [...x].slice(0, LOOK_TEXT_MAX).join(''));
+  if (screens.length > 0) look['screens'] = screens;
+  return Object.keys(look).length > 0 ? (look as LookChoice) : undefined;
 }
 
 export function readStudy(raw: unknown): StudyRecord {
@@ -187,7 +203,8 @@ export function isEmptySession(s: Session): boolean {
     !s.freeText &&
     Object.keys(s.notes ?? {}).length === 0 &&
     (s.customTools ?? []).length === 0 &&
-    (s.gaps ?? []).length === 0
+    (s.gaps ?? []).length === 0 &&
+    Object.keys(s.look ?? {}).length === 0
   );
 }
 export function isEmptyStudy(s: StudyRecord): boolean {

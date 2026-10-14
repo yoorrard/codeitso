@@ -20,6 +20,7 @@ import type { SlotRanking } from './shop.ts';
 import { buildSlots, rankSlot } from './shop.ts';
 import { CUSTOM_TOOLS_MAX, normalizeCustomTools, normalizeGaps, normalizeNotes } from './custom.ts';
 import { toolsToSetUp, withBuilderPublish } from './builder.ts';
+import { normalizeLookShape } from './look-choice.ts';
 import type { PrepItem, Product, Session } from './types.ts';
 
 export interface EngineResult {
@@ -46,7 +47,7 @@ export interface EngineResult {
 /**
  * 받은 상태를 정리한다: 모르는 상품·충돌·칸은 버리고, 나중으로 미룰 수 없는 칸은 뺀다.
  * 직접 쓴 것(D74): 내 말은 있는 질문만 한 줄 40자, 직접 쓴 도구는 모양이 맞는 5개까지(장바구니의 custom-n은
- * 그 도구가 있을 때만), 빈틈은 조사 카드가 있는 id만. 비어 있는 칸은 만들지 않는다(옛 세션 모양 그대로).
+ * 그 도구가 있을 때만), 빈틈은 조사 카드가 있는 id만. 디자인(look, T38)은 모양만. 비어 있는 칸은 만들지 않는다(옛 세션 모양 그대로).
  */
 export function normalizeSession(cat: Catalog, s: Partial<Session>): Session {
   const answers: Record<string, string> = {};
@@ -71,6 +72,9 @@ export function normalizeSession(cat: Catalog, s: Partial<Session>): Session {
   if (customTools.length > 0) out.customTools = customTools;
   const gaps = normalizeGaps(cat, s.gaps);
   if (gaps.length > 0) out.gaps = gaps;
+  // 디자인 (T38): 모양만 고른다. looks.json에 없는 id는 디자인 묶음(look.ts normalizeLook)이 버린다
+  const look = normalizeLookShape(s.look);
+  if (look) out.look = look;
   return out;
 }
 

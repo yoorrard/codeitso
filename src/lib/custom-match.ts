@@ -4,13 +4,16 @@
 // 도구 고르기의 '목록에 없는 도구 쓰기'가 따로 받는다. 빈틈 말을 품은 도구 짐작 말이 없어서 도구 이름의 빈틈도 같게 찾는다
 // (tests/engine/match.test.ts가 지킨다). 찾은 결과는 화면에 보여 주기만 한다: 세션에는 이용자가 누른 보기와 쓴 글만 들어간다.
 import { aiNames, gaps, options, yesNo } from '../../data/aliases.json';
+import lookWords from 'virtual:cc-data/look-mood-words';
 import type { Aliases } from './aliases.ts';
+import { withStyleWords } from './aliases.ts';
 import type { Catalog, Session } from './engine/index.ts';
 import type { AnswerMatch } from './engine/match.ts';
 import { gapsOfSession, looksLikeContact, matchAnswer } from './engine/match.ts';
 
-// JSON import는 넓은 타입(string 등)으로 들어오므로, 스키마 검사(npm run validate)를 믿고 Aliases로 본다
-const table = { version: 1, searchSynonyms: [], toolHints: [], options, yesNo, aiNames, gaps } as unknown as Aliases;
+// JSON import는 넓은 타입(string 등)으로 들어오므로, 스키마 검사(npm run validate)를 믿고 Aliases로 본다.
+// 느낌 질문의 낱말은 looks.json keywords.mood에서 (T38): 디자인 정하기와 같은 표
+const table = withStyleWords({ version: 1, searchSynonyms: [], toolHints: [], options, yesNo, aiNames, gaps } as unknown as Aliases, lookWords.mood);
 
 /** 질문의 직접 쓰기 글에서 가까운 보기 (0~3개)·영문 자판 되돌리기·빈틈 */
 export function answerMatch(cat: Catalog, questionId: string, text: string): AnswerMatch {

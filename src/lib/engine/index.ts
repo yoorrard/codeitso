@@ -12,6 +12,10 @@ export { SCORE_KEYS, buildSlots, rankSlot, scoreProduct, userLevel } from './sho
 export type { Conflict, EasierSwap, Split } from './recheck.ts';
 export { customToolConflictId, emptySlotId } from './recheck.ts';
 // 직접 쓴 답과 도구 (D74). 낱말 찾기(match.ts)는 여기서 내보내지 않는다: 화면이 직접 쓰기를 열 때 import()로 늦게 받는다
+// 디자인 정하기(T38): 세션·링크 모양 고르기(look-choice.ts)만 evaluate·extras가 쓴다. 값 정하기(look.ts)·6번 그리기(look-render.ts)는
+// 여기서 내보내지 않는다: 디자인 묶음(src/lib/look-data.ts·look-render-data.ts)이 import()로 늦게 받는다
+export type { LookRow } from './look-choice.ts';
+export { LOOK_CUSTOM, LOOK_ROW_FIELDS, LOOK_TEXT_MAX, lookPickedRows, lookTypeKeys, moodOrder } from './look-choice.ts';
 export { CUSTOM_TOOLS_MAX, LINE_MAX, NOTE_MAX, customProduct, isCustomId, productOf } from './custom.ts';
 // 웹에서 만드는 도구의 공개 (B-02): 공개 칸을 채우는 가짜 상품 '빌더의 게시 기능'
 export { BUILDER_PUBLISH_ID, builderHosts, costUnchecked } from './builder.ts';

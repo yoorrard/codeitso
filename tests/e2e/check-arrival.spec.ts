@@ -2,6 +2,7 @@
 // 도구끼리 맞춰 보기: 막힌 곳마다 같은 크기 중립 버튼 둘([도구 바꾸기] [그대로 가기]), 그대로 가면 '그대로 가는 곳' 줄과 [되돌리기],
 // 미룰 수 있는 빈 기능은 [나중으로 미루기], 비워 둘 수 없으면 '통행 불가' + [도구 고르기]. 주 버튼은 하나이고, 꺼진 까닭은 상태 한 줄.
 // 설계도 받기: 칸 고르개 4칸을 화살표 키로, 영수증 링크로 열면 꼬리표와 중립 버튼 [이 영수증으로 이어서 가기], 주 버튼 [설계도 내려받기 (.md)].
+import { readFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
@@ -10,6 +11,8 @@ import { makeCatalog } from '../../src/lib/engine/index.ts';
 import { shareHash } from '../../src/lib/share.ts';
 import { loadData } from '../../scripts/lib/load-data.ts';
 import { golden, islandsReady } from './helpers.ts';
+
+const templates = loadData().templates;
 
 interface Seed {
   answers: Record<string, string>;
@@ -264,6 +267,31 @@ test.describe('설계도 받기', () => {
     await expect(page.locator('.ar-shared-tag')).toHaveText(ko.receipt.sharedTag);
     await expect(page.locator('.paper .r-meta')).toContainText(`${no}`);
     expect(new URL(page.url()).hash).toBe('');
+  });
+
+  test('설계도 6번 묶음은 첫 묶음 밖에서 한 번 미리 받고, 내려받은 설계도 6번에 디자인 값이 든다 (T38, D96)', async ({ page }) => {
+    const asked: string[] = [];
+    page.on('request', (req) => {
+      if (/look-render-data\.[^/]+\.js$/.test(req.url())) asked.push(req.url());
+    });
+    await open(page, '/arrival', golden('case-01'), issued);
+    await expect.poll(() => asked.length).toBe(1);
+    const file = page.waitForEvent('download');
+    await page.locator('.action-bar').getByRole('button', { name: ko.receipt.download }).click();
+    const text = readFileSync(await (await file).path(), 'utf8');
+    expect(text).toContain(`### ${templates.look.sub.feel}`);
+    expect(text).toContain('```css');
+    expect(text).not.toContain(templates.pack.designPending);
+  });
+
+  test('설계도 6번 묶음을 못 받으면 내려받은 설계도 6번에 다시 받으라는 한 줄 (내려받기는 그대로)', async ({ page }) => {
+    await page.route(/look-render-data\.[^/]+\.js$/, (route) => route.abort());
+    await open(page, '/arrival', golden('case-01'), issued);
+    const file = page.waitForEvent('download');
+    await page.locator('.action-bar').getByRole('button', { name: ko.receipt.download }).click();
+    const text = readFileSync(await (await file).path(), 'utf8');
+    expect(text).toContain(templates.pack.designPending);
+    expect(text).not.toContain(`### ${templates.look.sub.feel}`);
   });
 
   test('영수증 머리의 번호 4자리는 지난 영수증 줄과 같다', async ({ page }) => {

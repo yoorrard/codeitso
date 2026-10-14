@@ -330,17 +330,9 @@ export type PackLabel =
   | 'feature'
   | 'doneWhen'
   | 'styleFeel'
-  | 'colors'
-  | 'font'
-  | 'fontSize'
-  | 'radius'
   | 'screenSize'
   | 'a11y'
-  | 'colorBackground'
-  | 'colorSurface'
-  | 'colorText'
-  | 'colorAccent'
-  | 'colorAccentText'
+  | 'appName'
   | 'toolSlot'
   | 'toolName'
   | 'toolProvider'
@@ -365,26 +357,17 @@ export type PackLabel =
 export interface TypeTemplate {
   label: string;
   goal: string;
-  screens: { name: string; parts: string[] }[];
+  /** components: 화면에 넣을 부품 id (data/looks.json components, 설계도 6-7 · DESIGN.md) */
+  screens: { name: string; parts: string[]; components: string[] }[];
   features: { name: string; doneWhen: string }[];
   dataModel?: { entity: string; fields: string[] }[];
   alternative?: string;
-}
-
-export interface StyleTemplate {
-  label: string;
-  palette: { background: string; surface: string; text: string; accent: string; accentText: string };
-  radius: string;
-  fontFamily: string;
-  baseFontSize: string;
-  note: string;
 }
 
 export interface Templates {
   version: 1;
   types: Record<string, TypeTemplate>;
   slotSteps: Record<string, { title: string; doneWhen: string; screen?: { name: string; parts: string[] } }>;
-  styles: Record<string, StyleTemplate>;
   devices: Record<string, string>;
   audiences: Record<string, string>;
   aiTools: Record<string, { label: string; saveAs: string; packRef: string; workStyle: string[] }>;
@@ -445,6 +428,10 @@ export interface Templates {
     stepRule: string;
     conceptLink: string;
     deferredNote: string;
+    /** 6번: 디자인 묶음을 싣지 못하고 설계도를 만들 때 남기는 한 줄 (T38) */
+    designPending: string;
+    /** 3번 화면 목록에서 이용자가 더한 화면 뒤에 붙는 말 (T38 P1) */
+    screenAdded: string;
     a11yLine: string;
     indexMemo: string;
     noPrep: string;
@@ -493,6 +480,10 @@ export interface Templates {
     /** 직접 쓴 도구마다 붙일 조사 카드 id */
     researchCard: string;
   };
+  /** 설계도 6번 '디자인 지시'와 DESIGN.md의 문장 (T38, 설계서 4.8절). 값은 data/looks.json, 그리기는 engine/look.ts */
+  look: LookTemplates;
+  /** 디자인 미리 보기 이름표 (role="img", T38): 시트에서도 쓰므로 look 묶음 밖에 둔다 */
+  lookSummary: string;
   /** 빌더의 게시 기능 (B-02, D89): 웹에서 만드는 도구를 고르면 배포 칸을 채우는 가짜 상품의 문장 */
   builderPublish: {
     name: string;
@@ -503,6 +494,46 @@ export interface Templates {
     /** 이 상품이 배포 칸을 채우면 붙일 조사 카드 id */
     researchCard: string;
   };
+}
+
+/** templates.json look: 설계도 6번 '디자인 지시'와 DESIGN.md 문장 (T38, 설계서 4.8절). {{이름}} 자리는 engine/look.ts가 채운다 */
+export interface LookTemplates {
+  /** 전체 판 6번 맨 위: DESIGN.md와 같은 값이라는 안내 */
+  designMd: string;
+  sub: Record<'feel' | 'color' | 'type' | 'layout' | 'depth' | 'shape' | 'parts' | 'motion' | 'icons' | 'a11y' | 'dos' | 'css' | 'ask', string>;
+  feel: Record<'mood' | 'focus' | 'appName' | 'tone' | 'toneMine' | 'mine' | 'found' | 'wish' | 'refs' | 'quote' | 'start', string>;
+  /** 앱 종류 태그 → 눈에 띄게 할 것 하나 */
+  focus: Record<string, string>;
+  color: {
+    role: string;
+    light: string;
+    dark: string;
+    contrast: string;
+    roles: Record<'bg' | 'surface' | 'text' | 'muted' | 'border' | 'line' | 'primary' | 'onPrimary' | 'link' | 'soft' | 'success' | 'error', string>;
+    onSurface: string;
+    onBg: string;
+    primaryRule: string;
+    theme: Record<'light' | 'dark' | 'both', string>;
+    standard: string;
+    fixed: string;
+  };
+  checks: Record<'buttonDark' | 'buttonAdjusted' | 'textDarker' | 'darkRaised' | 'buttonEdge' | 'redAccent' | 'darkRecheck', string>;
+  type: Record<'pair' | 'one' | 'mine' | 'html' | 'npm' | 'home' | 'license' | 'sizes' | 'korean' | 'headingOnly' | 'tabular' | 'families', string>;
+  layout: Record<'density' | 'pick' | 'mine' | 'safeArea', string>;
+  /** 깊이 id → 문장, border: 테두리 굵기 */
+  depth: Record<string, string>;
+  shape: { radius: string; pill: string };
+  parts: Record<'intro' | 'screen' | 'states' | 'primary' | 'secondary' | 'text' | 'rules', string>;
+  /** 움직임 id → 문장, short·steps: 느낌의 움직임 꼴, reduce: 동작 줄이기 */
+  motion: Record<string, string>;
+  icons: Record<'set' | 'few' | 'mine' | 'rule', string>;
+  /** 그림 id → 문장, mine: 직접 쓴 것, rule: 공통 규칙 */
+  imagery: Record<string, string>;
+  a11y: string[];
+  dos: { common: string[]; cliches: string[]; moods: Record<string, string[]> };
+  css: { comment: string; where: Record<string, string> };
+  ask: string;
+  designMdDescription: string;
 }
 
 /** data 폴더의 JSON을 한데 모은 것 */
@@ -547,4 +578,204 @@ export interface Session {
   customTools?: CustomTool[];
   /** 직접 쓴 글에서 화면이 찾은 빈틈 id (aliases.json gaps). 엔진은 조사 카드 research.gap-<id>를 더한다 */
   gaps?: string[];
+  /** 디자인 정하기 (T38, 설계서 4.2절). 느낌은 여기 없고 q.style 답(answers)·내 말(notes['q.style'])이 맡는다 */
+  look?: LookChoice;
+}
+
+/**
+ * 디자인 정하기에서 이용자가 고른 것 (설계서 4.2·4.10절). 비어 있는 칸은 기본값(느낌·앱 종류)을 쓴다 (engine/look.ts lookSpec).
+ * 보기 id와 직접 고른 색(#RRGGBB)만 영수증 링크에 실린다. 'custom'(직접 쓰기)과 글 칸은 링크에 싣지 않는다.
+ * 모르는 id는 normalizeLook(looks.json 기준)이 버린다: 엔진 계산(evaluate)은 looks.json을 싣지 않아 모양만 본다.
+ */
+export interface LookChoice {
+  /** 대표 색: 견본 id 또는 직접 고른 '#RRGGBB' */
+  accent?: string;
+  /** 대표 색 이름 (예: 학교 상징색, 20자) */
+  accentName?: string;
+  /** 밝기: 밝게만 · 어둡게만 · 둘 다 */
+  theme?: 'light' | 'dark' | 'both';
+  /** 글꼴 짝 id 또는 'custom' (fontName) */
+  font?: string;
+  /** 직접 쓴 글꼴 이름 (30자) */
+  fontName?: string;
+  radius?: string;
+  density?: string;
+  motion?: string;
+  /** 아이콘 묶음 id 또는 'custom' (iconsText 30자) */
+  icons?: string;
+  iconsText?: string;
+  /** 그림·사진 id 또는 'custom' (imageryText 40자) */
+  imagery?: string;
+  imageryText?: string;
+  /** 첫 화면 배치 id 또는 'custom' (layoutText 40자) */
+  layout?: string;
+  layoutText?: string;
+  /** 바라는 점 (80자) */
+  note?: string;
+  /** 닮고 싶은 앱 (60자) */
+  refs?: string;
+  /** P1 '내 말로' 넓히기: 앱 이름 (20자) */
+  appName?: string;
+  /** P1: 앱 말투 id(haeyo·hapsho·banmal) 또는 'custom' (toneText 20자) */
+  tone?: string;
+  toneText?: string;
+  /** P1: 더하고 싶은 화면 (40자, 3개까지). 설계도 3번에 '(내가 더함)'으로 */
+  screens?: string[];
+}
+
+// ── data/looks.json 모양 (T38, schemas/looks.schema.json과 같이 고친다) ─────────────
+
+export interface NeutralSet {
+  bg: string;
+  surface: string;
+  text: string;
+  muted: string;
+  border: string;
+  line: string;
+}
+
+export interface LookOption {
+  id: string;
+  label: string;
+}
+
+export interface LookMood extends LookOption {
+  keywordsKo: string[];
+  keywordsEn: string[];
+  neutral: string;
+  accent: string;
+  font: string;
+  radius: string;
+  radiusValues?: number[];
+  depth: string;
+  icons: string;
+  motion: string;
+  motionStyle?: 'short' | 'steps';
+  tabularNums?: true;
+  mapPalette: 'clean' | 'cute' | 'calm' | 'bold';
+}
+
+export interface LookNeutral extends LookOption {
+  light: NeutralSet;
+  dark: NeutralSet;
+}
+
+export interface LookAccent extends LookOption {
+  light: string;
+  dark: string;
+  soft: string;
+}
+
+export interface LookFamily {
+  id: string;
+  name: string;
+  css: string;
+  fallback: string;
+  license: string;
+  package: string;
+  version: string;
+  html?: string;
+  npm?: { install: string; import: string };
+  home: string;
+  checkedAt: string;
+  needsReview: boolean;
+  sources: string[];
+}
+
+export interface LookFont extends LookOption {
+  heading: string;
+  headingWeight: number;
+  body: string;
+}
+
+export interface LookRadius extends LookOption {
+  values: number[];
+}
+
+/** 글자 크기 [px, 줄 높이] */
+export type LookTypeStep = [number, number];
+
+export interface LookDensity extends LookOption {
+  gutter: number;
+  section: number;
+  row: number;
+  tap: number;
+  type: { title: LookTypeStep; subtitle: LookTypeStep; bodyLg: LookTypeStep; body: LookTypeStep; label: LookTypeStep; caption: LookTypeStep };
+}
+
+export interface LookMotion extends LookOption {
+  press: number;
+  screen: number;
+  list: number;
+  celebrate: number;
+  easing?: string;
+}
+
+export interface LookDepth {
+  id: string;
+  border: number;
+  shadow: string;
+  floatOnly?: true;
+}
+
+export interface LookIconSet extends LookOption {
+  name?: string;
+  license?: string;
+  package?: string;
+  version?: string;
+  react?: string;
+  home?: string;
+  checkedAt?: string;
+  needsReview?: boolean;
+  sources?: string[];
+}
+
+export interface LookComponent extends LookOption {
+  en: string;
+  kind: 'part' | 'state';
+  browse?: true;
+  rule: string;
+}
+
+export interface LookReference {
+  id: string;
+  name: string;
+  url: string;
+  what: string;
+  checkedAt: string;
+  needsReview: true;
+  sources: string[];
+}
+
+/** 낱말 한 줄 (data/aliases.json과 같은 꼴: '='로 시작하면 어절 전체가 같을 때만) */
+export interface LookKeyword {
+  id: string;
+  aliases: string[];
+}
+
+export interface Looks {
+  version: 1;
+  checkedAt: string;
+  contrast: { target: number; border: number; standard: number; nonText: number };
+  fixed: { error: { light: string; dark: string }; success: { light: string; dark: string }; onLight: [string, string]; onDark: string };
+  moods: LookMood[];
+  neutrals: LookNeutral[];
+  accents: LookAccent[];
+  themes: { id: 'light' | 'dark' | 'both'; label: string }[];
+  families: LookFamily[];
+  fonts: LookFont[];
+  radius: LookRadius[];
+  density: LookDensity[];
+  motion: LookMotion[];
+  depths: LookDepth[];
+  iconSets: LookIconSet[];
+  imagery: LookOption[];
+  tones: LookOption[];
+  /** 앱 종류(page·form·record·quiz·tool·board·custom) → 첫 화면 배치 둘 */
+  layouts: Record<string, LookOption[]>;
+  defaultsByType: Record<string, { moods: string[]; density: string; imagery: string }>;
+  components: LookComponent[];
+  keywords: { mood: LookKeyword[]; accent: LookKeyword[]; theme: LookKeyword[] };
+  references: LookReference[];
+  referenceKeywords: Record<string, { first: string[]; more: string[] }>;
 }

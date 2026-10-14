@@ -134,3 +134,21 @@ describe('사이트 안 주소 글자 (base-path, 설계서 9.4절)', () => {
     expect(rules('src/components/X.tsx', `<pre>{"fetch('/api/meal')"}</pre>{/* floor-guard-ignore: 예시 코드 글 */}`)).toEqual([]);
   });
 });
+
+describe('미리 보기 변수 (pv-scope, 설계서 4.6절)', () => {
+  it('--pv-*는 미리 보기 부품·스타일 밖에서 막는다', () => {
+    expect(css('.a {\n  color: var(--pv-text);\n}')).toEqual(['pv-scope:2']);
+    expect(rules('src/components/LookSheet.tsx', "const s = { '--pv-bg': x };")).toEqual(['pv-scope:1']);
+    expect(rules('src/components/LookPreview.tsx', "const s = { '--pv-bg': x };")).toEqual([]);
+  });
+
+  it('look.css는 .look-preview 안만, 값은 --pv-*와 모션 토큰만', () => {
+    const look = (src: string): string[] => rules('src/styles/look.css', src);
+    expect(look('.look-preview .pv-btn {\n  background: var(--pv-primary);\n  transition: background-color var(--dur-fade) var(--ease-out);\n}')).toEqual([]);
+    expect(look(':root[data-motion="reduce"] .look-preview * {\n  transition: none;\n}')).toEqual([]);
+    expect(look('@media (prefers-reduced-motion: reduce) {\n  .look-preview * {\n    transition: none;\n  }\n}')).toEqual([]);
+    expect(look('.look-preview .pv-btn {\n  color: var(--accent);\n}')).toEqual(['pv-scope:2']);
+    expect(look('.pv-btn {\n  color: var(--pv-text);\n}')).toEqual(['pv-scope:2']);
+    expect(look('.look-preview .pv-btn {\n  color: #fff;\n}')).toEqual(['token-color:2']);
+  });
+});

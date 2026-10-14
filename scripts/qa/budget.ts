@@ -8,7 +8,8 @@
 // 섬에는 지도 장면(D71)의 움직임 모듈(map/scene.ts 바뀐 것 견주기, map/rest.ts 서는 자리, scene.ts 건너뛰기)도 넣어 잰다: 모형은 키우지 않는다.
 // 어려운 말 풀이(brief 8절, D69)도 따로 본다: 풀이 섬 5KB · 자료(/glossary.json) + 매처 묶음 17KB · 도구 이름(/glossary-tools.json) 4KB.
 // 사전 검색 색인(/search-index.json)은 처음 찾을 때 받는다: 100KB (gzip).
-// 단계 화면에서 나중에 받는 묶음(D82): 4단계 칸 셋 3KB · 설계도 묶음 5KB · 풀이 칸 + 에러 안내 22KB · 직접 쓰기 찾기 묶음 8KB · 도구 이름 찾기 묶음 8KB(T37). 단계 화면의 첫 묶음에 끼면 실패한다.
+// 단계 화면에서 나중에 받는 묶음(D82): 4단계 칸 셋 3KB · 설계도 묶음 5KB · 풀이 칸 + 에러 안내 22KB · 직접 쓰기 찾기 묶음 8KB · 도구 이름 찾기 묶음 8KB(T37) ·
+// 설계도 6번 묶음 24KB(T38). 단계 화면의 첫 묶음에 끼면 실패한다.
 //   npm run qa:budget
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
@@ -220,20 +221,23 @@ for (const [name, re, limit, allowedAt] of STAGE_LAZY) {
 // 입구 조각과 그 조각이 정적으로 부르는 조각(둘이 나눠 쓰는 match 조각 포함) 가운데 처음에 안 불리는 것을 함께 센다.
 // 단계 화면 첫 묶음에 끼면 실패한다
 const MATCH_LIMIT = 8 * KB;
-const MATCH_CHUNKS: [string, RegExp, string][] = [
+const MATCH_CHUNKS: [string, RegExp, string, number?][] = [
   ['직접 쓰기 찾기 묶음 custom-match', /[\\/]custom-match\.[^\\/]+\.js$/, '낱말 찾기 + 질문 낱말표, 직접 쓰기를 처음 펼칠 때'],
   ['도구 이름 찾기 묶음 tool-match', /[\\/]tool-match\.[^\\/]+\.js$/, '낱말 찾기 + 도구 짐작 말, 목록에 없는 도구 쓰기를 처음 펼칠 때'],
+  // 설계도 6번 묶음 (T38, D82): 디자인 값 + 디자인 계산 + 6번·CSS·DESIGN.md 그리기와 문장. /arrival 아래 막대 섬이 깨어날 때 미리 받는다.
+  // 디자인 정하기 시트 묶음(look-data, 14KB)은 시트를 만들 때 따로 줄을 더한다 (지금은 이 묶음 안에 함께 있다)
+  ['설계도 6번 묶음 look-render-data', /[\\/]look-render-data\.[^\\/]+\.js$/, '디자인 값·계산 + 6번·DESIGN.md 그리기, 설계도 받기에서 미리', 24 * KB],
 ];
-for (const [name, re, when] of MATCH_CHUNKS) {
+for (const [name, re, when, limit = MATCH_LIMIT] of MATCH_CHUNKS) {
   const entries = [...allJs].filter((f) => re.test(f));
   const files = new Set<string>();
   for (const f of entries) withStaticImports(f, files);
   const size = [...files].filter((f) => !usedFirst.has(f)).reduce((a, f) => a + gzSize(f), 0);
   const early = entries.some((f) => usedFirst.has(f));
-  const ok = entries.length > 0 && size <= MATCH_LIMIT && !early;
+  const ok = entries.length > 0 && size <= limit && !early;
   if (!ok) failed += 1;
   console.log(
-    `${ok ? '✓' : '✗'} ${name} (${when}) ${(size / KB).toFixed(1)}KB/${(MATCH_LIMIT / KB).toFixed(1)}KB` +
+    `${ok ? '✓' : '✗'} ${name} (${when}) ${(size / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB` +
       `${entries.length === 0 ? ' (빌드에 없다)' : ''}${early ? ' (첫 묶음에 끼었다)' : ''}`,
   );
 }

@@ -1,9 +1,10 @@
-// 쓰지 않는 말 검사 (docs/CONCEPT.md 3.8·3.9절): 화면 문구(src/copy/ko.ts)와 자료 문장(data/*.json)에서
+// 쓰지 않는 말 검사 (docs/CONCEPT.md 3.8·3.9절): 화면 문구(src/copy/ko.ts·ko-look.ts)와 자료 문장(data/*.json)에서
 // 버린 비유와 바꾼 말을 찾는다. 내부 id·주소·출처·에러 원문 예시는 보지 않는다.
 //   node scripts/guard/check-words.ts
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { ko } from '../../src/copy/ko.ts';
+import { koLook } from '../../src/copy/ko-look.ts';
 import { ROOT } from '../lib/load-data.ts';
 import { collectStrings, findBanned } from '../lib/words.ts';
 
@@ -27,7 +28,7 @@ const WORD_TABLES = new Set(['data/aliases.json']);
 const TABLE_TEXT = /(?:^|\.)message$/;
 
 /** 화면·설계도 문장 파일 (일반 동사 '담다'도 막는다). 개념·상품·에러 설명은 일반 동사를 쓸 수 있다 */
-const UI_FILES = new Set(['src/copy/ko.ts', 'data/templates.json', 'data/rules.json', 'data/questions.json', 'data/research-cards.json', 'data/recipes.json']);
+const UI_FILES = new Set(['src/copy/ko.ts', 'src/copy/ko-look.ts', 'data/templates.json', 'data/rules.json', 'data/questions.json', 'data/research-cards.json', 'data/recipes.json']);
 
 const findings: string[] = [];
 const scan = (file: string, value: unknown): void => {
@@ -38,6 +39,8 @@ const scan = (file: string, value: unknown): void => {
 };
 
 scan('src/copy/ko.ts', ko);
+// 디자인 정하기 시트 문구 (T38): ko.ts의 한 갈래 (시트를 열 때만 받는 묶음)
+scan('src/copy/ko-look.ts', koLook);
 const dataDir = join(ROOT, 'data');
 for (const name of readdirSync(dataDir).filter((n) => n.endsWith('.json')).sort()) {
   scan(`data/${name}`, JSON.parse(readFileSync(join(dataDir, name), 'utf8')));

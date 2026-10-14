@@ -8,18 +8,19 @@
 
 | 파일 | 담는 것 | 스키마 | 지금 개수 |
 |---|---|---|---|
-| `taxonomy.json` | 태그 분류표 (유형·사용자·AI·쓰는 AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 70개(쓰는 AI `aitool.*` 15개 포함), 분야 10개 |
+| `taxonomy.json` | 태그 분류표 (유형·사용자·AI·쓰는 AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 72개(쓰는 AI `aitool.*` 15개, 느낌 6개 포함), 분야 10개 |
 | `questions.json` | 목적지 질문, 보기, 보기별 태그, 노출 조건, 질문마다 직접 쓰기 보기 | `questions.schema.json` | 20문항 (만들 앱 17 + 고르지 않아도 되는 '쓰는 AI' 3, 한 번에 하나만 보임) |
 | `rules.json` | 칸·충돌(막힌 곳)·알아볼 것·안전·막히기 쉬운 곳 규칙 | `rules.schema.json` | 39개 |
 | `scoring.json` | 추천 가중치와 기준값 (사이트에 공개) | `scoring.schema.json` | |
 | `products.json` | 상품 카드 = 화면의 도구 (진열·색인) | `products.schema.json` | 49개 (진열 48) |
 | `concepts.json` | 개념 카드 = 화면의 용어 카드 (읽어 둘 용어, 사전) | `concepts.schema.json` | 20장 |
-| `research-cards.json` | 조사 카드 (알아볼 것). 규칙이 붙이는 것 + 빈틈 넷(`research.gap-*`) + 직접 쓴 도구(`research.custom-tool`) + 빌더의 게시 기능(`research.builder-publish`, B-02) | `research-cards.schema.json` | 19장 |
-| `templates.json` | 영수증·설계도·AI에게 할 말 문장 틀 | `templates.schema.json` | |
+| `research-cards.json` | 조사 카드 (알아볼 것). 규칙이 붙이는 것 + 빈틈 넷(`research.gap-*`) + 직접 쓴 도구(`research.custom-tool`) + 빌더의 게시 기능(`research.builder-publish`, B-02) + 직접 고른 글꼴(`research.look-font`, T38) | `research-cards.schema.json` | 20장 |
+| `templates.json` | 영수증·설계도·AI에게 할 말 문장 틀. `look`은 설계도 6번·DESIGN.md 문장(디자인 묶음만 싣는다), `types.*.screens[].components`는 화면마다 부품 id(`looks.json` components) | `templates.schema.json` | |
 | `recipes.json` | 레시피 = 화면의 미리 짠 코스 (답 + 고른 도구 완성 세트) | `recipes.schema.json` | 5개 |
 | `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 20개 |
 | `glossary.json` | 어려운 말 풀이: 용어마다 한 문장 풀이, 다른 이름, 읽는 법, 짧은 예, 묶음(`kind`), 상위 용어, 용어 카드·도구·에러 안내 연결. 화면에서 글을 고르거나 점선 밑줄 말을 누르면 뜬다 (D60, D66). 엔진은 쓰지 않는다. 13절 | `glossary.schema.json` (+ `tests/lib/glossary.test.ts`가 매처로 문장 규칙·이름 겹침·상위 용어를 막는다) | 213개 |
 | `aliases.json` | 낱말표: 이용자가 칠 말을 화면 말·자료에 잇는 표 (AI 아님, D74·D83). 사전 검색 동의어와 직접 쓰기 낱말(보기 낱말·예·아니요·AI 이름·도구 이름 짐작·빈틈). 엔진 계산(`evaluate`)은 쓰지 않는다. 14절 | `aliases.schema.json` | 검색 동의어 10줄, 직접 쓰기 낱말 약 770개 |
+| `looks.json` | 디자인 정하기 값과 이름표 (T38, D76·D96): 느낌·바탕 묶음·대표 색(대비는 80쌍 4.6:1 이상, 테두리 3.1:1)·글꼴 짝과 글꼴(판·라이선스·받는 줄·확인한 날)·모서리·촘촘함·움직임·깊이·아이콘·그림·말투·첫 화면 배치·앱 종류별 기본값·화면 부품 이름과 규칙·느낌·색·밝기 낱말(`keywords`, 낱말표 규칙 그대로)·참고 사이트(첫 화면 주소, 모두 `needsReview`). 설계도 6번 문장은 `templates.json` `look`. 엔진 계산(`evaluate`)은 쓰지 않는다(ENGINE.md 11절) | `looks.schema.json` (+ 대비·라이선스(OFL-1.1·MIT·ISC)·참조 id는 `npm run validate`) | 느낌 6, 바탕 4, 대표 색 10, 글꼴 짝 8, 부품 25 |
 | `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
 | `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 23개 |
 

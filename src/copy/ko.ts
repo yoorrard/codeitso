@@ -4,6 +4,7 @@
 // 묶음 이름(interview, shop, receipt…)은 옛 화면 이름이지만 내부 id처럼 그대로 둔다: lesson = 내 AI 써 보기,
 // interview = 만들 앱 정하기, shop = 도구 고르기, check = 도구끼리 맞춰 보기, receipt = 설계도 받기,
 // shelf·product = 도구 모음, study·concept = 용어 카드, recipes = 미리 짠 코스.
+// 디자인 정하기 시트·미리 보기 문구는 ./ko-look.ts (koLook): 시트를 열 때만 받는 묶음이라 이 객체(단계 화면 첫 묶음)에 넣지 않는다 (D97).
 
 /** 단계 이름 (D64): 할 일을 말하는 '[무엇을] 하기' 묶음. 단계 줄·상태 한 줄 머리·<title>에 같은 이름을 쓴다 */
 const STAGE = {
@@ -257,6 +258,11 @@ export const ko = {
     /** P1 다시 묻지 않기 (설계서 7.7절, WCAG 3.3.7): 연습 칩에서 고른 AI로 '쓰는 AI'를 채우고 건너뛸 때. {{dir}} = josa(이름, 'dir') */
     aiToolFromPractice: '연습에서 고른 {{dir}} 넣어 뒀어요.',
     aiToolChange: '바꾸기',
+    /** 느낌 질문 (T38, 설계서 4.1·4.3절): 앱 종류 추천 첫째 타일의 꼬리표, 타일 아래 글 버튼 (누르면 '디자인 정하기' 시트) */
+    styleReco: '추천',
+    lookMore: '색·글꼴 더 정하기',
+    /** 시트 묶음을 못 받았을 때 (느린 망·끊김) */
+    lookFail: '디자인 정하기를 열지 못했어요. 다시 눌러 주세요.',
   },
   /**
    * 직접 쓰기 부품 (D74, docs/review/v3/input.md 4·9.6절): 보기 → [직접 쓰기] → '또는' → [모르겠어요].

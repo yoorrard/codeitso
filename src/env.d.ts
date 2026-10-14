@@ -36,3 +36,31 @@ declare module 'virtual:cc-data/concepts-detail' {
   const file: import('./lib/data-parts.ts').ConceptsFile<import('./lib/data-parts.ts').ConceptDetail>;
   export default file;
 }
+declare module 'virtual:cc-data/templates-core' {
+  const file: import('./lib/data-parts.ts').CoreTemplates;
+  export default file;
+}
+declare module 'virtual:cc-data/templates-look' {
+  const file: import('./lib/data-parts.ts').LookTemplatesPart;
+  export default file;
+}
+declare module 'virtual:cc-data/look-mood-words' {
+  const file: { mood: import('./lib/aliases.ts').AliasEntry[] };
+  export default file;
+}
+declare module 'virtual:cc-data/looks-screen' {
+  const file: import('./lib/data-parts.ts').ScreenLooks;
+  export default file;
+}
+declare module 'virtual:cc-data/look-mood-order' {
+  const file: Record<string, string[]>;
+  export default file;
+}
+declare module 'virtual:cc-data/look-icons-*' {
+  const file: Record<import('./lib/data-parts.ts').LookIconName, import('./lib/data-parts.ts').LookIcon>;
+  export default file;
+}
+declare module 'virtual:cc-data/looks-render' {
+  const file: import('./lib/data-parts.ts').RenderLooks;
+  export default file;
+}

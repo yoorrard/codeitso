@@ -4,7 +4,12 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Aliases } from '../../src/lib/aliases.ts';
-import type { Data } from '../../src/lib/engine/types.ts';
+import type { Data, Looks } from '../../src/lib/engine/types.ts';
+
+/** data/looks.json (디자인 정하기, T38). 엔진 계산(evaluate)은 읽지 않아 Data에 넣지 않는다 */
+export function loadLooks(): Looks {
+  return readJson<Looks>(join(DATA_DIR, 'looks.json'));
+}
 import type { Glossary } from '../../src/lib/glossary.ts';
 import { DATA_FILES } from './data-files.ts';
 import type { Sources, ValidationInput } from './validate.ts';
@@ -32,7 +37,7 @@ export function goldenFiles(): string[] {
     .map((f) => join(dir, f));
 }
 
-/** 자료 검사에 넘길 것을 모두 읽는다 (data, sources, glossary, aliases, schemas, 골든) */
+/** 자료 검사에 넘길 것을 모두 읽는다 (data, sources, glossary, aliases, looks, schemas, 골든) */
 export function loadValidationInput(release: boolean, now: Date = new Date()): ValidationInput {
   const schemaDir = join(ROOT, 'schemas');
   return {
@@ -40,6 +45,7 @@ export function loadValidationInput(release: boolean, now: Date = new Date()): V
     sources: readJson<Sources>(join(DATA_DIR, 'sources.json')),
     glossary: readJson<Glossary>(join(DATA_DIR, 'glossary.json')),
     aliases: readJson<Aliases>(join(DATA_DIR, 'aliases.json')),
+    looks: readJson<Looks>(join(DATA_DIR, 'looks.json')),
     schemas: readdirSync(schemaDir)
       .filter((x) => x.endsWith('.schema.json'))
       .sort()

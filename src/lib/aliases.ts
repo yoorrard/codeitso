@@ -67,6 +67,15 @@ export interface Gap {
   message: string;
 }
 
+/**
+ * 느낌 질문(q.style)의 보기 낱말은 data/looks.json keywords.mood에 둔다 (설계서 3.9절: 느낌·색 낱말은 looks.json, T38).
+ * 낱말 찾기 표(options)에 그 질문 칸으로 끼운다: 직접 쓰기 칸의 '가까운 보기'와 디자인 정하기가 같은 낱말을 쓴다
+ */
+export const STYLE_QUESTION = 'q.style';
+export function withStyleWords(al: Aliases, mood: AliasEntry[]): Aliases {
+  return { ...al, options: { ...al.options, [STYLE_QUESTION]: mood } };
+}
+
 export interface Aliases {
   version: 1;
   searchSynonyms: SearchSynonym[];

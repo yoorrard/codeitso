@@ -42,6 +42,16 @@ describe('세션 읽기', () => {
   });
 });
 
+describe('세션 읽기: 디자인 (T38)', () => {
+  it('글 칸과 더하고 싶은 화면만 남기고, 처음 값이 아니게 본다 (id·색·글자 수는 엔진이 다시 고른다)', () => {
+    const s = readSession({ answers: {}, look: { accent: '#00A651', theme: 'both', note: '  ', bad: 3, screens: ['표', 7, '달력', '', '목록', '사진'] } });
+    expect(s.look).toEqual({ accent: '#00A651', theme: 'both', screens: ['표', '달력', '목록'] });
+    expect(isEmptySession(s)).toBe(false);
+    expect(readSession({ look: 'x' }).look).toBeUndefined();
+    expect(readSession({ look: { note: 'ㄱ'.repeat(500) } }).look?.note).toHaveLength(80);
+  });
+});
+
 describe('세션 읽기: 직접 쓴 것 (T36)', () => {
   it('내 말: 질문 id 모양의 열쇠만, 40자, 20개까지, 빈 글은 버린다', () => {
     const notes: Record<string, unknown> = { 'q.type': '가계부 앱', 'Q.bad': 'x', 'q.save': '   ', 'q.long': 'ㄱ'.repeat(50), 'q.num': 3 };

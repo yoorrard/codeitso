@@ -5,6 +5,8 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { Aliases } from '../../src/lib/aliases.ts';
+import { withStyleWords } from '../../src/lib/aliases.ts';
+import type { Looks } from '../../src/lib/engine/types.ts';
 import { evaluate } from '../../src/lib/engine/index.ts';
 import {
   findAliases,
@@ -21,7 +23,8 @@ import { DATA_DIR, readJson } from '../../scripts/lib/load-data.ts';
 import { realCatalog } from '../fixtures/tiny.ts';
 
 const cat = realCatalog();
-const aliases = readJson<Aliases>(join(DATA_DIR, 'aliases.json'));
+// 느낌 질문의 낱말은 looks.json keywords.mood에 있다 (T38): 화면의 찾기 묶음(custom-match.ts)처럼 끼워 넣는다
+const aliases = withStyleWords(readJson<Aliases>(join(DATA_DIR, 'aliases.json')), readJson<Looks>(join(DATA_DIR, 'looks.json')).keywords.mood);
 
 const top = (qid: string, text: string): string | null => matchAnswer(cat, aliases, qid, text).suggestions[0]?.optionId ?? null;
 

@@ -2,6 +2,7 @@ import type { Catalog } from './catalog.ts';
 import type { Ctx } from './conditions.ts';
 import { evalCondition } from './conditions.ts';
 import { nameHidden } from './custom.ts';
+import { LOOK_CUSTOM } from './look-choice.ts';
 import type { Conflict } from './recheck.ts';
 import type { Slot } from './shop.ts';
 import { fill } from './text.ts';
@@ -9,8 +10,8 @@ import type { Concept, Lead, PrepItem, Product, ResearchText, Session } from './
 
 export interface ResearchItem extends ResearchText {
   id: string;
-  /** custom: 직접 쓴 도구(research.custom:custom-n), builder: 빌더의 게시 기능(research.builder-publish, B-02), gap: 빈틈(research.gap-<id>) */
-  source: 'rule' | 'conflict' | 'empty-slot' | 'index' | 'custom' | 'builder' | 'gap';
+  /** custom: 직접 쓴 도구(research.custom:custom-n), builder: 빌더의 게시 기능(research.builder-publish, B-02), gap: 빈틈(research.gap-<id>), look: 직접 고른 글꼴(research.look-font, T38) */
+  source: 'rule' | 'conflict' | 'empty-slot' | 'index' | 'custom' | 'builder' | 'gap' | 'look';
 }
 
 export interface StuckNote {
@@ -96,8 +97,14 @@ export function collectResearch(cat: Catalog, ctx: Ctx, conflicts: Conflict[], s
   }
   for (const p of ctx.cart) if (p.builderPublish === true) fromCard(t.builderPublish.researchCard, 'builder');
   for (const g of session?.gaps ?? []) fromCard(`research.gap-${g}`, 'gap');
+  // 디자인 정하기에서 글꼴을 직접 골랐으면 글꼴 라이선스 (T38, 설계서 4.2절). 이름은 6-3에 있고 여기에는 넣지 않는다:
+  // 영수증 링크에는 글꼴 'custom'만 실려 이름 없이도 같은 수가 나온다
+  if (session?.look?.font === LOOK_CUSTOM) fromCard(LOOK_FONT_CARD, 'look');
   return out;
 }
+
+/** 직접 고른 글꼴의 라이선스 알아볼 것 (T38) */
+export const LOOK_FONT_CARD = 'research.look-font';
 
 /** 가져올 정보 질문 (직접 쓴 내 말이 빈 외부 데이터 칸의 알아볼 것에 들어간다) */
 const DOMAIN_Q = 'q.domain';

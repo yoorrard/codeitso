@@ -889,7 +889,8 @@ export function layoutMap(input: MapInput): MapModel {
 const SHAPES: NodeShape[] = ['screen', 'store', 'auth', 'data', 'notify', 'host'];
 const LOT_TYPES: LotType[] = ['record', 'form', 'page', 'quiz', 'tool', 'board', 'custom', 'unknown'];
 /** 느낌 질문(q.style)의 보기 id → 지도 팔레트 */
-const PALETTE_OF: Record<string, Palette> = { clean: 'clean', cute: 'cute', serious: 'calm', bold: 'bold' };
+/** 새 느낌 둘(T38)은 있는 팔레트에 잇는다: 포근하게 → cute, 오락실처럼 → bold (data/looks.json mapPalette와 같다, 시험이 본다) */
+const PALETTE_OF: Record<string, Palette> = { clean: 'clean', cute: 'cute', serious: 'calm', bold: 'bold', warm: 'cute', retro: 'bold' };
 /** 느낌 보기 id의 지도 팔레트 (모르면 기본). 만들 앱 정하기의 느낌 견본도 이것으로 칠한다 */
 export const paletteOf = (id: string | undefined): Palette => PALETTE_OF[id ?? ''] ?? 'clean';
 /** 막힌 곳 id → 사고 표시 (나머지는 alert) */

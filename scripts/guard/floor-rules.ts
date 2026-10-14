@@ -44,6 +44,14 @@ const INTERNAL_PATH_RE = new RegExp(`['"\`]/(${INTERNAL_PATHS.map(esc).join('|')
 /** 사이트 안 주소를 직접 쓰면 안 되는 파일: 화면 부품과 도우미. 시험(tests/)은 밖이고, 주소를 정하는 routes.ts만 뺀다 */
 const isRouteScope = (rel: string): boolean => /^src\/(components|lib)\//.test(rel) && rel !== 'src/lib/routes.ts';
 
+/**
+ * 디자인 미리 보기 변수 (T38, 설계서 4.6절): 이용자 앱의 디자인 값(data/looks.json → 엔진 lookSpec)은 사이트 토큰이 아니라서
+ * 미리 보기 뿌리(.look-preview)에 인라인 --pv-* 변수로 넣는다. 이 변수를 쓰는 곳은 미리 보기 부품과 그 스타일 둘뿐이고,
+ * 미리 보기 스타일은 .look-preview 안만 꾸미며 --pv-* (과 모션 길이·곡선 토큰)만 쓴다. 사이트 화면이 이용자 색에 물들지 않게
+ */
+export const LOOK_PREVIEW_FILES = new Set(['src/styles/look.css', 'src/components/LookPreview.tsx']);
+const PV_RE = /--pv-[a-z0-9-]/;
+const LOOK_CSS = 'src/styles/look.css';
 const OLD_TOKEN_RE = new RegExp(`var\\(\\s*--(${OLD_TOKENS.join('|')})\\s*[,)]`);
 const GOLD_RE = /--(on-)?gold(-[a-z]+)?\b/;
 const BRAND_TEXT_RE = /(^|[^-\w])color\s*:\s*['"]?\s*var\(\s*--(brand-blue|cyan)\s*\)/;
@@ -228,6 +236,10 @@ export function checkSource(rel: string, raw: string): Finding[] {
     if (isUiOrStyle && !isTokens && OLD_TOKEN_RE.test(line)) {
       add(i, 'old-token', '옛 토큰 이름이다. 새 이름을 쓴다 (--ink → --text, --card → --surface, --text-sm → --size-caption…, systems.md 7절)');
     }
+    // 14. 미리 보기 변수 --pv-*는 미리 보기 부품·스타일 밖에서 쓰지 않는다 (설계서 4.6절)
+    if (isSrc && !LOOK_PREVIEW_FILES.has(rel) && PV_RE.test(line)) {
+      add(i, 'pv-scope', '--pv-* 변수는 미리 보기(.look-preview, src/components/LookPreview.tsx·src/styles/look.css) 안에서만 쓴다');
+    }
     // 11-a. 로고 파랑·청록 글자 (화면 코드의 인라인 style. CSS는 아래에서 규칙 단위로 본다)
     if (isUiOrStyle && ext !== '.css' && ext !== '.astro' && BRAND_TEXT_RE.test(line)) {
       add(i, 'brand-color-text', `--brand-blue·--cyan은 글자색으로 쓰지 않는다 (흰 바탕 3.77·2.36:1). 남색 면 위 청록 글자는 .${CYAN_ON_NAVY_CLASS}`);
@@ -245,6 +257,17 @@ export function checkSource(rel: string, raw: string): Finding[] {
       });
     }
     for (const block of cssBlocks(css)) {
+      // 14-b. 미리 보기 스타일: .look-preview 안만, 값은 --pv-*와 모션 토큰(--dur-*·--ease-*)만 (사이트 색·글자 토큰을 섞지 않는다)
+      if (rel === LOOK_CSS && block.decls.length > 0) {
+        const sel = block.selector.replace(/@[^{]*$/, '').trim();
+        if (sel && !sel.startsWith('@') && sel.split(',').some((x) => !/^(:root\[[^\]]*\]\s+)?\.look-preview\b/.test(x.trim()))) {
+          add(block.decls[0]?.line ?? 0, 'pv-scope', '미리 보기 스타일은 .look-preview 안만 꾸민다');
+        }
+        for (const d of block.decls) {
+          const other = [...d.value.matchAll(/var\(\s*--([a-z0-9-]+)/g)].map((m) => m[1] ?? '').filter((n) => !/^(pv|dur|ease)-/.test(n));
+          if (other.length > 0) add(d.line, 'pv-scope', `미리 보기 스타일은 var(--pv-*)만 쓴다 (사이트 토큰 --${other[0]}을 섞지 않는다)`);
+        }
+      }
       // 11-b. 로고 파랑·청록 글자: 그림 스타일 파일(지도)은 currentColor가 선 색이라 뺀다
       if (!GRAPHIC_STYLES.has(rel) && !new RegExp(`\\.${CYAN_ON_NAVY_CLASS}(?![-\\w])`).test(block.selector)) {
         for (const d of block.decls) {

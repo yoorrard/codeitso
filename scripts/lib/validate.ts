@@ -3,11 +3,14 @@
 import Ajv2020 from 'ajv/dist/2020.js';
 import type { Catalog, Condition, Data, Question } from '../../src/lib/engine/index.ts';
 import { BUILDER_PUBLISH_ID, evaluate, makeCatalog } from '../../src/lib/engine/index.ts';
+import { contrast as ratio, ratio2, shiftUntil } from '../../src/lib/engine/color.ts';
+import { darkSoftOf, LOOK_TYPE_OF_TAG } from '../../src/lib/engine/look.ts';
+import type { Looks } from '../../src/lib/engine/types.ts';
 import { usesCart } from '../../src/lib/engine/conditions.ts';
+import { LOOK_FONT_CARD } from '../../src/lib/engine/checkout.ts';
 import type { Aliases } from '../../src/lib/aliases.ts';
-import { aliasKey, nameKey } from '../../src/lib/aliases.ts';
+import { aliasKey, nameKey, STYLE_QUESTION } from '../../src/lib/aliases.ts';
 import type { Glossary } from '../../src/lib/glossary.ts';
-import { contrast } from './contrast.ts';
 import { DATA_FILES } from './data-files.ts';
 
 export interface Sources {
@@ -21,6 +24,8 @@ export interface ValidationInput {
   glossary: Glossary;
   /** data/aliases.json (낱말표: 검색 동의어, T36부터 직접 쓰기 낱말). 엔진 계산(evaluate)은 쓰지 않아 data와 따로 둔다 */
   aliases: Aliases;
+  /** data/looks.json (디자인 정하기 값, T38). 엔진 계산(evaluate)은 쓰지 않아 data와 따로 둔다 */
+  looks: Looks;
   /** schemas/*.schema.json 내용 */
   schemas: object[];
   goldens: { name: string; value: unknown }[];
@@ -63,6 +68,7 @@ export function validateAll(input: ValidationInput): ValidationResult {
     'sources.json': 'sources.schema.json',
     'glossary.json': 'glossary.schema.json',
     'aliases.json': 'aliases.schema.json',
+    'looks.json': 'looks.schema.json',
   };
   const validateValue = (name: string, value: unknown, schemaId: string): void => {
     const validate = ajv.getSchema(schemaId);
@@ -78,6 +84,7 @@ export function validateAll(input: ValidationInput): ValidationResult {
     if (file === 'sources.json') return input.sources;
     if (file === 'glossary.json') return input.glossary;
     if (file === 'aliases.json') return input.aliases;
+    if (file === 'looks.json') return input.looks;
     const key = (Object.keys(DATA_FILES) as (keyof typeof DATA_FILES)[]).find((k) => DATA_FILES[k] === file);
     return key ? input.data[key] : undefined;
   };
@@ -349,6 +356,9 @@ export function validateAll(input: ValidationInput): ValidationResult {
   // 빌더의 게시 기능 카드 (B-02): 웹에서 만드는 도구의 공개 칸을 엔진이 채울 때 붙는다
   if (!cardIds.has(data.templates.builderPublish.researchCard)) err(`templates.builderPublish.researchCard: 없는 조사 카드 ${data.templates.builderPublish.researchCard}`);
   usedCards.add(data.templates.builderPublish.researchCard);
+  // 직접 고른 글꼴의 라이선스 카드 (T38): 디자인 정하기에서 글꼴을 직접 쓰면 엔진이 붙인다
+  if (!cardIds.has(LOOK_FONT_CARD)) err(`engine/checkout.ts LOOK_FONT_CARD: 없는 조사 카드 ${LOOK_FONT_CARD}`);
+  usedCards.add(LOOK_FONT_CARD);
   dupes('research-cards', data.researchCards.cards.map((c) => c.id));
   for (const c of data.researchCards.cards) if (!usedCards.has(c.id)) warn(`research-cards/${c.id}: 어떤 규칙도 쓰지 않습니다`);
 
@@ -392,7 +402,6 @@ export function validateAll(input: ValidationInput): ValidationResult {
     for (const t of tagIds) if (t.startsWith(prefix) && !keys.includes(t)) err(`templates.${where}: ${t}의 문장이 없습니다`);
   };
   expectKeys('types', Object.keys(T.types), 'type.');
-  expectKeys('styles', Object.keys(T.styles), 'style.');
   expectKeys('devices', Object.keys(T.devices), 'device.');
   expectKeys('audiences', Object.keys(T.audiences), 'audience.');
   expectKeys('aiTools', Object.keys(T.aiTools), 'ai.');
@@ -402,18 +411,9 @@ export function validateAll(input: ValidationInput): ValidationResult {
   });
   dupes('templates.conversationCards', T.conversationCards.map((c) => c.id));
 
-  // 색 대비 (WCAG 2.x)
-  for (const [id, s] of Object.entries(T.styles)) {
-    const p = s.palette;
-    for (const [fg, bg, name] of [
-      [p.text, p.background, '글자/배경'],
-      [p.text, p.surface, '글자/면'],
-      [p.accentText, p.accent, '강조 글자/강조'],
-    ] as const) {
-      const ratio = contrast(fg, bg);
-      if (ratio < 4.5) err(`templates.styles.${id}: ${name} 대비 ${ratio.toFixed(2)}:1 (4.5:1 이상 필요)`);
-    }
-  }
+  expectKeys('look.focus', Object.keys(T.look.focus), 'type.');
+  for (const t of tagIds) if (t.startsWith('type.') && !(t in LOOK_TYPE_OF_TAG)) err(`look.ts LOOK_TYPE_OF_TAG: 앱 종류 태그 ${t}의 열쇠가 없습니다`);
+  checkLooks(input.looks);
 
   // 자리 표시({{이름}})가 정해진 이름만 쓰는지
   const allowed: Record<string, string[]> = {
@@ -427,6 +427,11 @@ export function validateAll(input: ValidationInput): ValidationResult {
     'pack.mine': ['chip', 'text', 'label', 'as'],
     'conversationCards': ['packRef'],
     'receipt': ['n', 'm', 'h'],
+    'look': [
+      'label', 'ko', 'en', 'focus', 'text', 'word', 'standard', 'nonText', 'v', 'hex', 'heading', 'body', 'name', 'line', 'install',
+      'import', 'home', 'list', 'title', 'subtitle', 'bodyLg', 'caption', 'gutter', 'section', 'row', 'tap', 'shadow', 'n', 'sm', 'md',
+      'lg', 'screen', 'parts', 'states', 'press', 'celebrate', 'easing', 'mood', 'accent', 'theme', 'issued', 'font', 'license', 'react',
+    ],
   };
   const placeholders = (s: unknown): string[] => (JSON.stringify(s).match(/\{\{([a-zA-Z0-9_]+)\}\}/g) ?? []).map((m) => m.slice(2, -2));
   const checkPlaceholders = (where: string, value: unknown, ok: string[]): void => {
@@ -442,7 +447,9 @@ export function validateAll(input: ValidationInput): ValidationResult {
   checkPlaceholders('receipt', T.receipt, allowed['receipt'] ?? []);
   checkPlaceholders('customTool', T.customTool, allowed['customTool'] ?? []);
   checkPlaceholders('pack.mine', T.pack.mine, allowed['pack.mine'] ?? []);
-  const { pack: _p, emptySlot: _e, indexResearch: _i, conversationCards: _c, receipt: _r, customTool: _t, ...rest } = T;
+  checkPlaceholders('look', T.look, allowed['look'] ?? []);
+  checkPlaceholders('lookSummary', T.lookSummary, ['title', 'mood', 'accent', 'font']);
+  const { pack: _p, emptySlot: _e, indexResearch: _i, conversationCards: _c, receipt: _r, customTool: _t, look: _l, lookSummary: _s, ...rest } = T;
   checkPlaceholders('나머지', rest, []);
   for (const c of data.concepts.concepts) checkPlaceholders(`concepts/${c.id}.askAI`, c.askAI, ['project']);
 
@@ -575,11 +582,29 @@ export function validateAll(input: ValidationInput): ValidationResult {
     else for (const o of ['chat-free', 'chat-paid', 'builder', 'agent']) if (!aiQ.options.some((x) => x.id === o)) err(`aliases/aiNames: ${AI_QUESTION}에 보기 ${o}가 없습니다`);
     field('aliases/aiNames', A.aiNames.map((a) => ({ target: a.id, aliases: a.aliases })));
 
-    // 직접 쓰기가 있는 질문은 모두 읽을 낱말이 있다
+    // 직접 쓰기가 있는 질문은 모두 읽을 낱말이 있다. 느낌 질문은 looks.json keywords.mood가 읽는다 (설계서 3.9절, T38)
     for (const q of data.questions.questions) {
       if (!q.options.some((o) => o.isCustom === true)) continue;
+      if (q.id === STYLE_QUESTION) continue;
       if (!(q.id in A.options) && !yesNoIds.has(q.id) && q.id !== AI_QUESTION) err(`aliases: ${q.id}의 직접 쓰기를 읽을 낱말이 없습니다 (options나 yesNo.topics에 더합니다)`);
     }
+    if (STYLE_QUESTION in A.options) err(`aliases/options/${STYLE_QUESTION}: 느낌 낱말은 data/looks.json keywords.mood에 둡니다 (설계서 3.9절)`);
+
+    // 디자인 정하기 낱말 (looks.json keywords): 칸마다 같은 말은 한 대상만. 느낌은 q.style 보기와 그 자리의 빈틈 말과 함께 본다
+    const K = input.looks.keywords;
+    const styleQ = cat.question.get(STYLE_QUESTION);
+    for (const e of K.mood) {
+      const o = styleQ?.options.find((x) => x.id === e.id);
+      if (!o || o.isUnknown === true || o.isCustom === true) err(`looks/keywords/mood: q.style에 없는 느낌 ${e.id}`);
+    }
+    for (const o of styleQ?.options ?? []) {
+      if (o.isUnknown !== true && o.isCustom !== true && !K.mood.some((e) => e.id === o.id)) warn(`looks/keywords/mood: 느낌 ${o.id}를 가리키는 낱말이 없습니다`);
+    }
+    field('looks/keywords/mood', [...K.mood.map((e) => ({ target: e.id, aliases: e.aliases })), ...gapsAt(STYLE_QUESTION)]);
+    for (const e of K.accent) if (!input.looks.accents.some((a) => a.id === e.id)) err(`looks/keywords/accent: 없는 대표 색 ${e.id}`);
+    field('looks/keywords/accent', K.accent.map((e) => ({ target: e.id, aliases: e.aliases })));
+    for (const e of K.theme) if (e.id !== 'both') err(`looks/keywords/theme: 어두운 말은 '둘 다'(both)로만 둡니다 (${e.id})`);
+    field('looks/keywords/theme', K.theme.map((e) => ({ target: e.id, aliases: e.aliases })));
 
     // 도구 이름 짐작 + 도구 칸의 빈틈
     dupes('aliases/toolHints', A.toolHints.map((h) => h.id));
@@ -607,6 +632,135 @@ export function validateAll(input: ValidationInput): ValidationResult {
       }
     }
     field('aliases/gaps(line)', gapsAt('line'));
+  }
+
+  /**
+   * 디자인 정하기 자료 (data/looks.json, 설계서 4.3·4.4·4.10절): 느낌 = q.style 보기, 참조 id, 라이선스 허용 목록(OFL-1.1 · MIT · ISC),
+   * 앱 종류 열쇠, 화면 부품, 그리고 대비. 대표 색 10 × 바탕 4 × 밝기 2 = 80쌍(대표 색 글자 / 면·바탕)이 4.6:1 이상, 버튼 글자·옅은 면 위 글자도
+   * 4.6:1 이상, 바탕 묶음의 글자·약한 글자 4.6:1 이상, 입력 테두리 3.1:1 이상. 모자라면 L을 0.01씩 옮긴 값을 알려 준다
+   */
+  function checkLooks(L: Looks): void {
+    const T = L.contrast.target;
+    const idSet = (where: string, list: { id: string }[]): Set<string> => {
+      dupes(where, list.map((x) => x.id));
+      return new Set(list.map((x) => x.id));
+    };
+    const neutrals = idSet('looks/neutrals', L.neutrals);
+    const accents = idSet('looks/accents', L.accents);
+    const families = idSet('looks/families', L.families);
+    const fonts = idSet('looks/fonts', L.fonts);
+    const radius = idSet('looks/radius', L.radius);
+    const density = idSet('looks/density', L.density);
+    const motion = idSet('looks/motion', L.motion);
+    const depths = idSet('looks/depths', L.depths);
+    const icons = idSet('looks/iconSets', L.iconSets);
+    const imagery = idSet('looks/imagery', L.imagery);
+    idSet('looks/tones', L.tones);
+    const comps = idSet('looks/components', L.components);
+    idSet('looks/references', L.references);
+    idSet('looks/moods', L.moods);
+
+    // 느낌 여섯 = q.style 보기 (직접 쓰기·모르겠어요 빼고), 이름도 같게
+    const styleOpts = (cat.question.get(STYLE_QUESTION)?.options ?? []).filter((o) => o.isUnknown !== true && o.isCustom !== true);
+    for (const o of styleOpts) {
+      const m = L.moods.find((x) => x.id === o.id);
+      if (!m) err(`looks/moods: q.style 보기 ${o.id}의 느낌이 없습니다`);
+      else if (m.label !== o.label) err(`looks/moods/${m.id}: 이름이 q.style 보기와 다릅니다 (${m.label} ≠ ${o.label})`);
+    }
+    for (const m of L.moods) {
+      const where = `looks/moods/${m.id}`;
+      if (!styleOpts.some((o) => o.id === m.id)) err(`${where}: q.style에 없는 느낌`);
+      if (!tagIds.has(`style.${m.id}`)) err(`${where}: 분류표에 style.${m.id} 태그가 없습니다`);
+      const ref = (set: Set<string>, v: string, what: string): void => {
+        if (!set.has(v)) err(`${where}: 없는 ${what} ${v}`);
+      };
+      ref(neutrals, m.neutral, '바탕 묶음');
+      ref(accents, m.accent, '대표 색');
+      ref(fonts, m.font, '글꼴 짝');
+      ref(radius, m.radius, '모서리');
+      ref(depths, m.depth, '깊이');
+      ref(icons, m.icons, '아이콘 묶음');
+      ref(motion, m.motion, '움직임');
+    }
+    for (const f of L.fonts) {
+      if (!families.has(f.heading)) err(`looks/fonts/${f.id}: 없는 제목 글꼴 ${f.heading}`);
+      if (!families.has(f.body)) err(`looks/fonts/${f.id}: 없는 본문 글꼴 ${f.body}`);
+    }
+
+    // 라이선스 허용 목록과 확인
+    const LICENSES = ['OFL-1.1', 'MIT', 'ISC'];
+    for (const f of L.families) {
+      const where = `looks/families/${f.id}`;
+      if (!LICENSES.includes(f.license)) err(`${where}: 허용하지 않는 라이선스 ${f.license} (OFL-1.1 · MIT · ISC만)`);
+      if (f.needsReview && (f.html !== undefined || f.npm !== undefined)) err(`${where}: 원문으로 확인하지 못한 글꼴(needsReview)에는 받는 줄(html·npm)을 두지 않습니다`);
+      if (f.checkedAt.slice(0, 7) > thisMonth) err(`${where}: 확인한 때(${f.checkedAt})가 미래입니다`);
+    }
+    for (const i of L.iconSets) if (i.license !== undefined && !LICENSES.includes(i.license)) err(`looks/iconSets/${i.id}: 허용하지 않는 라이선스 ${i.license} (OFL-1.1 · MIT · ISC만)`);
+    for (const r of L.references) if (/[?#]|utm_|ref=/.test(r.url)) err(`looks/references/${r.id}: 첫 화면 주소만 씁니다 (매개변수 없이)`);
+
+    // 앱 종류 열쇠 (look.ts LOOK_TYPE_OF_TAG의 값)
+    for (const k of new Set(Object.values(LOOK_TYPE_OF_TAG))) {
+      if (!L.layouts[k]) err(`looks/layouts: 앱 종류 ${k}의 첫 화면 배치가 없습니다`);
+      if (!L.defaultsByType[k]) err(`looks/defaultsByType: 앱 종류 ${k}의 기본값이 없습니다`);
+      if (!L.referenceKeywords[k]) err(`looks/referenceKeywords: 앱 종류 ${k}의 찾을 낱말이 없습니다`);
+    }
+    dupes('looks/layouts', Object.values(L.layouts).flat().map((x) => x.id));
+    for (const [k, d] of Object.entries(L.defaultsByType)) {
+      for (const m of d.moods) if (!L.moods.some((x) => x.id === m)) err(`looks/defaultsByType/${k}: 없는 느낌 ${m}`);
+      if (!density.has(d.density)) err(`looks/defaultsByType/${k}: 없는 촘촘함 ${d.density}`);
+      if (!imagery.has(d.imagery)) err(`looks/defaultsByType/${k}: 없는 그림 ${d.imagery}`);
+    }
+
+    // 화면 부품: 설계도 3번 화면마다 부품 id, 모든 화면의 상태 셋
+    for (const [tid, tt] of Object.entries(data.templates.types)) {
+      for (const sc of tt.screens) for (const c of sc.components) if (!comps.has(c)) err(`templates.types.${tid}: 화면 '${sc.name}'에 없는 부품 ${c} (looks.json components)`);
+    }
+    for (const st of ['loading', 'empty', 'error']) if (!comps.has(st)) err(`looks/components: 모든 화면의 상태 ${st}가 없습니다`);
+    const browseParts = L.components.filter((c) => c.browse === true && c.kind === 'part').length;
+    const browseStates = L.components.filter((c) => c.browse === true && c.kind === 'state').length;
+    if (browseParts !== 17) warn(`looks/components: 둘러보기 부품이 ${browseParts}개입니다 (설계서 4.9절은 17)`);
+    if (browseStates !== 5) warn(`looks/components: 둘러보기 상태가 ${browseStates}개입니다 (설계서 4.9절은 다섯)`);
+
+    // 대비 (설계서 4.4절): 견본은 4.6:1 이상으로 여유를 둔다
+    const [white, ink] = L.fixed.onLight;
+    for (const a of L.accents) {
+      const where = `looks/accents/${a.id}`;
+      for (const n of L.neutrals) {
+        for (const side of ['light', 'dark'] as const) {
+          const fg = a[side];
+          for (const bg of [n[side].surface, n[side].bg]) {
+            const r = ratio(fg, bg);
+            if (r >= T) continue;
+            const down = side === 'light';
+            const fix = shiftUntil(fg, down ? -0.01 : 0.01, (x) => ratio(x, bg) >= T).hex;
+            err(`${where}: ${down ? '밝은' : '어두운'} 화면 ${n.id} ${bg} 위 ${fg}가 ${ratio2(r)}:1 (${T}:1 이상). L을 0.01씩 ${down ? '낮춘' : '올린'} ${fix}로 바꿔 다시 잽니다`);
+          }
+        }
+      }
+      if (ratio(white, a.light) < T) err(`${where}: 밝은 화면 버튼의 흰 글자가 ${ratio2(ratio(white, a.light))}:1 (${T}:1 이상)`);
+      if (ratio(a.light, a.soft) < T) err(`${where}: 옅은 면 ${a.soft} 위 글자가 ${ratio2(ratio(a.light, a.soft))}:1 (${T}:1 이상)`);
+      if (ratio(L.fixed.onDark, a.dark) < T) err(`${where}: 어두운 화면 버튼 글자가 ${ratio2(ratio(L.fixed.onDark, a.dark))}:1 (${T}:1 이상)`);
+      const ds = darkSoftOf(a.dark);
+      if (ratio(a.dark, ds) < T) err(`${where}: 어두운 옅은 면 ${ds} 위 글자가 ${ratio2(ratio(a.dark, ds))}:1 (${T}:1 이상)`);
+    }
+    if (ratio(ink, white) < T) err('looks/fixed/onLight: 두 버튼 글자 색의 대비가 모자랍니다');
+    for (const n of L.neutrals) {
+      for (const side of ['light', 'dark'] as const) {
+        const c = n[side];
+        const where = `looks/neutrals/${n.id}.${side}`;
+        for (const [fg, name] of [
+          [c.text, '글자'],
+          [c.muted, '약한 글자'],
+          [L.fixed.error[side], '오류'],
+          [L.fixed.success[side], '성공'],
+        ] as const) {
+          const r = Math.min(ratio(fg, c.bg), ratio(fg, c.surface));
+          if (r < T) err(`${where}: ${name} ${fg}가 바탕·면 위 ${ratio2(r)}:1 (${T}:1 이상)`);
+        }
+        const b = Math.min(ratio(c.border, c.bg), ratio(c.border, c.surface));
+        if (b < L.contrast.border) err(`${where}: 입력 테두리 ${c.border}가 ${ratio2(b)}:1 (${L.contrast.border}:1 이상)`);
+      }
+    }
   }
 
   // 출처 대응표

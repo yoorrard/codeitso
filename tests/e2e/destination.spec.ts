@@ -124,13 +124,13 @@ test('네·아니요 질문은 2×2 중립 버튼, 고르면 --chosen 면이 된
   await expect(page.locator('.q-note')).toHaveText(ko.interview.maybeNote);
 });
 
-test('느낌 질문은 내 지도를 네 팔레트로 칠한 견본 넷 + 모르겠어요 줄', async ({ page }) => {
+test('느낌 질문은 내 지도를 네 팔레트로 칠한 견본 여섯 + 모르겠어요 줄 (새 느낌 둘은 있는 팔레트에 잇는다, T38)', async ({ page }) => {
   const answers = Object.fromEntries(Object.entries(g1Answers).filter(([k]) => k !== 'q.style'));
   await open(page, answers);
   await expect(page.locator('h1#q-title')).toContainText(q('q.style').text);
   const swatches = page.locator('.pick-plate.is-feel');
-  await expect(swatches).toHaveCount(4);
-  expect(await swatches.evaluateAll((els) => els.map((e) => e.getAttribute('data-palette')))).toEqual(['clean', 'cute', 'calm', 'bold']);
+  await expect(swatches).toHaveCount(6);
+  expect(await swatches.evaluateAll((els) => els.map((e) => e.getAttribute('data-palette')))).toEqual(['clean', 'cute', 'calm', 'bold', 'cute', 'bold']);
   // 견본마다 내 길(미니 지도)이 그려져 있다
   await expect(swatches.first().locator('svg.map-board.is-mini .mb-road').first()).toBeAttached();
   await expect(page.locator('.pick-wide .pick-btn')).toHaveText(label('q.style', 'unknown'));

@@ -1,0 +1,862 @@
+{
+  "category": "api",
+  "nameKo": "API",
+  "fetchedAt": "2026-10-14",
+  "total": 11614,
+  "subcategories": [
+    {
+      "id": "ai-llm",
+      "nameKo": "AI 언어 모델",
+      "count": 68,
+      "sources": [
+        {
+          "id": "models-dev",
+          "name": "models.dev (AI model providers)",
+          "count": 55
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 7
+        },
+        {
+          "id": "openrouter",
+          "name": "OpenRouter providers (AI inference companies)",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "id": "ai-inference",
+      "nameKo": "AI 모델 호스팅·라우터",
+      "count": 206,
+      "sources": [
+        {
+          "id": "models-dev",
+          "name": "models.dev (AI model providers)",
+          "count": 174
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 8
+        },
+        {
+          "id": "openrouter",
+          "name": "OpenRouter providers (AI inference companies)",
+          "count": 24
+        }
+      ]
+    },
+    {
+      "id": "ai-image",
+      "nameKo": "AI 이미지·영상·3D",
+      "count": 35,
+      "sources": [
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 34
+        },
+        {
+          "id": "openrouter",
+          "name": "OpenRouter providers (AI inference companies)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "ai-audio",
+      "nameKo": "AI 음성·음악",
+      "count": 33,
+      "sources": [
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 33
+        }
+      ]
+    },
+    {
+      "id": "ai-embeddings",
+      "nameKo": "AI 임베딩·리랭크",
+      "count": 8,
+      "sources": [
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "id": "ai-search",
+      "nameKo": "AI용 검색·웹 수집",
+      "count": 25,
+      "sources": [
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 25
+        }
+      ]
+    },
+    {
+      "id": "ai-vision",
+      "nameKo": "AI 비전·문서·번역",
+      "count": 29,
+      "sources": [
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 29
+        }
+      ]
+    },
+    {
+      "id": "ai-other",
+      "nameKo": "그 밖의 AI·머신러닝",
+      "count": 92,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 10
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 30
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 3
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 6
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 43
+        }
+      ]
+    },
+    {
+      "id": "kr-public",
+      "nameKo": "한국 공공데이터",
+      "count": 5385,
+      "sources": [
+        {
+          "id": "data-go-kr",
+          "name": "공공데이터포털 오픈API",
+          "count": 5183
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 4
+        },
+        {
+          "id": "public-apis-4kr",
+          "name": "public-apis-4Kr (한국 공개 API 목록)",
+          "count": 198
+        }
+      ]
+    },
+    {
+      "id": "kr-dev",
+      "nameKo": "한국 개발자 API",
+      "count": 114,
+      "sources": [
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 16
+        },
+        {
+          "id": "public-apis-4kr",
+          "name": "public-apis-4Kr (한국 공개 API 목록)",
+          "count": 98
+        }
+      ]
+    },
+    {
+      "id": "open-data",
+      "nameKo": "공공·과학 데이터",
+      "count": 616,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 295
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 3
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 38
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 34
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 246
+        }
+      ]
+    },
+    {
+      "id": "maps",
+      "nameKo": "지도·위치·교통",
+      "count": 412,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 97
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 9
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 34
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 9
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 41
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 222
+        }
+      ]
+    },
+    {
+      "id": "weather",
+      "nameKo": "날씨·환경",
+      "count": 104,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 3
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 1
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 15
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 13
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 72
+        }
+      ]
+    },
+    {
+      "id": "finance",
+      "nameKo": "금융·암호화폐·환율",
+      "count": 439,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 72
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 1
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 90
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 50
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 226
+        }
+      ]
+    },
+    {
+      "id": "payments",
+      "nameKo": "결제·쇼핑",
+      "count": 229,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 166
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 11
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 12
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 12
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 3
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 25
+        }
+      ]
+    },
+    {
+      "id": "messaging",
+      "nameKo": "이메일·문자·메신저",
+      "count": 180,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 93
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 25
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 21
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 41
+        }
+      ]
+    },
+    {
+      "id": "auth-security",
+      "nameKo": "로그인·보안",
+      "count": 168,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 27
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 1
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 27
+        },
+        {
+          "id": "official",
+          "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+          "count": 16
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 14
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 83
+        }
+      ]
+    },
+    {
+      "id": "dev",
+      "nameKo": "개발 도구",
+      "count": 757,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 219
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 27
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 109
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 84
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 318
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "nameKo": "업무·생산성",
+      "count": 329,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 82
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 3
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 65
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 33
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 146
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "nameKo": "사진·영상·음악",
+      "count": 578,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 346
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 1
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 57
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 18
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 156
+        }
+      ]
+    },
+    {
+      "id": "news-social",
+      "nameKo": "뉴스·소셜",
+      "count": 145,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 19
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 1
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 34
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 12
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 79
+        }
+      ]
+    },
+    {
+      "id": "text",
+      "nameKo": "글·사전·언어",
+      "count": 109,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 59
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 10
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 5
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 35
+        }
+      ]
+    },
+    {
+      "id": "entertainment",
+      "nameKo": "게임·애니·책·재미",
+      "count": 353,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 64
+        },
+        {
+          "id": "graphql-apis",
+          "name": "Public GraphQL APIs (APIs.guru)",
+          "count": 10
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 45
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 35
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 199
+        }
+      ]
+    },
+    {
+      "id": "life",
+      "nameKo": "생활·음식·건강·스포츠",
+      "count": 224,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 1
+        },
+        {
+          "id": "marcelscruz",
+          "name": "Public APIs (marcelscruz)",
+          "count": 37
+        },
+        {
+          "id": "public-api-lists",
+          "name": "Public API Lists",
+          "count": 21
+        },
+        {
+          "id": "public-apis",
+          "name": "public-apis",
+          "count": 165
+        }
+      ]
+    },
+    {
+      "id": "cloud",
+      "nameKo": "클라우드 서비스",
+      "count": 976,
+      "sources": [
+        {
+          "id": "apis-guru",
+          "name": "APIs.guru OpenAPI Directory",
+          "count": 976
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "apis-guru",
+      "name": "APIs.guru OpenAPI Directory",
+      "url": "https://apis.guru",
+      "license": "CC0-1.0 (directory data); each API has its own terms",
+      "note": "Every API in list.json, preferred version only. Specs for Azure, AWS and Google services are kept and land on the cloud shelf.",
+      "file": "apis-guru.json",
+      "count": 2529,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "data-go-kr",
+      "name": "공공데이터포털 오픈API",
+      "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API",
+      "license": "공공데이터의 제공 및 이용 활성화에 관한 법률에 따른 공개 목록 (각 API의 이용허락범위는 상세 쪽에 있다)",
+      "note": "Portal lists 12002 Open APIs (read all 12002 on 2026-10-14 by paging both the 'applications' and 'last updated' orders to the end). Kept the 5183 with at least 100 applications (활용신청). metrics.downloads = 활용신청 수.",
+      "file": "data-go-kr.json",
+      "count": 5183,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "graphql-apis",
+      "name": "Public GraphQL APIs (APIs.guru)",
+      "url": "https://github.com/APIs-guru/graphql-apis",
+      "license": "MIT (list text); each API has its own terms",
+      "note": "Every row of the README tables. The list has no categories, so the shelf is picked from words in the description.",
+      "file": "graphql-apis.json",
+      "count": 68,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "marcelscruz",
+      "name": "Public APIs (marcelscruz)",
+      "url": "https://github.com/marcelscruz/public-apis",
+      "license": "MIT (list text); each API has its own terms",
+      "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL.",
+      "file": "marcelscruz.json",
+      "count": 628,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "models-dev",
+      "name": "models.dev (AI model providers)",
+      "url": "https://models.dev",
+      "license": "MIT (models.dev data); each provider has its own terms",
+      "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드쇼퍼. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page.",
+      "file": "models-dev.json",
+      "count": 229,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "official",
+      "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+      "url": "https://github.com/yoorrard/code-chauffeur/blob/main/scripts/import/api-curated-data.ts",
+      "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드쇼퍼",
+      "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise.",
+      "file": "official.json",
+      "count": 225,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter providers (AI inference companies)",
+      "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
+      "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
+      "note": "OpenRouter lists 112 providers; kept the 31 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API.",
+      "file": "openrouter.json",
+      "count": 31,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "public-api-lists",
+      "name": "Public API Lists",
+      "url": "https://github.com/public-api-lists/public-api-lists",
+      "license": "MIT (list text); each API has its own terms",
+      "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL.",
+      "file": "public-api-lists.json",
+      "count": 369,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "public-apis-4kr",
+      "name": "public-apis-4Kr (한국 공개 API 목록)",
+      "url": "https://github.com/yybmion/public-apis-4Kr",
+      "license": "MIT (list text); each API has its own terms",
+      "note": "Every row of the Korean README tables. Rows that duplicate an entry of the hand-checked list (official.json) are skipped.",
+      "file": "public-apis-4kr.json",
+      "count": 296,
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "public-apis",
+      "name": "public-apis",
+      "url": "https://github.com/public-apis/public-apis",
+      "license": "MIT (list text); each API has its own terms",
+      "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL.",
+      "file": "public-apis.json",
+      "count": 2056,
+      "fetchedAt": "2026-10-14"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "RapidAPI Hub",
+      "url": "https://rapidapi.com/hub",
+      "reason": "No open listing API; terms forbid scraping the marketplace."
+    },
+    {
+      "name": "Postman Public API Network",
+      "url": "https://www.postman.com/explore",
+      "reason": "No open bulk listing; terms restrict automated collection."
+    },
+    {
+      "name": "ProgrammableWeb",
+      "url": "https://www.programmableweb.com",
+      "reason": "Directory shut down (2023)."
+    },
+    {
+      "name": "API Tracker, any-api.com, apilist.fun, public-apis.io, free-apis.github.io",
+      "url": "https://any-api.com",
+      "reason": "Mirrors of APIs.guru or public-apis already imported, or no open data."
+    },
+    {
+      "name": "dl0312/open-apis-korea",
+      "url": "https://github.com/dl0312/open-apis-korea",
+      "reason": "No license on the list text (and not updated since 2024). Korean APIs come from public-apis-4Kr (MIT) and the hand-checked list instead."
+    },
+    {
+      "name": "ripienaar/free-for-dev",
+      "url": "https://github.com/ripienaar/free-for-dev",
+      "reason": "A list of free tiers of SaaS (hosting, storage, login…) — the v5 brief drops that catalog because free tiers change too often."
+    },
+    {
+      "name": "cheahjs/free-llm-api-resources",
+      "url": "https://github.com/cheahjs/free-llm-api-resources",
+      "reason": "Repository no longer reachable; its providers are covered by models.dev."
+    },
+    {
+      "name": "Google APIs Discovery Service",
+      "url": "https://www.googleapis.com/discovery/v1/apis",
+      "reason": "Already inside APIs.guru (googleapis.com, 281 APIs)."
+    },
+    {
+      "name": "data.gov (US) API catalog",
+      "url": "https://catalog.data.gov",
+      "reason": "US-only datasets, mostly files not APIs; public-apis and APIs.guru already cover the main US government APIs."
+    },
+    {
+      "name": "공공데이터포털 목록 조회 오픈API",
+      "url": "https://www.data.go.kr",
+      "reason": "서비스 키가 필요해 쓰지 않았다. 같은 목록을 포털 목록 화면에서 끝까지 넘겨 받았다(data-go-kr.json)."
+    },
+    {
+      "name": "공공데이터포털 활용신청 100건 미만 API",
+      "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API",
+      "reason": "1만2천 개가 넘어 활용신청 100건 이상만 실었다 (개수는 data-go-kr.json의 source.note)."
+    },
+    {
+      "name": "Vector databases (Pinecone, Weaviate, Qdrant…)",
+      "url": "https://www.pinecone.io",
+      "reason": "Storage services; the v5 brief drops storage/deploy tool catalogs."
+    },
+    {
+      "name": "Midjourney, Suno, Udio",
+      "url": "https://www.midjourney.com",
+      "reason": "No official public API (only unofficial wrappers)."
+    },
+    {
+      "name": "Bing Web Search API",
+      "url": "https://learn.microsoft.com/bing/search-apis/",
+      "reason": "Retired by Microsoft on 2025-08-11."
+    },
+    {
+      "name": "GitHub Models",
+      "url": "https://docs.github.com/en/github-models",
+      "reason": "Official docs say it has been retired (checked 2026-10-14)."
+    },
+    {
+      "name": "LMNT",
+      "url": "https://www.lmnt.com",
+      "reason": "Official site says the service has ended (checked 2026-10-14)."
+    },
+    {
+      "name": "Nomic Atlas / Embed API",
+      "url": "https://docs.nomic.ai",
+      "reason": "Company pivoted (docs now describe an AEC workspace); embed models stay on the open-source shelf."
+    },
+    {
+      "name": "PlayHT",
+      "url": "https://play.ht",
+      "reason": "Acquired by Meta in 2025; public API status unclear."
+    },
+    {
+      "name": "Kakao Brain Karlo",
+      "url": "https://developers.kakao.com",
+      "reason": "Service ended."
+    },
+    {
+      "name": "LG EXAONE API (LG 자체)",
+      "url": "https://www.lgresearch.ai",
+      "reason": "LG가 직접 여는 공개 API를 찾지 못했다. 2026-01 무료 제공도 FriendliAI를 통해서였다 (models-dev:friendli)."
+    },
+    {
+      "name": "Kakao Kanana, KT 믿:음, SKT A.X, Saltlux LUXIA API",
+      "url": "https://huggingface.co",
+      "reason": "누구나 신청할 수 있는 공개 API 문서를 찾지 못했다 (모델은 Hugging Face 공개 가중치)."
+    },
+    {
+      "name": "models.dev prices",
+      "url": "https://models.dev",
+      "reason": "Prices are community-maintained; only sentences copied from official pricing pages are shown (preview.freeTierQuote)."
+    }
+  ]
+}

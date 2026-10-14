@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "catalog-api.json",
+  "title": "API 진열대 자료 파일 (data/catalog/api/<출처>.json)",
+  "type": "object",
+  "required": [
+    "source",
+    "fetchedAt",
+    "count",
+    "items"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "source": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "url",
+        "license"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "description": "목록 메타데이터를 싣는 근거 (자료 라이선스나 이용 조건)"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "fetchedAt": {
+      "$ref": "#/$defs/date"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/item"
+      }
+    }
+  },
+  "$defs": {
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "item": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "category",
+        "summary",
+        "url",
+        "source",
+        "tags",
+        "fetchedAt"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$",
+          "description": "<출처>:<슬러그> (소문자·숫자·점·하이픈)"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "ai-llm",
+            "ai-inference",
+            "ai-image",
+            "ai-audio",
+            "ai-embeddings",
+            "ai-search",
+            "ai-vision",
+            "ai-other",
+            "kr-public",
+            "kr-dev",
+            "open-data",
+            "maps",
+            "weather",
+            "finance",
+            "payments",
+            "messaging",
+            "auth-security",
+            "dev",
+            "business",
+            "media",
+            "news-social",
+            "text",
+            "entertainment",
+            "life",
+            "cloud"
+          ]
+        },
+        "category": {
+          "const": "api"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300,
+          "description": "출처의 원문(원래 언어). written이 있으면 코드쇼퍼가 쓴 한 줄일 수 있다"
+        },
+        "summaryKo": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300,
+          "description": "출처가 준 한국어 한 줄(public-apis-4Kr 번역) 또는 코드쇼퍼가 쓴 한 줄(written)"
+        },
+        "written": {
+          "const": "codeshopper",
+          "description": "summaryKo(손 목록에서 소개를 못 읽은 것은 summary까지)를 코드쇼퍼가 직접 썼다"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https?://"
+        },
+        "source": {
+          "type": "object",
+          "required": [
+            "name",
+            "url"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "url": {
+              "type": "string",
+              "pattern": "^https?://"
+            }
+          }
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "stars": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "downloads": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "npm SDK 주간 내려받기(preview.downloadsOf) 또는 공공데이터포털 활용신청 수"
+            },
+            "likes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "updatedAt": {
+              "$ref": "#/$defs/date"
+            }
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "preview": {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "api"
+            },
+            "auth": {
+              "type": "string"
+            },
+            "https": {
+              "type": "boolean"
+            },
+            "cors": {
+              "enum": [
+                "yes",
+                "no",
+                "unknown"
+              ]
+            },
+            "keyServerSide": {
+              "const": true,
+              "description": "비밀 키라 서버(환경 변수)에만 둔다"
+            },
+            "pricingUrl": {
+              "type": "string",
+              "pattern": "^https://"
+            },
+            "freeTierQuote": {
+              "type": "string",
+              "maxLength": 220,
+              "description": "공식 요금 쪽에서 그대로 따 온 문장 (freeTierCheckedAt 날짜 기준)"
+            },
+            "freeTierCheckedAt": {
+              "$ref": "#/$defs/date"
+            },
+            "openapi": {
+              "type": "string",
+              "pattern": "^https://"
+            },
+            "logo": {
+              "type": "string",
+              "pattern": "^https?://"
+            },
+            "env": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "models": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "modelCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "use": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "install": {
+              "type": "string"
+            },
+            "snippet": {
+              "type": "string"
+            },
+            "docs": {
+              "type": "string",
+              "pattern": "^https?://"
+            }
+          }
+        },
+        "fetchedAt": {
+          "$ref": "#/$defs/date"
+        }
+      }
+    }
+  }
+}

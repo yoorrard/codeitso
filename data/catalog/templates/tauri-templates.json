@@ -1,0 +1,624 @@
+{
+  "source": {
+    "id": "tauri-templates",
+    "name": "Tauri 공식 템플릿 (create-tauri-app)",
+    "url": "https://github.com/tauri-apps/create-tauri-app",
+    "license": "Folder names, README text and package.json descriptions from the public repository tauri-apps/create-tauri-app (Apache-2.0)."
+  },
+  "fetchedAt": "2026-10-14",
+  "count": 18,
+  "items": [
+    {
+      "id": "tauri-templates:template-angular",
+      "name": "Tauri + Angular",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and Angular.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-angular",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "angular",
+        "desktop",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-angular",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template angular",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-blazor",
+      "name": "Tauri + Blazor",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "Tauri + Blazor",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-blazor",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "blazor",
+        "desktop",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-blazor",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template blazor",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-dioxus",
+      "name": "Tauri + Dioxus",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and Dioxus.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-dioxus",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "dioxus",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-dioxus",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template dioxus",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-leptos",
+      "name": "Tauri + Leptos",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and Leptos.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-leptos",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "leptos",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-leptos",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template leptos",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-preact",
+      "name": "Tauri + Preact",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and Preact in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-preact",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "preact",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-preact",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template preact",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-preact-ts",
+      "name": "Tauri + Preact (TypeScript)",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri, Preact and Typescript in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-preact-ts",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "preact",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-preact-ts",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template preact-ts",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-react",
+      "name": "Tauri + React",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and React in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-react",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "react",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-react",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template react",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-react-ts",
+      "name": "Tauri + React (TypeScript)",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri, React and Typescript in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-react-ts",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "react",
+        "rust",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-react-ts",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template react-ts",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-solid",
+      "name": "Tauri + Solid",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and Solid in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-solid",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "solid",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-solid",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template solid",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-solid-ts",
+      "name": "Tauri + Solid (TypeScript)",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri, Solid and Typescript in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-solid-ts",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "solid",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-solid-ts",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template solid-ts",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-svelte",
+      "name": "Tauri + Svelte",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and SvelteKit in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-svelte",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "svelte",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-svelte",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template svelte",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-svelte-ts",
+      "name": "Tauri + Svelte (TypeScript)",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri, SvelteKit and TypeScript in Vite.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-svelte-ts",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "svelte",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-svelte-ts",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template svelte-ts",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-sycamore",
+      "name": "Tauri + Sycamore",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and Sycamore.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-sycamore",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "sycamore",
+        "tauri"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-sycamore",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template sycamore",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-vanilla",
+      "name": "Tauri + Vanilla",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-vanilla",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "tauri",
+        "vanilla"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-vanilla",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template vanilla",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-vanilla-ts",
+      "name": "Tauri + Vanilla (TypeScript)",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri in vanilla HTML, CSS and Typescript.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-vanilla-ts",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "tauri",
+        "vanilla"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-vanilla-ts",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template vanilla-ts",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-vue",
+      "name": "Tauri + Vue",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri + Vue 3 in Vite. The template uses Vue 3 SFCs, check out the script setup docs to learn more.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-vue",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "tauri",
+        "vue"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-vue",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template vue",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-vue-ts",
+      "name": "Tauri + Vue (TypeScript)",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 SFCs, check out the script setup docs to learn more.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-vue-ts",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "tauri",
+        "vue"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-vue-ts",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template vue-ts",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "tauri-templates:template-yew",
+      "name": "Tauri + Yew",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "This template should help get you started developing with Tauri and Yew.",
+      "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates/template-yew",
+      "source": {
+        "name": "Tauri 공식 템플릿 (create-tauri-app)",
+        "url": "https://github.com/tauri-apps/create-tauri-app/tree/dev/templates"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "updatedAt": "2026-10-09"
+      },
+      "tags": [
+        "desktop",
+        "rust",
+        "tauri",
+        "yew"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "Rust",
+        "path": "templates/template-yew",
+        "repo": "tauri-apps/create-tauri-app"
+      },
+      "use": {
+        "install": "npm create tauri-app@latest my-app -- --template yew",
+        "docs": "https://v2.tauri.app/start/create-project/"
+      },
+      "fetchedAt": "2026-10-14"
+    }
+  ]
+}

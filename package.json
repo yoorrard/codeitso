@@ -39,7 +39,12 @@
     "words": "node scripts/guard/check-words.ts",
     "art": "node scripts/assets/render-art.ts",
     "art:sheet": "node scripts/assets/render-art.ts --sheet",
-    "logo": "node scripts/assets/make-logo.ts"
+    "logo": "node scripts/assets/make-logo.ts",
+    "import": "node scripts/import/design-all.ts && node scripts/import/ai-import.ts && node scripts/import/api-all.ts && node scripts/import/oss-all.ts",
+    "import:design": "node scripts/import/design-all.ts",
+    "import:ai": "node scripts/import/ai-import.ts",
+    "import:api": "node scripts/import/api-all.ts",
+    "import:oss": "node scripts/import/oss-all.ts"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",

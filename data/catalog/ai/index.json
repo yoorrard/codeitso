@@ -1,0 +1,554 @@
+{
+  "category": "ai",
+  "count": 68134,
+  "fetchedAt": "2026-10-14",
+  "nameKo": "AI 확장",
+  "subcategories": [
+    {
+      "count": 5424,
+      "descKo": "SKILL.md 한 폴더로 된 능력 묶음. Claude Code·Codex·Copilot 같은 에이전트가 필요할 때 불러 쓴다.",
+      "id": "skill",
+      "nameKo": "에이전트 스킬",
+      "sources": [
+        {
+          "available": 40284,
+          "count": 2825,
+          "cut": "설치 25회 이상 또는 저장소 별 1000개 이상",
+          "file": "skill-cpd.json",
+          "id": "skill-cpd",
+          "license": "공개 API 메타데이터 (각 스킬은 원 저장소 라이선스)",
+          "name": "Claude Plugins (claude-plugins.dev)",
+          "url": "https://claude-plugins.dev/skills"
+        },
+        {
+          "available": 1141,
+          "count": 1089,
+          "file": "skill-awesome-agent.json",
+          "id": "skill-awesome-agent",
+          "license": "MIT",
+          "name": "Awesome Agent Skills",
+          "url": "https://github.com/VoltAgent/awesome-agent-skills"
+        },
+        {
+          "available": 891,
+          "count": 840,
+          "file": "skill-aitmpl.json",
+          "id": "skill-aitmpl",
+          "license": "MIT (davila7/claude-code-templates)",
+          "name": "Claude Code Templates (skills)",
+          "url": "https://www.aitmpl.com"
+        },
+        {
+          "available": 429,
+          "count": 428,
+          "file": "skill-copilot.json",
+          "id": "skill-copilot",
+          "license": "MIT",
+          "name": "Awesome GitHub Copilot (skills)",
+          "url": "https://github.com/github/awesome-copilot"
+        },
+        {
+          "available": 229,
+          "count": 223,
+          "file": "skill-toolhive.json",
+          "id": "skill-toolhive",
+          "license": "Apache-2.0 (등록소 자료), 각 스킬은 원 저장소 라이선스",
+          "name": "ToolHive Registry (skills)",
+          "url": "https://github.com/stacklok/toolhive-registry"
+        },
+        {
+          "available": 19,
+          "count": 19,
+          "file": "skill-anthropic.json",
+          "id": "skill-anthropic",
+          "license": "스킬마다 LICENSE.txt (Apache-2.0 또는 소스 공개 전용). 메타데이터(이름·설명)는 저장소 SKILL.md 머리말",
+          "name": "Anthropic Agent Skills",
+          "url": "https://github.com/anthropics/skills"
+        }
+      ]
+    },
+    {
+      "count": 46231,
+      "descKo": "AI 에이전트에 도구와 자료를 이어 주는 MCP(Model Context Protocol) 서버.",
+      "id": "mcp",
+      "nameKo": "MCP 서버",
+      "sources": [
+        {
+          "available": 43447,
+          "count": 42427,
+          "cut": "활성(active) 최신판만",
+          "file": "mcp-registry.json",
+          "id": "mcp-registry",
+          "license": "공개 등록소 API (게시자가 올린 server.json 메타데이터, 재배포를 위한 공개 API)",
+          "name": "Official MCP Registry",
+          "url": "https://registry.modelcontextprotocol.io"
+        },
+        {
+          "available": 4210,
+          "count": 1923,
+          "file": "mcp-awesome.json",
+          "id": "mcp-awesome",
+          "license": "MIT",
+          "name": "awesome-mcp-servers",
+          "url": "https://github.com/punkpeye/awesome-mcp-servers"
+        },
+        {
+          "available": 20132,
+          "count": 430,
+          "cut": "API가 내주는 사용량 순 상위 500개",
+          "file": "mcp-smithery.json",
+          "id": "mcp-smithery",
+          "license": "공개 등록소 API (registry.smithery.ai) 메타데이터",
+          "name": "Smithery",
+          "url": "https://smithery.ai"
+        },
+        {
+          "available": 427,
+          "count": 427,
+          "file": "mcp-github.json",
+          "id": "mcp-github",
+          "license": "공개 API (api.mcp.github.com) 메타데이터, 원문은 각 저장소 라이선스",
+          "name": "GitHub MCP Registry",
+          "url": "https://github.com/mcp"
+        },
+        {
+          "available": 328,
+          "count": 291,
+          "cut": "보관(Archived) 표시 서버 제외",
+          "file": "mcp-docker.json",
+          "id": "mcp-docker",
+          "license": "MIT (docker/mcp-registry)",
+          "name": "Docker MCP Catalog",
+          "url": "https://github.com/docker/mcp-registry"
+        },
+        {
+          "available": 389,
+          "count": 287,
+          "file": "mcp-mcpm.json",
+          "id": "mcp-mcpm",
+          "license": "MIT",
+          "name": "MCPM registry",
+          "url": "https://github.com/pathintegral-institute/mcpm.sh"
+        },
+        {
+          "available": 482,
+          "count": 198,
+          "file": "mcp-wong2.json",
+          "id": "mcp-wong2",
+          "license": "MIT",
+          "name": "mcpservers.org (awesome-mcp-servers)",
+          "url": "https://github.com/wong2/awesome-mcp-servers"
+        },
+        {
+          "available": 107,
+          "count": 93,
+          "file": "mcp-aitmpl.json",
+          "id": "mcp-aitmpl",
+          "license": "MIT (davila7/claude-code-templates)",
+          "name": "Claude Code Templates (MCP)",
+          "url": "https://www.aitmpl.com"
+        },
+        {
+          "available": 125,
+          "count": 80,
+          "file": "mcp-remote.json",
+          "id": "mcp-remote",
+          "license": "MIT",
+          "name": "Awesome Remote MCP Servers",
+          "url": "https://github.com/jaw9c/awesome-remote-mcp-servers"
+        },
+        {
+          "available": 109,
+          "count": 68,
+          "file": "mcp-toolhive.json",
+          "id": "mcp-toolhive",
+          "license": "Apache-2.0",
+          "name": "ToolHive Registry",
+          "url": "https://github.com/stacklok/toolhive-registry"
+        },
+        {
+          "available": 7,
+          "count": 7,
+          "file": "mcp-reference.json",
+          "id": "mcp-reference",
+          "license": "MIT (저장소 README·패키지 정보)",
+          "name": "MCP Reference Servers",
+          "url": "https://github.com/modelcontextprotocol/servers"
+        }
+      ]
+    },
+    {
+      "count": 8749,
+      "descKo": "스킬·명령·에이전트·MCP 설정을 한데 묶어 한 번에 설치하는 코딩 에이전트 플러그인과 확장.",
+      "id": "plugin",
+      "nameKo": "플러그인·확장",
+      "sources": [
+        {
+          "available": 54725,
+          "count": 2596,
+          "cut": "내려받기 50회 이상 또는 저장소 별 1000개 이상",
+          "file": "plugin-cpd.json",
+          "id": "plugin-cpd",
+          "license": "공개 API 메타데이터 (각 플러그인은 원 저장소 라이선스)",
+          "name": "Claude Plugins (claude-plugins.dev)",
+          "url": "https://claude-plugins.dev/plugins"
+        },
+        {
+          "available": 2283,
+          "count": 2283,
+          "file": "plugin-claude-community.json",
+          "id": "plugin-claude-community",
+          "license": "Apache-2.0 (마켓 목록), 각 플러그인은 원 저장소 라이선스",
+          "name": "Claude Plugins Community (Anthropic)",
+          "url": "https://github.com/anthropics/claude-plugins-community"
+        },
+        {
+          "available": 2182,
+          "count": 2178,
+          "file": "plugin-gemini.json",
+          "id": "plugin-gemini",
+          "license": "공개 갤러리 JSON (geminicli.com/extensions.json). 각 확장은 원 저장소 라이선스",
+          "name": "Gemini CLI Extensions",
+          "url": "https://geminicli.com/extensions/"
+        },
+        {
+          "available": 1000,
+          "count": 1000,
+          "file": "plugin-dify.json",
+          "id": "plugin-dify",
+          "license": "공개 마켓 API (marketplace.dify.ai) 메타데이터와 링크만 싣는다",
+          "name": "Dify Marketplace",
+          "url": "https://marketplace.dify.ai"
+        },
+        {
+          "available": 315,
+          "count": 315,
+          "file": "plugin-claude-official.json",
+          "id": "plugin-claude-official",
+          "license": "Apache-2.0 (마켓 목록), 각 플러그인은 원 저장소 라이선스",
+          "name": "Claude Plugins Official",
+          "url": "https://github.com/anthropics/claude-plugins-official"
+        },
+        {
+          "available": 176,
+          "count": 176,
+          "file": "plugin-copilot.json",
+          "id": "plugin-copilot",
+          "license": "MIT",
+          "name": "Awesome GitHub Copilot (plugins)",
+          "url": "https://github.com/github/awesome-copilot"
+        },
+        {
+          "available": 123,
+          "count": 123,
+          "file": "plugin-knowledge-work.json",
+          "id": "plugin-knowledge-work",
+          "license": "Apache-2.0",
+          "name": "Knowledge Work Plugins (Anthropic)",
+          "url": "https://github.com/anthropics/knowledge-work-plugins"
+        },
+        {
+          "available": 65,
+          "count": 65,
+          "file": "plugin-codex.json",
+          "id": "plugin-codex",
+          "license": "플러그인마다 plugin.json의 license",
+          "name": "OpenAI Codex Plugins",
+          "url": "https://github.com/openai/plugins"
+        },
+        {
+          "available": 13,
+          "count": 13,
+          "file": "plugin-claude-code.json",
+          "id": "plugin-claude-code",
+          "license": "저장소 LICENSE.md (Anthropic 상용 약관) 아래 공개 목록. 이름·설명·주소만 싣는다",
+          "name": "Claude Code Plugins (Anthropic)",
+          "url": "https://github.com/anthropics/claude-code/tree/main/plugins"
+        }
+      ]
+    },
+    {
+      "count": 929,
+      "descKo": "역할 하나를 맡기는 에이전트 정의 파일(.md). Claude Code 서브에이전트, Copilot 사용자 에이전트.",
+      "id": "subagent",
+      "nameKo": "서브에이전트",
+      "sources": [
+        {
+          "available": 222,
+          "count": 219,
+          "file": "agent-copilot.json",
+          "id": "agent-copilot",
+          "license": "MIT",
+          "name": "Awesome GitHub Copilot (agents)",
+          "url": "https://github.com/github/awesome-copilot"
+        },
+        {
+          "available": 422,
+          "count": 192,
+          "file": "agent-aitmpl.json",
+          "id": "agent-aitmpl",
+          "license": "MIT (davila7/claude-code-templates)",
+          "name": "Claude Code Templates (agents)",
+          "url": "https://www.aitmpl.com"
+        },
+        {
+          "available": 163,
+          "count": 163,
+          "file": "agent-voltagent.json",
+          "id": "agent-voltagent",
+          "license": "MIT",
+          "name": "Awesome Claude Code Subagents (VoltAgent)",
+          "url": "https://github.com/VoltAgent/awesome-claude-code-subagents"
+        },
+        {
+          "available": 202,
+          "count": 144,
+          "file": "agent-wshobson.json",
+          "id": "agent-wshobson",
+          "license": "MIT",
+          "name": "Claude Code Plugins: Orchestration and Automation (wshobson/agents)",
+          "url": "https://github.com/wshobson/agents"
+        },
+        {
+          "available": 138,
+          "count": 136,
+          "file": "agent-0xfurai.json",
+          "id": "agent-0xfurai",
+          "license": "MIT",
+          "name": "Claude Code Subagents (0xfurai)",
+          "url": "https://github.com/0xfurai/claude-code-subagents"
+        },
+        {
+          "available": 37,
+          "count": 36,
+          "file": "agent-lst97.json",
+          "id": "agent-lst97",
+          "license": "MIT",
+          "name": "Claude Code Sub-Agents (lst97)",
+          "url": "https://github.com/lst97/claude-code-sub-agents"
+        },
+        {
+          "available": 33,
+          "count": 32,
+          "file": "agent-vijaythecoder.json",
+          "id": "agent-vijaythecoder",
+          "license": "MIT",
+          "name": "Awesome Claude Agents (vijaythecoder)",
+          "url": "https://github.com/vijaythecoder/awesome-claude-agents"
+        },
+        {
+          "available": 7,
+          "count": 7,
+          "file": "agent-iannuttall.json",
+          "id": "agent-iannuttall",
+          "license": "MIT",
+          "name": "Claude Agents (iannuttall)",
+          "url": "https://github.com/iannuttall/claude-agents"
+        }
+      ]
+    },
+    {
+      "count": 720,
+      "descKo": "AGENTS.md·CLAUDE.md·Cursor 규칙처럼 에이전트가 늘 읽는 프로젝트 지침과 그 템플릿.",
+      "id": "rules",
+      "nameKo": "규칙·지침 파일",
+      "sources": [
+        {
+          "available": 257,
+          "count": 257,
+          "file": "rules-cursorrules.json",
+          "id": "rules-cursorrules",
+          "license": "CC0-1.0",
+          "name": "Awesome CursorRules",
+          "url": "https://github.com/PatrickJS/awesome-cursorrules"
+        },
+        {
+          "available": 241,
+          "count": 241,
+          "file": "rules-cursor-mdc.json",
+          "id": "rules-cursor-mdc",
+          "license": "CC0-1.0",
+          "name": "Awesome Cursor Rules MDC",
+          "url": "https://github.com/sanjeed5/awesome-cursor-rules-mdc"
+        },
+        {
+          "available": 194,
+          "count": 194,
+          "file": "rules-copilot.json",
+          "id": "rules-copilot",
+          "license": "MIT",
+          "name": "Awesome GitHub Copilot (instructions)",
+          "url": "https://github.com/github/awesome-copilot"
+        },
+        {
+          "available": 14,
+          "count": 14,
+          "file": "rules-aitmpl.json",
+          "id": "rules-aitmpl",
+          "license": "MIT (davila7/claude-code-templates)",
+          "name": "Claude Code Templates (project templates)",
+          "url": "https://www.aitmpl.com"
+        },
+        {
+          "available": 14,
+          "count": 14,
+          "file": "rules-format.json",
+          "id": "rules-format",
+          "license": "코드쇼퍼가 쓴 설명 (사실은 각 공식 문서 기준)",
+          "name": "코드쇼퍼 정리: 지침 파일 형식",
+          "url": "https://agents.md/"
+        }
+      ]
+    },
+    {
+      "count": 3423,
+      "descKo": "공개 라이선스로 풀린 프롬프트, 시스템 프롬프트, 슬래시 명령 모음.",
+      "id": "prompt",
+      "nameKo": "프롬프트",
+      "sources": [
+        {
+          "available": 2448,
+          "count": 2418,
+          "file": "prompt-prompts-chat.json",
+          "id": "prompt-prompts-chat",
+          "license": "CC0-1.0 (프롬프트 내용과 자료, 저장소 LICENSE)",
+          "name": "prompts.chat",
+          "url": "https://prompts.chat"
+        },
+        {
+          "available": 505,
+          "count": 505,
+          "file": "prompt-lobehub.json",
+          "id": "prompt-lobehub",
+          "license": "MIT (lobe-chat-agents 저장소)",
+          "name": "LobeHub Agents",
+          "url": "https://github.com/lobehub/lobe-chat-agents"
+        },
+        {
+          "available": 265,
+          "count": 265,
+          "file": "prompt-fabric.json",
+          "id": "prompt-fabric",
+          "license": "MIT",
+          "name": "Fabric patterns",
+          "url": "https://github.com/danielmiessler/fabric"
+        },
+        {
+          "available": 288,
+          "count": 235,
+          "file": "prompt-aitmpl-commands.json",
+          "id": "prompt-aitmpl-commands",
+          "license": "MIT (davila7/claude-code-templates)",
+          "name": "Claude Code Templates (slash commands)",
+          "url": "https://www.aitmpl.com"
+        }
+      ]
+    },
+    {
+      "count": 145,
+      "descKo": "코딩 에이전트가 정해진 순간(도구 실행 전후, 세션 시작·끝)에 돌리는 훅과 에이전트 설정 묶음.",
+      "id": "hook",
+      "nameKo": "훅·설정",
+      "sources": [
+        {
+          "available": 74,
+          "count": 74,
+          "file": "hook-aitmpl-settings.json",
+          "id": "hook-aitmpl-settings",
+          "license": "MIT (davila7/claude-code-templates)",
+          "name": "Claude Code Templates (settings)",
+          "url": "https://www.aitmpl.com"
+        },
+        {
+          "available": 63,
+          "count": 63,
+          "file": "hook-aitmpl.json",
+          "id": "hook-aitmpl",
+          "license": "MIT (davila7/claude-code-templates)",
+          "name": "Claude Code Templates (hooks)",
+          "url": "https://www.aitmpl.com"
+        },
+        {
+          "available": 8,
+          "count": 8,
+          "file": "hook-copilot.json",
+          "id": "hook-copilot",
+          "license": "MIT",
+          "name": "Awesome GitHub Copilot (hooks)",
+          "url": "https://github.com/github/awesome-copilot"
+        }
+      ]
+    },
+    {
+      "count": 221,
+      "descKo": "AI 에이전트·앱을 만드는 프레임워크, AI 회사 공식 SDK, MCP·A2A SDK, 평가·기억·로컬 실행 도구.",
+      "id": "framework",
+      "nameKo": "프레임워크·SDK",
+      "sources": [
+        {
+          "available": 221,
+          "count": 221,
+          "file": "fw-github.json",
+          "id": "fw-github",
+          "license": "저장소 메타데이터(GitHub API 또는 repos.ecosyste.ms, CC BY-SA 4.0). 고른 목록은 코드쇼퍼",
+          "name": "에이전트 프레임워크·AI SDK (GitHub 저장소)",
+          "url": "https://github.com"
+        }
+      ]
+    },
+    {
+      "count": 2292,
+      "descKo": "n8n·Activepieces·Flowise·Langflow·GitHub Agentic Workflows에서 가져다 쓰는 자동화·AI 흐름 템플릿.",
+      "id": "workflow",
+      "nameKo": "워크플로 템플릿",
+      "sources": [
+        {
+          "available": 13316,
+          "count": 1773,
+          "cut": "무료 템플릿 중 조회 1000회 이상",
+          "file": "wf-n8n.json",
+          "id": "wf-n8n",
+          "license": "공개 템플릿 API (api.n8n.io) 메타데이터와 링크만 싣는다. 템플릿 본문은 n8n에서 받는다",
+          "name": "n8n workflow templates",
+          "url": "https://n8n.io/workflows/"
+        },
+        {
+          "available": 420,
+          "count": 420,
+          "file": "wf-activepieces.json",
+          "id": "wf-activepieces",
+          "license": "공개 템플릿 API (cloud.activepieces.com) 메타데이터와 링크",
+          "name": "Activepieces templates",
+          "url": "https://www.activepieces.com/templates"
+        },
+        {
+          "available": 64,
+          "count": 64,
+          "file": "wf-flowise.json",
+          "id": "wf-flowise",
+          "license": "Apache-2.0 (packages/server 아래)",
+          "name": "Flowise marketplace templates",
+          "url": "https://github.com/FlowiseAI/Flowise"
+        },
+        {
+          "available": 27,
+          "count": 27,
+          "file": "wf-langflow.json",
+          "id": "wf-langflow",
+          "license": "MIT",
+          "name": "Langflow starter projects",
+          "url": "https://github.com/langflow-ai/langflow"
+        },
+        {
+          "available": 8,
+          "count": 8,
+          "file": "wf-copilot.json",
+          "id": "wf-copilot",
+          "license": "MIT",
+          "name": "Awesome GitHub Copilot (agentic workflows)",
+          "url": "https://github.com/github/awesome-copilot"
+        }
+      ]
+    }
+  ]
+}

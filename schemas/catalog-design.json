@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "catalog-design.json",
+  "title": "디자인 진열대 자료 파일 (data/catalog/design/<출처>.json)",
+  "type": "object",
+  "required": ["source", "fetchedAt", "count", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "source": {
+      "type": "object",
+      "required": ["id", "name", "url", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "pattern": "^https://" },
+        "license": { "type": "string", "minLength": 1, "description": "목록 메타데이터를 싣는 근거 (자료 라이선스나 이용 조건)" },
+        "note": { "type": "string" }
+      }
+    },
+    "fetchedAt": { "$ref": "#/$defs/date" },
+    "count": { "type": "integer", "minimum": 0 },
+    "items": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+  },
+  "$defs": {
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "item": {
+      "type": "object",
+      "required": ["id", "name", "kind", "category", "summary", "url", "source", "tags", "fetchedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9.-]+$", "description": "<출처>:<슬러그> (슬러그는 소문자·숫자·점·하이픈, GitHub owner/repo는 owner--repo)" },
+        "name": { "type": "string", "minLength": 1 },
+        "kind": {
+          "enum": [
+            "fonts-ko", "fonts", "color-systems", "palettes", "chart-palettes", "gradients", "patterns", "icons", "logos",
+            "ui-libraries", "ui-registries", "ui-blocks", "css-frameworks", "animation", "charts", "design-systems", "design-md",
+            "styles", "references", "design-tools", "illustrations", "photos", "3d", "game-assets", "motion", "mockups", "sounds"
+          ]
+        },
+        "category": { "const": "design" },
+        "summary": { "type": "string", "minLength": 1, "maxLength": 300, "description": "출처의 원문(원래 언어). 손으로 쓴 항목은 written으로 표시" },
+        "summaryKo": { "type": "string", "minLength": 1 },
+        "written": { "const": "codeshopper", "description": "summaryKo(스타일은 summary까지)를 코드쇼퍼가 직접 썼다" },
+        "url": { "type": "string", "pattern": "^https?://" },
+        "source": {
+          "type": "object",
+          "required": ["name", "url"],
+          "additionalProperties": false,
+          "properties": { "name": { "type": "string", "minLength": 1 }, "url": { "type": "string", "pattern": "^https?://" } }
+        },
+        "license": { "type": "string", "minLength": 1 },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "stars": { "type": "integer", "minimum": 0 },
+            "downloads": { "type": "integer", "minimum": 0 },
+            "likes": { "type": "integer", "minimum": 0 },
+            "updatedAt": { "$ref": "#/$defs/date" }
+          }
+        },
+        "tags": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "preview": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "enum": ["font", "palette", "icons", "style", "repo", "model", "dataset", "api", "skill", "mcp", "site", "template", "asset", "prompt"] }
+          }
+        },
+        "use": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "install": { "type": "string" }, "snippet": { "type": "string" }, "docs": { "type": "string", "pattern": "^https?://" } }
+        },
+        "fetchedAt": { "$ref": "#/$defs/date" }
+      },
+      "dependentRequired": { "summaryKo": ["written"] }
+    }
+  }
+}

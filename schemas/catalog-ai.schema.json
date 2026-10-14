@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "catalog-ai.schema.json",
+  "title": "AI 확장 진열대 출처 파일 (data/catalog/ai/<출처>.json)",
+  "type": "object",
+  "required": ["source", "fetchedAt", "count", "available", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "source": {
+      "type": "object",
+      "required": ["id", "name", "url", "kind", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "pattern": "^https://" },
+        "kind": { "$ref": "#/$defs/kind" },
+        "license": { "type": "string", "minLength": 1, "description": "목록 메타데이터를 싣는 근거" },
+        "note": { "type": "string" }
+      }
+    },
+    "fetchedAt": { "$ref": "#/$defs/date" },
+    "count": { "type": "integer", "minimum": 0 },
+    "available": { "type": "integer", "minimum": 0, "description": "출처에 있던 개수 (덜어 내기 전)" },
+    "cut": { "type": "string", "description": "인기 기준 등으로 덜어 낸 규칙" },
+    "items": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+  },
+  "$defs": {
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "kind": { "enum": ["skill", "mcp", "plugin", "subagent", "rules", "prompt", "hook", "framework", "workflow"] },
+    "item": {
+      "type": "object",
+      "required": ["id", "name", "kind", "category", "summary", "url", "source", "tags", "fetchedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+:[^\\s]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "kind": { "$ref": "#/$defs/kind" },
+        "category": { "const": "ai" },
+        "summary": { "type": "string", "maxLength": 300 },
+        "summaryKo": { "type": "string", "maxLength": 300 },
+        "written": { "const": "codeshopper" },
+        "url": { "type": "string", "pattern": "^https?://" },
+        "source": {
+          "type": "object",
+          "required": ["name", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "url": { "type": "string", "pattern": "^https://" }
+          }
+        },
+        "license": { "type": "string", "minLength": 1 },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "stars": { "type": "integer", "minimum": 0 },
+            "downloads": { "type": "integer", "minimum": 0 },
+            "likes": { "type": "integer", "minimum": 0 },
+            "updatedAt": { "$ref": "#/$defs/date" }
+          }
+        },
+        "tags": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 40 }, "maxItems": 12, "uniqueItems": true },
+        "preview": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "enum": ["font", "palette", "icons", "style", "repo", "model", "dataset", "api", "skill", "mcp", "site", "template", "asset", "prompt"] }
+          }
+        },
+        "use": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "install": { "type": "string", "minLength": 1 },
+            "snippet": { "type": "string", "minLength": 1 },
+            "docs": { "type": "string", "pattern": "^https?://" }
+          }
+        },
+        "fetchedAt": { "$ref": "#/$defs/date" }
+      }
+    }
+  }
+}

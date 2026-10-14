@@ -1,19 +1,17 @@
 ---
-// 4단계 설계도 받기 /arrival (brief 6.8, D70): 지도 띠 260(설계도 받기 문이 열렸을 때만 빈 터 앞의 차) → 16 겹친 내용 시트 안의 섬
-// → 아래 막대(상태 한 줄 + 주 버튼 하나 [설계도 내려받기 (.md)]). 빌드 때는 처음 온 사람 기준이라 잠김(빈 상태 + [만들 앱 정하러 가기])을 그린다.
+// 4단계 설계도 받기 /arrival (brief 6.8, D70, v4 D98): 두 칸 격자의 왼쪽 칸 = 설계도 받기 섬 → 왼쪽 칸 아래(상태 한 줄 +
+// [설계도 내려받기 (.md)]). 오른쪽 칸은 기본 틀의 설계도 창. 빌드 때는 처음 온 사람 기준이라 잠김(빈 상태 + [만들 앱 정하러 가기])을 그린다.
 // 영수증 링크(#r=)로 열면 기본 틀의 첫 그림 전 스크립트가 data-receipt-link를 붙여, 섬이 링크를 읽을 때까지 잠김 화면을 감춘다 (arrival.css).
 // 영수증 링크가 주소에 잠깐 있으므로 이 화면에는 방문 통계 스크립트를 싣지 않는다 (stage.ts analyticsAllowed).
 import Base from '../layouts/Base.astro';
 import ArrivalAction from '../components/ArrivalAction.tsx';
-import MapBoard from '../components/MapBoard.tsx';
 import Receipt from '../components/Receipt.tsx';
 import { ko } from '../copy/ko.ts';
 import '../styles/arrival.css';
 ---
 
 <Base title={ko.receipt.pageTitle} stage="arrival">
-  <div class="map-band is-arrival"><MapBoard client:load stage="arrival" /></div>
-  <div class="content-sheet on-map">
+  <div class="in-pane">
     <Receipt client:load />
   </div>
   <ArrivalAction client:load slot="action" />

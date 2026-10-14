@@ -19,7 +19,7 @@ beforeAll(async () => {
 describe('저장소', () => {
   it('깨진 저장 값은 처음 값으로 읽는다', () => {
     expect(store.$session.get()).toEqual({ answers: {}, cart: [], kept: [], deferred: [] });
-    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', sound: false });
+    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce' });
   });
 
   it('빌드(서버)에서는 저장 안내를 띄우지 않는다', () => {
@@ -34,9 +34,9 @@ describe('저장소', () => {
   });
 
   it('설정은 모양을 골라 저장한다', () => {
-    store.setPrefs({ sound: true });
-    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', sound: true });
-    store.setPrefs({ motion: 'auto', sound: false });
+    store.setPrefs({ marks: false });
+    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', marks: false });
+    store.setPrefs({ motion: 'auto', marks: true });
     expect(KEYS.prefs in storage).toBe(false);
   });
 
@@ -73,11 +73,11 @@ describe('저장소', () => {
     store.patchMeta({ lessonDone: true });
     store.rememberReceipt({ r: 'ccc', at: 't3' });
     store.$session.set({ answers: { 'q.type': 'page' }, cart: ['x'], kept: [], deferred: [] });
-    store.setPrefs({ motion: 'reduce', sound: true });
+    store.setPrefs({ motion: 'reduce', marks: false });
     store.clearAll();
     for (const key of [KEYS.session, KEYS.study, KEYS.meta, KEYS.seen, KEYS.receipts]) expect(key in storage).toBe(false);
     expect(storage['other:key']).toBe('그대로');
-    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', sound: true });
+    expect(store.$prefs.get()).toEqual({ ...DEFAULT_PREFS, motion: 'reduce', marks: false });
     expect(KEYS.prefs in storage).toBe(true);
   });
 });

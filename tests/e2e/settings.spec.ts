@@ -37,16 +37,18 @@ test('설정 시트: 스위치를 켜면 저장되고, 확인 대화 상자는 �
   await gear.click();
   const sheet = page.getByRole('dialog', { name: ko.settings.title });
   await expect(sheet).toBeVisible();
-  for (const label of [ko.settings.motion, ko.settings.sound, ko.settings.quiet, ko.settings.glossary, ko.settings.marks]) {
+  // 스위치 셋 (효과음·조용히 모시기는 v4 D96에서 걷었다)
+  await expect(sheet.getByRole('switch')).toHaveCount(3);
+  for (const label of [ko.settings.motion, ko.settings.glossary, ko.settings.marks]) {
     await expect(sheet.getByRole('switch', { name: label })).toBeVisible();
   }
-  // 풀이·점선 밑줄은 처음부터 켜짐, 조용히 모시기는 꺼짐
+  // 풀이·점선 밑줄은 처음부터 켜짐. 끄면 저장된다
   await expect(sheet.getByRole('switch', { name: ko.settings.glossary })).toHaveAttribute('aria-checked', 'true');
-  const quiet = sheet.getByRole('switch', { name: ko.settings.quiet });
-  await expect(quiet).toHaveAttribute('aria-checked', 'false');
-  await quiet.click();
-  await expect(quiet).toHaveAttribute('aria-checked', 'true');
-  expect(JSON.parse((await page.evaluate(() => localStorage.getItem('cc:prefs:v1'))) ?? '{}')).toMatchObject({ quiet: true });
+  const marks = sheet.getByRole('switch', { name: ko.settings.marks });
+  await expect(marks).toHaveAttribute('aria-checked', 'true');
+  await marks.click();
+  await expect(marks).toHaveAttribute('aria-checked', 'false');
+  expect(JSON.parse((await page.evaluate(() => localStorage.getItem('cc:prefs:v1'))) ?? '{}')).toMatchObject({ marks: false });
 
   await sheet.getByRole('button', { name: ko.settings.clear }).click();
   const confirm = page.getByRole('dialog', { name: ko.settings.clearTitle });

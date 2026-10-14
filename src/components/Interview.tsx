@@ -4,12 +4,12 @@
 //   짧은 네 보기(네·아니요·아마·모르겠어요) = 2×2 중립 버튼 56 아래 전체 폭 줄 [직접 쓰기](또는 없음),
 //   그 밖 = 목록 줄 56(그림 보기는 앞에 타일 40) 끝에 [직접 쓰기] 줄 → '또는' → [모르겠어요] 줄.
 // 직접 쓰기(T37, CustomAnswer)는 펼치는 글 칸이라 보기 꼴을 정할 때 세지 않는다. '쓰는 AI' 에이전트 질문은 보기를 무리(groups)로 나눠 보인다.
-// 느낌 타일의 그림은 내 지도(미니)를 그 보기의 팔레트로 칠한 견본이다. 답이 쌓이면 시트 첫 줄에 '고를 것 n개' 칩.
+// 느낌 타일은 그림 없이 이름만 둔다 (지도 견본은 걷어 냈다, v4 D96. 화면 미리 보기는 V5). 답이 쌓이면 첫 줄에 '고를 것 n개' 칩.
 // [이전]과 주 버튼은 아래 막대 섬(InterviewAction)이고,
 // 지금 질문 자리는 interview-nav.ts로 나눠 쓴다. 마지막 질문 뒤에는 한 줄 쓰기(선택)가 있다.
 // 시트 맨 아래: 접기 '지금까지 정한 것'(답 줄을 누르면 그 질문으로 · 고를 것 글 · 혹시 이 코스) + 글 버튼 '도구 먼저 둘러볼게요'.
 // 질문 풀이 글의 어려운 말에는 점선 밑줄(useTermMarks, D69)을 긋는다.
-// 계산은 모두 엔진(evaluate·answerChips·matchingRecipes)과 지도 모형이 한다. 화면은 보여 주기만 한다.
+// 계산은 모두 엔진(evaluate·answerChips·matchingRecipes)이 한다. 화면은 보여 주기만 한다.
 import { useStore } from '@nanostores/preact';
 import type { ComponentChildren } from 'preact';
 import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
@@ -23,13 +23,10 @@ import type { Option, Question } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { $questionMoves, $questionPick, goToQuestion, questionAt } from '../lib/interview-nav.ts';
 import { josa } from '../lib/josa.ts';
-import type { MapModel } from '../lib/map/model.ts';
-import { mapModel, paletteOf } from '../lib/map/model.ts';
 import { optionArt } from '../lib/option-art.ts';
 import { $result, updateSession } from '../lib/result.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
-import { sfx } from '../lib/sfx.ts';
 import { patchMeta } from '../lib/store.ts';
 import { track } from '../lib/track.ts';
 import type { Decide } from './CustomAnswer.tsx';
@@ -37,7 +34,6 @@ import { CustomAnswer } from './CustomAnswer.tsx';
 import { Glyph } from './Glyph.tsx';
 import { Icon } from './Icon.tsx';
 import { Lead } from './Lead.tsx';
-import { MapSvg } from './MapBoard.tsx';
 import { useTermMarks } from './TermMarks.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
@@ -57,7 +53,7 @@ function layoutOf(q: Question): Layout {
   return 'rows';
 }
 
-/** 답 하나로 바뀐 지도 마디를 한 문장으로: '지도에 저장이 생겼어요.' (바뀐 것이 없으면 null) */
+/** 답 하나로 바뀐 기능을 한 문장으로: '설계도에 저장이 생겼어요.' (바뀐 것이 없으면 null) */
 function mapChange(before: EngineResult, after: EngineResult): string | null {
   const had = new Set(before.slots.map((s) => s.slot.id));
   const has = new Set(after.slots.map((s) => s.slot.id));
@@ -120,16 +116,6 @@ function PickRow({ q, option, picked, onPick }: PickProps & { q: Question }) {
         <span class="list-check" aria-hidden="true" />
       </button>
     </li>
-  );
-}
-
-/** 느낌 견본: 내 지도(미니)를 그 보기의 팔레트로 칠한다. 땅은 판 면, 물·공원은 판의 두 조각 (map-land.css와 같은 토큰) */
-function FeelSwatch({ model, option }: { model: MapModel; option: Option }) {
-  const palette = paletteOf(option.id);
-  return (
-    <span class="pick-plate is-feel" data-palette={palette} aria-hidden="true">
-      <MapSvg model={{ ...model, palette }} variant="mini" />
-    </span>
   );
 }
 
@@ -202,15 +188,14 @@ function Options({ q, r, onPick, onDecide }: OptionsProps) {
   if (layout === 'rows') {
     return <RowOptions q={q} chosen={chosen} main={main} unknown={unknown} custom={customPart('row')} onPick={onPick} />;
   }
-  const model = q.id === 'q.style' ? mapModel(r) : null;
+  // 느낌(q.style)은 그림 없이 이름만 둔 낮은 타일 (화면 미리 보기 카드는 V5)
+  const plain = q.id === 'q.style';
   return (
     <>
-      <ul class={model ? 'pick-tiles is-two' : 'pick-tiles'}>
+      <ul class={plain ? 'pick-tiles is-plain' : 'pick-tiles'}>
         {main.map((o) => {
           const name = optionArt(q.id, o.id);
-          const art = model ? (
-            <FeelSwatch model={model} option={o} />
-          ) : (
+          const art = plain ? null : (
             <span class="pick-plate" aria-hidden="true">
               {name && <Glyph name={name} />}
             </span>
@@ -334,7 +319,7 @@ export default function Interview() {
   const q = visible[at];
 
   // 질문을 옮겼을 때만 새 질문 제목으로 초점 (처음 열 때·다른 곳에서 답이 바뀔 때는 옮기지 않는다). 그림 전에 옮겨 초점이 비지 않게.
-  // 질문마다 새 화면이라 맨 위로 올린다: 긴 목록 아래에서 골라도 다음 질문과 방금 자란 지도가 함께 보인다 (움직임 없이 바로)
+  // 질문마다 새 화면이라 맨 위로 올린다: 긴 목록 아래에서 골라도 다음 질문이 처음부터 보인다 (움직임 없이 바로)
   useLayoutEffect(() => {
     if (moves === seenMoves.current) return;
     seenMoves.current = moves;
@@ -375,13 +360,11 @@ export default function Interview() {
     }
     const after = $result.get();
     const finished = after.done && !before.done;
-    // 답 하나에 지도 변화 하나 (S2): 고른 것 → 생긴·빠진 마디 → 다 정했으면 고를 것 수. 한 번에 이어 읽힌다 (announce가 모은다)
+    // 답 하나에 설계도 변화 하나: 고른 것 → 생긴·빠진 기능 → 다 정했으면 고를 것 수. 한 번에 이어 읽힌다 (announce가 모은다)
     announce(how === 'kept' ? ko.custom.kept : fill(how === 'picked' ? ko.custom.picked : ko.interview.answered, { label: option.label }));
     const change = mapChange(before, after);
     if (change) announce(change);
     if (finished) announce(fill(ko.interview.done, { n: after.slots.length }));
-    // 다 정했으면 '정함' 소리 (도착 차임은 설계도 받기에만, brief 7절)
-    void sfx(finished ? 'confirm' : 'answer');
     const idx = after.interview.visible.findIndex((v) => v.id === q.id);
     goToQuestion(idx < 0 ? after.interview.visible.length : idx + 1);
   };
@@ -393,7 +376,7 @@ export default function Interview() {
   const keptCustom = (qid: string): boolean =>
     visible.find((v) => v.id === qid)?.options.find((o) => o.id === r.interview.answers[qid])?.isCustom === true;
   const chips = ready ? answerChips(catalog, r.interview, notes) : [];
-  // 답이 쌓이면 시트 첫 줄에 '고를 것 n개' (지도의 마디 수와 같다). 지도 위 왼쪽 위는 휴대폰에서 첫 굽이·첫 마디 이름표 자리라 가린다 (D70)
+  // 답이 쌓이면 첫 줄에 '고를 것 n개' (설계도 창의 기능 수와 같다)
   const chip = chips.length > 0 ? (
     <p class="q-chip">
       <span class="q-chip-dot" aria-hidden="true" />

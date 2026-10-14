@@ -110,25 +110,23 @@ describe('메타 읽기', () => {
   it('true일 때만 첫 수업·영수증 표시를 둔다', () => {
     expect(readMeta({ lessonDone: true, issued: 'yes', interviewStartedAt: -1 })).toEqual({ sent: [], lessonDone: true });
     expect(readMeta({ interviewStartedAt: 1_700_000_000_000 }).interviewStartedAt).toBe(1_700_000_000_000);
-    // 도구끼리 맞춰 보기에서 마지막으로 본 막힌 마디 (S4 '뚫림', D71): 글자 목록만, 비면 두지 않는다
-    expect(readMeta({ checkJams: ['slot.store', 3, '', 'slot.store'] }).checkJams).toEqual(['slot.store']);
-    expect(readMeta({ checkJams: [] })).toEqual({ sent: [] });
-    expect(isEmptyMeta({ sent: [], checkJams: ['slot.host'] })).toBe(false);
+    // 옛 저장 값의 막힌 마디 기록(S4, v4 D96에서 걷음)은 읽지 않는다
+    expect(readMeta({ checkJams: ['slot.store'] })).toEqual({ sent: [] });
   });
 });
 
 describe('설정 읽기', () => {
-  it('모르는 값은 기본값 (동작은 기기 설정 따르기, 효과음·조용히 모시기 꺼짐, 풀이·점선 밑줄 켜짐)', () => {
-    expect(readPrefs({ motion: 'fast', sound: 'on', quiet: 1, glossary: 'no', marks: null })).toEqual(DEFAULT_PREFS);
-    expect(DEFAULT_PREFS).toEqual({ motion: 'auto', sound: false, quiet: false, glossary: true, marks: true });
+  it('모르는 값은 기본값 (동작은 기기 설정 따르기, 풀이·점선 밑줄 켜짐)', () => {
+    expect(readPrefs({ motion: 'fast', glossary: 'no', marks: null })).toEqual(DEFAULT_PREFS);
+    expect(DEFAULT_PREFS).toEqual({ motion: 'auto', glossary: true, marks: true });
   });
 
-  it('줄이기와 효과음 켜기 (옛 저장 값에 없는 칸은 기본값)', () => {
-    expect(readPrefs({ motion: 'reduce', sound: true })).toEqual({ motion: 'reduce', sound: true, quiet: false, glossary: true, marks: true });
+  it('줄이기 켜기 (옛 저장 값의 효과음·조용히 모시기는 버린다, v4 D96)', () => {
+    expect(readPrefs({ motion: 'reduce', sound: true, quiet: true })).toEqual({ motion: 'reduce', glossary: true, marks: true });
   });
 
-  it('조용히 모시기 켜기, 풀이·점선 밑줄 끄기 (brief 6.13)', () => {
-    expect(readPrefs({ quiet: true, glossary: false, marks: false })).toEqual({ motion: 'auto', sound: false, quiet: true, glossary: false, marks: false });
+  it('풀이·점선 밑줄 끄기 (brief 6.13)', () => {
+    expect(readPrefs({ glossary: false, marks: false })).toEqual({ motion: 'auto', glossary: false, marks: false });
   });
 });
 
@@ -148,7 +146,6 @@ describe('처음 값 판단 (처음 값이면 저장 키를 지운다)', () => {
     expect(isEmptyMeta({ sent: [], issued: true })).toBe(false);
     expect(isDefaultPrefs(DEFAULT_PREFS)).toBe(true);
     expect(isDefaultPrefs({ ...DEFAULT_PREFS, motion: 'reduce' })).toBe(false);
-    expect(isDefaultPrefs({ ...DEFAULT_PREFS, quiet: true })).toBe(false);
     expect(isDefaultPrefs({ ...DEFAULT_PREFS, marks: false })).toBe(false);
     expect(isEmptySeen({ scenes: [] })).toBe(true);
     expect(isEmptySeen({ scenes: ['s5'] })).toBe(false);

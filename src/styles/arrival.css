@@ -1,7 +1,7 @@
-/* 4단계 설계도 받기 /arrival (brief 6.8, D70): 지도 띠 260 → 16 겹친 내용 시트(사건 메시지 → H1 22/700 + 한 줄 → 건네드릴 것 카드
+/* 4단계 설계도 받기 /arrival (brief 6.8, D70): 왼쪽 칸(H1 22/700 + 한 줄 → 건네드릴 것 카드
    → 칸 고르개 4칸 → 칸 내용 → 맺음 한 줄) → 아래 막대(상태 한 줄 + [설계도 내려받기 (.md)]).
    카드는 '건네드릴 것' 하나와 영수증 종이뿐이다. 칸 안의 묶음은 상자 없이 제목과 나눔 선으로.
-   부품(.content-sheet.on-map·.seg·.list·.fold·.paste·.tag·.empty-state·.btn)은 parts.css·frame.css. 이 파일은 이 페이지만 싣는다. */
+   부품(.in-pane·.seg·.list·.fold·.paste·.tag·.empty-state·.btn)은 parts.css·frame.css. 이 파일은 이 페이지만 싣는다. */
 
 /* 다시 온 손님·영수증 링크: 섬이 붙어 링크를 읽기 전에는 빌드 때 그린 잠김 화면을 감춘다 (기본 틀의 첫 그림 전 스크립트) */
 :root:is([data-resume], [data-receipt-link]) :is(.arrival, .ar-go):not([data-ready]),
@@ -22,8 +22,8 @@
   margin-block-start: var(--space-2);
 }
 
-/* 꼬리표·사건 메시지 다음의 제목은 16 */
-.arrival > :is(.ar-shared-tag, .ar-note) + h1 {
+/* 꼬리표 다음의 제목은 16 */
+.arrival > .ar-shared-tag + h1 {
   margin-block-start: var(--space-4);
 }
 
@@ -45,7 +45,7 @@
   line-height: var(--leading-label);
 }
 
-/* ── 건네드릴 것 (화면에 단 하나의 카드, brief 5.6): 모서리 16, 그림자 없음, 1px 나눔 선. 왼쪽 빈 터 그림 72(옅은 판), 768px부터 240 ── */
+/* ── 건네드릴 것 (화면에 단 하나의 카드, brief 5.6): 모서리 16, 그림자 없음, 1px 나눔 선. 왼쪽 빈 터 그림 72(옅은 판), 768~1023에서 240 ── */
 .ar-handover {
   display: flex;
   align-items: center;
@@ -105,7 +105,8 @@
   vertical-align: middle;
 }
 
-@media (min-width: 768px) {
+/* 768~1023(왼쪽 칸이 넓은 한 칸)에서만 큰 그림 240. 1024부터는 왼쪽 칸(560 이하) 안이라 휴대폰 꼴 (v4 D98) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .ar-handover {
     gap: var(--space-5);
     padding: var(--space-4);
@@ -362,19 +363,12 @@
   position: relative;
 }
 
-/* 프린터 틈: 종이가 위에서 아래로 덜컥덜컥 찍혀 나온다 (S6, clip-path를 steps(14)로). 틈은 --tile (밤에 남색이 바탕에 묻히지 않게).
-   설계도 받기 섬이 뽑을 때까지 종이를 가려 두고(data-print=wait) 종이가 화면에 보일 때 뽑는다(Receipt.tsx, D71 검토 반영).
-   틈은 종이보다 양옆 12씩만 넓다 (영수증 글꼴의 ch로 종이와 같은 셈) */
+/* 종이 틀: 영수증 글꼴의 ch로 종이 폭을 잰다 (출력 연출은 걷어 냈다, v4 D96) */
 .printer {
-  position: relative;
-  inline-size: min(100%, calc(36ch + 2 * var(--space-5) + 2 * var(--space-3)));
+  inline-size: min(100%, calc(36ch + 2 * var(--space-5)));
   margin-inline: auto;
-  overflow: hidden;
   font-family: var(--font-receipt);
   font-size: var(--size-caption);
-  padding-block-start: var(--space-2);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  background: linear-gradient(var(--tile) 0 var(--space-2), transparent var(--space-2));
 }
 
 .paper {
@@ -396,7 +390,6 @@
   font-size: var(--size-caption);
   line-height: var(--leading-caption);
   box-shadow: var(--elev-1);
-  animation: print var(--dur-print) steps(14, end) both;
 }
 
 /* 아래쪽 톱니 가장자리 8 (찢어 낸 영수증) */
@@ -409,16 +402,6 @@
   background:
     linear-gradient(135deg, var(--receipt) 50%, transparent 50%) 0 0 / var(--space-4) var(--space-2) repeat-x,
     linear-gradient(225deg, var(--receipt) 50%, transparent 50%) var(--space-2) 0 / var(--space-4) var(--space-2) repeat-x;
-}
-
-/* 위에서부터 한 줄씩 드러난다. 끝에서는 아래 톱니(8)와 그림자까지 다 보이게 넉넉히 연다 */
-@keyframes print {
-  from {
-    clip-path: inset(0 0 100% 0);
-  }
-  to {
-    clip-path: inset(calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) calc(-2 * var(--space-2)) calc(-1 * var(--space-2)));
-  }
 }
 
 .r-fixed {
@@ -502,7 +485,7 @@
   overflow-wrap: anywhere;
 }
 
-/* 남색 도장 (D65, brief 4.8): 3px 겹줄 둥근 네모, −6° 기울임, 단색 모자 마크 20 + '코드쇼퍼 · 요금 0원' */
+/* 남색 도장 줄 (D65): 3px 겹줄 둥근 네모, 단색 모자 마크 20 + 글. 찍는 연출과 기울임은 걷어 냈다 (v4 D96) */
 .r-stamp {
   display: flex;
   align-items: center;
@@ -512,69 +495,12 @@
   /* 글자를 키워도 종이 폭을 넘지 않게: 넘으면 마크와 글이 줄을 바꾼다 (WCAG 1.4.10) */
   inline-size: fit-content;
   max-inline-size: 100%;
-  /* 기울인 도장의 양 끝이 위아래로 약 12px 솟으므로 그만큼 비운다 */
-  margin: var(--space-5) auto;
+  margin: var(--space-4) auto;
   padding: var(--space-1) var(--space-3);
   border: 3px double var(--seal);
   border-radius: var(--radius-sm);
   color: var(--seal);
   font-weight: var(--weight-heading);
-  transform: rotate(-6deg);
-  /* 출력이 끝나기 --dur-stamp 앞에 내려찍어 출력과 함께 끝난다 (brief 7절: 2750~3000) */
-  animation: stamp-press var(--dur-stamp) var(--ease-in) calc(var(--dur-print) - var(--dur-stamp)) both;
-}
-
-/* 뽑을 차례인데 종이가 아직 화면에 보이지 않았다: 프린터 틈 안에 가려 둔다(애니메이션이 아니다). 종이가 보이면 섬이 이 표시를 떼어
-   출력이 처음부터 돈다. 그 전에 화면을 누르거나 Esc를 누르면(cc:skip) 섬이 다 나온 종이로 바꾼다 */
-.receipt-scene[data-print='wait'] .paper {
-  clip-path: inset(0 0 100% 0);
-}
-
-.receipt-scene[data-print='wait'] :is(.paper, .r-stamp) {
-  animation: none;
-}
-
-/* 한 번 뽑은 영수증은 다시 뽑지 않는다: 영수증 칸으로 돌아올 때, 도착 장면을 이미 본 뒤 다시 열 때 (섬이 data-printed를 붙인다).
-   출발 → 도착 장면을 끝 모습으로 볼 때(동작 줄이기·조용히 모시기 still, 섬이 붙기 전에 건너뜀 skip)도 뽑지 않는다 */
-.receipt-scene[data-printed] :is(.paper, .r-stamp),
-:root:is([data-depart='still'], [data-depart='skip']) .receipt-scene :is(.paper, .r-stamp) {
-  animation: none;
-}
-
-/* 조용히 모시기 (brief 7절): 큰 장면 S5+S6은 끝 모습을 짧게 비치기만 한다 (출력·도장 없이) */
-:root[data-quiet] .receipt-scene:not([data-printed]) :is(.paper, .r-stamp) {
-  animation: ar-fade var(--dur-fade) var(--ease-out) both;
-}
-
-@keyframes ar-fade {
-  from {
-    opacity: 0;
-  }
-}
-
-/* ── 출발 → 도착 (S5, src/lib/map/arrive.ts): 시트는 차가 빈 터에 닿은 뒤 아래에서 올라온다 ──
-   섬이 붙기 전(첫 그림)부터 내려 둔다. 장면이 시작되면(data-depart=run) 애니메이션이 이어받고, 스크립트가 돌지 못해도 --dur-scene 뒤에는 나온다 */
-:root[data-depart='play'] .content-sheet.on-map {
-  animation: ar-hold 0s linear var(--dur-scene) backwards;
-}
-
-@keyframes ar-hold {
-  from {
-    transform: translateY(100vh);
-  }
-}
-
-/* 끝 모습으로 볼 때(동작 줄이기·조용히 모시기): 시트를 짧게 비친다 */
-:root[data-depart='still'] .content-sheet.on-map {
-  animation: ar-fade var(--dur-fade) var(--ease-out) both;
-}
-
-/* S6: 1.3배에서 1배로 누르기만 한다. 'to'가 없어 끝 상태는 요소 자기 값(−6°)이다 */
-@keyframes stamp-press {
-  from {
-    opacity: 0;
-    transform: rotate(-6deg) scale(var(--juice-stamp-scale));
-  }
 }
 
 .r-footer {

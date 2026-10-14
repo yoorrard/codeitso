@@ -652,7 +652,6 @@ export interface LookMood extends LookOption {
   motion: string;
   motionStyle?: 'short' | 'steps';
   tabularNums?: true;
-  mapPalette: 'clean' | 'cute' | 'calm' | 'bold';
 }
 
 export interface LookNeutral extends LookOption {

@@ -495,11 +495,11 @@ export default function TermPopover() {
     const p = $prefs.get();
     const marks = unwrap(!p.marks);
     root.setAttribute('data-terms', '');
-    // 처음 한 번: 밑줄이 처음 보이는 화면에서 기사 메시지 (조용히 모시기면 내지 않는다).
+    // 처음 한 번: 밑줄이 처음 보이는 화면에서 알림 칸 (Notice).
     // 화면에 떠서 초점 받은 것을 가리지 않게 본문 흐름 안, 첫 그림 때부터 있는 알림 칸(role="status")에 그린다.
     // 그 칸이 없는 화면(섬 화면)은 H1이 든 머리 다음에 만들어 둔다
     let hint: HTMLElement | null = null;
-    if (marks > 0 && !p.quiet && !$seen.get().scenes.includes('glossary-hint')) {
+    if (marks > 0 && !$seen.get().scenes.includes('glossary-hint')) {
       markSceneSeen('glossary-hint');
       let slot = document.querySelector<HTMLElement>('[data-term-hint]');
       if (!slot) {
@@ -512,7 +512,7 @@ export default function TermPopover() {
         else document.getElementById('main')?.prepend(slot);
       }
       const at = (hint = slot);
-      void import('./DispatchNote.tsx').then((m) => render(h(m.DispatchNote, { text: ko.glossary.hint, class: 'term-hint' }), at));
+      void import('./Notice.tsx').then((m) => render(h(m.Notice, { text: ko.glossary.hint, class: 'term-hint' }), at));
     }
     // 섬이 깨어나기 전에 누른 밑줄 말 (TermText.astro의 작은 스크립트가 표시해 둔다)
     const waiting = document.querySelector<HTMLElement>('[data-term-wait]');

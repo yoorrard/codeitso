@@ -1,15 +1,10 @@
-// 기사 메시지 (docs/CONCEPT.md 4.1, brief 6.1): 사건 때만 낸다. 왼쪽에 모자 배지 원(32px), 오른쪽에 두 문장 이하의 글.
-// 닫기 단추(44px)로 접고, 저절로 닫히지 않는다. 얼굴 그림은 넣지 않는다 (기사는 로고 안에만 있다, D65).
-// 접을 때 초점이 닫기 단추에 있었으면 메시지 다음의 누를 수 있는 것으로 옮긴다 (지운 단추와 함께 초점이 body로 사라지지 않게, WCAG 2.4.3).
-// 조용히 모시기(brief 7절)면 사건 메시지를 내지 않는다: 같은 일은 화면 글·상태 한 줄·낭독이 알린다.
-import { useStore } from '@nanostores/preact';
+// 알림 칸 (v4 D96: 옛 기사 메시지를 대신한다). 사건 때만 낸다: 막힌 곳이 다 풀림, 풀이 처음 안내.
+// 왼쪽 그림 20 + 두 문장 이하의 글, 닫기 단추(44)로 접고 저절로 닫히지 않는다.
+// 접을 때 초점이 닫기 단추에 있었으면 알림 다음의 누를 수 있는 것으로 옮긴다 (지운 단추와 함께 초점이 body로 사라지지 않게, WCAG 2.4.3).
 import { useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
-import { LOGO_BADGE } from '../lib/logo-paths.ts';
 import { sentences } from '../lib/sentences.ts';
-import { $prefs } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
-import { Logo } from './Logo.tsx';
 
 interface Props {
   /** 알림 한 줄 (600). 두 문장이어도 한 줄로 둔다: '도착했습니다. 요금은 0원입니다.' */
@@ -19,6 +14,8 @@ interface Props {
   /** 닫기 단추를 둘지 (도착처럼 화면의 제목 역할이면 닫지 않는다) */
   closable?: boolean;
   class?: string;
+  /** 앞 그림: 다 풀림은 check, 안내는 help */
+  icon?: 'check' | 'help';
 }
 
 const FOCUSABLE = 'a[href],button:not([disabled]),input:not([type="hidden"]),select,textarea,summary,[tabindex]:not([tabindex="-1"])';
@@ -32,19 +29,18 @@ function nextFocus(el: Element): HTMLElement | null {
   return document.getElementById('main');
 }
 
-export function DispatchNote({ title, text, closable = true, class: cls }: Props) {
+export function Notice({ title, text, closable = true, class: cls, icon = 'help' }: Props) {
   const [open, setOpen] = useState(true);
   const box = useRef<HTMLElement>(null);
-  const quiet = useStore($prefs).quiet;
-  if (!open || quiet) return null;
+  if (!open) return null;
   const hide = (): void => {
     const el = box.current;
     if (el?.contains(document.activeElement)) nextFocus(el)?.focus();
     setOpen(false);
   };
   return (
-    <aside ref={box} class={cls ? `dispatch-note ${cls}` : 'dispatch-note'} aria-label={ko.dispatch.label}>
-      <Logo variant="badge" art={LOGO_BADGE} height={32} class="dispatch-badge" />
+    <aside ref={box} class={cls ? `notice ${cls}` : 'notice'} aria-label={ko.notice.label}>
+      <Icon name={icon} size="20px" />
       <p>
         {/* 알림 줄이 두 문장이면 좁은 폭에서 어구 중간이 아니라 문장 사이에서 줄을 바꾼다 (Lead.tsx와 같은 .lead-s) */}
         {title && (
@@ -66,7 +62,7 @@ export function DispatchNote({ title, text, closable = true, class: cls }: Props
         ))}
       </p>
       {closable && (
-        <button type="button" class="icon-btn dispatch-close" aria-label={ko.dispatch.hide} onClick={hide}>
+        <button type="button" class="icon-btn notice-close" aria-label={ko.notice.hide} onClick={hide}>
           <Icon name="close" size="20px" />
         </button>
       )}

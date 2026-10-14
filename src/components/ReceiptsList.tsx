@@ -1,6 +1,6 @@
-// 지난 영수증 섬 (brief 6.11, D67 W3b): 받은 영수증을 최근 것부터 30장까지. 줄 72 = 미니 지도 56×40 + 이름 + '받은 날 · 영수증 0427'
-// + 오른쪽 지우기 44(확인 대화 상자를 거친다). 줄을 누르면 /arrival#r=…로 다시 연다 (그때는 대표 장면 S5가 돌지 않는다, ARCHITECTURE 5절).
-// 미니 지도는 영수증 링크 조각을 풀어 엔진을 돌린 모형(MapSvg mini: 길·마디·빈 터)이고, 풀 수 없으면 앱 종류 청사진 타일을 둔다.
+// 지난 영수증 섬 (brief 6.11, D67 W3b): 받은 영수증을 최근 것부터 30장까지. 줄 72 = 앱 종류 청사진 타일 + 이름 + '받은 날 · 영수증 0427'
+// + 오른쪽 지우기 44(확인 대화 상자를 거친다). 줄을 누르면 /arrival#r=…로 다시 연다 (ARCHITECTURE 5절).
+// 넓은 화면에서는 카드 격자다 (v4 D98, receipts.css). 미니 지도는 걷어 냈다 (v4 D96).
 // 영수증 번호는 링크 조각의 해시에서 계산해 보여 주기만 한다(receipt-no.ts). 저장은 store.ts 한 곳.
 // 이름은 앱 종류 보기 이름이다. 직접 쓴 앱(type.custom, T37)이면 '직접 쓰기'가 아니라 내 말을 쓰되, 내 말은 링크에도 지난 영수증 기록에도
 // 넣지 않으므로(설계서 7.6절, 3.7절) 지금 브라우저의 진행(cc:session:v1)과 같은 영수증일 때만 그 말을 보이고, 아니면 '내 앱'이다.
@@ -11,16 +11,12 @@ import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import { evaluate, fill } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
-import { mapModel } from '../lib/map/model.ts';
-import type { MapModel } from '../lib/map/model.ts';
 import { receiptDate, receiptNo } from '../lib/receipt-no.ts';
 import { ROUTES } from '../lib/routes.ts';
-import { EMPTY_SESSION } from '../lib/saved.ts';
 import type { ReceiptEntry } from '../lib/saved.ts';
-import { readShareHash, shareHash, SHARE_PREFIX } from '../lib/share.ts';
+import { shareHash, SHARE_PREFIX } from '../lib/share.ts';
 import { $receipts, $session, forgetReceipt } from '../lib/store.ts';
 import { ArtTile } from './Glyph.tsx';
-import { MapSvg } from './MapBoard.tsx';
 
 const typeQuestion = catalog.question.get('q.type');
 
@@ -45,15 +41,6 @@ const typeArt: Record<string, string> = {
   board: 'L06',
 };
 
-/** 링크 조각을 풀어 도착한 지도의 모형으로. 깨진 조각이면 null (앱 종류 타일로 대신한다) */
-function miniModel(r: string): MapModel | null {
-  const read = readShareHash(SHARE_PREFIX + r);
-  if (read.status !== 'ok') return null;
-  return mapModel(evaluate(catalog, { ...EMPTY_SESSION, ...read.session }), {
-    arrived: true,
-  });
-}
-
 function dateText(at: string): string {
   const d = receiptDate(at, new Date().getFullYear());
   if (!d) return at;
@@ -68,7 +55,6 @@ interface Row {
   e: ReceiptEntry;
   name: string;
   no: string;
-  model: MapModel | null;
 }
 
 export default function ReceiptsList() {
@@ -86,7 +72,6 @@ export default function ReceiptsList() {
         e,
         name: nameOf(e, own),
         no: receiptNo(e.r),
-        model: miniModel(e.r),
       })),
     [list, own],
   );
@@ -148,7 +133,7 @@ export default function ReceiptsList() {
               <li key={row.e.r}>
                 <a class="list-row is-tall" href={`${ROUTES.arrival}${SHARE_PREFIX}${row.e.r}`}>
                   <span class="list-map" aria-hidden="true">
-                    {row.model ? <MapSvg model={row.model} variant="mini" /> : <ArtTile name={(row.e.type && typeArt[row.e.type]) ?? 'L00'} size="md" />}
+                    <ArtTile name={(row.e.type && typeArt[row.e.type]) ?? 'L00'} size="md" />
                   </span>
                   <span class="list-text">
                     <span class="list-name">{row.name}</span>

@@ -1,6 +1,6 @@
-/* 2단계 도구 고르기 /waypoints (brief 6.6, D70): 지도 띠 200 → 16 겹친 내용 시트(H1 22/700 + 한 줄 → 기능 칩 한 줄 →
+/* 2단계 도구 고르기 /waypoints (brief 6.6, D70, v4 D98): 왼쪽 칸(H1 22/700 + 한 줄 → 기능 칩 한 줄 →
    칸 제목 19/600 + 꼬리표 + 설명 → 도구 줄 72 → 접기 '원문만 있는 도구') → 아래 막대(상태 한 줄 + 주 버튼 하나).
-   부품(.content-sheet.on-map·.list·.chip-row·.chip·.tag·.alert·.fold·.empty-state·.btn)은 parts.css·frame.css. 이 파일은 이 페이지만 싣는다. */
+   부품(.in-pane·.list·.chip-row·.chip·.tag·.alert·.fold·.empty-state·.btn)은 parts.css·frame.css. 이 파일은 이 페이지만 싣는다. */
 
 /* 다시 온 손님: 섬이 붙기 전 잠김 화면이 잠깐 보이지 않게 (기본 틀의 첫 그림 전 스크립트가 data-resume을 붙인다) */
 :root[data-resume] :is(.shop, .w-action):not([data-ready]) > * {
@@ -123,11 +123,11 @@
 }
 
 /* ── 도구 줄 72 (parts.css .list-row). 고름 면이 화면 가장자리에 붙지 않게 시트 글 폭 안에 둔다 ── */
-.on-map .w-list {
+.in-pane .w-list {
   margin-inline: 0;
 }
 
-.on-map .w-list.list > li + li > :is(.list-row, .custom-answer > .list-row)::before {
+.in-pane .w-list.list > li + li > :is(.list-row, .custom-answer > .list-row)::before {
   inset-inline-end: 0;
 }
 

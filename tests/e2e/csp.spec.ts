@@ -15,7 +15,7 @@ async function watchCsp(page: Page): Promise<() => Promise<string[]>> {
   return () => page.evaluate(() => (window as unknown as { __csp?: string[] }).__csp ?? []);
 }
 
-test('CSP: 코스 → 영수증 출력 → 설계도 내려받기', async ({ page }) => {
+test('CSP: 코스 → 설계도 받기 → 설계도 내려받기', async ({ page }) => {
   const violations = await watchCsp(page);
   const first = recipes[0];
   if (!first) throw new Error('코스가 없다');
@@ -26,8 +26,8 @@ test('CSP: 코스 → 영수증 출력 → 설계도 내려받기', async ({ pag
   await page.locator('.action-bar .btn-issue').click();
   await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
-  // 출력이 끝날 때까지 (끝나면 도착 알림이 한 번 나온다)
-  await expect(page.locator('#cc-live')).toContainText(ko.dispatch.arrival, { timeout: 8000 });
+  // 처음 받은 설계도 알림이 한 번 나온다 (출력 연출은 v4 D96에서 걷었다)
+  await expect(page.locator('#cc-live')).toContainText(ko.receipt.arrived);
   expect(await longAnimations(page, 0)).toEqual([]);
   await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
   const download = page.waitForEvent('download');

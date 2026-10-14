@@ -4,8 +4,9 @@
 // E2E_BASE=1로 이 설정을 불러 그 프로젝트(base-path)와 --base 서버만 켠다. 그래서 npm run e2e는 기본 빌드만 본다.
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4400;
-const BASE_PORT = 4401;
+// 여러 작업 공간이 함께 돌 때는 E2E_PORT로 포트를 나눈다 (기본 4400, 바탕 시험은 그다음 번호)
+const PORT = Number(process.env['E2E_PORT'] ?? 4400);
+const BASE_PORT = PORT + 1;
 /** scripts/qa/base-build.ts의 BASE와 같다 */
 const BASE = '/code-chauffeur';
 const baseRun = process.env['E2E_BASE'] === '1';

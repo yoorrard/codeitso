@@ -17,7 +17,6 @@ import { badges, evaluate, fill, prepWait, toolDifficultyWord } from '../lib/eng
 import type { Product } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
-import { $mapFocus } from '../lib/map/focus.ts';
 import { reduced } from '../lib/motion.ts';
 import { slotArt } from '../lib/option-art.ts';
 import { withoutCustomTool } from '../lib/custom-input.ts';
@@ -360,9 +359,6 @@ export default function Shop() {
   useEffect(() => {
     if (ready && open !== null && r.done && !rankingOf(r, open)) $openSlot.set(initialSlot(r, null));
   }, [ready, open, r]);
-
-  // 지도에 지금 여는 칸을 알린다 (MapBoard가 그 마디에 --you 고리를 그린다, D68)
-  useEffect(() => $mapFocus.set(open), [open]);
 
   // 주 버튼·건너뛰기로 칸을 옮기면 새 칩과 칸 제목이 보이게 굴린다 (이미 보이면 그대로)
   useEffect(() => {

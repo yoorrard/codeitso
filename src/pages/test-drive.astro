@@ -3,31 +3,21 @@
 // H1(기사가 묻는 말) + 한 줄 + 글 버튼 '건너뛰고 만들 앱 정하기'(건너뛰기는 주 버튼이 아니다) → 세로 번호 단계 셋
 // (번호 원 24 + 2px 잇는 선. 단계마다 제목 19/600, 붙여 넣을 말 상자, 그다음 볼 것 한 줄, 접기 '잘 안 돼요') → 끝 한 줄.
 // 아래 막대: 상태 한 줄 + [다 했어요] → 마치면 [만들 앱 정하러 가기] (LessonFinish 섬).
-// 지도 띠 160(D71): 출발 옆 작은 연습 고리와 점 셋. 정적 SVG(처음 온 사람의 지도 + 연습 고리)이고, 마친 모습은 기본 틀의 data-lesson-done으로
-// CSS가 그린다. [다 했어요]를 누르면 차가 고리를 한 바퀴 돌고 고리 심이 청록으로 채워진다(S8, src/lib/map/practice.ts).
+// 두 칸 격자의 왼쪽 칸 (v4 D98). 연습 고리 지도와 장면 S8은 걷어 냈다 (D96).
 import Base from '../layouts/Base.astro';
 import CopyButton from '../components/CopyButton.tsx';
 import LessonFinish from '../components/LessonFinish.tsx';
 import { Lead } from '../components/Lead.tsx';
-import { PracticeMap } from '../components/PracticeRing.tsx';
 import { ko } from '../copy/ko.ts';
-import { catalog } from '../lib/data.ts';
-import { evaluate, fill } from '../lib/engine/index.ts';
-import { mapModel } from '../lib/map/model.ts';
+import { fill } from '../lib/engine/index.ts';
 import { ROUTES } from '../lib/routes.ts';
-import { EMPTY_SESSION } from '../lib/saved.ts';
 import '../styles/practice.css';
 
 const L = ko.lesson;
-const map = mapModel(evaluate(catalog, EMPTY_SESSION));
 ---
 
-<Base title={L.pageTitle} stage="test-drive" map>
-  <div class="map-band is-practice">
-    <PracticeMap model={map} />
-    <button type="button" class="btn btn-sm map-skip" data-skip hidden>{ko.common.skip}</button>
-  </div>
-  <div class="content-sheet on-map practice">
+<Base title={L.pageTitle} stage="test-drive">
+  <div class="in-pane practice">
     <h1 id="practice-title" tabindex="-1">{L.title}</h1>
     <Lead text={L.lead} />
     <a class="btn btn-text practice-skip" href={ROUTES.destination}>{L.skip}</a>

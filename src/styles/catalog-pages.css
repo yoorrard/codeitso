@@ -3,6 +3,41 @@
    부품(.list·.chip·.tag·.alert·.paste·.fold·.field·.empty-state)과 줄 덧붙임(.list.group·.list-sub.is-one·.list-ext·아이콘 마스크)은
    parts.css, 버튼·모달·확인 대화 상자는 frame.css의 것을 쓴다. 값은 tokens.css 변수만 쓴다. */
 
+/* ── 카드 격자 (v4 D98, brief 3절): 둘러보는 곳(넓은 무대 .is-wide)의 묶음 목록은 600부터 카드 격자
+   repeat(auto-fill, minmax(--card-min 280, 1fr)), 최대 1360. 줄 하나가 카드 하나다(면 + 가는 선, 나눔 선 없음) ── */
+@media (min-width: 600px) {
+  .stage.is-wide .list.group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr));
+    gap: var(--space-3);
+    overflow: visible;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .stage.is-wide .list.group > li {
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+
+  .stage.is-wide .list.group > li > .list-row {
+    block-size: 100%;
+  }
+
+  .stage.is-wide .list.group > li > .list-row::before,
+  .stage.is-wide .list.group > li::before {
+    content: none;
+  }
+}
+
+/* 검색 칸·거르기 칸은 넓은 무대에서도 읽는 폭 안 */
+.stage.is-wide :is(.dict, .shelf-filter) > form[role="search"] {
+  max-inline-size: 40rem;
+}
+
 /* ── 머리와 묶음 (brief 5.2): H1 26 → 한 줄 17/27 --text-2 (8) → 내용 (24) → 묶음과 묶음 사이 32 ── */
 .page-lead {
   color: var(--text-2);

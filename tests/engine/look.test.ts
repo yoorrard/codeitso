@@ -10,7 +10,6 @@ import { lookMoodOrder } from '../../src/lib/data-parts.ts';
 import { ACCENT_RULES, LOOK_FILE_NAME, darkSoftOf, darkenForWhite, deriveAccent, lookChecks, lookSpec, lookSummary, normalizeLook, referenceWords } from '../../src/lib/engine/look.ts';
 import { LOOK_GROUPS, renderDesignMd, renderLookCss, renderLookSection } from '../../src/lib/engine/look-render.ts';
 import type { LookChoice } from '../../src/lib/engine/types.ts';
-import { paletteOf } from '../../src/lib/map/model.ts';
 import { loadLooks } from '../../scripts/lib/load-data.ts';
 import { realCatalog } from '../fixtures/tiny.ts';
 
@@ -97,12 +96,6 @@ describe('앱 종류별 기본값 (설계서 4.3절 표, 7종)', () => {
       const s = spec({ 'q.style': id });
       expect([s.colors.light.primary, s.colors.dark.primary], id).toEqual([light, dark]);
     }
-  });
-
-  it('새 느낌 둘의 지도 색은 있는 팔레트에 잇는다 (포근하게 → cute, 오락실처럼 → bold)', () => {
-    for (const m of looks.moods) expect(paletteOf(m.id), m.id).toBe(m.mapPalette);
-    expect(paletteOf('warm')).toBe('cute');
-    expect(paletteOf('retro')).toBe('bold');
   });
 });
 

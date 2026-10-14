@@ -9,7 +9,7 @@
   --i: var(--i-trash);
 }
 
-/* ── 지난 영수증 (brief 6.11): 줄 72 = 미니 지도 56×40 + 이름 + '받은 날 · 영수증 0427' + 지우기 44 ── */
+/* ── 지난 영수증 (brief 6.11): 줄 72 = 청사진 판 56×40 + 이름 + '받은 날 · 영수증 0427' + 지우기 44 ── */
 .receipts {
   margin-block-start: var(--space-5);
 }
@@ -44,7 +44,7 @@
   overflow-wrap: anywhere;
 }
 
-/* 나눔 선은 줄 전체(지우기 버튼 아래까지)에, 지도 끝(16 + 56 + 12)에서 시작 */
+/* 나눔 선은 줄 전체(지우기 버튼 아래까지)에, 판 끝(16 + 56 + 12)에서 시작 */
 .list.receipts-list > li > .list-row::before {
   content: none;
 }
@@ -61,7 +61,7 @@
 .list-map {
   display: grid;
   place-items: center;
-  background: var(--map-land);
+  background: var(--plate);
 }
 
 .list-map .art-tile {

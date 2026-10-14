@@ -6,8 +6,6 @@ import backSvg from '@phosphor-icons/core/assets/regular/arrow-left.svg?raw';
 import nextSvg from '@phosphor-icons/core/assets/regular/arrow-right.svg?raw';
 import dictionarySvg from '@phosphor-icons/core/assets/regular/book-open-text.svg?raw';
 import settingsSvg from '@phosphor-icons/core/assets/regular/gear-six.svg?raw';
-import soundOnSvg from '@phosphor-icons/core/assets/regular/speaker-high.svg?raw';
-import soundOffSvg from '@phosphor-icons/core/assets/regular/speaker-slash.svg?raw';
 import sparkleSvg from '@phosphor-icons/core/assets/regular/sparkle.svg?raw';
 import checkSvg from '@phosphor-icons/core/assets/regular/check.svg?raw';
 import warningSvg from '@phosphor-icons/core/assets/regular/warning-circle.svg?raw';
@@ -27,8 +25,6 @@ export const icons = {
   next: nextSvg,
   dictionary: dictionarySvg,
   settings: settingsSvg,
-  soundOn: soundOnSvg,
-  soundOff: soundOffSvg,
   sparkle: sparkleSvg,
   check: checkSvg,
   warning: warningSvg,

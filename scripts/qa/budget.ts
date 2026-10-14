@@ -1,11 +1,10 @@
 // 성능 예산 검사 (docs/ARCHITECTURE.md 11절): 빌드한 dist/의 페이지마다
-//  - 처음 불러오는 자바스크립트 합계(gzip): 홈 100KB 이하, 단계 화면 130KB 이하(D82, 설계서 L-08: v3 기능을 얹을 자리), 다른 페이지 140KB 이하
+//  - 처음 불러오는 자바스크립트 합계(gzip): 홈 100KB 이하, 단계 화면 120KB 이하(v4 D98: 게임 요소를 걷어 13~16KB 줄인 뒤 130에서 내림.
+//    V2 연결망 설계도를 얹을 자리 약 8KB를 남겼다), 다른 페이지 140KB 이하
 //  - 처음 불러오는 CSS 합계(gzip): 30KB 이하 (CSS는 첫 화면 그리기를 막는다)
 //  - 그림·애니메이션 파일 합계: 300KB 이하 (<picture>와 srcset은 실제로 내려오는 하나만 센다)
 // 나중에 동적으로 불러오는 묶음(예: 지연 3D 장면)은 HTML에 드러나지 않으므로 따로 LAZY_LIMIT으로 본다.
-// 길 지도(docs/MAP.md, D68)는 따로 본다: 땅 판 24KB · 표지 묶음 10KB · 지도 섬 8KB · 지도 모형 6.5KB(gzip).
-// 섬과 모형은 각 파일만 줄여(esbuild minify, import는 밖에 둔 채) 재고, 빌드에서 둘이 함께 실린 MapBoard 묶음은 합계 안인지 본다.
-// 섬에는 지도 장면(D71)의 움직임 모듈(map/scene.ts 바뀐 것 견주기, map/rest.ts 서는 자리, scene.ts 건너뛰기)도 넣어 잰다: 모형은 키우지 않는다.
+// 길 지도·장면·효과음 줄은 게임 요소와 함께 걷어 냈다 (v4 D96).
 // 어려운 말 풀이(brief 8절, D69)도 따로 본다: 풀이 섬 5KB · 자료(/glossary.json) + 매처 묶음 17KB · 도구 이름(/glossary-tools.json) 4KB.
 // 사전 검색 색인(/search-index.json)은 처음 찾을 때 받는다: 100KB (gzip).
 // 단계 화면에서 나중에 받는 묶음(D82): 4단계 칸 셋 3KB · 설계도 묶음 5KB · 풀이 칸 + 에러 안내 22KB · 직접 쓰기 찾기 묶음 8KB · 도구 이름 찾기 묶음 8KB(T37) ·
@@ -20,7 +19,7 @@ const DIST = join(ROOT, 'dist');
 const KB = 1024;
 const HOME_JS = 100 * KB;
 const PAGE_JS = 140 * KB;
-const STAGE_JS = 130 * KB;
+const STAGE_JS = 120 * KB;
 /** 단계 화면 (내 AI 써 보기 + 1~4단계) */
 const STAGE_ROUTES = new Set(['/test-drive/', '/destination/', '/waypoints/', '/check/', '/arrival/']);
 const CSS_LIMIT = 30 * KB;
@@ -59,7 +58,7 @@ function pages(dir: string, out: string[] = []): string[] {
 }
 
 /** JS 파일이 정적으로 import하는(또는 export … from으로 다시 내보내는) 다른 JS 조각까지 따라간다 (처음 불러올 때 함께 내려온다).
- *  여러 곳이 쓰는 섬(MapBoard: 지도 띠·지난 영수증·느낌 견본)은 빌드가 'export{…}from"./조각.js"' 한 줄짜리 입구로 만든다 (D70) */
+ *  여러 곳이 쓰는 섬은 빌드가 'export{…}from"./조각.js"' 한 줄짜리 입구로 만들기도 한다 (D70) */
 function withStaticImports(file: string, seen: Set<string>): void {
   if (seen.has(file) || !existsSync(file)) return;
   seen.add(file);
@@ -152,39 +151,6 @@ if (biggestLazy) {
   if (!ok) failed += 1;
   console.log(`${ok ? '✓' : '✗'} 가장 큰 지연 묶음 ${relative(DIST, biggestLazy.f)} ${(biggestLazy.n / KB).toFixed(1)}KB/${LAZY_LIMIT / KB}KB`);
 }
-// 길 지도
-// 지도 모형 7KB (D95, T37): 표지 하나가 붙을 마디의 이름표를 다시 놓는 3b와 직접 쓴 앱 청사진으로 6.5KB를 조금 넘었다.
-// 섬 + 모형을 함께 싣는 빌드 묶음 한도는 그대로 14.5KB다
-const MAP_LIMITS = { land: 24 * KB, sprite: 10 * KB, island: 8 * KB, model: 7 * KB, shipped: 14.5 * KB } as const;
-async function minifiedGz(files: string[]): Promise<number> {
-  // esbuild는 vite·wrangler와 함께 깔린다. 파일 하나씩 줄이므로 import한 다른 모듈(엔진·문구·preact)은 세지 않는다
-  const { transform } = await import('esbuild');
-  let code = '';
-  for (const f of files) {
-    const src = readFileSync(join(ROOT, f), 'utf8');
-    const out = await transform(src, { loader: f.endsWith('.tsx') ? 'tsx' : 'ts', minify: true, format: 'esm', jsx: 'automatic', jsxImportSource: 'preact', target: 'es2022' });
-    code += out.code;
-  }
-  return gzipSync(Buffer.from(code), { level: 9 }).length;
-}
-const mapRows: [string, number, number][] = [
-  ['땅 판 src/assets/map/land.svg', gzSize(join(ROOT, 'src/assets/map/land.svg')), MAP_LIMITS.land],
-  ['표지 묶음 src/assets/map/map-sprite.svg', gzSize(join(ROOT, 'src/assets/map/map-sprite.svg')), MAP_LIMITS.sprite],
-  [
-    '지도 섬 MapBoard.tsx + map/focus.ts + 장면(map/scene.ts, map/rest.ts, scene.ts)',
-    await minifiedGz(['src/components/MapBoard.tsx', 'src/lib/map/focus.ts', 'src/lib/map/scene.ts', 'src/lib/map/rest.ts', 'src/lib/scene.ts']),
-    MAP_LIMITS.island,
-  ],
-  ['지도 모형 src/lib/map/model.ts', await minifiedGz(['src/lib/map/model.ts']), MAP_LIMITS.model],
-];
-const shipped = [...allJs].filter((f) => /[\\/]MapBoard\.[^\\/]+\.js$/.test(f)).reduce((a, f) => a + gzSize(f), 0);
-if (shipped > 0) mapRows.push(['빌드한 MapBoard 묶음 (섬 + 모형)', shipped, MAP_LIMITS.shipped]);
-for (const [name, n, limit] of mapRows) {
-  const ok = n <= limit;
-  if (!ok) failed += 1;
-  console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB`);
-}
-
 // 어려운 말 풀이와 검색 색인 (나중에 받는 자료라 페이지 합계에 들지 않는다)
 const GLOSSARY_LIMITS = { island: 5 * KB, data: 17 * KB, tools: 4 * KB, search: 100 * KB } as const;
 const chunk = (re: RegExp): number => [...allJs].filter((f) => re.test(f)).reduce((a, f) => a + gzSize(f), 0);

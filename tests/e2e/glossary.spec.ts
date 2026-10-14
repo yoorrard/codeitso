@@ -302,7 +302,7 @@ test('처음 한 번 안내는 본문 흐름 안의 알림 칸에 있고, 접으
   await expect(hint).toBeVisible();
   await expect(page.locator('[data-term-hint]')).toHaveAttribute('role', 'status');
   expect(await hint.evaluate((el) => getComputedStyle(el).position)).toBe('static');
-  await hint.getByRole('button', { name: ko.dispatch.hide }).focus();
+  await hint.getByRole('button', { name: ko.notice.hide }).focus();
   await page.keyboard.press('Enter');
   await expect(hint).toHaveCount(0);
   expect(await page.evaluate(() => document.activeElement !== document.body && document.activeElement?.matches('a, button'))).toBe(true);

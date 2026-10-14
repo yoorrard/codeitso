@@ -25,15 +25,10 @@ export interface Meta {
   lessonDone?: boolean;
   /** 영수증을 한 번 이상 받음 (도착 단계 마침) */
   issued?: boolean;
-  /** 도구끼리 맞춰 보기에서 마지막으로 본 막힌 마디(칸 id). 도구 고르기에서 고치고 돌아오면 빨강이 걷히는 장면(S4, D71)을 돌린다 */
-  checkJams?: string[];
 }
 
 export interface Prefs {
   motion: 'auto' | 'reduce';
-  sound: boolean;
-  /** 조용히 모시기 (brief 7절): 사건 기사 메시지·효과음·큰 장면을 줄인다. 기본 꺼짐 */
-  quiet: boolean;
   /** 어려운 말 풀이 (brief 8절): 글을 골라 뜨는 풀이. 기본 켜짐 */
   glossary: boolean;
   /** 점선 밑줄 (brief 8절): 사전에 있는 말 밑의 점선. 기본 켜짐 */
@@ -68,7 +63,7 @@ const LOOK_SCREENS_MAX = 3;
 const LIST_MAX = 200;
 
 export const EMPTY_SESSION: Session = { answers: {}, cart: [], kept: [], deferred: [] };
-export const DEFAULT_PREFS: Prefs = { motion: 'auto', sound: false, quiet: false, glossary: true, marks: true };
+export const DEFAULT_PREFS: Prefs = { motion: 'auto', glossary: true, marks: true };
 export const EMPTY_META: Meta = { sent: [] };
 export const EMPTY_SEEN: Seen = { scenes: [] };
 
@@ -142,8 +137,6 @@ export function readMeta(raw: unknown): Meta {
   if (typeof t === 'number' && Number.isFinite(t) && t > 0) out.interviewStartedAt = t;
   if (o['lessonDone'] === true) out.lessonDone = true;
   if (o['issued'] === true) out.issued = true;
-  const jams = strings(o['checkJams'], 12);
-  if (jams.length > 0) out.checkJams = jams;
   return out;
 }
 
@@ -151,8 +144,6 @@ export function readPrefs(raw: unknown): Prefs {
   const o = obj(raw);
   return {
     motion: o['motion'] === 'reduce' ? 'reduce' : 'auto',
-    sound: o['sound'] === true,
-    quiet: o['quiet'] === true,
     glossary: o['glossary'] !== false,
     marks: o['marks'] !== false,
   };
@@ -211,13 +202,11 @@ export function isEmptyStudy(s: StudyRecord): boolean {
   return Object.keys(s).length === 0;
 }
 export function isEmptyMeta(m: Meta): boolean {
-  return m.sent.length === 0 && m.interviewStartedAt === undefined && !m.lessonDone && !m.issued && !m.checkJams?.length;
+  return m.sent.length === 0 && m.interviewStartedAt === undefined && !m.lessonDone && !m.issued;
 }
 export function isDefaultPrefs(p: Prefs): boolean {
   return (
     p.motion === DEFAULT_PREFS.motion &&
-    p.sound === DEFAULT_PREFS.sound &&
-    p.quiet === DEFAULT_PREFS.quiet &&
     p.glossary === DEFAULT_PREFS.glossary &&
     p.marks === DEFAULT_PREFS.marks
   );

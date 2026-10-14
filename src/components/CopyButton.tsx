@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { fill } from '../lib/engine/text.ts';
-import { sfx } from '../lib/sfx.ts';
 import { Icon } from './Icon.tsx';
 
 interface Props {
@@ -57,7 +56,6 @@ export default function CopyButton({ text, srLabel, label, done, onCopied, prima
     if (ok) timer.current = window.setTimeout(() => setState('idle'), DONE_MS);
     announce(ok ? (done ?? ko.common.copied) : ko.common.copyFailed);
     if (ok) {
-      void sfx('answer');
       onCopied?.();
     }
   }

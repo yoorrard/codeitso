@@ -1,7 +1,8 @@
 // 머리줄의 설정 (brief 6.13, D67): 모달 시트(<dialog class="modal">) 안의 줄 56 목록.
-// 스위치 다섯(동작 줄이기 · 효과음 · 조용히 모시기 · 어려운 말 풀이 · 점선 밑줄) → 지난 영수증 보기 › → 저장한 기록 지우기(위험 글).
+// 스위치 셋(동작 줄이기 · 어려운 말 풀이 · 점선 밑줄) → 지난 영수증 보기 › → 저장한 기록 지우기(위험 글).
+// 효과음·조용히 모시기는 게임 요소와 함께 걷어 냈다 (v4 D96).
 // 풀이·점선 밑줄은 여기서 저장만 한다($prefs). 그 동작은 풀이(W6b)가 $prefs를 읽어 붙인다.
-// 동작 줄이기와 조용히 모시기는 html에도 붙인다(data-motion·data-quiet): CSS 장면(홈 S1)과 motion.ts가 읽는다 (D71).
+// 동작 줄이기는 html에도 붙인다(data-motion): CSS와 motion.ts가 읽는다.
 // 지우기는 시트 위에 겹쳐 뜨는 확인 대화 상자(<dialog class="sheet">). 둘 다 초점 가두기·Esc, 시트를 닫으면 설정 버튼으로 초점을 돌린다.
 // 지우고 나면 시트까지 닫아 설정 버튼으로 돌아간다.
 import { useStore } from '@nanostores/preact';
@@ -9,7 +10,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { announce } from '../lib/announce.ts';
-import { applyMotionPref, applyQuietPref } from '../lib/motion.ts';
+import { applyMotionPref } from '../lib/motion.ts';
 import type { Prefs } from '../lib/saved.ts';
 import { $prefs, clearAll, setPrefs } from '../lib/store.ts';
 import { Icon } from './Icon.tsx';
@@ -69,7 +70,6 @@ export default function SettingsMenu({ onCleared }: Props) {
 
   // 사이트 설정의 동작 줄이기를 html에 붙인다 (첫 그림 전에는 기본 틀의 작은 스크립트가 한다)
   useEffect(() => applyMotionPref(prefs.motion), [prefs.motion]);
-  useEffect(() => applyQuietPref(prefs.quiet), [prefs.quiet]);
 
   /** 시트 뒤 어두운 막을 누르면 닫는다 (닫기 단추·Esc와 같다) */
   const backdrop = (e: MouseEvent): void => {
@@ -80,7 +80,7 @@ export default function SettingsMenu({ onCleared }: Props) {
   };
 
   const reduce = prefs.motion === 'reduce';
-  const flip = (key: 'sound' | 'quiet' | 'glossary' | 'marks'): void => setPrefs({ [key]: !prefs[key] } as Partial<Prefs>);
+  const flip = (key: 'glossary' | 'marks'): void => setPrefs({ [key]: !prefs[key] } as Partial<Prefs>);
 
   return (
     <div class="settings">
@@ -109,8 +109,6 @@ export default function SettingsMenu({ onCleared }: Props) {
             locked={osReduce && !reduce}
             onToggle={() => setPrefs({ motion: reduce ? 'auto' : 'reduce' })}
           />
-          <SwitchRow id="cc-set-sound" label={ko.settings.sound} on={prefs.sound} onToggle={() => flip('sound')} />
-          <SwitchRow id="cc-set-quiet" label={ko.settings.quiet} note={ko.settings.quietNote} on={prefs.quiet} onToggle={() => flip('quiet')} />
           <SwitchRow id="cc-set-glossary" label={ko.settings.glossary} on={prefs.glossary} onToggle={() => flip('glossary')} />
           <SwitchRow id="cc-set-marks" label={ko.settings.marks} note={ko.settings.marksNote} on={prefs.marks} onToggle={() => flip('marks')} />
           <li>

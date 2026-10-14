@@ -36,12 +36,10 @@ test('받은 영수증은 지난 영수증에 쌓이고, 줄을 누르면 다시
   await page.locator('.action-bar .btn-issue').click();
   await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
-  // 처음 출발하면 출발 → 도착 장면(S5)이 돈다: Esc로 끝 상태로 (시트가 아래에서 올라오는 중에는 누를 자리가 움직인다)
-  await page.keyboard.press('Escape');
   await expect(page.locator('.paper')).toBeVisible();
   await page.goto('/receipts');
   await islandsReady(page);
-  // 줄 72: 미니 지도 + 이름 + '받은 날 · 영수증 0000' (brief 6.11)
+  // 줄 72: 앱 종류 청사진 판 + 이름 + '받은 날 · 영수증 0000' (brief 6.11)
   const rows = page.locator('.receipts-list > li');
   await expect(rows).toHaveCount(1);
   await expect(rows.first().locator('.list-map svg')).toHaveCount(1);
@@ -84,8 +82,6 @@ test('만들 앱을 처음부터 끝까지 키보드만으로 정하고 도구 �
   await page.locator('.action-bar .btn-issue').click();
   await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
-  // 처음 출발하면 출발 → 도착 장면(S5)이 돈다: Esc로 끝 상태로 (시트가 아래에서 올라오는 중에는 누를 자리가 움직인다)
-  await page.keyboard.press('Escape');
   await expect(page.locator('.paper')).toContainText('우리 반 급식 안내');
 });
 
@@ -100,8 +96,6 @@ test('영수증 링크를 다른 기기에서 열면 같은 영수증을 읽기 
   await page.locator('.action-bar .btn-issue').click();
   await page.waitForURL(/\/arrival$/);
   await islandsReady(page);
-  // 처음 출발하면 출발 → 도착 장면(S5)이 돈다: Esc로 끝 상태로 (시트가 아래에서 올라오는 중에는 누를 자리가 움직인다)
-  await page.keyboard.press('Escape');
   const paper = (await page.locator('.paper').innerText()).split('\n').filter((l) => !/\d{4}-\d{2}-\d{2}/.test(l));
   await page.getByRole('button', { name: ko.receipt.copyLink }).click();
   // 누르기가 출력 장면도 끝내서 축하 알림과 같이 이어 읽힌다

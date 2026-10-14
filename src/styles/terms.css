@@ -80,6 +80,13 @@
   }
 }
 
+/* 넓은 무대(1360)에서는 카드 격자와 같은 최소 폭으로 (v4 D98) */
+@media (min-width: 1280px) {
+  .term-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  }
+}
+
 .term-tile {
   display: grid;
   gap: var(--space-2);
@@ -123,9 +130,8 @@
   block-size: 100%;
 }
 
-/* 용어 카드 읽음·정답 S9 (brief 4.8·7절, D71 W5b, src/lib/term-scene.ts): 읽음 = 한 단 짙은 판, 다 맞힘 = 2px 고리.
-   [다 읽었어요]를 누르면 짙은 판이 왼쪽부터 채워지고(data-fill, --dur-draw), 다 맞힌 순간에는 고리 위로 청록 빛 하나가 한 바퀴 돈다(.plate-run).
-   고리는 그림 위에 그려야 해서 outline(판 안쪽 2px)으로 둔다. 동작 줄이기면 길이가 0이라 바로 끝 모습 */
+/* 용어 카드 읽음·정답 (brief 4.8, src/lib/term-state.ts): 읽음 = 한 단 짙은 판, 다 맞힘 = 2px 고리.
+   고리는 그림 위에 그려야 해서 outline(판 안쪽 2px)으로 둔다. 채우기·빛 돌기 연출(S9)은 걷어 냈다 (v4 D96) */
 .plate {
   position: relative;
   isolation: isolate;
@@ -140,43 +146,7 @@
   outline-offset: -2px;
 }
 
-.plate[data-fill] {
-  background: var(--plate);
-}
-
-.plate[data-fill]::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: var(--plate-read);
-  transform-origin: left center;
-  animation: plate-fill var(--dur-draw) var(--ease-out) both;
-}
-
-@keyframes plate-fill {
-  from {
-    transform: scaleX(0);
-  }
-}
-
-.plate-run {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.plate-run rect {
-  fill: none;
-  stroke: var(--cyan);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 12 88;
-}
-
-/* 확인 문제를 다 맞힘 (brief 4.8): 2px 남색 고리 + '다 맞혔어요 ✓'. 맞힌 순간에만 청록 빛이 고리를 한 바퀴 (.plate-run) */
+/* 확인 문제를 다 맞힘 (brief 4.8): 2px 남색 고리 + '다 맞혔어요 ✓' */
 .quiz-done {
   position: relative;
   display: inline-flex;

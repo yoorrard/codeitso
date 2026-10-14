@@ -1,5 +1,5 @@
-// 3단계 도구끼리 맞춰 보기 섬 (brief 6.7, D70). 지도 띠 아래 내용 시트 안에서, 할 일이 위·판단 과정이 아래:
-//   H1 + 한 줄 → (다 풀렸으면) 사건 메시지 '막힌 곳이 없어요. 출발할까요?' → 막힌 곳 n개(항목마다 알약 + 기능 이름, 설명, 고치는 법,
+// 3단계 도구끼리 맞춰 보기 섬 (brief 6.7, D70, v4 D98: 두 칸 격자의 왼쪽 칸). 할 일이 위·판단 과정이 아래:
+//   H1 + 한 줄 → (다 풀렸으면) 알림 칸 '막힌 곳이 없어요.' → 막힌 곳 n개(항목마다 알약 + 기능 이름, 설명, 고치는 법,
 //   같은 크기 중립 버튼 둘, 그 아래 안내 한 줄, 끝에 글 버튼 [목록에 없는 도구 쓰기 ›](T37: 도구 고르기의 그 칸, 도구 이름 칸을 펼친 채).
 //   항목 사이는 24 + 나눔 선, 상자 없음) → 그대로 가는 곳(줄 56 + [되돌리기], 직접 쓴 도구는 처음부터 서행이라 [도구 바꾸기])
 //   → 한 번에 가기엔 길이 멀어요(줄 56 + [나중으로], '더 쉬운 길') → 나중에 붙일 것 → 지름길 알림 상자 → 접기 '원활 n개'
@@ -22,12 +22,11 @@ import { $result, updateSession } from '../lib/result.ts';
 import { sentences } from '../lib/sentences.ts';
 import { waypointPath } from '../lib/routes.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
-import { sfx } from '../lib/sfx.ts';
 import { gate } from '../lib/stages.ts';
-import { DispatchNote } from './DispatchNote.tsx';
 import { ArtTile } from './Glyph.tsx';
 import { Icon } from './Icon.tsx';
 import { Lead } from './Lead.tsx';
+import { Notice } from './Notice.tsx';
 import { useTermMarks } from './TermMarks.tsx';
 
 const FIRST_VISIT = evaluate(catalog, EMPTY_SESSION);
@@ -86,7 +85,6 @@ function Jam({ c, mark, writable }: { c: Conflict; mark: (text: string) => Compo
   const keep = (): void => {
     updateSession((s) => ({ kept: [...s.kept, c.id] }));
     announce(ko.check.keptAnnounce);
-    void sfx('confirm');
     refocus(`[data-conflict="${c.id}"]`, NEXT_JAM);
   };
   const defer = (): void => {
@@ -165,7 +163,7 @@ export default function Check() {
   const mark = useTermMarks();
   const [cleared, setCleared] = useState(false);
 
-  // 이 화면에서 막힌 곳이 모두 풀리는 순간 한 번 알린다 (처음부터 풀려 있으면 메시지만 보인다). 훑기 연출(S4)은 W5
+  // 이 화면에서 막힌 곳이 모두 풀리는 순간 한 번 알린다 (처음부터 풀려 있으면 알림 칸만 보인다)
   const wasBlocked = useRef<boolean | null>(null);
   useEffect(() => {
     if (!ready) return;
@@ -173,9 +171,8 @@ export default function Check() {
     wasBlocked.current = !r.canIssue;
     if (before === true && r.canIssue && !cleared) {
       setCleared(true);
-      announce(ko.dispatch.checkDone);
-      void sfx('clear');
-      // 메시지 '막힌 곳이 없어요. 출발할까요?'와 다 풀린 지도가 보이게 맨 위로 (주 버튼은 아래 막대에 그대로 보인다)
+      announce(ko.check.allClear);
+      // 알림 칸 '막힌 곳이 없어요.'가 보이게 맨 위로 (주 버튼은 아래 막대에 그대로 보인다)
       window.scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
     }
   }, [ready, r.canIssue]);
@@ -215,7 +212,6 @@ export default function Check() {
   const swap = (from: string, to: string): void => {
     updateSession((s) => ({ cart: s.cart.map((id) => (id === from ? to : id)) }));
     announce(fill(ko.check.swapped, { toDir: josa(shortProduct(to), 'dir') }));
-    void sfx('confirm');
     refocus(`[data-easier="${from}"]`, '#ck-split');
   };
 
@@ -224,7 +220,7 @@ export default function Check() {
       <h1>{ko.check.title}</h1>
       <Lead text={ko.check.lead} />
 
-      {r.canIssue && <DispatchNote text={ko.dispatch.checkDone} class="ck-done" />}
+      {r.canIssue && <Notice text={ko.check.allClear} icon="check" class="ck-done" />}
 
       {jams.length > 0 && (
         <section class="ck-sec" aria-labelledby="ck-jams">

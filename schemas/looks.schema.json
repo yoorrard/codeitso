@@ -120,7 +120,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "label", "keywordsKo", "keywordsEn", "neutral", "accent", "font", "radius", "depth", "icons", "motion", "mapPalette"],
+        "required": ["id", "label", "keywordsKo", "keywordsEn", "neutral", "accent", "font", "radius", "depth", "icons", "motion"],
         "properties": {
           "id": { "$ref": "defs.schema.json#/$defs/id" },
           "label": { "$ref": "#/$defs/label" },
@@ -141,8 +141,7 @@
           "icons": { "$ref": "defs.schema.json#/$defs/id" },
           "motion": { "$ref": "defs.schema.json#/$defs/id" },
           "motionStyle": { "enum": ["short", "steps"], "description": "short: 짧고 빠르게, steps: steps()로 끊어서 (설계도 6-8)" },
-          "tabularNums": { "const": true, "description": "숫자 자리 맞춤(tabular-nums)을 설계도에 적는다" },
-          "mapPalette": { "enum": ["clean", "cute", "calm", "bold"], "description": "우리 사이트 내 지도 색 (src/lib/map/model.ts PALETTE_OF와 같다). 이용자 앱의 색이 아니다" }
+          "tabularNums": { "const": true, "description": "숫자 자리 맞춤(tabular-nums)을 설계도에 적는다" }
         }
       }
     },

@@ -1,7 +1,7 @@
 // 용어 카드 목록의 섬 (brief 6.10, D67 W3b): 맨 위 "20장 중 n장 읽음" → (만들 앱을 정했으면) '읽어 둘 용어' 줄 목록.
 // 그 아래 2열 타일(옅은 판 위 청사진 그림)은 terms/index.astro가 정적으로 그리고, 이 섬은 타일의 상태 글('아직 안 읽음'(숨은 글)·'읽음 ✓'·'다 맞혔어요 ✓')만
 // 저장된 기록에 맞춰 바꾼다 (그림 SVG를 섬 묶음에 넣지 않으려고. ShelfFilter와 같은 방식). 퍼센트·순위는 쓰지 않는다.
-// 타일 위 옅은 판도 같은 상태로 칠한다: 읽음은 한 단 짙은 판, 다 맞힘은 2px 고리 (S9, src/lib/term-scene.ts).
+// 타일 위 옅은 판도 같은 상태로 칠한다: 읽음은 한 단 짙은 판, 다 맞힘은 2px 고리 (src/lib/term-state.ts).
 import { useStore } from '@nanostores/preact';
 import { useEffect } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
@@ -12,8 +12,8 @@ import { $result } from '../lib/result.ts';
 import { termPath } from '../lib/routes.ts';
 import type { StudyRecord } from '../lib/saved.ts';
 import { $study } from '../lib/store.ts';
-import type { TermState } from '../lib/term-scene.ts';
-import { paintPlate, termState } from '../lib/term-scene.ts';
+import type { TermState } from '../lib/term-state.ts';
+import { paintPlate, termState } from '../lib/term-state.ts';
 
 const WORD: Record<TermState, string> = {
   todo: ko.study.notRead,

@@ -1,7 +1,7 @@
 // 만들 앱 정하기 (brief 6.5, D70): H1이 질문, 바깥 카드·'n번째 질문' 글·주 버튼 자리의 [도구 먼저 둘러볼게요] 없음,
-// 앱 종류 타일 2열 + '아직 안 정했어요' 전체 폭 줄, 네·아니요 2×2 버튼, 느낌 견본 넷(지도 팔레트), 보기를 누르면 바로 다음 질문,
+// 앱 종류 타일 2열 + '아직 안 정했어요' 전체 폭 줄, 네·아니요 2×2 버튼, 느낌 타일(이름만), 보기를 누르면 바로 다음 질문,
 // 아래 막대 [이전] 56 + 상태 한 줄, 주 버튼 [도구 고르러 가기]는 마지막 질문에 답한 뒤에만(화면에 하나),
-// 답이 쌓이면 '고를 것 n개' 칩과 지도 변화 낭독, '지금까지 정한 것' 답 줄로 그 질문에 돌아가기.
+// 답이 쌓이면 '고를 것 n개' 칩과 설계도 변화 낭독, '지금까지 정한 것' 답 줄로 그 질문에 돌아가기.
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
@@ -79,10 +79,10 @@ test('보기를 누르면 바로 다음 질문(제목에 초점), 칩·낭독, [
   const title = page.locator('h1#q-title');
   await expect(title).toContainText(q('q.audience').text);
   await expect(title).toBeFocused();
-  // 답 하나에 지도 변화 하나: 고른 것과 생긴 마디를 한 번에 읽는다
+  // 답 하나에 설계도 변화 하나: 고른 것과 생긴 기능을 한 번에 읽는다
   const live = page.locator('#cc-live');
   await expect(live).toContainText(fill(ko.interview.answered, { label: form }));
-  await expect(live).toContainText(/지도에 .+ 생겼어요\./);
+  await expect(live).toContainText(/설계도에 .+ 생겼어요\./);
   await expect(page.locator('.q-chip')).toHaveText(/고를 것 \d+개/);
   await expect(page.locator('.action-bar .status-line')).toContainText(fill(ko.progress.status.question, { n: 2 }));
   // 아래 막대 [이전] 56×56 → 첫 질문, 고른 타일은 눌린 채
@@ -124,15 +124,14 @@ test('네·아니요 질문은 2×2 중립 버튼, 고르면 --chosen 면이 된
   await expect(page.locator('.q-note')).toHaveText(ko.interview.maybeNote);
 });
 
-test('느낌 질문은 내 지도를 네 팔레트로 칠한 견본 여섯 + 모르겠어요 줄 (새 느낌 둘은 있는 팔레트에 잇는다, T38)', async ({ page }) => {
+test('느낌 질문은 이름만 둔 낮은 타일 여섯 + 모르겠어요 줄 (지도 견본은 v4 D96에서 걷었다)', async ({ page }) => {
   const answers = Object.fromEntries(Object.entries(g1Answers).filter(([k]) => k !== 'q.style'));
   await open(page, answers);
   await expect(page.locator('h1#q-title')).toContainText(q('q.style').text);
-  const swatches = page.locator('.pick-plate.is-feel');
-  await expect(swatches).toHaveCount(6);
-  expect(await swatches.evaluateAll((els) => els.map((e) => e.getAttribute('data-palette')))).toEqual(['clean', 'cute', 'calm', 'bold', 'cute', 'bold']);
-  // 견본마다 내 길(미니 지도)이 그려져 있다
-  await expect(swatches.first().locator('svg.map-board.is-mini .mb-road').first()).toBeAttached();
+  const tiles = page.locator('.pick-tiles.is-plain .pick-tile');
+  await expect(tiles).toHaveCount(6);
+  await expect(page.locator('.pick-tiles.is-plain .pick-plate')).toHaveCount(0);
+  await expect(page.locator('svg.map-board')).toHaveCount(0);
   await expect(page.locator('.pick-wide .pick-btn')).toHaveText(label('q.style', 'unknown'));
   expect(await page.locator('.btn-primary:visible').count()).toBe(0);
 });

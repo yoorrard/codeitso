@@ -6,7 +6,7 @@ import Dictionary from '../components/Dictionary.tsx';
 import { ko } from '../copy/ko.ts';
 ---
 
-<Base title={ko.dict.pageTitle}>
+<Base title={ko.dict.pageTitle} width="wide">
   <h1>{ko.dict.title}</h1>
   <p class="page-lead">{ko.dict.lead}</p>
   <Dictionary client:load />

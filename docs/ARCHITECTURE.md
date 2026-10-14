@@ -44,7 +44,7 @@ code-chauffeur/
 ├─ scripts/                  검사·예시·색인 스크립트 (Node로 바로 실행)
 │  ├─ lib/                   부작용 없는 도우미 (자료 읽기, 골든 비교, 색 대비, 쓰지 않는 말, 자료 칸 나누기 Vite 플러그인). 시험에서도 import
 │  ├─ guard/                 품질 바닥선(floor-guard), 쓰지 않는 말(check-words), 하네스 앞머리 검사
-│  ├─ assets/                (T28·T33) 땅 판 만들기(make-map), 렌더 굽기(render-art)
+│  ├─ assets/                (T28·T33) 렌더 굽기(render-art). 땅 판 만들기(make-map)는 v4 D96a에서 지웠다
 │  ├─ fonts/                 글꼴 만들기 (Pretendard 조각 복사, CC Receipt 하위 집합·이름 바꾸기)
 │  └─ qa/                    시각 점검(shots), 성능 예산(budget), 정적 서버(serve)
 ├─ src/

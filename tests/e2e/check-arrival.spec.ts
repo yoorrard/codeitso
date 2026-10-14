@@ -75,10 +75,10 @@ test.describe('도구끼리 맞춰 보기', () => {
     await keep.click();
     await expect(jam).toHaveCount(0);
     await expect(page.locator('#cc-live')).toContainText(ko.check.keptAnnounce);
-    // 다 풀린 알림은 화면의 사건 메시지만: 단계 줄의 '이제 설계도를 받을 수 있어요.'를 겹쳐 읽지 않는다
-    await expect(page.locator('#cc-live')).toContainText(ko.dispatch.checkDone);
+    // 다 풀린 알림은 화면의 알림 칸만: 단계 줄의 '이제 설계도를 받을 수 있어요.'를 겹쳐 읽지 않는다
+    await expect(page.locator('#cc-live')).toContainText(ko.check.allClear);
     await expect(page.locator('#cc-live')).not.toContainText(ko.layout.opened.arrival);
-    // 메시지와 다 풀린 지도가 보이게 맨 위로 (주 버튼으로 옮긴 초점이 페이지를 끝으로 굴리지 않는다)
+    // 알림 칸이 보이게 맨 위로 (주 버튼으로 옮긴 초점이 페이지를 끝으로 굴리지 않는다)
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(8);
     await expect(issue(page)).toBeFocused();
     const row = page.locator('.ck-row', { has: page.locator('.pill-warn') });
@@ -86,7 +86,7 @@ test.describe('도구끼리 맞춰 보기', () => {
     await expect(row).toContainText('저장');
     // 둘째 줄: 무엇을 알고 그대로 가는지 (막힌 곳 설명의 첫 문장)
     await expect(row.locator('.list-sub')).not.toBeEmpty();
-    await expect(page.locator('.dispatch-note')).toContainText(ko.dispatch.checkDone);
+    await expect(page.locator('.notice.ck-done')).toContainText(ko.check.allClear);
     await expect(issue(page)).not.toHaveAttribute('aria-disabled', 'true');
     await expect(issue(page)).not.toHaveAttribute('aria-describedby', /./);
     expect((await saved(page)).kept).toContain('conflict.personal-server');
@@ -135,7 +135,7 @@ test.describe('도구끼리 맞춰 보기', () => {
     const bar = await page.locator('.action-main').boundingBox();
     const btn = await issue(page).boundingBox();
     expect(Math.round(btn?.width ?? 0)).toBe(Math.round(bar?.width ?? 1));
-    await expect(page.locator('.dispatch-note')).toContainText(ko.dispatch.checkDone);
+    await expect(page.locator('.notice.ck-done')).toContainText(ko.check.allClear);
     // 할 일보다 아래: 접기 '원활 n개'와 '이렇게 이해했어요'
     await expect(page.locator('.ck-fold > summary').last()).toHaveText(ko.check.understood);
     await issue(page).click();
@@ -162,9 +162,9 @@ test.describe('설계도 받기', () => {
     await expect(status(page)).toContainText(ko.progress.status.lockedFix);
   });
 
-  test('도착: 사건 메시지, 건네드릴 것 카드, 칸 고르개 4칸을 화살표 키로 옮기고, 주 버튼은 [설계도 내려받기 (.md)] 하나', async ({ page }) => {
+  test('도착: 건네드릴 것 카드, 칸 고르개 4칸을 화살표 키로 옮기고, 주 버튼은 [설계도 내려받기 (.md)] 하나', async ({ page }) => {
     await open(page, '/arrival', golden('case-01'), issued);
-    await expect(page.locator('.dispatch-note')).toContainText(ko.dispatch.arrival);
+    await expect(page.locator('#cc-live')).toContainText(ko.receipt.arrived);
     await expect(page.locator('.ar-handover')).toContainText(ko.receipt.handoverTitle);
     await expect(status(page)).toContainText(ko.progress.status.issued);
     await expect(primary(page)).toHaveCount(1);
@@ -310,7 +310,6 @@ test.describe('설계도 받기', () => {
     await page.goto(`/arrival${hash}`);
     await islandsReady(page);
     await expect(page.locator('.ar-shared-tag')).toHaveText(ko.receipt.sharedTag);
-    await expect(page.locator('.dispatch-note')).toHaveCount(0);
     const cont = page.getByRole('button', { name: ko.receipt.continueHere });
     await expect(cont).toBeVisible();
     await expect(cont).not.toHaveClass(/btn-primary/);
@@ -322,40 +321,22 @@ test.describe('설계도 받기', () => {
   });
 
   for (const mode of ['기기 설정', '사이트 설정'] as const) {
-    test(`동작 줄이기(${mode})에서도 도착 알림을 읽고, 장면을 본 것으로 적는다`, async ({ page }) => {
+    test(`동작 줄이기(${mode})에서도 처음 받은 설계도 알림을 읽고, 본 것으로 적는다`, async ({ page }) => {
       if (mode === '기기 설정') await page.emulateMedia({ reducedMotion: 'reduce' });
-      else await page.addInitScript(() => localStorage.setItem('cc:prefs:v1', JSON.stringify({ motion: 'reduce', sound: false })));
+      else await page.addInitScript(() => localStorage.setItem('cc:prefs:v1', JSON.stringify({ motion: 'reduce' })));
       await open(page, '/arrival', golden('case-01'), issued);
-      await expect(page.locator('#cc-live')).toContainText(ko.dispatch.arrival);
+      await expect(page.locator('#cc-live')).toContainText(ko.receipt.arrived);
       await expect.poll(() => page.evaluate(() => localStorage.getItem('cc:seen:v1') ?? '')).toContain('arrival');
     });
   }
 
-  test('영수증은 한 번만 뽑는다: 칸을 옮겼다 돌아와도, 다시 열어도 다시 뽑지 않는다', async ({ page }) => {
-    await open(page, '/arrival', golden('case-01'), issued);
-    await expect(page.locator('#cc-live')).toContainText(ko.dispatch.arrival);
-    // 휴대폰에서는 종이가 아래 막대 밑에 있다: 보일 때 뽑는다 (D71 검토 반영)
-    await expect(page.locator('.receipt-scene')).toHaveAttribute('data-print', 'wait');
-    await page.locator('.receipt-scene').scrollIntoViewIfNeeded();
-    await expect(page.locator('.receipt-scene')).toHaveAttribute('data-printed', '');
-    const running = () => page.evaluate(() => document.querySelector('.receipt-scene')?.getAnimations({ subtree: true }).length ?? -1);
-    await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
-    await page.getByRole('tab', { name: ko.receipt.tabs.receipt }).click();
-    expect(await running()).toBe(0);
-    await page.reload();
-    await islandsReady(page);
-    await expect(page.locator('.receipt-scene')).toHaveAttribute('data-printed', '');
-    expect(await running()).toBe(0);
-  });
-
-  test('영수증 링크로 열면 지도도 그 영수증 (도착한 빈 터). [이 영수증으로 이어서 가기] 뒤 초점은 H1', async ({ page }) => {
+  test('영수증 링크로 열면 설계도 창도 그 영수증. [이 영수증으로 이어서 가기] 뒤 초점은 H1', async ({ page }) => {
     const cat = makeCatalog(loadData());
     const c = golden('case-03');
     const hash = shareHash(evaluate(cat, { answers: c.answers, cart: c.cart, kept: ['conflict.realtime-mismatch'] }).session);
     await page.goto(`/arrival${hash}`);
     await islandsReady(page);
-    await expect(page.locator('.map-band .mb-lot')).toHaveClass(/is-drawn/);
-    await expect(page.locator('.map-band .mb-node.is-picked')).not.toHaveCount(0);
+    await expect(page.locator('.ar-shared-tag')).toBeVisible();
     await page.getByRole('button', { name: ko.receipt.continueHere }).click();
     await expect(page.locator('#receipt-title')).toBeFocused();
     await expect(page.locator('.ar-shared-tag')).toHaveCount(0);

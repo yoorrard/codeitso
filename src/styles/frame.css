@@ -1,15 +1,10 @@
-/* 기본 틀 (T05, docs/CONCEPT.md 5.8): 머리줄(브랜드·단계 줄·설정), 무대, 아래 막대, 설정 창.
-   섬(Preact)도 같은 클래스를 쓰므로 범위 없는 전역 스타일로 둔다. 값은 tokens.css 변수만 쓴다. */
+/* 기본 틀 (T05, v4 D98): 머리줄(로고 · 단계 줄 · 사전 · 설정), 무대(단계 화면 두 칸 격자 · 읽는 폭 · 둘러보는 폭), 아래 막대, 설정 창.
+   섬(Preact)도 같은 클래스를 쓰므로 범위 없는 전역 스타일로 둔다. 값은 tokens.css 변수만 쓴다.
+   구간: compact <600 · medium 600~1023 · expanded 1024~1439 · large ≥1440 (--bp-*, 미디어 조건에는 숫자로 쓴다) */
 
-/* 단계 이동 S7 (brief 7절, D25·D71): 문서 간 View Transitions는 꺼 두었다(D71 검토 반영). 지도 섬이 붙기 전의 지도는 땅만 그리므로(D68)
-   옛 화면과 섞어 비추면 길이 사라졌다 다시 나타나고, 띠 높이가 바뀌며 지도가 한 번 튄다: 전환이 없을 때보다 나빴다.
-   새 화면에서 도는 단계 줄 ✓와 막대 칸 채움(StageRail.tsx)은 그대로다.
-   다시 켜는 조건: 붙기 전에 지도 띠가 옛 그림을 칠할 수 있을 때 (예: pageswap에서 띠 SVG를 store.ts로 떠 두고 첫 그림 전에 넣기).
-   그때 켜기(@view-transition)는 기본 틀 머리의 인라인 style에 둔다(바깥 묶음에만 두면 크롬이 건너뛴다). 머리줄·단계 줄·지도 띠에
-   view-transition-name을 주고 자리 이동 없이(animation: none) 시트만 바꾸며, 지도 묶음은 화면 안이면 기본 크기 변환, 화면 밖이면
-   animation: none으로 나눈다(viewTransition.types). 사이트 설정의 동작 줄이기면 pageswap·pagereveal에서 skipTransition() */
-
-/* ── 머리줄 (CONCEPT 5.8, brief 3.2): 가로 묶음 로고(그림 52×44 + 8 + 글자 상표 82×20), 사전, 설정. 높이 56. 붙박이가 아니다 (D41) ── */
+/* ── 머리줄 (v4 D98): 로고 · (단계 화면) 단계 줄 · 사전 · 설정. 높이 56, 붙박이가 아니다 (D41).
+   격자 세 칸(로고 auto · 가운데 1fr · 오른쪽 auto)이라 사전·설정은 늘 오른쪽 끝 같은 자리에 있다: 단계 줄이 길어져도 밀리지 않는다.
+   1024px 아래에서 단계 줄은 둘째 줄 전체 폭 ── */
 .topbar {
   background: var(--surface);
   color: var(--text);
@@ -19,13 +14,42 @@
 
 .topbar-inner {
   container: topbar / inline-size;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'brand . actions';
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  max-inline-size: var(--content-max);
+  column-gap: var(--space-4);
+  max-inline-size: var(--container-max);
   min-block-size: 56px;
   margin-inline: auto;
+}
+
+.brand {
+  grid-area: brand;
+}
+
+.top-actions {
+  grid-area: actions;
+}
+
+/* 1024 아래: 단계 줄은 둘째 줄 전체 폭 */
+.topbar-inner > .rail-wrap {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1024px) {
+  .topbar-inner.has-rail {
+    grid-template-areas: 'brand rail actions';
+  }
+
+  /* 단계 줄은 가운데 칸 안에서 52rem까지 (원 사이 선이 화면 끝까지 늘어지지 않게) */
+  .topbar-inner.has-rail > .rail-wrap {
+    grid-column: auto;
+    grid-area: rail;
+    justify-self: center;
+    inline-size: min(100%, 52rem);
+    padding-block-end: 0;
+  }
 }
 
 .brand {
@@ -81,6 +105,7 @@
 .top-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--space-2);
 }
 
@@ -148,11 +173,10 @@
 /* ── 단계 줄 (D64, docs/review/v2/brief.md 6.2) ─────────────────────────────
    접힘(컨테이너 40rem 미만, 360px 기본): '2/4 · 도구 고르기' 버튼 하나 + 4칸 막대. 누르면 단계 시트.
    펼침(40rem 이상): 연습 글 링크 | 원 넷(24)을 가는 선으로 잇는다. 원: 마침 = 남색(내 것) + ✓, 지금 = 파랑(지금) + 흰 숫자, 아직 = 흰 원.
-   펼친 줄은 원·연습 링크까지 약 625px가 들어서, 읽는 폭(640px)을 다 쓸 때만 펼친다 (D64: 설계서의 34rem은 이름만 잰 값).
+   펼친 줄은 원·연습 링크까지 약 625px가 들어서 그만큼 폭이 있을 때만 펼친다 (D64). 1024px부터 머리줄 가운데 칸에 놓인다(v4 D98).
    rem 기준이라 글자를 키우면(200%) 어느 폭이든 접힌다 */
 .rail-wrap {
-  max-inline-size: var(--content-max);
-  margin-inline: auto;
+  min-inline-size: 0;
   padding-block-end: var(--space-1);
 }
 
@@ -322,45 +346,6 @@
   }
 }
 
-/* 단계 이동 S7: 새로 마친 단계의 ✓가 톡 찍히고(--dur-pop 스프링), 막대 칸과 잇는 선이 왼쪽부터 채워진다(--dur-ui).
-   섬이 just-done·just-reached를 한 번 붙인다(StageRail.tsx). 동작 줄이기면 길이가 0이라 바로 보인다 */
-.rail-full :is(.step-dot.just-done, .rail-practice.just-done) .icon-wrap {
-  animation: step-done var(--dur-pop) var(--ease-spring) both;
-}
-
-@keyframes step-done {
-  from {
-    opacity: 0;
-    transform: scale(0.6);
-  }
-}
-
-.rail-list > li.just-reached::before {
-  transform-origin: left center;
-  animation: bar-fill var(--dur-ui) var(--ease-out) both;
-}
-
-.rail-bars .bar.done.just-done {
-  position: relative;
-  overflow: hidden;
-  background: var(--fill);
-}
-
-.rail-bars .bar.done.just-done::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--chosen);
-  transform-origin: left center;
-  animation: bar-fill var(--dur-ui) var(--ease-out) both;
-}
-
-@keyframes bar-fill {
-  from {
-    transform: scaleX(0);
-  }
-}
-
 /* 접힘: 글 줄 44 + 4칸 막대 4 + 아래 여백 4 = 52 */
 .rail-toggle {
   flex-direction: column;
@@ -428,8 +413,7 @@
 
 /* 밤에는 --fill이 머리줄 바탕과 거의 같아(1.19:1) 네 칸 구조가 안 읽혀서, 빈 칸을 한 단 밝은 선 색으로 */
 @media (prefers-color-scheme: dark) {
-  .rail-bars .bar,
-  .rail-bars .bar.done.just-done {
+  .rail-bars .bar {
     background: var(--hairline);
   }
 }
@@ -978,21 +962,116 @@
   }
 }
 
-/* ── 무대 ───────────────────────────────────────────────── */
+/* ── 무대 (v4 D98) ───────────────────────────────────────
+   단계가 아닌 화면: 읽는 글은 한 줄 72ch(.is-read), 둘러보는 곳은 최대 1360(.is-wide, 카드 격자는 catalog-pages.css) */
 .stage {
   display: block;
-  /* 머리말·아래 막대 안쪽(720px)과 글 시작선을 맞춘다 */
-  max-inline-size: calc(var(--content-max) + 2 * var(--gutter));
-  margin-inline: auto;
   padding: var(--space-5) var(--gutter) var(--space-6);
+}
+
+.stage.is-read {
+  max-inline-size: calc(var(--read-max) + 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+.stage.is-wide {
+  max-inline-size: calc(var(--container-max) + 2 * var(--gutter));
+  margin-inline: auto;
 }
 
 .stage:focus {
   outline: none;
 }
 
-/* ── 아래 막대 (brief 5.6): 단계 화면 아래 붙박이. 층 2(--surface-raised + 위로 --elev-sheet).
-   위 8 → 상태 한 줄 20 → 사이 8 → 주 버튼 56 → 아래 12 + 안전 영역 = 104 + 안전 영역. 실제 높이는 Base.astro가 재서 --bar-bottom으로 ── */
+/* ── 단계 화면 두 칸 격자 (v4 D98, brief 3절) ──
+   왼쪽 칸(.stage-left) = 본문 + 아래 막대(상태 한 줄 + 주 버튼). 칸은 면(--surface) 하나이고 아래 막대는 칸 아래에 붙박이(sticky).
+   오른쪽 칸(.blueprint-pane) = 설계도 창 (sticky).
+   compact <600: 한 칸, 왼쪽 칸은 화면 끝에서 끝까지, 아래 막대는 화면 아래 붙박이, 설계도 창은 본문 뒤.
+   medium 600~1023: 한 칸(최대 720), 설계도 창이 본문 위 카드(높이 220까지).
+   expanded ≥1024: 두 칸(왼쪽 420~560 · 오른쪽 나머지), 최대 1360 */
+.stage-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'left' 'pane';
+  gap: var(--space-4);
+  padding-block-end: var(--space-6);
+}
+
+.stage-left {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  /* 아래 막대가 짧은 본문에서도 칸(화면) 아래에 붙게 */
+  min-block-size: calc(100dvh - 56px);
+  background: var(--surface);
+  box-shadow: var(--edge-light);
+}
+
+.stage-left > .stage {
+  flex: 1;
+  padding: var(--space-5) var(--gutter) var(--space-6);
+}
+
+.blueprint-pane {
+  grid-area: pane;
+  margin-inline: var(--gutter);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+}
+
+@media (min-width: 600px) {
+  .stage-grid {
+    grid-template-areas: 'pane' 'left';
+    max-inline-size: calc(720px + 2 * var(--gutter));
+    margin-inline: auto;
+    padding: var(--space-4) var(--gutter) var(--space-6);
+  }
+
+  .stage-left {
+    min-block-size: auto;
+    border-radius: var(--radius-xl);
+  }
+
+  .blueprint-pane {
+    margin-inline: 0;
+    max-block-size: 220px;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stage-grid {
+    grid-template-columns: var(--pane-left) minmax(0, 1fr);
+    grid-template-areas: 'left pane';
+    align-items: start;
+    gap: var(--space-5);
+    max-inline-size: calc(var(--container-max) + 2 * var(--gutter));
+  }
+
+  /* 왼쪽 칸은 화면 높이를 채워 주 버튼이 칸 아래 끝에 선다 (머리줄 56 + 위아래 여백) */
+  .stage-left {
+    min-block-size: calc(100dvh - 56px - 2 * var(--space-4));
+  }
+
+  .stage-left > .stage {
+    padding-inline: var(--space-6);
+  }
+
+  /* 높이 = 화면 − 머리줄 − 위아래 여백: 처음 화면에서 왼쪽 칸과 아래 끝이 맞는다. 굴리면 위 16에 붙는다 */
+  .blueprint-pane {
+    position: sticky;
+    inset-block-start: var(--space-4);
+    block-size: calc(100dvh - 56px - 2 * var(--space-4));
+    max-block-size: none;
+    padding: var(--space-5) var(--space-6);
+  }
+}
+
+/* ── 아래 막대 (brief 5.6): 단계 화면 왼쪽 칸 아래에 붙박이. 층 2(--surface-raised).
+   위 8 → 상태 한 줄 20 → 사이 8 → 주 버튼 56 → 아래 12 + 안전 영역. 실제 높이는 Base.astro가 재서 --bar-bottom으로.
+   600 아래는 화면 끝에서 끝까지 위로 그림자, 600부터는 왼쪽 칸 폭 안에서 위에 나눔 선과 아래 둥근 모서리 ── */
 .action-bar {
   position: sticky;
   inset-block-end: 0;
@@ -1003,7 +1082,22 @@
   padding-inline: var(--gutter);
 }
 
-/* 단계가 아닌 화면(홈·도구 모음·용어 카드·소개)은 아래 막대를 붙박이로 두지 않는다 (CONCEPT 5.8: 붙박이 아래 막대는 단계 화면만).
+@media (min-width: 600px) {
+  .stage-left > .action-bar {
+    border-block-start: 1px solid var(--hairline);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    box-shadow: none;
+    background: var(--surface);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stage-left > .action-bar {
+    padding-inline: var(--space-6);
+  }
+}
+
+/* 단계가 아닌 화면(도구 모음·용어 카드·코스)은 아래 막대를 붙박이로 두지 않는다 (붙박이 아래 막대는 단계 화면만).
    목록 화면의 거르기 단추를 붙박이 막대가 가리지 않게 (WCAG 2.5.8) */
 .action-bar.is-static {
   position: static;
@@ -1012,10 +1106,17 @@
   background: var(--bg);
 }
 
+.action-bar.is-static .action-inner {
+  max-inline-size: var(--read-max);
+}
+
+.action-bar.is-static.is-wide .action-inner {
+  max-inline-size: var(--container-max);
+}
+
 .action-inner {
   display: grid;
   gap: var(--space-2);
-  max-inline-size: var(--content-max);
   margin-inline: auto;
 }
 
@@ -1044,7 +1145,7 @@
   inline-size: var(--btn-lg);
 }
 
-/* 상태 한 줄 (D64): '도구 고르기 · 1개만 더 고르면 돼요 · 약 1분'. 14/600 --text-2, 높이 20. 미니 길은 없앴다 (지도와 이 줄이 같은 일을 한다) */
+/* 상태 한 줄 (D64): '도구 고르기 · 1개만 더 고르면 돼요 · 약 1분'. 14/600 --text-2, 높이 20 */
 .status-line {
   min-block-size: 20px;
   color: var(--text-2);
@@ -1054,22 +1155,80 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* 숫자 굴리기(S3): 숫자만 따로 감싸 옛 숫자(.sl-old)를 위에 겹쳐 둔다. 움직임은 StatusLine.tsx */
-.sl-n,
-.sl-n > span {
-  display: inline-block;
-  position: relative;
-}
-
-.sl-n > .sl-old {
-  position: absolute;
-  inset: 0;
-}
-
 /* 아주 낮은 화면(가로로 든 휴대폰)이나 글자를 크게 키운 좁은 화면에서는 아래 막대도 붙박이를 푼다.
    미디어 조건의 em은 브라우저 기본 글자 크기를 따르므로 글자를 키우면 같이 커진다 (360px ÷ 32px = 11.25em) */
 @media (max-height: 30em), (max-width: 15em) {
   .action-bar {
     position: static;
   }
+}
+
+/* ── 설계도 창의 안 (BlueprintPane.tsx, v4 D98): 제목 · 만들 앱 · 기능마다 고른 도구 · 정한 수. V2가 연결망 그림으로 바꾼다 ── */
+.bp-title {
+  font-size: var(--size-title-3);
+  line-height: var(--leading-title-3);
+  font-weight: var(--weight-heading);
+}
+
+.bp-empty,
+.bp-foot {
+  margin-block-start: var(--space-2);
+  color: var(--text-2);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+.bp-app {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  margin-block-start: var(--space-2);
+}
+
+.bp-label {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.bp-app-name {
+  font-weight: var(--weight-strong);
+  overflow-wrap: anywhere;
+}
+
+.bp-list {
+  display: grid;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bp-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-block-start: 1px solid var(--hairline);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+.bp-slot {
+  font-weight: var(--weight-strong);
+}
+
+.bp-opt,
+.bp-row:not(.is-picked) .bp-tool {
+  color: var(--text-2);
+  font-weight: var(--weight-body);
+}
+
+.bp-tool {
+  overflow-wrap: anywhere;
+}
+
+/* 다시 온 손님: 빌드 때 그린 빈 안내가 잠깐 보이지 않게 (붙으면 data-ready) */
+:root[data-resume] .bp:not([data-ready]) > :not(.bp-title) {
+  visibility: hidden;
 }

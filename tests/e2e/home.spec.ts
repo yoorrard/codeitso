@@ -44,8 +44,9 @@ test('홈 처음 온 사람: 주 버튼은 [만들 앱 정하기] 하나, 묶음
   await expect(page.locator('.home-links > li')).toHaveCount(2);
   await expect(page.getByRole('button', { name: ko.home.fresh })).toHaveCount(0);
   expect(await visiblePrimaries(page)).toBe(1);
-  // 지도는 장식 정적 SVG (첫 화면 JS 없이), 단계 이름 넷을 가르친다
-  await expect(page.locator('.map-band.is-home svg.map-board')).toHaveAttribute('aria-hidden', 'true');
+  // 지도는 없다 (v4 D96). 미리 짠 코스 카드 셋, 단계 이름 넷을 가르친다
+  await expect(page.locator('svg.map-board, .map-band')).toHaveCount(0);
+  await expect(page.locator('.course-card')).toHaveCount(3);
   for (const name of [ko.stages.destination, ko.stages.waypoints, ko.stages.check, ko.stages.arrival]) await expect(page.locator('.home-how')).toContainText(name);
 });
 

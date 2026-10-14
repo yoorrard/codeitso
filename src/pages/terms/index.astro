@@ -16,7 +16,7 @@ const all = [...data.concepts.concepts].sort((a, b) => (a.level === b.level ? a.
 const figures = import.meta.glob<string>('../../assets/concepts/*.svg', { query: '?raw', import: 'default', eager: true });
 ---
 
-<Base title={ko.study.pageTitle}>
+<Base title={ko.study.pageTitle} width="wide">
   <h1>{ko.study.title}</h1>
   <p class="page-lead">{ko.study.lead}</p>
   <StudyList client:load />

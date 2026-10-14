@@ -158,6 +158,15 @@ export interface Row {
   more?: { cat: CategoryId; sub: string };
 }
 
+/** 스타터 키트 한 묶음 (홈, data/kits.json → 진열대 빌드): 한 번에 담는 재료 카드 */
+export interface KitData {
+  /** src/lib/kits.ts KIT_IDS 중 하나 */
+  id: string;
+  name: string;
+  desc: string;
+  cards: Card[];
+}
+
 /** 출처 파일 머리 (/about/credits): 출처 이름·주소·라이선스 설명 */
 export interface SourceFile {
   category: CategoryId;
@@ -178,6 +187,7 @@ export interface SiteData {
   fetched: string;
   categories: CategoryMeta[];
   rows: Row[];
+  kits: KitData[];
   tops: Record<string, Card[]>;
   first: Record<string, Card[]>;
   sources: SourceFile[];

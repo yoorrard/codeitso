@@ -276,14 +276,14 @@ CREATE TABLE IF NOT EXISTS daily_events (
 - [ ] **5.** 휴대폰으로도 열어 봐요. 카카오톡 '나와의 채팅'에 주소를 보낸 뒤 휴대폰에서 누르면 쉬워요.
 - [ ] **6.** (선택) 방문 횟수가 쌓이는지 확인하기:
   - 시크릿 창(크롬: Ctrl+Shift+N, 맥: Cmd+Shift+N)에서 사이트를 열어요.
-  - 1 만들 앱 정하기로 가서 첫 질문에 답을 하나 골라요. 화면만 열면 세지 않아요.
+  - 카테고리에 들어가 재료 하나를 [담기]로 담아요. 화면만 열면 세지 않아요.
   - D1 → `code-chauffeur-events` → **Console**에 아래 글을 붙여 넣고 **Execute**를 눌러요.
 
     ```sql
     SELECT * FROM daily_events ORDER BY day DESC LIMIT 20;
     ```
 
-  - `interview_start` 줄이 보이면 돼요. 안 보이면 알려 주세요.
+  - `cart_add` 줄이 보이면 돼요(v5 S2부터 이벤트는 cart_add·checkout·md_download·md_copy·bundle_add). 안 보이면 알려 주세요.
 - [ ] **7.** (선택, 기술 확인) `…workers.dev/robots.txt`를 열면 `Disallow: /` 줄이 있어요. 검색에 나오지 않게 막는 줄이에요. `…workers.dev/manifest.webmanifest`를 열면 `"start_url": "/"` 줄이 있어요.
 
 **다 맞으면** 대화창에 "확인 끝"이라고 써 주세요. 다른 칸이 있으면 몇 번 칸이 어떻게 달랐는지 쓰거나 캡처를 보내 주세요.

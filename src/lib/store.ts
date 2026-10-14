@@ -1,10 +1,30 @@
-// 브라우저 저장은 이 파일 한 곳에서만 한다 (docs/ARCHITECTURE.md 4절, CLAUDE.md 꼭 지킬 것 2).
-// v5: 장바구니(담은 재료와 메모), 설정, 연 용어, 집계 기록. 영수증·지난 영수증은 S2에서 더한다.
+// 브라우저 저장은 이 파일 한 곳에서만 한다 (docs/ARCHITECTURE.md 5절, CLAUDE.md 꼭 지킬 것 2).
+// v5: 장바구니(담은 재료와 메모), 프로젝트 메모, 지난 영수증, 최근 본 재료, 설정, 연 용어, 집계 기록.
 // localStorage를 못 쓰면(사생활 보호 모드, 막힌 저장소) 메모리에만 두고 $storageOk를 false로 둔다.
 import { persistentAtom, setPersistentEngine } from '@nanostores/persistent';
 import { atom, computed } from 'nanostores';
-import type { CartLine, Meta, Prefs } from './saved.ts';
-import { DEFAULT_PREFS, EMPTY_META, KEYS, LEGACY_KEYS, SENT_MAX, addLine, cleanMemo, isDefaultPrefs, isEmptyCart, isEmptyMeta, readCart, readMeta, readPrefs } from './saved.ts';
+import type { AddResult, CartLine, Meta, Prefs, Receipt, RecentItem } from './saved.ts';
+import {
+  DEFAULT_PREFS,
+  EMPTY_META,
+  KEYS,
+  LEGACY_KEYS,
+  RECEIPTS_MAX,
+  SENT_MAX,
+  addLine,
+  addLines,
+  cleanMemo,
+  isDefaultPrefs,
+  isEmptyList,
+  isEmptyMeta,
+  pushRecent,
+  readCart,
+  readMeta,
+  readPrefs,
+  readProject,
+  readReceipts,
+  readRecent,
+} from './saved.ts';
 
 /** 빌드(서버)에서는 저장소가 없어도 안내를 띄우지 않는다. 브라우저에서만 실제로 써 본다. */
 function storageWorks(): boolean {
@@ -40,26 +60,48 @@ function codec<T>(read: (raw: unknown) => T, empty: (v: T) => boolean): { encode
   };
 }
 
-export const $cart = persistentAtom<CartLine[]>(KEYS.cart, [], codec(readCart, isEmptyCart));
+export const $cart = persistentAtom<CartLine[]>(KEYS.cart, [], codec(readCart, isEmptyList));
+export const $project = persistentAtom<string>(KEYS.project, '', codec(readProject, (s) => s === ''));
+export const $receipts = persistentAtom<Receipt[]>(KEYS.receipts, [], codec(readReceipts, isEmptyList));
+export const $recent = persistentAtom<RecentItem[]>(KEYS.recent, [], codec(readRecent, isEmptyList));
 export const $meta = persistentAtom<Meta>(KEYS.meta, EMPTY_META, codec(readMeta, isEmptyMeta));
 export const $prefs = persistentAtom<Prefs>(KEYS.prefs, DEFAULT_PREFS, codec(readPrefs, isDefaultPrefs));
 
 /** 담은 재료 개수 (머리줄 배지) */
 export const $cartCount = computed($cart, (l) => l.length);
 
-/** 재료를 담는다. 이미 있으면 메모만 바꾼다. 장바구니가 가득 차서 못 담았으면 false */
-export function addToCart(line: Omit<CartLine, 'at' | 'memo'> & { memo?: string }, now: number): boolean {
+export type NewLine = Omit<CartLine, 'addedAt' | 'memo'> & { memo?: string };
+
+function lineOf(line: NewLine, now: number): CartLine {
   const memo = cleanMemo(line.memo);
-  const next: CartLine = { id: line.id, name: line.name, cat: line.cat, sub: line.sub, at: now };
+  const next: CartLine = { id: line.id, name: line.name, cat: line.cat, sub: line.sub, addedAt: now };
   if (memo) next.memo = memo;
-  const { list, full } = addLine($cart.get(), next);
-  if (full) return false;
-  $cart.set(list);
-  return true;
+  return next;
+}
+
+/** 재료를 담는다. 이미 있으면 'exists'(메모를 주었으면 메모만 바꾼다), 가득 차서 못 담았으면 'full' */
+export function addToCart(line: NewLine, now: number): AddResult {
+  const { list, result } = addLine($cart.get(), lineOf(line, now));
+  if (result !== 'full') $cart.set(list);
+  return result;
+}
+
+/** 여러 재료를 한 번에 담는다 (스타터 키트·공유 링크). 이미 담은 것은 건너뛴다 */
+export function addManyToCart(lines: readonly NewLine[], now: number): { added: number; skipped: number; full: boolean } {
+  const r = addLines(
+    $cart.get(),
+    lines.map((l) => lineOf(l, now)),
+  );
+  $cart.set(r.list);
+  return { added: r.added, skipped: r.skipped, full: r.full };
 }
 
 export function removeFromCart(id: string): void {
   $cart.set($cart.get().filter((x) => x.id !== id));
+}
+
+export function clearCart(): void {
+  $cart.set([]);
 }
 
 /** 메모를 바꾼다. 빈 글이면 메모를 지운다 */
@@ -76,6 +118,33 @@ export function setCartMemo(id: string, memo: string): void {
 
 export function inCart(id: string): boolean {
   return $cart.get().some((x) => x.id === id);
+}
+
+/** 프로젝트 메모 (만들 앱 한 줄). 계산해도 지우지 않는다 */
+export function setProject(text: string): void {
+  $project.set(readProject(text));
+}
+
+/** 영수증을 맨 앞에 남긴다 (RECEIPTS_MAX개 넘으면 오래된 것부터 빠진다) */
+export function saveReceipt(r: Receipt): void {
+  $receipts.set(readReceipts([r, ...$receipts.get().filter((x) => x.id !== r.id)]).slice(0, RECEIPTS_MAX));
+}
+
+export function removeReceipt(id: string): void {
+  $receipts.set($receipts.get().filter((x) => x.id !== id));
+}
+
+export function findReceipt(id: string): Receipt | undefined {
+  return $receipts.get().find((x) => x.id === id);
+}
+
+/** 상세를 연 재료를 최근 본 재료 맨 앞에 */
+export function markViewed(item: Omit<RecentItem, 'at'>, now: number): void {
+  $recent.set(readRecent(pushRecent($recent.get(), { ...item, at: now })));
+}
+
+export function clearRecent(): void {
+  $recent.set([]);
 }
 
 export function setPrefs(patch: Partial<Prefs>): void {
@@ -110,9 +179,12 @@ export function rememberSent(key: string): boolean {
   return true;
 }
 
-/** '저장한 기록 지우기': 장바구니·연 용어·집계 기록을 지운다. 설정(동작 줄이기)은 기록이 아니라서 남긴다 */
+/** '저장한 기록 지우기': 장바구니·프로젝트 메모·영수증·최근 본 재료·연 용어·집계 기록을 지운다. 설정(동작 줄이기)은 기록이 아니라서 남긴다 */
 export function clearAll(): void {
   $cart.set([]);
+  $project.set('');
+  $receipts.set([]);
+  $recent.set([]);
   $meta.set(EMPTY_META);
   $termsSeen.set([]);
 }

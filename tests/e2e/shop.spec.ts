@@ -49,7 +49,11 @@ for (const vp of [
       await expect(page.locator('.in-cart')).toBeVisible();
       await expect(page.locator('.hd-badge')).toHaveText('1');
 
+      // 머리줄 장바구니 → 서랍 → 장바구니 쪽
       await page.locator('a.hd-cart').click();
+      await expect(page.locator('dialog.drawer')).toBeVisible();
+      await expect(page.locator('dialog.drawer .cart-memo')).toContainText('파일 읽기에 쓴다');
+      await page.locator('dialog.drawer').getByRole('link', { name: ko.drawer.toCart }).click();
       await expect(page).toHaveURL(/\/cart$/);
       await islandsReady(page);
       await expect(page.locator('.cart-name')).toHaveText(second ?? '');
@@ -92,21 +96,33 @@ test('정렬: 이름순·최근 갱신순 주소, 뒤로 가기', async ({ page 
   await expect(cardName(page)).toHaveText(popular ?? '');
 });
 
-test('카드 [담기]: 누르면 담음·배지 1, 다시 누르면 뺀다 (상태는 쪽을 옮겨도 남는다)', async ({ page }) => {
+test('카드 [담기]: 누르면 담음·배지 1·작은 창, 다시 누르면 서랍이 그 줄로 초점 (상태는 쪽을 옮겨도 남는다)', async ({ page }) => {
   await page.goto('/c/design/gradients');
   await islandsReady(page);
   const btn = page.locator('.listing-grid button[data-add]').first();
-  await expect(btn).toHaveAttribute('aria-pressed', 'false');
+  const name = (await btn.getAttribute('data-name')) ?? '';
+  await expect(btn).toHaveAttribute('data-in', 'false');
   await btn.click();
-  await expect(btn).toHaveAttribute('aria-pressed', 'true');
+  await expect(btn).toHaveAttribute('data-in', 'true');
   await expect(btn).toContainText(ko.card.added);
+  await expect(btn).toHaveAccessibleName(fill(ko.card.inCartLabel, { name }));
   await expect(page.locator('.hd-badge')).toHaveText('1');
   await expect(page.locator('#cc-live')).toContainText(ko.card.addedLive.split(':')[0] ?? '');
+  await expect(page.locator('.add-pop')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.add-pop')).toHaveCount(0);
+  await expect(btn).toBeFocused();
   await page.reload();
   await islandsReady(page);
-  await expect(page.locator('.listing-grid button[data-add]').first()).toHaveAttribute('aria-pressed', 'true');
-  await page.locator('.listing-grid button[data-add]').first().click();
-  await expect(page.locator('.hd-badge')).toBeHidden();
+  const again = page.locator('.listing-grid button[data-add]').first();
+  await expect(again).toHaveAttribute('data-in', 'true');
+  await again.click();
+  await expect(page.locator('dialog.drawer')).toBeVisible();
+  await expect(page.locator('dialog.drawer [data-line]').first()).toBeFocused();
+  await expect(page.locator('.hd-badge')).toHaveText('1');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('dialog.drawer')).toBeHidden();
+  await expect(again).toBeFocused();
 });
 
 test('카테고리 메뉴: 모든 대분류·소분류, Esc로 닫으면 단추로 초점', async ({ page }) => {

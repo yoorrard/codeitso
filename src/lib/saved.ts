@@ -1,8 +1,12 @@
 // 브라우저에 저장하는 값의 모양과, 읽은 값을 믿지 않고 고르는 함수 (부작용 없음, 시험 있음).
-// 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 4절). v5: 장바구니(담은 재료와 메모) + 설정 + 연 용어 + 집계 기록.
+// 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 5절).
+// v5: 장바구니(담은 재료와 메모) + 프로젝트 메모 + 영수증(계산한 때의 재료 사본) + 최근 본 재료 + 설정 + 연 용어 + 집계 기록.
 
 export const KEYS = {
   cart: 'cc:cart:v1',
+  project: 'cc:project:v1',
+  receipts: 'cc:receipts:v2',
+  recent: 'cc:recent:v1',
   meta: 'cc:meta:v1',
   prefs: 'cc:prefs:v1',
 } as const;
@@ -10,7 +14,7 @@ export const KEYS = {
 /** 더는 쓰지 않는 옛 키(v4 단계 흐름의 답·용어 카드·장면·영수증). 옮길 값이 없어 읽지 않고, 남아 있으면 지운다 */
 export const LEGACY_KEYS = ['cc:trip:v1', 'cc:session:v1', 'cc:study:v1', 'cc:seen:v1', 'cc:receipts:v1'] as const;
 
-/** 장바구니 한 줄: 재료 id와 다시 그리기에 필요한 이름·자리, 이용자 메모(어디에 어떻게 쓸지) */
+/** 장바구니 한 줄: 재료 id, 담은 때, 이용자 메모(어디에 어떻게 쓸지). 이름·자리는 서랍을 자료 없이 바로 그리려고 같이 둔다 */
 export interface CartLine {
   id: string;
   name: string;
@@ -20,6 +24,44 @@ export interface CartLine {
   sub: string;
   memo?: string;
   /** 담은 때 (ms) */
+  addedAt: number;
+}
+
+/** 영수증 한 줄: 계산한 때의 재료 사본 (출처 자료 그대로, 지어내지 않는다). 그래서 진열대가 바뀌어도 .md를 다시 받을 수 있다 */
+export interface ReceiptLine {
+  id: string;
+  name: string;
+  cat: string;
+  sub: string;
+  memo?: string;
+  /** 공식 주소 */
+  url?: string;
+  license?: string;
+  /** 출처 이름 */
+  source?: string;
+  install?: string;
+  snippet?: string;
+  docs?: string;
+}
+
+export interface Receipt {
+  /** 저장 열쇠 겸 주소 (/receipt?id=) */
+  id: string;
+  /** 영수증 번호 'YYYYMMDD-NNNN' */
+  no: string;
+  /** 계산한 때 (ms) */
+  at: number;
+  /** 만들 앱 한 줄 (프로젝트 메모) */
+  project?: string;
+  lines: ReceiptLine[];
+}
+
+/** 최근 본 재료 한 줄 (상세를 연 때) */
+export interface RecentItem {
+  id: string;
+  name: string;
+  cat: string;
+  sub: string;
   at: number;
 }
 
@@ -38,8 +80,15 @@ export const SENT_MAX = 20;
 /** 장바구니에 담을 수 있는 줄 수 (넘치면 가장 오래된 것부터 빠지지 않고 담기를 막는다) */
 export const CART_MAX = 300;
 export const MEMO_MAX = 200;
+export const PROJECT_MAX = 300;
+/** 남기는 영수증 수 (넘치면 가장 오래된 것부터 빠진다) */
+export const RECEIPTS_MAX = 30;
+/** 최근 본 재료 수 */
+export const RECENT_MAX = 20;
 const ID_MAX = 200;
 const NAME_MAX = 200;
+/** 영수증 사본 칸의 길이 상한 (글자): 저장소를 지키고, 넘는 조각은 공식 주소가 대신한다 */
+export const RECEIPT_FIELD_MAX = { url: 500, license: 200, source: 200, install: 1000, snippet: 4000, docs: 500 } as const;
 
 export const DEFAULT_PREFS: Prefs = { motion: 'auto', glossary: true };
 export const EMPTY_META: Meta = { sent: [] };
@@ -55,32 +104,125 @@ function strings(raw: unknown, max: number): string[] {
 
 const SLUG = /^[a-z0-9][a-z0-9-]{0,39}$/;
 
-/** 메모는 앞뒤 공백을 걷고 MEMO_MAX자(글자 단위)까지. 비면 없음 */
-export function cleanMemo(raw: unknown): string | undefined {
+/** 앞뒤 공백을 걷고 max자(글자 단위)까지. 비면 없음 */
+export function cleanText(raw: unknown, max: number): string | undefined {
   if (typeof raw !== 'string') return undefined;
-  const t = [...raw.trim()].slice(0, MEMO_MAX).join('');
+  const t = [...raw.trim()].slice(0, max).join('');
   return t === '' ? undefined : t;
 }
 
-/** 장바구니: 모양이 맞는 줄만, 같은 id는 처음 것 하나, CART_MAX줄까지 */
+/** 메모는 MEMO_MAX자까지 */
+export function cleanMemo(raw: unknown): string | undefined {
+  return cleanText(raw, MEMO_MAX);
+}
+
+function time(raw: unknown): number {
+  return typeof raw === 'number' && Number.isFinite(raw) && raw > 0 ? raw : 0;
+}
+
+/** id·이름·대분류·소분류가 모양에 맞으면 그 칸을 돌려준다 */
+function head(o: Record<string, unknown>): { id: string; name: string; cat: string; sub: string } | null {
+  const [id, name, cat, sub] = [o['id'], o['name'], o['cat'], o['sub']];
+  if (typeof id !== 'string' || id.length === 0 || id.length > ID_MAX) return null;
+  if (typeof name !== 'string' || name.trim().length === 0) return null;
+  if (typeof cat !== 'string' || !SLUG.test(cat) || typeof sub !== 'string' || !SLUG.test(sub)) return null;
+  return { id, name: [...name].slice(0, NAME_MAX).join(''), cat, sub };
+}
+
+/** 장바구니: 모양이 맞는 줄만, 같은 id는 처음 것 하나, CART_MAX줄까지. S1 판의 담은 때(at)도 읽는다 */
 export function readCart(raw: unknown): CartLine[] {
   if (!Array.isArray(raw)) return [];
   const out: CartLine[] = [];
   const seen = new Set<string>();
   for (const item of raw) {
     const o = obj(item);
-    const [id, name, cat, sub, at] = [o['id'], o['name'], o['cat'], o['sub'], o['at']];
-    if (typeof id !== 'string' || id.length === 0 || id.length > ID_MAX || seen.has(id)) continue;
-    if (typeof name !== 'string' || name.length === 0) continue;
-    if (typeof cat !== 'string' || !SLUG.test(cat) || typeof sub !== 'string' || !SLUG.test(sub)) continue;
-    const line: CartLine = { id, name: [...name].slice(0, NAME_MAX).join(''), cat, sub, at: typeof at === 'number' && Number.isFinite(at) && at > 0 ? at : 0 };
+    const h = head(o);
+    if (!h || seen.has(h.id)) continue;
+    const line: CartLine = { ...h, addedAt: time(o['addedAt'] ?? o['at']) };
     const memo = cleanMemo(o['memo']);
     if (memo) line.memo = memo;
-    seen.add(id);
+    seen.add(h.id);
     out.push(line);
     if (out.length === CART_MAX) break;
   }
   return out;
+}
+
+export function readProject(raw: unknown): string {
+  return cleanText(raw, PROJECT_MAX) ?? '';
+}
+
+function readReceiptLine(raw: unknown): ReceiptLine | null {
+  const o = obj(raw);
+  const h = head(o);
+  if (!h) return null;
+  const line: ReceiptLine = { ...h };
+  const memo = cleanMemo(o['memo']);
+  if (memo) line.memo = memo;
+  for (const k of Object.keys(RECEIPT_FIELD_MAX) as (keyof typeof RECEIPT_FIELD_MAX)[]) {
+    const v = cleanText(o[k], RECEIPT_FIELD_MAX[k]);
+    if (v) line[k] = v;
+  }
+  if (line.url && !/^https?:\/\//.test(line.url)) delete line.url;
+  if (line.docs && !/^https?:\/\//.test(line.docs)) delete line.docs;
+  return line;
+}
+
+export function readReceipt(raw: unknown): Receipt | null {
+  const o = obj(raw);
+  const [id, no] = [o['id'], o['no']];
+  if (typeof id !== 'string' || !/^[a-z0-9]{1,40}$/.test(id)) return null;
+  if (typeof no !== 'string' || !/^\d{8}-\d{4}$/.test(no)) return null;
+  const at = time(o['at']);
+  if (at === 0 || !Array.isArray(o['lines'])) return null;
+  const lines: ReceiptLine[] = [];
+  const seen = new Set<string>();
+  for (const l of o['lines']) {
+    const line = readReceiptLine(l);
+    if (!line || seen.has(line.id)) continue;
+    seen.add(line.id);
+    lines.push(line);
+    if (lines.length === CART_MAX) break;
+  }
+  if (lines.length === 0) return null;
+  const r: Receipt = { id, no, at, lines };
+  const project = cleanText(o['project'], PROJECT_MAX);
+  if (project) r.project = project;
+  return r;
+}
+
+/** 지난 영수증: 새것이 앞, 같은 id는 하나, RECEIPTS_MAX개까지 */
+export function readReceipts(raw: unknown): Receipt[] {
+  if (!Array.isArray(raw)) return [];
+  const out: Receipt[] = [];
+  const seen = new Set<string>();
+  for (const x of raw) {
+    const r = readReceipt(x);
+    if (!r || seen.has(r.id)) continue;
+    seen.add(r.id);
+    out.push(r);
+  }
+  return out.sort((a, b) => b.at - a.at).slice(0, RECEIPTS_MAX);
+}
+
+export function readRecent(raw: unknown): RecentItem[] {
+  if (!Array.isArray(raw)) return [];
+  const out: RecentItem[] = [];
+  const seen = new Set<string>();
+  for (const x of raw) {
+    const o = obj(x);
+    const h = head(o);
+    if (!h || seen.has(h.id)) continue;
+    seen.add(h.id);
+    out.push({ ...h, at: time(o['at']) });
+    if (out.length === RECENT_MAX) break;
+  }
+  return out;
+}
+
+/** 본 재료를 맨 앞에 (이미 있으면 앞으로 옮긴다), RECENT_MAX개까지 */
+export function pushRecent(list: readonly RecentItem[], item: RecentItem): RecentItem[] {
+  return [item, ...list.filter((x) => x.id !== item.id)].slice(0, RECENT_MAX);
 }
 
 export function readMeta(raw: unknown): Meta {
@@ -93,9 +235,10 @@ export function readPrefs(raw: unknown): Prefs {
 }
 
 /** 처음 값과 같으면 저장할 필요가 없다 (키를 지운다) */
-export function isEmptyCart(l: CartLine[]): boolean {
+export function isEmptyList(l: readonly unknown[]): boolean {
   return l.length === 0;
 }
+export const isEmptyCart = isEmptyList;
 export function isEmptyMeta(m: Meta): boolean {
   return m.sent.length === 0;
 }
@@ -103,15 +246,44 @@ export function isDefaultPrefs(p: Prefs): boolean {
   return p.motion === DEFAULT_PREFS.motion && p.glossary === DEFAULT_PREFS.glossary;
 }
 
-/** 줄 하나를 더한다. 이미 있으면 메모만 바꾸고 자리는 그대로. 가득 찼으면 그대로 돌려준다 (full: true) */
-export function addLine(list: readonly CartLine[], line: CartLine): { list: CartLine[]; full: boolean } {
+export type AddResult = 'added' | 'exists' | 'full';
+
+/** 줄 하나를 더한다. 이미 있으면 메모만 바꾸고(메모를 주었을 때) 자리는 그대로. 가득 찼으면 그대로 */
+export function addLine(list: readonly CartLine[], line: CartLine): { list: CartLine[]; result: AddResult } {
   const at = list.findIndex((x) => x.id === line.id);
   if (at >= 0) {
     const next = [...list];
     const prev = next[at];
     if (prev) next[at] = line.memo === undefined ? prev : { ...prev, memo: line.memo };
-    return { list: next, full: false };
+    return { list: next, result: 'exists' };
   }
-  if (list.length >= CART_MAX) return { list: [...list], full: true };
-  return { list: [...list, line], full: false };
+  if (list.length >= CART_MAX) return { list: [...list], result: 'full' };
+  return { list: [...list, line], result: 'added' };
+}
+
+/** 여러 줄을 한 번에 (스타터 키트·공유 링크). 이미 있는 것은 건너뛰고, 가득 차면 거기서 멈춘다 */
+export function addLines(list: readonly CartLine[], lines: readonly CartLine[]): { list: CartLine[]; added: number; skipped: number; full: boolean } {
+  let next = [...list];
+  let added = 0;
+  let skipped = 0;
+  for (const l of lines) {
+    const r = addLine(next, l);
+    if (r.result === 'full') return { list: next, added, skipped, full: true };
+    if (r.result === 'exists') skipped += 1;
+    else added += 1;
+    next = r.list;
+  }
+  return { list: next, added, skipped, full: false };
+}
+
+/** 영수증 번호: 계산한 날(이용자 기기 시각) + 네 자리(담은 재료와 시각의 해시, receipt-no.ts) */
+export function receiptNumber(at: number, digits: string): string {
+  return `${stamp(at).slice(0, 8)}-${digits}`;
+}
+
+/** 'YYYYMMDD-HHMM' (이용자 기기 시각): 영수증 번호 앞자리와 .md 파일 이름 */
+export function stamp(at: number): string {
+  const d = new Date(at);
+  const p = (n: number): string => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`;
 }

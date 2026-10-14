@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
-import { CARDS_EVENT } from '../lib/cart-buttons.ts';
+import { CARDS_EVENT } from '../lib/cart-ui.ts';
 import { chunkOf, pageWindow, withCommas } from '../lib/catalog/core.ts';
 import type { Card, CategoryId, ListChunk, SortKey } from '../lib/catalog/types.ts';
 import { PAGE_SIZE, SORTS } from '../lib/catalog/types.ts';

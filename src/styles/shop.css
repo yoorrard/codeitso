@@ -812,7 +812,7 @@
   transition: background-color var(--dur-tap) var(--ease-out), color var(--dur-tap) var(--ease-out);
 }
 .add-btn:hover,
-.add-btn[aria-pressed='true'] {
+.add-btn[data-in='true'] {
   background: var(--primary);
   color: var(--on-primary);
 }
@@ -820,10 +820,10 @@
   scale: var(--juice-press-scale);
 }
 .add-btn .add-on,
-.add-btn[aria-pressed='true'] .add-off {
+.add-btn[data-in='true'] .add-off {
   display: none;
 }
-.add-btn[aria-pressed='true'] .add-on {
+.add-btn[data-in='true'] .add-on {
   display: inline-flex;
 }
 .add-btn .add-off,
@@ -1394,64 +1394,6 @@
   justify-items: start;
   gap: var(--space-3);
   padding-block: var(--space-7);
-}
-
-/* ── 장바구니 ───────────────────────────────────────────────────────── */
-.cart,
-.cart-empty {
-  display: grid;
-  gap: var(--space-4);
-  justify-items: start;
-  margin-block-start: var(--space-4);
-}
-.cart-group {
-  inline-size: 100%;
-}
-.cart-group > h2 {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--size-title-3);
-  color: var(--cat-ink);
-}
-.cart-lines {
-  margin: var(--space-2) 0 0;
-  padding: 0;
-  list-style: none;
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-}
-.cart-line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-}
-.cart-line + .cart-line {
-  border-block-start: 1px solid var(--hairline);
-}
-.cart-line-text {
-  display: grid;
-  gap: 2px;
-  min-inline-size: 0;
-}
-.cart-name {
-  color: var(--text);
-  font-weight: var(--weight-strong);
-}
-.cart-sub {
-  color: var(--text-3);
-  font-size: var(--size-caption);
-}
-.cart-memo {
-  color: var(--text-2);
-  font-size: var(--size-caption);
-}
-.cart-soon,
-.cart-count {
-  color: var(--text-2);
 }
 
 /* ── 검색 결과 ───────────────────────────────────────────────────────── */

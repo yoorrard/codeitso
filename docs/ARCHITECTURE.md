@@ -56,7 +56,9 @@ code-chauffeur/
 | `/c/<대분류>` | 정적, 6쪽 | 소분류 타일(상품 수·출처) · 소분류마다 1등 상품 |
 | `/c/<대분류>/<소분류>?sort=&page=` | 정적, 소분류마다 1쪽 (100쪽) | 인기순 1쪽 60개를 HTML에 그린다. 다른 쪽·정렬은 목록 섬이 목록 묶음 JSON을 받아 같은 카드로 다시 그린다. 쪽·정렬은 진짜 주소(새 탭·공유 가능)이고 그냥 누르면 `pushState`. 주소가 인기순 1쪽이 아니면 첫 그림 전에 빌드 때 그린 카드를 감춘다(`html[data-list-pending]`, 4초 안전판). |
 | `/item?id=<id>` | 정적 1쪽 | 상세 섬이 id 해시로 상세 조각을 받아 그린다: 큰 미리 보기 · 이름·설명·[장바구니에 담기]+메모 · 정보 표(출처·라이선스·인기·갱신일·공식 주소·태그) · 쓰는 법(출처가 준 설치 명령·설정 조각·문서 주소만) · 관련 상품. 검색 엔진 색인은 목록 쪽이 맡는다. |
-| `/cart` | 정적 + 섬 | 담은 재료(카테고리별 묶음, 메모, 빼기). 서랍·계산·영수증·.md 받기는 S2. |
+| `/cart` (`#s=<id>,…`) | 정적 + 섬 | 만들 앱 한 줄 · 대분류별 줄(메모 고치기·빼기) · 설치 명령 한꺼번에 복사 · 공유 링크 복사 · 모두 비우기 · 주문 요약(대분류별 개수, 합계 0원, [계산하기]). `#s=`로 열면 위에 공유받은 목록과 [모두 담기]. 머리줄 장바구니는 어느 쪽에서나 오른쪽 서랍(모달 `<dialog>`)을 연다. |
+| `/receipt?id=<id>` | 정적 + 섬 | 이 브라우저에 남긴 영수증 한 장: 0원 영수증(번호 `YYYYMMDD-NNNN`·때·만들 앱·대분류별 재료와 개수) · [.md 받기]·[복사]·[공유 링크 복사]·[장바구니에 다시 담기] · .md 미리 보기 |
+| `/receipts` | 정적 + 섬 | 지난 영수증(최근 30장): [열기]·[.md 받기]·[지우기] |
 | `/search?q=` | 정적 + 섬 | 임시 검색 (소분류 이름 + 소분류마다 인기 30개). 전체 검색은 S3. |
 | `/terms` | 정적 | 용어 사전 (`data/glossary.json`) |
 | `/about`, `/about/credits`, `/legal/privacy`, `/legal/notice` | 정적 | 소개, 자료 출처(출처 파일마다 이름·수·이용 조건), 처리방침, 이용 안내 |
@@ -76,7 +78,7 @@ data/catalog/**  ──npm run import(네트워크)──  출처 API·목록
 public/catalog/list/<대분류>/<소분류>/<정렬>-<묶음>.json   카드 480장(8쪽)씩, 정렬 셋(popular·name·recent)  ≈1,020개
 public/catalog/item/<n>.json                              상세 조각 1,024개 (n = FNV-1a(id) % 1024), 관련 상품 [id, 이름] 6개 포함
 public/catalog/search-lite.json                           임시 검색 색인
-.cache/catalog/site.json                                  Astro용 요약: 대분류·소분류·출처·홈 기획전·대분류 1등·소분류 1쪽 카드
+.cache/catalog/site.json                                  Astro용 요약: 대분류·소분류·출처·홈 기획전·스타터 키트(data/kits.json)·대분류 1등·소분류 1쪽 카드
       │
       ▼ astro build  → dist/ (쪽 116 + 진열대 JSON 2,045 + 정적 파일 ≈ 2,300개)
 ```
@@ -94,12 +96,15 @@ public/catalog/search-lite.json                           임시 검색 색인
 
 | 키 | 내용 |
 |---|---|
-| `cc:cart:v1` | 담은 재료 `{ id, name, cat, sub, at, memo? }[]` (메모 200자, 최대 300개) |
+| `cc:cart:v1` | 담은 재료 `{ id, name, cat, sub, addedAt, memo? }[]` (메모 200자, 최대 300개, 같은 재료는 한 줄. S1 판의 `at`도 읽는다) |
+| `cc:project:v1` | 만들 앱 한 줄 (300자, 계산해도 남는다) |
+| `cc:receipts:v2` | 지난 영수증 `{ id, no, at, project?, lines: { id, name, cat, sub, memo?, url?, license?, source?, install?, snippet?, docs? }[] }[]` (계산한 때의 재료 사본, 최근 30장) |
+| `cc:recent:v1` | 최근 본 재료 `{ id, name, cat, sub, at }[]` (20개) |
 | `cc:meta:v1` | `{ sent: string[] }` 보낸 집계 이벤트 열쇠 |
 | `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', glossary: boolean }` |
 | `cc:terms:v1` | 풀이를 연 용어 id (최근 300개) |
 
-- 옛 v4 키(`cc:session:v1`·`cc:study:v1`·`cc:seen:v1`·`cc:receipts:v1`·`cc:trip:v1`)는 처음 불릴 때 지운다(`LEGACY_KEYS`). 영수증·지난 영수증 키는 S2가 더한다.
+- 옛 v4 키(`cc:session:v1`·`cc:study:v1`·`cc:seen:v1`·`cc:receipts:v1`·`cc:trip:v1`)는 처음 불릴 때 지운다(`LEGACY_KEYS`). 공유 링크(`/cart#s=…`, `src/lib/share.ts`)에는 재료 id만 들어가고 메모·만들 앱은 들어가지 않는다. 계산(`src/lib/checkout.ts`)은 담은 재료의 상세 조각을 받아 영수증 사본을 만들고(`buildReceipt`, 출처 자료 그대로) 장바구니를 비운다. .md는 `src/lib/receipt-md.ts`가 만든다.
 
 ## 6. 바깥 자원과 보안 머리글 (brief 5절, D107)
 
@@ -110,7 +115,7 @@ public/catalog/search-lite.json                           임시 검색 색인
 
 ## 7. 집계 (Worker + D1)
 
-`worker/index.ts`가 `/api/event`의 `{"t":종류,"b":구간}`만 받아 날짜별로 센다. 종류·구간은 `src/lib/event-spec.ts`가 화면과 Worker의 약속이다. v4 이벤트 다섯(interview_start 등)은 S2가 쇼핑몰 이벤트(담기·계산·.md 받기)로 바꾼다. 개인 정보·쿠키·IP는 저장하지 않는다.
+`worker/index.ts`가 `/api/event`의 `{"t":종류,"b":구간}`만 받아 날짜별로 센다. 종류·구간은 `src/lib/event-spec.ts`가 화면과 Worker의 약속이다. S2부터 이벤트는 다섯: `cart_add`(구간 = 대분류), `checkout`(재료 수 구간 n01·n02-03·n04-06·n07-10·n11-20·n21+), `md_download`, `md_copy`, `bundle_add`(구간 = 스타터 키트 id). 재료 id·메모·검색어는 보내지 않는다. 개인 정보·쿠키·IP는 저장하지 않는다.
 
 ## 8. 배포
 
@@ -120,7 +125,7 @@ Cloudflare Workers Builds가 푸시마다 `npm run build:cf`(= `npm run build`: 
 
 | 무엇 | 한도 |
 |---|---|
-| 처음 불러오는 JS (gzip) | 모든 쪽 100KB (지금 27~33KB) |
+| 처음 불러오는 JS (gzip) | 모든 쪽 100KB (지금 38~42KB, 머리줄 장바구니 서랍 포함) |
 | 처음 불러오는 CSS (gzip) | 30KB |
 | 사이트 안 그림 | 쪽마다 300KB |
 | 임시 검색 색인 | 100KB |

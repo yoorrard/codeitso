@@ -2,7 +2,7 @@
 // .cache/catalog/site.json에 쓴 것을 한 번 읽어 둔다. 13만 개 원본은 읽지 않는다. 빌드 때만 쓴다 (섬은 props로 받는다).
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { Card, CategoryId, CategoryMeta, NavCategory, Row, SiteData, SourceFile, SubMeta } from './types.ts';
+import type { Card, CategoryId, CategoryMeta, KitData, NavCategory, Row, SiteData, SourceFile, SubMeta } from './types.ts';
 
 /** 진열대 빌드가 쓰고 Astro가 읽는 요약 파일 (저장소에 올리지 않는다, .cache/는 .gitignore) */
 export const SITE_FILE = join(process.cwd(), '.cache', 'catalog', 'site.json');
@@ -34,6 +34,11 @@ export function navData(): NavCategory[] {
 
 export function homeRows(): Row[] {
   return site().rows;
+}
+
+/** 스타터 키트 (data/kits.json) */
+export function homeKits(): KitData[] {
+  return site().kits ?? [];
 }
 
 /** 대분류 쪽의 소분류별 1등 상품 */

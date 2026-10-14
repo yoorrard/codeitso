@@ -1,0 +1,52 @@
+---
+// 홈 '스타터 키트' (brief 7절 묶음 기획전): 키트마다 이름·설명·재료 이름 목록과 [키트 담기] 한 번.
+// 정적 HTML이고, 누름은 src/lib/cart-buttons.ts가 맡는다 (button[data-kit], 재료는 data-items에 [id, 이름, 대분류, 소분류]).
+import Icon from './Icon.astro';
+import { ko } from '../copy/ko.ts';
+import type { KitData } from '../lib/catalog/types.ts';
+import { fill } from '../lib/text.ts';
+
+interface Props {
+  kits: KitData[];
+}
+const { kits } = Astro.props;
+---
+
+{
+  kits.length > 0 && (
+    <section class="sec kits" aria-labelledby="kits-title">
+      <div class="sec-head">
+        <h2 id="kits-title">{ko.kits.title}</h2>
+      </div>
+      <p class="sec-lead">{ko.kits.lead}</p>
+      <ul class="kit-grid">
+        {kits.map((k) => (
+          <li class="kit" data-kit-id={k.id}>
+            <h3 class="kit-name">{k.name}</h3>
+            <p class="kit-desc">{k.desc}</p>
+            <ul class="kit-items" aria-label={fill(ko.kits.count, { n: k.cards.length })}>
+              {k.cards.map((c) => (
+                <li data-cat={c.cat}>
+                  <span class="kit-dot" aria-hidden="true" />
+                  {c.name}
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              class="btn btn-soft kit-add"
+              data-kit={k.id}
+              data-name={k.name}
+              data-items={JSON.stringify(k.cards.map((c) => [c.id, c.name, c.cat, c.sub]))}
+              aria-label={fill(ko.kits.addLabel, { name: k.name, n: k.cards.length })}
+            >
+              <Icon name="cart" size="18px" />
+              <span class="kit-add-label">{ko.kits.add}</span>
+              <span class="kit-add-n">{fill(ko.kits.count, { n: k.cards.length })}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

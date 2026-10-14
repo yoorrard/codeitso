@@ -1,62 +1,53 @@
-// 익명 집계의 약속: 정해진 이벤트·구간만 받고, 큰 본문·다른 칸은 버린다. 걸린 시간 구간과 짧은 해시.
+// 익명 집계의 약속 (v5 S2): 정해진 이벤트·구간만 받고, 큰 본문·다른 칸은 버린다. 재료 수 구간과 짧은 해시.
 import { describe, expect, it } from 'vitest';
-import { BODY_MAX, elapsedBucket, isBucket, parseEvent, shortHash, utcDay } from '../../src/lib/event-spec.ts';
+import { BODY_MAX, EVENT_SPEC, countBucket, isBucket, parseEvent, shortHash, utcDay } from '../../src/lib/event-spec.ts';
+import { KIT_IDS } from '../../src/lib/kits.ts';
 
 describe('본문 검사', () => {
   it('정해진 이벤트와 구간', () => {
-    expect(parseEvent('{"t":"card_copy","b":"first"}')).toEqual({ type: 'card_copy', bucket: 'first' });
-    expect(parseEvent('{"t":"receipt_issued","b":"m30+"}')).toEqual({ type: 'receipt_issued', bucket: 'm30+' });
-    expect(parseEvent('{"t":"quiz_answer","b":"ng"}')).toEqual({ type: 'quiz_answer', bucket: 'ng' });
+    expect(parseEvent('{"t":"cart_add","b":"design"}')).toEqual({ type: 'cart_add', bucket: 'design' });
+    expect(parseEvent('{"t":"checkout","b":"n21+"}')).toEqual({ type: 'checkout', bucket: 'n21+' });
+    expect(parseEvent('{"t":"bundle_add","b":"school"}')).toEqual({ type: 'bundle_add', bucket: 'school' });
   });
   it('구간이 없는 이벤트는 b를 빼도 빈 구간', () => {
-    expect(parseEvent('{"t":"interview_start"}')).toEqual({ type: 'interview_start', bucket: '' });
-    expect(parseEvent('{"t":"required_done","b":""}')).toEqual({ type: 'required_done', bucket: '' });
+    expect(parseEvent('{"t":"md_download"}')).toEqual({ type: 'md_download', bucket: '' });
+    expect(parseEvent('{"t":"md_copy","b":""}')).toEqual({ type: 'md_copy', bucket: '' });
   });
-  it('목록에 없는 이벤트·구간은 버린다', () => {
+  it('목록에 없는 이벤트·구간은 버린다 (v4 이벤트도)', () => {
     expect(parseEvent('{"t":"page_view"}')).toBeNull();
-    expect(parseEvent('{"t":"card_copy","b":"secret"}')).toBeNull();
-    expect(parseEvent('{"t":"card_copy"}')).toBeNull();
-    expect(parseEvent('{"t":"interview_start","b":"m00-05"}')).toBeNull();
+    expect(parseEvent('{"t":"interview_start"}')).toBeNull();
+    expect(parseEvent('{"t":"cart_add","b":"google-fonts:roboto"}')).toBeNull();
+    expect(parseEvent('{"t":"cart_add"}')).toBeNull();
+    expect(parseEvent('{"t":"md_download","b":"n01"}')).toBeNull();
+    expect(parseEvent('{"t":"bundle_add","b":"secret-kit"}')).toBeNull();
     expect(parseEvent('{"t":"toString"}')).toBeNull();
     expect(parseEvent('{"t":"__proto__"}')).toBeNull();
   });
   it('다른 칸이 붙거나 모양이 다르면 버린다', () => {
-    expect(parseEvent('{"t":"card_copy","b":"first","ip":"1.2.3.4"}')).toBeNull();
-    expect(parseEvent('["card_copy"]')).toBeNull();
+    expect(parseEvent('{"t":"cart_add","b":"design","id":"x"}')).toBeNull();
+    expect(parseEvent('["cart_add"]')).toBeNull();
     expect(parseEvent('null')).toBeNull();
     expect(parseEvent('{"t":1}')).toBeNull();
-    expect(parseEvent('{"t":"card_copy","b":1}')).toBeNull();
+    expect(parseEvent('{"t":"cart_add","b":1}')).toBeNull();
     expect(parseEvent('not json')).toBeNull();
     expect(parseEvent('')).toBeNull();
   });
   it(`${BODY_MAX}바이트를 넘는 본문은 버린다 (한글은 3바이트)`, () => {
-    const pad = ' '.repeat(BODY_MAX - '{"t":"interview_start"}'.length);
-    expect(parseEvent(`{"t":"interview_start"}${pad}`)).not.toBeNull();
-    expect(parseEvent(`{"t":"interview_start"}${pad} `)).toBeNull();
-    expect(parseEvent(`{"t":"interview_start","x":"${'가'.repeat(60)}"}`)).toBeNull();
+    const pad = ' '.repeat(BODY_MAX - '{"t":"md_copy"}'.length);
+    expect(parseEvent(`{"t":"md_copy"}${pad}`)).not.toBeNull();
+    expect(parseEvent(`{"t":"md_copy"}${pad} `)).toBeNull();
+    expect(parseEvent(`{"t":"md_copy","x":"${'가'.repeat(60)}"}`)).toBeNull();
   });
-  it('구간 좁히기', () => {
-    expect(isBucket('card_copy', 'verify')).toBe(true);
-    expect(isBucket('card_copy', 'other')).toBe(false);
+  it('구간 좁히기: 담기는 대분류, 키트 담기는 키트 id', () => {
+    expect(isBucket('cart_add', 'datasets')).toBe(true);
+    expect(isBucket('cart_add', 'fonts')).toBe(false);
+    expect(EVENT_SPEC.bundle_add).toEqual(KIT_IDS);
   });
 });
 
-describe('영수증 발행 구간', () => {
-  const t0 = Date.UTC(2026, 9, 12, 9, 0, 0);
-  const min = 60000;
-  it('경계는 앞 구간에 넣지 않는다 (5분이면 m05-10)', () => {
-    expect(elapsedBucket(t0, t0)).toBe('m00-05');
-    expect(elapsedBucket(t0, t0 + 5 * min - 1)).toBe('m00-05');
-    expect(elapsedBucket(t0, t0 + 5 * min)).toBe('m05-10');
-    expect(elapsedBucket(t0, t0 + 14 * min)).toBe('m10-15');
-    expect(elapsedBucket(t0, t0 + 19 * min)).toBe('m15-20');
-    expect(elapsedBucket(t0, t0 + 29 * min)).toBe('m20-30');
-    expect(elapsedBucket(t0, t0 + 30 * min)).toBe('m30+');
-  });
-  it('시작 시각이 없거나 앞뒤가 바뀌면 none', () => {
-    expect(elapsedBucket(undefined, t0)).toBe('none');
-    expect(elapsedBucket(t0 + min, t0)).toBe('none');
-    expect(elapsedBucket(Number.NaN, t0)).toBe('none');
+describe('계산한 재료 수 구간', () => {
+  it('경계', () => {
+    expect([0, 1, 2, 3, 4, 6, 7, 10, 11, 20, 21, 300].map(countBucket)).toEqual(['n01', 'n01', 'n02-03', 'n02-03', 'n04-06', 'n04-06', 'n07-10', 'n07-10', 'n11-20', 'n11-20', 'n21+', 'n21+']);
   });
 });
 

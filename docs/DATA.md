@@ -9,6 +9,7 @@
 | `data/catalog/<대분류>/index.json` | 대분류 이름(`nameKo`), 받은 날, 소분류 목록(id·이름·설명·출처별 개수), 뺀 출처와 이유(`rejected`) |
 | `data/catalog/<대분류>/<출처>.json` | `{ source, fetchedAt, count, available?, cut?, note?, items[] }`. `source.license`는 이 목록을 실어도 되는 이유, `cut`은 너무 큰 출처의 상위 기준 |
 | `data/glossary.json` | 어려운 말 풀이·용어 사전 (204개) |
+| `data/kits.json` | 스타터 키트 (홈에서 한 번에 담는 재료 묶음 4개, 손으로 고른 진열대 id). 키트 id는 `src/lib/kits.ts` `KIT_IDS`(집계 구간)와 같아야 하고, 진열대에 없는 id가 있으면 진열대 빌드가 멈춘다 (`tests/lib/kits.test.ts`). 자료를 다시 받아 재료가 빠지면 여기를 고친다 |
 | `schemas/catalog-*.json` | 대분류마다 출처 파일·`index.json` 스키마 |
 
 ## 2. 항목 하나의 모양 (`src/lib/catalog/types.ts`의 `CatalogItem`)

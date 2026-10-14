@@ -9,10 +9,12 @@ import { dateOf, formatCount, paletteColors, pickSummary, shardOf, thumbOf } fro
 import type { DetailRecord, NavCategory, Shard } from '../lib/catalog/types.ts';
 import { contrast, isHex, ratio2 } from '../lib/color.ts';
 import { METRIC_ICON } from '../lib/labels.ts';
+import { openCart } from '../lib/cart-ui.ts';
 import { ROUTES, categoryPath, itemDataPath, itemPath, listPath } from '../lib/routes.ts';
-import { $cart, addToCart, removeFromCart, setCartMemo } from '../lib/store.ts';
+import { $cart, addToCart, markViewed, removeFromCart, setCartMemo } from '../lib/store.ts';
 import { MEMO_MAX } from '../lib/saved.ts';
 import { fill } from '../lib/text.ts';
+import { trackAdd } from '../lib/track.ts';
 import CopyButton from './CopyButton.tsx';
 import { Icon } from './Icon.tsx';
 import { Thumb } from './Thumb.tsx';
@@ -86,9 +88,9 @@ function AddBox({ item }: { item: DetailRecord }) {
             >
               {ko.item.remove}
             </button>
-            <a class="btn btn-text" href={ROUTES.cart}>
+            <button type="button" class="btn btn-text" onClick={() => openCart(item.id)}>
               {ko.item.goCart}
-            </a>
+            </button>
           </div>
         </>
       ) : (
@@ -96,8 +98,13 @@ function AddBox({ item }: { item: DetailRecord }) {
           type="button"
           class="btn btn-primary btn-lg buy-add"
           onClick={() => {
-            if (addToCart({ id: item.id, name: item.name, cat: item.category, sub: item.kind, memo }, Date.now())) announce(fill(ko.card.addedLive, { name: item.name }));
-            else announce(ko.card.full);
+            const r = addToCart({ id: item.id, name: item.name, cat: item.category, sub: item.kind, memo }, Date.now());
+            if (r === 'full') {
+              announce(ko.card.full);
+              return;
+            }
+            if (r === 'added') trackAdd(item.category);
+            announce(fill(ko.card.addedLive, { name: item.name }));
           }}
         >
           <Icon name="cart" size="20px" />
@@ -318,6 +325,7 @@ export default function ItemDetail({ nav }: Props) {
           return;
         }
         document.title = `${item.name} · ${ko.site.name}`;
+        markViewed({ id: item.id, name: item.name, cat: item.category, sub: item.kind }, Date.now());
         setState({ k: 'ok', item });
       })
       .catch(() => live && setState({ k: 'failed' }));

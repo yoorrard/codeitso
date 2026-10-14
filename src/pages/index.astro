@@ -1,18 +1,23 @@
 ---
-// 홈 (brief 3절): 한 줄 소개 + 검색 → 대분류 타일(상품 수·소분류 몇 개) → 기획전 여섯 줄(가로로 넘기는 카드).
-// PC 첫 화면(1440×900)에 검색·카테고리·기획전 첫 줄이 다 보이게 위를 낮게 둔다.
+// 홈 (brief 3절·7절): 한 줄 소개 + 검색 → 대분류 타일(상품 수·소분류 몇 개) → 최근 본 재료(있을 때만) → 기획전 첫 줄
+// → 스타터 키트(한 번에 담는 묶음) → 나머지 기획전(가로로 넘기는 카드). PC 첫 화면(1440×900)에 검색·카테고리·기획전 첫 줄이 다 보이게 위를 낮게 둔다.
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import KitShelf from '../components/KitShelf.astro';
 import { ProductCard } from '../components/ProductCard.tsx';
+import RecentRow from '../components/RecentRow.tsx';
 import { ko } from '../copy/ko.ts';
 import { withCommas } from '../lib/catalog/core.ts';
-import { categories, homeRows } from '../lib/catalog/site.ts';
+import { categories, homeKits, homeRows } from '../lib/catalog/site.ts';
 import { CATEGORY_ICON } from '../lib/icons.ts';
 import { ROUTES, categoryPath, listPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
 
 const cats = categories();
 const rows = homeRows();
+const kits = homeKits();
+/** 최근 본 재료 줄의 이름표: 대분류 id → 이름, '대분류/소분류' → 소분류 이름 */
+const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c.id, c.nameKo], ...c.subcategories.map((s) => [`${c.id}/${s.id}`, s.nameKo])]));
 ---
 
 <Base>
@@ -49,8 +54,12 @@ const rows = homeRows();
     </ul>
   </section>
 
+  <RecentRow client:idle names={names} />
+
   {
-    rows.map((r) => (
+    rows.map((r, ri) => (
+      <Fragment>
+      {ri === 1 && <KitShelf kits={kits} />}
       <section class="sec row" aria-labelledby={`row-${r.id}`}>
         <div class="sec-head">
           <h2 id={`row-${r.id}`}>{ko.home.rows[r.id]}</h2>
@@ -69,6 +78,7 @@ const rows = homeRows();
           ))}
         </ul>
       </section>
+      </Fragment>
     ))
   }
 </Base>

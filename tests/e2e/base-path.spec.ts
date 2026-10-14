@@ -50,6 +50,8 @@ test('하위 주소: 홈 → 대분류 → 2쪽 → 상세 → 담기 → 장바
   await expect(page.locator('h1.detail-name')).toBeVisible();
   await page.getByRole('button', { name: ko.item.add }).click();
   await page.locator('a.hd-cart').click();
+  await expect(page.locator('dialog.drawer')).toBeVisible();
+  await page.locator('dialog.drawer').getByRole('link', { name: ko.drawer.toCart }).click();
   await expect(page).toHaveURL(new RegExp(`${BASE}/cart$`));
   await islandsReady(page);
   await expect(page.locator('.cart-name')).toHaveCount(1);

@@ -5,10 +5,12 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { cardOf, dateOf, filePopularity, relatedIndex, shardOf, sortRanked } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
-import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
+import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
 
 export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog');
+/** 스타터 키트 (손으로 고른 진열대 id 묶음) */
+export const KITS_FILE = join(import.meta.dirname, '..', '..', 'data', 'kits.json');
 const DIR = CATALOG_DIR;
 
 interface IndexFile {
@@ -206,4 +208,23 @@ export function homeRows(): Row[] {
 /** 대분류 쪽의 소분류별 인기 상품 몇 개 */
 export function topOf(cat: CategoryId, sub: string, n: number): Card[] {
   return take(listOf(cat, sub, 'popular'), n);
+}
+
+interface KitsFile {
+  kits: { id: string; nameKo: string; descKo: string; items: string[] }[];
+}
+
+/** 스타터 키트 (data/kits.json): id마다 진열대 카드로. 없는 id가 있으면 빌드를 멈춘다 (자료를 다시 받아 빠진 재료) */
+export function kits(file: string = KITS_FILE): KitData[] {
+  const { byId } = catalog();
+  return readJson<KitsFile>(file).kits.map((k) => ({
+    id: k.id,
+    name: k.nameKo,
+    desc: k.descKo,
+    cards: k.items.map((id) => {
+      const r = byId.get(id);
+      if (!r) throw new Error(`data/kits.json: 키트 ${k.id}의 ${id}가 진열대에 없다`);
+      return card(r.item);
+    }),
+  }));
 }

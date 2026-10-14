@@ -1,0 +1,29 @@
+{
+  "about": "스타터 키트 (brief 7절 묶음 기획전): 한 번에 담는 재료 묶음. items는 진열대 id(data/catalog/**)이고 손으로 골랐다. 키트 id는 src/lib/kits.ts KIT_IDS와 같아야 한다 (tests/lib/kits.test.ts).",
+  "kits": [
+    {
+      "id": "landing",
+      "nameKo": "랜딩 페이지 키트",
+      "descKo": "서비스를 한 쪽에 소개하는 홈페이지 재료다. 한글 폰트·색·아이콘·UI·템플릿·일러스트를 묶었다.",
+      "items": ["korean-fonts:pretendard", "color-systems:tailwind", "iconify:lucide", "github:saadeghi--daisyui", "astro-themes:blackspike-astro-landing-page", "curated:undraw", "skill-anthropic:frontend-design"]
+    },
+    {
+      "id": "ai-chatbot",
+      "nameKo": "AI 챗봇 키트",
+      "descKo": "묻고 답하는 챗봇 재료다. 언어 모델 API 둘, 챗봇 템플릿, UI, 최신 문서를 읽어 오는 MCP 서버를 묶었다.",
+      "items": ["models-dev:anthropic", "models-dev:openai", "vercel:chatbot", "design-systems:shadcn-ui", "google-fonts:noto-sans-kr", "iconify:ph", "mcp-aitmpl:mcps-devtools-context7"]
+    },
+    {
+      "id": "school",
+      "nameKo": "학교 정보 앱 키트",
+      "descKo": "학교 기본정보·급식·시간표·학사일정을 보여 주는 앱 재료다. 나이스(NEIS) 공개 API와 한글 폰트·아이콘을 묶었다.",
+      "items": ["official:neis", "data-go-kr:15122275", "data-go-kr:15139198", "data-go-kr:15122333", "data-go-kr:15137088", "korean-fonts:pretendard", "iconify:tabler"]
+    },
+    {
+      "id": "dashboard",
+      "nameKo": "대시보드 키트",
+      "descKo": "숫자를 차트로 보여 주는 관리 화면 재료다. 대시보드 템플릿·차트 라이브러리·차트 색·세계 통계 데이터를 묶었다.",
+      "items": ["github-lists:kiranism--next-shadcn-dashboard-starter", "github:recharts--recharts", "chart-colors:d3-tableau10", "owid:life-expectancy", "owid:co-emissions-per-capita", "korean-fonts:pretendard", "iconify:lucide"]
+    }
+  ]
+}

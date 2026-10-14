@@ -38,7 +38,7 @@ export function releaseEnvProblems(env: BuildEnv): string[] {
   if (env.PUBLIC_STAGE !== 'release') return [];
   const out: string[] = [];
   const site = (env.PUBLIC_SITE_URL ?? '').trim();
-  if (site === '') out.push('정식 빌드인데 PUBLIC_SITE_URL(사이트 주소)이 비어 있어요. 실제 주소를 넣으세요 (docs/DEPLOY.md 4단계)');
+  if (site === '') out.push('정식 빌드인데 PUBLIC_SITE_URL(사이트 주소)이 비어 있어요. 실제 주소를 넣으세요 (docs/DEPLOY.md 7단계)');
   else if (site.toLowerCase().includes('example')) out.push(`정식 빌드인데 PUBLIC_SITE_URL이 예시 주소예요 (${site}). 실제 주소를 넣으세요`);
   if ((env.PUBLIC_CONTACT_EMAIL ?? '').trim() === '') out.push('정식 빌드인데 PUBLIC_CONTACT_EMAIL(연락 메일 주소)이 비어 있어요. 받을 주소를 넣으세요 (HUMAN H22)');
   return out;

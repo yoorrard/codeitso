@@ -778,7 +778,7 @@ aitools.md 10.3절이 H12를 제안했지만 H12는 이미 '저장소 비공개'
 
 - **aitools.md**: `data/guides.json` 모양을 이 문서 12절로 넓힌다. `/guides` 이름을 '준비 안내'로, 'AI 도구 안내'는 갈래 이름으로. 에러 카드 `ps-execution-policy`는 하나만. H12 번호 충돌을 H13으로.
 - **design.md**: '다른 서비스(직접 입력)'의 낱말표는 design.md 5번 결정(직접 쓴 말을 AI 없이 낱말표로 읽어 반영하고, 반영한 결과를 그대로 말함)과 같은 장치를 쓴다. 반영 문장 꼴도 맞춘다("'OpenWeather' → 날씨 갈래의 확인된 도구를 옆에 놓았어요").
-- **D72(배포)**: 코드쇼퍼 자신은 Cloudflare Workers. 이용자 안내의 기본 제안도 같은 서비스라, 소유자가 한 번 해 본 순서(`docs/DEPLOY.md` 4절)를 `cf-workers-connect` 안내의 실측 근거로 쓴다.
+- **D72(배포)**: 코드쇼퍼 자신은 Cloudflare Workers. 이용자 안내의 기본 제안도 같은 서비스라, 소유자가 한 번 해 본 순서(`docs/DEPLOY.md` 5단계)를 `cf-workers-connect` 안내의 실측 근거로 쓴다.
 
 ---
 

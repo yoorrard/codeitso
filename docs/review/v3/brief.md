@@ -969,7 +969,7 @@ type SourceRef = { url: string; label: string; via: 'page' | 'repo' | 'registry'
 
 | 안 | 비공개 저장소 | 비용 | 익명 집계 `/api/event` | 보안 머리글 `_headers` | 주소 바탕 | 근거 |
 |---|---|---|---|---|---|---|
-| **Cloudflare Workers + Workers Builds (지금 기본, D72)** | 된다. Cloudflare GitHub 앱을 설치할 때 고른 저장소에 접근한다 | 0원. 정적 파일 요청은 무료·무제한, Worker는 `/api/*`만, 하루 10만 요청 | 됨 | 됨 | `/` | `docs/DEPLOY.md` 0·4절 · [검색 요약] developers.cloudflare.com/workers/ci-cd/builds/git-integration (비공개 저장소를 따로 적지는 않았고 GitHub 앱 권한으로 된다는 설명) |
+| **Cloudflare Workers + Workers Builds (지금 기본, D72)** | 된다. Cloudflare GitHub 앱을 설치할 때 고른 저장소에 접근한다 | 0원. 정적 파일 요청은 무료·무제한, Worker는 `/api/*`만, 하루 10만 요청 | 됨 | 됨 | `/` | `docs/DEPLOY.md` 0절·5단계 · [검색 요약] developers.cloudflare.com/workers/ci-cd/builds/git-integration (비공개 저장소를 따로 적지는 않았고 GitHub 앱 권한으로 된다는 설명) |
 | Cloudflare Pages | 된다 [기억·미확인] | 0원 | Pages Functions로 옮겨야 함 | 됨 | `/` | Cloudflare 문서가 새 프로젝트는 Workers로 시작하라고 권한다 [저장소: `services.md` 1절] |
 | **GitHub Pages (Free)** | **안 된다.** 공개 저장소만. 비공개로 바꾸면 사이트가 내려간다 | 0원 | 안 됨(서버 없음) → `PUBLIC_HOST=static` | 안 됨(`<meta>` CSP만 남음, `frame-ancestors` 없음) | 프로젝트 사이트면 `/code-chauffeur` | [저장소] github/docs `gated-features/pages.md` · [검색 요약] docs.github.com githubs-plans |
 | GitHub Pages (Pro·Team) | 된다. 사이트는 인터넷에 공개된다(접근 제한 게시는 Enterprise Cloud 조직만) | 유료 요금제 | 안 됨 | 안 됨 | 같음 | [검색 요약] docs.github.com githubs-plans, pages limits |
@@ -1273,7 +1273,7 @@ T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 �
   - https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits
   - https://docs.github.com/en/billing/managing-billing-for-your-github-account/downgrading-your-github-subscription
   - 본문 근거는 `services.md` 2.2절 [저장소]
-- Cloudflare Workers Builds 저장소 연결: https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/ [검색 요약]. 비공개 저장소를 따로 적지는 않음. `docs/DEPLOY.md` 4절.
+- Cloudflare Workers Builds 저장소 연결: https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/ [검색 요약]. 비공개 저장소를 따로 적지는 않음. `docs/DEPLOY.md` 5단계.
 - Vercel Hobby와 조직 소유 비공개 저장소: https://community.vercel.com/t/unable-to-deploy-from-organizational-private-repository/16334 · https://community.vercel.com/t/why-cant-hobby-accounts-deploy-from-organizations/10015 [검색 요약: 직원 답변이 인용한 공식 문서 문장]
 - Astro `base`와 내부 링크 앞붙이기: https://docs.astro.build/en/guides/deploy/github/ · https://docs.astro.build/en/reference/configuration-reference/ [검색 요약]
 

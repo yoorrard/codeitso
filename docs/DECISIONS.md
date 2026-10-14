@@ -242,7 +242,7 @@ MCP 서버와 비공식 패키지는 이용자 컴퓨터에서 남의 코드를 
 ## D53 미리 보기 배포 준비: CSP는 Astro 해시, 나머지 머리글은 _headers, 단계는 저장소 변수 (2026-10-12, 자동 결정)
 - 결정: (1) CSP는 Astro 7의 `security.csp`(빌드 때 스크립트·스타일 해시를 모아 `<meta>`)로, `'unsafe-inline'` 스크립트 없이 간다. 인라인 style 속성(노선 띠의 `--here` 등)만 `style-src-attr 'unsafe-inline'`. 외부 허용은 Web Analytics 둘뿐. (2) `frame-ancestors`는 meta에서 안 되므로 `public/_headers`에 다른 보안 머리글과 함께 둔다 (Cloudflare 문서: 정적 파일 디렉터리의 `_headers`를 Workers가 읽어 정적 응답에 적용, 파일 자체는 내보내지 않음). `Referrer-Policy`는 `same-origin` — 노선 띠 차 이동(D49)이 같은 사이트 referrer를 쓰고, 밖으로는 아무것도 보내지 않는다. (3) 색종이는 기본 인스턴스가 blob 작업자를 만들어 CSP에 막히므로 `useWorker: false` 인스턴스를 쓴다 (CSP를 넓히지 않음). (4) 단계는 저장소 변수 `SITE_STAGE` 하나로: 미리 보기(띠·noindex·robots 막음, `validate`)와 정식(`validate:release` 통과해야 배포). (5) 배포 작업은 비밀 값이 없으면 빌드까지만 하고 알림만 남기며, `database_id`가 비어 있으면 실패한다. (6) Web Analytics는 자동 설치를 끄고 토큰만 받아 `/receipt`를 빼고 싣는다.
 - 이유: ARCHITECTURE 9절, R-04·R-61, CLAUDE.md 꼭 지킬 것 1·11. 확인: CSP를 켠 채 e2e 43개(새 CSP 시험 2개 포함)·화면 점검 통과, 영수증 화면에 분석 스크립트 0.
-- 틀렸을 때 비용: 낮음. CSP가 무엇을 막으면 `astro.config.mjs`의 `security.csp` 목록을 고친다. 실제 배포 화면은 사람이 계정을 연결한 뒤 확인한다 (DEPLOY.md 6단계, 화면·권한 이름은 미확인).
+- 틀렸을 때 비용: 낮음. CSP가 무엇을 막으면 `astro.config.mjs`의 `security.csp` 목록을 고친다. 실제 배포 화면은 사람이 계정을 연결한 뒤 확인한다 (DEPLOY.md 8단계, 화면·권한 이름은 미확인).
 
 ## D54 T16b(홈 WebGL 시험 장면)는 만들지 않고 보류 (2026-10-12, 자동 결정)
 - 결정: ogl(1.0.11, Unlicense)로 홈 출발 장면을 진짜 3D로 바꾸는 시험판을 만들지 않는다. CSS 3D 장면(M8 원근 도로·차, M2 문·기사님)을 그대로 둔다.

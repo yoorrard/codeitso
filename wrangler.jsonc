@@ -1,0 +1,26 @@
+// Cloudflare Workers 설정 (docs/ARCHITECTURE.md 9절). 정적 파일(dist) + /api/*만 Worker 함수 (worker/index.ts).
+// T18: 로컬 시험용 뼈대. database_id는 T21에서 `npx wrangler d1 create code-chauffeur-events` 결과로 채운다 (비밀 값이 아니다).
+// 로컬 시험: npm run build → npx wrangler d1 migrations apply code-chauffeur-events --local → npx wrangler dev
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "code-chauffeur",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-20",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // 화면의 링크는 끝 빗금 없이(/check) 쓴다. 기본값(auto)이면 /check → /check/로 한 번 돌려보내므로 끝 빗금을 떼는 쪽으로 맞춘다
+    "html_handling": "drop-trailing-slash",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "code-chauffeur-events",
+      "database_id": "",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "observability": { "enabled": false }
+}

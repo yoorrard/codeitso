@@ -1,0 +1,1075 @@
+/* 기본 틀 (T05, docs/CONCEPT.md 5.8): 머리줄(브랜드·단계 줄·설정), 무대, 아래 막대, 설정 창.
+   섬(Preact)도 같은 클래스를 쓰므로 범위 없는 전역 스타일로 둔다. 값은 tokens.css 변수만 쓴다. */
+
+/* 단계 이동 S7 (brief 7절, D25·D71): 문서 간 View Transitions는 꺼 두었다(D71 검토 반영). 지도 섬이 붙기 전의 지도는 땅만 그리므로(D68)
+   옛 화면과 섞어 비추면 길이 사라졌다 다시 나타나고, 띠 높이가 바뀌며 지도가 한 번 튄다: 전환이 없을 때보다 나빴다.
+   새 화면에서 도는 단계 줄 ✓와 막대 칸 채움(StageRail.tsx)은 그대로다.
+   다시 켜는 조건: 붙기 전에 지도 띠가 옛 그림을 칠할 수 있을 때 (예: pageswap에서 띠 SVG를 store.ts로 떠 두고 첫 그림 전에 넣기).
+   그때 켜기(@view-transition)는 기본 틀 머리의 인라인 style에 둔다(바깥 묶음에만 두면 크롬이 건너뛴다). 머리줄·단계 줄·지도 띠에
+   view-transition-name을 주고 자리 이동 없이(animation: none) 시트만 바꾸며, 지도 묶음은 화면 안이면 기본 크기 변환, 화면 밖이면
+   animation: none으로 나눈다(viewTransition.types). 사이트 설정의 동작 줄이기면 pageswap·pagereveal에서 skipTransition() */
+
+/* ── 머리줄 (CONCEPT 5.8, brief 3.2): 가로 묶음 로고(그림 52×44 + 8 + 글자 상표 82×20), 사전, 설정. 높이 56. 붙박이가 아니다 (D41) ── */
+.topbar {
+  background: var(--surface);
+  color: var(--text);
+  border-block-end: 1px solid var(--hairline);
+  padding-inline: max(var(--gutter), env(safe-area-inset-left)) max(var(--gutter), env(safe-area-inset-right));
+}
+
+.topbar-inner {
+  container: topbar / inline-size;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  max-inline-size: var(--content-max);
+  min-block-size: 56px;
+  margin-inline: auto;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tap);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  text-decoration: none;
+  transition: scale var(--dur-tap) var(--ease-out);
+}
+
+/* 머리줄 로고는 움직이지 않는다. 눌렀을 때 다른 버튼처럼 0.98로 눌리기만 한다 (brief 3.1) */
+.brand:active {
+  scale: var(--juice-press-scale);
+}
+
+/* ── 로고 (D65, brief 3.1·3.4·3.5): 인라인 SVG. 경로 클래스를 --logo-* 토큰으로 칠한다.
+   로고 위에 그림자·외곽선·필터를 더하지 않는다. 크기는 Logo의 height가 정한다 ── */
+.logo {
+  display: block;
+  flex-shrink: 0;
+}
+
+.logo-body {
+  fill: var(--logo-body);
+}
+
+.logo-letter {
+  fill: var(--logo-letter);
+}
+
+.logo-accent {
+  fill: var(--logo-accent);
+}
+
+.logo-light {
+  fill: var(--logo-light);
+}
+
+.logo-white {
+  fill: var(--logo-white);
+}
+
+/* 모자 배지는 남색 타일을 스스로 가져서 낮·밤이 같다 */
+.logo--badge {
+  --logo-body: var(--navy);
+  --logo-accent: var(--brand-blue);
+  --logo-light: var(--cyan);
+  --logo-white: var(--brand-white);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* 사전: 보이는 알약은 36(--btn-sm), 누르는 곳은 44. 알약은 ::before로 그리고 링크 자체는 44 높이로 둔다 (brief 3.2) */
+.dict-btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+  transition: scale var(--dur-tap) var(--ease-out);
+}
+
+.dict-btn::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--tap) - var(--btn-sm)) / 2);
+  z-index: -1;
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+  transition: background-color var(--dur-tap) var(--ease-out);
+}
+
+.dict-btn:active {
+  scale: var(--juice-press-scale);
+}
+
+.dict-btn:active::before {
+  background: var(--fill-press);
+}
+
+@media (hover: hover) {
+  .dict-btn:hover::before {
+    background: var(--fill-press);
+  }
+}
+
+/* 글자를 키워 머리줄 폭이 모자라면 '사전' 글자를 숨기고 그림 단추로 (이름은 화면 낭독기에 그대로 남는다) */
+@container topbar (max-width: 18rem) {
+  .dict-btn {
+    inline-size: var(--tap);
+    padding: 0;
+    justify-content: center;
+  }
+
+  .dict-btn span {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ── 단계 줄 (D64, docs/review/v2/brief.md 6.2) ─────────────────────────────
+   접힘(컨테이너 40rem 미만, 360px 기본): '2/4 · 도구 고르기' 버튼 하나 + 4칸 막대. 누르면 단계 시트.
+   펼침(40rem 이상): 연습 글 링크 | 원 넷(24)을 가는 선으로 잇는다. 원: 마침 = 남색(내 것) + ✓, 지금 = 파랑(지금) + 흰 숫자, 아직 = 흰 원.
+   펼친 줄은 원·연습 링크까지 약 625px가 들어서, 읽는 폭(640px)을 다 쓸 때만 펼친다 (D64: 설계서의 34rem은 이름만 잰 값).
+   rem 기준이라 글자를 키우면(200%) 어느 폭이든 접힌다 */
+.rail-wrap {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: var(--space-1);
+}
+
+.rail {
+  container: rail / inline-size;
+}
+
+.rail-full {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 48px;
+}
+
+.rail-toggle {
+  display: flex;
+}
+
+@container rail (min-width: 40rem) {
+  .rail-full {
+    display: flex;
+  }
+
+  .rail-toggle {
+    display: none;
+  }
+}
+
+/* 펼침: 연습은 번호 밖이라 작은 글 링크 + 세로 나눔 선 */
+.rail-practice {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  /* 번호 밖 연습이라 지금 단계(파랑 원)보다 조용하게 */
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.rail-practice.current {
+  color: var(--text);
+}
+
+.rail-practice-opt {
+  color: var(--text-2);
+  font-weight: var(--weight-body);
+}
+
+.rail-divider {
+  flex: none;
+  inline-size: 1px;
+  block-size: 24px;
+  background: var(--hairline);
+}
+
+.rail-list {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rail-list > li {
+  display: flex;
+  align-items: center;
+}
+
+/* 원과 원 사이를 잇는 선: 1px --hairline. 지나온 구간은 2px --brand-blue */
+.rail-list > li + li {
+  flex: 1 1 auto;
+}
+
+.rail-list > li + li::before {
+  content: '';
+  flex: 1 1 auto;
+  min-inline-size: var(--space-3);
+  block-size: 1px;
+  margin-inline: var(--space-1);
+  background: var(--hairline);
+}
+
+.rail-list > li.reached::before {
+  block-size: 2px;
+  background: var(--brand-blue);
+}
+
+.step :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font: inherit;
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.step:is(.current, .done) a {
+  color: var(--text);
+}
+
+.step.locked button {
+  color: var(--text-3);
+}
+
+/* 원 24 (펼친 줄과 단계 시트가 같이 쓴다). rem이라 글자를 키우면 원도 같이 커진다 (WCAG 1.4.4) */
+.step-dot {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+:is(.step, .sheet-step).done .step-dot {
+  background: var(--chosen);
+  box-shadow: none;
+  color: var(--on-chosen);
+}
+
+:is(.step, .sheet-step).current .step-dot {
+  background: var(--accent);
+  box-shadow: none;
+  color: var(--on-accent);
+}
+
+.step-dot .icon-wrap {
+  display: block;
+}
+
+/* 연습(번호 없음)의 빈 고리 */
+.step-ring {
+  inline-size: 8px;
+  block-size: 8px;
+  border: 2px solid currentColor;
+  border-radius: var(--radius-pill);
+}
+
+.step-dot.just-opened {
+  animation: step-open var(--dur-pop) var(--ease-spring);
+}
+
+@keyframes step-open {
+  from {
+    transform: scale(var(--juice-s-scale));
+  }
+}
+
+/* 단계 이동 S7: 새로 마친 단계의 ✓가 톡 찍히고(--dur-pop 스프링), 막대 칸과 잇는 선이 왼쪽부터 채워진다(--dur-ui).
+   섬이 just-done·just-reached를 한 번 붙인다(StageRail.tsx). 동작 줄이기면 길이가 0이라 바로 보인다 */
+.rail-full :is(.step-dot.just-done, .rail-practice.just-done) .icon-wrap {
+  animation: step-done var(--dur-pop) var(--ease-spring) both;
+}
+
+@keyframes step-done {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+.rail-list > li.just-reached::before {
+  transform-origin: left center;
+  animation: bar-fill var(--dur-ui) var(--ease-out) both;
+}
+
+.rail-bars .bar.done.just-done {
+  position: relative;
+  overflow: hidden;
+  background: var(--fill);
+}
+
+.rail-bars .bar.done.just-done::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--chosen);
+  transform-origin: left center;
+  animation: bar-fill var(--dur-ui) var(--ease-out) both;
+}
+
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* 접힘: 글 줄 44 + 4칸 막대 4 + 아래 여백 4 = 52 */
+.rail-toggle {
+  flex-direction: column;
+  align-items: stretch;
+  inline-size: 100%;
+  padding: 0 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.rail-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-strong);
+}
+
+.rail-count {
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.rail-sep {
+  color: var(--text-3);
+}
+
+.rail-name {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.rail-toggle-row .icon-wrap {
+  color: var(--text-2);
+}
+
+.rail-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-1);
+}
+
+.rail-bars .bar {
+  block-size: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+}
+
+/* 마친 칸은 남색(내 것), 지금 칸은 파랑(지금): 펼친 줄의 원과 같은 문법이라, 뒤로 돌아와도 지금 위치가 보인다 (D64 검토 반영) */
+.rail-bars .bar.done {
+  background: var(--chosen);
+}
+
+.rail-bars .bar.now {
+  background: var(--brand-blue);
+}
+
+/* 밤에는 --fill이 머리줄 바탕과 거의 같아(1.19:1) 네 칸 구조가 안 읽혀서, 빈 칸을 한 단 밝은 선 색으로 */
+@media (prefers-color-scheme: dark) {
+  .rail-bars .bar,
+  .rail-bars .bar.done.just-done {
+    background: var(--hairline);
+  }
+}
+
+/* 다시 온 손님(Base.astro의 data-resume): 빌드 때 그린 진행 표시는 처음 온 사람 기준이라 틀린 상태가 잠깐 보인다.
+   섬이 붙어 data-ready가 달릴 때까지 감췄다가 흐리게 나타낸다. 처음 온 사람과 스크립트 없는 화면은 그대로 보인다 */
+:root[data-resume] .rail:not([data-ready]) :is(.rail-bars, .rail-list),
+:root[data-resume] .status-line:not([data-ready]) .status-text {
+  opacity: 0;
+}
+
+.rail-bars,
+.rail-list,
+.status-text {
+  transition: opacity var(--dur-fade) var(--ease-out);
+}
+
+/* ── 모달 시트 (brief 5.6, D67): 단계 시트·설정·확인·사전이 함께 쓰는 <dialog>.
+   360px은 아래에서 올라오는 시트(위 모서리 20), 768px부터 가운데 최대 640(확인 대화 상자는 400). 끌지 않으므로 손잡이를 그리지 않는다.
+   층 3: --surface-raised + --elev-3, 뒤막 --scrim(낮 40%, 밤 60%). 들어오기 320ms --ease-drawer, 나가기 200ms --ease-in
+   (나갈 때는 display·overlay를 allow-discrete로 늦춘다. 못 하는 브라우저는 바로 닫힌다). 동작 줄이기면 150ms 투명도만.
+   쓰는 법: <dialog class="modal"> → .modal-head(.modal-title + 닫기 .icon-btn) → 내용. 확인 대화 상자는 <dialog class="sheet"> ── */
+.modal,
+.stage-sheet,
+.sheet {
+  --sheet-from: 100%;
+  --sheet-fade: 1;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: calc(100dvh - var(--space-6));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: auto auto 0;
+  padding: 0 var(--gutter) calc(var(--space-5) + env(safe-area-inset-bottom));
+  border: 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: var(--elev-3);
+  opacity: var(--sheet-fade);
+  translate: 0 var(--sheet-from);
+  transition-property: translate, opacity, overlay, display;
+  transition-behavior: allow-discrete;
+  transition-duration: var(--dur-exit);
+  transition-timing-function: var(--ease-in);
+}
+
+:is(.modal, .stage-sheet, .sheet)[open] {
+  opacity: 1;
+  translate: 0 0;
+  transition-duration: var(--dur-sheet);
+  transition-timing-function: var(--ease-drawer);
+}
+
+@starting-style {
+  :is(.modal, .stage-sheet, .sheet)[open] {
+    opacity: var(--sheet-fade);
+    translate: 0 var(--sheet-from);
+  }
+}
+
+:is(.modal, .stage-sheet, .sheet)::backdrop {
+  background: var(--scrim);
+  opacity: 0;
+  transition-property: opacity, overlay, display;
+  transition-behavior: allow-discrete;
+  transition-duration: var(--dur-exit);
+  transition-timing-function: var(--ease-in);
+}
+
+:is(.modal, .stage-sheet, .sheet)[open]::backdrop {
+  opacity: 1;
+  transition-duration: var(--dur-sheet);
+  transition-timing-function: var(--ease-drawer);
+}
+
+@starting-style {
+  :is(.modal, .stage-sheet, .sheet)[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+:is(.modal, .stage-sheet, .sheet) :focus-visible {
+  outline-color: var(--focus);
+}
+
+@media (min-width: 768px) {
+  .modal,
+  .stage-sheet,
+  .sheet {
+    --sheet-from: var(--space-6);
+    --sheet-fade: 0;
+    max-inline-size: 640px;
+    margin: auto;
+    padding-block-end: var(--space-5);
+    border-radius: var(--radius-xl);
+  }
+
+  .sheet {
+    max-inline-size: 400px;
+  }
+}
+
+/* 동작 줄이기(기기·사이트): 미끄러지지 않고 150ms 투명도만 */
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .stage-sheet,
+  .sheet {
+    --sheet-from: 0px;
+    --sheet-fade: 0;
+  }
+
+  :is(.modal, .stage-sheet, .sheet),
+  :is(.modal, .stage-sheet, .sheet)[open],
+  :is(.modal, .stage-sheet, .sheet)::backdrop,
+  :is(.modal, .stage-sheet, .sheet)[open]::backdrop {
+    transition-duration: var(--dur-fade);
+  }
+}
+
+:root[data-motion='reduce'] :is(.modal, .stage-sheet, .sheet) {
+  --sheet-from: 0px;
+  --sheet-fade: 0;
+}
+
+:root[data-motion='reduce'] :is(.modal, .stage-sheet, .sheet),
+:root[data-motion='reduce'] :is(.modal, .stage-sheet, .sheet)[open],
+:root[data-motion='reduce'] :is(.modal, .stage-sheet, .sheet)::backdrop,
+:root[data-motion='reduce'] :is(.modal, .stage-sheet, .sheet)[open]::backdrop {
+  transition-duration: var(--dur-fade);
+}
+
+/* 머리 56: 제목 22/700 왼쪽, 닫기 44 오른쪽. 내용이 길면 머리는 위에 붙어 있다 */
+.modal-head,
+.sheet-head {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-block-size: 56px;
+  margin-inline: calc(-1 * var(--gutter));
+  padding: var(--space-2) var(--gutter) 0;
+  background: var(--surface-raised);
+}
+
+.modal-title,
+.sheet-head h2 {
+  margin: 0;
+  font-size: var(--size-title-2);
+  line-height: var(--leading-title-2);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-title-sm);
+}
+
+:is(.modal-head, .sheet-head) .icon-btn {
+  margin-inline-end: calc(-1 * var(--space-3));
+}
+
+.sheet-steps {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  container: sheet-steps / inline-size;
+}
+
+.sheet-step + .sheet-step {
+  border-block-start: 1px solid var(--hairline);
+}
+
+/* 못 가는 줄(.sheet-step-row)은 이유를 줄에 적어 두고 누를 수 없게 둔다 */
+.sheet-step :is(a, .sheet-step-row) {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr auto;
+  align-items: center;
+  column-gap: var(--space-3);
+  inline-size: 100%;
+  min-block-size: 56px;
+  padding: var(--space-3) 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+}
+
+.sheet-step a {
+  cursor: pointer;
+}
+
+.sheet-step-text {
+  display: grid;
+  gap: 2px;
+  min-inline-size: 0;
+}
+
+.sheet-step-name {
+  font-size: var(--size-body-lg);
+  /* 단위 없는 줄 높이: 글자를 키워 두 줄로 넘어가도 겹치지 않는다 (WCAG 1.4.12) */
+  line-height: var(--leading-body);
+  font-weight: var(--weight-strong);
+}
+
+.sheet-step-opt {
+  color: var(--text-2);
+  font-weight: var(--weight-body);
+}
+
+.sheet-step.locked .sheet-step-name {
+  color: var(--text-2);
+}
+
+.sheet-step-sub {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.sheet-step-state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+  white-space: nowrap;
+}
+
+.sheet-step.done .sheet-step-state {
+  color: var(--ok-ink);
+}
+
+.sheet-step.current .sheet-step-state {
+  color: var(--link);
+}
+
+.sheet-step.locked .sheet-step-state {
+  color: var(--text-3);
+}
+
+/* 좁거나 글자를 키우면(200%) 오른쪽 상태 글을 이름 아래로 내린다: 글 칸이 한 낱말 폭으로 줄지 않게 */
+@container sheet-steps (width < 18rem) {
+  .sheet-step :is(a, .sheet-step-row) {
+    grid-template-columns: 1.5rem 1fr;
+  }
+
+  .sheet-step-state {
+    grid-column: 2;
+    white-space: normal;
+  }
+}
+
+.route-hint {
+  margin-block-start: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--fill);
+  color: var(--text);
+  font-size: var(--size-caption);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: inherit;
+}
+
+.icon-wrap {
+  display: inline-flex;
+}
+
+/* 직접 그린 SVG 그림 (src/lib/glyphs.ts): 감싼 상자의 크기를 채운다. 색은 currentColor */
+.glyph {
+  display: inline-grid;
+  place-items: center;
+}
+
+.glyph svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* 그림 타일 (CONCEPT 5.7, brief 5.7·4.3): 48px 이하는 남색 채움 타일(--tile + --on-tile 선 그림), 64px 이상은 옅은 판(--plate + --plate-line).
+   밤에는 남색 면이 바탕에 묻혀(1.14:1) --tile이 한 단 밝은 남색 판 + 밝은 파랑 선으로 바뀐다.
+   크기: sm 36 · md 40 · lg 48 · xl 64 · hero(칸 폭, 140까지). 그림은 타일의 60%, 청사진(96 격자, 자체 여백)은 92% */
+.art-tile {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--tile);
+  color: var(--on-tile);
+}
+
+.art-tile svg {
+  display: block;
+  inline-size: 60%;
+  block-size: 60%;
+}
+
+.art-tile.is-blueprint svg {
+  inline-size: 92%;
+  block-size: 92%;
+}
+
+/* 64px 이하 타일에서는 청사진의 치수선이 0.5px 잡선으로 보여 뺀다 */
+.art-tile:not(.tile-hero) .bp-dim {
+  display: none;
+}
+
+.art-tile.tile-sm {
+  inline-size: 36px;
+  block-size: 36px;
+}
+
+.art-tile.tile-lg {
+  inline-size: 48px;
+  block-size: 48px;
+}
+
+/* 64px 이상: 큰 남색 판을 늘어놓지 않는다 (brief 5.7, 10절). 옅은 판 위 선 1.5 */
+.art-tile.tile-xl {
+  inline-size: 64px;
+  block-size: 64px;
+  border-radius: var(--radius-md);
+  background: var(--plate);
+  color: var(--plate-line);
+}
+
+/* 큰 청사진 타일: 놓인 칸의 폭을 채우되 140px까지 (빈 상태, 설계도 받기의 건네드릴 것) */
+.art-tile.tile-hero {
+  inline-size: min(100%, 140px);
+  block-size: auto;
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  background: var(--plate);
+  color: var(--plate-line);
+}
+
+.storage-off {
+  margin-block-start: var(--space-2);
+  font-size: var(--size-caption);
+}
+
+/* ── 설정 시트 (brief 6.13): 줄 56 목록(.list-row, parts.css)과 스위치. 줄 아래 덧붙이는 설명 한 줄 ── */
+/* 줄은 시트 가장자리까지 (parts.css의 .list가 뒤에 실려 margin을 0으로 되돌리지 않게 시트 안으로 좁힌다) */
+.modal .settings-list {
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0;
+  list-style: none;
+}
+
+/* 줄 글을 시트 제목과 같은 선(양옆 여백 20)에서 시작한다 */
+.settings-list .list-row {
+  --list-indent: var(--gutter);
+  padding-inline: var(--gutter);
+}
+
+/* ── 확인 대화 상자 (brief 5.6): 360px은 모달 시트 꼴, 768px부터 가운데 400. 제목 22, 본문 16, 같은 크기 행동 둘을 나란히 ── */
+.sheet {
+  padding-block-start: var(--space-5);
+}
+
+.sheet h2 {
+  margin-block-end: var(--space-2);
+  font-size: var(--size-title-2);
+  line-height: var(--leading-title-2);
+  font-weight: var(--weight-heading);
+}
+
+.sheet h3 {
+  font-size: var(--size-body);
+  margin-block: var(--space-4) var(--space-2);
+}
+
+.sheet-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: var(--space-2);
+  margin-block-start: var(--space-5);
+}
+
+/* ── 버튼 (brief 5.6, systems 4.6, D67) ─────────────────────────────────────
+   크기: 보통 48/14/16·600(기본), .btn-lg 56/16/17·600(아래 막대·홈 주 버튼), .btn-sm 36/10/15·600(누르는 곳 44).
+   종류: 중립(기본, --fill) · .btn-primary(--accent, 화면마다 하나) · .btn-soft(--accent-soft) · .btn-text(바탕 없음, --link) · .btn-danger(--bad-soft).
+   외곽선 버튼은 쓰지 않는다. 누르면 0.98, 100ms. 꺼짐은 --fill + --text-disabled(투명도로 흐리게 하지 않는다)이고 이유 글을 aria-describedby로 잇는다.
+   면 색은 --btn-bg·--btn-fg 두 변수로 받는다: 작은 버튼은 보이는 알약(36)을 ::before로 그리고 누르는 곳은 44로 둔다 ── */
+.btn {
+  --btn-bg: var(--fill);
+  --btn-bg-press: var(--fill-press);
+  --btn-fg: var(--text);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: var(--btn-md);
+  padding: var(--space-2) var(--space-5);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+  font-weight: var(--weight-strong);
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform var(--dur-tap) var(--ease-out),
+    background-color var(--dur-tap) var(--ease-out);
+}
+
+.btn .icon {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.btn:active {
+  background: var(--btn-bg-press);
+  transform: scale(var(--juice-press-scale));
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--btn-bg-press);
+  }
+}
+
+.btn-primary {
+  --btn-bg: var(--accent);
+  --btn-bg-press: var(--accent-press);
+  --btn-fg: var(--on-accent);
+}
+
+.btn-soft {
+  --btn-bg: var(--accent-soft);
+  --btn-bg-press: color-mix(in srgb, var(--accent-soft) 88%, var(--accent));
+  --btn-fg: var(--on-accent-soft);
+}
+
+.btn-neutral {
+  --btn-bg: var(--fill);
+  --btn-bg-press: var(--fill-press);
+  --btn-fg: var(--text);
+}
+
+.btn-text {
+  --btn-bg: transparent;
+  --btn-bg-press: var(--fill);
+  --btn-fg: var(--link);
+  min-block-size: var(--tap);
+  padding-inline: var(--space-2);
+}
+
+.btn-danger {
+  --btn-bg: var(--bad-soft);
+  --btn-bg-press: color-mix(in srgb, var(--bad-soft) 88%, var(--bad));
+  --btn-fg: var(--bad-ink);
+}
+
+.btn-lg {
+  min-block-size: var(--btn-lg);
+  padding-inline: var(--space-5);
+  border-radius: var(--radius-lg);
+  font-size: var(--size-body-lg);
+}
+
+.btn-sm {
+  min-block-size: var(--tap);
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+.btn-sm::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--tap) - var(--btn-sm)) / 2);
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--btn-bg);
+  transition: background-color var(--dur-tap) var(--ease-out);
+}
+
+.btn-sm:active {
+  background: none;
+}
+
+.btn-sm:active::before {
+  background: var(--btn-bg-press);
+}
+
+@media (hover: hover) {
+  .btn-sm:hover {
+    background: none;
+  }
+
+  .btn-sm:hover::before {
+    background: var(--btn-bg-press);
+  }
+}
+
+.btn-block {
+  inline-size: 100%;
+}
+
+/* 아래 막대 왼쪽 [이전] 같은 보조 버튼: 56×56 중립 아이콘 버튼 */
+.btn-square {
+  inline-size: var(--btn-lg);
+  min-block-size: var(--btn-lg);
+  padding: 0;
+  border-radius: var(--radius-lg);
+}
+
+/* 꺼짐: 회색 면 + 꺼진 글자. 눌림·올림이 바뀌지 않는다 */
+.btn:is(:disabled, [aria-disabled='true']) {
+  --btn-bg: var(--fill);
+  --btn-bg-press: var(--fill);
+  --btn-fg: var(--text-disabled);
+  transform: none;
+}
+
+/* 고대비 모드: 면이 사라져도 버튼 경계가 보이게 */
+@media (forced-colors: active) {
+  .btn {
+    border: 1px solid ButtonText;
+  }
+
+  .btn-sm::before {
+    background: none;
+  }
+}
+
+/* ── 무대 ───────────────────────────────────────────────── */
+.stage {
+  display: block;
+  /* 머리말·아래 막대 안쪽(720px)과 글 시작선을 맞춘다 */
+  max-inline-size: calc(var(--content-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding: var(--space-5) var(--gutter) var(--space-6);
+}
+
+.stage:focus {
+  outline: none;
+}
+
+/* ── 아래 막대 (brief 5.6): 단계 화면 아래 붙박이. 층 2(--surface-raised + 위로 --elev-sheet).
+   위 8 → 상태 한 줄 20 → 사이 8 → 주 버튼 56 → 아래 12 + 안전 영역 = 104 + 안전 영역. 실제 높이는 Base.astro가 재서 --bar-bottom으로 ── */
+.action-bar {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 20;
+  background: var(--surface-raised);
+  box-shadow: var(--elev-sheet);
+  padding-block: var(--space-2) calc(var(--space-3) + env(safe-area-inset-bottom));
+  padding-inline: var(--gutter);
+}
+
+/* 단계가 아닌 화면(홈·도구 모음·용어 카드·소개)은 아래 막대를 붙박이로 두지 않는다 (CONCEPT 5.8: 붙박이 아래 막대는 단계 화면만).
+   목록 화면의 거르기 단추를 붙박이 막대가 가리지 않게 (WCAG 2.5.8) */
+.action-bar.is-static {
+  position: static;
+  box-shadow: none;
+  border-block-start: 1px solid var(--hairline);
+  background: var(--bg);
+}
+
+.action-inner {
+  display: grid;
+  gap: var(--space-2);
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+}
+
+.action-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.action-main > * {
+  flex: 1 1 12rem;
+}
+
+.action-main > .btn-square {
+  flex: none;
+}
+
+.action-main .btn {
+  min-block-size: var(--btn-lg);
+  inline-size: 100%;
+  border-radius: var(--radius-lg);
+  font-size: var(--size-body-lg);
+}
+
+.action-main .btn-square {
+  inline-size: var(--btn-lg);
+}
+
+/* 상태 한 줄 (D64): '도구 고르기 · 1개만 더 고르면 돼요 · 약 1분'. 14/600 --text-2, 높이 20. 미니 길은 없앴다 (지도와 이 줄이 같은 일을 한다) */
+.status-line {
+  min-block-size: 20px;
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 숫자 굴리기(S3): 숫자만 따로 감싸 옛 숫자(.sl-old)를 위에 겹쳐 둔다. 움직임은 StatusLine.tsx */
+.sl-n,
+.sl-n > span {
+  display: inline-block;
+  position: relative;
+}
+
+.sl-n > .sl-old {
+  position: absolute;
+  inset: 0;
+}
+
+/* 아주 낮은 화면(가로로 든 휴대폰)이나 글자를 크게 키운 좁은 화면에서는 아래 막대도 붙박이를 푼다.
+   미디어 조건의 em은 브라우저 기본 글자 크기를 따르므로 글자를 키우면 같이 커진다 (360px ÷ 32px = 11.25em) */
+@media (max-height: 30em), (max-width: 15em) {
+  .action-bar {
+    position: static;
+  }
+}

@@ -1,0 +1,222 @@
+---
+// 모든 화면의 기본 틀 (T27, docs/CONCEPT.md 5.8): 본문 바로 가기 → 머리줄(브랜드·사전·설정) → 단계 줄(단계 화면만)
+// → 본문(시트) → 아래 막대(단계 화면: 상태 한 줄 + 주 버튼, 붙박이) → 바닥글. 화면 낭독기 알림 자리(#cc-live)도 여기 있다.
+// 맨 위 '검토 중인 시험판' 띠는 걷어 냈다(brief 3.2, D67): 미리 보기 배포의 안내 한 줄은 바닥글에 둔다.
+// 페이지 사이의 문서 간 View Transitions(S7)는 꺼 두었다 (D71 검토 반영: 붙기 전 지도는 땅만 그려 길이 사라졌다 나타난다. 다시 켜는 조건은 frame.css).
+import '../styles/global.css';
+import '../styles/frame.css';
+import '../styles/parts.css';
+import MapSprite from '../components/MapSprite.astro';
+import Icon from '../components/Icon.astro';
+import DictionaryPanel from '../components/DictionaryPanel.tsx';
+import TermPopover from '../components/TermPopover.tsx';
+import Logo from '../components/Logo.astro';
+import SettingsMenu from '../components/SettingsMenu.tsx';
+import StageRail from '../components/StageRail.tsx';
+import StatusLine from '../components/StatusLine.tsx';
+import { ko } from '../copy/ko.ts';
+import { LIVE_ID } from '../lib/announce.ts';
+import { catalog } from '../lib/data.ts';
+import { evaluate } from '../lib/engine/index.ts';
+import { mastheadState } from '../lib/masthead-state.ts';
+import { ROUTES } from '../lib/routes.ts';
+import { EMPTY_SESSION } from '../lib/saved.ts';
+import type { StageId } from '../lib/stages.ts';
+import { analyticsAllowed, BEACON_TOKEN, STAGE } from '../lib/stage.ts';
+
+interface Props {
+  /** 페이지 제목 (사이트 이름은 뒤에 붙는다). 없으면 홈 제목 */
+  title?: string;
+  description?: string;
+  /** 지금 단계. 단계가 아닌 화면은 비워 둔다 */
+  stage?: StageId | null;
+  /** 단계 밖 화면에 지도(MapSvg)를 그릴 때: 지도 표지 묶음을 싣는다 (홈의 본보기 지도·코스 미니 지도) */
+  map?: boolean;
+}
+const { title, description = ko.site.description, stage = null, map = false } = Astro.props;
+const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
+// 배포 서버는 끝 빗금을 뗀 주소(/check)로 맞춘다 (wrangler.jsonc html_handling, D50)
+const canonical = Astro.site ? new URL(Astro.url.pathname.replace(/\/+$/, '') || '/', Astro.site).href : undefined;
+// 처음 온 사람 기준 단계 줄 값 (빌드 때 한 번)
+const initial = mastheadState(evaluate(catalog, EMPTY_SESSION), {});
+const hasAction = Astro.slots.has('action');
+// 지도 띠가 있는 단계와 지도를 그리는 화면(홈, 내 AI 써 보기의 연습 고리 띠)에만 지도 표지 묶음을 숨겨 넣는다 (내 AI 써 보기는 map으로).
+// 지도 CSS는 지도를 그리는 MapBoard.tsx가 불러온다 (D68)
+const hasMap = map || (stage !== null && stage !== 'test-drive');
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 낮) 값을 그대로 쓴다 -->
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f1724" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 밤) 값을 그대로 쓴다 -->
+    {canonical && <link rel="canonical" href={canonical} />}
+    <!-- 파비콘·앱 아이콘은 모자 배지 타일 (D65, brief 3.3). npm run logo가 만든다 -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
+    <script is:inline>
+      // 첫 그림 전에: 사이트 설정의 '동작 줄이기'·'조용히 모시기'(data-quiet)와 다시 온 사람 표시, 이어 갈 진행(data-resume),
+      // 연습을 마침(data-lesson-done: 내 AI 써 보기의 주 버튼·연습 고리가 붙기 전 바뀌어 보이지 않게), 영수증 링크(data-receipt-link)를 붙인다.
+      // 처음 온 사람이면 홈 첫 방문 장면 S1을 고른다(data-intro: play = 장면, still = 조용히 모시기·동작 줄이기의 끝 모습 + 짧은 비침, D71).
+      // 읽기만 한다 (저장은 src/lib/store.ts).
+      var p = {};
+      try {
+        p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}') || {};
+        if (p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
+        if (p.quiet === true) document.documentElement.setAttribute('data-quiet', '');
+        var saved = localStorage.getItem('cc:session:v1');
+        if (saved || localStorage.getItem('cc:seen:v1')) document.documentElement.setAttribute('data-visit', 'again');
+        if (saved && Object.keys(JSON.parse(saved).answers || {}).length > 0) document.documentElement.setAttribute('data-resume', '');
+        if (JSON.parse(localStorage.getItem('cc:meta:v1') || '{}').lessonDone === true) document.documentElement.setAttribute('data-lesson-done', '');
+      } catch (e) {}
+      // 영수증 링크(#r=)로 열었으면: 설계도 받기 섬이 링크를 읽을 때까지 빌드 때 그린 잠김 화면을 감춘다 (arrival.css)
+      if (location.hash.indexOf('#r=') === 0) document.documentElement.setAttribute('data-receipt-link', '');
+      // 사이트 안에서 돌아왔거나 뒤로 가기로 왔으면 다시 온 사람으로 본다 (홈 첫 방문 장면 S1을 돌리지 않는다)
+      try {
+        var nav = performance.getEntriesByType('navigation')[0];
+        var ref = document.referrer ? new URL(document.referrer) : null;
+        if ((ref && ref.origin === location.origin) || (nav && nav.type === 'back_forward')) document.documentElement.setAttribute('data-visit', 'again');
+      } catch (e) {}
+      if (!document.documentElement.hasAttribute('data-visit')) document.documentElement.setAttribute('data-intro', p.quiet === true || p.motion === 'reduce' ? 'still' : 'play');
+    </script>
+    {
+      stage === 'arrival' && (
+        <script is:inline data-from={ROUTES.check}>
+          // 출발 → 도착 장면(S5+S6, D71): 도구끼리 맞춰 보기에서 [설계도 받으러 출발하기]로 처음 왔으면 html[data-depart]를 붙인다.
+          // play = 장면, still = 조용히 모시기·동작 줄이기(끝 모습 + 짧은 비침). 다시 열기·뒤로 가기·영수증 링크·이미 본 장면이면 붙이지 않는다.
+          // 읽기만 한다 (저장은 src/lib/store.ts, 장면은 src/lib/depart.ts와 src/lib/map/arrive.ts)
+          (function () {
+          try {
+            var from = document.currentScript.getAttribute('data-from');
+            var ref = document.referrer ? new URL(document.referrer) : null;
+            var how = performance.getEntriesByType('navigation')[0];
+            var pref = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}') || {};
+            var issued = JSON.parse(localStorage.getItem('cc:meta:v1') || '{}').issued === true;
+            var seen = (JSON.parse(localStorage.getItem('cc:seen:v1') || '{}') || {}).scenes || [];
+            var came = ref && ref.origin === location.origin && ref.pathname.replace(/\/+$/, '') === from && (!how || how.type === 'navigate');
+            if (came && issued && seen.indexOf('arrival') < 0 && location.hash.indexOf('#r=') !== 0) {
+              var calm = pref.quiet === true || pref.motion === 'reduce' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+              document.documentElement.setAttribute('data-depart', calm ? 'still' : 'play');
+            }
+          } catch (e) {}
+          })();
+        </script>
+      )
+    }
+  </head>
+  <body>
+    {hasMap && <MapSprite />}
+    <a class="skip-link" href="#main">{ko.layout.skip}</a>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href={ROUTES.home}>
+          <Logo variant="lockup" height={44} />
+          <span class="visually-hidden">{ko.site.name}</span>
+        </a>
+        <div class="top-actions">
+          <a class="dict-btn" href={ROUTES.dictionary}>
+            <Icon name="dictionary" size="20px" />
+            <span>{ko.layout.dictionary}</span>
+          </a>
+          <SettingsMenu client:idle />
+        </div>
+      </div>
+      {
+        stage && (
+          <div class="rail-wrap">
+            <StageRail client:load stage={stage} initial={initial} />
+          </div>
+        )
+      }
+    </header>
+    <main id="main" tabindex="-1" class:list={['stage', { 'has-bar': stage !== null }]}>
+      <slot />
+    </main>
+    {
+      (stage || hasAction) && (
+        <div class:list={['action-bar', { 'is-static': stage === null }]} role="region" aria-label={ko.layout.actionBar}>
+          <div class="action-inner">
+            {stage && <StatusLine client:load stage={stage} />}
+            {hasAction && (
+              <div class="action-main">
+                <slot name="action" />
+              </div>
+            )}
+          </div>
+        </div>
+      )
+    }
+    <footer class="site-footer" aria-label={ko.footer.label}>
+      <Logo variant="wordmark" height={16} label={ko.site.name} class="footer-mark" />
+      <p class="footer-line">{ko.footer.license}</p>
+      {STAGE === 'preview' && <p class="footer-line footer-trial">{ko.footer.trial}</p>}
+      <ul class="footer-links">
+        <li><a href={ROUTES.about}>{ko.footer.about}</a></li>
+        <li><a href={ROUTES.criteria}>{ko.footer.scoring}</a></li>
+        <li><a href={ROUTES.credits}>{ko.footer.credits}</a></li>
+        <li><a href={ROUTES.privacy}>{ko.footer.privacy}</a></li>
+        <li><a href={ROUTES.notice}>{ko.footer.notice}</a></li>
+      </ul>
+    </footer>
+    <DictionaryPanel client:idle />
+    <TermPopover client:idle />
+    <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+    {
+      analyticsAllowed(Astro.url.pathname) && (
+        <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: BEACON_TOKEN })}></script><!-- floor-guard-ignore: 쿠키 없는 Cloudflare Web Analytics, CLAUDE.md 꼭 지킬 것 1의 허용 예외(R-61). 토큰이 있을 때만, 영수증 화면 제외 -->
+      )
+    }
+    <script>
+      // 모든 장면 건너뛰기 (CONCEPT 7절, R-08): 화면 어디든 누르거나 Esc면 돌고 있는 애니메이션(영수증 출력, 교통 정보…)을 끝 상태로.
+      // 누르기는 click(잡기 단계)에서 끝낸다: 누르기가 시작될 때(pointerdown) 끝내면 움직이던 시트가 손가락 밑에서 끝 자리로 튀어
+      // 손을 뗀 곳이 다른 요소가 되고 click이 사라진다 (WCAG 2.5.2, D71 검토 반영). 눌린 버튼의 click 처리는 그 뒤에 그대로 일어난다.
+      // 화면을 굴리기만 하면 click이 없으니 장면은 그대로 돈다.
+      // 숫자 굴리기처럼 애니메이션 객체가 아닌 것은 cc:skip 신호를 듣고 스스로 끝낸다.
+      // '건너뛰기' 버튼은 자기 click에서 끝내고 제목으로 초점을 옮기므로 여기서는 건드리지 않는다
+      import { skipAll } from '../lib/motion.ts';
+
+      const skip = (): void => {
+        // 출발 → 도착 장면(S5)이 섬이 붙기 전이면 돌지 않게 (src/lib/depart.ts)
+        if (document.documentElement.getAttribute('data-depart') === 'play') document.documentElement.setAttribute('data-depart', 'skip');
+        skipAll(document);
+        document.dispatchEvent(new CustomEvent('cc:skip'));
+      };
+      document.addEventListener(
+        'click',
+        (e) => {
+          if (e.target instanceof Element && e.target.closest('[data-skip]')) return;
+          skip();
+        },
+        { capture: true, passive: true },
+      );
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') skip();
+        // 장면이 시트를 내려 두고 inert로 막아 둔 동안 Tab을 누르면 장면을 끝내고 시트를 연다:
+        // 키보드로 움직이기 시작한 사람이 머리줄·아래 막대만 돌며 본문에 닿지 못하는 일을 막는다 (WCAG 2.1.1)
+        if (e.key === 'Tab') {
+          const held = document.querySelectorAll<HTMLElement>('.content-sheet[inert]');
+          if (held.length > 0) {
+            skip();
+            held.forEach((s) => (s.inert = false));
+          }
+        }
+      });
+
+      // 아래 막대 높이를 재서 --bar-bottom으로 (WCAG 2.4.11): 막대는 상태 줄·안내 글에 따라 112px보다 커지므로,
+      // 고정값이면 키보드로 옮긴 초점이 막대 뒤에 숨는다. scroll-padding이 실제 높이를 따라가게 한다.
+      const bar = document.querySelector('.action-bar:not(.is-static)');
+      if (bar && 'ResizeObserver' in window) {
+        new ResizeObserver(() => {
+          document.documentElement.style.setProperty('--bar-bottom', `calc(${Math.ceil(bar.getBoundingClientRect().height)}px + var(--space-3))`);
+        }).observe(bar);
+      }
+    </script>
+  </body>
+</html>

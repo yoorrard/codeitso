@@ -1,0 +1,72 @@
+{
+  "id": "case-11",
+  "title": "동네 가게 지도 (결제는 아마도)",
+  "note": "위치정보와 결제 조사 카드, 각각의 안전 지시가 붙는다. 카카오맵 키는 화면용이라 키 노출 충돌이 없다.",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "few",
+    "q.ai": "chat-paid",
+    "q.save": "no",
+    "q.domain": "map",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.payment": "maybe",
+    "q.device": "phone",
+    "q.style": "clean"
+  },
+  "cart": ["html-single", "kakao-maps", "github-pages"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.realtime",
+      "q.budget",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "kakao-maps",
+        "filledBy": ["kakao-maps"],
+        "score": 4,
+        "runnerUp": "leaflet-osm",
+        "reasons": ["domain", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "github-pages",
+        "filledBy": ["github-pages"],
+        "score": 4,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": ["research.payment", "research.location"],
+    "safety": ["safety.public-key", "safety.payment-test", "safety.location-minimum"],
+    "study": { "required": ["api", "api-key", "deploy"], "all": ["api", "api-key", "deploy", "git-repo"] },
+    "steps": ["slot.screen", "slot.data", "slot.host"],
+    "prep": ["카카오 개발자 가입 후 앱을 만들고 JavaScript 키 받기", "GitHub 가입"],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 120,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

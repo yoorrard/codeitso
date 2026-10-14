@@ -1,0 +1,18 @@
+---
+// 1단계 만들 앱 정하기 /destination (brief 6.5, D70): 지도 띠(답이 쌓이면 왼쪽 위 '고를 것 n개' 칩) → 16 겹친 내용 시트 안의 질문 섬
+// → 아래 막대(왼쪽 [이전] 56 + 상태 한 줄, 다 정하면 주 버튼 [도구 고르러 가기]). 빌드 때는 처음 온 사람 기준 첫 질문을 그린다.
+import Base from '../layouts/Base.astro';
+import MapBoard from '../components/MapBoard.tsx';
+import Interview from '../components/Interview.tsx';
+import InterviewAction from '../components/InterviewAction.tsx';
+import { ko } from '../copy/ko.ts';
+import '../styles/destination.css';
+---
+
+<Base title={ko.interview.pageTitle} stage="destination">
+  <div class="map-band is-destination"><MapBoard client:load stage="destination" /></div>
+  <div class="content-sheet on-map q-sheet">
+    <Interview client:load />
+  </div>
+  <InterviewAction client:load slot="action" />
+</Base>

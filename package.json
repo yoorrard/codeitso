@@ -1,0 +1,71 @@
+{
+  "name": "code-chauffeur",
+  "version": "0.1.0",
+  "private": true,
+  "description": "코드쇼퍼: 바이브코딩 초심자가 설계 꾸러미를 영수증처럼 받아 가는 무료 웹 서비스",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:cf": "node scripts/deploy/cf-build.ts",
+    "preview": "astro preview",
+    "validate": "node scripts/validate-data.ts",
+    "validate:release": "node scripts/validate-data.ts --release",
+    "golden": "node scripts/check-golden.ts",
+    "golden:print": "node scripts/check-golden.ts --print",
+    "examples": "node scripts/make-examples.ts",
+    "explain": "node scripts/explain.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "astro check && tsc -p tsconfig.json && npm run typecheck:worker",
+    "typecheck:worker": "wrangler types worker/worker-configuration.d.ts > /dev/null && tsc -p worker/tsconfig.json",
+    "check": "npm run validate && npm run golden && npm run tokens && npm run fonts:check && npm run guard && npm run words && npm run harness && npm run typecheck && npm run test",
+    "guard": "node scripts/guard/floor-guard.ts",
+    "qa:shots": "node scripts/qa/shots.ts",
+    "qa:budget": "node scripts/qa/budget.ts",
+    "harness": "node scripts/guard/validate-harness.ts",
+    "tokens": "node scripts/check-tokens.ts",
+    "fonts": "node scripts/fonts/build-fonts.ts",
+    "fonts:check": "node scripts/fonts/build-fonts.ts --check",
+    "map": "node scripts/assets/make-map.ts",
+    "e2e": "playwright test",
+    "words": "node scripts/guard/check-words.ts",
+    "art": "node scripts/assets/render-art.ts",
+    "art:sheet": "node scripts/assets/render-art.ts --sheet",
+    "logo": "node scripts/assets/make-logo.ts"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@phosphor-icons/core": "2.1.1",
+    "@playwright/test": "1.56.1",
+    "@types/node": "^22.18.0",
+    "@vitest/coverage-v8": "5.0.3",
+    "ajv": "^8.17.1",
+    "fontverter": "2.0.0",
+    "subset-font": "2.9.0",
+    "three": "0.186.1",
+    "typescript": "^5.9.2",
+    "vitest": "5.0.3",
+    "wrangler": "4.141.0"
+  },
+  "dependencies": {
+    "@astrojs/preact": "6.0.6",
+    "@nanostores/persistent": "1.3.5",
+    "@nanostores/preact": "1.1.0",
+    "astro": "7.3.8",
+    "lz-string": "1.5.0",
+    "minisearch": "7.2.0",
+    "nanostores": "1.5.4",
+    "preact": "10.29.8"
+  },
+  "overrides": {
+    "playwright-core": "1.56.1",
+    "vitest": "5.0.3"
+  }
+}

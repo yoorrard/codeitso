@@ -1,0 +1,71 @@
+# 예비 배포 (T21·T22, docs/ARCHITECTURE.md 9절, D53·D72): 손으로 돌리면 Cloudflare Workers(정적 파일 + /api/event)로 올린다.
+# 단계는 저장소 변수 SITE_STAGE로 정한다: 없거나 preview면 미리 보기('검토 중인 시험판' 띠·noindex, npm run validate),
+# release면 정식(npm run validate:release를 통과해야 함). 계정이 연결되지 않았으면(비밀 값 없음) 빌드까지만 하고 건너뛴다.
+# 비밀 값은 저장소 Settings → Secrets에만 둔다: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID. 사람용 안내는 docs/DEPLOY.md.
+name: deploy
+
+# 기본 배포는 Cloudflare Workers Builds(대시보드에서 저장소 연결, 비밀 값·Actions 시간 불필요)가 main 푸시마다 한다 (D72).
+# 이 작업 흐름은 그 연결이 없을 때 쓰는 예비 길이라 손으로만 돌린다 (Actions → deploy → Run workflow).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  WRANGLER_SEND_METRICS: 'false'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      STAGE: ${{ vars.SITE_STAGE == 'release' && 'release' || 'preview' }}
+      HAS_ACCOUNT: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: 검사
+        run: npm run check
+      - name: 자료 검사 (정식이면 사람 확인이 남은 진열 상품이 없어야 함)
+        run: |
+          if [ "$STAGE" = release ]; then npm run validate:release; else npm run validate; fi
+      - name: 빌드
+        run: npm run build
+        env:
+          PUBLIC_STAGE: ${{ env.STAGE }}
+          PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+          PUBLIC_CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
+      - name: 성능 예산
+        run: npm run qa:budget
+      - name: 계정이 아직 없으면 여기서 멈춤
+        if: env.HAS_ACCOUNT != 'true'
+        run: echo "::notice::Cloudflare 계정이 연결되지 않아 배포를 건너뜁니다 (docs/DEPLOY.md, HUMAN H01)."
+      - name: D1 database_id 확인
+        if: env.HAS_ACCOUNT == 'true'
+        run: |
+          if grep -Eq '"database_id": ""' wrangler.jsonc; then
+            echo "::error::wrangler.jsonc의 database_id가 비어 있습니다. docs/DEPLOY.md 3단계를 따라 채워 주세요."
+            exit 1
+          fi
+      - name: D1 표 만들기·바꾸기 (원격)
+        if: env.HAS_ACCOUNT == 'true'
+        run: npx wrangler d1 migrations apply code-chauffeur-events --remote
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: 배포
+        if: env.HAS_ACCOUNT == 'true'
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

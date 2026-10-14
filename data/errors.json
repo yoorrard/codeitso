@@ -1,0 +1,408 @@
+{
+  "version": 1,
+  "errors": [
+    {
+      "id": "command-not-found",
+      "title": "명령을 찾을 수 없어요",
+      "patterns": ["command not found", "is not recognized as (an internal or external command|the name of a cmdlet)", "은\\(는\\) 내부 또는 외부 명령"],
+      "examples": [
+        "zsh: command not found: npm",
+        "'npm' is not recognized as an internal or external command, operable program or batch file.",
+        "'npm'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다."
+      ],
+      "meaning": "컴퓨터가 그 명령어를 모른다는 뜻이에요. 프로그램이 설치되지 않았거나, 설치한 뒤 터미널을 다시 열지 않았거나, 이름을 잘못 적었을 때 나요.",
+      "causes": ["프로그램(Node.js 등)이 설치되지 않음", "설치한 뒤 터미널을 새로 열지 않음", "명령어 철자가 틀림"],
+      "tryFirst": ["터미널을 닫았다가 다시 열기", "node -v로 Node.js가 설치됐는지 확인하기", "명령어 철자 확인하기"],
+      "askAI": "터미널에 '(에러 붙여 넣기)'가 나왔어. 내 컴퓨터는 (윈도우/맥)이야. 무엇을 설치하거나 확인해야 하는지 순서대로 알려 줘.",
+      "concepts": ["terminal"]
+    },
+    {
+      "id": "http-401",
+      "title": "키가 없거나 틀렸어요 (401)",
+      "patterns": ["\\b401\\b", "unauthorized", "SERVICE[_ ]KEY[_ ]IS[_ ]NOT[_ ]REGISTERED", "ERROR-290"],
+      "examples": ["401 Unauthorized", "SERVICE_KEY_IS_NOT_REGISTERED_ERROR", "ERROR-290 인증키가 유효하지 않습니다."],
+      "meaning": "API가 요청한 사람을 확인하지 못했다는 뜻이에요. 키가 없거나, 틀렸거나, 아직 동작하지 않을 때 나요.",
+      "causes": [
+        "키를 안 넣었거나 앞뒤에 공백이 섞임",
+        "공공데이터포털 키를 받은 직후라 아직 등록 전",
+        "인코딩 키와 디코딩 키를 바꿔 넣음",
+        "환경 변수 이름이 코드와 다름"
+      ],
+      "tryFirst": [
+        "키를 다시 복사해 붙여 넣기 (앞뒤 공백 확인)",
+        "공공데이터포털 키라면 1~2시간 뒤 다시 해 보기",
+        "인코딩 키 대신 디코딩 키(또는 그 반대)로 바꿔 보기"
+      ],
+      "askAI": "API를 부르니 '(에러 붙여 넣기)'가 나왔어. 키는 (어디에) 넣었어. 키 이름과 넣는 위치가 맞는지 같이 확인해 줘. 키 값 자체는 보여 주지 않을게.",
+      "concepts": ["api-key", "env-var"]
+    },
+    {
+      "id": "cors",
+      "title": "브라우저가 요청을 막았어요 (CORS)",
+      "patterns": ["CORS", "Access-Control-Allow-Origin"],
+      "examples": [
+        "Access to fetch at 'https://api.example.com/data' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+      ],
+      "meaning": "브라우저가 다른 주소의 서버 응답을 막았어요. 그 서버가 브라우저에서 바로 부르는 것을 허락하지 않았다는 뜻이에요.",
+      "causes": ["공공 API처럼 브라우저 호출을 허락하지 않는 서버를 화면 코드에서 바로 부름", "파일을 두 번 눌러서 연 상태에서 요청함"],
+      "tryFirst": [
+        "화면 코드에서 바로 부르지 말고 중간 서버(예: Cloudflare Workers)를 거쳐 부르기",
+        "파일을 두 번 눌러 열었다면 로컬 서버나 배포한 주소로 열기"
+      ],
+      "askAI": "브라우저 콘솔에 '(에러 붙여 넣기)'가 나왔어. 중간 서버를 거쳐 부르도록 코드를 바꾸는 방법을 알려 줘. 키는 중간 서버의 비밀 값으로 둘 거야. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["cors", "api"]
+    },
+    {
+      "id": "module-not-found",
+      "title": "파일이나 패키지를 못 찾아요",
+      "patterns": ["Cannot find module", "Module not found", "ERR_MODULE_NOT_FOUND", "Failed to resolve import"],
+      "examples": ["Error: Cannot find module 'react'", "[vite] Failed to resolve import \"./App.jsx\" from \"src/main.jsx\". Does the file exist?"],
+      "meaning": "코드가 부르는 파일이나 패키지를 찾지 못했다는 뜻이에요.",
+      "causes": ["패키지를 설치하지 않음 (npm install 안 함)", "파일 이름이나 경로 오타 (대소문자 포함)"],
+      "tryFirst": ["프로젝트 폴더에서 npm install 실행하기", "에러에 나온 파일 이름과 실제 파일 이름을 대소문자까지 비교하기"],
+      "askAI": "'(에러 붙여 넣기)'가 나왔어. 지금 폴더 구조는 (붙여 넣기)야. 무엇이 빠졌는지 알려 줘.",
+      "concepts": ["terminal"]
+    },
+    {
+      "id": "http-404",
+      "title": "주소에 아무것도 없어요 (404)",
+      "patterns": ["\\b404\\b"],
+      "examples": ["GET https://example.com/api/meal 404 (Not Found)"],
+      "meaning": "요청한 주소에 아무것도 없다는 뜻이에요.",
+      "causes": ["주소 오타", "배포가 아직 끝나지 않음", "API 주소가 바뀜"],
+      "tryFirst": [
+        "주소를 브라우저 주소창에 직접 붙여 넣어 열어 보기",
+        "배포 화면에서 배포가 끝났는지 확인하기",
+        "API 문서에서 요청 주소가 바뀌었는지 확인하기"
+      ],
+      "askAI": "'(주소)'를 열었더니 404가 나왔어. 배포는 (어디에) 했어. 주소가 맞는지 같이 확인해 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["api", "deploy"]
+    },
+    {
+      "id": "http-429",
+      "title": "너무 많이 불렀어요 (429)",
+      "patterns": ["\\b429\\b", "Too Many Requests", "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS"],
+      "examples": ["429 Too Many Requests", "LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR"],
+      "meaning": "짧은 시간에 너무 많이 불러서 막혔어요. 하루 무료 한도를 넘었을 수도 있어요.",
+      "causes": ["화면을 열 때마다 API를 새로 부름", "반복문 안에서 API를 부름", "하루 호출 한도를 넘음"],
+      "tryFirst": ["잠시 기다렸다가 다시 해 보기", "한 번 받은 결과를 저장해 두고 다시 쓰게 고치기", "하루 한도를 공식 문서에서 확인하기"],
+      "askAI": "'(에러 붙여 넣기)'가 나왔어. 같은 결과를 다시 부르지 않게, 받은 결과를 잠시 저장해 두는 방법으로 고쳐 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["free-tier", "api"]
+    },
+    {
+      "id": "git-auth-failed",
+      "title": "GitHub가 나를 확인하지 못했어요 (Authentication failed)",
+      "patterns": ["Authentication failed for", "password authentication was removed", "Permission denied \\(publickey\\)", "Permission to \\S+ denied to"],
+      "examples": [
+        "fatal: Authentication failed for 'https://github.com/me/my-app.git/'",
+        "remote: Support for password authentication was removed on August 13, 2021.",
+        "git@github.com: Permission denied (publickey)."
+      ],
+      "meaning": "GitHub가 지금 올리는 사람이 누구인지 확인하지 못했다는 뜻이에요. GitHub는 2021년 8월부터 비밀번호로는 올리기를 받지 않아요. 비밀번호 대신 토큰(GitHub에서 만드는 긴 암호)이나 SSH 키로 확인받아야 해요.",
+      "causes": [
+        "비밀번호 칸에 GitHub 비밀번호를 그대로 넣음",
+        "토큰 기한이 끝났거나, 토큰에 이 저장소 권한이 없음",
+        "SSH 키를 만들지 않았거나 GitHub 계정에 등록하지 않음",
+        "다른 GitHub 계정으로 로그인돼 있음"
+      ],
+      "tryFirst": [
+        "GitHub 설정에서 토큰(Personal access token)을 만들어 비밀번호 대신 넣기",
+        "GitHub CLI가 있다면 gh auth login으로 다시 로그인하기",
+        "저장소 주소가 git@로 시작하면 ssh -T git@github.com으로 키가 연결됐는지 확인하기"
+      ],
+      "askAI": "터미널에 '(에러 붙여 넣기)'가 나왔어. 내 컴퓨터는 (윈도우/맥)이고, 저장소 주소는 (https/git@)로 시작해. GitHub에 다시 로그인하는 방법을 순서대로 알려 줘. 토큰 값은 보여 주지 않을게.",
+      "concepts": ["git-repo", "auth-login"]
+    },
+    {
+      "id": "git-push-rejected",
+      "title": "GitHub가 올리기를 거절했어요 (rejected)",
+      "patterns": ["\\[(remote )?rejected\\]", "failed to push some refs", "non-fast-forward", "Updates were rejected", "GH013"],
+      "examples": [
+        "! [rejected]        main -> main (non-fast-forward)",
+        "error: failed to push some refs to 'https://github.com/me/my-app.git'",
+        "remote: error: GH013: Repository rule violations found for refs/heads/main."
+      ],
+      "meaning": "GitHub에 있는 기록과 내 컴퓨터의 기록이 달라서 올리기가 막혔어요. 대개 GitHub 쪽에 내 컴퓨터에 없는 커밋이 있을 때 나요. 커밋에 비밀 키가 들어 있어서 GitHub가 막았을 수도 있어요.",
+      "causes": [
+        "GitHub 웹에서 README 같은 파일을 고쳐서 GitHub 쪽에만 커밋이 있음",
+        "다른 컴퓨터나 AI 도구가 먼저 올림",
+        "커밋에 API 키 같은 비밀 값이 들어 있음 (GH013)",
+        "아직 커밋을 하나도 하지 않았거나 브랜치 이름(main/master)이 다름 (src refspec)"
+      ],
+      "tryFirst": [
+        "git pull로 GitHub 쪽 기록을 먼저 받은 뒤 다시 git push 하기",
+        "에러에 GH013이나 secret이 보이면 코드에서 키를 빼고, 커밋 기록에서 지우는 방법을 AI에게 묻기",
+        "--force로 덮어쓰지 말고 AI에게 이유를 먼저 물어보기"
+      ],
+      "askAI": "터미널에 '(에러 붙여 넣기)'가 나왔어. GitHub에 있는 기록을 지우지 않고 올리는 방법을 알려 줘. 에러에 GH013이 있으면 내 커밋에서 키를 빼는 방법도 알려 줘. --force는 쓰지 말고, 꼭 필요하면 무엇이 지워지는지 먼저 설명해 줘.",
+      "concepts": ["git-repo", "git-commit"]
+    },
+    {
+      "id": "key-expired",
+      "title": "키나 토큰의 기한이 끝났어요 (expired)",
+      "patterns": ["\\b(token|jwt|key)\\b[^\\n]{0,30}\\bexpired\\b", "TokenExpired", "invalid_grant", "DEADLINE[_ ]HAS[_ ]EXPIRED"],
+      "examples": ["TokenExpiredError: jwt expired", "API key expired. Please renew the API key.", "DEADLINE_HAS_EXPIRED_ERROR"],
+      "meaning": "키나 로그인 토큰을 쓸 수 있는 기한이 끝났다는 뜻이에요. 값이 맞아도 기한이 지나면 받아 주지 않아요.",
+      "causes": [
+        "공공데이터포털 활용 기간이 끝남 (DEADLINE_HAS_EXPIRED_ERROR)",
+        "로그인 토큰 기한이 끝났는데 새로 받는 코드가 없음",
+        "키를 새로 만들거나 지워서 옛 키가 막힘",
+        "컴퓨터 시계가 틀려서 기한 계산이 어긋남"
+      ],
+      "tryFirst": [
+        "키를 받은 사이트에서 기한을 확인하고 연장하거나 다시 신청하기 (공공데이터포털은 마이페이지)",
+        "로그인 토큰이라면 로그아웃했다가 다시 로그인해 보기",
+        "컴퓨터의 날짜와 시각이 맞는지 확인하기"
+      ],
+      "askAI": "'(에러 붙여 넣기)'가 나왔어. 키(또는 로그인 토큰)는 (어디서) 받았어. 기한을 어디서 확인하고 늘리는지 알려 줘. 로그인 토큰이라면 기한이 끝나기 전에 새로 받도록 코드도 고쳐 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["api-key", "auth-login"]
+    },
+    {
+      "id": "data-go-kr-error",
+      "title": "공공데이터포털이 오류 코드를 보냈어요 (_ERROR)",
+      "patterns": [
+        "SERVICE[_ ]ACCESS[_ ]DENIED[_ ]ERROR",
+        "NO[_ ]OPENAPI[_ ]SERVICE[_ ]ERROR",
+        "INVALID[_ ]REQUEST[_ ]PARAMETER[_ ]ERROR",
+        "NO[_ ]MANDATORY[_ ]REQUEST[_ ]PARAMETERS[_ ]ERROR",
+        "NODATA[_ ]ERROR",
+        "OpenAPI_ServiceResponse"
+      ],
+      "examples": ["SERVICE_ACCESS_DENIED_ERROR", "NO_MANDATORY_REQUEST_PARAMETERS_ERROR", "INVALID_REQUEST_PARAMETER_ERROR"],
+      "meaning": "공공데이터포털 API가 데이터 대신 오류 이름을 보냈다는 뜻이에요. 이름에 원인이 들어 있어서, 이름만 보고도 무엇을 고칠지 알 수 있어요.",
+      "causes": [
+        "이 API를 활용신청하지 않았거나 아직 승인 전 (SERVICE_ACCESS_DENIED_ERROR)",
+        "꼭 넣어야 하는 요청 값이 빠졌거나 이름·형식이 틀림 (NO_MANDATORY_REQUEST_PARAMETERS_ERROR, INVALID_REQUEST_PARAMETER_ERROR)",
+        "요청 주소가 틀렸거나 없어진 API (NO_OPENAPI_SERVICE_ERROR)",
+        "조건에 맞는 데이터가 없음 (NODATA_ERROR)"
+      ],
+      "tryFirst": [
+        "공공데이터포털 마이페이지에서 이 API의 활용신청이 승인됐는지 확인하기 (승인 직후라면 1~2시간 뒤 다시 해 보기)",
+        "API 기술문서의 요청 예시와 내 요청 주소를 값 하나씩 비교하기 (serviceKey 대소문자 포함)",
+        "데이터가 없다는 오류라면 날짜나 지역 같은 조건을 바꿔 보기"
+      ],
+      "askAI": "공공데이터포털 API를 부르니 '(에러 붙여 넣기)'가 나왔어. 내 요청 주소는 (주소)이고, 기술문서의 요청 예시는 (붙여 넣기)야. 둘이 무엇이 다른지 같이 확인해 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["api", "api-key"]
+    },
+    {
+      "id": "http-403",
+      "title": "허락받지 못한 요청이에요 (403)",
+      "patterns": ["\\b403\\b", "\\bForbidden\\b", "PERMISSION_DENIED", "API_KEY_HTTP_REFERRER_BLOCKED"],
+      "examples": ["GET https://api.example.com/data 403 (Forbidden)", "\"status\": \"PERMISSION_DENIED\"", "\"reason\": \"API_KEY_HTTP_REFERRER_BLOCKED\""],
+      "meaning": "서버가 요청을 받았지만 허락하지 않았다는 뜻이에요. 키가 있어도 그 키로 쓸 수 없는 기능이거나, 키에 걸어 둔 제한에 막혔을 때 나요.",
+      "causes": [
+        "키에 허용한 사이트 주소와 지금 주소(localhost, 배포 주소)가 다름",
+        "그 API를 쓰겠다고 신청하지 않았거나 켜지 않음",
+        "지금 요금제로는 쓸 수 없는 기능"
+      ],
+      "tryFirst": [
+        "API 키 설정에서 허용한 사이트 주소에 지금 주소(예: http://localhost:5173)가 있는지 확인하기",
+        "API 관리 화면에서 이 API를 켰는지(사용 신청했는지) 확인하기",
+        "API 문서에서 내 요금제로 쓸 수 있는 기능인지 확인하기"
+      ],
+      "askAI": "API를 부르니 '(에러 붙여 넣기)'가 나왔어. 키는 (어디서) 받았고, 사이트는 (지금 주소)에서 열고 있어. 키 설정에서 무엇을 확인해야 하는지 알려 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["api-key", "api"]
+    },
+    {
+      "id": "http-500",
+      "title": "서버 안에서 문제가 생겼어요 (500)",
+      "patterns": ["\\b500\\b", "Internal Server Error", "INTERNAL_SERVER_ERROR", "FUNCTION_INVOCATION_FAILED", "Worker threw (a JavaScript )?exception"],
+      "examples": [
+        "GET https://my-app.pages.dev/api/meal 500 (Internal Server Error)",
+        "500: INTERNAL_SERVER_ERROR Code: FUNCTION_INVOCATION_FAILED",
+        "Error 1101 Worker threw exception"
+      ],
+      "meaning": "서버(또는 서버 함수)의 코드가 돌다가 실패했다는 뜻이에요. 브라우저 화면만 봐서는 원인을 알 수 없어요. 진짜 원인은 서버 쪽 기록(로그)에 남아요.",
+      "causes": [
+        "배포한 곳에 환경 변수(키)를 넣지 않음",
+        "서버 코드가 쓰는 패키지가 배포 환경에 설치되지 않음",
+        "서버 코드가 생각하지 못한 값(빈 값 등)을 만나 멈춤",
+        "서버가 부르는 외부 API가 실패함"
+      ],
+      "tryFirst": [
+        "배포한 곳(Cloudflare, Vercel 등)의 로그 화면에서 같은 시각의 에러 찾기",
+        "내 컴퓨터에서는 되는데 배포한 곳에서만 안 되면 배포 설정의 환경 변수 확인하기",
+        "외부 API 서버 문제일 수 있으니 잠시 뒤 다시 해 보기"
+      ],
+      "askAI": "'(에러 붙여 넣기)'가 나왔어. 배포는 (어디에) 했고, 로그에는 '(로그 붙여 넣기)'가 남았어. 원인을 찾고 고쳐 줘. (주소나 로그에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["deploy", "env-var", "logs"]
+    },
+    {
+      "id": "not-json",
+      "title": "JSON이 아닌 답이 왔어요 (Unexpected token <)",
+      "patterns": ["Unexpected token .{1,6} in JSON", "is not valid JSON", "JSON\\.parse: unexpected", "JSON Parse error", "Unexpected end of JSON input"],
+      "examples": [
+        "Uncaught (in promise) SyntaxError: Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON",
+        "SyntaxError: Unexpected token < in JSON at position 0",
+        "SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data"
+      ],
+      "meaning": "코드는 JSON을 기다렸는데 다른 글이 왔다는 뜻이에요. '<'로 시작하면 HTML 에러 화면이나 XML이 온 경우가 많아요. 받은 내용을 직접 열어 보면 원인이 보여요.",
+      "causes": [
+        "요청 주소가 틀려서 HTML로 된 에러 화면이 옴",
+        "API가 JSON 대신 XML로 답함 (응답 형식을 정하는 값을 빠뜨렸거나, 오류를 XML로 보낼 때)",
+        "서버가 빈 답을 보냄 (Unexpected end of JSON input)"
+      ],
+      "tryFirst": [
+        "요청 주소를 브라우저 주소창에 붙여 넣어 열고 무엇이 오는지 보기",
+        "개발자 도구(F12)의 네트워크 탭에서 그 요청의 응답 내용 보기",
+        "응답에 오류 이름(예: SERVICE_KEY_IS_NOT_REGISTERED_ERROR)이 보이면 그 이름을 사전에 다시 붙여 넣기"
+      ],
+      "askAI": "API를 부르니 '(에러 붙여 넣기)'가 나왔어. 응답 내용 앞부분은 '(붙여 넣기)'야. 왜 JSON이 아닌 답이 왔는지 찾고, 이런 답이 와도 화면이 멈추지 않게 고쳐 줘. (주소나 응답에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["json", "api", "devtools"]
+    },
+    {
+      "id": "network-failed",
+      "title": "요청이 서버에 닿지 못했어요 (Failed to fetch)",
+      "patterns": ["Failed to fetch", "NetworkError when attempting to fetch resource", "net::ERR_", "ERR_CONNECTION_REFUSED", "Mixed Content"],
+      "examples": [
+        "Uncaught (in promise) TypeError: Failed to fetch",
+        "GET http://localhost:3000/api/data net::ERR_CONNECTION_REFUSED",
+        "Mixed Content: The page at 'https://my-app.pages.dev/' was loaded over HTTPS, but requested an insecure resource 'http://apis.data.go.kr/'. This request has been blocked; the content must be served over HTTPS."
+      ],
+      "meaning": "브라우저가 서버에서 아무 답도 받지 못했다는 뜻이에요. 서버가 꺼져 있거나, 주소가 틀렸거나, 브라우저가 요청을 막았을 때 나요.",
+      "causes": [
+        "내 컴퓨터의 서버(npm run dev 등)를 켜지 않았거나 꺼짐",
+        "주소나 포트 번호가 틀림",
+        "https 사이트에서 http 주소를 부름 (Mixed Content)",
+        "CORS나 광고 차단 확장 프로그램이 요청을 막음"
+      ],
+      "tryFirst": [
+        "내 컴퓨터의 서버(npm run dev 등)라면 터미널에서 아직 켜져 있는지 확인하기",
+        "콘솔에 CORS나 Mixed Content 문장이 같이 있는지 보기",
+        "API 주소가 http://로 시작하면 https://로 바꿔도 열리는지 확인하기"
+      ],
+      "askAI": "브라우저 콘솔에 '(에러 붙여 넣기)'가 나왔어. 요청 주소는 (주소)이고, 사이트는 (내 컴퓨터/배포 주소)에서 열었어. 왜 요청이 닿지 않는지 하나씩 확인해 줘. (주소나 에러 문장에 키가 보이면 지우고 붙여 넣을게.)",
+      "concepts": ["api", "cors", "devtools", "https"]
+    },
+    {
+      "id": "blank-screen",
+      "title": "화면이 하얗게 비었어요 (Uncaught TypeError)",
+      "patterns": [
+        "Cannot (read|set) propert(y|ies)",
+        "undefined is not an object",
+        "is not a function",
+        "Uncaught TypeError",
+        "ReferenceError",
+        "client-side exception has occurred"
+      ],
+      "examples": [
+        "Uncaught TypeError: Cannot read properties of undefined (reading 'map')",
+        "Application error: a client-side exception has occurred (see the browser console for more information).",
+        "Uncaught ReferenceError: process is not defined"
+      ],
+      "meaning": "화면을 그리는 코드가 돌다가 멈춰서 아무것도 나오지 않는 상태예요. 진짜 원인은 브라우저 개발자 도구의 콘솔에 빨간 글씨로 나와요. 아직 오지 않은 데이터를 쓰려고 할 때 가장 흔해요.",
+      "causes": [
+        "API 답이 오기 전이나 답이 비어 있을 때 그 데이터를 씀 (reading 'map')",
+        "데이터 모양이 생각과 다름 (목록이 아니라 하나로 옴)",
+        "화면 코드에서 process.env를 씀 (process is not defined)",
+        "함수 이름 오타나 불러오지 않은 함수 (is not a function)"
+      ],
+      "tryFirst": [
+        "F12(또는 오른쪽 버튼 메뉴의 '검사')로 개발자 도구를 열고 콘솔 탭의 첫 빨간 에러 읽기",
+        "에러 옆의 파일 이름과 줄 번호를 AI에게 함께 알려 주기",
+        "API 데이터라면 네트워크 탭에서 실제로 온 답의 모양 보기"
+      ],
+      "askAI": "화면이 하얗게 나오고 콘솔에 '(에러 붙여 넣기)'가 나왔어. 에러가 난 곳은 (파일 이름과 줄 번호)야. 원인을 찾고, 데이터가 늦게 오거나 비어 있어도 화면이 멈추지 않게 고쳐 줘.",
+      "concepts": ["json", "env-var", "devtools"]
+    },
+    {
+      "id": "build-type-error",
+      "title": "빌드가 타입 오류로 멈췄어요 (Type error)",
+      "patterns": ["error TS\\d+", "\\bType error:", "is not assignable to (type|parameter)", "Failed to compile"],
+      "examples": [
+        "src/App.tsx:12:7 - error TS2322: Type 'string' is not assignable to type 'number'.",
+        "Type error: Property 'title' does not exist on type 'Post'.",
+        "Failed to compile."
+      ],
+      "meaning": "코드 속 값의 종류(타입)가 맞지 않아서 빌드가 멈췄어요. 빌드는 배포할 완성본을 만드는 단계예요. 개발 서버는 대개 타입을 검사하지 않아서, 이 오류를 빌드 때 처음 보기도 해요.",
+      "causes": [
+        "숫자 자리에 글자를 넣는 것처럼 값의 종류가 다름",
+        "데이터에 없는 이름(속성)을 씀 (does not exist on type)",
+        "값이 비어 있을 수 있는데(undefined) 그대로 씀"
+      ],
+      "tryFirst": [
+        "에러에 나온 파일 이름과 줄 번호(예: App.tsx:12)를 찾아 그 줄 보기",
+        "배포 전에 내 컴퓨터에서 npm run build를 돌려 같은 에러가 나는지 확인하기",
+        "에러가 여러 개면 맨 위 것부터 하나씩 AI에게 보여 주기"
+      ],
+      "askAI": "npm run build를 하니 '(에러 붙여 넣기)'가 나왔어. 그 줄의 코드는 (붙여 넣기)야. 타입 검사를 끄지 말고, 값의 종류가 맞도록 고쳐 줘.",
+      "concepts": ["deploy"]
+    },
+    {
+      "id": "npm-eresolve",
+      "title": "패키지 버전이 서로 안 맞아요 (ERESOLVE)",
+      "patterns": ["ERESOLVE", "unable to resolve dependency tree", "Could not resolve dependency", "conflicting peer dependency"],
+      "examples": ["npm ERR! code ERESOLVE", "npm error ERESOLVE unable to resolve dependency tree", "npm ERR! Could not resolve dependency:"],
+      "meaning": "설치하려는 패키지들이 서로 다른 버전을 원해서 npm이 설치를 멈췄어요. 한 패키지가 React 17하고만 맞는다고 하는데 프로젝트에는 React 18이 있을 때처럼요.",
+      "causes": ["새로 더한 패키지가 지금 쓰는 React나 Next.js의 버전을 아직 지원하지 않음", "AI가 오래된 버전 번호로 패키지를 더함"],
+      "tryFirst": [
+        "에러의 Found: 줄과 Could not resolve dependency: 줄에서 어떤 패키지끼리 안 맞는지 확인하기",
+        "방금 더한 패키지의 공식 페이지에서 내 프로젝트의 버전(에러의 Found: 줄)과 맞는 버전이 있는지 확인하기",
+        "--force나 --legacy-peer-deps는 바로 쓰지 말고 AI에게 이유를 먼저 물어보기"
+      ],
+      "askAI": "npm install을 하니 '(에러 붙여 넣기)'가 나왔어. 어떤 패키지끼리 버전이 안 맞는지 풀어서 설명해 줘. --force나 --legacy-peer-deps 없이 맞는 버전으로 고치는 방법을 알려 줘.",
+      "concepts": ["terminal", "npm-package"]
+    },
+    {
+      "id": "port-in-use",
+      "title": "그 포트를 이미 쓰고 있어요 (EADDRINUSE)",
+      "patterns": ["EADDRINUSE", "address already in use", "port \\d+ is already in use"],
+      "examples": [
+        "Error: listen EADDRINUSE: address already in use :::3000",
+        "Error: Port 5173 is already in use",
+        "OSError: [Errno 48] Address already in use"
+      ],
+      "meaning": "서버가 쓰려는 번호(포트)를 다른 프로그램이 이미 쓰고 있다는 뜻이에요. 대개 전에 켠 개발 서버가 다른 터미널 창에서 아직 돌고 있을 때 나요.",
+      "causes": ["다른 터미널 창이나 탭에서 같은 서버가 이미 켜져 있음", "전에 켠 서버가 제대로 꺼지지 않음", "다른 프로그램이 같은 포트를 씀"],
+      "tryFirst": ["다른 터미널 창을 찾아 Ctrl+C로 서버 끄기", "다른 포트로 켜기 (예: npm run dev -- --port 3001)", "그래도 안 되면 컴퓨터를 다시 시작하기"],
+      "askAI": "터미널에 '(에러 붙여 넣기)'가 나왔어. 내 컴퓨터는 (윈도우/맥)이야. 그 포트를 쓰는 프로그램을 찾아 안전하게 끄는 방법을 알려 줘.",
+      "concepts": ["terminal", "localhost"]
+    },
+    {
+      "id": "no-such-file",
+      "title": "그 자리에 파일이나 폴더가 없어요 (ENOENT)",
+      "patterns": ["ENOENT", "no such file or directory", "지정된 경로를 찾을 수 없습니다", "지정된 파일을 찾을 수 없습니다"],
+      "examples": [
+        "npm ERR! enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/Users/me/package.json'",
+        "bash: cd: my-app: No such file or directory",
+        "지정된 경로를 찾을 수 없습니다."
+      ],
+      "meaning": "명령이 찾아본 자리에 그 파일이나 폴더가 없다는 뜻이에요. 가장 흔한 경우는 프로젝트 폴더가 아닌 곳에서 npm 명령을 실행한 거예요.",
+      "causes": [
+        "터미널의 지금 위치가 프로젝트 폴더가 아님 (package.json이 없는 곳)",
+        "파일·폴더 이름 오타 (대소문자, 띄어쓰기 포함)",
+        "파일을 옮기거나 지운 뒤 예전 경로를 씀"
+      ],
+      "tryFirst": [
+        "pwd(윈도우는 cd)로 지금 위치를 보고, ls(윈도우는 dir)로 package.json이 있는지 확인하기",
+        "cd 뒤에 프로젝트 폴더 이름을 붙여(예: cd my-app) 들어간 뒤 다시 실행하기",
+        "에러에 나온 경로를 파일 탐색기(맥은 Finder)에서 직접 찾아보기"
+      ],
+      "askAI": "터미널에 '(에러 붙여 넣기)'가 나왔어. 지금 위치는 (pwd 또는 cd 결과)이고, 이 폴더의 파일 목록은 (붙여 넣기)야. 어디로 가서 다시 실행해야 하는지 알려 줘.",
+      "concepts": ["terminal"]
+    },
+    {
+      "id": "permission-denied",
+      "title": "권한이 없어서 막혔어요 (EACCES)",
+      "patterns": ["EACCES", "EPERM", "permission denied(?! \\(publickey\\))", "operation not permitted", "액세스가 거부되었습니다"],
+      "examples": [
+        "npm ERR! Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/vercel'",
+        "Error: EPERM: operation not permitted, unlink 'C:\\Users\\me\\my-app\\node_modules\\.vite\\deps\\chunk.js'",
+        "액세스가 거부되었습니다."
+      ],
+      "meaning": "컴퓨터가 그 파일이나 폴더를 고치거나 실행하도록 허락하지 않았다는 뜻이에요. 다른 프로그램이 그 파일을 쓰고 있을 때도 나요.",
+      "causes": [
+        "npm install -g가 관리자만 쓸 수 있는 폴더에 설치하려 함 (맥·리눅스)",
+        "편집기, 개발 서버, 백신 프로그램이 파일을 잡고 있음 (윈도우)",
+        "실행 권한이 없는 파일을 바로 실행함"
+      ],
+      "tryFirst": [
+        "개발 서버와 편집기를 닫고 다시 해 보기",
+        "전역 설치(-g) 대신 npx로 실행해 보기 (예: npx vercel)",
+        "sudo나 관리자 권한으로 다시 실행하지 말고 AI에게 이유를 먼저 물어보기"
+      ],
+      "askAI": "터미널에 '(에러 붙여 넣기)'가 나왔어. 내 컴퓨터는 (윈도우/맥)이야. sudo, chmod 777, 관리자 권한 실행 없이 고치는 방법을 알려 줘. 권한을 바꿔야 한다면 무엇이 바뀌는지 먼저 설명해 줘.",
+      "concepts": ["terminal"]
+    }
+  ]
+}

@@ -1,0 +1,550 @@
+/* 길 지도 (docs/MAP.md 5절, CONCEPT 5.3·5.5, D68): src/components/MapBoard.tsx가 그린 SVG의 칠과 지도 띠. 값은 토큰만 쓴다.
+   굵기·대시는 지도 세계 단위(viewBox 432×240)라 띠 크기에 맞춰 함께 늘고 준다. 땅 판의 칠은 map-land.css.
+   이 파일은 지도를 그리는 섬(MapBoard.tsx)이 불러온다: 지도가 없는 페이지에는 실리지 않는다 */
+
+/* 표지 묶음(MapSprite.astro): 크기 0, 문서 흐름 밖. display:none이면 무늬(mk-hatch)를 칠하지 못하는 브라우저가 있다 */
+.map-sprite {
+  position: absolute;
+  overflow: hidden;
+}
+
+/* ── 지도 띠: 머리줄 바로 아래, 화면 끝에서 끝까지 (CONCEPT 5.8 높이) ── */
+.map-band {
+  position: relative;
+  /* 안의 지도 판이 띠 크기(cqw·cqh)로 배율을 정한다 */
+  container-type: size;
+  block-size: 220px;
+  /* 본문(.stage) 안쪽 여백과 최대 폭을 넘어 화면 폭 전체로 */
+  margin-inline: calc(50% - 50vw);
+  margin-block-start: calc(-1 * var(--space-5));
+  /* 다음 섬(astro-island는 display: contents라 .stage의 형제 간격을 받지 못한다)과의 간격은 띠가 낸다 */
+  margin-block-end: var(--space-5);
+  overflow: hidden;
+  background: var(--map-land);
+}
+
+/* 만들 앱 정하기 (D70)·내 AI 써 보기(연습 고리, D71): 내용 시트가 아래 16을 덮으므로 16 크게 두고, 지도 판을 8 올린다. 보이는 땅은 160 그대로 */
+.map-band:is(.is-destination, .is-practice) {
+  block-size: 176px;
+  margin-block-end: 0;
+}
+
+/* 도구 고르기 (brief 6.6): 띠 200. 시트가 아래 16을 덮는다 */
+.map-band.is-waypoints {
+  block-size: 200px;
+  margin-block-end: 0;
+}
+
+/* 도구끼리 맞춰 보기 (brief 6.7): 띠 200. 시트가 아래 16을 덮는다 */
+.map-band.is-check {
+  block-size: 200px;
+  margin-block-end: 0;
+}
+
+/* 설계도 받기 (brief 6.8): 띠 260. 시트가 아래 16을 덮는다 */
+.map-band.is-arrival {
+  block-size: 260px;
+  margin-block-end: 0;
+}
+
+/* 출발 → 도착(S5) 동안만 띠의 아래쪽 자르기를 푼다 (src/lib/map/arrive.ts가 붙였다 뗀다): 시트를 내려 둔 사이 띠 밖까지 그려 둔 땅이
+   화면을 채운다. 옆과 위(머리줄·단계 줄 쪽)는 그대로 자른다(clip-path). 붙박이 아래 막대는 그 위에 있다 (D71 검토 반영).
+   가로는 그대로 자른다(overflow-x: clip): 풀면 1.2배로 기울인 지도 판이 문서를 옆으로 넓혀 휴대폰이 화면을 축소해 보인다 */
+.map-band[data-driving] {
+  overflow-x: clip;
+  overflow-y: visible;
+  clip-path: inset(0 0 -100vh 0);
+}
+
+/* 시트가 아래 16을 덮는 띠: 지도 판을 8 올려 보이는 띠의 가운데에 둔다 */
+.map-band:is(.is-destination, .is-practice, .is-waypoints, .is-check, .is-arrival) .map-board {
+  translate: -50% calc(-50% - var(--space-2));
+}
+
+/* 키가 작은 화면(360×640 같은 것): 띠를 160으로 줄여 첫 질문·제목이 아래 막대 위에 보이게 한다.
+   160 아래로는 줄이지 않는다: 안전 구역(높이 176)이 들어가도록 판이 작아져 이름표가 14px 밑으로 내려간다 (MAP.md 1절) */
+@media (max-height: 699px) {
+  .map-band,
+  .map-band.is-waypoints,
+  .map-band.is-check,
+  .map-band.is-arrival {
+    block-size: 160px;
+  }
+}
+
+@media (min-width: 768px) and (min-height: 700px) {
+  .map-band,
+  .map-band:is(.is-destination, .is-practice),
+  .map-band.is-waypoints,
+  .map-band.is-check,
+  .map-band.is-arrival {
+    block-size: 320px;
+  }
+}
+
+/* 노트북 높이(900 아래)의 도구 고르기·맞춰 보기: 띠 240. 320이면 첫 도구 줄·첫 막힌 곳이 아래 막대에 걸친다 */
+@media (min-width: 768px) and (min-height: 700px) and (max-height: 899px) {
+  .map-band:is(.is-waypoints, .is-check) {
+    block-size: 240px;
+  }
+}
+
+/* 100vw는 고전 스크롤 막대가 있는 화면에서 막대 폭만큼 넓다. 띠가 있는 화면은 그만큼 가로 스크롤이 생기지 않게 자른다 */
+:root:has(.map-band) {
+  overflow-x: clip;
+}
+
+/* ── 지도 판 ── */
+.map-board {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  /* 띠(slice)에서는 땅 판이 viewBox 밖까지 채운다. 잘라 내는 것은 띠의 몫 */
+  overflow: visible;
+  font-family: var(--font-body);
+}
+
+.map-board.is-mini {
+  overflow: hidden;
+}
+
+/* 띠 안의 지도 판: 세계(432×240)를 띠에 꽉 차게(slice) 키우되, 안전 구역(312×176)이 잘리기 시작하는 배율에서 멈춘다.
+   넓은 띠(1024px 이상)에서는 세계 전체가 보이고 양옆은 viewBox 밖까지 그린 땅 판이, 그 바깥(1944px 넘는 화면)은
+   MapBoard의 넓은 땅색 사각형이 채운다. 둘 다 느낌 팔레트를 따르므로 이음매가 없다 (MAP.md 1절) */
+.map-band .map-board {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  translate: -50% -50%;
+}
+
+@supports (inline-size: 1cqw) {
+  .map-band .map-board {
+    /* 넓은 띠에서 이름표가 너무 커지지 않게 배율은 1.5(이름표 약 25px)에서 멈춘다 */
+    inline-size: min(max(100cqw, 180cqh), 138.46cqw, 245.45cqh, 648px);
+    block-size: auto;
+    aspect-ratio: 432 / 240;
+  }
+}
+
+/* 붙기 전에는 땅 판만 있다. 붙은 뒤 길·마디·차가 한 번 비친다 (동작 줄이기에서도 --dur-fade는 남는다, D30) */
+.mb-live {
+  animation: mb-live-in var(--dur-fade) var(--ease-out) both;
+}
+
+@keyframes mb-live-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ── 장면 (CONCEPT 7절, D71): 움직임은 src/lib/map/scene.ts(S2·S3·S4)·practice.ts(S8)·home.css(S1) ── */
+
+/* 장면이 도는 동안만 보이는 [건너뛰기] (지도 띠 오른쪽 위, 누르는 곳 44). 땅 위에서 읽히게 면색 판 */
+.map-skip {
+  position: absolute;
+  inset-block-start: var(--space-2);
+  inset-inline-end: var(--space-2);
+  z-index: 1;
+  --btn-bg: var(--surface);
+  --btn-bg-press: var(--fill);
+}
+
+.map-skip::before {
+  box-shadow: var(--elev-2);
+}
+
+/* 짧은 장면(S2 0.4초)마다 번쩍 뜨지 않게 투명도로만 비친다 */
+.map-skip:not([hidden]) {
+  animation: mb-live-in var(--dur-fade) var(--ease-out);
+}
+
+/* 움직이는 마디·이름표·표지는 제 가운데를 기준으로 커진다 */
+.map-board [data-k] {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* 길 이어 그리기의 가림막: 길보다 넓은 흰 선이 앞에서부터 늘어난다 (끝은 각지게: 둥근 끝이 앞서 비치지 않게) */
+.mb-mask {
+  fill: none;
+  stroke: var(--brand-white);
+  stroke-width: 18;
+}
+
+/* 교통 색을 덮기 전 내 길 (S4 들어오기의 밑그림) */
+.mb-fx-plain {
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* 다 풀림: 길을 훑는 청록 짧은 대시 하나 */
+.mb-sweep {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+/* 느낌 색 넘기기 (S2): 땅·물·공원 색을 색으로 등록해 두어 답할 때 섞이며 바뀐다. 붙을 때(저장된 느낌)는 바로 */
+@property --map-land {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-water {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-park {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+.map-board[data-grow] {
+  transition:
+    --map-land var(--dur-pop) var(--ease-in-out),
+    --map-water var(--dur-pop) var(--ease-in-out),
+    --map-park var(--dur-pop) var(--ease-in-out);
+}
+
+/* 밤 주행 모드 (출발 → 도착 S5, src/lib/map/arrive.ts): 지도 판의 색 변수를 밤 값으로 넘겼다가 낮으로 돌아온다.
+   색으로 등록한 것만 섞이며 바뀐다(나머지 이름표 글자·마디 테두리는 넘기는 길이의 반쯤에서 바뀐다) */
+@property --map-block {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-road {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-road-edge {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-ghost {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-lot {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-roof {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --route-outer {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --route-core {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --route-halo {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --node-fill {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-car {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --map-car-light {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+/* 출발 → 도착 (S5): 지도 판이 차를 따라 1.2배로 기울 때의 기준점은 판 가운데. 지난 마디 ✓·두루마리는 제 가운데에서 톡, 깃발은 깃대 밑동에서 오른다 */
+.map-band .map-board {
+  transform-origin: 50% 50%;
+}
+
+.mb-done,
+.mb-scroll {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.mb-flag {
+  transform-box: fill-box;
+  transform-origin: 75% 100%;
+}
+
+/* 전조등 빛: 빈 터 앞에서 두 번 깜빡일 때만 잠깐 붙는다 (브랜드 서명 모션) */
+.mb-beam {
+  fill: var(--map-car-light);
+  opacity: 0;
+}
+
+/* 윤곽이 실선으로 바뀌는 동안 밑에 까는 점선 사본 */
+.mb-lot.is-drawn .mb-bp.is-dashed {
+  stroke-dasharray: 4 3;
+}
+
+/* ── 연습 고리 (내 AI 써 보기, S8): 마치기 전에는 아직 안 난 길(회색 점)과 빈 점 셋, 마치면 남색 바깥 + 청록 심과 남색 점 ── */
+.mb-practice path {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.mb-ring,
+.mb-dot.is-done {
+  display: none;
+}
+
+:root[data-lesson-done] :is(.mb-ring, .mb-dot.is-done) {
+  display: inline;
+}
+
+.mb-ring .mb-core {
+  stroke: var(--cyan);
+}
+
+.mb-dot {
+  fill: var(--map-land);
+  stroke: var(--map-ghost);
+  stroke-width: 2;
+}
+
+.mb-dot.is-done {
+  fill: var(--node-fill);
+  stroke: var(--surface);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* 그림자: 빛은 늘 왼쪽 위에서, 같은 모양을 오른쪽 아래로 (2, 3) 흐림 없이. 차는 돌지 않는 부모의 필터(#mb-shade)로 */
+.mb-shadows {
+  fill: var(--map-shadow);
+}
+
+.mb-shade-color {
+  flood-color: var(--map-shadow);
+}
+
+/* ── 길 (brief 4.5): 아직 = 회색 점 3(대시 0·간격 7), 이어짐 = 바깥 8 + 심 4, 나중 = 회색 점 가지 ── */
+.mb-road,
+.mb-halo {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mb-road.is-ghost {
+  stroke: var(--map-ghost);
+  stroke-width: 3;
+  stroke-dasharray: 0 7;
+}
+
+.mb-road.is-later {
+  stroke: var(--text-3);
+  stroke-width: 3;
+  stroke-dasharray: 0 6;
+}
+
+/* 밤 주행 빛: 이어진 길 전체를 한 줄로, 낮에는 투명 */
+.mb-halo {
+  stroke: var(--route-halo);
+  stroke-width: 14;
+}
+
+.mb-outer {
+  stroke: var(--route-outer);
+  stroke-width: 8;
+}
+
+.mb-core {
+  stroke: var(--route-core);
+  stroke-width: 4;
+}
+
+/* 교통 정보 (도구끼리 맞춰 보기): 바깥이 교통 색, 심의 무늬가 색 없이도 셋을 나눈다.
+   원활 = 같은 초록 심의 한 줄 실선 · 막힘 = 흰 짧은 대시(3 3) · 서행 = 둥근 점(0 5). 옆에는 늘 사고 표시·물음표가 붙는다 (색만으로 뜻을 전하지 않는다) */
+.is-traffic .mb-road.is-built .mb-outer {
+  stroke: var(--route-smooth);
+}
+
+.is-traffic .mb-road.is-built .mb-core {
+  stroke: var(--route-smooth-core);
+}
+
+.mb-road.is-jam .mb-core {
+  stroke: var(--route-traffic-core);
+}
+
+.mb-road.is-jam .mb-outer {
+  stroke: var(--route-jam);
+}
+
+.mb-road.is-jam .mb-core {
+  stroke-linecap: butt;
+  stroke-dasharray: 3 3;
+}
+
+.mb-road.is-slow .mb-outer {
+  stroke: var(--route-slow);
+}
+
+.mb-road.is-slow .mb-core {
+  stroke: var(--route-slow-core);
+  stroke-width: 3;
+  stroke-dasharray: 0 5;
+}
+
+/* ── 마디: 모양은 표지 묶음의 mk-node-*(칠 없음)를 물려받아 상태마다 칠한다. 그림은 currentColor ── */
+.mb-shape {
+  stroke-width: 2;
+}
+
+.mb-node.is-ghost .mb-shape {
+  fill: var(--map-land);
+  stroke: var(--map-ghost);
+  stroke-dasharray: 2 4;
+}
+
+.mb-node.is-ghost .mb-icon {
+  color: var(--map-ghost);
+}
+
+/* 지금 여는 곳인데 아직 비었음: 면색 마디 (고리는 .mb-focus) */
+.mb-node.is-open .mb-shape {
+  fill: var(--surface);
+  stroke: var(--text-3);
+}
+
+.mb-node.is-open .mb-icon {
+  color: var(--text);
+}
+
+/* 고름: 채움 + 길과 떼어 보이는 면색 테두리 */
+.mb-node.is-picked .mb-shape {
+  fill: var(--node-fill);
+  stroke: var(--surface);
+}
+
+.mb-node.is-picked .mb-icon {
+  color: var(--on-node);
+}
+
+/* 나중: 가지 끝의 회색 점선 마디 (고깔은 표지 묶음) */
+.mb-node.is-later .mb-shape {
+  fill: var(--map-land);
+  stroke: var(--text-3);
+  stroke-dasharray: 2 4;
+}
+
+.mb-node.is-later .mb-icon {
+  color: var(--text-3);
+}
+
+/* 막힘·서행: 교통 색 고리와 같은 색 그림. 옆에 사고 표시·물음표가 붙는다 */
+.mb-node.is-jam .mb-shape,
+.mb-node.is-slow .mb-shape {
+  fill: var(--surface);
+  stroke-width: 3;
+}
+
+.mb-node.is-jam .mb-shape {
+  stroke: var(--route-jam);
+}
+
+.mb-node.is-jam .mb-icon {
+  color: var(--route-jam);
+}
+
+.mb-node.is-slow .mb-shape {
+  stroke: var(--route-slow);
+}
+
+.mb-node.is-slow .mb-icon {
+  color: var(--route-slow);
+}
+
+/* 지금 여는 곳: --you 3 고리 (반지름 16, 바깥 끝 17.5는 마디 상자 반쪽 16 + 이름표 띄움 2 안) */
+.mb-focus {
+  fill: none;
+  stroke: var(--you);
+  stroke-width: 3;
+}
+
+/* ── 굴: 둔덕 위로 비치는 길 심(currentColor 점선). 아직 고르지 않았으면 점선 굴 ── */
+.mb-tunnel {
+  color: var(--brand-white);
+}
+
+.mb-tunnel-ghost rect {
+  fill: var(--map-land);
+  stroke: var(--map-ghost);
+  stroke-width: 2;
+  stroke-dasharray: 2 4;
+  stroke-linecap: round;
+}
+
+.mb-tunnel-ghost use {
+  color: var(--map-ghost);
+}
+
+/* ── 빈 터의 앱 종류 윤곽: 짓기 전에는 파란 점선(4 3) 청사진, 도착하면 실선 ── */
+.mb-bp {
+  color: var(--brand-blue);
+  stroke-dasharray: 4 3;
+}
+
+.mb-lot.is-drawn .mb-bp {
+  stroke-dasharray: none;
+}
+
+/* '길 전체' 표지에 모인 막힌 곳 수 (반지름 10, 글자 15) */
+.mb-count circle {
+  fill: var(--text);
+  stroke: var(--surface);
+  stroke-width: 1.5;
+}
+
+.mb-count text {
+  fill: var(--surface);
+  font-weight: var(--weight-heading);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 이름표: 17 단위 700, 땅색 테두리를 글자 아래에 깔아 길 위에서도 읽힌다 ── */
+.mb-labels {
+  fill: var(--text);
+  stroke: var(--map-land);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  font-weight: var(--weight-heading);
+}

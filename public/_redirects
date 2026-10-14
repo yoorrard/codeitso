@@ -1,0 +1,11 @@
+# 옛 주소 → 새 주소 (docs/CONCEPT.md 2.2절, D56). src/lib/routes.ts의 REDIRECTS와 같아야 한다 (tests/lib/routes.test.ts)
+/lesson /test-drive 301
+/interview /destination 301
+/shop /waypoints 301
+/receipt /arrival 301
+/shelf /tools 301
+/products/:id /tools/:id 301
+/concepts/:id /terms/:id 301
+/study /terms 301
+/recipes /courses 301
+/about/scoring /about/criteria 301

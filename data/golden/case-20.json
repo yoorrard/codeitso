@@ -1,0 +1,153 @@
+{
+  "id": "case-20",
+  "title": "동네 문화 행사 안내 (결제 받음, 개인정보·로그인 충돌)",
+  "note": "문화 행사 정보 API가 추천되지만 이용자는 공공데이터포털을 담는다. 결제를 받는다고 해 결제 조사·안전 지시가 붙고, 다른 사람 개인정보를 로그인 없이 받아 충돌 둘이 남아 발행이 막힌다.",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "anyone",
+    "q.ai": "chat-free",
+    "q.save": "yes",
+    "q.domain": "culture",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.personal": "yes-others",
+    "q.login": "unknown",
+    "q.payment": "yes",
+    "q.device": "phone",
+    "q.style": "unknown"
+  },
+  "cart": [
+    "html-single",
+    "google-sheets-apps-script",
+    "data-go-kr"
+  ],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.login",
+      "q.domain",
+      "q.realtime",
+      "q.budget",
+      "q.personal",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": [
+          "html-single"
+        ],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": [
+          "aiTool",
+          "budget"
+        ]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [
+          "google-sheets-apps-script"
+        ],
+        "score": 6,
+        "runnerUp": "google-forms",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "proxy"
+        ]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "culture-events",
+        "filledBy": [
+          "data-go-kr"
+        ],
+        "score": 4,
+        "runnerUp": "data-go-kr",
+        "reasons": [
+          "domain",
+          "budget",
+          "official"
+        ]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [
+          "google-sheets-apps-script"
+        ],
+        "score": 8,
+        "runnerUp": "netlify",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "proxy"
+        ]
+      }
+    ],
+    "conflicts": [
+      "conflict.personal-server",
+      "conflict.shared-without-login"
+    ],
+    "canIssue": false,
+    "research": [
+      "research.privacy-personal",
+      "research.payment",
+      "research.pick-public-api"
+    ],
+    "safety": [
+      "safety.proxy-key",
+      "safety.personal-minimum",
+      "safety.payment-test"
+    ],
+    "study": {
+      "required": [
+        "api",
+        "api-key",
+        "env-var"
+      ],
+      "all": [
+        "api",
+        "json",
+        "api-key",
+        "env-var",
+        "deploy"
+      ]
+    },
+    "steps": [
+      "slot.screen",
+      "slot.store",
+      "step.proxy",
+      "slot.data",
+      "slot.host"
+    ],
+    "prep": [
+      "공공데이터포털 가입 후 API 활용 신청 (승인 뒤 키가 동작하기까지 1~2시간)",
+      "개인 구글 계정 (학교 계정은 외부 공유가 막힐 수 있어요)"
+    ],
+    "stuckRules": [
+      "stuck.apps-script-key",
+      "stuck.apps-script-html"
+    ],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 150,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

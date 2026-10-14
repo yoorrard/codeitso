@@ -1,0 +1,122 @@
+/* 둘러보는 곳이 함께 쓰는 배치: 도구 모음·도구 상세·용어 카드·지난 영수증·사전 페이지 (brief 6.9~6.12, D67 W3b), 그리고 미리 짠 코스.
+   화면마다 따로 쓰는 배치는 tools.css·terms.css·receipts.css에 나눠 둔다 (첫 화면 CSS 30KB 예산, 페이지는 쓰는 것만 싣는다).
+   부품(.list·.chip·.tag·.alert·.paste·.fold·.field·.empty-state)과 줄 덧붙임(.list.group·.list-sub.is-one·.list-ext·아이콘 마스크)은
+   parts.css, 버튼·모달·확인 대화 상자는 frame.css의 것을 쓴다. 값은 tokens.css 변수만 쓴다. */
+
+/* ── 머리와 묶음 (brief 5.2): H1 26 → 한 줄 17/27 --text-2 (8) → 내용 (24) → 묶음과 묶음 사이 32 ── */
+.page-lead {
+  color: var(--text-2);
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body-lg);
+  /* 두 줄이 될 때 끝줄에 한 글자만 남지 않게 */
+  text-wrap: balance;
+}
+
+.stage > h1 + .page-lead {
+  margin-block-start: var(--space-2);
+}
+
+.stage > .page-lead + * {
+  margin-block-start: var(--space-5);
+}
+
+/* 묶음은 섬(astro-island는 display: contents) 안에 있을 때도 같은 사이를 둔다 */
+.stage .sec {
+  margin-block-start: var(--space-6);
+}
+
+.sec-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-3);
+}
+
+.sec-title .glyph {
+  inline-size: 16px;
+  block-size: 16px;
+  color: var(--text-2);
+}
+
+.sec-note {
+  margin-block: calc(-1 * var(--space-2)) var(--space-3);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.sec-foot {
+  margin-block-start: var(--space-2);
+  padding-inline: var(--space-4);
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+/* 뒤로: 글 버튼(누르는 곳 44), 글 시작선을 본문과 맞춘다 */
+.btn.back-link {
+  margin-inline-start: calc(-1 * var(--space-2));
+  gap: var(--space-1);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+.stage > .back-link + * {
+  margin-block-start: var(--space-2);
+}
+
+/* 아래 막대 (단계 밖 화면): 한 줄 14/600 --text-2 → 사이 8 → 주 버튼 56 */
+.bar-stack {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.bar-line {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  font-weight: var(--weight-strong);
+}
+
+/* ── 미리 짠 코스 (/courses, T14) ───────────────────────── */
+/* 링크 목록 (코스에 든 도구): 한 줄에 하나, 글머리표 없이. 따로 놓인 링크라 누르는 곳을 44px로 */
+.stage .link-list {
+  display: grid;
+  gap: var(--space-1);
+  list-style: none;
+  padding: 0;
+}
+
+.stage .link-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  min-inline-size: var(--tap);
+}
+
+.recipe-card {
+  gap: var(--space-3);
+}
+
+.recipe-card h2 {
+  font-size: var(--size-title-3);
+}
+
+.recipe-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+}
+
+.recipe-facts dt {
+  font-weight: var(--weight-strong);
+  color: var(--text-2);
+}
+
+.recipe-own {
+  color: var(--text-2);
+}

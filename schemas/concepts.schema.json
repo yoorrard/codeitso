@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "concepts.schema.json",
+  "title": "개념 카드 (화면: 용어 카드. 읽어 둘 용어와 사전이 함께 쓴다)",
+  "type": "object",
+  "required": ["version", "concepts"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "concepts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "level", "order", "summary", "quiz", "askAI", "prerequisites"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "title": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "사전 검색용 다른 이름"
+          },
+          "level": { "enum": ["must", "good"], "description": "must는 '시작 전 필수' 후보" },
+          "order": { "type": "integer", "description": "선후 관계가 같을 때 먼저 배울 순서 (작을수록 먼저)" },
+          "summary": { "type": "string", "minLength": 40, "description": "3분 안에 읽을 쉬운 설명" },
+          "figure": { "type": "string", "description": "그릴 그림 설명. 그림을 만들 때 대체 텍스트로도 쓴다" },
+          "tryIt": {
+            "type": "object",
+            "required": ["kind", "instruction"],
+            "additionalProperties": false,
+            "properties": {
+              "kind": { "enum": ["env-var-form", "api-key-form", "json-reader", "terminal-sim", "deploy-sim"] },
+              "instruction": { "$ref": "defs.schema.json#/$defs/nonEmptyText" }
+            }
+          },
+          "quiz": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": ["q", "options", "answer", "explain"],
+              "additionalProperties": false,
+              "properties": {
+                "q": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+                "options": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "minItems": 2,
+                  "maxItems": 4
+                },
+                "answer": { "type": "integer", "minimum": 0 },
+                "explain": { "$ref": "defs.schema.json#/$defs/nonEmptyText" }
+              }
+            }
+          },
+          "askAI": {
+            "$ref": "defs.schema.json#/$defs/nonEmptyText",
+            "description": "'내 AI에게 배우기' 문장. {{project}} 자리에 이용자의 만들 것이 들어간다"
+          },
+          "prerequisites": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/id" },
+            "uniqueItems": true
+          },
+          "relatedProducts": {
+            "type": "array",
+            "items": { "$ref": "defs.schema.json#/$defs/id" },
+            "uniqueItems": true
+          },
+          "stepHint": {
+            "$ref": "defs.schema.json#/$defs/capability",
+            "description": "진행 순서에서 이 개념을 붙일 칸의 기능. 상품이 그 칸을 맡으면 그 단계에, 아니면 상품의 첫 단계에 붙인다"
+          }
+        }
+      }
+    }
+  }
+}

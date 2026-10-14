@@ -1,0 +1,384 @@
+/* 홈 / (brief 6.3, D70): 지도 띠 240 → 지도와 16 겹친 내용 시트(위 모서리 20, --elev-sheet).
+   1024px 이상은 지도가 화면을 채우고 왼쪽에 폭 440 패널이 떠 있다(세로 묶음 로고 A 폭 160을 머리에).
+   지도 띠·지도 판의 칠은 map.css(MapBoard.tsx가 불러온다), 부품(.list·.btn·.content-sheet·.modal)은 parts.css·frame.css.
+   이 파일은 홈(index.astro)만 싣는다. */
+
+/* ── 지도 띠: 본보기 코스. 다음 것(시트)이 16 겹치므로 띠 아래 여백은 두지 않는다 ── */
+.map-band.is-home {
+  block-size: 240px;
+  margin-block-end: 0;
+}
+
+/* 키가 작은 화면: 다른 띠(160)보다 16 크게. 시트가 16 겹쳐도 안전 구역(176 × 배율)이 다 보이게 */
+@media (max-height: 699px) {
+  .map-band.is-home {
+    block-size: 176px;
+  }
+}
+
+@media (min-width: 768px) and (min-height: 700px) {
+  .map-band.is-home {
+    block-size: 320px;
+  }
+}
+
+/* 시트가 아래 16을 덮으므로 지도 판을 8 올려 보이는 띠의 가운데에 둔다 */
+.map-band.is-home .map-board {
+  translate: -50% calc(-50% - var(--space-2));
+}
+
+/* ── 첫 방문 장면 S1 (CONCEPT 7절, brief 7절, D71). 기본 틀이 첫 그림 전에 html[data-intro]를 붙인다 (처음 온 사람만, 한 번).
+   0~400 지도 1.04 → 1 · 0~600 본보기 길 그리기(가림막) · 400~1200 차가 왼쪽 가장자리에서 출발 줄을 따라 달려 와(--ease-out) 출발에서 위로 꺾어 섬
+   (offset-path는 키프레임 안에만: 끝나면 차는 자기 자리) · 1200~1500 출발 고리가 한 번 퍼짐. 합계 1500.
+   조용히 모시기·동작 줄이기(still)는 끝 모습을 --dur-fade로 비치기만. 기기 설정의 동작 줄이기는 길이 토큰이 0이라 바로 끝 모습 ── */
+:root[data-intro='play'] .map-band.is-home .map-board {
+  animation: mb-settle var(--dur-settle) var(--ease-out) both;
+}
+
+:root[data-intro='play'] .is-home .mb-roads {
+  mask: url(#mb-intro);
+}
+
+:root[data-intro='play'] .is-home .mb-intro-path {
+  animation: mb-draw var(--dur-route) var(--ease-in-out) both;
+}
+
+:root[data-intro='play'] .is-home .mb-car-wrap {
+  animation: mb-live-in var(--dur-ui) var(--ease-out) var(--dur-settle) backwards;
+}
+
+@supports (offset-path: path('M0 0')) {
+  :root[data-intro='play'] .is-home .mb-car {
+    /* 들어오는 차는 이미 달리는 중이라 강한 감속(--ease-out): 천천히 출발하면 휴대폰 폭에서 차가 화면 밖에 오래 있다 (D71 검토 반영) */
+    animation: mb-approach var(--dur-approach) var(--ease-out) var(--dur-settle) backwards;
+  }
+}
+
+:root[data-intro='play'] .is-home .mb-pulse {
+  animation: mb-pulse var(--dur-pop) var(--ease-out) calc(var(--dur-settle) + var(--dur-approach)) both;
+}
+
+:root[data-intro='still'] .map-band.is-home .map-board {
+  animation: mb-live-in var(--dur-fade) var(--ease-out) both;
+}
+
+/* 길 그리기 가림막: 길보다 넓은 흰 선. 끝 모습(가림막 다 열림)이 기본이라 장면이 없으면 길이 그대로 다 보인다 */
+.mb-intro-path {
+  fill: none;
+  stroke: var(--brand-white);
+  stroke-width: 18;
+  stroke-dasharray: 1 2;
+}
+
+/* 출발 고리 퍼짐: 평소에는 보이지 않는다 */
+.mb-pulse {
+  fill: none;
+  stroke: var(--you);
+  stroke-width: 3;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes mb-settle {
+  from {
+    scale: 1.04;
+  }
+}
+
+@keyframes mb-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes mb-approach {
+  from {
+    offset-path: var(--approach);
+    offset-distance: 0%;
+    offset-rotate: auto;
+    transform: none;
+  }
+
+  to {
+    offset-path: var(--approach);
+    offset-distance: 100%;
+    offset-rotate: auto;
+    transform: none;
+  }
+}
+
+@keyframes mb-pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+/* 시트 아래 무대 여백은 시트가 낸다 (시트와 바닥글 사이에 회색 띠가 남지 않게) */
+.stage:has(> .home) {
+  padding-block-end: 0;
+}
+
+/* ── 내용 시트: 360px은 화면 끝에서 끝까지(무대 양옆 여백을 넘어), 768px부터 읽는 폭 640 + 여백 ── */
+.home-sheet {
+  margin-inline: calc(-1 * var(--gutter));
+  padding-block-end: var(--space-7);
+}
+
+.home-logo {
+  display: none;
+}
+
+.home-sheet h1 {
+  margin-block-start: var(--space-3);
+  text-wrap: balance;
+}
+
+.home-sheet h1:focus {
+  outline: none;
+}
+
+.home-intro {
+  margin-block-start: var(--space-2);
+  color: var(--text-2);
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body-lg);
+}
+
+.home-explain {
+  margin-block-start: var(--space-2);
+  text-wrap: pretty;
+  color: var(--text-2);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+/* ── 주 버튼 56 (HomeStart). 다시 온 손님은 두 줄: '이어서 가기' 17/22 + '2/4 · 도구 고르기' 14/18 (높이는 그대로 56) ── */
+.home-start {
+  margin-block-start: var(--space-5);
+}
+
+.home-go.is-back {
+  flex-direction: column;
+  gap: 0;
+  padding-block: var(--space-2);
+}
+
+.home-go-name {
+  line-height: 1.375rem;
+}
+
+.home-go-sub {
+  font-size: var(--size-caption);
+  line-height: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 다시 온 손님: 갈 곳을 알 때까지(data-ready) 처음 온 사람의 주 버튼 글을 보이지 않고, 붙기 전(data-live)에는
+   붙은 뒤 더할 '새로 만들 앱 정하기' 줄(72) 자리를 미리 비워 둔다. 스크립트가 꺼지면 data-resume도 붙지 않으므로 늘 보인다 */
+:root[data-resume] .home-start:not([data-ready]) .home-go {
+  visibility: hidden;
+}
+
+:root[data-resume] .home-start:not([data-live]) .home-links {
+  margin-block-start: calc(var(--space-4) + var(--row-2));
+}
+
+/* ── 묶음 목록·'이렇게 가요'·코스: 시트 안이라 상자 없이 나눔 선. 줄의 누름 면은 글 시작선 밖으로 16 나간다 ── */
+.home-sheet .list {
+  margin-inline: calc(-1 * var(--space-4));
+}
+
+.home-links {
+  margin-block-start: var(--space-4);
+}
+
+/* 나눔 선은 글 시작선 안에서 끝난다 (줄의 누름 면만 16 밖으로 나간다) */
+.home-sheet :is(.list > li + li > .list-row, .list > .list-row + .list-row)::before {
+  inset-inline-end: var(--space-4);
+}
+
+.home-note {
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.home-sheet > .home-note {
+  margin-block-start: var(--space-4);
+}
+
+.home-note + .home-note {
+  margin-block-start: var(--space-1);
+}
+
+.home-section {
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--hairline);
+}
+
+.home-section h2 {
+  margin-block-end: var(--space-2);
+}
+
+.home-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-2);
+}
+
+.home-section-head h2 {
+  margin: 0;
+}
+
+.home-section-head .btn-text {
+  margin-inline-end: calc(-1 * var(--space-2));
+}
+
+/* '이렇게 가요': 누르는 줄이 아니다. 번호 원 24는 parts.css .num-dot */
+.home-how > .list-row {
+  --list-indent: 52px;
+  cursor: default;
+}
+
+.home-how > .list-row:active {
+  background: transparent;
+}
+
+
+/* 코스 줄: 미니 지도 56×40. 나눔 선은 지도 끝(16 + 56 + 12)에서 */
+.home-courses > li > .list-row {
+  --list-indent: 84px;
+}
+
+.home-sheet .list-map {
+  background: var(--map-land);
+}
+
+/* ── 코스 미리 보기 시트 (모달 시트, frame.css) ── */
+.course-map {
+  position: relative;
+  aspect-ratio: 312 / 176;
+  margin-block: var(--space-2) var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--map-land);
+}
+
+@media (min-width: 768px) {
+  .course-map {
+    aspect-ratio: auto;
+    block-size: 250px;
+  }
+}
+
+.course-summary {
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body-lg);
+}
+
+.course-facts {
+  margin: var(--space-4) 0 0;
+}
+
+.course-facts > div {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-block-start: 1px solid var(--hairline);
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+}
+
+.course-facts dt {
+  color: var(--text-2);
+}
+
+.course-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.course-note {
+  margin-block-start: var(--space-2);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.course-go {
+  display: flex;
+  margin-block-start: var(--space-5);
+}
+
+/* ── 1024px 이상: 지도가 화면을 채우고(머리줄 아래부터, 스크롤해도 제자리), 왼쪽에 패널이 떠 있다 ── */
+@media (min-width: 1024px) {
+  .home {
+    display: grid;
+    /* 무대(최대 680)를 넘어 화면 폭 전체로 */
+    margin-inline: calc(50% - 50vw);
+    margin-block-start: calc(-1 * var(--space-5));
+  }
+
+  .home > * {
+    grid-area: 1 / 1;
+  }
+
+  .map-band.is-home {
+    position: sticky;
+    inset-block-start: 0;
+    align-self: start;
+    block-size: 100dvh;
+    margin: 0;
+  }
+
+  /* 지도 판은 패널(20 + 440)을 뺀 오른쪽 빈 곳의 가운데에. 시트가 덮지 않으니 위아래는 가운데 그대로 */
+  .map-band.is-home .map-board {
+    inset-inline-start: calc(50% + 230px);
+    translate: -50% -50%;
+  }
+
+  /* 머리줄도 화면 폭 전체로. 패널 머리에 세로 묶음 로고 A가 있으니 머리줄 로고는 감춘다 (한 화면에 로고 둘이 되지 않게).
+     홈에서 홈으로 가는 링크라 빠져도 길을 잃지 않는다. visibility라 자리는 남아 오른쪽 단추들이 제자리다 */
+  :root:has(.home) .topbar-inner {
+    max-inline-size: none;
+  }
+
+  :root:has(.home) .topbar .brand {
+    visibility: hidden;
+  }
+
+  .home-sheet {
+    position: relative;
+    z-index: 1;
+    align-self: start;
+    inline-size: 440px;
+    margin: var(--space-5) 0 var(--space-6) var(--gutter);
+    padding: var(--space-6) var(--space-6) var(--space-6);
+    border-radius: var(--radius-xl);
+    background: var(--surface-raised);
+    box-shadow: var(--elev-2);
+  }
+
+  .home-logo {
+    display: block;
+    inline-size: 160px;
+    block-size: auto;
+    margin-block-end: var(--space-5);
+  }
+}
+
+/* 시험판 안내는 시트 안에 이미 있다: 같은 화면 바닥글에서 되풀이하지 않는다 */
+:root:has(.home) .footer-trial {
+  display: none;
+}

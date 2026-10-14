@@ -1,0 +1,69 @@
+{
+  "id": "case-05",
+  "title": "교육과정 찾기 도구 (색인 상품을 담음)",
+  "note": "주제가 다른 나이스 상품은 기준 점수에 못 미쳐 추천이 없다. 색인 상품은 조사할 것으로 넘어간다.",
+  "answers": {
+    "q.type": "tool",
+    "q.audience": "me",
+    "q.ai": "agent",
+    "q.save": "no",
+    "q.domain": "education",
+    "q.edu-topic": "curriculum",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.device": "pc",
+    "q.style": "serious"
+  },
+  "cart": ["react-vite", "korean-elementary-learning-map-mcp"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.edu-topic",
+      "q.realtime",
+      "q.budget",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "react-vite",
+        "filledBy": ["react-vite"],
+        "score": 4,
+        "runnerUp": "html-single",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": null,
+        "filledBy": ["korean-elementary-learning-map-mcp"]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "cloudflare-workers",
+        "filledBy": [],
+        "score": 5,
+        "runnerUp": "firebase-hosting",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": ["research.index:korean-elementary-learning-map-mcp"],
+    "safety": [],
+    "study": { "required": ["terminal"], "all": ["terminal"] },
+    "steps": ["slot.screen", "slot.data"],
+    "prep": ["Node.js LTS 설치"],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 130,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

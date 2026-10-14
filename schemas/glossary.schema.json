@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "glossary.schema.json",
+  "title": "어려운 말 풀이 (화면: 고르면 뜨는 쉬운 풀이, 점선 밑줄 말). 손으로 쓴 용어만 둔다. 도구 이름은 빌드 때 products.json에서 더한다",
+  "type": "object",
+  "required": ["version", "terms"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 2 },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "term", "plain", "kind"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "term": { "type": "string", "minLength": 1, "description": "보이는 이름. 한 글자도 된다('봇'): 한 글자 열쇠는 고른 글 전체가 그 말일 때만 맞는다" },
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 2 },
+            "minItems": 1,
+            "description": "다른 이름 (영어 이름, 줄임말, 자료에 쓰인 표기). 정규화 뒤 2자 이상, 다른 용어의 이름·다른 이름과 겹치지 않는다 (tests/lib/glossary.test.ts)"
+          },
+          "say": {
+            "type": "string",
+            "pattern": "^[가-힣]+(?:[ ·][가-힣]+)*$",
+            "description": "읽는 법 (영문 용어, 한글만). 열쇠로 쓰지 않는다"
+          },
+          "plain": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 70,
+            "pattern": "^(?!.*[.?!]\\s).+요\\.$",
+            "description": "쉬운 한 문장 풀이. 해요체, '요.'로 끝, 70자 이하(목표 45자). 상위 용어는 하나까지(see)"
+          },
+          "example": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 60,
+            "pattern": "^(?!.*[.?!]\\s).+\\.$",
+            "description": "짧은 예 한 문장, 60자 이하"
+          },
+          "kind": {
+            "enum": ["key", "money", "data", "code", "ai", "law", "site"],
+            "description": "key 키·로그인·안전, money 돈·요금제·한도, data 공공 API·자료·지도, code 도구·코드·Git·브라우저, ai AI, law 권리·약관, site 코드쇼퍼 말. 'tool'(도구 이름)은 빌드 때만 생긴다"
+          },
+          "see": { "$ref": "defs.schema.json#/$defs/id", "description": "풀이 문장 속 상위 용어 id (같은 파일). 풀이에서 실제로 찾혀야 한다" },
+          "concept": { "$ref": "defs.schema.json#/$defs/id", "description": "용어 카드 id (concepts.json)" },
+          "tool": { "$ref": "defs.schema.json#/$defs/id", "description": "도구 카드 id (products.json)" },
+          "error": { "$ref": "defs.schema.json#/$defs/id", "description": "에러 안내 id (errors.json)" },
+          "noMark": { "const": true, "description": "점선 밑줄을 긋지 않는다 (흔한 말, 코드쇼퍼 말). 고르기로는 풀린다" },
+          "risk": { "const": true, "description": "위험을 품은 용어. 풀이 안에 위험을 숨기지 않는 말('넣으면 안 돼요', '지워질 수 있어요' 따위)이 있어야 한다" }
+        }
+      }
+    }
+  }
+}

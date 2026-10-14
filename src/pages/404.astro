@@ -1,0 +1,22 @@
+---
+// 404 (T17): 길을 잘못 들었어요. 처음 화면으로 모신다.
+import Base from '../layouts/Base.astro';
+import { ko } from '../copy/ko.ts';
+import { ROUTES } from '../lib/routes.ts';
+---
+
+<Base title={ko.notFound.pageTitle}>
+  <section class="lost">
+    <h1>{ko.notFound.title}</h1>
+    <p class="lead">{ko.notFound.body}</p>
+    <a class="btn btn-primary" href={ROUTES.home}>{ko.notFound.home}</a>
+  </section>
+</Base>
+
+<style>
+  .lost {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-3);
+  }
+</style>

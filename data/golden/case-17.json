@@ -1,0 +1,152 @@
+{
+  "id": "case-17",
+  "title": "학사일정 알림판 (예산 넉넉, 알림은 아마도)",
+  "note": "학사일정(neis-schedule)을 처음 쓰는 사례. 알림을 '아마도'로 답해 알림 칸이 필수가 되고, 난이도 7이라 알림을 2차로 미루자는 제안이 나온다. 예산 '넉넉'과 코딩 에이전트로 React+Vite·Workers가 추천된다.",
+  "answers": {
+    "q.type": "board",
+    "q.audience": "few",
+    "q.ai": "agent",
+    "q.save": "no",
+    "q.domain": "education",
+    "q.edu-topic": "schedule",
+    "q.notify": "maybe",
+    "q.realtime": "daily",
+    "q.budget": "more",
+    "q.payment": "no",
+    "q.device": "pc",
+    "q.style": "serious"
+  },
+  "cart": [
+    "react-vite",
+    "neis-schedule",
+    "discord-webhook",
+    "cloudflare-workers"
+  ],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.edu-topic",
+      "q.notify",
+      "q.realtime",
+      "q.budget",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "react-vite",
+        "filledBy": [
+          "react-vite"
+        ],
+        "score": 4,
+        "runnerUp": "html-single",
+        "reasons": [
+          "aiTool",
+          "budget"
+        ]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "neis-schedule",
+        "filledBy": [
+          "neis-schedule"
+        ],
+        "score": 8,
+        "runnerUp": "neis-meal",
+        "reasons": [
+          "domain",
+          "topic",
+          "budget"
+        ]
+      },
+      {
+        "id": "slot.notify",
+        "required": true,
+        "recommended": "discord-webhook",
+        "filledBy": [
+          "discord-webhook"
+        ],
+        "score": 4,
+        "runnerUp": "slack-webhook",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "official"
+        ]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "cloudflare-workers",
+        "filledBy": [
+          "cloudflare-workers"
+        ],
+        "score": 7,
+        "runnerUp": "netlify",
+        "reasons": [
+          "aiTool",
+          "budget",
+          "proxy"
+        ]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [
+      "research.schedule-run"
+    ],
+    "safety": [
+      "safety.proxy-key"
+    ],
+    "study": {
+      "required": [
+        "api",
+        "api-key",
+        "env-var"
+      ],
+      "all": [
+        "api",
+        "json",
+        "api-key",
+        "env-var",
+        "terminal",
+        "deploy"
+      ]
+    },
+    "steps": [
+      "slot.screen",
+      "step.proxy",
+      "slot.data",
+      "slot.notify",
+      "slot.host"
+    ],
+    "prep": [
+      "Node.js LTS 설치",
+      "교육정보 개방 포털에 로그인해 인증키 발급",
+      "디스코드 서버의 채널 설정에서 웹후크 만들기",
+      "Cloudflare 가입"
+    ],
+    "stuckRules": [
+      "stuck.workers-secret",
+      "stuck.workers-cron"
+    ],
+    "difficulty": 7,
+    "difficultyFirst": 7,
+    "minutes": 160,
+    "split": {
+      "needed": true,
+      "defer": [
+        "slot.notify"
+      ],
+      "easier": []
+    }
+  }
+}

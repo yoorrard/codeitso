@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-cards.schema.json",
+  "title": "조사 카드 (영수증과 설계도 9번의 '알아볼 것')",
+  "type": "object",
+  "required": ["version", "cards"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "area", "what", "why", "where", "doneWhen"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^research\\.[a-z0-9-]+$" },
+          "area": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "what": { "$ref": "defs.schema.json#/$defs/nonEmptyText", "description": "무엇을 확인하나 (질문 형태)" },
+          "why": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "where": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "description": "어디서 찾나 (기관·문서 이름이나 검색어)"
+          },
+          "doneWhen": { "$ref": "defs.schema.json#/$defs/nonEmptyText", "description": "확인됐다고 볼 기준" }
+        }
+      }
+    }
+  }
+}

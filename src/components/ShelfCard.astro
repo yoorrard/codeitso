@@ -1,0 +1,43 @@
+---
+// 도구 모음의 줄 하나 (brief 6.9, D67 W3b): 줄 72 = 타일 40 + 이름 + 하는 일 한 줄 + 오른쪽 '0원'/'유료'. 줄 전체가 하나의 누르는 곳.
+// 진열 도구는 상세 페이지로, 원문만 있는 도구(색인)는 상세가 없어 첫 원문 링크를 새 창으로 연다.
+// data-domains·data-caps는 거르기 섬(ShelfFilter)이 읽는다.
+import Glyph from './Glyph.astro';
+import { ko } from '../copy/ko.ts';
+import { catalog } from '../lib/data.ts';
+import type { Product } from '../lib/engine/index.ts';
+import { productArt } from '../lib/shelf.ts';
+import { toolPath } from '../lib/routes.ts';
+
+interface Props {
+  product: Product;
+}
+const { product: p } = Astro.props;
+const isShelf = p.layer === 'shelf';
+const source = p.links[0];
+---
+
+<li data-shelf-item data-id={p.id} data-domains={(p.domains ?? []).join(' ')} data-caps={p.capabilities.join(' ')}>
+  {
+    isShelf ? (
+      <a class="list-row is-tall" href={toolPath(p.id)}>
+        <Glyph name={productArt(p)} tile="md" class="list-tile" />
+        <span class="list-text">
+          <span class="list-name">{p.name}</span>
+          <span class="list-sub is-one">{p.summary}</span>
+        </span>
+        <span class:list={['tool-price', { 'is-paid': !p.cost.free }]}>{p.cost.free ? ko.shelf.free : catalog.data.templates.receipt.paid}</span>
+      </a>
+    ) : (
+      <a class="list-row is-tall" href={source?.url} target="_blank" rel="noopener noreferrer">
+        <Glyph name={productArt(p)} tile="md" class="list-tile" />
+        <span class="list-text">
+          <span class="list-name">{p.name}</span>
+          <span class="list-sub is-one">{p.summary}</span>
+        </span>
+        <span class="list-ext" aria-hidden="true" />
+        <span class="visually-hidden"> ({ko.shelf.newTab})</span>
+      </a>
+    )
+  }
+</li>

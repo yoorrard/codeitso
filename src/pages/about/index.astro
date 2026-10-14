@@ -1,0 +1,23 @@
+---
+// 소개 /about (docs/UX.md 3.11, T17)
+import Base from '../../layouts/Base.astro';
+import { ko } from '../../copy/ko.ts';
+import { ROUTES } from '../../lib/routes.ts';
+
+const A = ko.about;
+---
+
+<Base title={A.pageTitle}>
+  <article class="prose">
+    <h1>{A.title}</h1>
+    <h2>{A.what}</h2>
+    {A.whatBody.map((t) => <p>{t}</p>)}
+    <h2>{A.not}</h2>
+    <ul>{A.notBody.map((t) => <li>{t}</li>)}</ul>
+    <h2>{A.whyNoAI}</h2>
+    {A.whyNoAIBody.map((t) => <p>{t}</p>)}
+    <h2>{A.open}</h2>
+    <p>{A.openBody}</p>
+    <p><a href={ROUTES.criteria}>{A.scoringLink}</a> · <a href={ROUTES.credits}>{A.creditsLink}</a></p>
+  </article>
+</Base>

@@ -1,0 +1,233 @@
+---
+// 홈 / (brief 6.3, D70): 지도 띠(본보기 코스의 길, 출발에 선 차) → 지도와 16 겹친 내용 시트.
+// 시트: 남색 요금 칩, H1, 소개, 한 줄, 주 버튼 하나와 묶음 목록(HomeStart 섬: 다시 온 손님은 [이어서 가기]와 '새로 만들 앱 정하기'),
+// 믿음 줄, '이렇게 가요' 네 줄(단계 이름을 가르친다), 미리 짠 코스 세 줄(미니 지도). 코스 줄을 누르면 코스 미리 보기 시트가 뜨고
+// 그 안의 [이 코스로 출발]이 주 버튼이다. 스크립트가 없으면 코스 줄은 코스 모음의 그 코스로 간다.
+// 첫 화면 JS에는 엔진·자료가 없다: 지도는 지시어 없이 그린 정적 SVG이고, 코스로 채우는 모듈(src/lib/course.ts)은
+// [이 코스로 출발]을 누를 때, 이어 갈 곳(src/lib/continue.ts)은 저장된 진행이 있을 때만 늦게 불러온다.
+// 첫 방문 장면 S1(D71)은 CSS 키프레임이다(home.css): 기본 틀이 첫 그림 전에 html[data-intro]를 붙이면 지도가 가라앉고, 본보기 길이 그려지고,
+// 차가 왼쪽 가장자리에서 출발로 와 서고, 출발 고리가 한 번 퍼진다. 아래 스크립트는 본 기록과 [건너뛰기]만 맡는다.
+// 1024px 이상: 지도가 화면을 채우고, 왼쪽에 폭 440 패널이 떠 있다. 패널 머리에 세로 묶음 로고 A(폭 160).
+import Base from '../layouts/Base.astro';
+import '../styles/home.css';
+import HomeStart from '../components/HomeStart.tsx';
+import Icon from '../components/Icon.astro';
+import Logo from '../components/Logo.astro';
+import { MapSvg } from '../components/MapBoard.tsx';
+import { ko } from '../copy/ko.ts';
+import { catalog, data } from '../lib/data.ts';
+import { evaluate, fill, receiptModel } from '../lib/engine/index.ts';
+import { glyph } from '../lib/glyphs.ts';
+import { iconSvg } from '../lib/icons.ts';
+import { mapModel } from '../lib/map/model.ts';
+import { ROUTES } from '../lib/routes.ts';
+import { shelfProducts } from '../lib/shelf.ts';
+import { STAGE } from '../lib/stage.ts';
+import { NUMBERED } from '../lib/stages.ts';
+
+const H = ko.home;
+const sessionOf = (id: string) => {
+  const r = data.recipes.recipes.find((x) => x.id === id);
+  return r ? { answers: r.answers, cart: r.cart, kept: r.kept ?? [] } : {};
+};
+// 본보기 코스: 출발 → 화면 → 외부 데이터 → 배포·공유 → 빈 터. 길은 다 잇고 차는 출발에 세운다 (parked)
+const sample = mapModel(evaluate(catalog, sessionOf('weather-board')), { parked: true });
+
+const courses = data.recipes.recipes.slice(0, 3).map((recipe) => {
+  const result = evaluate(catalog, { answers: recipe.answers, cart: recipe.cart, kept: recipe.kept ?? [] });
+  // 난이도·예상 시간은 영수증과 같은 값 (발행 시각은 쓰지 않으므로 비워 둔다)
+  const model = receiptModel(catalog, result, '');
+  const tools = recipe.cart.map((id) => catalog.product.get(id)?.name).filter((n) => n !== undefined);
+  return {
+    recipe,
+    model,
+    tools,
+    map: mapModel(result),
+    // '교사, 학생회' → '교사·학생회': 줄 안의 ' · '와 나뉘게
+    sub: fill(H.recipeSub, { who: recipe.forWho.replace(/,\s*/g, '·'), time: model.timeText, level: model.difficultyText }),
+  };
+});
+
+const icons = {
+  practice: glyph('q-ai-chat-free'),
+  tools: glyph('q-domain-none'),
+  fresh: iconSvg('pin', '20px'),
+};
+---
+
+<Base map>
+  <div class="home">
+    <div class="map-band is-home">
+      <MapSvg model={sample} decorative intro />
+      <button type="button" class="btn btn-sm map-skip" data-skip hidden>{ko.common.skip}</button>
+    </div>
+    <div class="content-sheet home-sheet">
+      <Logo variant="stack" height={162} class="home-logo" />
+      <p class="fare-chip">
+        <span class="fare-dot" aria-hidden="true"></span>
+        {H.fareChip}
+      </p>
+      <h1 id="home-title" class="t-display" tabindex="-1">{H.title}</h1>
+      <p class="home-intro">{H.intro}</p>
+      <p class="home-explain">{H.explain}</p>
+      <HomeStart client:load icons={icons} toolsSub={fill(H.browseSub, { n: shelfProducts.length })} />
+      <p class="home-note">{H.trust}</p>
+      {STAGE === 'preview' && <p class="home-note">{ko.footer.trial}</p>}
+
+      <section class="home-section" aria-labelledby="home-how">
+        <h2 id="home-how" class="t-title-3">{H.howTitle}</h2>
+        <ol class="list home-how">
+          {
+            NUMBERED.map((s, i) => (
+              <li class="list-row">
+                <span class="num-dot" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span class="list-text">
+                  <span class="list-name">{ko.stages[s.id]}</span>
+                  <span class="list-sub">{H.how[s.id as keyof typeof H.how]}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="home-section" aria-labelledby="home-courses">
+        <div class="home-section-head">
+          <h2 id="home-courses" class="t-title-3">{H.recipesTitle}</h2>
+          <a class="btn btn-text" href={ROUTES.courses} aria-label={H.allRecipesLabel}>{H.allRecipes}</a>
+        </div>
+        <ul class="list home-courses">
+          {
+            courses.map(({ recipe, map, sub }) => (
+              <li>
+                <a class="list-row is-tall" href={`${ROUTES.courses}#${recipe.id}`} data-course={recipe.id} aria-haspopup="dialog">
+                  <span class="list-map" aria-hidden="true">
+                    <MapSvg model={map} variant="mini" />
+                  </span>
+                  <span class="list-text">
+                    <span class="list-name">{recipe.title}</span>
+                    <span class="list-sub">{sub}</span>
+                  </span>
+                  <span class="list-chev" aria-hidden="true" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  {
+    courses.map(({ recipe, model, tools, map }) => (
+      <dialog class="modal course-sheet" id={`course-${recipe.id}`} aria-labelledby={`course-${recipe.id}-title`}>
+        <div class="modal-head">
+          <h2 class="modal-title" id={`course-${recipe.id}-title`}>
+            {recipe.title}
+          </h2>
+          <form method="dialog">
+            <button class="icon-btn" aria-label={H.close}>
+              <Icon name="close" />
+            </button>
+          </form>
+        </div>
+        <div class="course-map" aria-hidden="true">
+          <MapSvg model={map} decorative />
+        </div>
+        <p class="course-summary">{recipe.summary}</p>
+        <dl class="course-facts">
+          <div>
+            <dt>{H.recipeFor}</dt>
+            <dd>{recipe.forWho}</dd>
+          </div>
+          <div>
+            <dt>{H.recipeCart}</dt>
+            <dd>{tools.join(', ')}</dd>
+          </div>
+          <div>
+            <dt>{model.difficultyLabel}</dt>
+            <dd>{model.difficultyText}</dd>
+          </div>
+          <div>
+            <dt>{model.timeLabel}</dt>
+            <dd>{model.timeText}</dd>
+          </div>
+        </dl>
+        <p class="course-note">{H.recipesLead}</p>
+        <button type="button" class="btn btn-primary btn-lg btn-block course-go" data-course-go={recipe.id} aria-label={fill(H.recipeGoLabel, { title: recipe.title })}>
+          {H.recipeGo}
+        </button>
+      </dialog>
+    ))
+  }
+  <dialog class="sheet" id="course-overwrite" aria-labelledby="course-overwrite-title" aria-describedby="course-overwrite-body">
+    <h2 id="course-overwrite-title">{H.overwriteTitle}</h2>
+    <p id="course-overwrite-body">{H.overwriteBody}</p>
+    <form method="dialog" class="sheet-actions">
+      <button class="btn">{H.overwriteNo}</button>
+      <button class="btn btn-danger" value="go" data-course-confirm>{H.overwriteYes}</button>
+    </form>
+  </dialog>
+</Base>
+
+<script>
+  // 코스 줄을 누르면 미리 보기 시트를 연다 (스크립트가 없으면 링크대로 코스 모음의 그 코스로 간다).
+  // 닫으면 누른 줄로 초점을 돌리고, 뒤 막을 누르면 닫는다.
+  // [이 코스로 출발]은 코스로 채우는 모듈을 그때 불러온다(엔진·자료를 첫 화면 JS에 넣지 않는다). 저장된 진행을 덮어쓰면 먼저 묻는다.
+  import type { Session } from '../lib/engine/types.ts';
+  import { runScene } from '../lib/scene.ts';
+  import { markSceneSeen } from '../lib/store.ts';
+
+  // 첫 방문 장면 S1: 한 번 본 것으로 적어 두고(다음에는 기본 틀이 data-visit을 붙여 돌지 않는다), 도는 동안 [건너뛰기]를 보인다
+  const intro = document.documentElement.getAttribute('data-intro');
+  if (intro) markSceneSeen('home');
+  if (intro === 'play') runScene(document.querySelector('.map-band.is-home'));
+
+  const closeOnBackdrop = (d: HTMLDialogElement): void => {
+    d.addEventListener('click', (e) => {
+      if (e.target !== d) return;
+      const box = d.getBoundingClientRect();
+      if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) d.close();
+    });
+  };
+
+  for (const row of document.querySelectorAll<HTMLAnchorElement>('a[data-course]')) {
+    const sheet = document.getElementById(`course-${row.dataset.course ?? ''}`);
+    if (!(sheet instanceof HTMLDialogElement) || typeof sheet.showModal !== 'function') continue;
+    row.addEventListener('click', (e) => {
+      e.preventDefault();
+      sheet.showModal();
+    });
+    sheet.addEventListener('close', () => row.focus());
+    closeOnBackdrop(sheet);
+  }
+
+  const overwrite = document.getElementById('course-overwrite');
+  let pending: { target: Session; from: HTMLButtonElement } | null = null;
+  if (overwrite instanceof HTMLDialogElement) {
+    closeOnBackdrop(overwrite);
+    overwrite.addEventListener('close', () => {
+      if (overwrite.returnValue !== 'go') pending?.from.focus();
+    });
+    overwrite.querySelector('[data-course-confirm]')?.addEventListener('click', () => {
+      const p = pending;
+      if (p) void import('../lib/course.ts').then((m) => m.startCourse(p.target));
+    });
+  }
+
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('button[data-course-go]')) {
+    btn.addEventListener('click', () => {
+      void import('../lib/course.ts').then((m) => {
+        const target = m.courseSession(btn.dataset.courseGo ?? '');
+        if (!target) return;
+        if (m.wouldOverwrite(target) && overwrite instanceof HTMLDialogElement) {
+          pending = { target, from: btn };
+          overwrite.returnValue = '';
+          overwrite.showModal();
+        } else m.startCourse(target);
+      });
+    });
+  }
+</script>

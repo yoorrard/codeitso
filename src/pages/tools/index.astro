@@ -1,0 +1,63 @@
+---
+// 도구 모음 /tools (brief 6.9, D67 W3b, R-46): H1 + 한 줄 + 검색 칸 → 칩 한 줄(분야 ⌄ 시트 | 기능) → 기능별 묶음(줄 72) → 원문만 있는 도구(접기).
+// 목록은 정적 HTML이라 자바스크립트 없이도 모두 보이고, 거르기 섬은 숨기기·보이기만 한다.
+import Base from '../../layouts/Base.astro';
+import '../../styles/catalog-pages.css';
+import '../../styles/tools.css';
+import Glyph from '../../components/Glyph.astro';
+import ShelfCard from '../../components/ShelfCard.astro';
+import ShelfFilter from '../../components/ShelfFilter.tsx';
+import { ko } from '../../copy/ko.ts';
+import { ROUTES } from '../../lib/routes.ts';
+import { fill } from '../../lib/engine/index.ts';
+import { DEFAULT_DOMAIN_ART, optionArt } from '../../lib/option-art.ts';
+import { capabilityChoices, corners, domainChoices, indexProducts, shelfProducts } from '../../lib/shelf.ts';
+
+const S = ko.shelf;
+const everything = [...shelfProducts, ...indexProducts];
+const groups = corners(shelfProducts);
+---
+
+<Base title={S.pageTitle} description={S.description}>
+  <h1>{S.title}</h1>
+  <p class="page-lead">{S.lead}</p>
+  <ShelfFilter
+    client:idle
+    domains={domainChoices(everything)}
+    capabilities={capabilityChoices(everything)}
+    generalArt={optionArt('q.domain', 'none') ?? DEFAULT_DOMAIN_ART}
+    total={everything.length}
+  />
+  {
+    groups.map((g) => (
+      <section class="shelf-corner" data-shelf-group aria-labelledby={`corner-${g.capability}`}>
+        <h2 id={`corner-${g.capability}`} class="sec-title">
+          <Glyph name={g.art} />
+          <span>{g.label}</span>
+        </h2>
+        <ul class="list group tool-list">
+          {g.products.map((p) => (
+            <ShelfCard product={p} />
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+  {
+    indexProducts.length > 0 && (
+      <details class="fold shelf-index" data-shelf-group data-shelf-index>
+        <summary>{fill(S.indexFold, { n: indexProducts.length })}</summary>
+        <p class="sec-note">{S.indexLead}</p>
+        <ul class="list group tool-list">
+          {indexProducts.map((p) => (
+            <ShelfCard product={p} />
+          ))}
+        </ul>
+      </details>
+    )
+  }
+  <div slot="action" class="bar-stack">
+    <p class="bar-line">{S.cartNote}</p>
+    <a class="btn btn-primary" href={ROUTES.destination}>{S.goBuild}</a>
+  </div>
+</Base>

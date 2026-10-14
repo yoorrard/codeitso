@@ -1,0 +1,235 @@
+/* ── 어려운 말 풀이 2판 (brief 8절, glossary.md 5.3·5.4·5.7, D69) ─────────────────────────────
+   풀이 상자: Popover API로 맨 위 층. 모서리 16, --surface-raised, --elev-2, 안쪽 16, 폭은 섬이 min(320, 화면 − 32)로 잡는다.
+   위에서 아래로: (길잡이 + 뒤로) → 이름 17/600 + 읽는 법 14 → 풀이 16/24 → 예 14/21 → 같이 고른 말 칩 → 버튼 둘까지. 닫기 44는 오른쪽 위.
+   꼬리 12×6은 상자 끝에서 16 안쪽에서만 움직인다(--tail). 열림 200ms(투명도 + 위로 4px), 닫힘 100ms, 동작 줄이기는 투명도만.
+   점선 밑줄 말: 글자색은 본문 그대로, 밑줄만 --link 점선 1.5px. 버튼이지만 여백·테두리 0, font: inherit라 줄이 밀리지 않는다. */
+
+.term-pop-host {
+  display: contents;
+}
+
+.term-pop {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: var(--elev-2);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+  opacity: 0;
+  translate: 0 var(--space-1);
+  transition:
+    opacity var(--dur-tap) var(--ease-in),
+    translate var(--dur-tap) var(--ease-in),
+    overlay var(--dur-tap) allow-discrete,
+    display var(--dur-tap) allow-discrete;
+}
+
+.term-pop:popover-open {
+  opacity: 1;
+  translate: 0 0;
+  transition-duration: var(--dur-ui);
+  transition-timing-function: var(--ease-out);
+}
+
+@starting-style {
+  .term-pop:popover-open {
+    opacity: 0;
+    translate: 0 var(--space-1);
+  }
+}
+
+.term-pop-in {
+  display: grid;
+  gap: var(--space-2);
+  max-block-size: var(--max-h, 360px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4);
+  border-radius: inherit;
+}
+
+.term-pop-in > * {
+  margin: 0;
+}
+
+.term-pop-close {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  color: var(--text-2);
+}
+
+.term-pop-tail {
+  position: absolute;
+  inset-block-start: calc(-1 * var(--space-2) + 2px);
+  left: calc(var(--tail, 50%) - 6px);
+  inline-size: 12px;
+  block-size: 6px;
+  background: var(--surface-raised);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.term-pop[data-side='above'] .term-pop-tail {
+  inset-block: auto calc(-1 * var(--space-2) + 2px);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.term-pop[data-side='pin'] .term-pop-tail {
+  display: none;
+}
+
+/* 머리 줄: 이름 17/600 + 읽는 법 14 --text-2. 닫기 단추 자리를 비워 둔다 */
+.term-pop-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  padding-inline-end: var(--space-6);
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-strong);
+}
+
+.term-pop-name:focus-visible {
+  outline-offset: 2px;
+}
+
+.term-pop-say {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-body);
+}
+
+/* 겹 풀이 길잡이: [뒤로] + 'API › API 키' */
+.term-pop-trail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-block: calc(-1 * var(--space-2)) 0;
+  margin-inline-start: calc(-1 * var(--space-2));
+  padding-inline-end: var(--space-6);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.term-pop-back {
+  flex: none;
+  padding-inline: var(--space-2) var(--space-3);
+  font-size: var(--size-caption);
+}
+
+.term-pop-plain {
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+}
+
+.term-pop-ex {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-body);
+}
+
+.term-pop-also {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.term-pop-act {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  margin-block-start: var(--space-1);
+}
+
+/* 모르는 말: 작은 칩 하나 (44). 고른 글이 길면 줄을 바꾼다 */
+.term-pop.is-miss .term-pop-in {
+  padding: var(--space-2);
+  padding-inline-end: calc(var(--tap) + var(--space-1));
+}
+
+.term-pop-miss {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-strong);
+  text-align: start;
+}
+
+.term-pop-miss:active {
+  background: var(--fill-press);
+}
+
+/* 점선 밑줄 말 (설명 글 칸만). 섬이 깨어나 이미 연 용어의 밑줄을 거둔 뒤에 밑줄을 보인다(html[data-terms]) */
+.term-mark {
+  /* 문장 속 말이라 누르는 곳 44의 예외 (WCAG 2.5.8 Inline). 줄 높이를 바꾸지 않는다 */
+  min-block-size: 0;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-decoration: underline dotted 1.5px transparent;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+  transition: text-decoration-color var(--dur-ui) var(--ease-out);
+}
+
+:root[data-terms] .term-mark,
+.term-pop .term-mark {
+  text-decoration-color: var(--link);
+}
+
+.term-mark:active {
+  background: var(--fill);
+}
+
+@media (hover: hover) {
+  .term-mark:hover {
+    background: var(--fill);
+  }
+}
+
+/* 처음 한 번 기사 메시지: 본문 흐름 안, H1 아래 한 줄 다음의 알림 칸(.term-hint-slot, role="status")에 그린다.
+   떠 있지 않아 초점 받은 것을 가리지 않고, 닫기가 Tab 순서 앞쪽에 온다 (D69 검토 반영) */
+.stage .term-hint-slot:not(:empty) {
+  margin-block: var(--space-4);
+}
+
+/* 동작 줄이기 (기기·사이트): 움직이지 않고 투명도만 */
+@media (prefers-reduced-motion: reduce) {
+  .term-pop,
+  .term-pop:popover-open {
+    translate: none;
+    transition-duration: var(--dur-fade);
+  }
+}
+
+:root[data-motion='reduce'] .term-pop,
+:root[data-motion='reduce'] .term-pop:popover-open {
+  translate: none;
+  transition-duration: var(--dur-fade);
+}

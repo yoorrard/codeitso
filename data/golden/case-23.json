@@ -1,0 +1,67 @@
+{
+  "id": "case-23",
+  "title": "나만 쓰는 독서 기록장 (브라우저 저장, 배포 칸 동점)",
+  "note": "나만 쓰는 기록장에 브라우저 저장을 담았다. 배포 칸(선택)에서 GitHub Pages와 앱스 스크립트가 4점으로 같고 둘 다 공식·난이도 2인데, 앱스 스크립트가 맡을 수 있는 저장 칸은 이미 브라우저 저장이 채워 '다른 빈 칸도 함께 맡는 상품'으로 앞서지 않는다(D55, 엔진 검토 반영). 그래서 id 순으로 GitHub Pages가 추천.",
+  "answers": {
+    "q.type": "record",
+    "q.audience": "me",
+    "q.ai": "chat-free",
+    "q.domain": "none",
+    "q.budget": "free-only",
+    "q.personal": "no",
+    "q.device": "phone",
+    "q.style": "cute"
+  },
+  "cart": ["html-single", "browser-storage"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.domain", "q.budget", "q.personal", "q.device", "q.style"],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "browser-storage",
+        "filledBy": ["browser-storage"],
+        "score": 6,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "local"]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "github-pages",
+        "filledBy": [],
+        "score": 4,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [],
+    "safety": [],
+    "study": {
+      "required": [],
+      "all": []
+    },
+    "steps": ["slot.screen", "slot.store"],
+    "prep": [],
+    "stuckRules": [],
+    "difficulty": 2,
+    "difficultyFirst": 2,
+    "minutes": 65,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

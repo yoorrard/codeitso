@@ -1,0 +1,24 @@
+---
+// 직접 그린 SVG 그림을 HTML에 바로 넣는다 (src/lib/glyphs.ts). 늘 장식이다: 뜻은 옆의 글이 전한다.
+// tile을 주면 남색 둥근 네모 안에 밝은 선 그림으로 (CONCEPT 5.7, 섬의 ArtTile과 같은 틀).
+import { glyph } from '../lib/glyphs.ts';
+import { isBlueprint } from '../lib/option-art.ts';
+
+interface Props {
+  name: string;
+  class?: string;
+  /** 그림 타일 크기. 없으면 타일 없이 글자색 그림 */
+  tile?: 'sm' | 'md' | 'lg' | 'xl' | 'hero';
+}
+const { name, class: cls, tile } = Astro.props;
+const svg = glyph(name);
+---
+
+{
+  svg &&
+    (tile ? (
+      <span class:list={['art-tile', `tile-${tile}`, { 'is-blueprint': isBlueprint(name) }, cls]} aria-hidden="true" set:html={svg} />
+    ) : (
+      <span class:list={['glyph', cls]} aria-hidden="true" set:html={svg} />
+    ))
+}

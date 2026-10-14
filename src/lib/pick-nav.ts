@@ -40,12 +40,15 @@ function rowsOf(ranking: SlotRanking): Product[] {
 
 /**
  * 이 칸에 정한 도구: 이 칸을 채운 장바구니 상품 중 가장 나중에 담은 것.
- * 한 상품이 여러 칸을 맡으면(배포·공유 + 중간 서버) 다른 칸에서 고른 것이 이 칸에도 정한 도구로 보인다
+ * 한 상품이 여러 칸을 맡으면(배포·공유 + 중간 서버) 다른 칸에서 고른 것이 이 칸에도 정한 도구로 보인다.
+ * 이용자가 고른 것만 센다: 엔진이 채운 빌더의 게시 기능(B-02)은 정한 도구도, 뺄 도구도 아니다
  */
 export function savedFor(r: EngineResult, ranking: SlotRanking): string | null {
   const cart = r.session.cart;
   let best: string | null = null;
-  for (const id of ranking.filledBy) if (best === null || cart.indexOf(id) > cart.indexOf(best)) best = id;
+  for (const id of ranking.filledBy) {
+    if (cart.includes(id) && (best === null || cart.indexOf(id) > cart.indexOf(best))) best = id;
+  }
   return best;
 }
 

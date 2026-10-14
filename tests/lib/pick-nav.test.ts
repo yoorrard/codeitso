@@ -160,6 +160,16 @@ describe('removableFor: 있으면 좋은 것만 뺄 수 있다', () => {
     const r = at('case-03');
     expect(removableFor(r, slot(r, 'slot.host'))).toBeNull();
   });
+
+  it('엔진이 채운 빌더의 게시 기능(B-02)은 정한 도구도 뺄 도구도 아니다 (case-31)', () => {
+    const r = at('case-31', ['html-single']);
+    const host = slot(r, 'slot.host');
+    expect(host.filledBy).toEqual(['builder-publish']);
+    expect(savedFor(r, host)).toBeNull();
+    expect(removableFor(r, host)).toBeNull();
+    expect(pressedFor(r, host, {})).toBeNull();
+    expect(pickableSlots(r)).toEqual([]);
+  });
 });
 
 describe('shortName: 버튼에 넣는 이름 (brief 2.1)', () => {

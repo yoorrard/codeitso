@@ -12,7 +12,7 @@ import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import type { Conflict, EngineResult } from '../lib/engine/index.ts';
-import { answerChips, difficultyWord, emptySlotId, evaluate, fill, formatMinutes } from '../lib/engine/index.ts';
+import { answerChips, difficultyWord, emptySlotId, evaluate, fill, formatMinutes, productOf } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
 import { reduced } from '../lib/motion.ts';
@@ -151,6 +151,8 @@ export default function Check() {
   const ready = useHydrated();
   const live = useStore($result);
   const r = ready ? live : FIRST_VISIT;
+  // 결과의 도구 이름: 엔진이 채운 빌더의 게시 기능(B-02)과 직접 쓴 도구도 이름으로 (카탈로그에 없다)
+  const nameOf = (id: string): string => productOf(catalog, r, id)?.name ?? id;
   const mark = useTermMarks();
   const [cleared, setCleared] = useState(false);
 
@@ -329,7 +331,7 @@ export default function Check() {
                   <Pill state="flow" />
                   <span class="list-text">
                     <span class="list-name">{s.slot.label}</span>
-                    <span class="list-sub">{s.filledBy.map(productName).join(', ')}</span>
+                    <span class="list-sub">{s.filledBy.map(nameOf).join(', ')}</span>
                   </span>
                 </li>
               ))}
@@ -356,13 +358,13 @@ export default function Check() {
                 <div key={s.slot.id}>
                   <dt>{s.slot.label}</dt>
                   <dd>
-                    {s.filledBy.length > 0 ? s.filledBy.map(productName).join(', ') : ko.check.emptySlot}
+                    {s.filledBy.length > 0 ? s.filledBy.map(nameOf).join(', ') : ko.check.emptySlot}
                     {r.session.deferred.includes(s.slot.id) && <span class="tag ck-later-tag">{ko.check.laterMark}</span>}
                   </dd>
                 </div>
               ))}
             </dl>
-            {r.orphans.length > 0 && <p class="ck-sub">{fill(ko.check.orphans, { names: r.orphans.map(productName).join(', ') })}</p>}
+            {r.orphans.length > 0 && <p class="ck-sub">{fill(ko.check.orphans, { names: r.orphans.map(nameOf).join(', ') })}</p>}
             <p class="ck-sub">{fill(ko.check.size, { level: difficultyWord(catalog, r.split.difficultyFirst), time: formatMinutes(r.minutes, T.receipt.timeFormat) })}</p>
           </div>
         </details>

@@ -2,7 +2,9 @@ import type { Catalog } from './catalog.ts';
 import { cmp } from './catalog.ts';
 import type { Ctx } from './conditions.ts';
 import { evalCondition, hasTag, tagsWithPrefix } from './conditions.ts';
-import type { Product, ScoreKey, SlotDef } from './types.ts';
+import { builderHosts, builderPublishProduct } from './builder.ts';
+import { customProduct } from './custom.ts';
+import type { CustomTool, Product, ScoreKey, SlotDef } from './types.ts';
 
 /** 점수 항목의 고정 순서. 이유를 고를 때 점수가 같으면 이 순서를 따른다. */
 export const SCORE_KEYS: ScoreKey[] = [
@@ -53,8 +55,16 @@ export interface SlotRanking {
   /** 추천과 2위 비교: 추천이 앞선 항목, 2위가 앞선 항목 */
   /** 추천과 2위의 차이. 점수가 같으면 tieBy가 무엇으로 갈렸는지 말한다 (정렬 순서: 공식 제공 → 맡는 칸 수 → 난이도 → id) */
   compare: { ahead: ScoreKey[]; behind: ScoreKey[]; tieBy?: TieBy } | null;
-  /** 이 칸을 채운 장바구니 상품 id */
+  /** 이 칸을 채운 장바구니 상품 id (직접 쓴 도구 custom-n 포함) */
   filledBy: string[];
+  /** 이 칸 기능의 직접 쓴 도구 (쓴 순서, 장바구니에 없어도). 점수·추천·비교가 없다 (D74) */
+  custom: Product[];
+  /**
+   * 웹에서 만드는 도구를 골랐을 때 공개 칸이면 빌더의 게시 기능 (B-02, D89), 아니면 null. 이 칸은 추천·2위·비교가 없다.
+   * 고른 공개 도구가 없으면 filledBy에 이 상품 id가 들어간다. 이용자가 다른 공개 도구를 고르면 filledBy에는 그 도구만 들어가고 이 값은 그대로다
+   * (화면: "쓰는 웹 빌더가 공개를 맡아요" + [다른 곳에 공개하고 싶어요])
+   */
+  builder: Product | null;
 }
 
 /** 칸 규칙을 모아 칸 목록을 만든다. 같은 칸은 합치고, 하나라도 필수면 필수. */
@@ -177,7 +187,14 @@ function tieReason(a: Scored, b: Scored): TieBy {
   return 'id';
 }
 
-export function rankSlot(cat: Catalog, slot: Slot, tags: Record<string, number>, cart: Product[], slots: Slot[]): SlotRanking {
+export function rankSlot(
+  cat: Catalog,
+  slot: Slot,
+  tags: Record<string, number>,
+  cart: Product[],
+  slots: Slot[],
+  customTools: CustomTool[] = [],
+): SlotRanking {
   const tops = slotTops(cat, slots, tags, cart);
   // 맡는 칸 수 = 이 칸 1 + 다른 열린 칸 중 이 상품이 맡을 수 있는 칸. 다른 상품이 채운 칸, 이 상품보다
   // 점수가 높은 상품이 있는 칸은 세지 않는다 (D55). 이 칸은 모두에게 같으므로 장바구니와 상관없이 1이다
@@ -196,7 +213,9 @@ export function rankSlot(cat: Catalog, slot: Slot, tags: Record<string, number>,
   const shelf = scored.filter((s) => s.product.layer === 'shelf');
   const index = scored.filter((s) => s.product.layer === 'index');
   const threshold = cat.data.scoring.recommendThreshold;
-  const recommended = shelf.find((s) => s.product.recommendable && s.score >= threshold) ?? null;
+  // 웹에서 만드는 도구의 공개 칸은 추천하지 않는다: 빌더의 게시 기능과 겹치는 배포처를 권하지 않게 (B-02). 목록과 점수는 그대로 둔다
+  const builder = builderHosts(tags, slot) ? builderPublishProduct(cat) : null;
+  const recommended = builder ? null : (shelf.find((s) => s.product.recommendable && s.score >= threshold) ?? null);
   const runnerUp = recommended ? (shelf.find((s) => s !== recommended) ?? null) : null;
   let compare: SlotRanking['compare'] = null;
   if (recommended && runnerUp) {
@@ -210,7 +229,8 @@ export function rankSlot(cat: Catalog, slot: Slot, tags: Record<string, number>,
     compare = recommended.score === runnerUp.score ? { ahead, behind, tieBy: tieReason(recommended, runnerUp) } : { ahead, behind };
   }
   const filledBy = cart.filter((p) => p.capabilities.includes(slot.capability)).map((p) => p.id);
-  return { slot, shelf, index, recommended, runnerUp, compare, filledBy };
+  const custom = customTools.filter((t) => t.capability === slot.capability).map((t) => customProduct(cat, t));
+  return { slot, shelf, index, recommended, runnerUp, compare, filledBy, custom, builder };
 }
 
 /** 열린 칸마다 순위를 낸다 (도구 고르기 화면 전체) */

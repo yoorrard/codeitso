@@ -229,6 +229,13 @@ describe('productField·matchProduct', () => {
     expect(productField(p, 'publicKey')).toBe(false);
   });
 
+  it('productField custom: 직접 쓴 도구만 참, 진열·색인 도구는 늘 거짓 (D74)', () => {
+    expect(productField(product('p'), 'custom')).toBe(false);
+    expect(productField(product('custom-1', { custom: true, layer: 'index' }), 'custom')).toBe(true);
+    expect(matchProduct(product('custom-1', { custom: true }), { field: 'custom', is: true })).toBe(true);
+    expect(matchProduct(product('p'), { field: 'custom', is: true })).toBe(false);
+  });
+
   it('matchProduct: 빈 조건은 참, 기능과 값은 모두 맞아야', () => {
     const p = product('p', { capabilities: ['store', 'auth'], access: 'key' });
     expect(matchProduct(p, {})).toBe(true);
@@ -336,6 +343,45 @@ describe('runInterview', () => {
     const back = runInterview(cat, { ...changed, q1: 'a' });
     expect(back.answers).toEqual({ q1: 'a', q2: 'c', q3: 'd' });
     expect(back.tags).toEqual({ 't.x': 2, 't.y': 1 });
+  });
+
+  describe('고르지 않아도 되는 질문 (optional, D87)', () => {
+    // q1 → (q1이 a일 때) 고르지 않아도 되는 q.opt → q4
+    const opt = question('q.opt', [option('x', { 'aitool.x': 1 }), option('unknown', {}, { isUnknown: true })], { optional: true, showIf: { answer: 'q1', is: 'a' } });
+    const cat = tinyCatalog({ questions: [q1, opt, q4] });
+
+    it('차례가 오면 다른 질문처럼 묻는다', () => {
+      const s = runInterview(cat, { q1: 'a' });
+      expect(ids(s.visible)).toEqual(['q1', 'q.opt', 'q4']);
+      expect(s.next?.id).toBe('q.opt');
+      expect(s.total).toBe(3);
+    });
+
+    it('답하지 않은 채 다른 질문을 다 마치면 보이는 질문에서 빠지고 끝난다', () => {
+      const s = runInterview(cat, { q1: 'a', q4: 'e' });
+      expect(ids(s.visible)).toEqual(['q1', 'q4']);
+      expect(s.next).toBeNull();
+      expect(s.total).toBe(2);
+      expect(evaluate(cat, { answers: { q1: 'a', q4: 'e' } }).done).toBe(true);
+    });
+
+    it('답하면 남고 그 태그가 더해진다 (점수에 쓰지 않는 aitool.*)', () => {
+      const s = runInterview(cat, { q1: 'a', 'q.opt': 'x', q4: 'e' });
+      expect(ids(s.visible)).toEqual(['q1', 'q.opt', 'q4']);
+      expect(s.answers).toEqual({ q1: 'a', 'q.opt': 'x', q4: 'e' });
+      expect(s.tags).toEqual({ 't.x': 1, 't.y': 1, 'aitool.x': 1 });
+      expect(s.next).toBeNull();
+    });
+
+    it('뒤에 필수 질문이 남아 있으면 앞의 고르지 않아도 되는 질문부터 묻는다', () => {
+      const s = runInterview(cat, { q1: 'a' });
+      expect(s.next?.id).toBe('q.opt');
+      expect(evaluate(cat, { answers: { q1: 'a' } }).done).toBe(false);
+    });
+
+    it('노출 조건이 맞지 않으면 처음부터 보이지 않는다', () => {
+      expect(ids(runInterview(cat, { q1: 'b' }).visible)).toEqual(['q1', 'q4']);
+    });
   });
 
   it('없는 질문·보기의 답은 버린다', () => {

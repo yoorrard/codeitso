@@ -1,0 +1,74 @@
+{
+  "id": "case-25",
+  "title": "직접 쓴 가져올 정보: 포켓몬 도감 정보 (맞는 도구 없이 그대로 가기)",
+  "note": "가져올 정보를 직접 쓰고 그대로 뒀다. 분야 태그 없이 need.data만 붙어 외부 데이터 칸이 생기지만 분야를 맞춰야 하는 칸이라 진열 도구가 없다. 빈 칸을 그대로 가기로 두면 알아볼 것 research.empty:slot.data가 붙고, 그 '무엇을 확인'은 내 말로 바뀐다(id는 그대로).",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "anyone",
+    "q.ai": "chat-free",
+    "q.save": "no",
+    "q.domain": "custom",
+    "q.realtime": "daily",
+    "q.budget": "free-only",
+    "q.payment": "no",
+    "q.device": "both",
+    "q.style": "clean"
+  },
+  "notes": {
+    "q.domain": "포켓몬 도감 정보"
+  },
+  "cart": ["html-single", "github-pages"],
+  "kept": ["conflict.empty-slot:slot.data"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.realtime", "q.budget", "q.payment", "q.device", "q.style"],
+    "tags": {
+      "need.data": 1,
+      "domain.public": 0
+    },
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": null,
+        "filledBy": []
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "github-pages",
+        "filledBy": ["github-pages"],
+        "score": 4,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": ["conflict.empty-slot:slot.data"],
+    "canIssue": true,
+    "research": ["research.empty:slot.data"],
+    "safety": [],
+    "study": {
+      "required": ["deploy"],
+      "all": ["deploy", "git-repo"]
+    },
+    "steps": ["slot.screen", "slot.data", "slot.host"],
+    "prep": ["GitHub 가입"],
+    "stuckRules": [],
+    "difficulty": 3,
+    "difficultyFirst": 3,
+    "minutes": 80,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

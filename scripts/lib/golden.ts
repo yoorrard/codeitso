@@ -1,6 +1,6 @@
 // 골든 사례 비교. 부작용이 없어서 Vitest(T03)에서 그대로 import해 쓸 수 있다.
 import type { EngineResult } from '../../src/lib/engine/index.ts';
-import type { Session } from '../../src/lib/engine/types.ts';
+import type { CustomTool, Session } from '../../src/lib/engine/types.ts';
 
 export interface GoldenSlot {
   id: string;
@@ -39,11 +39,19 @@ export interface Golden {
   cart: string[];
   kept?: string[];
   deferred?: string[];
+  /** 직접 쓴 것 (D74, input.md 11.2절): 질문 id → 내 말, 목록에 없는 도구, 빈틈 id */
+  notes?: Record<string, string>;
+  customTools?: CustomTool[];
+  gaps?: string[];
   expect: GoldenExpect;
 }
 
 export function goldenSession(g: Golden): Partial<Session> {
-  return { answers: g.answers, cart: g.cart, kept: g.kept ?? [], deferred: g.deferred ?? [] };
+  const s: Partial<Session> = { answers: g.answers, cart: g.cart, kept: g.kept ?? [], deferred: g.deferred ?? [] };
+  if (g.notes) s.notes = g.notes;
+  if (g.customTools) s.customTools = g.customTools;
+  if (g.gaps) s.gaps = g.gaps;
+  return s;
 }
 
 /** 엔진 결과를 골든 기대값 모양으로 바꾼다 */

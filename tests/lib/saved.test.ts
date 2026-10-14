@@ -42,6 +42,42 @@ describe('세션 읽기', () => {
   });
 });
 
+describe('세션 읽기: 직접 쓴 것 (T36)', () => {
+  it('내 말: 질문 id 모양의 열쇠만, 40자, 20개까지, 빈 글은 버린다', () => {
+    const notes: Record<string, unknown> = { 'q.type': '가계부 앱', 'Q.bad': 'x', 'q.save': '   ', 'q.long': 'ㄱ'.repeat(50), 'q.num': 3 };
+    for (let i = 0; i < 25; i += 1) notes[`q.n${i}`] = `글 ${i}`;
+    const s = readSession({ notes });
+    expect(s.notes?.['q.type']).toBe('가계부 앱');
+    expect(s.notes?.['q.long']).toBe('ㄱ'.repeat(40));
+    expect(Object.keys(s.notes ?? {})).not.toContain('Q.bad');
+    expect(Object.keys(s.notes ?? {})).not.toContain('q.save');
+    expect(Object.keys(s.notes ?? {})).toHaveLength(20);
+  });
+
+  it('직접 쓴 도구: 글 칸 셋이 있는 것만 5개까지, 이름 40자 (모양·기능은 엔진이 다시 고른다)', () => {
+    const tools = [
+      { id: 'custom-1', name: 'PokeAPI', capability: 'data' },
+      { id: 'custom-2', name: 3, capability: 'data' },
+      'custom-3',
+      ...[3, 4, 5, 6, 7].map((n) => ({ id: `custom-${n}`, name: `도구 ${n}${'x'.repeat(45)}`, capability: 'store' })),
+    ];
+    const s = readSession({ customTools: tools });
+    expect(s.customTools?.map((t) => t.id)).toEqual(['custom-1', 'custom-3', 'custom-4', 'custom-5', 'custom-6']);
+    expect([...(s.customTools?.[1]?.name ?? '')]).toHaveLength(40);
+  });
+
+  it('빈틈: id 모양의 글만 10개까지', () => {
+    const s = readSession({ gaps: ['chat', 'Bad Id', 4, ...Array.from({ length: 12 }, (_, i) => `g${i}`)] });
+    expect(s.gaps).toEqual(['chat', ...Array.from({ length: 9 }, (_, i) => `g${i}`)]);
+  });
+
+  it('없으면 칸을 만들지 않고, 있으면 처음 값이 아니다', () => {
+    expect(readSession({ notes: {}, customTools: [], gaps: [] })).toEqual({ answers: {}, cart: [], kept: [], deferred: [] });
+    expect(isEmptySession(readSession({ notes: { 'q.type': '가계부' } }))).toBe(false);
+    expect(isEmptySession(readSession({ customTools: [{ id: 'custom-1', name: 'x', capability: 'data' }] }))).toBe(false);
+  });
+});
+
 describe('공부 기록 읽기', () => {
   it('읽음과 맞힌 문제 번호(정수, 겹침 없이 정렬)', () => {
     expect(readStudy({ api: { read: true, quiz: [2, 0, 2, -1, 1.5, 'x'] } })).toEqual({ api: { read: true, quiz: [0, 2] } });

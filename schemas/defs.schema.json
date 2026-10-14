@@ -10,7 +10,8 @@
     },
     "tagId": {
       "type": "string",
-      "pattern": "^(type|audience|ai|need|domain|topic|budget|sensitive|device|style)\\.[a-z0-9-]+$"
+      "pattern": "^(type|audience|ai|aitool|need|domain|topic|budget|sensitive|device|style)\\.[a-z0-9-]+$",
+      "description": "aitool.* 태그는 '쓰는 AI' 질문(optional)만 달고 점수·규칙·노출 조건에 쓰지 않는다 (npm run validate)"
     },
     "questionId": { "type": "string", "pattern": "^q\\.[a-z0-9-]+$" },
     "slotId": { "type": "string", "pattern": "^slot\\.[a-z0-9-]+$" },
@@ -31,8 +32,10 @@
         "cost.free",
         "keyExposureRisk",
         "publicKey",
-        "recommendable"
-      ]
+        "recommendable",
+        "custom"
+      ],
+      "description": "custom: 이용자가 직접 쓴 도구(목록에 없는 도구, D74)면 참. 진열·색인 도구는 늘 거짓"
     },
     "productPredicate": {
       "type": "object",
@@ -159,8 +162,8 @@
     },
     "conflictId": {
       "type": "string",
-      "pattern": "^conflict\\.[a-z0-9-]+(:slot\\.[a-z0-9-]+)?$",
-      "description": "충돌 id. 빈 칸 충돌은 conflict.empty-slot:slot.이름 꼴"
+      "pattern": "^conflict\\.[a-z0-9-]+(:(slot\\.[a-z0-9-]+|custom-[1-5]))?$",
+      "description": "충돌 id. 빈 칸 충돌은 conflict.empty-slot:slot.이름, 직접 쓴 도구 서행은 conflict.custom-tool:custom-n 꼴"
     }
   }
 }

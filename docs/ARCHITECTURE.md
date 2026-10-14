@@ -86,7 +86,7 @@ code-chauffeur/
 | `/legal/privacy` | 개인정보 처리방침 (초안, 사람 검토) | 정적 |
 | `/legal/notice` | 이용 안내·면책 (초안, 사람 검토) | 정적 |
 | `/404` | 길을 잘못 들었어요 | 정적 |
-| `/search-index.json`, `/glossary.json`, `/glossary-tools.json`, `/robots.txt`, `/manifest.webmanifest` | 검색 색인, 어려운 말 풀이 자료(손으로 쓴 용어 212개, D66·D69)와 도구 이름 풀이(products.json에서), 로봇 안내, 웹 앱 설명서(`start_url`·`scope`·아이콘에 주소 바탕, T35·D81) (빌드 때 만드는 정적 끝점) | 정적 생성 |
+| `/search-index.json`, `/glossary.json`, `/glossary-tools.json`, `/robots.txt`, `/manifest.webmanifest` | 검색 색인, 어려운 말 풀이 자료(손으로 쓴 용어 213개, D66·D69)와 도구 이름 풀이(products.json에서), 로봇 안내, 웹 앱 설명서(`start_url`·`scope`·아이콘에 주소 바탕, T35·D81) (빌드 때 만드는 정적 끝점) | 정적 생성 |
 
 **v3에서 더할 주소 (계획, `docs/review/v3/brief.md` 3.4·3.6절).** 만들면 이 표 위로 올린다.
 
@@ -122,7 +122,7 @@ code-chauffeur/
 
 | 키 | 내용 |
 |---|---|
-| `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers(목적지 답), cart(고른 도구), kept(그대로 간 막힌 곳), deferred(나중으로 미룬 기능), freeText(한 줄 입력). 이름이 바뀌어도 키와 모양은 그대로라 저장된 답이 살아남는다 (D56) |
+| `cc:session:v1` | `Session` (`src/lib/engine/types.ts`): answers(목적지 답), cart(고른 도구), kept(그대로 간 막힌 곳), deferred(나중으로 미룬 기능), freeText(한 줄 입력). v3(T36, D74·D88)에서 선택 칸 셋을 더했다: notes(질문 id → 내 말, 20개·40자, 열쇠 `q.*`), customTools(직접 쓴 도구 `{ id: custom-1~5, name 40자, capability }`, 5개), gaps(빈틈 id, 10개). 한도는 읽을 때 `saved.ts` `readSession`이, 뜻은 `normalizeSession`이 다시 거른다. 넷 다 비면 칸을 두지 않아 옛 모양 그대로다. 엔진이 채운 빌더의 게시 기능(`builder-publish`, B-02)은 cart에 넣지 않는다. 이름이 바뀌어도 키와 모양은 그대로라 저장된 답이 살아남는다 (D56) |
 | `cc:study:v1` | `{ [conceptId]: { read: boolean, quiz: number[] } }` 용어 카드 읽음과 정답 맞힌 문제 번호 |
 | `cc:meta:v1` | `{ interviewStartedAt?: number, sent: string[], lessonDone?: true, issued?: true, checkJams?: string[] }` 만들 앱 정하기 첫 답 시각, 보낸 이벤트 열쇠 (최근 20개만 둔다, 8절), 내 AI 써 보기를 끝까지 함·영수증을 한 번 이상 받음 (단계 상태 계산용, D40·D56), 도구끼리 맞춰 보기에서 마지막으로 본 막힌 마디(칸 id, 12개까지. 고치고 돌아오면 빨강이 걷히는 장면 S4, D71) |
 | `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', sound: boolean, quiet: boolean, glossary: boolean, marks: boolean }` (효과음·조용히 모시기 기본 false, 어려운 말 풀이·점선 밑줄 기본 true, D67) |
@@ -134,7 +134,7 @@ code-chauffeur/
 
 | 키 | 모양 | '저장한 기록 지우기' | 묶음 |
 |---|---|---|---|
-| `cc:session:v1` (넓힘) | `notes: Record<질문 id, string>`(직접 쓴 말), `customTools`(직접 쓴 도구, 최대 5), `gaps: string[]`, `look`(디자인 정하기) | 지움 | T36·T38 |
+| `cc:session:v1` (넓힘) | `notes: Record<질문 id, string>`(직접 쓴 말), `customTools`(직접 쓴 도구, 최대 5), `gaps: string[]` (T36에서 했다, 위 표), `look`(디자인 정하기) | 지움 | T36·T38 |
 | `cc:prep:v1` (새) | 영수증마다 `{ done, mine, guideIds }`, 최근 30장. `done`에는 안내가 걸리지 않은 줄만 | 지움 | T40 |
 | `cc:guides:v1` (새) | `{ done: { [안내 id]: string[] }, finished: string[] }`, 다 마친 안내 최근 200. 안내가 걸린 줄의 마침은 여기만 진실이다(D79, `src/lib/progress.ts`의 `lineDone`·`progressCount`) | 지움 | T39 |
 | `cc:prefs:v1` (넓힘) | 지금 값에 `scheme: 'auto' \| 'light' \| 'dark'`(화면 밝기), `text: 100 \| 112.5 \| 125`(글자 크기), `os: 'windows' \| 'mac' \| 'linux' \| 'other' \| 'mobile'`, `osText?`(직접 쓴 컴퓨터 이름)을 더한다 | 설정 값은 남기고 `osText`만 지움 | T39·T41 |
@@ -150,6 +150,7 @@ code-chauffeur/
 
 - 모양: `https://사이트/arrival#r=<압축 문자열>`. 주소 바탕이 있으면 `https://사이트/code-chauffeur/arrival#r=…`(3.1절 `siteRoot()`).
 - 압축 전 값: `toShareState(session)` → `{ v: 1, a: 답, c: 고른 도구, k: 그대로 간 막힌 곳, d: 나중으로 미룬 기능 }`. 한 줄 입력(freeText)은 넣지 않는다.
+- 직접 쓴 것(T36, D88): 내 말(`notes`)과 직접 쓴 도구 이름은 넣지 않는다. 빌더의 게시 기능(B-02, D89)은 세션 장바구니에 없으므로 링크에도 없고, 여는 쪽에서 답(`q.ai`)으로 다시 계산된다. 장바구니의 직접 쓴 도구는 `x: { 'custom-n': 기능 }`, 빈틈은 `g: [id]`로 **있을 때만** 넣고 판 번호는 `v: 1` 그대로다(옛 화면은 모르는 칸을 버린다). 링크로 연 영수증·설계도에는 이름 자리에 '직접 쓴 도구'가 보인다. 보기 id `custom`과 `custom-n`은 그대로 넣는다.
 - 압축: `LZString.compressToEncodedURIComponent(JSON.stringify(state))`
 - 여는 쪽: 압축 풀기 → `fromShareState()`로 모양 검사 → `evaluate()`가 모르는 id를 버린다. 읽자마자 `history.replaceState`로 주소에서 `#r=`를 지운다. 실패하면 "링크가 깨졌어요" 안내 후 홈으로.
 - 링크로 연 영수증은 읽기 전용으로 보여 주고, "이 영수증으로 이어서 가기"를 누를 때만 저장한다 (지금 상태와 다르면 묻는다).
@@ -296,6 +297,7 @@ T01에서 `tsconfig.json`을 아래 모양으로 만든다 (지금 파일은 엔
 - 단계 화면 덜기 (D82, 설계서 L-08, 2026-10-14 잼): `/arrival` 136.0 → 115.0 · `/check` 133.8 → 114.7 · `/waypoints` 131.0 → 111.9 · `/destination` 130.0 → 110.8 · `/test-drive` 106.7 → 87.6KB. 자료 두 판(6절)으로 −17KB 안팎, 4단계 칸 지연으로 `/arrival` −1.8KB, 상품 출처 칸 뺌으로 −2.0KB.
 - 4단계 칸 지연 (D82): 영수증 칸만 처음 묶음에 있다. 설계도·용어·AI에게 할 말 칸의 안(`ReceiptTabs.tsx`)은 영수증을 그린 뒤 쉬는 시간에(칸 이름에 초점·포인터가 가도) `import()`로 미리 받는다. 못 받으면 열린 칸에 한 줄 + [새로 고치기](실패한 `import()`는 브라우저가 기억해 같은 주소로 다시 받을 수 없다). [설계도 내려받기 (.md)]의 설계도 묶음(`src/lib/pack-file.ts` + 엔진 `pack.ts`)은 `/arrival` 아래 막대 섬의 첫 묶음에 함께 싣는다: 주 버튼이 망과 상관없이 같은 누름 안에서 내려받는다. 'AI에게 할 말 n장' 수는 엔진 `cards.ts`라 처음 묶음에 있다.
 - 단계 화면에서 나중에 받는 묶음 (D82, gzip): 4단계 칸 셋(`ReceiptTabs`) 3KB 이하, 설계도 묶음(`pack-file` + `pack.ts`) 5KB 이하, 풀이 칸 + 에러 안내(`data-full`, 사전 시트를 열 때) 22KB 이하. 단계 화면의 첫 묶음에 끼면 예산 검사가 실패한다(설계도 묶음만 `/arrival` 첫 묶음에 있어도 된다). v3에서 더할 지연 묶음 상한(찾기 8 · 디자인 14 · 다음 할 일 12 · AI 설정 파일 10 · 안내 섬 5 · `/looks` 섬 4KB)은 그 묶음을 만들 때 예산 검사에 줄을 더한다 (빌드에 없으면 실패하는 규칙이라 미리 넣지 않는다).
+- 직접 쓰기 찾기 묶음 (T36·T37, D88): 낱말 찾기 `src/lib/engine/match.ts`와 낱말표 `data/aliases.json`(사전 검색용 `searchSynonyms`는 빼고)을 화면이 직접 쓰기 칸을 처음 열 때 `import()`로 받는다. 엔진 입구 `index.ts`는 `match.ts`를 내보내지 않아 단계 화면 첫 묶음에 들지 않는다. T36에서 잰 값(esbuild + gzip): 찾기 코드 약 3.1KB + 낱말표 약 5.5KB = **약 8.7KB로 상한 8KB를 넘는다.** 묶음을 만드는 T37이 줄이고(낱말표를 질문별로 나누거나 도구 이름 표를 2단계에서만 받기) `qa:budget`에 줄을 더한다. 단계 화면 첫 묶음은 T36 뒤 `/arrival` 124.3 · `/check` 121.6 · `/waypoints` 118.8 · `/destination` 117.7 · `/test-drive` 94.1KB(모두 130KB 이하, 빌더의 게시 기능 `builder.ts`까지 넣은 값)였다.
 - 처음 불러오는 CSS(글꼴 `@font-face` 포함)는 gzip 30KB 이하. CSS는 첫 화면 그리기를 막는다 (D38). 밤 지도 토큰도 이 안에 든다.
 - 페이지마다 그림·애니메이션 파일 합계 300KB 이하. 글꼴은 하위 집합(subset)만 싣는다. 렌더 그림은 Astro `<Picture>`로 화면 크기에 맞는 AVIF/WebP 하나만 내려온다. 쪽별 그림 예산은 CONCEPT 9절 표 (가장 큰 곳은 목적지 첫 질문, 약 80KB).
 - 지도 (T28, gzip, D68): 땅 판 한 장 24KB 이하, 지도 표지 묶음 10KB 이하, 지도 섬(MapBoard.tsx + `map/focus.ts`) 8KB 이하, 지도 모형(`map/model.ts`) 6.5KB 이하, 빌드한 MapBoard 묶음(섬 + 모형) 14.5KB 이하. 섬과 모형은 파일 하나씩 줄여(import한 엔진·문구·preact는 빼고) 잰다. 지도 CSS(`map.css`·`map-land.css`)는 지도를 그리는 페이지에만 실린다 (MapBoard.tsx가 불러온다).

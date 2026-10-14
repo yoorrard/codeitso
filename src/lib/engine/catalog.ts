@@ -1,4 +1,5 @@
-import type { Concept, Data, Product, Question, ResearchCard } from './types.ts';
+import { customProduct } from './custom.ts';
+import type { Concept, CustomTool, Data, Product, Question, ResearchCard } from './types.ts';
 
 /** 데이터와 id 찾기 표. 화면이 열릴 때 한 번 만들고 계속 쓴다. */
 export interface Catalog {
@@ -21,12 +22,13 @@ export function makeCatalog(data: Data): Catalog {
   };
 }
 
-/** 장바구니 id 목록을 상품으로 바꾼다. 모르는 id는 버린다. */
-export function cartProducts(cat: Catalog, cart: string[]): Product[] {
+/** 장바구니 id 목록을 상품으로 바꾼다. custom-n은 직접 쓴 도구로 만들고(카탈로그에는 넣지 않는다), 모르는 id는 버린다. */
+export function cartProducts(cat: Catalog, cart: string[], customTools: CustomTool[] = []): Product[] {
   const out: Product[] = [];
   const seen = new Set<string>();
   for (const id of cart) {
-    const p = cat.product.get(id);
+    const tool = customTools.find((t) => t.id === id);
+    const p = tool ? customProduct(cat, tool) : cat.product.get(id);
     if (p && !seen.has(id)) {
       out.push(p);
       seen.add(id);

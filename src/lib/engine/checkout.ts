@@ -1,14 +1,16 @@
 import type { Catalog } from './catalog.ts';
 import type { Ctx } from './conditions.ts';
 import { evalCondition } from './conditions.ts';
+import { nameHidden } from './custom.ts';
 import type { Conflict } from './recheck.ts';
 import type { Slot } from './shop.ts';
 import { fill } from './text.ts';
-import type { Concept, Lead, PrepItem, Product, ResearchText } from './types.ts';
+import type { Concept, Lead, PrepItem, Product, ResearchText, Session } from './types.ts';
 
 export interface ResearchItem extends ResearchText {
   id: string;
-  source: 'rule' | 'conflict' | 'empty-slot' | 'index';
+  /** custom: 직접 쓴 도구(research.custom:custom-n), builder: 빌더의 게시 기능(research.builder-publish, B-02), gap: 빈틈(research.gap-<id>) */
+  source: 'rule' | 'conflict' | 'empty-slot' | 'index' | 'custom' | 'builder' | 'gap';
 }
 
 export interface StuckNote {
@@ -38,8 +40,12 @@ export interface Study {
 
 const LEAD_ORDER: Record<Lead, number> = { days: 0, hours: 1, instant: 2 };
 
-/** 알아볼 것: 규칙 카드 → 그대로 둔 규칙 충돌 → 그대로 둔 빈 칸 → 색인 상품(화면: 원문만 있는 도구). id가 같으면 앞의 것만 남긴다. */
-export function collectResearch(cat: Catalog, ctx: Ctx, conflicts: Conflict[], slots: Slot[]): ResearchItem[] {
+/**
+ * 알아볼 것: 규칙 카드 → 그대로 둔 규칙 충돌 → 그대로 둔 빈 칸 → 색인 상품(화면: 원문만 있는 도구) → 직접 쓴 도구 →
+ * 빌더의 게시 기능(B-02) → 빈틈(session.gaps 순서). id가 같으면 앞의 것만 남긴다. 가져올 정보를 직접 썼으면(notes['q.domain']) 빈 외부 데이터 칸의
+ * '무엇을 확인'을 그 말로 쓴다 (id는 그대로).
+ */
+export function collectResearch(cat: Catalog, ctx: Ctx, conflicts: Conflict[], slots: Slot[], session?: Session): ResearchItem[] {
   const out: ResearchItem[] = [];
   const seen = new Set<string>();
   const push = (item: ResearchItem): void => {
@@ -63,15 +69,29 @@ export function collectResearch(cat: Catalog, ctx: Ctx, conflicts: Conflict[], s
     if (!c.kept || c.kind !== 'empty-slot' || !c.slotId) continue;
     const slot = slots.find((s) => s.id === c.slotId);
     const vars = { label: slot?.label ?? c.slotId };
-    push({ id: `research.empty:${c.slotId}`, source: 'empty-slot', ...fillResearch(t.emptySlot.research, vars) });
+    const item = fillResearch(t.emptySlot.research, vars);
+    const note = session?.notes?.[DOMAIN_Q];
+    if (note && slot?.capability === 'data') item.what = fill(t.emptySlot.researchWithNote.what, { note });
+    push({ id: `research.empty:${c.slotId}`, source: 'empty-slot', ...item });
   }
   for (const p of ctx.cart) {
-    if (p.layer !== 'index') continue;
+    if (p.layer !== 'index' || p.custom === true || p.builderPublish === true) continue;
     const vars = { name: p.name, link: p.links[0]?.url ?? '' };
     push({ id: `research.index:${p.id}`, source: 'index', ...fillResearch(t.indexResearch, vars) });
   }
+  for (const p of ctx.cart) {
+    if (p.custom !== true) continue;
+    const c = cat.card.get(t.customTool.researchCard);
+    if (!c) throw new Error(`조사 카드가 없습니다: ${t.customTool.researchCard}`);
+    push({ ...c, id: `research.custom:${p.id}`, source: 'custom', area: nameHidden(cat, p) ? t.customTool.researchAreaHidden : fill(t.customTool.researchArea, { name: p.name }) });
+  }
+  for (const p of ctx.cart) if (p.builderPublish === true) fromCard(t.builderPublish.researchCard, 'builder');
+  for (const g of session?.gaps ?? []) fromCard(`research.gap-${g}`, 'gap');
   return out;
 }
+
+/** 가져올 정보 질문 (직접 쓴 내 말이 빈 외부 데이터 칸의 알아볼 것에 들어간다) */
+const DOMAIN_Q = 'q.domain';
 
 function fillResearch(r: ResearchText, vars: Record<string, string>): ResearchText {
   return {

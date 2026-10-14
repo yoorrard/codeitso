@@ -235,8 +235,10 @@ export const ko = {
     slotsLine: '고를 것 {{n}}개: {{names}}',
     recipesTitle: '혹시 이걸 만드시나요?',
     lineTitle: '만들고 싶은 걸 한 줄로 적어 주세요 (선택)',
-    lineHint: '이름, 학교 이름, 연락처는 적지 마세요. 이 글은 영수증 링크에 들어가지 않아요.',
-    linePlaceholder: '예: 우리 반 이번 주 급식을 보여 주는 페이지…',
+    /** 예시는 placeholder가 아니라 보이는 도움말에 (input.md 5.7절). 칸 안 예시는 두지 않는다 (같은 글이 두 번 보였다) */
+    lineHint: '예: 우리 반 이번 주 급식을 보여 주는 페이지. 이름, 학교 이름, 연락처는 적지 마세요. 이 글은 영수증 링크에 들어가지 않아요.',
+    /** 넘쳐도 자르지 않고 알린다 (maxlength 없음, input.md 5.7절) */
+    lineTooLong: '{{max}}자까지 쓸 수 있어요. {{over}}자를 줄여 주세요.',
     lineFull: '{{max}}자까지 쓸 수 있어요.',
     docTitle: `{{what}} · ${STAGE.destination} (1/4) · 코드쇼퍼`,
     lineCount: '{{n}}/{{max}}자',
@@ -250,6 +252,47 @@ export const ko = {
     /** 답 하나에 지도 변화 하나 (S2): 생긴 마디·빠진 마디를 낭독으로 */
     mapAdded: '지도에 {{names}} 생겼어요.',
     mapRemoved: '지도에서 {{names}} 빠졌어요.',
+    /** '쓰는 AI' 보기 꼬리표: 유료 구독이 있어야 쓰는 곳 (questions.json aiTool.paidOnly, 출처 있음) */
+    paidOnly: '유료 구독 필요',
+    /** P1 다시 묻지 않기 (설계서 7.7절, WCAG 3.3.7): 연습 칩에서 고른 AI로 '쓰는 AI'를 채우고 건너뛸 때. {{dir}} = josa(이름, 'dir') */
+    aiToolFromPractice: '연습에서 고른 {{dir}} 넣어 뒀어요.',
+    aiToolChange: '바꾸기',
+  },
+  /**
+   * 직접 쓰기 부품 (D74, docs/review/v3/input.md 4·9.6절): 보기 → [직접 쓰기] → '또는' → [모르겠어요].
+   * 쓴 말로 보기를 저절로 고르지 않는다. 찾은 결과는 넷 중 하나(하나 · 여럿 · 못 찾음 · 빈틈 알림)
+   */
+  custom: {
+    row: '직접 쓰기',
+    /** 정한 뒤 [직접 쓰기] 줄의 둘째 줄 */
+    rowNote: '내 말: “{{text}}”',
+    /** 숨은 글: 그대로 둔 답일 때 [직접 쓰기] 줄 (aria-pressed를 겹쳐 쓰지 않는다) */
+    chosen: '고른 답',
+    or: '또는',
+    /** 모든 직접 쓰기 도움말 끝에 붙는 같은 한 줄 (R-18과 같은 뜻) */
+    privacy: '이름·연락처는 쓰지 마세요.',
+    count: '{{n}}/{{max}}자',
+    submit: '확인',
+    empty: '한 글자 이상 써 주세요.',
+    tooLong: '{{max}}자까지 쓸 수 있어요. {{over}}자를 줄여 주세요.',
+    contact: '연락처처럼 보이는 글이 있어요. 설계도에 그대로 들어가니 지워 주세요.',
+    found: '찾은 말 ‘{{word}}’ → {{label}}',
+    foundMany: '가까운 보기가 {{n}}개 있어요.',
+    ask: '이 보기로 할까요? 내 말은 설계도에 그대로 넣을게요.',
+    /** {{labelDir}} = josa(보기 이름, 'dir'): 기록장으로 · 퀴즈로 */
+    pick: '{{labelDir}} 고르기',
+    notFound: '보기와 맞는 말을 찾지 못했어요.',
+    closest: '가장 가까운 걸 고르거나, 내 말 그대로 둘 수 있어요.',
+    /** 그대로 둘 때의 계산 (like가 있는 질문). {{likeAnd}} = josa('‘모르겠어요’', 'and') */
+    keepLike: '{{likeAnd}} 같게 계산하고, 내 말은 설계도에 그대로 넣을게요.',
+    /** 가장 흔한 꼴을 미리 붙여 둔 한 줄 ('모르겠어요'와 같게 계산하는 질문) */
+    keepUnknown: '‘모르겠어요’와 같게 계산하고, 내 말은 설계도에 그대로 넣을게요.',
+    keep: '내 말 그대로 두기',
+    retry: '다시 쓰기',
+    readAs: '영문 자판으로 친 것 같아 이렇게 읽었어요: ‘{{hangul}}’',
+    /** 정한 뒤 낭독 */
+    picked: '골랐어요: {{label}}. 내 말도 설계도에 넣었어요.',
+    kept: '내 말 그대로 뒀어요.',
   },
   shop: {
     pageTitle: `${STAGE.waypoints} (2/4)`,
@@ -337,6 +380,29 @@ export const ko = {
     toInterview: '만들 앱 정하러 가기',
     realtimeWords: { realtime: '실시간', frequent: '자주 (몇 분~몇 시간)', daily: '하루 한 번', static: '거의 바뀌지 않음' },
     providerWords: { official: '공식', community: '커뮤니티', unofficial: '비공식', generic: '일반 기술' },
+    /** 목록에 없는 도구 쓰기 (D74, input.md 8.1·9.6절). 이름은 40자, 진열 도구 이름을 쓰면 알려 준다 */
+    customRow: '목록에 없는 도구 쓰기',
+    customField: '도구 이름',
+    customHint: '예: OpenWeather, Notion. 공식 이름 그대로 써 주세요.',
+    customSame: '이미 목록에 있는 도구예요: {{name}}',
+    customSamePick: '이 도구로 고르기',
+    customSameElsewhere: '이 도구는 {{slot}} 기능에 있어요.',
+    customOpenSlot: '{{slot}} 열기',
+    customNear: '같은 일을 하는 확인된 도구: {{names}}',
+    customNearShow: '확인된 도구 보기',
+    customNearElsewhere: '가져올 정보 답을 바꾸면 고를 수 있어요.',
+    customNone: '코드쇼퍼가 아직 확인하지 않은 도구예요.',
+    customKeepNote: '그대로 쓰면 확인할 일을 ‘알아볼 것’에 적어 둘게요.',
+    customKeep: '직접 쓴 도구로 두기',
+    customLine: '직접 쓴 도구 · 확인 필요',
+    customCost: '모름',
+    customDetail: '코드쇼퍼가 확인하지 않은, 내가 직접 쓴 도구예요.',
+    customRemove: '이 도구 지우기',
+    customLimit: '직접 쓴 도구는 5개까지 둘 수 있어요.',
+    customDuplicate: '같은 이름을 이미 썼어요.',
+    /** 웹에서 만드는 도구의 공개 칸 (B-02, D89): 엔진 SlotRanking.builder가 있고 그 칸을 채울 때. 버튼은 목록과 직접 쓰기를 펼친다 (T37) */
+    builderLine: '쓰는 웹 빌더가 공개를 맡아요.',
+    builderOther: '다른 곳에 공개하고 싶어요',
   },
   /** 3단계 도구끼리 맞춰 보기 (brief 6.7, D70): H1 + 한 줄 → 막힌 곳(항목마다 알약 + 기능 이름, 설명, 고치는 법, 같은 크기 중립 버튼 둘)
    *  → 그대로 가는 곳(줄 56) → 한 번에 가기엔 길이 멀어요(줄 56 + [나중으로]) → 지름길 알림 상자 → 접기 '원활 n개' → 접기 '이렇게 이해했어요' */
@@ -683,6 +749,10 @@ export const ko = {
     tieTitle: '점수가 같으면',
     tieBody: '공식 제공 → 다른 고를 것도 함께 맡는 도구(거기서도 점수가 가장 높을 때) → 쉬운 난이도 → 도구의 영문 id 순으로 정해요.',
     golden: '기준을 바꾸면 미리 정해 둔 사례들로 추천 결과를 확인한 뒤에 반영해요.',
+    /** 직접 쓴 도구 (D74·D88, 설계서 10절 T36) */
+    custom: '직접 쓴 도구는 점수를 매기지 않아요. 코드쇼퍼가 확인하지 않은 도구라, 확인할 일을 ‘알아볼 것’에 적어 둬요.',
+    /** 웹에서 만드는 도구의 공개 (B-02, D89) */
+    builder: '웹에서 만드는 도구를 고르면 공개는 그 도구의 게시 기능이 맡아요. 그래서 배포·공유에는 도구를 추천하지 않고, 공개 조건을 ‘알아볼 것’에 적어 둬요.',
   },
   credits: {
     pageTitle: '크레딧',
@@ -771,6 +841,8 @@ export const ko = {
     count: '도구 {{n}}개',
     shown: '도구 {{n}}개를 보여 드려요.',
     none: '이 조건에 맞는 도구가 아직 없어요.',
+    /** 검색 0건일 때 한 줄 더 (input.md 3절) */
+    noneCustom: '목록에 없으면 도구 고르기에서 직접 쓸 수 있어요.',
     reset: '모두 보기',
     /** 줄 오른쪽 값: 무료로 시작할 수 있으면 0원 (유료는 templates.receipt.paid) */
     free: '0원',

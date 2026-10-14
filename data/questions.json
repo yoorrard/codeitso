@@ -45,8 +45,17 @@
           "tags": { "type.dashboard": 1 }
         },
         {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "field": "만들고 싶은 앱을 한 줄로 써 주세요",
+          "hint": "예: 가계부, 반려식물 물 주기 알림.",
+          "keep": "보기에 없는 앱으로 두고, 필요한 기능은 다음 질문에서 물어볼게요.",
+          "tags": { "type.custom": 1 }
+        },
+        {
           "id": "unknown",
-          "label": "아직 못 정했어요",
+          "label": "아직 안 정했어요",
           "alt": "턱을 괴고 고민하는 얼굴 그림",
           "isUnknown": true,
           "tags": { "type.page": 1 }
@@ -79,6 +88,15 @@
           "tags": { "audience.public": 1 }
         },
         {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "few",
+          "field": "누가 쓰는지 써 주세요",
+          "hint": "예: 우리 가족 넷, 동아리 회원 30명.",
+          "tags": { "audience.few": 1 }
+        },
+        {
           "id": "unknown",
           "label": "모르겠어요",
           "alt": "턱을 괴고 고민하는 얼굴 그림",
@@ -97,20 +115,39 @@
         {
           "id": "chat-free",
           "label": "무료 AI 채팅",
+          "sub": "ChatGPT·Gemini·Claude 무료",
           "alt": "흰 말풍선 그림",
           "tags": { "ai.chat-free": 1 }
         },
         {
           "id": "chat-paid",
           "label": "유료 AI 구독",
+          "sub": "ChatGPT·Gemini·Claude 유료 요금제",
           "alt": "빛나는 노란 별 그림",
           "tags": { "ai.chat-paid": 1 }
         },
         {
+          "id": "builder",
+          "label": "웹에서 만드는 도구",
+          "sub": "Lovable·Bolt·v0",
+          "alt": "글줄이 있는 브라우저 창 그림",
+          "tags": { "ai.builder": 1 }
+        },
+        {
           "id": "agent",
           "label": "코딩 에이전트",
+          "sub": "Claude Code·Codex·Cursor",
           "alt": "모니터와 자판이 있는 데스크톱 컴퓨터 그림",
           "tags": { "ai.agent": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "쓰는 AI 이름을 써 주세요",
+          "hint": "예: 뤼튼.",
+          "tags": { "ai.chat-free": 1 }
         },
         {
           "id": "unknown",
@@ -119,6 +156,209 @@
           "isUnknown": true,
           "tags": { "ai.chat-free": 1 }
         }
+      ]
+    },
+    {
+      "id": "q.aitool-chat",
+      "text": "어떤 AI 채팅을 쓰나요?",
+      "help": "고른 AI에 맞게 설계도를 건네는 방법을 알려 드려요.",
+      "chip": "쓰는 AI",
+      "picture": false,
+      "optional": true,
+      "showIf": { "answer": "q.ai", "in": ["chat-free", "chat-paid"] },
+      "options": [
+        {
+          "id": "claude",
+          "label": "Claude",
+          "aiTool": { "tool": "claude", "surface": "web" },
+          "tags": { "aitool.claude": 1 }
+        },
+        {
+          "id": "chatgpt",
+          "label": "ChatGPT",
+          "aiTool": { "tool": "chatgpt", "surface": "web" },
+          "tags": { "aitool.chatgpt": 1 }
+        },
+        {
+          "id": "gemini",
+          "label": "Gemini",
+          "aiTool": { "tool": "gemini", "surface": "web" },
+          "tags": { "aitool.gemini": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "쓰는 AI 이름을 써 주세요",
+          "hint": "예: 뤼튼.",
+          "tags": {}
+        },
+        { "id": "unknown", "label": "아직 안 정했어요", "isUnknown": true, "tags": {} }
+      ]
+    },
+    {
+      "id": "q.aitool-builder",
+      "text": "어떤 웹 도구로 만드나요?",
+      "help": "설치 없이 브라우저에서 앱을 만드는 도구(웹 빌더)예요.",
+      "chip": "쓰는 AI",
+      "picture": false,
+      "optional": true,
+      "showIf": { "answer": "q.ai", "is": "builder" },
+      "options": [
+        {
+          "id": "lovable",
+          "label": "Lovable",
+          "aiTool": { "tool": "lovable", "surface": "web" },
+          "tags": { "aitool.lovable": 1 }
+        },
+        {
+          "id": "bolt",
+          "label": "Bolt.new",
+          "aiTool": { "tool": "bolt", "surface": "web" },
+          "tags": { "aitool.bolt": 1 }
+        },
+        {
+          "id": "v0",
+          "label": "v0",
+          "aiTool": { "tool": "v0", "surface": "web" },
+          "tags": { "aitool.v0": 1 }
+        },
+        {
+          "id": "replit",
+          "label": "Replit",
+          "aiTool": { "tool": "replit", "surface": "web" },
+          "tags": { "aitool.replit": 1 }
+        },
+        {
+          "id": "ai-studio",
+          "label": "Google AI Studio",
+          "aiTool": { "tool": "ai-studio", "surface": "web" },
+          "tags": { "aitool.ai-studio": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "쓰는 도구 이름을 써 주세요",
+          "hint": "예: Base44.",
+          "tags": {}
+        },
+        { "id": "unknown", "label": "아직 안 정했어요", "isUnknown": true, "tags": {} }
+      ]
+    },
+    {
+      "id": "q.aitool-agent",
+      "text": "어떤 코딩 에이전트를 쓰나요?",
+      "help": "터미널이 처음이면 맨 위 두 가지(앱 안에서 쓰는 것)가 가장 쉬워요.",
+      "chip": "쓰는 AI",
+      "picture": false,
+      "optional": true,
+      "showIf": { "answer": "q.ai", "is": "agent" },
+      "groups": [
+        {
+          "id": "app",
+          "label": "앱 안에서 (터미널 없이)",
+          "help": "데스크톱 앱 안에서 에이전트에게 맡겨요."
+        },
+        { "id": "editor", "label": "편집기 안", "help": "코드 편집기 옆 창에서 에이전트에게 맡겨요." },
+        { "id": "terminal", "label": "터미널", "help": "터미널에 명령을 쳐서 에이전트를 불러요." }
+      ],
+      "options": [
+        {
+          "id": "codex-app",
+          "label": "ChatGPT 앱의 Codex",
+          "group": "app",
+          "aiTool": {
+            "tool": "codex",
+            "surface": "desktop",
+            "needsReview": true,
+            "sources": [
+              "https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan",
+              "https://en.wikipedia.org/wiki/OpenAI_Codex_(AI_agent)"
+            ]
+          },
+          "tags": { "aitool.codex": 1 }
+        },
+        {
+          "id": "claude-app",
+          "label": "Claude 앱의 Code 탭",
+          "group": "app",
+          "aiTool": {
+            "tool": "claude-code",
+            "surface": "desktop",
+            "paidOnly": true,
+            "sources": ["https://code.claude.com/docs/en/setup"]
+          },
+          "tags": { "aitool.claude-code": 1 }
+        },
+        {
+          "id": "vscode-copilot",
+          "label": "VS Code + Copilot",
+          "group": "editor",
+          "aiTool": { "tool": "copilot", "surface": "ide-extension" },
+          "tags": { "aitool.copilot": 1 }
+        },
+        {
+          "id": "cursor",
+          "label": "Cursor",
+          "group": "editor",
+          "aiTool": { "tool": "cursor", "surface": "editor" },
+          "tags": { "aitool.cursor": 1 }
+        },
+        {
+          "id": "devin-desktop",
+          "label": "Devin Desktop",
+          "group": "editor",
+          "aiTool": { "tool": "devin-desktop", "surface": "editor" },
+          "tags": { "aitool.devin-desktop": 1 }
+        },
+        {
+          "id": "antigravity",
+          "label": "Antigravity",
+          "group": "editor",
+          "aiTool": { "tool": "antigravity", "surface": "editor" },
+          "tags": { "aitool.antigravity": 1 }
+        },
+        {
+          "id": "claude-code",
+          "label": "Claude Code",
+          "group": "terminal",
+          "aiTool": { "tool": "claude-code", "surface": "cli" },
+          "tags": { "aitool.claude-code": 1 }
+        },
+        {
+          "id": "codex-cli",
+          "label": "Codex CLI",
+          "group": "terminal",
+          "aiTool": { "tool": "codex", "surface": "cli" },
+          "tags": { "aitool.codex": 1 }
+        },
+        {
+          "id": "gemini-cli",
+          "label": "Gemini CLI",
+          "group": "terminal",
+          "aiTool": { "tool": "gemini-cli", "surface": "cli" },
+          "tags": { "aitool.gemini-cli": 1 }
+        },
+        {
+          "id": "copilot-cli",
+          "label": "Copilot CLI",
+          "group": "terminal",
+          "aiTool": { "tool": "copilot", "surface": "cli" },
+          "tags": { "aitool.copilot": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "쓰는 에이전트 이름을 써 주세요",
+          "hint": "예: Cline.",
+          "tags": {}
+        },
+        { "id": "unknown", "label": "아직 안 정했어요", "isUnknown": true, "tags": {} }
       ]
     },
     {
@@ -150,6 +390,15 @@
           "id": "maybe",
           "label": "아마 그럴 거예요",
           "tags": { "need.save": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "생각을 짧게 써 주세요",
+          "hint": "예: 사진만 남겨 두고 싶어요.",
+          "tags": {}
         },
         {
           "id": "unknown",
@@ -191,6 +440,15 @@
           "id": "maybe",
           "label": "아마 그럴 거예요",
           "tags": { "need.login": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "생각을 짧게 써 주세요",
+          "hint": "예: 선생님만 로그인하면 돼요.",
+          "tags": {}
         },
         {
           "id": "unknown",
@@ -274,6 +532,15 @@
           "tags": { "domain.public": 1, "need.data": 1 }
         },
         {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "field": "가져올 정보를 써 주세요",
+          "hint": "예: 우리 지역 도서관 휴관일.",
+          "keep": "밖에서 가져올 정보가 있다고 보고, 맞는 도구는 도구 고르기에서 같이 찾아요.",
+          "tags": { "need.data": 1 }
+        },
+        {
           "id": "unknown",
           "label": "모르겠어요",
           "alt": "턱을 괴고 고민하는 얼굴 그림",
@@ -312,6 +579,15 @@
         { "id": "school-info", "label": "학교 기본 정보", "tags": { "topic.school-info": 1 } },
         { "id": "career", "label": "진로·직업", "tags": { "topic.career": 1 } },
         {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "필요한 정보를 써 주세요",
+          "hint": "예: 방과 후 수업 목록.",
+          "tags": {}
+        },
+        {
           "id": "unknown",
           "label": "모르겠어요",
           "isUnknown": true,
@@ -328,6 +604,15 @@
       "options": [
         { "id": "forecast", "label": "날씨 예보", "tags": { "topic.forecast": 1 } },
         { "id": "air", "label": "미세먼지·공기", "tags": { "topic.air": 1 } },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "필요한 정보를 써 주세요",
+          "hint": "예: 자외선 지수.",
+          "tags": { "topic.forecast": 1 }
+        },
         { "id": "unknown", "label": "모르겠어요", "isUnknown": true, "tags": { "topic.forecast": 1 } }
       ]
     },
@@ -340,6 +625,15 @@
       "options": [
         { "id": "translate", "label": "다른 나라 말로 옮기기", "tags": { "topic.translate": 1 } },
         { "id": "dictionary", "label": "낱말 뜻 찾기", "tags": { "topic.dictionary": 1 } },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "하려는 일을 써 주세요",
+          "hint": "예: 맞춤법 고치기.",
+          "tags": { "topic.translate": 1 }
+        },
         { "id": "unknown", "label": "모르겠어요", "isUnknown": true, "tags": { "topic.translate": 1 } }
       ]
     },
@@ -353,6 +647,15 @@
         { "id": "stock", "label": "주식 시세", "tags": { "topic.stock": 1 } },
         { "id": "exchange", "label": "환율", "tags": { "topic.exchange": 1 } },
         { "id": "economy", "label": "경제 지표(금리·물가 등)", "tags": { "topic.economy": 1 } },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "필요한 정보를 써 주세요",
+          "hint": "예: 금 시세.",
+          "tags": { "topic.stock": 1 }
+        },
         { "id": "unknown", "label": "모르겠어요", "isUnknown": true, "tags": { "topic.stock": 1 } }
       ]
     },
@@ -362,7 +665,7 @@
       "help": "알림은 정해진 시간마다 확인하는 장치가 필요해서 조금 더 어려워요.",
       "chip": "알림",
       "picture": false,
-      "showIf": { "tag": "type.dashboard", "gte": 1 },
+      "showIf": { "any": [{ "tag": "type.dashboard", "gte": 1 }, { "tag": "type.custom", "gte": 1 }] },
       "options": [
         {
           "id": "yes",
@@ -378,6 +681,15 @@
           "id": "maybe",
           "label": "아마 그럴 거예요",
           "tags": { "need.notify": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "생각을 짧게 써 주세요",
+          "hint": "예: 비 오는 날 아침에만.",
+          "tags": {}
         },
         {
           "id": "unknown",
@@ -403,6 +715,15 @@
         {
           "id": "daily",
           "label": "하루 한 번이면 충분해요",
+          "tags": {}
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "얼마나 자주 새로 받아야 하는지 써 주세요",
+          "hint": "예: 5분마다, 하루 한 번.",
           "tags": {}
         },
         {
@@ -435,6 +756,15 @@
           "tags": { "budget.flex": 1 }
         },
         {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "쓸 수 있는 돈을 써 주세요",
+          "hint": "예: 한 달 5천 원.",
+          "tags": { "budget.free": 1 }
+        },
+        {
           "id": "unknown",
           "label": "모르겠어요",
           "isUnknown": true,
@@ -464,6 +794,15 @@
           "id": "no",
           "label": "아니요",
           "tags": {}
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "받는 정보를 써 주세요",
+          "hint": "정보의 종류만 써 주세요. 예: 학년과 반, 생일.",
+          "tags": { "sensitive.personal": 1 }
         },
         {
           "id": "unknown",
@@ -499,6 +838,15 @@
           "tags": { "sensitive.payment": 1 }
         },
         {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "생각을 짧게 써 주세요",
+          "hint": "예: 후원 버튼 정도.",
+          "tags": {}
+        },
+        {
           "id": "unknown",
           "label": "모르겠어요",
           "isUnknown": true,
@@ -525,6 +873,15 @@
         {
           "id": "both",
           "label": "둘 다",
+          "tags": { "device.both": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "어디서 쓰는지 써 주세요",
+          "hint": "예: 아이패드, 교실 전자칠판.",
           "tags": { "device.both": 1 }
         },
         {
@@ -564,6 +921,15 @@
           "label": "강렬하게",
           "alt": "검은 바탕에 노란 글자가 큰 화면 그림",
           "tags": { "style.bold": 1 }
+        },
+        {
+          "id": "custom",
+          "label": "직접 쓰기",
+          "isCustom": true,
+          "like": "unknown",
+          "field": "원하는 느낌을 한 줄로 써 주세요",
+          "hint": "예: 바다처럼 시원하게, 우리 학교 초록색으로.",
+          "tags": { "style.clean": 1 }
         },
         {
           "id": "unknown",

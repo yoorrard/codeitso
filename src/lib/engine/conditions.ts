@@ -23,7 +23,11 @@ export function tagsWithPrefix(tags: Record<string, number>, prefix: string): st
     .sort();
 }
 
+/** 직접 쓴 도구(custom)가 모르는 사실: 규칙 조건에서 값이 없다 → is·in 조건이 맞지 않는다 (input.md 8.2절) */
+const UNKNOWN_FOR_CUSTOM: ReadonlySet<ProductField> = new Set<ProductField>(['provider.type', 'access', 'realtime', 'cost.free', 'keyExposureRisk', 'publicKey']);
+
 export function productField(p: Product, field: ProductField): Scalar | undefined {
+  if (p.custom === true && UNKNOWN_FOR_CUSTOM.has(field)) return undefined;
   switch (field) {
     case 'provider.type':
       return p.provider.type;
@@ -43,11 +47,18 @@ export function productField(p: Product, field: ProductField): Scalar | undefine
       return p.publicKey ?? false;
     case 'recommendable':
       return p.recommendable;
+    case 'custom':
+      return p.custom === true;
   }
 }
 
-/** 상품 하나가 조건을 모두 만족하는지 */
+/**
+ * 상품 하나가 조건을 모두 만족하는지.
+ * 빌더의 게시 기능(B-02, D89)은 어떤 조건에도 맞지 않는다: 배포 칸에 걸린 막힌 곳 규칙(공개 주소 + 키 같은 것)이
+ * 고른 적 없는 가짜 상품 때문에 켜지지 않게. 키 자체를 보는 규칙(키 노출 상품 + 중간 서버 없음)은 그대로 켜진다
+ */
 export function matchProduct(p: Product, pred: ProductPredicate): boolean {
+  if (p.builderPublish === true) return false;
   if (pred.capability !== undefined && !p.capabilities.includes(pred.capability)) return false;
   if (pred.field !== undefined) {
     const v = productField(p, pred.field);

@@ -12,7 +12,9 @@ export interface Question {
   text: string;
   help?: string;
   chip?: string;
-  options?: { id: string; label: string }[];
+  /** 고르지 않아도 되는 질문('쓰는 AI', D87): 골든·코스의 답에는 없다 */
+  optional?: boolean;
+  options?: { id: string; label: string; isUnknown?: boolean; isCustom?: boolean }[];
 }
 export const questions = json<{ questions: Question[] }>('data/questions.json').questions;
 export const products = json<{ products: { id: string; name: string; layer: string }[] }>('data/products.json').products;
@@ -66,7 +68,8 @@ export async function answerInterview(page: Page, answers: Record<string, string
       }
       return;
     }
-    const answer = answers[q.id];
+    // 고르지 않아도 되는 질문은 답이 없으면 '아직 안 정했어요'(isUnknown)를 고른다 (골든은 그 질문을 고르지 않은 채로 둔다)
+    const answer = answers[q.id] ?? (q.optional === true ? q.options?.find((o) => o.isUnknown === true)?.id : undefined);
     const label = q.options?.find((o) => o.id === answer)?.label;
     expect(label, `${q.id}의 답 ${answer}`).toBeTruthy();
     const option = page.locator('.q').getByRole('button', { name: label ?? '', exact: true });

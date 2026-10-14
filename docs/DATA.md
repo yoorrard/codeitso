@@ -8,18 +8,18 @@
 
 | 파일 | 담는 것 | 스키마 | 지금 개수 |
 |---|---|---|---|
-| `taxonomy.json` | 태그 분류표 (유형·사용자·AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 53개, 분야 10개 |
-| `questions.json` | 목적지 질문, 보기, 보기별 태그, 노출 조건 | `questions.schema.json` | 17문항 |
-| `rules.json` | 칸·충돌(막힌 곳)·알아볼 것·안전·막히기 쉬운 곳 규칙 | `rules.schema.json` | 38개 |
+| `taxonomy.json` | 태그 분류표 (유형·사용자·AI·쓰는 AI·필요·분야·주제·예산·민감·기기·느낌) | `taxonomy.schema.json` | 태그 70개(쓰는 AI `aitool.*` 15개 포함), 분야 10개 |
+| `questions.json` | 목적지 질문, 보기, 보기별 태그, 노출 조건, 질문마다 직접 쓰기 보기 | `questions.schema.json` | 20문항 (만들 앱 17 + 고르지 않아도 되는 '쓰는 AI' 3, 한 번에 하나만 보임) |
+| `rules.json` | 칸·충돌(막힌 곳)·알아볼 것·안전·막히기 쉬운 곳 규칙 | `rules.schema.json` | 39개 |
 | `scoring.json` | 추천 가중치와 기준값 (사이트에 공개) | `scoring.schema.json` | |
 | `products.json` | 상품 카드 = 화면의 도구 (진열·색인) | `products.schema.json` | 49개 (진열 48) |
 | `concepts.json` | 개념 카드 = 화면의 용어 카드 (읽어 둘 용어, 사전) | `concepts.schema.json` | 20장 |
-| `research-cards.json` | 조사 카드 (알아볼 것) | `research-cards.schema.json` | 13장 |
+| `research-cards.json` | 조사 카드 (알아볼 것). 규칙이 붙이는 것 + 빈틈 넷(`research.gap-*`) + 직접 쓴 도구(`research.custom-tool`) + 빌더의 게시 기능(`research.builder-publish`, B-02) | `research-cards.schema.json` | 19장 |
 | `templates.json` | 영수증·설계도·AI에게 할 말 문장 틀 | `templates.schema.json` | |
 | `recipes.json` | 레시피 = 화면의 미리 짠 코스 (답 + 고른 도구 완성 세트) | `recipes.schema.json` | 5개 |
 | `errors.json` | 사전의 에러 안내 | `errors.schema.json` | 20개 |
-| `glossary.json` | 어려운 말 풀이: 용어마다 한 문장 풀이, 다른 이름, 읽는 법, 짧은 예, 묶음(`kind`), 상위 용어, 용어 카드·도구·에러 안내 연결. 화면에서 글을 고르거나 점선 밑줄 말을 누르면 뜬다 (D60, D66). 엔진은 쓰지 않는다. 13절 | `glossary.schema.json` (+ `tests/lib/glossary.test.ts`가 매처로 문장 규칙·이름 겹침·상위 용어를 막는다) | 212개 |
-| `aliases.json` | 낱말표: 이용자가 칠 말을 화면 말·자료에 잇는 표 (AI 아님, D74·D83). 지금은 사전 검색 동의어(`searchSynonyms`)만, T36이 직접 쓰기 낱말을 더한다. 엔진 계산(`evaluate`)은 쓰지 않는다. 14절 | `aliases.schema.json` | 검색 동의어 10줄 |
+| `glossary.json` | 어려운 말 풀이: 용어마다 한 문장 풀이, 다른 이름, 읽는 법, 짧은 예, 묶음(`kind`), 상위 용어, 용어 카드·도구·에러 안내 연결. 화면에서 글을 고르거나 점선 밑줄 말을 누르면 뜬다 (D60, D66). 엔진은 쓰지 않는다. 13절 | `glossary.schema.json` (+ `tests/lib/glossary.test.ts`가 매처로 문장 규칙·이름 겹침·상위 용어를 막는다) | 213개 |
+| `aliases.json` | 낱말표: 이용자가 칠 말을 화면 말·자료에 잇는 표 (AI 아님, D74·D83). 사전 검색 동의어와 직접 쓰기 낱말(보기 낱말·예·아니요·AI 이름·도구 이름 짐작·빈틈). 엔진 계산(`evaluate`)은 쓰지 않는다. 14절 | `aliases.schema.json` | 검색 동의어 10줄, 직접 쓰기 낱말 약 770개 |
 | `sources.json` | 색인 수집 출처 대응표 | `sources.schema.json` | 1곳 |
 | `golden/case-*.json` | 추천 회귀 검사 사례 | `golden.schema.json` | 23개 |
 
@@ -48,11 +48,20 @@
 { "deferred": "slot.notify" }                       // 그 칸을 나중으로 미뤘다 (맞춰 보기 뒤 규칙에서만)
 ```
 
-- `cartAny`에서 쓸 수 있는 field: `provider.type`, `access`, `realtime`, `serverRegion`, `layer`, `cost.free`, `keyExposureRisk`, `publicKey`, `recommendable`
+- `cartAny`에서 쓸 수 있는 field: `provider.type`, `access`, `realtime`, `serverRegion`, `layer`, `cost.free`, `keyExposureRisk`, `publicKey`, `recommendable`, `custom`(이용자가 직접 쓴 도구면 참, 진열·색인 도구는 늘 거짓, D74)
+- 고르지 않아도 되는 질문(`optional`, '쓰는 AI')의 답과 그 태그(`aitool.*`)는 어떤 조건에도 쓰지 않는다 (검사가 막는다, D87).
 - 질문 노출 조건과 칸 규칙에는 장바구니 조건과 `deferred`를 쓸 수 없다 (검사가 막는다).
 - 질문 노출 조건은 앞선 질문이 만드는 태그와 답만 볼 수 있다.
 - '모르겠어요' 보기(`isUnknown: true`)는 태그를 줄 수도 있다: 앱 종류(→ 안내 페이지), 만드는 AI, 예산, 그리고 날씨·말과 글·금융 갈래(→ 가장 흔한 쪽인 예보·번역·주식 시세)는 기본 태그를 주고, 교육 주제의 '모르겠어요'는 태그를 주지 않는다(교육 상품은 주제가 서로 달라 하나로 보낼 수 없다). 미리 짠 코스 미리 보기('혹시 이걸 만드시나요?')는 '모르겠어요'를 어긋남으로 세지 않는다.
 - '아마 그럴 거예요'(`maybe`) 보기는 '네'와 같은 태그를 준다. 화면은 보기 묶음 아래에 이 사실을 한 줄로 밝힌다.
+
+### 3.1 직접 쓰기 보기와 '쓰는 AI' (T36, D74·D75·D87)
+
+- **직접 쓰기 보기**: 질문마다 정확히 하나, `id: "custom"`, `isCustom: true`, '모르겠어요' 바로 앞. 화면은 보기 줄이 아니라 펼치는 글 칸으로 그린다(T37). 칸: `field`(칸 라벨, 40자 안) · `hint`(예시. 화면이 끝에 "이름·연락처는 쓰지 마세요."를 붙인다) · `like`(그대로 둘 때 같게 계산할 보기, `tags`가 그 보기와 똑같아야 한다) · `keep`(`like`가 없을 때 화면이 말하는 계산 한 줄). `like` 없는 예외 둘: `q.type` → `type.custom`(새 종류 '직접 쓴 앱', 이때 `q.notify`도 묻는다), `q.domain` → `need.data`만. `q.audience`는 `like: "few"`, 나머지는 `like: "unknown"`. 그림 질문이라도 직접 쓰기 보기에는 `alt`가 없어도 된다. `field`·`hint`·`keep`은 `npm run words`가 본다.
+- **고르지 않아도 되는 질문**(`optional: true`): '쓰는 AI' 셋 `q.aitool-chat`·`q.aitool-builder`·`q.aitool-agent`. `showIf`로 `q.ai`의 답에 따라 하나만 보인다. 태그 없는 '모르겠어요' 보기('아직 안 정했어요')가 하나 있어야 하고, 보기 태그는 `aitool.<도구 id>`뿐이다. 답하지 않아도 만들 앱 정하기가 끝난다(ENGINE 1절 6).
+- **보기 무리**(`groups` + 보기의 `group`): 무리 이름을 적힌 순서대로 보인다. 보기는 무리 순서대로 두고, 직접 쓰기·모르겠어요는 무리 밖. 지금은 코딩 에이전트 세 무리(앱 안에서(터미널 없이) · 편집기 안 · 터미널)뿐이다.
+- **`aiTool`**(쓰는 AI 보기마다): `tool`(도구 id = 태그 `aitool.<tool>` = `guides.json` `tools[].id`) · `surface`(`cli`·`desktop`·`ide-extension`·`editor`·`web`·`mobile`) · `paidOnly`(유료 구독이 있어야 쓰는 곳, 출처 필수) · `needsReview`(확인 못 한 사실이 있음, 출처 필수, 화면은 무료·유료 꼬리표를 달지 않는다) · `sources`. AI 설정 파일은 도구로, 설치 안내는 쓰는 곳으로 고른다.
+- **`sub`**: 보기 둘째 줄(아는 이름 몇 개, P1). 이름만 쓰고 로고는 쓰지 않는다.
 
 ## 4. 상품 카드 (화면: 도구)
 
@@ -130,7 +139,8 @@
 
 - 유형별 화면·기능·데이터 구조, 칸별 단계 문장(칸이 더하는 화면 포함), 중간 서버 준비 단계, 느낌별 색·글꼴, 기기·사용자·AI별 문장, 추천 이유 말, 배지, 만들지 않을 것, 영수증 글자(도구 비용 합계 포함), 설계도 머리말·제목·안내, 안전 기본 지시, 대화 카드(AI에게 할 말), 빈 칸·색인 상품용 알아볼 것 항목.
 - 유형 이름(`types.*.label`)은 질문 `q.type`의 보기 이름과 같게 둔다 (예: `type.tool` = '계산기·도우미'). 설계도 1번 '종류'와 영수증 목적지에 나온다.
-- 자리 표시는 정해진 것만 쓴다: 설계도 제목 `{{project}}`, 머리말 `{{saveAs}}`, 용어 카드 링크 `{{site}}`·`{{id}}` (`{{site}}/terms/{{id}}`), 외부 데이터 줄 `{{names}}`, 빈 칸 `{{label}}`, 색인 상품 `{{name}}`·`{{link}}`, 대화 카드 `{{packRef}}`, 영수증 `{{n}}`. 검사가 확인한다.
+- 자리 표시는 정해진 것만 쓴다: 설계도 제목 `{{project}}`, 머리말 `{{saveAs}}`, 용어 카드 링크 `{{site}}`·`{{id}}` (`{{site}}/terms/{{id}}`), 외부 데이터 줄 `{{names}}`, 빈 칸 `{{label}}`·`{{note}}`(가져올 정보를 직접 썼을 때 `emptySlot.researchWithNote`), 색인 상품 `{{name}}`·`{{link}}`, 직접 쓴 도구 `{{name}}`(`customTool`), 설계도 1번 '내 말 그대로' `{{chip}}`·`{{text}}`·`{{label}}`·`{{as}}`(`pack.mine`), 대화 카드 `{{packRef}}`, 영수증 `{{n}}`. 검사가 확인한다.
+- 직접 쓰기 묶음 (T36, D74): `types["type.custom"]`('직접 쓴 앱': 화면·기능은 출발점만), `customAnswer.hidden`(링크로 받아 내 말이 없을 때 이름), `customTool.*`(목록에 없는 도구: 제공·비용 '확인 필요'·설계도 7번 표시 '(직접 씀)'·서행 문장·알아볼 것 이름 `researchArea`, 본문은 조사 카드 `researchCard`), `pack.mine`(설계도 1번 '내 말 그대로' 줄), `receipt.unknown`('모름')·`receipt.totalUnchecked`('0원 + 확인 필요'), `aiTools["ai.builder"]`(웹에서 만드는 도구: 프로젝트 지식 칸에 붙여 넣기). `builderPublish.*`(B-02, D89: 웹에서 만드는 도구를 고르면 엔진이 배포 칸에 채우는 가짜 상품 '빌더의 게시 기능'의 이름·제공·요약·설계도 7번 메모와 조사 카드 id. `products.json`에 넣지 않고, 같은 id `builder-publish`의 상품을 검사가 막는다. 숫자를 싣지 않는다).
 - 느낌별 색은 글자/배경, 글자/면, 강조 글자/강조 대비가 4.5:1 이상이어야 한다. 검사가 확인한다.
 
 ## 8. 레시피 (화면: 미리 짠 코스)
@@ -200,4 +210,17 @@
 
 - 펼치는 곳은 색인을 만드는 `src/lib/search-index.ts`의 `applySynonyms`다(빌드 때 `/search-index.json`). 브라우저에 싣는 코드는 늘지 않는다. 동의어마다 지금 붙은 문서는 `node scripts/build-search.ts`가 찍는다.
 - `npm run words`는 이 파일의 열쇠와 대상 이름을 보지 않고, 화면에 보이는 문장 칸(`message`, T36의 `gaps`)만 본다. 다른 자료의 `aliases`·`keywords` 칸(다른 이름, 느낌 낱말)도 같은 까닭으로 보지 않는다 (D83).
-- T36이 같은 파일에 질문별 낱말(`options`·`yesNo`·`aiNames`)·`products`·`toolHints`·`gaps`를 더하고 충돌 검사를 넓힌다.
+
+직접 쓰기 낱말 (T36, `input.md` 6·9.2절). 낱말 찾기(`src/lib/engine/match.ts`)는 직접 쓰기 칸을 처음 열 때 이 표와 함께 늦게 받는다(찾기 묶음 8KB, D82). 말 앞의 `=`는 '어절 하나 전체가 같을 때만'이고(`=비`는 '비빔밥'에 걸리지 않는다), 한 글자 말은 반드시 `=`를 붙인다. 열쇠는 정규화(NFKC·소문자·글자와 숫자와 `+`·`#`만, `src/lib/aliases.ts` `aliasKey`)하고 띄어쓰기를 뺀 꼴로 견준다.
+
+| 칸 | 뜻 |
+|---|---|
+| `options["q.…"][]` | 질문의 보기마다 낱말 `{ id: 보기 id, aliases }`. '모르겠어요'·'직접 쓰기' 보기, 예·아니요 질문, `q.ai`는 두지 않는다. `q.style`의 느낌 낱말은 T38의 `looks.json` `keywords`가 생기면 그쪽으로 옮길 수 있다 |
+| `yesNo.topics["q.…"]` | 예·아니요 질문(저장·로그인·알림·결제)의 주제어. 주제어만 있으면 '네' 쪽 증거, 바로 뒤 `negWindow`(6)글자 안에 `negAfter` 조각이 오면 '아니요' 쪽 |
+| `yesNo.answers[]` | 공통 말 넷. 적힌 순서(no → unknown → maybe → yes)대로 정한다 |
+| `aiNames[]` | `q.ai` 직접 쓰기: `agent`·`builder`·`chat`·`paid`·`free` 무리. 에이전트 이름 → 코딩 에이전트, 빌더 이름 → 웹에서 만드는 도구, 유료 말 → 유료 AI 구독, 채팅 이름·무료 말 → 무료 AI 채팅 |
+| `toolHints[]` | 목록에 없는 도구 이름 짐작: `product`(이미 목록에 있는 도구, "수파베이스" → `supabase`) 또는 갈래 `capability` + `domain`("OpenWeather" → 외부 데이터·날씨). 진열 상품의 공식 이름은 적지 않는다(목록 이름으로 찾는다). 한글 이름인 공공 API 도구도 적지 않는다 |
+| `gaps[]` | 코드쇼퍼가 아직 못 하는 바람(AI 기능 · 스토어 앱 · 채팅 · 파일 올리기). `where`(찾는 자리: 질문 id · `line`(마지막 한 줄) · `tool`(도구 이름)), `message`(화면 알림, 해요체). 조사 카드 `research.gap-<id>`가 있어야 한다 |
+
+- **충돌 검사 (`npm run validate`):** 한 칸에서 함께 찾는 말끼리 같은 열쇠가 두 대상을 가리키면 오류다. 함께 찾는 말 = 그 질문의 보기 낱말 + 그 자리의 빈틈 말 / 예·아니요 질문이면 주제어 + 공통 말 넷 + 빈틈 말 / `q.ai`면 AI 이름 다섯 무리 / 도구 칸이면 도구 이름 짐작 + 빈틈 말 / 마지막 한 줄이면 빈틈 말. 다른 질문끼리는 겹쳐도 된다('알림'은 `q.type` 현황판과 `q.notify` 주제어에 다 있다). 그 밖에: 대상(질문·보기·도구·분야·조사 카드)이 있는지, 직접 쓰기가 있는 질문은 모두 읽을 낱말이 있는지, `q.ai`·'쓰는 AI' 질문에서는 빈틈을 찾지 않는지, `products.json`의 id가 `custom-`으로 시작하지 않는지.
+- `npm run words`는 `gaps[].message`만 본다.

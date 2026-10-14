@@ -1,3 +1,4 @@
+import { costUnchecked } from './builder.ts';
 import type { Catalog } from './catalog.ts';
 import { tagsWithPrefix } from './conditions.ts';
 import type { EngineResult } from './evaluate.ts';
@@ -10,6 +11,8 @@ export interface ReceiptItem {
   productId: string;
   name: string;
   free: boolean;
+  /** 비용을 모르는 품목 (직접 쓴 도구, 빌더의 게시 기능). 비용 칸은 '모름' */
+  unknown: boolean;
   price: string;
   /** 나중으로 미룬 칸에만 쓰이는 상품 (영수증 표시 '(나중)') */
   later: boolean;
@@ -39,14 +42,17 @@ export interface ReceiptModel {
   countFormat: string;
 }
 
-/** 설계도 제목과 영수증 목적지에 쓰는 이름: 한 줄 입력 → 유형 이름 → '내 앱' */
+/** 설계도 제목과 영수증 목적지에 쓰는 이름: 한 줄 입력 → 만들 것의 내 말(notes['q.type']) → 유형 이름 → '내 앱' (30자) */
 export function projectName(cat: Catalog, r: EngineResult): string {
-  const free = oneLine(r.session.freeText ?? '', 30);
+  const free = oneLine(r.session.freeText ?? '', 30) || oneLine(r.session.notes?.[TYPE_Q] ?? '', 30);
   if (free) return free;
   const typeTag = tagsWithPrefix(r.interview.tags, 'type.')[0];
   const t = typeTag ? cat.data.templates.types[typeTag] : undefined;
   return t?.label ?? cat.data.templates.receipt.unnamed;
 }
+
+/** 만들 것(앱 종류) 질문 */
+const TYPE_Q = 'q.type';
 
 /** 난이도 말: 기준의 절반 이하 쉬움, 기준 이하 보통, 넘으면 어려움 */
 export function difficultyWord(cat: Catalog, n: number): string {
@@ -77,16 +83,18 @@ export function receiptModel(cat: Catalog, r: EngineResult, issuedAt: string): R
   const first = new Set(firstPhaseProducts(r.cart, slotDefs, r.session.deferred).map((p) => p.id));
   const items: ReceiptItem[] = r.cart.map((p) => {
     const labels = slotDefs.filter((s) => p.capabilities.includes(s.capability)).map((s) => s.label);
+    const unknown = costUnchecked(p);
     return {
       slot: slotLabelFor(cat, labels, 11),
       productId: p.id,
       name: p.name,
-      free: p.cost.free,
-      price: p.cost.free ? t.free : t.paid,
+      free: !unknown && p.cost.free,
+      unknown,
+      price: unknown ? t.unknown : p.cost.free ? t.free : t.paid,
       later: !first.has(p.id),
     };
   });
-  const allFree = items.every((i) => i.free);
+  const paid = items.some((i) => !i.free && !i.unknown);
   const difficulty = r.split.difficultyFirst;
   return {
     title: t.title,
@@ -95,8 +103,9 @@ export function receiptModel(cat: Catalog, r: EngineResult, issuedAt: string): R
     destination: projectName(cat, r),
     items,
     totalLabel: t.total,
-    // 도구 비용 합계: 모두 0원으로 시작할 수 있으면 '0원으로 시작', 아니면 '유료 포함' (요금이라 부르지 않는다, CONCEPT 3.4)
-    total: allFree ? t.totalFree : t.paidIncluded,
+    // 도구 비용 합계: 유료 도구가 있으면 '유료 포함', 없고 비용을 모르는 도구(직접 쓴 도구·빌더의 게시 기능)가 있으면 '0원 + 확인 필요',
+    // 모두 0원으로 시작할 수 있으면 '0원으로 시작' (요금이라 부르지 않는다, CONCEPT 3.4)
+    total: paid ? t.paidIncluded : items.some((i) => i.unknown) ? t.totalUnchecked : t.totalFree,
     minutes: r.minutes,
     timeLabel: t.time,
     timeText: formatMinutes(r.minutes, t.timeFormat),

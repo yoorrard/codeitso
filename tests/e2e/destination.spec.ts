@@ -1,5 +1,5 @@
 // 만들 앱 정하기 (brief 6.5, D70): H1이 질문, 바깥 카드·'n번째 질문' 글·주 버튼 자리의 [도구 먼저 둘러볼게요] 없음,
-// 앱 종류 타일 2열 + '아직 못 정했어요' 전체 폭 줄, 네·아니요 2×2 버튼, 느낌 견본 넷(지도 팔레트), 보기를 누르면 바로 다음 질문,
+// 앱 종류 타일 2열 + '아직 안 정했어요' 전체 폭 줄, 네·아니요 2×2 버튼, 느낌 견본 넷(지도 팔레트), 보기를 누르면 바로 다음 질문,
 // 아래 막대 [이전] 56 + 상태 한 줄, 주 버튼 [도구 고르러 가기]는 마지막 질문에 답한 뒤에만(화면에 하나),
 // 답이 쌓이면 '고를 것 n개' 칩과 지도 변화 낭독, '지금까지 정한 것' 답 줄로 그 질문에 돌아가기.
 import type { Page } from '@playwright/test';
@@ -15,6 +15,13 @@ const q = (id: string) => {
 };
 const label = (qid: string, oid: string): string => q(qid).options?.find((o) => o.id === oid)?.label ?? '';
 const g1 = golden('case-01');
+/**
+ * 사례 01의 답을 화면에서 묻는 순서대로. '쓰는 AI'(q.aitool-chat)는 고르지 않아도 되는 질문이라 골든에는 없고(D87),
+ * 다른 질문이 남아 있으면 q.ai 다음에 묻는다. 그래서 심을 때는 '아직 안 정했어요'로 넣는다
+ */
+const g1Answers: Record<string, string> = Object.fromEntries(
+  Object.entries(g1.answers).flatMap(([k, v]) => (k === 'q.ai' ? [[k, v], ['q.aitool-chat', 'unknown']] : [[k, v]])),
+);
 
 /** 저장된 답을 심고 만들 앱 정하기를 연다 */
 async function open(page: Page, answers: Record<string, string> = {}): Promise<void> {
@@ -33,7 +40,7 @@ async function visiblePrimaries(page: Page): Promise<number> {
 }
 
 /** 사례 01의 답을 앞에서부터 n개 */
-const firstAnswers = (n: number): Record<string, string> => Object.fromEntries(Object.entries(g1.answers).slice(0, n));
+const firstAnswers = (n: number): Record<string, string> => Object.fromEntries(Object.entries(g1Answers).slice(0, n));
 
 test('첫 질문: H1이 질문이고 단계 한 줄은 그 위에만, 앱 종류 타일 2열과 전체 폭 줄, 주 버튼 없음', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
@@ -93,8 +100,8 @@ test('보기를 누르면 바로 다음 질문(제목에 초점), 칩·낭독, [
 
 test('네·아니요 질문은 2×2 중립 버튼, 고르면 --chosen 면이 된다', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
-  // case-01은 안내 페이지라 넷째 질문이 저장(네·아니요)이다
-  await open(page, firstAnswers(4));
+  // case-01은 안내 페이지라 '쓰는 AI' 다음 다섯째 질문이 저장(네·아니요)이다
+  await open(page, firstAnswers(5));
   await page.locator('.q-back').click();
   await expect(page.locator('h1#q-title')).toContainText(q('q.save').text);
   const btns = page.locator('.pick-pairs .pick-btn');
@@ -118,7 +125,7 @@ test('네·아니요 질문은 2×2 중립 버튼, 고르면 --chosen 면이 된
 });
 
 test('느낌 질문은 내 지도를 네 팔레트로 칠한 견본 넷 + 모르겠어요 줄', async ({ page }) => {
-  const answers = Object.fromEntries(Object.entries(g1.answers).filter(([k]) => k !== 'q.style'));
+  const answers = Object.fromEntries(Object.entries(g1Answers).filter(([k]) => k !== 'q.style'));
   await open(page, answers);
   await expect(page.locator('h1#q-title')).toContainText(q('q.style').text);
   const swatches = page.locator('.pick-plate.is-feel');
@@ -131,7 +138,7 @@ test('느낌 질문은 내 지도를 네 팔레트로 칠한 견본 넷 + 모르
 });
 
 test('마지막 질문에 답하면 한 줄 쓰기와 주 버튼 [도구 고르러 가기] 하나, 정한 것 접기에서 질문으로 돌아간다', async ({ page }) => {
-  const answers = Object.fromEntries(Object.entries(g1.answers).filter(([k]) => k !== 'q.style'));
+  const answers = Object.fromEntries(Object.entries(g1Answers).filter(([k]) => k !== 'q.style'));
   await open(page, answers);
   await page.locator('.pick-tile', { hasText: label('q.style', 'cute') }).click();
   await expect(page.locator('#free-line')).toBeVisible();

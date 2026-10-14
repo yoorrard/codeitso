@@ -41,10 +41,17 @@ const PAIR_MAX = 9;
 
 type Layout = 'tiles' | 'pairs' | 'rows';
 
+/**
+ * 보기 줄로 그리는 보기: '직접 쓰기'(isCustom)는 보기 줄이 아니라 펼치는 글 칸이라 빼고 센다(input.md 4.1절).
+ * 그 칸(CustomAnswer)은 T37이 붙인다. 그때까지는 보이지 않는다
+ */
+const pickable = (q: Question): Option[] => q.options.filter((o) => o.isCustom !== true);
+
 /** 보기 꼴: 앱 종류·느낌은 타일, 짧은 네 보기는 2×2, 나머지는 목록 줄 */
 function layoutOf(q: Question): Layout {
   if (q.id === 'q.type' || q.id === 'q.style') return 'tiles';
-  if (!q.picture && q.options.length === 4 && q.options.every((o) => o.label.length <= PAIR_MAX)) return 'pairs';
+  const options = pickable(q);
+  if (!q.picture && options.length === 4 && options.every((o) => o.label.length <= PAIR_MAX)) return 'pairs';
   return 'rows';
 }
 
@@ -124,10 +131,11 @@ function FeelSwatch({ model, option }: { model: MapModel; option: Option }) {
 function Options({ q, r, onPick }: { q: Question; r: EngineResult; onPick: (o: Option) => void }) {
   const chosen = r.interview.answers[q.id];
   const layout = layoutOf(q);
+  const options = pickable(q);
   if (layout === 'pairs') {
     return (
       <ul class="pick-pairs">
-        {q.options.map((o) => (
+        {options.map((o) => (
           <PickButton key={o.id} option={o} picked={chosen === o.id} onPick={onPick} />
         ))}
       </ul>
@@ -136,7 +144,7 @@ function Options({ q, r, onPick }: { q: Question; r: EngineResult; onPick: (o: O
   if (layout === 'rows') {
     return (
       <ul class="list pick-rows">
-        {q.options.map((o) => (
+        {options.map((o) => (
           <PickRow key={o.id} q={q} option={o} picked={chosen === o.id} onPick={onPick} />
         ))}
       </ul>
@@ -145,7 +153,7 @@ function Options({ q, r, onPick }: { q: Question; r: EngineResult; onPick: (o: O
   const model = q.id === 'q.style' ? mapModel(r) : null;
   return (
     <ul class={model ? 'pick-tiles is-two' : 'pick-tiles'}>
-      {q.options.map((o) => {
+      {options.map((o) => {
         if (o.isUnknown === true) return <PickButton key={o.id} option={o} picked={chosen === o.id} onPick={onPick} wide />;
         const name = optionArt(q.id, o.id);
         const art = model ? (
@@ -266,7 +274,6 @@ export default function Interview() {
               autocomplete="off"
               enterkeyhint="done"
               aria-describedby="free-line-hint free-line-count"
-              placeholder={ko.interview.linePlaceholder}
               value={r.session.freeText ?? ''}
               onInput={(e) => {
                 const v = (e.currentTarget as HTMLInputElement).value.slice(0, LINE_MAX);

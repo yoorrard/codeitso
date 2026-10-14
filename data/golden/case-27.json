@@ -1,0 +1,76 @@
+{
+  "id": "case-27",
+  "title": "쓰는 사람을 직접 쓴 가족 기록장 (몇 명이 같이로 계산)",
+  "note": "쓰는 사람을 '우리 가족 넷'으로 직접 쓰고 그대로 뒀다. 쓰는 사람의 그대로 둔 답은 '몇 명이 같이'(audience.few)로 계산해서 배포·공유 칸이 필수가 된다(나만이면 선택).",
+  "answers": {
+    "q.type": "record",
+    "q.audience": "custom",
+    "q.ai": "agent",
+    "q.login": "no",
+    "q.domain": "none",
+    "q.budget": "free-only",
+    "q.personal": "no",
+    "q.payment": "no",
+    "q.device": "both",
+    "q.style": "clean"
+  },
+  "notes": {
+    "q.audience": "우리 가족 넷"
+  },
+  "cart": ["react-vite", "browser-storage", "cloudflare-workers"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.login", "q.domain", "q.budget", "q.personal", "q.payment", "q.device", "q.style"],
+    "tags": {
+      "audience.few": 1,
+      "audience.me": 0
+    },
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "react-vite",
+        "filledBy": ["react-vite"],
+        "score": 4,
+        "runnerUp": "html-single",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "airtable",
+        "filledBy": ["browser-storage"],
+        "score": 4,
+        "runnerUp": "firebase-firestore",
+        "reasons": ["aiTool", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "cloudflare-workers",
+        "filledBy": ["cloudflare-workers"],
+        "score": 5,
+        "runnerUp": "firebase-hosting",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": [],
+    "safety": [],
+    "study": {
+      "required": ["terminal", "deploy"],
+      "all": ["terminal", "deploy"]
+    },
+    "steps": ["slot.screen", "slot.store", "slot.host"],
+    "prep": ["Node.js LTS 설치", "Cloudflare 가입"],
+    "stuckRules": [],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 125,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

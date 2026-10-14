@@ -1,19 +1,23 @@
 import type { Catalog } from './catalog.ts';
 import type { Ctx } from './conditions.ts';
 import { evalCondition } from './conditions.ts';
+import { nameHidden } from './custom.ts';
 import type { Slot, SlotRanking } from './shop.ts';
 import { fill } from './text.ts';
 import type { Product, Session } from './types.ts';
 
 export interface Conflict {
   id: string;
-  kind: 'rule' | 'empty-slot';
+  /** 규칙 충돌 · 빈 필수 칸 · 직접 쓴 도구(처음부터 서행, D74) */
+  kind: 'rule' | 'empty-slot' | 'custom-tool';
   message: string;
   fixHint: string;
   /** 규칙 충돌을 '그대로 가기'로 두면 '알아볼 것'에 붙는 조사 카드 */
   researchCard?: string;
   /** 빈 칸 충돌의 칸 id */
   slotId?: string;
+  /** 직접 쓴 도구 서행의 도구 id (custom-n) */
+  customTool?: string;
   /** 지도에서 이 막힌 곳을 붙일 칸 id. 규칙 충돌은 규칙의 anchorSlot(열린 칸일 때만), 빈 칸 충돌은 그 칸. 없으면 길 전체 */
   anchorSlot?: string;
   /** 빈 칸 충돌에서 그 칸을 '나중에 붙일 것'으로 미룰 수 있는지 (칸의 deferrable). 미루면 이 막힌 곳은 사라진다 */
@@ -49,7 +53,14 @@ export function emptySlotId(slotId: string): string {
   return `conflict.empty-slot:${slotId}`;
 }
 
-/** 도구끼리 맞춰 보기: 규칙 충돌(규칙 순서) 다음에 빈 필수 칸(칸 순서). 화면에서는 '막힌 곳' */
+export function customToolConflictId(toolId: string): string {
+  return `conflict.custom-tool:${toolId}`;
+}
+
+/**
+ * 도구끼리 맞춰 보기: 규칙 충돌(규칙 순서) → 빈 필수 칸(칸 순서) → 열린 칸을 채운 직접 쓴 도구(장바구니 순서).
+ * 화면에서는 '막힌 곳'. 직접 쓴 도구는 쓰는 순간 확인 못 한 길을 고른 것이라 처음부터 그대로 가기(kept, 서행)이고 출발을 막지 않는다.
+ */
 export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: Slot[]): Conflict[] {
   const out: Conflict[] = [];
   const open = new Set(slots.map((s) => s.id));
@@ -83,6 +94,21 @@ export function findConflicts(cat: Catalog, session: Session, ctx: Ctx, slots: S
       ...(s.deferrable === true ? { deferrable: true } : {}),
       keepable,
       kept: keepable && session.kept.includes(id),
+    });
+  }
+  const ct = cat.data.templates.customTool;
+  for (const p of ctx.cart) {
+    const slot = p.custom === true ? slots.find((s) => p.capabilities.includes(s.capability)) : undefined;
+    if (!slot) continue;
+    out.push({
+      id: customToolConflictId(p.id),
+      kind: 'custom-tool',
+      message: nameHidden(cat, p) ? ct.messageHidden : fill(ct.message, { name: p.name }),
+      fixHint: ct.fixHint,
+      anchorSlot: slot.id,
+      customTool: p.id,
+      keepable: true,
+      kept: true,
     });
   }
   return out;

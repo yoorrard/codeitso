@@ -243,8 +243,8 @@ describe('자료 약속 (data/glossary.json)', () => {
   const RISK_WORDS = /안 돼요|안 되는|지워질 수 있어요|사라져요|꺼야 해요|숨겨야 해요|막아 둬야|돈이 나가|읽힐 수 있어요/;
   const KINDS = new Set(['key', 'money', 'data', 'code', 'ai', 'law', 'site']);
 
-  it('손으로 쓴 용어는 212개, id가 겹치지 않고 kind가 있다', () => {
-    expect(glossary.terms).toHaveLength(212);
+  it('손으로 쓴 용어는 213개, id가 겹치지 않고 kind가 있다', () => {
+    expect(glossary.terms).toHaveLength(213);
     const all = glossary.terms.map((t) => t.id);
     expect(new Set(all).size).toBe(all.length);
     for (const t of glossary.terms) expect(KINDS.has(t.kind), `${t.id}: ${t.kind}`).toBe(true);

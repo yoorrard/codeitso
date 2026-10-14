@@ -308,9 +308,9 @@ describe('receiptModel', () => {
     const r = evaluate(cat, { answers: ANSWERED, cart: RECEIPT_CART });
     const m = receiptModel(cat, r, ISSUED);
     expect(m.items).toEqual([
-      { slot: '화면', productId: 'p.screen', name: '화면 상품', free: true, price: T.receipt.free, later: false },
-      { slot: '저장 외 1개', productId: 'p.both', name: '저장 배포 상품', free: true, price: T.receipt.free, later: false },
-      { slot: '알림', productId: 'p.bell', name: '알림 상품', free: false, price: T.receipt.paid, later: false },
+      { slot: '화면', productId: 'p.screen', name: '화면 상품', free: true, unknown: false, price: T.receipt.free, later: false },
+      { slot: '저장 외 1개', productId: 'p.both', name: '저장 배포 상품', free: true, unknown: false, price: T.receipt.free, later: false },
+      { slot: '알림', productId: 'p.bell', name: '알림 상품', free: false, unknown: false, price: T.receipt.paid, later: false },
     ]);
     expect(m.total).toBe(T.receipt.paidIncluded);
   });
@@ -586,11 +586,29 @@ describe('renderPack: 골든 사례', () => {
     expect(goldenResult('case-12').research).toHaveLength(3);
   });
 
+  it("1번 '만들 것'에 직접 쓰기 보기 이름이 찍히지 않는다 (직접 쓴 답이 있는 골든 포함, 설계서 10절 T36)", () => {
+    const customLabels = new Set(REAL.data.questions.questions.flatMap((q) => q.options.filter((o) => o.isCustom).map((o) => o.label)));
+    expect(customLabels.size).toBeGreaterThan(0);
+    for (const g of GOLDEN) {
+      const md = renderPack(REAL, goldenResult(g.id), { siteUrl: SITE, issuedAt: ISSUED });
+      const from = md.indexOf(`## ${T.pack.headings.what}`);
+      const to = md.indexOf(`## ${T.pack.headings.scope}`);
+      expect(from, g.id).toBeGreaterThan(0);
+      expect(to, g.id).toBeGreaterThan(from);
+      const one = md.slice(from, to);
+      // 직접 쓴 답이 있는 사례는 '내 말 그대로' 줄이 있어야 시험이 헛돌지 않는다
+      if (Object.values(g.answers).includes('custom')) expect(one, g.id).toContain(T.pack.mine.label);
+      for (const label of customLabels) expect(one.includes(label), `${g.id}: ${label}`).toBe(false);
+    }
+  });
+
   it('색인 상품(원문만 있는 도구)이 있을 때만 indexMemo', () => {
     for (const g of GOLDEN) {
       const r = goldenResult(g.id);
       const md = renderPack(REAL, r, { siteUrl: SITE, issuedAt: ISSUED });
-      expect(md.includes(T.pack.indexMemo), g.id).toBe(r.cart.some((p) => p.layer === 'index'));
+      // 직접 쓴 도구와 빌더의 게시 기능도 색인 층이지만 메모가 따로 있다 (D74·D89)
+      const index = r.cart.some((p) => p.layer === 'index' && p.custom !== true && p.builderPublish !== true);
+      expect(md.includes(T.pack.indexMemo), g.id).toBe(index);
     }
     const md = renderPack(REAL, goldenResult('case-05'), { siteUrl: SITE, issuedAt: ISSUED });
     expect(md).toContain(`**korean-elementary-learning-map-mcp**\n\n- ${T.pack.indexMemo}`);

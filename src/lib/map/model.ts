@@ -884,8 +884,11 @@ const MARKER_OF: Record<string, MarkerKind> = {
   'conflict.personal-server': 'globe',
 };
 
+/** 직접 쓴 앱의 빈 터 이름표 글자 수 (input.md 5.2절) */
+const LOT_NOTE_MAX = 12;
+
 /** 막힌 곳 id로 사고 표시 종류를 고른다 (MAP.md 4절) */
-export function markerKind(c: { id: string; kind: 'rule' | 'empty-slot'; kept: boolean }): MarkerKind {
+export function markerKind(c: { id: string; kind: 'rule' | 'empty-slot' | 'custom-tool'; kept: boolean }): MarkerKind {
   return c.kept ? 'question' : c.kind === 'empty-slot' ? 'gap' : (MARKER_OF[c.id] ?? 'alert');
 }
 
@@ -931,7 +934,10 @@ export function mapModel(r: EngineResult, opts: MapOptions = {}): MapModel {
 
   const typeAnswer = r.interview.answers['q.type'];
   const typeOption = r.interview.visible.find((q) => q.id === 'q.type')?.options.find((o) => o.id === typeAnswer);
-  const typeLabel = typeOption && typeOption.isUnknown !== true ? typeOption.label : null;
+  // 직접 쓴 앱(D74): 빈 터 이름표는 내 말 앞 12자. 내 말이 없으면(영수증 링크로 받음) '목적지'
+  const note = (r.session.notes?.['q.type'] ?? '').replace(/\s+/g, ' ').trim();
+  const typeLabel =
+    typeOption?.isCustom === true ? [...note].slice(0, LOT_NOTE_MAX).join('') || null : typeOption && typeOption.isUnknown !== true ? typeOption.label : null;
   const proxy = r.cart.some((p) => p.capabilities.includes('proxy'));
 
   return layoutMap({
@@ -954,7 +960,9 @@ export function mapModel(r: EngineResult, opts: MapOptions = {}): MapModel {
  */
 export function mapSummary(r: EngineResult, o: { traffic: boolean; arrived: boolean; typeLabel: string | null }): string {
   const S = ko.map.summary;
-  const text = (r.session.freeText ?? '').replace(/\s+/g, ' ').trim();
+  // 이름 순서: 한 줄 입력 → 만들 것의 내 말 → 종류 이름 (projectName과 같다)
+  const clean = (t: string | undefined): string => (t ?? '').replace(/\s+/g, ' ').trim();
+  const text = clean(r.session.freeText) || clean(r.session.notes?.['q.type']);
   const name = ([...text].length > 30 ? `${[...text].slice(0, 30).join('')}…` : text) || o.typeLabel;
   const out = name ? [fill(S.destination, { name })] : [];
   if (!r.done) return out[0] ?? S.noDestination;

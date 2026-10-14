@@ -1,0 +1,80 @@
+{
+  "id": "case-29",
+  "title": "직접 쓴 저장 도구 + 개인정보 신청서 (서버 위치를 몰라 개인정보 막힌 곳)",
+  "note": "저장 칸을 직접 쓴 도구 Notion(custom-2)으로 채운 신청서. 직접 쓴 도구의 서버 위치는 '모름'이라 개인정보 막힌 곳(conflict.personal-server)이 켜지고(그대로 가기로 둠), 그 뒤에 직접 쓴 도구의 서행이 온다. 유료·키 노출처럼 사실을 단정하는 막힌 곳은 켜지지 않는다.",
+  "answers": {
+    "q.type": "form",
+    "q.audience": "few",
+    "q.ai": "chat-free",
+    "q.login": "no",
+    "q.domain": "none",
+    "q.budget": "free-only",
+    "q.personal": "yes-others",
+    "q.payment": "no",
+    "q.device": "both",
+    "q.style": "clean"
+  },
+  "customTools": [
+    {
+      "id": "custom-2",
+      "name": "Notion",
+      "capability": "store"
+    }
+  ],
+  "cart": ["html-single", "custom-2", "github-pages"],
+  "kept": ["conflict.personal-server"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.login", "q.domain", "q.budget", "q.personal", "q.payment", "q.device", "q.style"],
+    "tags": {
+      "sensitive.personal": 1
+    },
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": ["custom-2"],
+        "score": 4,
+        "runnerUp": "google-forms",
+        "reasons": ["aiTool", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "github-pages",
+        "filledBy": ["github-pages"],
+        "score": 4,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": ["conflict.personal-server", "conflict.custom-tool:custom-2"],
+    "canIssue": true,
+    "research": ["research.privacy-personal", "research.privacy-overseas", "research.custom:custom-2"],
+    "safety": ["safety.form-responses", "safety.personal-minimum", "safety.custom-tool"],
+    "study": {
+      "required": ["deploy"],
+      "all": ["deploy", "git-repo"]
+    },
+    "steps": ["slot.screen", "slot.store", "slot.host"],
+    "prep": ["GitHub 가입"],
+    "stuckRules": [],
+    "difficulty": 5,
+    "difficultyFirst": 5,
+    "minutes": 140,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

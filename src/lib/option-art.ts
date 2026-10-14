@@ -12,7 +12,8 @@ export const OPTION_ART: Record<string, Record<string, string>> = {
     unknown: 'L00',
   },
   'q.audience': { me: 'q-audience-me', few: 'q-audience-few', anyone: 'q-audience-anyone', unknown: 'q-unknown' },
-  'q.ai': { 'chat-free': 'q-ai-chat-free', 'chat-paid': 'q-ai-chat-paid', agent: 'q-ai-agent', unknown: 'q-unknown' },
+  // 웹에서 만드는 도구: 전용 그림이 오기 전까지 화면 기능 그림(브라우저 창)을 같이 쓴다 (questions.json alt와 같은 그림)
+  'q.ai': { 'chat-free': 'q-ai-chat-free', 'chat-paid': 'q-ai-chat-paid', builder: 'fn-screen', agent: 'q-ai-agent', unknown: 'q-unknown' },
   'q.domain': {
     none: 'q-domain-none',
     education: 'q-domain-education',

@@ -29,6 +29,33 @@ describe('공유 링크', () => {
     expect(JSON.parse(text)).toEqual({ v: 1, a: session.answers, c: session.cart, k: session.kept, d: session.deferred });
   });
 
+  it("직접 쓴 글·도구 이름은 링크에 없고, 맡은 기능(x)·빈틈(g)만. 링크로 연 영수증은 '직접 쓴 도구'", () => {
+    const mine = evaluate(cat, {
+      ...session,
+      cart: [...session.cart, 'custom-1'],
+      notes: { 'q.type': '가계부 비밀 앱' },
+      customTools: [{ id: 'custom-1', name: 'PokeAPI', capability: 'data' }],
+      gaps: ['chat'],
+    }).session;
+    const hash = shareHash(mine);
+    const text = LZString.decompressFromEncodedURIComponent(hash.slice(3));
+    for (const secret of ['가계부', 'PokeAPI', '비밀']) expect(text).not.toContain(secret);
+    expect(JSON.parse(text)).toMatchObject({ v: 1, x: { 'custom-1': 'data' }, g: ['chat'] });
+    const read = readShareHash(hash);
+    if (read.status !== 'ok') throw new Error('링크를 읽지 못했습니다');
+    const r = evaluate(cat, read.session);
+    expect(r.cart.find((p) => p.id === 'custom-1')?.name).toBe(cat.data.templates.customTool.hiddenName);
+    expect(r.session.gaps).toEqual(['chat']);
+    expect(r.session.notes).toBeUndefined();
+  });
+
+  it('옛 링크(x·g 없음)도 그대로 열린다', () => {
+    const read = readShareHash(pack({ v: 1, a: session.answers, c: session.cart, k: session.kept, d: session.deferred }));
+    expect(read.status).toBe('ok');
+    if (read.status !== 'ok') return;
+    expect(evaluate(cat, read.session).session.cart).toEqual(session.cart);
+  });
+
   it('주소는 사이트/arrival#r= 모양 (끝 빗금은 하나로)', () => {
     expect(shareUrl('https://codechauffeur.example/', session).startsWith('https://codechauffeur.example/arrival#r=')).toBe(true);
   });

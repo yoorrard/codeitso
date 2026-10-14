@@ -10,7 +10,11 @@ export { answerChips, matchingRecipes, runInterview } from './interview.ts';
 export type { Scored, Slot, SlotRanking } from './shop.ts';
 export { SCORE_KEYS, buildSlots, rankSlot, scoreProduct, userLevel } from './shop.ts';
 export type { Conflict, EasierSwap, Split } from './recheck.ts';
-export { emptySlotId } from './recheck.ts';
+export { customToolConflictId, emptySlotId } from './recheck.ts';
+// 직접 쓴 답과 도구 (D74). 낱말 찾기(match.ts)는 여기서 내보내지 않는다: 화면이 직접 쓰기를 열 때 import()로 늦게 받는다
+export { CUSTOM_TOOLS_MAX, LINE_MAX, NOTE_MAX, customProduct, isCustomId, productOf } from './custom.ts';
+// 웹에서 만드는 도구의 공개 (B-02): 공개 칸을 채우는 가짜 상품 '빌더의 게시 기능'
+export { BUILDER_PUBLISH_ID, builderHosts, costUnchecked } from './builder.ts';
 export type { ResearchItem, Step, StuckNote, Study } from './checkout.ts';
 export { PROXY_STEP } from './checkout.ts';
 export type { EngineResult } from './evaluate.ts';

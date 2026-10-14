@@ -1362,6 +1362,12 @@
   font-weight: var(--weight-strong);
 }
 
+/* 점수 칸은 짧은 숫자라 끊지 않는다: 몸의 overflow-wrap: anywhere가 칸을 한 글자 폭으로 줄여 '+3'·'30'이 두 줄로 갈라졌다 */
+.prose .num {
+  text-align: end;
+  white-space: nowrap;
+}
+
 .review-banner {
   padding: var(--space-4);
   border-radius: var(--radius-md);

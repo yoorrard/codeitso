@@ -1,11 +1,12 @@
 import type { Catalog } from './catalog.ts';
 import { hasTag, tagsWithPrefix } from './conditions.ts';
+import { nameHidden, productOf } from './custom.ts';
 import type { EngineResult } from './evaluate.ts';
 import { answerChips } from './interview.ts';
 import { projectName, slotLabelFor } from './receipt.ts';
 import { firstPhaseProducts } from './recheck.ts';
 import { cell, fill, oneLine, pickTemplate } from './text.ts';
-import type { StyleTemplate, TypeTemplate } from './types.ts';
+import type { Option, Product, StyleTemplate, TypeTemplate } from './types.ts';
 
 export interface PackOptions {
   /** 용어 카드 링크(/terms/아이디)에 쓸 사이트 첫 주소 (끝에 / 없이). 화면에서는 siteRoot() = origin + 주소 바탕 (src/lib/routes.ts) */
@@ -30,7 +31,8 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   const audience = audienceTag ? (T.audiences[audienceTag] ?? '') : '';
   const slotLabel = new Map(r.slots.map((s) => [s.slot.id, s.slot.label]));
   const conceptTitle = (id: string): string => cat.concept.get(id)?.title ?? id;
-  const productName = (id: string): string => cat.product.get(id)?.name ?? id;
+  const productName = (id: string): string => productOf(cat, r, id)?.name ?? id;
+  const notes = r.session.notes ?? {};
   const deferred = r.session.deferred;
 
   const out: string[] = [];
@@ -45,12 +47,32 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
 
   // 1. 만들 것 (목적지)
   h2(P.headings.what);
-  const chips = answerChips(cat, r.interview).map((c) => `${c.chip}: ${c.label}`);
-  out.push(`- ${L.oneLine}: ${oneLine(r.session.freeText ?? '') || typeTpl.goal}`);
+  const chipList = answerChips(cat, r.interview, notes);
+  const chips = chipList.map((c) => `${c.chip}: ${c.label}`);
+  out.push(`- ${L.oneLine}: ${oneLine(r.session.freeText ?? '') || oneLine(notes[TYPE_Q] ?? '') || typeTpl.goal}`);
   out.push(`- ${L.kind}: ${typeTpl.label}`);
   if (audience) out.push(`- ${L.audience}: ${audience}`);
-  out.push(`- ${L.ai}: ${aiTpl.label}`);
+  const aiName = usedAiName(r, notes);
+  out.push(`- ${L.ai}: ${aiTpl.label}${aiName ? ` (${aiName})` : ''}`);
   out.push(`- ${L.answers}: ${chips.join(' · ')}`);
+  // 내 말 그대로 (D74): 내 말이 하나라도 있을 때만, 질문 순서로. 쓴 글은 한 줄 40자라 새 제목을 만들 수 없다
+  const mine = chipList.filter((c) => notes[c.questionId]);
+  if (mine.length > 0) {
+    out.push(`- ${P.mine.label}: ${P.mine.rule}`);
+    for (const c of mine) {
+      const q = cat.question.get(c.questionId);
+      const opt = q?.options.find((o) => o.id === r.interview.answers[c.questionId]);
+      const text = notes[c.questionId] ?? '';
+      // '쓰는 AI'(보기마다 aiTool)는 계산에 쓰지 않는 이름 질문이라 '계산은 … 기준' 꼬리를 붙이지 않는다
+      const line = !opt?.isCustom
+        ? fill(P.mine.picked, { chip: c.chip, text, label: opt?.label ?? '' })
+        : isNameQuestion(q?.options ?? [])
+          ? fill(P.mine.keptName, { chip: c.chip, text })
+          : fill(P.mine.kept, { chip: c.chip, text, as: keptAs(cat, q?.options ?? [], opt) });
+      out.push(`  - ${line}`);
+    }
+  }
+  if (hasTag(tags, CUSTOM_TYPE)) out.push(`- ${P.mine.customType}`);
 
   // 2. 범위
   h2(P.headings.scope);
@@ -119,8 +141,23 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   );
   const firstIds = new Set(firstPhaseProducts(r.cart, r.slots.map((s) => s.slot), deferred).map((p) => p.id));
   const later = (id: string): string => (firstIds.has(id) ? '' : ` ${T.receipt.later}`);
+  const CT = T.customTool;
+  // 직접 쓴 도구: 이름 + '(직접 씀)'. 이름 없이 받았으면(영수증 링크) '직접 쓴 도구'만
+  const customName = (p: Product): string => (nameHidden(cat, p) ? cell(p.name) : `${cell(p.name)} ${CT.mark}`);
   for (const p of r.cart) {
     const labels = r.slots.filter((s) => p.capabilities.includes(s.slot.capability)).map((s) => s.slot.label);
+    if (p.custom === true) {
+      // 직접 쓴 도구: 이름 + '(직접 씀)', 링크 없음, 확인하지 않은 칸은 '확인 필요' (D74)
+      const u = CT.unchecked;
+      out.push(`| ${cell(slotLabelFor(cat, labels, 999))}${later(p.id)} | ${customName(p)} | ${u} | ${u} | ${u} | ${u} | ${u} |`);
+      continue;
+    }
+    if (p.builderPublish === true) {
+      // 빌더의 게시 기능 (B-02): 제공은 고른 웹 빌더, 자격·비용·라이선스·확인한 때는 '확인 필요'
+      const u = CT.unchecked;
+      out.push(`| ${cell(slotLabelFor(cat, labels, 999))}${later(p.id)} | ${cell(p.name)} | ${cell(p.provider.name)} | ${u} | ${u} | ${u} | ${u} |`);
+      continue;
+    }
     const link = p.links[0];
     const name = link ? `[${cell(p.name)}](${link.url})` : cell(p.name);
     out.push(
@@ -129,6 +166,14 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   }
   out.push('', `### ${L.memo}`);
   for (const p of r.cart) {
+    if (p.custom === true) {
+      out.push('', `**${customName(p)}**${later(p.id)}`, '', `- ${CT.memo}`);
+      continue;
+    }
+    if (p.builderPublish === true) {
+      out.push('', `**${p.name}**${later(p.id)}`, '', `- ${T.builderPublish.memo}`);
+      continue;
+    }
     out.push('', `**${p.name}**${later(p.id)}`, '');
     if (p.layer === 'index') {
       out.push(`- ${P.indexMemo}`);
@@ -192,6 +237,36 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
 
   out.push('', '---', '', T.disclaimer, '');
   return out.join('\n');
+}
+
+const TYPE_Q = 'q.type';
+const CUSTOM_TYPE = 'type.custom';
+
+/** 그대로 둔 답을 무엇과 같게 계산했는지: like 보기의 이름, 없으면 그 보기 태그의 이름 ('직접 쓴 앱', '외부 데이터') */
+/** '쓰는 AI'처럼 보기가 도구 이름인 질문 (보기에 aiTool). 태그가 점수에 쓰이지 않는다 (D87) */
+function isNameQuestion(options: Option[]): boolean {
+  return options.some((o) => o.aiTool !== undefined);
+}
+
+/** 쓰는 AI 이름 (설계서 7.1절, 1번 '만드는 AI' 줄): 목록에서 골랐으면 보기 이름, 직접 썼으면 “내 말”, 안 정했으면 빈 글 */
+function usedAiName(r: EngineResult, notes: Record<string, string>): string {
+  for (const q of r.interview.visible) {
+    if (!isNameQuestion(q.options)) continue;
+    const opt = q.options.find((o) => o.id === r.interview.answers[q.id]);
+    if (!opt || opt.isUnknown === true) continue;
+    if (opt.isCustom !== true) return opt.label;
+    const note = notes[q.id];
+    if (note) return `“${note}”`;
+  }
+  return '';
+}
+
+function keptAs(cat: Catalog, options: Option[], opt: Option): string {
+  const like = options.find((o) => o.id === opt.like);
+  if (like) return like.label;
+  return Object.keys(opt.tags)
+    .map((t) => cat.tagLabel.get(t) ?? t)
+    .join(', ');
 }
 
 /** 설계도 파일 이름: codechauffeur-plan-YYYYMMDD-HHmm.md (이용자 기기 시간) */

@@ -35,7 +35,7 @@ renderReceiptText(receiptModel(cat, r, issuedAt));   // 텍스트 영수증
 conversationCards(cat, r);                           // AI에게 할 말 5장
 ```
 
-`evaluate`는 먼저 `normalizeSession`으로 입력을 정리한다: 없는 질문·보기의 답, 없는 상품, 문자열이 아닌 값, 겹친 id를 버린다. 그다음 나중으로 미룰 수 없는 칸은 `deferred`에서, 지금 생기지 않았거나 그대로 둘 수 없는 충돌은 `kept`에서 뺀다. 정리된 상태는 `r.session`에 있다.
+`evaluate`는 먼저 `normalizeSession`으로 입력을 정리한다: 없는 질문·보기의 답, 없는 상품, 문자열이 아닌 값, 겹친 id를 버린다. 직접 쓴 것(내 말 40자, 직접 쓴 도구 5개, 빈틈)의 정리는 9절. 그다음 나중으로 미룰 수 없는 칸은 `deferred`에서, 지금 생기지 않았거나 그대로 둘 수 없는 충돌은 `kept`에서 뺀다. 정리된 상태는 `r.session`에 있다.
 
 ## 1. 목적지 질문 (`interview.ts`)
 
@@ -44,6 +44,8 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 3. 보인 질문에 유효한 답이 있으면 그 보기의 `tags`를 더한다 (같은 태그는 합산).
 4. 다음 질문 = 보인 질문 중 답이 없는 첫 질문. 없으면 만들 앱 정하기 끝 (`done`). 도구 고르기와 도구끼리 맞춰 보기는 이때 열린다.
 5. 앞 답을 바꿔 숨겨진 질문의 답은 지우지 않고 무시한다. 되돌리면 다시 살아난다.
+6. **고르지 않아도 되는 질문**(`optional: true`, '쓰는 AI' `q.aitool-*`, D87): 차례가 오면 다른 질문처럼 묻는다(다음 질문이 된다). 하지만 답하지 않은 채 다른 질문을 모두 마쳤으면(미리 짠 코스, v3 전의 저장·영수증 링크) 보인 질문에서 빼고 끝난 것으로 본다. 그 답은 '모르겠어요' 보기('아직 안 정했어요', 태그 없음)와 같다. 이런 질문의 보기 태그는 `aitool.*`뿐이고 점수·규칙·노출 조건에 쓰지 않는다(`npm run validate`가 막는다). 그래서 골든 23개의 '물어본 질문'은 그대로다.
+7. **직접 쓰기 보기**(`isCustom: true`, id `custom`, D74): 질문마다 하나 있는 보통 보기다. 엔진은 다른 보기처럼 그 `tags`를 더한다(`like`가 있으면 그 보기와 같은 태그, 없으면 `q.type` → `type.custom`, `q.domain` → `need.data`). 쓴 말을 읽어 보기를 고르는 일(낱말 찾기)은 화면이 하고 `evaluate()`에는 들어오지 않는다. 낱말표 `data/aliases.json`은 엔진 계산이 읽지 않는다.
 
 '길 찾는 중' 미리 보기 (목적지 화면의 지도): `answerChips()`(답한 질문의 짧은 이름 + 고른 보기. 설계도 1번 '고른 답'에도 쓴다), `buildSlots()`(지금 생긴 칸 = 고를 것), `matchingRecipes()`(지금까지의 답과 어긋나지 않고 같은 답이 하나 이상인 레시피(미리 짠 코스)를 같은 답이 많은 순으로 2개, 같으면 `recipes.json` 순서. '모르겠어요'(isUnknown) 답은 어긋남으로도 같은 답으로도 세지 않는다. 첫 답 전에는 비어 있다).
 
@@ -59,7 +61,7 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 
 **후보**: 칸의 기능(`capability`)을 가진 모든 상품. 칸이 `matchDomain`이면 상품의 `domains`가 이용자의 domain 태그와 하나라도 겹쳐야 한다.
 
-**이용자 수준**: `scoring.userLevelByAi`에서 이용자의 ai 태그에 맞는 값 (무료·유료 채팅 1, 코딩 에이전트 2). 없으면 `defaultUserLevel`.
+**이용자 수준**: `scoring.userLevelByAi`에서 이용자의 ai 태그에 맞는 값 (무료·유료 채팅 1, 웹에서 만드는 도구 1, 코딩 에이전트 2). 없으면 `defaultUserLevel`.
 
 **점수** = 아래 항목의 합. 값은 `data/scoring.json`의 `weights`.
 
@@ -85,7 +87,7 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 
 **맡는 칸 수** (`Scored.slotsCovered`, D55): 이 칸 1 + 다른 열린 칸(미룬 칸·선택 칸 포함) 중 ① 이 상품의 기능이 맞고 ② 다른 상품이 아직 채우지 않았고 ③ 그 칸에서 이 상품의 점수가 추천할 수 있는 상품 중 가장 높은(같아도 됨) 칸의 수. 예: 회원제 기록장의 저장 칸에서 4점이 셋이면 로그인 칸에서도 최고 점수인 Supabase가 앞선다. 브라우저 저장을 이미 고른 사람에게는 앱스 스크립트가 저장 칸을 맡는다고 배포 칸에서 앞서지 않는다. 동점이면 `compare.tieBy`가 무엇으로 갈렸는지 알려 준다(`official`·`coverage`·`difficulty`·`id`).
 
-**추천**: 진열 상품(`layer: shelf`) 중 `recommendable`이고 점수가 `recommendThreshold`(3) 이상인 첫 상품. 색인 상품(원문만 있는 도구)은 추천하지 않는다. 칸마다 추천은 하나뿐이다.
+**추천**: 진열 상품(`layer: shelf`) 중 `recommendable`이고 점수가 `recommendThreshold`(3) 이상인 첫 상품. 색인 상품(원문만 있는 도구)은 추천하지 않는다. 칸마다 추천은 하나뿐이다. 웹에서 만드는 도구(`ai.builder`)의 배포·공유 칸은 추천하지 않는다(10절).
 
 **다른 후보** (`runnerUp`, 예전 이름 '2위'): 추천이 있을 때, 추천이 아닌 진열 상품 중 첫 번째.
 
@@ -95,12 +97,12 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 
 ## 4. 도구끼리 맞춰 보기 (`recheck.ts`)
 
-**충돌 순서**: 조건이 맞는 `conflict` 규칙(규칙 순서) → 비어 있는 필수 칸(칸 순서). 빈 칸 충돌 id는 `conflict.empty-slot:칸id`이고, 문장은 칸의 `emptyMessage`/`emptyFix`, 없으면 `templates.emptySlot`. 화면은 충돌을 '막힌 곳'으로 보이고, 상태를 막힘(빨강) · 서행(노랑, kept) · 원활(초록)로 그린다.
+**충돌 순서**: 조건이 맞는 `conflict` 규칙(규칙 순서) → 비어 있는 필수 칸(칸 순서) → 열린 칸을 채운 직접 쓴 도구(고른 순서, 처음부터 kept, 9절). 빈 칸 충돌 id는 `conflict.empty-slot:칸id`이고, 문장은 칸의 `emptyMessage`/`emptyFix`, 없으면 `templates.emptySlot`. 화면은 충돌을 '막힌 곳'으로 보이고, 상태를 막힘(빨강) · 서행(노랑, kept) · 원활(초록)로 그린다.
 
 - 나중으로 미룬 칸은 비어 있어도 충돌이 아니다.
 - 이용자가 '그대로 가기'(아래 한 줄: "'알아볼 것'에 적어 둘게요.")를 고르면 `session.kept`에 충돌 id가 들어간다. 화면 상태는 서행이다.
 - `mustFill` 칸(화면)이 비면 그 충돌은 `keepable: false`다. 그대로 갈 수 없고, 상품을 골라야 한다 (화면: 통행 불가).
-- **`anchorSlot`**: 지도에서 막힌 곳을 붙일 칸. 규칙 충돌은 규칙의 `anchorSlot`이 **지금 열린 칸일 때만** 넘긴다. 없거나 열리지 않은 칸이면 키도 없다 = 길 전체 (예: 유료 도구). 빈 칸 충돌은 그 칸 id다. 지금 자료: realtime-mismatch → `slot.data`, personal-server → `slot.store`, key-in-static-page·key-on-public-host → `slot.host`(고치는 곳이 배포·공유), shared-without-login·paid-on-free → 없음 (고치는 곳이 목적지 답이나 길 전체).
+- **`anchorSlot`**: 지도에서 막힌 곳을 붙일 칸. 규칙 충돌은 규칙의 `anchorSlot`이 **지금 열린 칸일 때만** 넘긴다. 없거나 열리지 않은 칸이면 키도 없다 = 길 전체 (예: 유료 도구). 빈 칸 충돌은 그 칸 id다. 지금 자료: realtime-mismatch → `slot.data`, personal-server → `slot.store`, key-in-static-page·key-on-public-host → `slot.host`(고치는 곳이 배포·공유), shared-without-login·paid-on-free → 없음 (고치는 곳이 목적지 답이나 길 전체). 엔진이 채운 빌더의 게시 기능은 어떤 규칙 조건에도 맞지 않는다(10절).
 - **`deferrable`**: 빈 칸 충돌에서 그 칸이 나중으로 미룰 수 있는 칸(`deferrable`)이면 `true`. 화면은 이 막힌 곳에 '나중으로 미루기'를 함께 보인다. 미루면 그 칸은 충돌이 아니므로 막힌 곳이 사라진다.
 - **출발 가능** (`canIssue`) = 목적지 질문이 끝났고, 모든 충돌이 kept. 화면의 '출발하기' 버튼이 이 값으로 켜진다.
 
@@ -122,7 +124,10 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 1. 조건이 맞는 `research` 규칙의 카드 (규칙 순서)
 2. kept인 규칙 충돌의 `researchCard`
 3. kept인 빈 칸 충돌 → `templates.emptySlot.research`로 만든 항목, id `research.empty:칸id`
-4. 장바구니의 색인 상품(원문만 있는 도구) → `templates.indexResearch`로 만든 항목, id `research.index:상품id`
+4. 장바구니의 색인 상품(원문만 있는 도구) → `templates.indexResearch`로 만든 항목, id `research.index:상품id` (직접 쓴 도구는 빼고)
+5. 장바구니의 직접 쓴 도구 → `research.custom:custom-n` (9절)
+6. 빌더의 게시 기능이 배포 칸을 채우면 → `research.builder-publish` (10절)
+7. 빈틈 → `session.gaps` 순서로 조사 카드 `research.gap-<id>` (9절)
 
 **안전 지시**: `templates.safetyDefaults` 여섯 줄 + 조건이 맞는 `safety` 규칙 줄 (같은 문장은 한 번).
 
@@ -142,26 +147,26 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 4. 선수 개념은 함께 붙이고, 이미 앞 단계에 붙은 개념은 다시 붙이지 않는다.
 5. 단계 제목과 완성 확인 기준은 `templates.slotSteps`.
 
-**예상 시간(분)** = `baseMinutes`(30) + 먼저 만들 상품의 `setupMinutes` 합 (없으면 `unknownSetupMinutes` 60).
+**예상 시간(분)** = `baseMinutes`(30) + 먼저 만들 상품의 `setupMinutes` 합 (없으면 `unknownSetupMinutes` 60). 빌더의 게시 기능은 더하지 않는다(10절).
 
 **만들지 않을 것**: `templates.notBuildRules` 중 조건이 맞는 문장.
 
 ## 6. 영수증과 설계도
 
-- `receiptModel`: 품목(상품마다 맡은 칸 이름, 나중 여부, 가격 '0원'/'유료'), 도구 비용 합계(모두 0원으로 시작할 수 있으면 `receipt.totalFree` '0원으로 시작', 아니면 '유료 포함'), 예상 시간, 먼저 만들 것의 난이도(`difficulty` 숫자는 모형에만 두고, 글은 쉬움(3 이하)·보통(6 이하)·어려움 말만), 준비물·읽어 둘 용어·알아볼 것 개수(글은 `receipt.count` '{{n}}개'). 글자는 모두 `templates.receipt`. '요금'은 코드쇼퍼 이용료(늘 0원, 도장과 맺음말)에만 쓰고 도구 비용에는 쓰지 않는다.
+- `receiptModel`: 품목(상품마다 맡은 칸 이름, 나중 여부, 가격 '0원'/'유료'/'모름'(직접 쓴 도구·빌더의 게시 기능, `unknown: true`)), 도구 비용 합계(유료 도구가 있으면 '유료 포함', 없고 비용을 모르는 도구(직접 쓴 도구·빌더의 게시 기능)가 있으면 `receipt.totalUnchecked` '0원 + 확인 필요', 모두 0원으로 시작할 수 있으면 `receipt.totalFree` '0원으로 시작'), 예상 시간, 먼저 만들 것의 난이도(`difficulty` 숫자는 모형에만 두고, 글은 쉬움(3 이하)·보통(6 이하)·어려움 말만), 준비물·읽어 둘 용어·알아볼 것 개수(글은 `receipt.count` '{{n}}개'). 글자는 모두 `templates.receipt`. '요금'은 코드쇼퍼 이용료(늘 0원, 도장과 맺음말)에만 쓰고 도구 비용에는 쓰지 않는다.
 - 맡은 칸이 여럿이면 '화면, 저장'처럼 잇고, 11칸을 넘으면 '저장 외 1개' (예: '저장, 배포·공유'는 15칸이라 '저장 외 1개').
 - `difficultyWord(cat, n)`: 난이도 합을 말로. `toolDifficultyWord(cat, d)`: 도구 하나의 난이도(1~3)를 쉬움·보통·어려움으로 (화면의 '난이도 보통').
 - 예상 시간: 55분 미만은 10분 단위('약 40분'), 그 위는 30분 단위('약 1시간', '약 2시간 30분').
 - `renderReceiptText`: 고정폭 36칸. 한글은 2칸으로 센다. 긴 이름은 '…'로 자른다. 품목 줄은 칸 이름 자리 + 도구 이름 자리 + 띄움 + 가격 4칸이다. 칸 이름 자리는 기본 12칸(이름 11칸)이고, 11칸을 넘는 이름(예: '로그인(나중)' 12칸)이 있으면 그 영수증만 13칸으로 넓히고 도구 이름 자리를 19칸에서 18칸으로 줄인다. '(나중)' 표시는 늘 보이게 칸 이름 쪽을 먼저 자르고 붙인다 (예: '로그…(나중)'). 그림 문자(이모지)는 2칸으로 센다. 합계·시간·난이도·개수는 한 줄에 하나씩, 값을 오른쪽 끝에 붙인다.
 - `renderPack`: 12개 항목의 마크다운. 모든 문장은 `templates.json`과 상품 카드에서 온다. 형식은 `docs/RECEIPT.md`. 나중으로 미룬 칸에만 쓰이는 도구는 7번에 '(나중)'을 붙인다. 용어 링크는 `{{site}}/terms/{{id}}`.
 - `packFileName(date)`: `codechauffeur-plan-YYYYMMDD-HHmm.md` (이용자 기기 시간).
-- 프로젝트 이름(설계도 제목, 영수증 목적지): 자유 입력(30자) → 유형 이름 → '내 앱'.
+- 프로젝트 이름(설계도 제목, 영수증 목적지): 자유 입력(30자) → 만들 것의 내 말(`notes['q.type']`, 30자) → 유형 이름(`type.custom`이면 '직접 쓴 앱') → '내 앱'.
 
 ## 7. 그 밖의 함수 (`extras.ts`)
 
 - `badges(cat, product)`: 0원으로 시작, 처음 쓰기 쉬움(난이도 1), 공식, 실시간, 자주 갱신, 주의(추천 제외). 글자는 `templates.badges`.
 - `matchErrors(cat, text)`: 에러 안내의 정규식(대소문자 무시) 중 하나라도 맞는 항목, 적힌 순서.
-- `toShareState(session)` / `fromShareState(raw)`: 영수증 링크(`/arrival#r=…`)용. 자유 입력은 넣지 않는다. 받는 쪽은 모양만 검사하고, id 검사는 `normalizeSession`이 한다.
+- `toShareState(session)` / `fromShareState(raw)`: 영수증 링크(`/arrival#r=…`)용. 자유 입력·내 말·직접 쓴 도구 이름은 넣지 않는다(9절의 `x`·`g`만). 받는 쪽은 모양만 검사하고, id 검사는 `normalizeSession`이 한다.
 - `checkQuiz(cat, conceptId, index, choice)`: 용어 카드의 확인 문제 채점.
 
 ## 8. 바꿀 때 절차
@@ -173,3 +178,55 @@ conversationCards(cat, r);                           // AI에게 할 말 5장
 5. `npm run examples`로 예시를 다시 만들고, `npm run check`가 통과해야 커밋한다.
 
 알려진 빈틈: 분야 안에서 점수·공식·맡는 칸 수·난이도가 모두 같아 **영문 id 순서로** 추천이 갈리는 곳이 남아 있다 (예: 사전 API 셋, 하루 단위 교통·공공·문화). 주제를 더 나눌지 `docs/BACKLOG.md`에서 정한다. `npm run explain`이 동점을 가른 값(공식·맡는 칸 수·난이도)을 함께 찍는다.
+
+## 9. 직접 쓴 답과 도구 (`custom.ts`, `match.ts`, D74·D88)
+
+설계서 `docs/review/v3/brief.md` 7절, 정본 `docs/review/v3/input.md` 6~8절. 엔진은 이용자가 **확정한 것**(`answers`·`notes`·`customTools`·`gaps`)만 본다. 낱말 찾기 결과는 `evaluate()`에 들어가지 않는다. 그래서 낱말표를 고쳐도 골든이 흔들리지 않는다.
+
+**세션 칸** (`Session`, 저장 키 `cc:session:v1`):
+- `notes`: 질문 id → 직접 쓴 글(내 말). 보기를 골랐어도 남는다. `normalizeSession`이 있는 질문 id만, 한 줄로(`oneLine`) 40자(코드 포인트)까지 남기고 빈 글·글이 아닌 값은 버린다.
+- `customTools`: 목록에 없는 도구 `{ id: 'custom-1'~'custom-5', name, capability }`. 모양·id·기능이 맞는 것만, 같은 id·같은 이름(띄어쓰기·대소문자 무시, 빈 이름은 겹침으로 보지 않음)은 앞의 것 하나, 5개까지, 이름은 한 줄 40자. 장바구니의 `custom-n`은 이 목록에 있을 때만 남는다.
+- `gaps`: 화면이 직접 쓴 글에서 찾은 빈틈 id. 조사 카드 `research.gap-<id>`가 있는 id만 남긴다(엔진은 낱말표를 읽지 않는다).
+- `freeText`(마지막 한 줄)는 그대로 둔다. 화면의 한 줄 칸이 이 값을 그대로 보이므로 정리하면 쓰는 중에 띄어쓰기를 먹는다. 줄바꿈·앞뒤 공백·80자(`LINE_MAX`)는 쓰는 곳(설계도 1번 한 줄 설명, 이름 30자)이 `oneLine`으로 정리하고, 저장 값은 `readSession`이 200자로 자른다.
+- 넷 다 비면 칸을 만들지 않는다(옛 세션·링크와 같은 모양).
+
+**그대로 둔 답**: 직접 쓰기 보기(`custom`)는 자료의 `tags`를 그대로 더한다. 대부분 `like` 보기('모르겠어요')와 같은 태그이고, 예외 셋은 `q.type` → `type.custom`(알림 질문 `q.notify`도 묻는다), `q.domain` → `need.data`만, `q.audience` → '몇 명이 같이'. `matchingRecipes`는 직접 쓰기 답을 '모르겠어요'처럼 센다.
+
+**고른 답 칩** (`answerChips(cat, state, notes)`): 직접 쓰기 답은 '직접 쓰기' 대신 내 말 “앞 20자…”, 내 말이 없으면(링크로 받음) `templates.customAnswer.hidden`('직접 쓴 답'). 보기를 골랐으면 보기 이름 그대로.
+
+**직접 쓴 도구** (`customProduct`, 카탈로그에 넣지 않는다):
+- `cartProducts(cat, ids, customTools)`가 `custom-n`을 '모름' 도구로 만든다: `custom: true`, `layer: 'index'`, 기능 = 쓴 칸의 기능, `serverRegion: 'unknown'`, `recommendable: false`, 제공 `generic`, 난이도 `scoring.unknownDifficulty`(2), 준비 시간 없음(→ `unknownSetupMinutes` 60), 링크·준비물·필요 개념·막힘·지시 없음. 이름이 비면 `templates.customTool.hiddenName`('직접 쓴 도구').
+- **규칙 조건**: 모르는 사실(`provider.type`·`access`·`realtime`·`cost.free`·`keyExposureRisk`·`publicKey`)은 `productField`가 값 없음을 돌려줘 `is`·`in`이 맞지 않는다. 그래서 유료·키 노출·실시간 막힌 곳이 켜지지 않는다(모르는 도구에 사실을 단정하지 않는다). 서버 위치만 `unknown`이라 개인정보 막힌 곳(`conflict.personal-server`)은 켜진다. `custom` 칸은 참이라 `safety.custom-tool`이 켜진다.
+- **도구 고르기** (`rankSlot`): 칸을 채운다(`filledBy`에 `custom-n`). 후보·점수·추천·비교에는 끼지 않는다. `SlotRanking.custom` = 그 칸 기능의 직접 쓴 도구(쓴 순서, 장바구니에 없어도).
+- **맞춰 보기**: 열린 칸을 채운 직접 쓴 도구마다 `conflict.custom-tool:custom-n`(`kind: 'custom-tool'`, `customTool`, `anchorSlot` = 그 칸, `keepable: true`, **늘 `kept: true`**). 쓰는 순간 확인 못 한 길을 고른 것이라 출발(`canIssue`)을 막지 않는다. 문장 `templates.customTool.message`·`fixHint`(이름 없이 받은 도구는 `messageHidden`, 아래). 칸이 사라진 직접 쓴 도구는 서행 없이 '어디에도 쓰이지 않는 도구'(`orphans`)다.
+- **알아볼 것**: 도구마다 `research.custom:custom-n` = 조사 카드 `templates.customTool.researchCard`의 본문 + 머리 `templates.customTool.researchArea`({{name}}). 영수증 링크로 받아 이름 자리가 `hiddenName`인 도구(`nameHidden`)는 '직접 쓴 도구 확인하기: 직접 쓴 도구'처럼 겹치지 않게 `researchAreaHidden`·`messageHidden`을 쓰고 7번에 `customTool.mark`를 붙이지 않는다. `research.index:*`는 만들지 않는다.
+- **영수증**: 비용 '모름'(`receipt.unknown`, 4칸), 합계는 6절. **설계도 7번**: 이름 + `customTool.mark`('(직접 씀)'), 링크 없음, 제공·자격·비용·라이선스·확인한 때는 `customTool.unchecked`('확인 필요'), 메모 `customTool.memo`. 2·5·10번의 도구 이름은 `productOf(cat, r, id)`(결과의 장바구니 → 세션의 직접 쓴 도구 → 카탈로그)로 찾는다.
+
+**설계도 1번** (`renderPack`): 한 줄 설명 = 한 줄 입력 → `notes['q.type']` → 종류 목표. 고른 답 다음에 내 말이 하나라도 있으면 `- 내 말 그대로: {pack.mine.rule}` 한 줄과 질문 순서로 아래 줄: 보기를 골랐으면 `pack.mine.picked`(“내 말” → 고른 답 보기), 그대로 뒀으면 `pack.mine.kept`(계산 기준 `{{as}}` = `like` 보기 이름, 없으면 그 보기 태그 이름: '직접 쓴 앱', '외부 데이터'). '쓰는 AI'처럼 보기마다 `aiTool`이 있는 이름 질문은 계산에 쓰지 않으므로 `pack.mine.keptName`(계산 기준 꼬리 없음). `type.custom`이면 `pack.mine.customType` 한 줄. '만드는 AI' 줄은 `q.ai` 보기 이름 뒤에 쓰는 AI 이름을 괄호로 붙인다(목록에서 골랐으면 보기 이름, 직접 썼으면 “내 말”, 안 정했으면 붙이지 않음, 설계서 7.1절). 내 말은 한 줄 40자에 “ ”로 감싸 새 제목을 만들 수 없다.
+
+**가져올 정보를 직접 썼을 때**: 빈 외부 데이터 칸을 그대로 두면 `research.empty:slot.data`의 '무엇을 확인'만 `templates.emptySlot.researchWithNote`(내 말)로 바꾼다. id는 그대로.
+
+**영수증 링크** (`ShareState`, 판 번호 `v: 1` 그대로): 직접 쓴 글·도구 이름은 넣지 않는다. 장바구니의 직접 쓴 도구는 `x: { 'custom-n': 기능 }`, 빈틈은 `g: [id]`로 있을 때만 넣는다. `fromShareState`는 `x`의 id 모양·기능 이름을 검사해 이름 없는 도구를 만들고, 모르는 값은 버린다. 그래서 링크로 연 영수증·설계도에는 이름 자리에 '직접 쓴 도구'가 보인다. 옛 화면은 모르는 칸 `x`·`g`를 버린다.
+
+**낱말 찾기** (`match.ts`, AI 아님, 화면이 직접 쓰기 칸을 처음 열 때 낱말표 `data/aliases.json`과 함께 `import()`로 늦게 받는다. `index.ts`에서 내보내지 않는다):
+- `normalizeForMatch`: NFKC·소문자·폭 없는 글자 지움·글자와 숫자와 `+`·`#` 밖은 띄어쓰기(`src/lib/aliases.ts` `normalizeWords`). 견줌은 띄어쓰기를 뺀 글에서, 어절 경계는 따로 든다.
+- `findAliases(text, entries)`: 모든 자리를 찾고 **긴 말부터 겹치지 않게**(같으면 앞 자리 → 자료 순서). `=` 열쇠는 어절 전체가 같을 때만. 한 칸에서 쓰는 낱말표(보기 · 도구 이름 · 갈래 짐작 · 빈틈)를 한 번에 넘긴다('업비트'가 '비트'를 이긴다).
+- `matchAnswer(cat, aliases, questionId, text)`: 보기마다 찾은 서로 다른 말의 개수 → 가장 긴 말 → 보기 순서로 최대 3개(보기 낱말 질문은 ‘모르겠어요’·‘직접 쓰기’ 보기를 제안하지 않음). 예·아니요 질문(`yesNo.topics`)은 아니요 말·부정된 주제어(주제어 뒤 `negWindow` 6글자 안의 `negAfter`) → 모름 말 → 아마 말 → 예 말·주제어 순서로 하나(모름 말이면 ‘모르겠어요’ 보기 `unknown`을 제안한다, `input.md` 6.5절). `q.ai`는 에이전트 → 빌더 → 유료 → 채팅·무료 이름 순서. `q.budget`은 돈 단위가 붙은 숫자를 한 달 기준(한 달 말이 있으면 그대로, 년 ÷12, 주 ×4, 하루 ×30. '년'·'연'은 숫자 바로 뒤나 따로 선 어절일 때만이라 '청소년'·'작년'은 기간이 아니다)으로 읽어 0원 → 0원만, 1만 원 미만 → 몇천 원까지, 이상 → 필요하면 더(숫자가 없으면 보기 낱말). `q.realtime`은 숫자 + 초·분·시간 → 실시간, 숫자 + 일·주·달 → 하루 한 번. 아무것도 못 찾았고 영문 글자뿐이면 두벌식으로 되돌려(`qwertyToHangul`, 완성 글자 70% 이상) 한 번 더 찾고 `readAs`를 붙인다. 빈틈은 그 질문이 `gaps[].where`에 있을 때만.
+- `matchTool(cat, aliases, r, slotId, text)`: `same` = 진열 상품의 공식 이름이나 `toolHints`의 한글 표기로 찾은 도구(그 도구가 보이는 열린 칸, 이 칸인지), `near` = 갈래 짐작(기능 + 분야)의 진열 도구 2개(이 칸의 목록에 있으면 그 순위 순서, 없으면 카탈로그 자료 순서와 `inSlot: false`). 순위 계산을 새로 하지 않는다.
+- `gapsIn(cat, aliases, texts)`: 여러 글(`q.*` · `line` · `tool`)의 빈틈을 자료 순서로. `looksLikeContact(text)`: 전화·전자 우편처럼 보이는 글(막지 않고 화면이 경고). `readMoney(text)`: 한 달 기준 원.
+- 시험 `tests/engine/match.test.ts`: 맞춘 묶음 73개 모두, 맞추지 않은 묶음 27개 중 26개(못 맞힌 1개: '기차 시간표' → 학교 정보, 같은 개수일 때 긴 말이 이김), 찾으면 안 되는 글 10개 제안 0, 도구 이름 12개.
+
+## 10. 웹에서 만드는 도구의 공개 (`builder.ts`, B-02·D89)
+
+설계서 `docs/review/v3/brief.md` 7.7절·8.1절 B-02. 웹에서 만드는 도구(Lovable·Bolt·v0 같은 것, `q.ai`의 `builder` 보기 → 태그 `ai.builder`)는 공개도 그 도구 안의 게시 기능으로 한다. 계산 없이 두면 이 이용자의 영수증과 설계도에 GitHub Pages나 Cloudflare가 추천되어, 빌더의 게시 기능과 겹치는 틀린 안내가 된다. 그래서 P0 최소안으로 배포·공유 칸만 따로 계산한다.
+
+- **빌더의 게시 기능** (`builderPublishProduct`, id `builder-publish`): `products.json`에 넣지 않는 엔진 상수 + `templates.builderPublish` 문장. 기능은 `host` 하나, `builderPublish: true`, `layer: 'index'`, `recommendable: false`, 제공 `generic`(`builderPublish.provider` '쓰는 웹 빌더'), 링크·준비물·필요 개념·막힘·지시 없음. 자료 검사가 `products.json`의 같은 id를 막는다.
+- **언제 채우나** (`withBuilderPublish`, `evaluate` 안): `ai.builder` 태그가 있고, 공개(`host`) 기능 칸이 **꼭 고를 칸**(여럿이·아무나 쓰는 앱)으로 열려 있고, 고른 도구 중 공개 기능이 있는 것이 없을 때 결과의 고른 도구(`r.cart`) 끝에 더한다. 나만 쓰는 앱의 선택 칸은 채우지 않고 비워 둔다(추천은 아래 `rankSlot`이 여전히 막는다). 채우면 10번 '공개하기' 단계와 `safety.local-key`의 '키가 든 파일은 공개 주소에 올리지 않는다'가 한 설계도에 함께 나오고, 이 상품은 규칙 조건에 끼지 않아 `conflict.key-on-public-host`도 켜지지 않기 때문이다. 세션 장바구니(`r.session.cart`)와 영수증 링크에는 넣지 않는다(이용자가 고른 것이 아니다). 링크로 열면 답에서 다시 계산된다.
+- **다른 곳에 공개하고 싶을 때**: 이용자가 공개 기능이 있는 도구(진열 도구나 직접 쓴 도구)를 고르면 그 도구가 칸을 채우고 빌더의 게시 기능은 빠진다. 다른 칸을 맡으려고 고른 도구가 공개 기능도 있으면(구글 시트 + 앱스 스크립트, Cloudflare Workers) 그 도구가 채운다. 지금 계산 그대로이고, 빌더 이용자에게 맞는지는 BACKLOG에서 본다.
+- **도구 고르기** (`rankSlot`): 칸 기능이 `host`이고 `ai.builder`면 `SlotRanking.builder` = 빌더의 게시 기능, 아니면 `null`. 이 칸은 추천·다른 후보·비교가 없다(`recommended`·`runnerUp`·`compare` 모두 `null`). 진열 목록과 점수는 그대로 계산해 둔다(화면의 [다른 곳에 공개하고 싶어요]가 펼친다). 꼭 고를 칸이고 고른 공개 도구가 없으면 `filledBy` = `['builder-publish']`라서 남은 칸이 아니고 빈 칸 막힌 곳도 없다. 선택 칸이면 `filledBy`는 비어 있고 `builder`만 있다. 화면(T37): "쓰는 웹 빌더가 공개를 맡아요." + [다른 곳에 공개하고 싶어요] (`ko.shop.builderLine`·`builderOther`). 화면의 '정한 도구'(`pick-nav.ts`의 `savedFor`)는 세션 장바구니에 있는 것만 세므로, 이 상품은 정한 도구로도 뺄 도구로도 보이지 않는다.
+- **규칙 조건**: `matchProduct`는 이 상품을 어떤 조건에도 맞지 않게 본다. 배포 칸에 걸린 막힌 곳 규칙(`conflict.key-on-public-host`: 나만 쓰는 앱 + 키 노출 데이터 도구 + 공개 도구)은 나만 쓰는 앱에서만 켜지는데, 그때는 이 상품이 칸을 채우지 않으므로(위 '언제 채우나') 둘이 만나지 않는다. 나만 쓰는 빌더 앱에는 공개 단계가 없고 `safety.local-key`가 키가 든 파일을 공개 주소에 올리지 말라고 지시한다. 키 자체를 보는 막힌 곳(`conflict.key-in-static-page`: 여럿이 쓰는 앱 + 키 노출 도구 + 중간 서버 없음)은 공개 도구와 상관없이 그대로 켜진다. 고치려면 중간 서버 기능이 있는 공개 도구를 고르고, 그러면 그 도구가 배포 칸을 채운다. 이 고치는 법 문장("Workers나 앱스 스크립트를 배포·공유에 쓸 도구로 고르세요")은 빌더 이용자에게는 빌더의 게시 기능을 빼라는 말이 되어 맞지 않는다. 빌더의 비밀 값·서버 함수 기능을 원문으로 확인한 뒤 빌더용 고치는 법을 더한다(BACKLOG).
+- **알아볼 것**: 이 상품이 칸을 채우면 조사 카드 `templates.builderPublish.researchCard`(`research.builder-publish`, 출처 `builder`)를 직접 쓴 도구 다음, 빈틈 앞에 붙인다: 무료 요금제로 공개할 수 있나 · 내 주소를 붙일 수 있나 · 공개 범위. 숫자(한도·요금)는 싣지 않는다. `research.index:*`는 만들지 않는다.
+- **비용·난이도·시간**: 비용은 '모름'과 같다(`costUnchecked`: 영수증 비용 칸 '모름', 유료 도구가 없으면 합계 '0원 + 확인 필요'). 난이도 합(`split`)과 예상 시간(`minutes`)에는 더하지 않는다(`toolsToSetUp`). 쓰던 빌더 안의 기능이라 새로 붙일 도구가 아니다. 진행 순서에는 배포 단계로 나온다(`slotSteps['slot.host']`).
+- **설계도 7번**: 이름 `builderPublish.name` · 제공 `builderPublish.provider` · 자격·비용·라이선스·확인한 때 `customTool.unchecked`('확인 필요'), 링크 없음, 메모 `builderPublish.memo`. 2·10번의 도구 이름은 `productOf`로 찾는다.
+- 다른 칸(화면·저장·로그인)은 지금 계산 그대로다. 빌더 자체 저장소·로그인 계산은 BACKLOG.
+- 지키는 것: 골든 case-31(웹에서 만드는 도구 + 안내 페이지, 배포 칸 = `builder-publish`), 시험 `tests/engine/builder.test.ts`(GitHub Pages·Cloudflare가 추천되지 않음, 고른 공개 도구가 이김, 나만 쓰는 앱의 선택 칸은 비워 둠, 공개 주소 막힌 곳이 켜지지 않음, 영수증 '0원 + 확인 필요', 설계도 7번).

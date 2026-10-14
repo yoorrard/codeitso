@@ -18,7 +18,35 @@
     "cart": {
       "type": "array",
       "items": { "$ref": "defs.schema.json#/$defs/id" },
-      "uniqueItems": true
+      "uniqueItems": true,
+      "description": "고른 도구 id. 직접 쓴 도구는 customTools의 custom-n"
+    },
+    "notes": {
+      "type": "object",
+      "propertyNames": { "$ref": "defs.schema.json#/$defs/questionId" },
+      "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 40 },
+      "description": "질문 id → 직접 쓴 글 (내 말, D74)"
+    },
+    "customTools": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "capability"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^custom-[1-5]$" },
+          "name": { "type": "string", "maxLength": 40 },
+          "capability": { "$ref": "defs.schema.json#/$defs/capability" }
+        }
+      },
+      "description": "목록에 없는 도구 (직접 쓴 도구, D74)"
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+      "uniqueItems": true,
+      "description": "직접 쓴 글에서 찾은 빈틈 id (aliases.json gaps)"
     },
     "kept": {
       "type": "array",

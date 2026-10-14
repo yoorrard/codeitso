@@ -1,11 +1,11 @@
 // 자료 검사 로직: 스키마 검사 + 파일끼리 맞물리는지 검사. 부작용 없음 (파일을 읽지 않고 출력·종료도 하지 않는다).
 // node scripts/validate-data.ts와 tests/data.test.ts가 함께 쓴다. 파일 읽기는 load-data.ts의 loadValidationInput.
 import Ajv2020 from 'ajv/dist/2020.js';
-import type { Catalog, Condition, Data } from '../../src/lib/engine/index.ts';
-import { evaluate, makeCatalog } from '../../src/lib/engine/index.ts';
+import type { Catalog, Condition, Data, Question } from '../../src/lib/engine/index.ts';
+import { BUILDER_PUBLISH_ID, evaluate, makeCatalog } from '../../src/lib/engine/index.ts';
 import { usesCart } from '../../src/lib/engine/conditions.ts';
 import type { Aliases } from '../../src/lib/aliases.ts';
-import { nameKey } from '../../src/lib/aliases.ts';
+import { aliasKey, nameKey } from '../../src/lib/aliases.ts';
 import type { Glossary } from '../../src/lib/glossary.ts';
 import { contrast } from './contrast.ts';
 import { DATA_FILES } from './data-files.ts';
@@ -142,6 +142,29 @@ export function validateAll(input: ValidationInput): ValidationResult {
     return [];
   }
 
+  /** 조건이 답을 보는 질문 목록 */
+  function conditionAnswers(c: Condition): string[] {
+    if ('answer' in c) return [c.answer];
+    if ('all' in c) return c.all.flatMap(conditionAnswers);
+    if ('any' in c) return c.any.flatMap(conditionAnswers);
+    if ('not' in c) return conditionAnswers(c.not);
+    return [];
+  }
+
+  /** 태그 묶음 둘이 같은지 (순서 무관) */
+  const sameTags = (a: Record<string, number>, b: Record<string, number>): boolean =>
+    JSON.stringify(Object.entries(a).sort(([x], [y]) => (x < y ? -1 : x > y ? 1 : 0))) ===
+    JSON.stringify(Object.entries(b).sort(([x], [y]) => (x < y ? -1 : x > y ? 1 : 0)));
+
+  /** 고르지 않아도 되는 질문('쓰는 AI')의 태그 접두어: 점수·규칙·노출 조건에 쓰지 않는다 (D87) */
+  const OPTIONAL_TAG = 'aitool.';
+  const optionalIds = new Set(data.questions.questions.filter((q) => q.optional === true).map((q) => q.id));
+  /** 조건이 고르지 않아도 되는 질문이나 그 태그를 보면 오류 (답하지 않아도 끝나는 질문이라 계산을 바꾸면 안 된다) */
+  function noOptionalRefs(where: string, c: Condition): void {
+    for (const t of conditionTags(c)) if (t.startsWith(OPTIONAL_TAG)) err(`${where}: ${t}처럼 고르지 않아도 되는 질문의 태그는 조건에 쓰지 않습니다`);
+    for (const qid of conditionAnswers(c)) if (optionalIds.has(qid)) err(`${where}: 고르지 않아도 되는 질문 ${qid}의 답은 조건에 쓰지 않습니다`);
+  }
+
   /** 모든 칸 규칙이 만드는 칸 id (조건의 deferred 검사용) */
   const slotIdsAll = new Set(data.rules.rules.flatMap((r) => (r.type === 'slot' ? [r.slot.id] : [])));
 
@@ -154,7 +177,11 @@ export function validateAll(input: ValidationInput): ValidationResult {
   data.questions.questions.forEach((q, i) => {
     dupes(`${q.id} 보기`, q.options.map((o) => o.id));
     if (q.options.filter((o) => o.isUnknown).length > 1) err(`${q.id}: '모르겠어요' 보기는 하나만 둡니다`);
+    checkCustomOption(q);
+    checkOptionalQuestion(q);
+    checkGroups(q);
     if (q.showIf) {
+      noOptionalRefs(`${q.id}.showIf`, q.showIf);
       checkCondition(`${q.id}.showIf`, q.showIf);
       if (usesCart(q.showIf)) err(`${q.id}.showIf: 질문 노출 조건에 장바구니를 쓸 수 없습니다`);
       for (const t of conditionTags(q.showIf)) {
@@ -178,12 +205,80 @@ export function validateAll(input: ValidationInput): ValidationResult {
     if (!producedSoFar.has(t) && (tag?.phase ?? 1) === 1) warn(`taxonomy: 어떤 질문도 만들지 않는 태그 ${t}`);
   }
 
+  /** '직접 쓰기' 보기 (D74, input.md 9.1절): 질문마다 하나, id custom, '모르겠어요' 바로 앞, like면 tags가 같고 아니면 keep */
+  function checkCustomOption(q: Question): void {
+    const customs = q.options.filter((o) => o.isCustom === true);
+    if (customs.length !== 1) err(`${q.id}: '직접 쓰기' 보기(isCustom)는 질문마다 하나 둡니다 (지금 ${customs.length}개)`);
+    const unknownAt = q.options.findIndex((o) => o.isUnknown === true);
+    const wantAt = unknownAt >= 0 ? unknownAt - 1 : q.options.length - 1;
+    for (const c of customs) {
+      const where = `${q.id}.${c.id}`;
+      if (c.id !== 'custom') err(`${where}: '직접 쓰기' 보기의 id는 custom입니다`);
+      if (q.options.indexOf(c) !== wantAt) err(`${where}: '직접 쓰기' 보기는 '모르겠어요' 바로 앞(없으면 맨 끝)에 둡니다`);
+      if (c.like !== undefined) {
+        const like = q.options.find((o) => o.id === c.like);
+        if (!like || like.isCustom === true) err(`${where}: like(${c.like})는 같은 질문의 다른 보기여야 합니다`);
+        else if (!sameTags(like.tags, c.tags)) err(`${where}: like로 정한 보기(${c.like})와 tags가 같아야 합니다 (그대로 둔 답은 그 보기와 같게 계산한다)`);
+        if (c.keep !== undefined) err(`${where}: like가 있으면 keep을 두지 않습니다 (화면이 like 보기 이름으로 말한다)`);
+      } else if (c.keep === undefined) err(`${where}: like가 없으면 그대로 둘 때의 계산을 말하는 keep이 있어야 합니다`);
+    }
+  }
+
+  /** 고르지 않아도 되는 질문 (D87): 태그 없는 '모르겠어요' 하나, 보기 태그는 aitool.*만, 도구 보기마다 aiTool */
+  function checkOptionalQuestion(q: Question): void {
+    for (const o of q.options) {
+      const where = `${q.id}.${o.id}`;
+      for (const t of Object.keys(o.tags)) {
+        if (q.optional === true && !t.startsWith(OPTIONAL_TAG)) err(`${where}: 고르지 않아도 되는 질문의 보기는 ${OPTIONAL_TAG}* 태그만 답니다 (${t})`);
+        if (q.optional !== true && t.startsWith(OPTIONAL_TAG)) err(`${where}: ${OPTIONAL_TAG}* 태그는 고르지 않아도 되는 질문(optional)에만 답니다`);
+      }
+      if (o.aiTool === undefined) {
+        if (q.optional === true && o.isCustom !== true && o.isUnknown !== true) err(`${where}: '쓰는 AI' 보기에는 도구와 쓰는 곳(aiTool)이 있어야 합니다`);
+        continue;
+      }
+      if (q.optional !== true) err(`${where}: aiTool은 고르지 않아도 되는 질문('쓰는 AI')의 보기에만 답니다`);
+      if (o.tags[`${OPTIONAL_TAG}${o.aiTool.tool}`] === undefined) err(`${where}: 태그 ${OPTIONAL_TAG}${o.aiTool.tool}을 답니다 (aiTool.tool과 같게)`);
+      if ((o.aiTool.paidOnly === true || o.aiTool.needsReview === true) && (o.aiTool.sources ?? []).length === 0) {
+        err(`${where}: 유료 표시(paidOnly)나 확인 필요(needsReview)에는 출처(sources)가 있어야 합니다`);
+      }
+    }
+    if (q.optional !== true) return;
+    const unknowns = q.options.filter((o) => o.isUnknown === true);
+    if (unknowns.length !== 1 || Object.keys(unknowns[0]?.tags ?? {}).length > 0) {
+      err(`${q.id}: 고르지 않아도 되는 질문에는 태그 없는 '모르겠어요' 보기가 하나 있어야 합니다 (답하지 않으면 그 보기로 본다)`);
+    }
+  }
+
+  /** 보기 무리 (groups): 무리마다 보기가 있고, 보기는 무리 순서대로, 직접 쓰기·모르겠어요는 무리 밖 */
+  function checkGroups(q: Question): void {
+    if (q.groups === undefined) {
+      for (const o of q.options) if (o.group !== undefined) err(`${q.id}.${o.id}: 질문에 groups가 없는데 group(${o.group})이 있습니다`);
+      return;
+    }
+    const order = q.groups.map((g) => g.id);
+    dupes(`${q.id} 무리`, order);
+    let last = -1;
+    for (const o of q.options) {
+      if (o.isCustom === true || o.isUnknown === true) {
+        if (o.group !== undefined) err(`${q.id}.${o.id}: '직접 쓰기'·'모르겠어요' 보기는 무리에 넣지 않습니다`);
+        continue;
+      }
+      const at = o.group === undefined ? -1 : order.indexOf(o.group);
+      if (at < 0) err(`${q.id}.${o.id}: 무리(group)가 없거나 groups에 없는 무리입니다`);
+      else if (at < last) err(`${q.id}.${o.id}: 보기는 무리 순서대로 둡니다`);
+      last = Math.max(last, at);
+    }
+    for (const g of order) if (!q.options.some((o) => o.group === g)) err(`${q.id}: 무리 ${g}에 보기가 없습니다`);
+  }
+
   // 상품
   dupes('products', data.products.products.map((p) => p.id));
   let reviewCount = 0;
   let reviewIndexCount = 0;
   for (const p of data.products.products) {
     const where = `products/${p.id}`;
+    if (p.id.startsWith('custom-')) err(`${where}: custom-으로 시작하는 id는 직접 쓴 도구(custom-1~custom-5) 몫입니다`);
+    if (p.id === BUILDER_PUBLISH_ID) err(`${where}: ${BUILDER_PUBLISH_ID}는 엔진이 만드는 빌더의 게시 기능 몫입니다 (products.json에 넣지 않는다)`);
     for (const t of [...(p.domains ?? []), ...(p.topics ?? []), ...(p.goodFor ?? [])]) {
       if (!tagIds.has(t)) err(`${where}: 분류표에 없는 태그 ${t}`);
     }
@@ -213,6 +308,7 @@ export function validateAll(input: ValidationInput): ValidationResult {
   for (const r of data.rules.rules) {
     const where = `rules/${r.id}`;
     checkCondition(where, r.when);
+    noOptionalRefs(where, r.when);
     if (r.type === 'slot') {
       if (usesCart(r.when)) err(`${where}: 칸 규칙에는 장바구니 조건을 쓸 수 없습니다`);
       const { required: _required, ...shape } = r.slot;
@@ -242,7 +338,17 @@ export function validateAll(input: ValidationInput): ValidationResult {
     }
   }
 
-  // 조사 카드
+  // 조사 카드: 규칙이 쓰는 것 + 낱말표 빈틈(research.gap-<id>, 엔진이 session.gaps로 더함) + 직접 쓴 도구 카드(templates.customTool.researchCard)
+  for (const g of input.aliases.gaps) {
+    const card = `research.gap-${g.id}`;
+    if (!cardIds.has(card)) err(`aliases/gaps/${g.id}: 조사 카드 ${card}가 없습니다`);
+    usedCards.add(card);
+  }
+  if (!cardIds.has(data.templates.customTool.researchCard)) err(`templates.customTool.researchCard: 없는 조사 카드 ${data.templates.customTool.researchCard}`);
+  usedCards.add(data.templates.customTool.researchCard);
+  // 빌더의 게시 기능 카드 (B-02): 웹에서 만드는 도구의 공개 칸을 엔진이 채울 때 붙는다
+  if (!cardIds.has(data.templates.builderPublish.researchCard)) err(`templates.builderPublish.researchCard: 없는 조사 카드 ${data.templates.builderPublish.researchCard}`);
+  usedCards.add(data.templates.builderPublish.researchCard);
   dupes('research-cards', data.researchCards.cards.map((c) => c.id));
   for (const c of data.researchCards.cards) if (!usedCards.has(c.id)) warn(`research-cards/${c.id}: 어떤 규칙도 쓰지 않습니다`);
 
@@ -290,7 +396,10 @@ export function validateAll(input: ValidationInput): ValidationResult {
   expectKeys('devices', Object.keys(T.devices), 'device.');
   expectKeys('audiences', Object.keys(T.audiences), 'audience.');
   expectKeys('aiTools', Object.keys(T.aiTools), 'ai.');
-  T.notBuildRules.forEach((r, i) => checkCondition(`templates.notBuildRules[${i}]`, r.when));
+  T.notBuildRules.forEach((r, i) => {
+    checkCondition(`templates.notBuildRules[${i}]`, r.when);
+    noOptionalRefs(`templates.notBuildRules[${i}]`, r.when);
+  });
   dupes('templates.conversationCards', T.conversationCards.map((c) => c.id));
 
   // 색 대비 (WCAG 2.x)
@@ -312,8 +421,10 @@ export function validateAll(input: ValidationInput): ValidationResult {
     'pack.intro': ['saveAs'],
     'pack.conceptLink': ['site', 'id'],
     'pack.dataLines.external': ['names'],
-    'emptySlot': ['label'],
+    'emptySlot': ['label', 'note'],
     'indexResearch': ['name', 'link'],
+    'customTool': ['name'],
+    'pack.mine': ['chip', 'text', 'label', 'as'],
     'conversationCards': ['packRef'],
     'receipt': ['n', 'm', 'h'],
   };
@@ -329,7 +440,9 @@ export function validateAll(input: ValidationInput): ValidationResult {
   checkPlaceholders('indexResearch', T.indexResearch, allowed['indexResearch'] ?? []);
   checkPlaceholders('conversationCards', T.conversationCards, allowed['conversationCards'] ?? []);
   checkPlaceholders('receipt', T.receipt, allowed['receipt'] ?? []);
-  const { pack: _p, emptySlot: _e, indexResearch: _i, conversationCards: _c, receipt: _r, ...rest } = T;
+  checkPlaceholders('customTool', T.customTool, allowed['customTool'] ?? []);
+  checkPlaceholders('pack.mine', T.pack.mine, allowed['pack.mine'] ?? []);
+  const { pack: _p, emptySlot: _e, indexResearch: _i, conversationCards: _c, receipt: _r, customTool: _t, ...rest } = T;
   checkPlaceholders('나머지', rest, []);
   for (const c of data.concepts.concepts) checkPlaceholders(`concepts/${c.id}.askAI`, c.askAI, ['project']);
 
@@ -381,6 +494,119 @@ export function validateAll(input: ValidationInput): ValidationResult {
       else synonymOwner.set(k, s.id);
     }
     for (const t of s.to) if (nameKey(t) === '') err(`${where}: 빈 대상 이름`);
+  }
+
+  checkWordTables(input.aliases);
+
+  /**
+   * 직접 쓰기 낱말표 (input.md 9.2절 검사): 대상이 있는지, 열쇠 모양(정규화 뒤 2자 이상, 1자는 '='),
+   * 그리고 한 칸에서 함께 찾는 말끼리 겹치지 않는지. 함께 찾는 말 = 그 질문의 보기 낱말 + 그 자리의 빈틈 말,
+   * 예·아니요 질문이면 주제어 + 공통 말 넷, q.ai면 AI 이름 다섯 무리, 도구 칸이면 도구 이름 짐작 + 빈틈 말.
+   * 다른 질문끼리는 겹쳐도 된다('알림'은 q.type 현황판과 q.notify 주제어에 다 있다)
+   */
+  function checkWordTables(A: Aliases): void {
+    const AI_QUESTION = 'q.ai';
+    const keyOf = (where: string, word: string): string | null => {
+      const { key, whole } = aliasKey(word);
+      const n = [...key].length;
+      if (n === 0) err(`${where}: '${word}'는 정규화하면 빈 말입니다`);
+      else if (n < 2 && !whole) err(`${where}: '${word}'처럼 한 글자 말은 앞에 '='를 붙여 어절 하나 전체가 같을 때만 찾게 합니다`);
+      return n === 0 ? null : key;
+    };
+    /** 한 칸에서 함께 찾는 표: 같은 열쇠는 한 대상만 가리킨다 (띄어쓰기·대소문자·'='를 빼고 견줌) */
+    const field = (where: string, entries: { target: string; aliases: string[] }[]): void => {
+      const owner = new Map<string, string>();
+      for (const e of entries) {
+        for (const w of e.aliases) {
+          const key = keyOf(`${where}/${e.target}`, w);
+          if (key === null) continue;
+          const prev = owner.get(key);
+          if (prev === undefined) owner.set(key, e.target);
+          else err(`${where}: '${w}'가 ${prev === e.target ? `${e.target}에 두 번` : `${prev}와 ${e.target}에 함께`} 있습니다 (한 칸에서 같은 말은 한 대상만 가리킨다)`);
+        }
+      }
+    };
+    const gapsAt = (place: string): { target: string; aliases: string[] }[] =>
+      A.gaps.filter((g) => g.where.includes(place)).map((g) => ({ target: `빈틈 ${g.id}`, aliases: g.aliases }));
+    const yesNoIds = new Set(Object.keys(A.yesNo.topics));
+
+    // 보기 낱말
+    for (const [qid, entries] of Object.entries(A.options)) {
+      const where = `aliases/options/${qid}`;
+      const q = cat.question.get(qid);
+      if (!q) {
+        err(`${where}: 없는 질문`);
+        continue;
+      }
+      if (yesNoIds.has(qid)) err(`${where}: 예·아니요 질문은 yesNo.topics에만 둡니다`);
+      if (qid === AI_QUESTION) err(`${where}: ${AI_QUESTION}는 aiNames로 읽습니다`);
+      dupes(where, entries.map((e) => e.id));
+      for (const e of entries) {
+        const o = q.options.find((x) => x.id === e.id);
+        if (!o) err(`${where}: 없는 보기 ${e.id}`);
+        else if (o.isUnknown === true || o.isCustom === true) err(`${where}: '모르겠어요'·'직접 쓰기' 보기(${e.id})에는 낱말을 두지 않습니다`);
+      }
+      for (const o of q.options) {
+        if (o.isUnknown !== true && o.isCustom !== true && !entries.some((e) => e.id === o.id)) warn(`${where}: 보기 ${o.id}를 가리키는 낱말이 없습니다`);
+      }
+      field(where, [...entries.map((e) => ({ target: e.id, aliases: e.aliases })), ...gapsAt(qid)]);
+    }
+
+    // 예·아니요
+    const answerOrder = A.yesNo.answers.map((a) => a.id).join(',');
+    if (answerOrder !== 'no,unknown,maybe,yes') err(`aliases/yesNo/answers: 공통 말은 no → unknown → maybe → yes 순서로 하나씩 둡니다 (지금 ${answerOrder})`);
+    for (const [qid, topics] of Object.entries(A.yesNo.topics)) {
+      const where = `aliases/yesNo/${qid}`;
+      const q = cat.question.get(qid);
+      if (!q) {
+        err(`${where}: 없는 질문`);
+        continue;
+      }
+      const ids = q.options.filter((o) => o.isCustom !== true).map((o) => o.id).sort();
+      if (ids.join(',') !== 'maybe,no,unknown,yes') err(`${where}: 보기가 네·아니요·아마·모르겠어요인 질문만 둡니다`);
+      field(where, [{ target: '주제어', aliases: topics }, ...A.yesNo.answers.map((a) => ({ target: a.id, aliases: a.aliases })), ...gapsAt(qid)]);
+    }
+
+    // q.ai
+    dupes('aliases/aiNames', A.aiNames.map((a) => a.id));
+    for (const kind of ['agent', 'builder', 'chat', 'paid', 'free']) if (!A.aiNames.some((a) => a.id === kind)) err(`aliases/aiNames: ${kind} 무리가 없습니다`);
+    const aiQ = cat.question.get(AI_QUESTION);
+    if (!aiQ) err(`aliases/aiNames: 질문 ${AI_QUESTION}가 없습니다`);
+    else for (const o of ['chat-free', 'chat-paid', 'builder', 'agent']) if (!aiQ.options.some((x) => x.id === o)) err(`aliases/aiNames: ${AI_QUESTION}에 보기 ${o}가 없습니다`);
+    field('aliases/aiNames', A.aiNames.map((a) => ({ target: a.id, aliases: a.aliases })));
+
+    // 직접 쓰기가 있는 질문은 모두 읽을 낱말이 있다
+    for (const q of data.questions.questions) {
+      if (!q.options.some((o) => o.isCustom === true)) continue;
+      if (!(q.id in A.options) && !yesNoIds.has(q.id) && q.id !== AI_QUESTION) err(`aliases: ${q.id}의 직접 쓰기를 읽을 낱말이 없습니다 (options나 yesNo.topics에 더합니다)`);
+    }
+
+    // 도구 이름 짐작 + 도구 칸의 빈틈
+    dupes('aliases/toolHints', A.toolHints.map((h) => h.id));
+    for (const h of A.toolHints) {
+      const where = `aliases/toolHints/${h.id}`;
+      if (h.product !== undefined && !productIds.has(h.product)) err(`${where}: 없는 도구 ${h.product}`);
+      if (h.domain !== undefined && !tagIds.has(h.domain)) err(`${where}: 분류표에 없는 분야 ${h.domain}`);
+    }
+    // matchTool은 상품 이름(p:<id>)·짐작 말·빈틈을 한 번에 찾으므로 셋을 함께 견준다. 짐작 말이 가리키는 상품은 같은 대상이다
+    field('aliases/toolHints', [
+      ...data.products.products.map((p) => ({ target: `상품 ${p.id}`, aliases: [p.name] })),
+      ...A.toolHints.map((h) => ({ target: h.product !== undefined ? `상품 ${h.product}` : h.id, aliases: h.aliases })),
+      ...gapsAt('tool'),
+    ]);
+
+    // 빈틈
+    dupes('aliases/gaps', A.gaps.map((g) => g.id));
+    for (const g of A.gaps) {
+      for (const place of g.where) {
+        if (place === 'line' || place === 'tool') continue;
+        const q = cat.question.get(place);
+        if (!q) err(`aliases/gaps/${g.id}: 없는 질문 ${place}`);
+        else if (place === AI_QUESTION || optionalIds.has(place)) err(`aliases/gaps/${g.id}: AI 이름을 쓰는 질문(${place})에서는 빈틈을 찾지 않습니다`);
+        else if (!q.options.some((o) => o.isCustom === true)) err(`aliases/gaps/${g.id}: ${place}에는 직접 쓰기가 없습니다`);
+      }
+    }
+    field('aliases/gaps(line)', gapsAt('line'));
   }
 
   // 출처 대응표

@@ -1,6 +1,6 @@
 // 브라우저에 저장하는 값의 모양과, 읽은 값을 믿지 않고 고르는 함수 (부작용 없음, 시험 있음).
 // 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 4절).
-import type { Session } from './engine/types.ts';
+import type { Capability, CustomTool, Session } from './engine/types.ts';
 
 export const KEYS = {
   session: 'cc:session:v1',
@@ -57,6 +57,11 @@ export const RECEIPTS_MAX = 30;
 /** 영수증 링크 조각의 최대 길이 (share.ts HASH_MAX와 같다) */
 const RECEIPT_HASH_MAX = 8000;
 export const FREE_TEXT_MAX = 200;
+/** 직접 쓴 것 (input.md 7.1절): 내 말 20개·40자, 직접 쓴 도구 5개, 빈틈 10개. 모양·기능·질문 id는 엔진 normalizeSession이 다시 고른다 */
+export const NOTES_MAX = 20;
+export const NOTE_MAX = 40;
+export const CUSTOM_TOOLS_MAX = 5;
+export const GAPS_MAX = 10;
 const LIST_MAX = 200;
 
 export const EMPTY_SESSION: Session = { answers: {}, cart: [], kept: [], deferred: [] };
@@ -80,6 +85,24 @@ export function readSession(raw: unknown): Session {
   const out: Session = { answers, cart: strings(o['cart']), kept: strings(o['kept']), deferred: strings(o['deferred']) };
   const free = o['freeText'];
   if (typeof free === 'string' && free.trim() !== '') out.freeText = free.slice(0, FREE_TEXT_MAX);
+  const cut = (t: string): string => [...t].slice(0, NOTE_MAX).join('');
+  const notes: Record<string, string> = {};
+  for (const [k, v] of Object.entries(obj(o['notes']))) {
+    if (Object.keys(notes).length === NOTES_MAX) break;
+    if (/^q\.[a-z0-9-]+$/.test(k) && typeof v === 'string' && v.trim() !== '') notes[k] = cut(v);
+  }
+  if (Object.keys(notes).length > 0) out.notes = notes;
+  const tools: CustomTool[] = [];
+  for (const raw of Array.isArray(o['customTools']) ? o['customTools'] : []) {
+    const t = obj(raw);
+    const [id, name, capability] = [t['id'], t['name'], t['capability']];
+    // 기능 이름은 엔진(normalizeSession)이 고른다. 여기서는 글인지만 본다 (홈 첫 화면에 엔진을 싣지 않으려고)
+    if (typeof id === 'string' && typeof name === 'string' && typeof capability === 'string') tools.push({ id, name: cut(name), capability: capability as Capability });
+    if (tools.length === CUSTOM_TOOLS_MAX) break;
+  }
+  if (tools.length > 0) out.customTools = tools;
+  const gaps = strings(o['gaps']).filter((g) => /^[a-z0-9-]{1,40}$/.test(g)).slice(0, GAPS_MAX);
+  if (gaps.length > 0) out.gaps = gaps;
   return out;
 }
 
@@ -156,7 +179,16 @@ export function hasProgress(s: Session): boolean {
 
 /** 처음 값과 같으면 저장할 필요가 없다 (키를 지운다) */
 export function isEmptySession(s: Session): boolean {
-  return Object.keys(s.answers).length === 0 && s.cart.length === 0 && s.kept.length === 0 && s.deferred.length === 0 && !s.freeText;
+  return (
+    Object.keys(s.answers).length === 0 &&
+    s.cart.length === 0 &&
+    s.kept.length === 0 &&
+    s.deferred.length === 0 &&
+    !s.freeText &&
+    Object.keys(s.notes ?? {}).length === 0 &&
+    (s.customTools ?? []).length === 0 &&
+    (s.gaps ?? []).length === 0
+  );
 }
 export function isEmptyStudy(s: StudyRecord): boolean {
   return Object.keys(s).length === 0;

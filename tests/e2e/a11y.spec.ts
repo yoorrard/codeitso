@@ -1,7 +1,7 @@
 // 접근성 (T20, docs/UX.md 6절): 모든 화면에서 axe 심각·치명 0. 진행이 있는 상태(코스로 채움)의 단계 화면도 본다.
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { islandsReady } from './helpers.ts';
+import { animationsSettled, islandsReady } from './helpers.ts';
 import { readFileSync } from 'node:fs';
 
 const ROUTES = ['/', '/test-drive', '/destination', '/waypoints', '/check', '/arrival', '/terms', '/terms/api', '/tools', '/tools/neis-meal', '/courses', '/dictionary', '/about', '/about/criteria', '/about/credits', '/legal/privacy', '/legal/notice', '/nowhere'];
@@ -9,6 +9,7 @@ const ROUTES = ['/', '/test-drive', '/destination', '/waypoints', '/check', '/ar
 const recipe = (JSON.parse(readFileSync('data/recipes.json', 'utf8')) as { recipes: { answers: Record<string, string>; cart: string[]; kept?: string[]; freeText?: string }[] }).recipes[0];
 
 async function serious(page: import('@playwright/test').Page): Promise<string[]> {
+  await animationsSettled(page);
   const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
   return result.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`);
 }

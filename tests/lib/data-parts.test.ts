@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { catalog as stageCatalog, data as stageData } from '../../src/lib/data.ts';
 import { catalog as fullCatalog, data as fullData } from '../../src/lib/data-full.ts';
-import { CONCEPT_CORE, CONCEPT_DETAIL, PRODUCT_CHECK_ONLY, conceptPart, guardMissing, joinConcepts, screenProducts } from '../../src/lib/data-parts.ts';
+import { ALIAS_TOOL_PART, CONCEPT_CORE, CONCEPT_DETAIL, PRODUCT_CHECK_ONLY, conceptPart, guardMissing, joinConcepts, screenProducts, toolAliases } from '../../src/lib/data-parts.ts';
 import { conversationCards, evaluate, makeCatalog, receiptModel, renderPack, renderReceiptText } from '../../src/lib/engine/index.ts';
 import type { Golden } from '../../scripts/lib/golden.ts';
 import { goldenSession } from '../../scripts/lib/golden.ts';
@@ -49,6 +49,16 @@ describe('진열 상품 출처 칸', () => {
     for (const p of screen) expect(PRODUCT_CHECK_ONLY.some((k) => k in p)).toBe(false);
     const withoutSources = nodeData.products.products.map(({ sources: _s, ...rest }) => rest);
     expect(screen).toEqual(withoutSources);
+  });
+});
+
+describe('도구 이름 찾기 묶음의 낱말표 (virtual:cc-data/tool-aliases, T37)', () => {
+  it('도구 짐작 말과 빈틈만 싣고 값은 원본 그대로', () => {
+    const full = readJson<import('../../src/lib/aliases.ts').Aliases>(`${ROOT}/data/aliases.json`);
+    const part = toolAliases(full);
+    expect(Object.keys(part).sort()).toEqual([...ALIAS_TOOL_PART].sort());
+    expect(part.toolHints).toEqual(full.toolHints);
+    expect(part.gaps).toEqual(full.gaps);
   });
 });
 

@@ -5,7 +5,7 @@
 import { atom } from 'nanostores';
 import { ko } from '../copy/ko.ts';
 import type { EngineResult, SlotRanking } from './engine/index.ts';
-import { fill } from './engine/index.ts';
+import { BUILDER_PUBLISH_ID, fill } from './engine/index.ts';
 import type { Product } from './engine/types.ts';
 import { josa } from './josa.ts';
 import { requiredLeftSlots } from './progress.ts';
@@ -33,9 +33,17 @@ export function rankingOf(r: EngineResult, slotId: string | null): SlotRanking |
   return slotId === null ? undefined : r.slots.find((s) => s.slot.id === slotId);
 }
 
-/** 이 칸의 줄로 보이는 상품 전부 (도구 + 원문만 있는 도구) */
-function rowsOf(ranking: SlotRanking): Product[] {
-  return [...ranking.shelf, ...ranking.index].map((s) => s.product);
+/** 이 칸의 줄로 보이는 상품 전부 (직접 쓴 도구 + 도구 + 원문만 있는 도구). 직접 쓴 도구는 목록 맨 위에 쓴 순서대로 (input.md 8.1절) */
+export function rowsOf(ranking: SlotRanking): Product[] {
+  return [...ranking.custom, ...[...ranking.shelf, ...ranking.index].map((s) => s.product)];
+}
+
+/**
+ * 고른 웹 빌더가 이 칸(공개)을 맡고 있는가 (B-02): 엔진이 빌더의 게시 기능으로 칸을 채웠고 이용자가 고른 공개 도구가 없을 때.
+ * 화면은 칸에 '쓰는 웹 빌더가 공개를 맡아요' 한 줄 + [다른 곳에 공개하기]를 보이고, 칩은 '골랐어요' 대신 이 말을 읽는다
+ */
+export function builderFills(ranking: SlotRanking): boolean {
+  return ranking.builder !== null && ranking.filledBy.includes(BUILDER_PUBLISH_ID);
 }
 
 /**
@@ -61,9 +69,12 @@ export function pressedFor(r: EngineResult, ranking: SlotRanking, pending: Recor
   return ranking.slot.required ? (ranking.recommended?.product.id ?? null) : null;
 }
 
-/** 지금 고를 수 있는 꼭 고를 것 (칸 순서): 아직 안 골랐고, 미루거나 그대로 두지 않았고, 맞는 도구가 있는 것. 상태 한 줄의 'n개만 더'와 같은 수 */
+/**
+ * 지금 고를 수 있는 꼭 고를 것 (칸 순서): 아직 안 골랐고, 미루거나 그대로 두지 않았고, 맞는 도구나 직접 쓴 도구가 있는 것.
+ * 상태 한 줄의 'n개만 더'와 같은 수 (progress의 requiredLeft − requiredNoTool)
+ */
 export function pickableSlots(r: EngineResult): SlotRanking[] {
-  return requiredLeftSlots(r).filter((s) => s.shelf.length > 0);
+  return requiredLeftSlots(r).filter((s) => s.shelf.length > 0 || s.custom.length > 0);
 }
 
 /** 다음에 열 칸: from 다음 칸부터 (끝에서 처음으로 돌아) 고를 수 있는 꼭 고를 것. from 자신은 빼고, 없으면 null */

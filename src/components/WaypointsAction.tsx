@@ -100,11 +100,12 @@ export default function WaypointsAction() {
     refocus.current = true;
   };
 
-  // 꺼진 주 버튼을 누르면(Enter): 까닭(#w-why)을 읽고 첫 도구 줄로 초점을 옮긴다 (도구끼리 맞춰 보기의 꺼진 주 버튼과 같은 방식)
+  // 꺼진 주 버튼을 누르면(Enter): 까닭(#w-why)을 읽고 첫 도구 줄로 초점을 옮긴다 (도구끼리 맞춰 보기의 꺼진 주 버튼과 같은 방식).
+  // 줄이 없으면 빌더 칸의 [다른 곳에 공개하기] 또는 [목록에 없는 도구 쓰기]로 (T37)
   const why = (): void => {
     const text = document.getElementById('w-why')?.textContent;
     if (text) announce(text);
-    document.querySelector<HTMLElement>('#w-slot .w-row')?.focus();
+    document.querySelector<HTMLElement>('#w-slot :is(.w-row, .w-builder-other, .custom-row)')?.focus();
   };
 
   const remove = (): void => {

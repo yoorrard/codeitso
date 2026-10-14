@@ -6,6 +6,7 @@ import type { EngineResult } from '../../src/lib/engine/index.ts';
 import { evaluate } from '../../src/lib/engine/index.ts';
 import {
   barState,
+  builderFills,
   cartAfterPick,
   initialSlot,
   nextOpenSlot,
@@ -13,6 +14,7 @@ import {
   pressedFor,
   rankingOf,
   removableFor,
+  rowsOf,
   savedFor,
   plainName,
   shortName,
@@ -169,6 +171,41 @@ describe('removableFor: 있으면 좋은 것만 뺄 수 있다', () => {
     expect(removableFor(r, host)).toBeNull();
     expect(pressedFor(r, host, {})).toBeNull();
     expect(pickableSlots(r)).toEqual([]);
+  });
+});
+
+describe('직접 쓴 도구 (T37, input.md 8.1절): 목록 맨 위 줄, 고를 예정, 정하기', () => {
+  const tools = [{ id: 'custom-1', name: 'PokeAPI', capability: 'data' as const }];
+  const withTool = (cart: string[] = []): EngineResult => evaluate(cat, { answers: kase('case-03').answers, cart, customTools: tools });
+
+  it('그 칸 줄의 맨 위에 쓴 순서대로, 다른 칸에는 없다', () => {
+    const r = withTool();
+    expect(rowsOf(slot(r, 'slot.data'))[0]?.id).toBe('custom-1');
+    expect(rowsOf(slot(r, 'slot.screen')).some((p) => p.id === 'custom-1')).toBe(false);
+  });
+
+  it('누르면 고를 예정, 주 버튼은 [PokeAPI로 정하기], 정하면 장바구니에 custom-1이 들어가고 맡던 도구는 빠진다', () => {
+    const r = withTool(['fsc-stock']);
+    const data = slot(r, 'slot.data');
+    expect(pressedFor(r, data, { 'slot.data': 'custom-1' })).toBe('custom-1');
+    const b = barState(r, 'slot.data', { 'slot.data': 'custom-1' });
+    expect(b.kind === 'save' && b.product.name).toBe('PokeAPI');
+    const cart = cartAfterPick(r, 'slot.data', 'custom-1');
+    expect(cart).toContain('custom-1');
+    expect(cart).not.toContain('fsc-stock');
+    const after = evaluate(cat, { answers: r.session.answers, cart, customTools: tools });
+    expect(savedFor(after, slot(after, 'slot.data'))).toBe('custom-1');
+  });
+});
+
+describe('builderFills: 고른 웹 빌더가 공개 칸을 맡고 있나 (B-02)', () => {
+  it('빌더가 채운 공개 칸은 true, 다른 공개 도구를 고르면 false, 빌더가 아니면 false', () => {
+    const r = at('case-31', ['html-single']);
+    expect(builderFills(slot(r, 'slot.host'))).toBe(true);
+    const picked = at('case-31', ['html-single', 'github-pages']);
+    expect(builderFills(slot(picked, 'slot.host'))).toBe(false);
+    const plain = at('case-03');
+    expect(builderFills(slot(plain, 'slot.host'))).toBe(false);
   });
 });
 

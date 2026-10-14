@@ -29,6 +29,14 @@ export async function islandsReady(page: Page): Promise<void> {
   await page.waitForFunction(() => [...document.querySelectorAll('astro-island[client="load"], astro-island[client="idle"]')].every((i) => !i.hasAttribute('ssr')));
 }
 
+/**
+ * 끝이 있는 애니메이션이 다 끝날 때까지 (scripts/qa/shots.ts의 settle과 같은 기준, 되풀이 애니메이션은 뺀다).
+ * axe는 다 그려진 화면을 재야 한다: 나타나는 중(기사 메시지 note-in 같은)의 옅은 글은 대비가 낮게 잡힌다
+ */
+export async function animationsSettled(page: Page): Promise<void> {
+  await page.waitForFunction(() => document.getAnimations().every((a) => a.playState !== 'running' || a.effect?.getTiming().iterations === Infinity));
+}
+
 /** 보일 때 붙는 섬(client:visible) 안의 요소: 보이게 굴리고 그 섬이 붙을 때까지 */
 export async function hydrated(target: Locator): Promise<Locator> {
   await target.scrollIntoViewIfNeeded();

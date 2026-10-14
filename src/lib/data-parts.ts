@@ -4,6 +4,7 @@
 //  - 에러 안내(data/errors.json)는 사전과 빌드 때만 쓰므로 data-full.ts에만 싣는다.
 //  - 진열 상품의 출처 칸(sources)은 자료 검사(npm run validate, Node)만 읽으므로 브라우저에는 싣지 않는다 (data-full.ts에도 없다).
 // 빌드에서는 Vite 플러그인(scripts/lib/data-parts-plugin.ts)이 이 함수로 가상 모듈을 만든다. 순수 함수만 둔다 (시험 있음).
+import type { Aliases } from './aliases.ts';
 import type { Concept, Product } from './engine/types.ts';
 
 /** 엔진(evaluate·영수증·설계도)과 단계 화면 섬이 읽는 용어 칸 */
@@ -49,6 +50,17 @@ export function screenProducts(file: ProductsFile<Product>): ProductsFile<Screen
     version: file.version,
     products: file.products.map((p) => Object.fromEntries(Object.entries(p).filter(([k]) => !drop.includes(k))) as unknown as ScreenProduct),
   };
+}
+
+/**
+ * 도구 이름 찾기 묶음(T37, 2단계 '목록에 없는 도구 쓰기', src/lib/tool-match.ts)이 싣는 낱말표 칸: 도구 짐작 말과 빈틈.
+ * 질문 칸(options·yesNo·aiNames)은 1단계 찾기 묶음(custom-match.ts)이 aliases.json에서 바로 싣는다. 같은 JSON 모듈을 두 묶음이
+ * 함께 부르면 빌드가 둘을 한 공유 조각으로 묶어 서로의 칸까지 받게 되므로, 이 칸만 가상 모듈로 따로 뗀다 (빈틈은 두 묶음에 한 벌씩)
+ */
+export const ALIAS_TOOL_PART = ['toolHints', 'gaps'] as const;
+export type ToolAliases = Pick<Aliases, (typeof ALIAS_TOOL_PART)[number]>;
+export function toolAliases(file: Pick<Aliases, 'toolHints' | 'gaps'>): ToolAliases {
+  return { toolHints: file.toolHints, gaps: file.gaps };
 }
 
 /** 나눈 두 쪽을 id로 다시 붙인다. 순서는 core를 따른다 (원래 파일 순서) */

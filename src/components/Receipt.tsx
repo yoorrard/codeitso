@@ -394,7 +394,7 @@ export default function Receipt() {
   // 사이트 첫 주소 = origin + 주소 바탕 (설계서 9.4절): 영수증 링크가 바탕을 품는다 (설계도 속 용어 주소는 src/lib/pack-file.ts)
   const url = shareUrl(siteRoot(), r.session);
   const cards = conversationCards(catalog, r);
-  const prep = [...r.prep].sort((a, b) => ['days', 'hours', 'instant'].indexOf(a.lead) - ['days', 'hours', 'instant'].indexOf(b.lead));
+  const prep = [...r.prep].sort((a, b) => ['unknown', 'days', 'hours', 'instant'].indexOf(a.lead) - ['unknown', 'days', 'hours', 'instant'].indexOf(b.lead));
   const got = parts !== null && parts !== 'failed' ? parts : null;
   /** 영수증 밖 칸: 불러왔으면 안을, 아니면 열린 칸에만 기다림 한 줄, 또는 실패 한 줄 + [새로 고치기] (알림과 같은 말) */
   const later = (id: Tab, body: (m: TabParts) => ComponentChildren) => (

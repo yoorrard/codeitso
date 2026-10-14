@@ -210,9 +210,11 @@ export function animateMap(svg: SVGSVGElement, prev: MapModel | null, next: MapM
     }
   }
   const labelsBefore = new Map(labelsOf(prev));
+  // 이름표 글이 바뀌면(빈 터 '목적지' → 직접 쓴 앱 이름) 자리 이동이 아니라 새 글이 그 자리에 톡 생긴다
   for (const [k, l] of labelsOf(next)) {
     const b = labelsBefore.get(k);
-    if (b) slide(`l:${k}`, b.x - l.x, b.y - l.y);
+    if (b && b.text !== l.text) pop(`l:${k}`);
+    else if (b) slide(`l:${k}`, b.x - l.x, b.y - l.y);
   }
   // 새 마디까지 길 이어 그리기 (앞 둘만)
   for (const n of added.filter((x) => x.state !== 'later').slice(0, 2)) {

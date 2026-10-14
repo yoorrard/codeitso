@@ -2,6 +2,8 @@
 // + 오른쪽 지우기 44(확인 대화 상자를 거친다). 줄을 누르면 /arrival#r=…로 다시 연다 (그때는 대표 장면 S5가 돌지 않는다, ARCHITECTURE 5절).
 // 미니 지도는 영수증 링크 조각을 풀어 엔진을 돌린 모형(MapSvg mini: 길·마디·빈 터)이고, 풀 수 없으면 앱 종류 청사진 타일을 둔다.
 // 영수증 번호는 링크 조각의 해시에서 계산해 보여 주기만 한다(receipt-no.ts). 저장은 store.ts 한 곳.
+// 이름은 앱 종류 보기 이름이다. 직접 쓴 앱(type.custom, T37)이면 '직접 쓰기'가 아니라 내 말을 쓰되, 내 말은 링크에도 지난 영수증 기록에도
+// 넣지 않으므로(설계서 7.6절, 3.7절) 지금 브라우저의 진행(cc:session:v1)과 같은 영수증일 때만 그 말을 보이고, 아니면 '내 앱'이다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
@@ -15,13 +17,25 @@ import { receiptDate, receiptNo } from '../lib/receipt-no.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import type { ReceiptEntry } from '../lib/saved.ts';
-import { readShareHash, SHARE_PREFIX } from '../lib/share.ts';
-import { $receipts, forgetReceipt } from '../lib/store.ts';
+import { readShareHash, shareHash, SHARE_PREFIX } from '../lib/share.ts';
+import { $receipts, $session, forgetReceipt } from '../lib/store.ts';
 import { ArtTile } from './Glyph.tsx';
 import { MapSvg } from './MapBoard.tsx';
 
 const typeQuestion = catalog.question.get('q.type');
-const nameOf = (e: ReceiptEntry): string => typeQuestion?.options.find((o) => o.id === e.type && !o.isUnknown)?.label ?? ko.receipts.unnamed;
+
+/** 지금 브라우저의 진행이 받을 영수증: 링크 조각과 직접 쓴 앱의 내 말 (이 브라우저에만 있다) */
+interface Own {
+  r: string;
+  note: string | undefined;
+}
+
+/** 줄 이름: 앱 종류 보기 이름. '모르겠어요'는 '내 앱', 직접 쓴 앱은 지금 진행과 같은 영수증일 때만 내 말 */
+const nameOf = (e: ReceiptEntry, own: Own): string => {
+  const o = typeQuestion?.options.find((x) => x.id === e.type && x.isUnknown !== true);
+  if (o?.isCustom === true) return e.r === own.r && own.note ? own.note : ko.receipts.unnamed;
+  return o?.label ?? ko.receipts.unnamed;
+};
 const typeArt: Record<string, string> = {
   record: 'L01',
   form: 'L02',
@@ -60,16 +74,21 @@ interface Row {
 export default function ReceiptsList() {
   const ready = useHydrated();
   const live = useStore($receipts);
+  const session = useStore($session);
   const list = ready ? live : [];
+  const own = useMemo<Own>(() => {
+    const s = evaluate(catalog, session).session;
+    return { r: shareHash(s).slice(SHARE_PREFIX.length), note: s.notes?.['q.type'] };
+  }, [session]);
   const rows = useMemo<Row[]>(
     () =>
       list.map((e) => ({
         e,
-        name: nameOf(e),
+        name: nameOf(e, own),
         no: receiptNo(e.r),
         model: miniModel(e.r),
       })),
-    [list],
+    [list, own],
   );
   const [asking, setAsking] = useState<Row | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);

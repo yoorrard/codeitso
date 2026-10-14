@@ -1,6 +1,7 @@
 // 3단계 도구끼리 맞춰 보기 섬 (brief 6.7, D70). 지도 띠 아래 내용 시트 안에서, 할 일이 위·판단 과정이 아래:
 //   H1 + 한 줄 → (다 풀렸으면) 사건 메시지 '막힌 곳이 없어요. 출발할까요?' → 막힌 곳 n개(항목마다 알약 + 기능 이름, 설명, 고치는 법,
-//   같은 크기 중립 버튼 둘, 그 아래 안내 한 줄. 항목 사이는 24 + 나눔 선, 상자 없음) → 그대로 가는 곳(줄 56 + [다시 고르기])
+//   같은 크기 중립 버튼 둘, 그 아래 안내 한 줄, 끝에 글 버튼 [목록에 없는 도구 쓰기 ›](T37: 도구 고르기의 그 칸, 도구 이름 칸을 펼친 채).
+//   항목 사이는 24 + 나눔 선, 상자 없음) → 그대로 가는 곳(줄 56 + [되돌리기], 직접 쓴 도구는 처음부터 서행이라 [도구 바꾸기])
 //   → 한 번에 가기엔 길이 멀어요(줄 56 + [나중으로], '더 쉬운 길') → 나중에 붙일 것 → 지름길 알림 상자 → 접기 '원활 n개'
 //   → 접기 '이렇게 이해했어요'(답, 기능마다 고른 도구, 쓰이지 않는 도구).
 // 막힌 곳·출발 가능·나누기 제안·지름길은 모두 엔진 결과(evaluate)다. 화면은 엔진 결과를 기능별로 묶어 보이고,
@@ -12,7 +13,7 @@ import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { catalog } from '../lib/data.ts';
 import type { Conflict, EngineResult } from '../lib/engine/index.ts';
-import { answerChips, difficultyWord, emptySlotId, evaluate, fill, formatMinutes, productOf } from '../lib/engine/index.ts';
+import { answerChips, customToolClears, difficultyWord, emptySlotId, evaluate, fill, formatMinutes, productOf } from '../lib/engine/index.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
 import { reduced } from '../lib/motion.ts';
@@ -79,7 +80,7 @@ function Pill({ state }: { state: Traffic }) {
 }
 
 /** 막힌 곳 하나: 알약 + 기능 이름 17/600, 설명 16/24, 고치는 법 15/22, 같은 크기 중립 버튼 둘(48), 안내 한 줄 14 */
-function Jam({ c, mark }: { c: Conflict; mark: (text: string) => ComponentChildren }) {
+function Jam({ c, mark, writable }: { c: Conflict; mark: (text: string) => ComponentChildren; writable: boolean }) {
   const where = whereOf(c);
   const slot = c.slotId ?? c.anchorSlot;
   const keep = (): void => {
@@ -136,6 +137,14 @@ function Jam({ c, mark }: { c: Conflict; mark: (text: string) => ComponentChildr
             </a>
           </div>
         </>
+      )}
+      {/* '바꾸기' 보기 끝: 목록에 없는 도구를 직접 쓰면 그 칸은 서행이라 막힘이 풀린다 (설계서 7.1·7.5절).
+          직접 써도 풀리지 않는 막힌 곳(서버 위치를 몰라 남는 개인정보 막힌 곳 등)과 기능에 붙지 않은 막힌 곳에는 달지 않는다 (엔진 customToolClears) */}
+      {slot && writable && (
+        <a class="btn btn-text ck-write" href={waypointPath(slot, true)} aria-label={label(ko.check.writeTool)}>
+          {ko.check.writeTool}
+          <span class="i-mask i-chevron ck-write-chevron" aria-hidden="true" />
+        </a>
       )}
     </li>
   );
@@ -224,7 +233,7 @@ export default function Check() {
           </h2>
           <ul class="ck-jams">
             {jams.map((c) => (
-              <Jam c={c} mark={mark} key={c.id} />
+              <Jam c={c} mark={mark} key={c.id} writable={customToolClears(catalog, r, c.id)} />
             ))}
           </ul>
         </section>
@@ -244,9 +253,20 @@ export default function Check() {
                   <span class="list-name">{whereOf(c)}</span>
                   <span class="list-sub">{sentences(c.message)[0]}</span>
                 </span>
-                <button type="button" class="btn btn-text ck-row-btn" aria-label={fill(ko.check.undoKeepLabel, { where: whereOf(c) })} onClick={() => undoKeep(c.id)}>
-                  {ko.check.undoKeep}
-                </button>
+                {c.kind === 'custom-tool' ? (
+                  // 직접 쓴 도구는 쓰는 순간 '확인 못 한 길'을 고른 것이라 되돌릴 막힌 곳이 없다: 그 칸을 연 도구 고르기로 (input.md 8.3절)
+                  <a
+                    class="btn btn-text ck-row-btn"
+                    href={waypointPath(c.anchorSlot)}
+                    aria-label={fill(ko.check.actionLabel, { where: whereOf(c), action: ko.check.change })}
+                  >
+                    {ko.check.change}
+                  </a>
+                ) : (
+                  <button type="button" class="btn btn-text ck-row-btn" aria-label={fill(ko.check.undoKeepLabel, { where: whereOf(c) })} onClick={() => undoKeep(c.id)}>
+                    {ko.check.undoKeep}
+                  </button>
+                )}
               </li>
             ))}
           </ul>

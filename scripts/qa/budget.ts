@@ -8,7 +8,7 @@
 // 섬에는 지도 장면(D71)의 움직임 모듈(map/scene.ts 바뀐 것 견주기, map/rest.ts 서는 자리, scene.ts 건너뛰기)도 넣어 잰다: 모형은 키우지 않는다.
 // 어려운 말 풀이(brief 8절, D69)도 따로 본다: 풀이 섬 5KB · 자료(/glossary.json) + 매처 묶음 17KB · 도구 이름(/glossary-tools.json) 4KB.
 // 사전 검색 색인(/search-index.json)은 처음 찾을 때 받는다: 100KB (gzip).
-// 단계 화면에서 나중에 받는 묶음(D82): 4단계 칸 셋 3KB · 설계도 묶음 5KB · 풀이 칸 + 에러 안내 22KB. 단계 화면의 첫 묶음에 끼면 실패한다.
+// 단계 화면에서 나중에 받는 묶음(D82): 4단계 칸 셋 3KB · 설계도 묶음 5KB · 풀이 칸 + 에러 안내 22KB · 직접 쓰기 찾기 묶음 8KB · 도구 이름 찾기 묶음 8KB(T37). 단계 화면의 첫 묶음에 끼면 실패한다.
 //   npm run qa:budget
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
@@ -152,7 +152,9 @@ if (biggestLazy) {
   console.log(`${ok ? '✓' : '✗'} 가장 큰 지연 묶음 ${relative(DIST, biggestLazy.f)} ${(biggestLazy.n / KB).toFixed(1)}KB/${LAZY_LIMIT / KB}KB`);
 }
 // 길 지도
-const MAP_LIMITS = { land: 24 * KB, sprite: 10 * KB, island: 8 * KB, model: 6.5 * KB } as const;
+// 지도 모형 7KB (D95, T37): 표지 하나가 붙을 마디의 이름표를 다시 놓는 3b와 직접 쓴 앱 청사진으로 6.5KB를 조금 넘었다.
+// 섬 + 모형을 함께 싣는 빌드 묶음 한도는 그대로 14.5KB다
+const MAP_LIMITS = { land: 24 * KB, sprite: 10 * KB, island: 8 * KB, model: 7 * KB, shipped: 14.5 * KB } as const;
 async function minifiedGz(files: string[]): Promise<number> {
   // esbuild는 vite·wrangler와 함께 깔린다. 파일 하나씩 줄이므로 import한 다른 모듈(엔진·문구·preact)은 세지 않는다
   const { transform } = await import('esbuild');
@@ -175,7 +177,7 @@ const mapRows: [string, number, number][] = [
   ['지도 모형 src/lib/map/model.ts', await minifiedGz(['src/lib/map/model.ts']), MAP_LIMITS.model],
 ];
 const shipped = [...allJs].filter((f) => /[\\/]MapBoard\.[^\\/]+\.js$/.test(f)).reduce((a, f) => a + gzSize(f), 0);
-if (shipped > 0) mapRows.push(['빌드한 MapBoard 묶음 (섬 + 모형)', shipped, MAP_LIMITS.island + MAP_LIMITS.model]);
+if (shipped > 0) mapRows.push(['빌드한 MapBoard 묶음 (섬 + 모형)', shipped, MAP_LIMITS.shipped]);
 for (const [name, n, limit] of mapRows) {
   const ok = n <= limit;
   if (!ok) failed += 1;
@@ -211,6 +213,29 @@ for (const [name, re, limit, allowedAt] of STAGE_LAZY) {
   const ok = n > 0 && n <= limit && !early;
   if (!ok) failed += 1;
   console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB${n === 0 ? ' (빌드에 없다)' : ''}${early ? ' (단계 화면 첫 묶음에 끼었다)' : ''}`);
+}
+
+// 직접 쓰기 찾기 묶음 (T37, 설계서 7.3절): 낱말 찾기(engine/match.ts) + 낱말표. 칸을 처음 펼칠 때 받는다.
+//   custom-match: 1단계 질문의 직접 쓰기(질문 칸 낱말표) · tool-match: 2단계 '목록에 없는 도구 쓰기'(도구 짐작 말 + 빈틈)
+// 입구 조각과 그 조각이 정적으로 부르는 조각(둘이 나눠 쓰는 match 조각 포함) 가운데 처음에 안 불리는 것을 함께 센다.
+// 단계 화면 첫 묶음에 끼면 실패한다
+const MATCH_LIMIT = 8 * KB;
+const MATCH_CHUNKS: [string, RegExp, string][] = [
+  ['직접 쓰기 찾기 묶음 custom-match', /[\\/]custom-match\.[^\\/]+\.js$/, '낱말 찾기 + 질문 낱말표, 직접 쓰기를 처음 펼칠 때'],
+  ['도구 이름 찾기 묶음 tool-match', /[\\/]tool-match\.[^\\/]+\.js$/, '낱말 찾기 + 도구 짐작 말, 목록에 없는 도구 쓰기를 처음 펼칠 때'],
+];
+for (const [name, re, when] of MATCH_CHUNKS) {
+  const entries = [...allJs].filter((f) => re.test(f));
+  const files = new Set<string>();
+  for (const f of entries) withStaticImports(f, files);
+  const size = [...files].filter((f) => !usedFirst.has(f)).reduce((a, f) => a + gzSize(f), 0);
+  const early = entries.some((f) => usedFirst.has(f));
+  const ok = entries.length > 0 && size <= MATCH_LIMIT && !early;
+  if (!ok) failed += 1;
+  console.log(
+    `${ok ? '✓' : '✗'} ${name} (${when}) ${(size / KB).toFixed(1)}KB/${(MATCH_LIMIT / KB).toFixed(1)}KB` +
+      `${entries.length === 0 ? ' (빌드에 없다)' : ''}${early ? ' (첫 묶음에 끼었다)' : ''}`,
+  );
 }
 
 if (failed > 0) {

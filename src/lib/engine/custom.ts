@@ -3,7 +3,7 @@
 // 값이 없다(맞지 않음). 서버 위치만 자료 규칙이 처음부터 위험 쪽에 둔 '모름'(unknown)이다.
 import type { Catalog } from './catalog.ts';
 import type { EngineResult } from './evaluate.ts';
-import { oneLine } from './text.ts';
+import { fill, oneLine } from './text.ts';
 import type { Capability, CustomTool, Product } from './types.ts';
 
 /** 직접 쓴 도구는 모두 5개까지 */
@@ -44,6 +44,8 @@ export function customProduct(cat: Catalog, tool: CustomTool): Product {
     access: 'none',
     cost: { free: false, note: t.cost },
     serverRegion: 'unknown',
+    // 준비물: 가입·키가 필요한지 모르므로 '걸리는 시간 모름'으로 한 줄 (설계도 8번이 '없다'고 단정하지 않게)
+    prep: [{ label: fill(t.prep, { name: tool.name || t.hiddenName }), lead: 'unknown' }],
     difficulty: cat.data.scoring.unknownDifficulty,
     keyExposureRisk: false,
     recommendable: false,

@@ -379,15 +379,17 @@
         "mine": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["label", "rule", "picked", "kept", "keptName", "customType"],
+          "required": ["label", "rule", "picked", "kept", "keptType", "keptName", "customType", "hidden"],
           "description": "설계도 1번의 '내 말 그대로' 줄 (직접 쓴 답, D74·input.md 7.3절). {{chip}} 질문 이름, {{text}} 내 말, {{label}} 고른 보기, {{as}} 그대로 둘 때 같게 계산한 것",
           "properties": {
             "label": { "type": "string", "minLength": 1 },
             "rule": { "type": "string", "minLength": 1 },
             "picked": { "type": "string", "minLength": 1 },
             "kept": { "type": "string", "minLength": 1 },
+            "keptType": { "type": "string", "minLength": 1, "description": "만들 것(q.type)을 그대로 뒀을 때 (customType 줄이 따로 붙어 계산 기준 꼬리 없음)" },
             "keptName": { "type": "string", "minLength": 1, "description": "'쓰는 AI'처럼 계산에 쓰지 않는 이름 질문을 그대로 뒀을 때 (계산 기준 꼬리 없음)" },
-            "customType": { "type": "string", "minLength": 1, "description": "만들 것을 보기에 없는 앱(type.custom)으로 둘 때만 붙는 줄" }
+            "customType": { "type": "string", "minLength": 1, "description": "만들 것을 보기에 없는 앱(type.custom)으로 둘 때만 붙는 줄" },
+            "hidden": { "type": "string", "minLength": 1, "description": "직접 쓴 답이 있는데 내 말이 없을 때(영수증 링크로 받음) 붙는 줄" }
           }
         },
         "intro": {
@@ -592,7 +594,7 @@
     "customTool": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["provider", "hiddenName", "summary", "cost", "memo", "mark", "unchecked", "message", "messageHidden", "fixHint", "researchArea", "researchAreaHidden", "researchCard"],
+      "required": ["provider", "hiddenName", "summary", "cost", "memo", "memoHidden", "prep", "mark", "unchecked", "message", "messageHidden", "fixHint", "researchArea", "researchAreaHidden", "researchCard"],
       "description": "목록에 없는 도구 (직접 쓴 도구, D74·input.md 8절). {{name}}에 쓴 이름. 엔진이 점수 없는 '모름' 도구를 만들 때 쓴다",
       "properties": {
         "provider": { "type": "string", "minLength": 1 },
@@ -600,6 +602,8 @@
         "summary": { "type": "string", "minLength": 1 },
         "cost": { "type": "string", "minLength": 1, "description": "설계도 7번 표의 비용 칸" },
         "memo": { "type": "string", "minLength": 1, "description": "설계도 7번 도구별 메모" },
+        "memoHidden": { "type": "string", "minLength": 1, "description": "이름이 없을 때(영수증 링크) 7번 메모와 9번 '무엇을' 앞에 붙는 말: 어떤 도구인지 먼저 물어보게" },
+        "prep": { "type": "string", "minLength": 1, "description": "준비물(설계도 8번·영수증) 한 줄. {{name}}에 쓴 이름(없으면 hiddenName). 걸리는 시간은 leadLabels.unknown" },
         "mark": { "type": "string", "minLength": 1, "description": "설계도 7번 도구 이름 뒤 표시" },
         "unchecked": { "type": "string", "minLength": 1, "description": "설계도 7번 제공·자격·라이선스·확인한 때 칸" },
         "message": { "type": "string", "minLength": 1, "description": "도구끼리 맞춰 보기의 서행 줄" },
@@ -629,11 +633,12 @@
     "leadLabels": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["instant", "hours", "days"],
+      "required": ["instant", "hours", "days", "unknown"],
       "properties": {
         "instant": { "type": "string" },
         "hours": { "type": "string" },
-        "days": { "type": "string" }
+        "days": { "type": "string" },
+        "unknown": { "type": "string", "description": "직접 쓴 도구의 준비물: 걸리는 시간을 모른다" }
       }
     },
     "proxyStep": {

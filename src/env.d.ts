@@ -28,6 +28,10 @@ declare module 'virtual:cc-data/products' {
   const file: import('./lib/data-parts.ts').ProductsFile<import('./lib/data-parts.ts').ScreenProduct>;
   export default file;
 }
+declare module 'virtual:cc-data/tool-aliases' {
+  const file: import('./lib/data-parts.ts').ToolAliases;
+  export default file;
+}
 declare module 'virtual:cc-data/concepts-detail' {
   const file: import('./lib/data-parts.ts').ConceptsFile<import('./lib/data-parts.ts').ConceptDetail>;
   export default file;

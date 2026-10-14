@@ -18,7 +18,7 @@ import type { Conflict, Split } from './recheck.ts';
 import { findConflicts, firstPhaseProducts, orphanProducts, suggestSplit } from './recheck.ts';
 import type { SlotRanking } from './shop.ts';
 import { buildSlots, rankSlot } from './shop.ts';
-import { normalizeCustomTools, normalizeGaps, normalizeNotes } from './custom.ts';
+import { CUSTOM_TOOLS_MAX, normalizeCustomTools, normalizeGaps, normalizeNotes } from './custom.ts';
 import { toolsToSetUp, withBuilderPublish } from './builder.ts';
 import type { PrepItem, Product, Session } from './types.ts';
 
@@ -115,4 +115,33 @@ export function evaluate(cat: Catalog, input: Partial<Session>): EngineResult {
     minutes: estimateMinutes(cat, toolsToSetUp(first)),
     notBuild: collectNotBuild(cat, ctx),
   };
+}
+
+/**
+ * 막힌 곳 하나가 그 기능을 직접 쓴 도구로 바꾸면 풀리는가 (3단계 '바꾸기' 끝의 [목록에 없는 도구 쓰기 ›]를 보일지, 설계서 7.1·7.5절).
+ * 그 칸을 맡던 도구를 빼고(다른 칸을 혼자 맡고 있으면 남긴다: 도구 고르기에서 정할 때와 같다) 이름 없는 직접 쓴 도구를 넣어 다시 계산한다.
+ * 직접 쓴 도구의 모르는 사실은 규칙 조건에서 '맞지 않음'이라 대부분 풀리지만, 서버 위치('모름')로 켜지는 개인정보 막힌 곳이나
+ * 다른 도구 때문에 켜지는 키 노출 막힌 곳은 그대로다. 기능에 붙지 않은 막힌 곳, 직접 쓴 도구를 더 둘 수 없을 때(5개)는 false
+ */
+export function customToolClears(cat: Catalog, r: EngineResult, conflictId: string): boolean {
+  const c = r.conflicts.find((x) => x.id === conflictId);
+  const slotId = c?.slotId ?? c?.anchorSlot;
+  const ranking = r.slots.find((s) => s.slot.id === slotId);
+  if (!c || c.kept || !ranking) return false;
+  const tools = r.session.customTools ?? [];
+  const id = Array.from({ length: CUSTOM_TOOLS_MAX }, (_, i) => `custom-${i + 1}`).find((x) => !tools.some((t) => t.id === x));
+  if (id === undefined) return false;
+  const others = r.slots.filter((s) => s.slot.id !== ranking.slot.id);
+  let cart = cartProducts(cat, r.session.cart, tools);
+  for (const old of cart.filter((p) => ranking.filledBy.includes(p.id))) {
+    const rest = cart.filter((p) => p.id !== old.id);
+    const alone = others.some((s) => old.capabilities.includes(s.slot.capability) && !rest.some((x) => x.capabilities.includes(s.slot.capability)));
+    if (!alone) cart = rest;
+  }
+  const trial = evaluate(cat, {
+    ...r.session,
+    customTools: [...tools, { id, name: '', capability: ranking.slot.capability }],
+    cart: [...cart.map((p) => p.id), id],
+  });
+  return !trial.conflicts.some((x) => x.id === conflictId && !x.kept);
 }

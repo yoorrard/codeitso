@@ -91,9 +91,10 @@ export function termPath(id: string): string {
   return `${ROUTES.terms}/${encodeURIComponent(id)}`;
 }
 
-/** 도구 고르기 단계에서 고를 것 하나를 펼친 채로 */
-export function waypointPath(slotId?: string): string {
-  return slotId ? `${ROUTES.waypoints}?slot=${encodeURIComponent(slotId)}` : ROUTES.waypoints;
+/** 도구 고르기 단계에서 고를 것 하나를 펼친 채로. write면 그 칸의 '목록에 없는 도구 쓰기' 칸까지 펼친다 (T37, 막힌 곳에서) */
+export function waypointPath(slotId?: string, write = false): string {
+  if (!slotId) return ROUTES.waypoints;
+  return `${ROUTES.waypoints}?slot=${encodeURIComponent(slotId)}${write ? '&write=1' : ''}`;
 }
 
 /** 주소에서 바탕을 뗀다 ('/code-chauffeur/arrival' → '/arrival'). 바탕 밖 주소는 그대로 */

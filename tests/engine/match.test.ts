@@ -9,6 +9,7 @@ import { evaluate } from '../../src/lib/engine/index.ts';
 import {
   findAliases,
   gapsIn,
+  gapsOfSession,
   looksLikeContact,
   matchAnswer,
   matchTool,
@@ -245,6 +246,31 @@ describe('빈틈', () => {
 
   it('빈틈 자리에 없는 글은 보지 않는다 (파일 올리기는 도구 이름에서 찾지 않음)', () => {
     expect(gapsIn(cat, aliases, [{ where: 'tool', text: '업로드 서버' }])).toEqual([]);
+  });
+
+  it('gapsOfSession: 내 말·한 줄·직접 쓴 도구 이름을 모두 보고, 지운 글의 빈틈은 남기지 않는다', () => {
+    const s = { notes: { 'q.type': '단톡 같은 앱', 'q.save': '업로드한 사진' }, freeText: '챗봇이 답해 주는 페이지', customTools: [{ name: 'Flutter' }] };
+    expect(gapsOfSession(cat, aliases, s)).toEqual(['ai-feature', 'native-app', 'chat']);
+    expect(gapsOfSession(cat, aliases, { ...s, notes: {}, freeText: '' })).toEqual(['native-app']);
+    expect(gapsOfSession(cat, aliases, {})).toEqual([]);
+  });
+
+  it('화면의 찾기 묶음은 도구 짐작 말(toolHints)을 싣지 않는다: 빈틈 말을 품은 도구 짐작 말이 없어 결과가 같다', () => {
+    // 긴 말이 이기므로 빈틈 말을 가리는 것은 그 말을 품은(같거나 긴) 도구 짐작 말뿐이다. '='가 붙은 빈틈 말은 어절 하나로 품어야 가린다
+    const norm = (w: string): string => w.replace(/^=/, '').toLowerCase();
+    const hints = aliases.toolHints.flatMap((h) => h.aliases.map(norm));
+    const clash = aliases.gaps.flatMap((g) =>
+      g.aliases.flatMap((a) => {
+        const word = norm(a);
+        const hides = (h: string): boolean => (a.startsWith('=') ? h.split(/\s+/).includes(word) : h.replace(/\s+/g, '').includes(word.replace(/\s+/g, '')));
+        return hints.filter(hides).map((h) => `${a} ← ${h}`);
+      }),
+    );
+    expect(clash).toEqual([]);
+    const lite = { ...aliases, toolHints: [], searchSynonyms: [] };
+    for (const name of ['OpenAI API', 'Flutter 앱', '카카오톡 채팅', '슬랙 메신저', '업비트 챗봇']) {
+      expect(gapsIn(cat, lite, [{ where: 'tool', text: name }]), name).toEqual(gapsIn(cat, aliases, [{ where: 'tool', text: name }]));
+    }
   });
 });
 

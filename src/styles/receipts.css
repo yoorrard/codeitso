@@ -39,6 +39,11 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* 직접 쓴 앱의 내 말(40자, 띄어쓰기 없을 수도)이 이름일 때 가로로 넘치지 않게 */
+.receipts-list .list-name {
+  overflow-wrap: anywhere;
+}
+
 /* 나눔 선은 줄 전체(지우기 버튼 아래까지)에, 지도 끝(16 + 56 + 12)에서 시작 */
 .list.receipts-list > li > .list-row::before {
   content: none;

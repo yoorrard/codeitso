@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { Catalog, EngineResult, ReceiptModel, Session } from '../../src/lib/engine/index.ts';
 import { evaluate } from '../../src/lib/engine/index.ts';
-import { badges, checkQuiz, fromShareState, matchErrors, toShareState } from '../../src/lib/engine/extras.ts';
+import { badges, checkQuiz, fromShareState, matchErrors, prepWait, toShareState } from '../../src/lib/engine/extras.ts';
 import { conversationCards } from '../../src/lib/engine/cards.ts';
 import { packFileName, renderPack } from '../../src/lib/engine/pack.ts';
 import { difficultyWord, projectName, receiptModel, renderReceiptText, slotLabelFor } from '../../src/lib/engine/receipt.ts';
@@ -835,6 +835,28 @@ describe('badges', () => {
     const index = REAL.product.get('korean-elementary-learning-map-mcp');
     expect(kis && badges(REAL, kis)).toEqual([b.free, b.official, b.realtime]);
     expect(index && badges(REAL, index)).toEqual([b.free, b.caution]);
+  });
+});
+
+describe('prepWait (도구 고르기 기다림 꼬리표, 설계서 5.6절)', () => {
+  it('준비물 가운데 가장 오래 걸리는 것: 며칠 > 몇 시간 > 바로(없음)', () => {
+    expect(prepWait({})).toBeNull();
+    expect(prepWait({ prep: [{ label: '가입', lead: 'instant' }] })).toBeNull();
+    expect(prepWait({ prep: [{ label: '가입', lead: 'instant' }, { label: '키 신청', lead: 'hours' }] })).toBe('hours');
+    expect(prepWait({ prep: [{ label: '계좌', lead: 'days' }, { label: '키', lead: 'instant' }] })).toBe('days');
+  });
+
+  it('진짜 상품: 도서관 정보나루는 며칠, 공공데이터포털은 몇 시간, 수파베이스는 없음. 결제 카드는 자료 칸 그대로', () => {
+    const get = (id: string): Product => {
+      const p = REAL.product.get(id);
+      if (!p) throw new Error(id);
+      return p;
+    };
+    expect(prepWait(get('data4library'))).toBe('days');
+    expect(prepWait(get('data-go-kr'))).toBe('hours');
+    expect(prepWait(get('supabase'))).toBeNull();
+    expect(get('google-maps-js').paymentCard).toBe(true);
+    expect(get('supabase').paymentCard).toBeUndefined();
   });
 });
 

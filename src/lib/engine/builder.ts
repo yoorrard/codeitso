@@ -44,7 +44,7 @@ export function builderPublishProduct(cat: Catalog): Product {
  * 고른 도구 중 공개를 맡는 것이 없을 때만. 나만 쓰는 앱의 선택 칸은 비워 둔다: 채우면 '공개 주소에 올려라'(10번)와
  * '키가 든 파일은 공개 주소에 올리지 않는다'(safety.local-key)가 함께 나오고, 이 상품은 규칙 조건에 끼지 않아
  * 공개 주소 막힌 곳(conflict.key-on-public-host)도 켜지지 않는다. 그 칸의 추천은 rankSlot이 여전히 막는다.
- * 이용자가 다른 공개 도구(진열 도구·직접 쓴 도구)를 고르면 그 도구가 칸을 채우고 이것은 빠진다 (2단계 [다른 곳에 공개하고 싶어요]).
+ * 이용자가 다른 공개 도구(진열 도구·직접 쓴 도구)를 고르면 그 도구가 칸을 채우고 이것은 빠진다 (2단계 [다른 곳에 공개하기]).
  */
 export function withBuilderPublish(cat: Catalog, cart: Product[], slots: SlotDef[], tags: Record<string, number>): Product[] {
   if (!slots.some((s) => s.required && builderHosts(tags, s))) return cart;

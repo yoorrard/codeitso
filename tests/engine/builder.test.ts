@@ -125,7 +125,7 @@ describe('웹에서 만드는 도구로 만드는 안내 페이지 (case-31과 �
     expect(h.recommended).toBeNull();
     expect(h.runnerUp).toBeNull();
     expect(h.compare).toBeNull();
-    // 목록과 점수는 그대로 둔다 ([다른 곳에 공개하고 싶어요]에서 고를 수 있게)
+    // 목록과 점수는 그대로 둔다 ([다른 곳에 공개하기]에서 고를 수 있게)
     expect(h.shelf.map((s) => s.product.id)).toEqual(expect.arrayContaining(['github-pages', 'cloudflare-workers']));
   });
 

@@ -14,6 +14,9 @@ describe('주소 만들기 (루트 빌드)', () => {
     expect(termPath('api-key')).toBe('/terms/api-key');
     expect(waypointPath()).toBe('/waypoints');
     expect(waypointPath('slot.store')).toBe('/waypoints?slot=slot.store');
+    // 막힌 곳의 [목록에 없는 도구 쓰기 ›]: 그 칸의 도구 이름 칸까지 펼친다 (T37)
+    expect(waypointPath('slot.data', true)).toBe('/waypoints?slot=slot.data&write=1');
+    expect(waypointPath(undefined, true)).toBe('/waypoints');
   });
 });
 

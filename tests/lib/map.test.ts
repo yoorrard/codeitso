@@ -774,12 +774,14 @@ describe('빈 터, 깃발, 집, 팔레트, 요약 글', () => {
     expect(unknown.lot.label.text).toBe(ko.map.destination);
   });
 
-  it("직접 쓴 앱: 기본 빈 터, 이름표는 내 말 앞 12자 (내 말이 없으면 '목적지'), 요약 글은 내 말 30자", () => {
+  it("직접 쓴 앱: 직접 쓴 앱 청사진(윤곽), 이름표는 내 말 12자(넘으면 11자 + '…', 내 말이 없으면 '목적지'), 요약 글은 내 말 30자", () => {
     const note = '반려식물 물 주기 알림을 보내는 앱이에요 정말로';
     const m = mapModel(evaluate(cat, { answers: { 'q.type': 'custom' }, notes: { 'q.type': note } }));
-    expect(m.lot.type).toBeNull();
-    expect(m.lot.state).toBe('bare');
-    expect(m.lot.label.text).toBe([...note].slice(0, 12).join(''));
+    expect(m.lot.type).toBe('custom');
+    expect(m.lot.state).toBe('outline');
+    expect(m.lot.label.text).toBe(`${[...note].slice(0, 11).join('')}…`);
+    const short = mapModel(evaluate(cat, { answers: { 'q.type': 'custom' }, notes: { 'q.type': '반려식물 물 주기 알림' } }));
+    expect(short.lot.label.text).toBe('반려식물 물 주기 알림');
     expect(m.lot.label.box.y + m.lot.label.box.h).toBeLessThanOrEqual(m.lot.box.y);
     expect(m.summary).toContain([...note].slice(0, 30).join(''));
     const hidden = mapModel(evaluate(cat, { answers: { 'q.type': 'custom' } }));
@@ -789,6 +791,24 @@ describe('빈 터, 깃발, 집, 팔레트, 요약 글', () => {
 
   it('직접 쓴 도구의 서행 표지는 물음표', () => {
     expect(markerKind({ id: 'conflict.custom-tool:custom-1', kind: 'custom-tool', kept: true })).toBe('question');
+  });
+
+  it("표지 하나가 붙을 마디의 귀퉁이를 그 마디 이름표가 막으면 이름표를 옮겨 표지를 마디에 단다 ('길 전체'로 물리지 않는다)", () => {
+    // case-01의 분야를 직접 쓰고 외부 데이터 칸을 직접 쓴 도구로: 마디 셋짜리 지도의 가운데 '외부 데이터'
+    const g = readJson<Golden>(goldenFiles().find((f) => f.endsWith('case-01.json')) ?? '');
+    const r = evaluate(cat, {
+      answers: { ...g.answers, 'q.domain': 'custom' },
+      notes: { 'q.domain': '포켓몬 도감' },
+      customTools: [{ id: 'custom-1', name: 'PokeAPI', capability: 'data' }],
+      cart: ['html-single', 'custom-1', 'github-pages'],
+    });
+    for (const opts of [{ traffic: true }, { arrived: true }]) {
+      const m = mapModel(r, opts);
+      const marker = m.markers.find((x) => x.conflicts.includes('conflict.custom-tool:custom-1'));
+      expect(marker?.anchor).toBe('slot.data');
+      const data = m.nodes.find((n) => n.id === 'slot.data');
+      expect(data && marker && overlaps(data.label.box, marker.box)).toBe(false);
+    }
   });
 
   it('깃발 밑동(12, 22)이 빈 터 왼쪽 위 말뚝(6, 6)에 꽂히고, 이름표는 깃발을 비킨다', () => {

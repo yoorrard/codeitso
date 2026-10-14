@@ -64,14 +64,20 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
       const opt = q?.options.find((o) => o.id === r.interview.answers[c.questionId]);
       const text = notes[c.questionId] ?? '';
       // '쓰는 AI'(보기마다 aiTool)는 계산에 쓰지 않는 이름 질문이라 '계산은 … 기준' 꼬리를 붙이지 않는다
+      // 만들 것(q.type)은 아래 customType 줄이 따로 붙으므로 '도구는 … 기준' 꼬리를 붙이지 않는다
       const line = !opt?.isCustom
         ? fill(P.mine.picked, { chip: c.chip, text, label: opt?.label ?? '' })
         : isNameQuestion(q?.options ?? [])
           ? fill(P.mine.keptName, { chip: c.chip, text })
-          : fill(P.mine.kept, { chip: c.chip, text, as: keptAs(cat, q?.options ?? [], opt) });
+          : c.questionId === TYPE_Q
+            ? fill(P.mine.keptType, { chip: c.chip, text })
+            : fill(P.mine.kept, { chip: c.chip, text, as: keptAs(cat, q?.options ?? [], opt) });
       out.push(`  - ${line}`);
     }
   }
+  // 직접 쓴 답이 있는데 내 말이 없다(영수증 링크로 받음): AI가 '직접 쓴 답'이 무엇인지 묻게
+  const blank = chipList.some((c) => !notes[c.questionId] && cat.question.get(c.questionId)?.options.find((o) => o.id === r.interview.answers[c.questionId])?.isCustom === true);
+  if (blank) out.push(`- ${P.mine.label}: ${P.mine.hidden}`);
   if (hasTag(tags, CUSTOM_TYPE)) out.push(`- ${P.mine.customType}`);
 
   // 2. 범위
@@ -167,7 +173,7 @@ export function renderPack(cat: Catalog, r: EngineResult, opts: PackOptions): st
   out.push('', `### ${L.memo}`);
   for (const p of r.cart) {
     if (p.custom === true) {
-      out.push('', `**${customName(p)}**${later(p.id)}`, '', `- ${CT.memo}`);
+      out.push('', `**${customName(p)}**${later(p.id)}`, '', `- ${nameHidden(cat, p) ? CT.memoHidden : CT.memo}`);
       continue;
     }
     if (p.builderPublish === true) {

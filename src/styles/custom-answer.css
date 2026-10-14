@@ -1,0 +1,215 @@
+/* 직접 쓰기 부품 (T37, CustomAnswer.tsx가 import한다): 이 부품을 쓰는 화면만 싣는다 (모든 화면이 싣는 parts.css를 키우지 않게).
+   값은 tokens.css 변수만 쓴다. 목록 줄 사이 나눔 선은 parts.css .list가 그린다. */
+
+/* ── 직접 쓰기 (T37, 설계서 7.2절, input.md 4.1절, CustomAnswer.tsx) ─────────────
+   [연필 20 + 직접 쓰기 ⌄] 줄(목록 줄 56 .list-row, 또는 타일·2×2 아래 전체 폭 .pick-btn 56) → 이 자리에 펼치는 판 → '또는' → [모르겠어요].
+   펼친 판은 카드가 아니다(카드 안 카드 금지): 옅은 판 --fill, 모서리 --radius-md, 안쪽 16. 펼침·접힘은 높이 전환 --dur-ui
+   (설계서의 --dur-fast는 D67에서 --dur-tap·--dur-ui로 나뉜 옛 이름. '접고 펴기'는 --dur-ui), 동작 줄이기면 토큰이 0이라 바로 바뀐다.
+   판 안의 중립 버튼은 판과 같은 --fill이라 --surface 면으로 띄운다. --text-3은 --fill 위에 쓰지 않는다 ── */
+.custom-pencil {
+  display: grid;
+  flex: none;
+  place-items: center;
+  color: var(--text-2);
+}
+
+/* 목록 타일 자리(40)에 둘 때는 타일의 글자색(--on-tile): --text-2는 남색 타일 위에서 대비가 모자란다 */
+.list-tile.custom-pencil {
+  color: var(--on-tile);
+}
+
+.custom-pencil .icon {
+  inline-size: 20px;
+  block-size: 20px;
+}
+
+.custom-caret {
+  color: var(--text-2);
+  transition: rotate var(--dur-ui) var(--ease-out);
+}
+
+.custom-row[aria-expanded='true'] .custom-caret {
+  rotate: 180deg;
+}
+
+/* 그대로 둔 답: 목록 줄은 .list-row.is-chosen(고름 고리 + ✓), 전체 폭 줄은 눌린 .pick-btn과 같은 --chosen 면 + ✓ */
+.pick-btn.custom-row .list-text {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  justify-items: center;
+}
+
+/* 내 말이 길면(띄어쓰기 없는 40자, 주소 같은 글) 줄을 바꿔 360px 안에 둔다 (가로 넘침 없음, WCAG 1.4.10) */
+.pick-btn.custom-row .list-sub {
+  overflow-wrap: anywhere;
+}
+
+.pick-btn.custom-row .list-name {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.pick-btn.custom-row.is-chosen {
+  background: var(--chosen);
+  color: var(--on-chosen);
+}
+
+.pick-btn.custom-row.is-chosen :is(.list-sub, .custom-pencil, .custom-caret) {
+  color: inherit;
+}
+
+.pick-btn.custom-row.is-chosen .custom-check {
+  display: block;
+  background: currentColor;
+}
+
+.custom-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--dur-ui) var(--ease-out),
+    visibility var(--dur-ui);
+}
+
+/* 펼칠 때 visibility는 바로 바꾼다(전환 첫 그림은 아직 hidden이라 글 칸이 초점을 받지 못한다). 접을 때는 다 접힌 뒤에 숨긴다 */
+.custom-panel.is-open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--dur-ui) var(--ease-out),
+    visibility 0s;
+}
+
+/* clip: 스크롤 상자가 아니라서, 접힌 판 안의 글 칸에 초점을 줄 때 브라우저가 이 상자를 굴리지 못한다
+   (hidden이면 펼치는 동안 안의 글이 반대로 내려오는 움직임이 겹친다). 초점 스크롤은 창이 맡는다 */
+.custom-inner {
+  min-block-size: 0;
+  overflow: clip;
+}
+
+/* 목록 안에서는 줄 글과 같은 자리에서 시작한다 (목록은 끝에서 끝까지, 줄은 안쪽 16) */
+.list .custom-panel {
+  padding-inline: var(--space-4);
+}
+
+.custom-box {
+  display: grid;
+  gap: var(--space-2);
+  margin-block: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  color: var(--text);
+}
+
+.custom-label {
+  font-size: var(--size-label);
+  line-height: var(--leading-label);
+  font-weight: var(--weight-strong);
+}
+
+.custom-help,
+.custom-count,
+.custom-busy,
+.custom-calc {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.custom-field[aria-invalid='true'] {
+  border-color: var(--bad);
+}
+
+/* 글자 수 · [확인]: 한 줄, 글자를 키우면 [확인]이 칸 아래 줄로 내려간다 (가로 넘침 없음) */
+.custom-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.custom-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.custom-count.is-over,
+.custom-error {
+  color: var(--bad-ink);
+}
+
+.custom-error,
+.custom-warn,
+.custom-gap {
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.custom-box .btn-neutral {
+  --btn-bg: var(--surface);
+  --btn-bg-press: var(--fill-press);
+}
+
+.custom-result {
+  display: grid;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+  padding-block-start: var(--space-3);
+  border-block-start: 1px solid var(--hairline);
+}
+
+/* 결과 첫 문장: 초점을 받는 글(tabindex -1)이라 제목처럼 테두리를 그리지 않는다 */
+.custom-found {
+  font-weight: var(--weight-strong);
+}
+
+.custom-found:focus {
+  outline: none;
+}
+
+.custom-line {
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+}
+
+.custom-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.custom-warn,
+.custom-gap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.custom-gap .icon {
+  flex: none;
+  inline-size: 20px;
+  block-size: 20px;
+  color: var(--warn-ink);
+}
+
+/* '또는': 직접 쓰기 줄과 '모르겠어요' 사이 글 나눔 (14, --text-3) */
+.pick-or {
+  margin-block: var(--space-2);
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+  text-align: center;
+}
+
+@media (forced-colors: active) {
+  .custom-box {
+    border: 1px solid CanvasText;
+  }
+
+  .pick-btn.custom-row.is-chosen {
+    outline: 3px solid Highlight;
+    outline-offset: -3px;
+  }
+}

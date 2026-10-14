@@ -39,6 +39,29 @@ describe('조사 고르기', () => {
     expect(josa('Supabase', 'obj')).toBe('Supabase를');
   });
 
+  it("직접 쓴 도구 이름의 영문 끝소리: -er·-or는 받침 없음, 짧은 홀소리 뒤 p·t·k와 'ck'는 받침, 닿소리·긴 소리 뒤 t는 받침 없음", () => {
+    expect(josa('OpenWeather', 'obj')).toBe('OpenWeather를');
+    expect(josa('OpenWeather', 'subj')).toBe('OpenWeather가');
+    expect(josa('Cursor', 'obj')).toBe('Cursor를');
+    expect(josa('Replit', 'dir')).toBe('Replit으로');
+    expect(josa('VS Code + Copilot', 'dir')).toBe('VS Code + Copilot으로');
+    expect(josa('Devin Desktop', 'dir')).toBe('Devin Desktop으로');
+    expect(josa('Telegram Bot', 'obj')).toBe('Telegram Bot을');
+    expect(josa('Slack', 'obj')).toBe('Slack을');
+    expect(josa('Webhook', 'obj')).toBe('Webhook을');
+    expect(josa('Bolt', 'dir')).toBe('Bolt로');
+    expect(josa('Google Sheet', 'obj')).toBe('Google Sheet를');
+    expect(josa('Telegram', 'obj')).toBe('Telegram을');
+    expect(josa('Vercel', 'dir')).toBe('Vercel로');
+    // 대문자 줄임말은 글자 이름 (지피티·에이피아이·엘엘엠)
+    expect(josa('ChatGPT', 'obj')).toBe('ChatGPT를');
+    expect(josa('PokeAPI', 'obj')).toBe('PokeAPI를');
+    expect(josa('LLM', 'obj')).toBe('LLM을');
+    // 따옴표로 감싼 보기 이름은 따옴표를 건너뛴다 ('모르겠어요'로 고르기)
+    expect(josa("'모르겠어요'", 'dir')).toBe("'모르겠어요'로");
+    expect(josa("'네, 학생 정보예요'", 'dir')).toBe("'네, 학생 정보예요'로");
+  });
+
   it('이에요/예요 (추천 이름 알림)', () => {
     expect(josa('Supabase', 'cop')).toBe('Supabase예요');
     expect(josa('나이스 급식식단정보', 'cop')).toBe('나이스 급식식단정보예요');

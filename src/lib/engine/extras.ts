@@ -15,6 +15,15 @@ export function badges(cat: Catalog, p: Product): string[] {
   return out;
 }
 
+/**
+ * 도구 고르기 줄의 기다림 꼬리표 (설계서 5.6절): 준비물(prep) 가운데 가장 오래 걸리는 것이 며칠(days)·몇 시간(hours)이면 그 값,
+ * 바로 되면(instant) 또는 준비물이 없으면 null. 화면에 보이기만 하고 점수에는 쓰지 않는다 (결제 카드는 Product.paymentCard)
+ */
+export function prepWait(p: Pick<Product, 'prep'>): 'days' | 'hours' | null {
+  const leads = (p.prep ?? []).map((x) => x.lead);
+  return leads.includes('days') ? 'days' : leads.includes('hours') ? 'hours' : null;
+}
+
 /** 사전: 붙여 넣은 에러 문장에 맞는 안내 (적힌 순서). 없으면 빈 배열 → templates.errorFallback을 보여 준다 */
 export function matchErrors(cat: Catalog, text: string): ErrorEntry[] {
   const t = text.trim();

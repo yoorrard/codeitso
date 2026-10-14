@@ -70,7 +70,9 @@ export default function ShelfFilter({ domains, capabilities, generalArt, total }
   const domainOptions: FilterChoice[] = [{ id: ALL, label: ko.shelf.all }, ...domains, { id: GENERAL, label: ko.shelf.general, art: generalArt }];
   const domainLabel = domainOptions.find((d) => d.id === domain)?.label ?? ko.shelf.all;
 
-  const say = (n: number): void => announce(n === 0 ? ko.shelf.none : fill(ko.shelf.shown, { n }));
+  // 검색어로 0건이면 '목록에 없으면 도구 고르기에서 직접 쓸 수 있어요.'까지 (설계서 7.1절, T37)
+  const say = (n: number): void =>
+    announce(n === 0 ? (now.current.q ? `${ko.shelf.none} ${ko.shelf.noneCustom}` : ko.shelf.none) : fill(ko.shelf.shown, { n }));
   const refresh = (): number => {
     const n = apply(now.current.domain, now.current.cap, hits.current);
     setShown(n);
@@ -204,6 +206,7 @@ export default function ShelfFilter({ domains, capabilities, generalArt, total }
       {shown === 0 && (
         <div class="empty-state shelf-none">
           <p class="empty-state-text">{ko.shelf.none}</p>
+          {query.trim() !== '' && <p class="empty-state-text">{ko.shelf.noneCustom}</p>}
           <button type="button" class="btn" onClick={reset}>
             {ko.shelf.reset}
           </button>

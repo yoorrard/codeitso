@@ -9,7 +9,7 @@ import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/engine/index.ts';
 import { josa } from '../../src/lib/josa.ts';
 import { shortName } from '../../src/lib/pick-nav.ts';
-import { golden, islandsReady, products } from './helpers.ts';
+import { animationsSettled, golden, islandsReady, products } from './helpers.ts';
 
 const c03 = golden('case-03');
 const name = (id: string): string => products.find((p) => p.id === id)?.name ?? id;
@@ -42,6 +42,7 @@ const pressed = (page: Page) => page.locator('#w-slot .w-row[aria-pressed="true"
 const chip = (page: Page, label: string) => page.locator('.w-chip', { hasText: label });
 
 async function seriousAxe(page: Page): Promise<string[]> {
+  await animationsSettled(page);
   const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
   return result.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical').map((v) => v.id);
 }

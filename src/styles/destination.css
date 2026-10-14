@@ -1,5 +1,6 @@
 /* 1단계 만들 앱 정하기 /destination (brief 6.5, D70): 지도 띠 → 16 겹친 내용 시트(질문 H1 22/700 + 보기) → 아래 막대.
    보기 꼴 셋: 타일 156×132(앱 종류·느낌), 2×2 중립 버튼 56(네·아니요…), 목록 줄 56(parts.css .list-row).
+   보기마다 [직접 쓰기] 줄(T37, parts.css .custom-*)이 붙는다: 타일·목록 줄은 그 뒤 '또는' → [모르겠어요], 2×2는 아래 전체 폭 줄만.
    부품(.content-sheet·.list·.fold·.field·.btn)은 parts.css·frame.css, 지도 칠은 map.css. 이 파일은 이 페이지만 싣는다. */
 
 /* ── 내용 시트: 지도 띠 위 시트(parts.css .content-sheet.on-map) ── */
@@ -270,6 +271,40 @@
   margin-block-start: var(--space-4);
 }
 
+/* '또는' 아래 [모르겠어요] 줄은 '또는'이 사이를 둔다 */
+.pick-rows.is-after-or {
+  margin-block-start: 0;
+}
+
+/* '쓰는 AI' 에이전트 질문의 무리 (앱 안에서 · 편집기 안 · 터미널): 무리 제목 17/600 + 한 줄 풀이 14 */
+.pick-group-title {
+  margin-block: var(--space-5) 0;
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body-lg);
+  font-weight: var(--weight-strong);
+}
+
+.pick-group-help {
+  margin-block-start: var(--space-1);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.pick-group .pick-rows {
+  margin-block-start: var(--space-2);
+}
+
+/* ── 직접 쓰기 (T37): 타일·2×2 아래 전체 폭 줄 [직접 쓰기] → '또는' → [모르겠어요] 전체 폭 줄 (부품 모양은 parts.css) ── */
+.pick-custom {
+  margin-block-start: var(--space-2);
+}
+
+/* 2×2와 느낌 견본 넷은 넓어도 30rem이라 그 아래 줄도 같은 폭 */
+:is(.pick-pairs, .pick-tiles.is-two) ~ :is(.pick-custom, .pick-wide, .pick-or) {
+  max-inline-size: 30rem;
+}
+
 /* ── 마지막 한 줄 쓰기 ── */
 .q-line {
   display: grid;
@@ -287,6 +322,21 @@
   line-height: var(--leading-caption);
   font-variant-numeric: tabular-nums;
   text-align: end;
+}
+
+/* 80자를 넘으면 자르지 않고 알린다 (input.md 5.7절): 글자 수와 오류 글은 --bad-ink, 칸 테두리는 --bad */
+.q-count.is-over,
+.q-line-error {
+  color: var(--bad-ink);
+}
+
+.q-line-error {
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+.q-line .field[aria-invalid='true'] {
+  border-color: var(--bad);
 }
 
 /* ── 시트 맨 아래: 접기 '지금까지 정한 것' + 글 버튼 '도구 먼저 둘러볼게요' (나눔 선 위 32) ── */

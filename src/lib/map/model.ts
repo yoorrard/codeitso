@@ -28,7 +28,8 @@ export type NodeShape = 'screen' | 'store' | 'auth' | 'data' | 'notify' | 'host'
 export type NodeState = 'ghost' | 'open' | 'picked' | 'later' | 'jam' | 'slow';
 export type RoadState = 'ghost' | 'built' | 'jam' | 'slow' | 'later';
 export type MarkerKind = 'toll' | 'gap' | 'lock' | 'globe' | 'alert' | 'question';
-export type LotType = 'record' | 'form' | 'page' | 'quiz' | 'tool' | 'board' | 'unknown';
+/** 빈 터 청사진 종류: 앱 종류 보기 id. custom = 직접 쓴 앱(점선 틀 + 연필), unknown = 아직 안 정함(X 틀) */
+export type LotType = 'record' | 'form' | 'page' | 'quiz' | 'tool' | 'board' | 'custom' | 'unknown';
 /** 맨땅(앱 종류를 아직 모름) / 파란 점선 청사진 / 실선 청사진(도착) */
 export type LotState = 'bare' | 'outline' | 'drawn';
 export type Palette = 'clean' | 'cute' | 'calm' | 'bold';
@@ -743,12 +744,14 @@ export function layoutMap(input: MapInput): MapModel {
   // 3. 이름표: 출발 → 빈 터 → 마디 (길 순서). 길·굴·차를 비킨다
   const labels = new Map<string, MapLabel>();
   const taken: Blocker[] = [...solidOf(moving), ...solidOf(roadBoxes)];
-  const place = (key: string, text: string, cands: Cand[]): void => {
-    const got = pick(cands, (cd) => labelBox(text, cd.at, cd.anchor), taken);
+  const place = (key: string, text: string, cands: Cand[], extra: Blocker[] = []): boolean => {
+    const got = pick(cands, (cd) => labelBox(text, cd.at, cd.anchor), [...taken, ...extra]);
+    if (extra.length && !got?.clean) return false;
     const cd = got?.value ?? { at: START, anchor: 'middle' as const };
     const box = labelBox(text, cd.at, cd.anchor);
     taken.push({ box, gx: LABEL_SPACE, gy: OBJECT_GAP });
     labels.set(key, { text, x: r2(cd.at.x), y: r2(cd.at.y), anchor: cd.anchor, box: roundBox(box) });
+    return true;
   };
   place('start', ko.map.start, labelCands(START, START_HALF, START_HALF, textWidth(ko.map.start), ['below', 'above', 'right']));
   // 빈 터 이름은 위에. 깃발이 위로 솟아 있어 넓은 이름은 깃발 왼쪽에 붙인다
@@ -759,16 +762,30 @@ export function layoutMap(input: MapInput): MapModel {
     { at: { x: FLAG_BOX.x - OBJECT_GAP, y: LOT_BOX.y - LABEL_GAP - LABEL_H / 2 }, anchor: 'end' },
     ...labelCands(LOT_C, LOT_W / 2, LOT_H / 2, lotW, ['above', 'below']),
   ]);
+  const conflicts = input.conflicts ?? [];
+  /** 표지 자리 후보: 마디 귀퉁이 (이름표 반대쪽 먼저, 나중 가지는 거꾸로) */
+  const corners = (w: Work): Box[] => (w.later ? AXIS[w.axis].badge.slice().reverse() : AXIS[w.axis].badge).map((k) => boxAround(add(w.pos, CORNER[k]), MARKER, MARKER));
+  const nodeCands = (w: Work): Cand[] => labelCands(w.pos, NODE_HALF, NODE_HALF, textWidth(w.input.label), w.later ? AXIS[w.axis].spurLabel : AXIS[w.axis].label);
+  for (const w of work) place(w.id, w.input.label, nodeCands(w));
+  // 3b. 표지 하나가 붙을 마디의 귀퉁이가 모두 막혔는데 그 마디 이름표가 한몫하면(예: 마디 셋짜리 지도의 가운데 '외부 데이터'),
+  //     표지 자리를 먼저 잡고 그 마디 이름표를 다시 놓아 본다. 둘 다 깨끗할 때만 바꾼다 (아니면 아래 4가 '길 전체'로 물린다)
   for (const w of work) {
-    const rule = AXIS[w.axis];
-    place(w.id, w.input.label, labelCands(w.pos, NODE_HALF, NODE_HALF, textWidth(w.input.label), w.later ? rule.spurLabel : rule.label));
+    const old = labels.get(w.id);
+    if (!old || conflicts.filter((c) => c.anchor === w.id).length !== 1) continue;
+    const block = (skip?: Box): Blocker[] => [
+      ...solidOf([...moving.filter((b) => b !== w.box), ...[...labels.values()].map((l) => l.box).filter((b) => b !== skip)]),
+      ...solidOf(roadBoxes, 0),
+    ];
+    if (pick(corners(w), (b) => b, block())?.clean) continue;
+    // 옛 이름표 자리는 taken에 남겨 둔다: 새 이름표는 그 자리도 비킨다 (깨끗하지 않으면 place가 아무것도 바꾸지 않는다)
+    const mark = pick(corners(w), (b) => b, block(old.box));
+    if (mark?.clean) place(w.id, w.input.label, nodeCands(w), solidOf([mark.value]));
   }
   const labelBoxes = [...labels.values()].map((l) => l.box);
   const label = (key: string): MapLabel => labels.get(key) ?? { text: '', x: 0, y: 0, anchor: 'middle', box: { x: 0, y: 0, w: 0, h: 0 } };
 
   // 4. 표지: 붙일 마디의 귀퉁이, 막히면 길과 직각인 변 가운데 (자기 마디와는 겹쳐도 된다). 빈 자리가 없거나 마디가 없으면 '길 전체'로
   const base = work.length + 2 + (housesBox ? 1 : 0) + (tunnel ? 1 : 0);
-  const conflicts = input.conflicts ?? [];
   const placeMarkers = (collapseAll: boolean): { markers: MapMarker[]; ok: boolean } => {
     const markers: MapMarker[] = [];
     // 표지는 제 길에 닿을 만큼 붙으므로 길과는 띄움 없이 본다
@@ -781,10 +798,9 @@ export function layoutMap(input: MapInput): MapModel {
     if (!whole.length) {
       for (const c of conflicts) {
         const node = work.find((w) => w.id === c.anchor);
-        const rule = node && AXIS[node.axis];
-        const got = node && rule && pick((node.later ? rule.badge.slice().reverse() : rule.badge).map((k) => add(node.pos, CORNER[k])), (p) => boxAround(p, MARKER, MARKER), others(node.box, 0));
+        const got = node && pick(corners(node), (b) => b, others(node.box, 0));
         if (!node || !got?.clean) whole.push(c);
-        else markers.push({ id: c.id, kind: c.kind, x: got.value.x, y: got.value.y, anchor: node.id, count: 1, countAt: null, conflicts: [c.id], box: boxAround(got.value, MARKER, MARKER) });
+        else markers.push({ id: c.id, kind: c.kind, x: got.value.x + MARKER / 2, y: got.value.y + MARKER / 2, anchor: node.id, count: 1, countAt: null, conflicts: [c.id], box: got.value });
       }
       if (base + markers.length + (whole.length ? 1 : 0) > MAP_MAX_SYMBOLS) {
         whole = [...conflicts];
@@ -871,7 +887,7 @@ export function layoutMap(input: MapInput): MapModel {
 // ---------------------------------------------------------------- 엔진 결과 → 지도 입력
 
 const SHAPES: NodeShape[] = ['screen', 'store', 'auth', 'data', 'notify', 'host'];
-const LOT_TYPES: LotType[] = ['record', 'form', 'page', 'quiz', 'tool', 'board', 'unknown'];
+const LOT_TYPES: LotType[] = ['record', 'form', 'page', 'quiz', 'tool', 'board', 'custom', 'unknown'];
 /** 느낌 질문(q.style)의 보기 id → 지도 팔레트 */
 const PALETTE_OF: Record<string, Palette> = { clean: 'clean', cute: 'cute', serious: 'calm', bold: 'bold' };
 /** 느낌 보기 id의 지도 팔레트 (모르면 기본). 만들 앱 정하기의 느낌 견본도 이것으로 칠한다 */
@@ -884,8 +900,13 @@ const MARKER_OF: Record<string, MarkerKind> = {
   'conflict.personal-server': 'globe',
 };
 
-/** 직접 쓴 앱의 빈 터 이름표 글자 수 (input.md 5.2절) */
+/** 직접 쓴 앱의 빈 터 이름표 글자 수 (input.md 5.2절): 넘으면 11자 + '…' (지도 요약 글과 같게 낱말 중간에서 끊긴 것을 보인다) */
 const LOT_NOTE_MAX = 12;
+/** 글자(코드 포인트) max개까지. 넘으면 max−1자 + '…' */
+const cut = (text: string, max: number): string => {
+  const chars = [...text];
+  return chars.length > max ? `${chars.slice(0, max - 1).join('')}…` : text;
+};
 
 /** 막힌 곳 id로 사고 표시 종류를 고른다 (MAP.md 4절) */
 export function markerKind(c: { id: string; kind: 'rule' | 'empty-slot' | 'custom-tool'; kept: boolean }): MarkerKind {
@@ -934,10 +955,10 @@ export function mapModel(r: EngineResult, opts: MapOptions = {}): MapModel {
 
   const typeAnswer = r.interview.answers['q.type'];
   const typeOption = r.interview.visible.find((q) => q.id === 'q.type')?.options.find((o) => o.id === typeAnswer);
-  // 직접 쓴 앱(D74): 빈 터 이름표는 내 말 앞 12자. 내 말이 없으면(영수증 링크로 받음) '목적지'
+  // 직접 쓴 앱(D74): 빈 터 이름표는 내 말 12자(넘으면 11자 + '…'). 내 말이 없으면(영수증 링크로 받음) '목적지'.
+  // 빈 터에는 직접 쓴 앱의 청사진(점선 틀 + 연필)이 비친다: 고른 것이 있다는 진행을 지도가 그린다
   const note = (r.session.notes?.['q.type'] ?? '').replace(/\s+/g, ' ').trim();
-  const typeLabel =
-    typeOption?.isCustom === true ? [...note].slice(0, LOT_NOTE_MAX).join('') || null : typeOption && typeOption.isUnknown !== true ? typeOption.label : null;
+  const typeLabel = typeOption?.isCustom === true ? cut(note, LOT_NOTE_MAX) || null : typeOption && typeOption.isUnknown !== true ? typeOption.label : null;
   const proxy = r.cart.some((p) => p.capabilities.includes('proxy'));
 
   return layoutMap({
@@ -963,7 +984,7 @@ export function mapSummary(r: EngineResult, o: { traffic: boolean; arrived: bool
   // 이름 순서: 한 줄 입력 → 만들 것의 내 말 → 종류 이름 (projectName과 같다)
   const clean = (t: string | undefined): string => (t ?? '').replace(/\s+/g, ' ').trim();
   const text = clean(r.session.freeText) || clean(r.session.notes?.['q.type']);
-  const name = ([...text].length > 30 ? `${[...text].slice(0, 30).join('')}…` : text) || o.typeLabel;
+  const name = cut(text, 31) || o.typeLabel;
   const out = name ? [fill(S.destination, { name })] : [];
   if (!r.done) return out[0] ?? S.noDestination;
   const p = progress(r, {});

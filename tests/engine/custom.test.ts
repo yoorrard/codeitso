@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import type { Catalog, EngineResult, Session } from '../../src/lib/engine/index.ts';
 import {
   answerChips,
+  customToolClears,
   evaluate,
   fromShareState,
   matchProduct,
@@ -20,6 +21,9 @@ import { productField } from '../../src/lib/engine/conditions.ts';
 import { customProduct, isCustomId, productOf } from '../../src/lib/engine/custom.ts';
 import { displayWidth, fill } from '../../src/lib/engine/text.ts';
 import type { CustomTool, ProductField } from '../../src/lib/engine/types.ts';
+import type { Golden } from '../../scripts/lib/golden.ts';
+import { goldenSession } from '../../scripts/lib/golden.ts';
+import { goldenFiles, readJson } from '../../scripts/lib/load-data.ts';
 import { realCatalog } from '../fixtures/tiny.ts';
 
 const cat: Catalog = realCatalog();
@@ -286,10 +290,53 @@ describe('모르는 사실은 맞지 않음, 서버 위치만 모름', () => {
     expect(ids.indexOf('conflict.custom-tool:custom-2')).toBe(ids.length - 1);
   });
 
+  it("직접 써도 서버 위치를 몰라 개인정보 막힌 곳은 풀리지 않는다 (막힌 곳 '바꾸기' 끝의 [목록에 없는 도구 쓰기 ›]를 달지 않음)", () => {
+    const jam = run({ answers, cart: ['html-single', 'custom-2', 'github-pages'], customTools: [notion] });
+    expect(jam.conflicts.find((c) => c.id === 'conflict.personal-server')?.kept).toBe(false);
+    expect(customToolClears(cat, jam, 'conflict.personal-server')).toBe(false);
+    // 그대로 둔 것·없는 것·기능에 붙지 않은 것은 false
+    expect(customToolClears(cat, r, 'conflict.personal-server')).toBe(false);
+    expect(customToolClears(cat, jam, 'conflict.no-such')).toBe(false);
+  });
+
   it('알아볼 것 순서: 규칙 카드 → 그대로 둔 막힌 곳 → 직접 쓴 도구', () => {
     const ids = r.research.map((x) => x.id);
     expect(ids.indexOf('research.privacy-overseas')).toBeLessThan(ids.indexOf('research.custom:custom-2'));
     expect(ids[ids.length - 1]).toBe('research.custom:custom-2');
+  });
+});
+
+describe('customToolClears: 그 기능을 직접 쓴 도구로 바꾸면 막힌 곳이 풀리는가', () => {
+  it('빈 꼭 고를 칸과, 고른 도구의 사실로 켜진 막힌 곳(실시간)은 풀린다', () => {
+    const empty = run({ answers: PAGE, cart: ['html-single', 'github-pages'] });
+    const gap = empty.conflicts.find((c) => c.kind === 'empty-slot' && !c.kept);
+    expect(gap).toBeDefined();
+    expect(customToolClears(cat, empty, gap?.id ?? '')).toBe(true);
+  });
+
+  it('다른 도구 때문에 켜진 막힌 곳(키 노출: 데이터 도구의 키, 공개 칸에 붙음)은 공개 칸을 직접 써도 그대로', () => {
+    for (const f of goldenFiles()) {
+      const g = readJson<Golden>(f);
+      const r = evaluate(cat, goldenSession(g));
+      for (const c of r.conflicts.filter((x) => x.id === 'conflict.key-in-static-page' && !x.kept)) expect(customToolClears(cat, r, c.id), g.id).toBe(false);
+    }
+  });
+
+  it('직접 쓴 도구를 5개 다 썼으면 false', () => {
+    const five: CustomTool[] = [1, 2, 3, 4, 5].map((n) => ({ id: `custom-${n}`, name: `도구${n}`, capability: 'notify' }));
+    const full = run({ answers: PAGE, cart: ['html-single', 'github-pages'], customTools: five });
+    const gap = full.conflicts.find((c) => c.kind === 'empty-slot' && !c.kept);
+    expect(gap && customToolClears(cat, full, gap.id)).toBe(false);
+  });
+});
+
+describe('준비물: 직접 쓴 도구', () => {
+  it("직접 쓴 도구마다 '가입이나 키가 필요한지 먼저 확인' 한 줄(걸리는 시간 모름)을 맨 앞에, 설계도 8번이 '없다'고 하지 않는다", () => {
+    const r = run({ answers: PAGE, cart: ['html-single', 'custom-1'], customTools: [POKE] });
+    expect(r.prep[0]).toEqual({ label: fill(T.customTool.prep, { name: 'PokeAPI' }), lead: 'unknown' });
+    const md = renderPack(cat, r, PACK);
+    expect(md).toContain(`- [ ] ${fill(T.customTool.prep, { name: 'PokeAPI' })} (${T.leadLabels.unknown})`);
+    expect(md).not.toContain(T.pack.noPrep);
   });
 });
 
@@ -349,11 +396,15 @@ describe('설계도', () => {
     expect(one).toContain('- 종류: 직접 쓴 앱');
     expect(one).toContain('만들 것: “반려식물 물 주기 알림”');
     expect(one).toContain(`- ${T.pack.mine.label}: ${T.pack.mine.rule}`);
-    expect(one).toContain('  - 만들 것: “반려식물 물 주기 알림” → 보기에 없어 그대로 둠 (계산은 ‘직접 쓴 앱’ 기준)');
+    // 만들 것은 아래 customType 줄이 따로 붙어 '도구는 … 기준' 꼬리가 없다
+    expect(one).toContain(`  - ${fill(T.pack.mine.keptType, { chip: '만들 것', text: '반려식물 물 주기 알림' })}`);
+    expect(one).not.toContain('‘직접 쓴 앱’로 보고');
     expect(one).toContain('  - 알림: “비 오는 날 아침에만” → 고른 답 네');
     expect(one.indexOf('만들 것: “반려식물')).toBeLessThan(one.indexOf('알림: “비 오는'));
     expect(one).toContain(`- ${T.pack.mine.customType}`);
-    expect(T.pack.mine.rule).toContain('고른 답과 다르면 이 말을 먼저 따르고, 헷갈리면 만들기 전에 나에게 물어 줘.');
+    // 내 말이 고른 답보다 뜻에 가깝고, 7번 도구로 할 수 있는지 9번에서 함께 확인하고, 범위 밖이면 먼저 묻게 (reader-tester 검토)
+    expect(T.pack.mine.rule).toContain('9번을 정리할 때 7번 도구로 이 말대로 할 수 있는지');
+    expect(T.pack.mine.rule).toContain('만들기 전에 나에게 물어 줘.');
   });
 
   it("1번 '만드는 AI' 줄에 쓰는 AI 이름 (설계서 7.1절), 직접 쓴 AI 이름은 '계산은 … 기준' 꼬리 없이", () => {
@@ -375,13 +426,14 @@ describe('설계도', () => {
   it("like가 있는 답은 그 보기 이름 기준 (쓰는 사람 → '몇 명이 같이')", () => {
     const a2 = finish({ 'q.type': 'record', 'q.audience': 'custom' });
     const md2 = renderPack(cat, run({ answers: a2, notes: { 'q.audience': '우리 가족 넷' }, cart: ['html-single'] }), PACK);
-    expect(md2).toContain('  - 쓰는 사람: “우리 가족 넷” → 보기에 없어 그대로 둠 (계산은 ‘몇 명이 같이’ 기준)');
+    expect(md2).toContain('  - 쓰는 사람: “우리 가족 넷” → 보기에 없어 그대로 둠 (도구는 ‘몇 명이 같이’로 보고 골랐다)');
     expect(md2).not.toContain(T.pack.mine.customType);
   });
 
-  it('내 말이 없으면 내 말 그대로 줄도 없다 (링크로 받음)', () => {
+  it("내 말이 없으면(링크로 받음) 내 말 줄 대신 '직접 쓴 답은 링크에 담기지 않았다' 한 줄", () => {
     const md3 = renderPack(cat, run({ answers, cart: ['html-single'] }), PACK);
-    expect(md3).not.toContain(`- ${T.pack.mine.label}:`);
+    expect(md3).not.toContain(`- ${T.pack.mine.label}: ${T.pack.mine.rule}`);
+    expect(md3).toContain(`- ${T.pack.mine.label}: ${T.pack.mine.hidden}`);
     expect(md3).toContain(`만들 것: ${T.customAnswer.hidden}`);
     // 링크로 열면 내 말이 없으므로 한 줄 설명이 '1번에 적은 일'처럼 없는 글을 가리키지 않는다
     const goal = T.types['type.custom']?.goal ?? '?';
@@ -451,6 +503,9 @@ describe('영수증 링크', () => {
     expect(md).not.toContain(`${hidden} ${T.customTool.mark}`);
     expect(md).toContain(`**${hidden}**`);
     expect(md).not.toContain(`${T.customTool.researchAreaHidden}: ${hidden}`);
+    // 이름 없이 받은 도구는 어떤 도구인지 먼저 묻게 (7번 메모, 9번 '무엇을' 앞)
+    expect(md).toContain(`- ${T.customTool.memoHidden}`);
+    expect(r.research.find((x) => x.id === 'research.custom:custom-1')?.what.startsWith(T.customTool.memoHidden)).toBe(true);
   });
 
   it('모르는 x·g 값은 버린다 (id 모양, 기능 이름, 글이 아닌 값)', () => {

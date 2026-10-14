@@ -38,7 +38,8 @@ export interface Study {
   all: string[];
 }
 
-const LEAD_ORDER: Record<Lead, number> = { days: 0, hours: 1, instant: 2 };
+/** 준비물 순서: 걸리는 시간을 모르는 것(직접 쓴 도구) → 며칠 → 몇 시간 → 바로. 모르는 것은 먼저 확인해야 기다릴지 안다 */
+const LEAD_ORDER: Record<Lead, number> = { unknown: 0, days: 1, hours: 2, instant: 3 };
 
 /**
  * 알아볼 것: 규칙 카드 → 그대로 둔 규칙 충돌 → 그대로 둔 빈 칸 → 색인 상품(화면: 원문만 있는 도구) → 직접 쓴 도구 →
@@ -83,7 +84,15 @@ export function collectResearch(cat: Catalog, ctx: Ctx, conflicts: Conflict[], s
     if (p.custom !== true) continue;
     const c = cat.card.get(t.customTool.researchCard);
     if (!c) throw new Error(`조사 카드가 없습니다: ${t.customTool.researchCard}`);
-    push({ ...c, id: `research.custom:${p.id}`, source: 'custom', area: nameHidden(cat, p) ? t.customTool.researchAreaHidden : fill(t.customTool.researchArea, { name: p.name }) });
+    // 이름 없이 받았으면(영수증 링크) 어떤 도구인지 먼저 묻게 한 줄을 앞에 붙인다
+    const hidden = nameHidden(cat, p);
+    push({
+      ...c,
+      id: `research.custom:${p.id}`,
+      source: 'custom',
+      area: hidden ? t.customTool.researchAreaHidden : fill(t.customTool.researchArea, { name: p.name }),
+      ...(hidden ? { what: `${t.customTool.memoHidden} ${c.what}` } : {}),
+    });
   }
   for (const p of ctx.cart) if (p.builderPublish === true) fromCard(t.builderPublish.researchCard, 'builder');
   for (const g of session?.gaps ?? []) fromCard(`research.gap-${g}`, 'gap');

@@ -262,6 +262,23 @@ export function gapsIn(cat: Catalog, al: Aliases, texts: { where: string; text: 
   return al.gaps.filter((g) => found.has(g.id)).map((g) => g.id);
 }
 
+/**
+ * 세션에 든 직접 쓴 글 전부(질문의 내 말 notes, 마지막 한 줄 freeText, 직접 쓴 도구 이름)에서 빈틈을 다시 찾는다.
+ * 화면이 내 말을 정하거나 지울 때마다 이 값으로 session.gaps를 바꾼다(지운 글의 빈틈이 남지 않게). 결과는 자료 순서
+ */
+export function gapsOfSession(
+  cat: Catalog,
+  al: Aliases,
+  s: { notes?: Record<string, string>; freeText?: string; customTools?: { name: string }[] },
+): string[] {
+  const texts = [
+    ...Object.entries(s.notes ?? {}).map(([where, text]) => ({ where, text })),
+    ...(s.freeText ? [{ where: 'line', text: s.freeText }] : []),
+    ...(s.customTools ?? []).map((t) => ({ where: 'tool', text: t.name })),
+  ];
+  return gapsIn(cat, al, texts);
+}
+
 /** 연락처처럼 보이는 글 (input.md 4.3절): 막지 않고 화면이 경고한다 */
 export function looksLikeContact(text: string): boolean {
   return /(01[016789]|0\d{1,2})[-.\s]?\d{3,4}[-.\s]?\d{4}/.test(text) || /[^\s@]+@[^\s@]+\.[^\s@]{2,}/.test(text);

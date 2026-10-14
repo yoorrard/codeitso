@@ -18,6 +18,7 @@ import expandSvg from '@phosphor-icons/core/assets/regular/caret-down.svg?raw';
 import helpSvg from '@phosphor-icons/core/assets/regular/question.svg?raw';
 import pinSvg from '@phosphor-icons/core/assets/regular/map-pin.svg?raw';
 import externalSvg from '@phosphor-icons/core/assets/regular/arrow-square-out.svg?raw';
+import pencilSvg from '@phosphor-icons/core/assets/regular/pencil-simple.svg?raw';
 
 export const icons = {
   close: closeSvg,
@@ -38,6 +39,8 @@ export const icons = {
   help: helpSvg,
   pin: pinSvg,
   external: externalSvg,
+  /** 직접 쓰기 줄 (T37). ✎ 글자는 글꼴에 없어 기기 글꼴로 대신 그려지므로 SVG로 (T25와 같은 까닭) */
+  pencil: pencilSvg,
 } as const;
 
 export type IconName = keyof typeof icons;

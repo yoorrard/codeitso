@@ -3,7 +3,8 @@
 
 export type Capability = 'screen' | 'store' | 'auth' | 'data' | 'host' | 'proxy' | 'notify';
 export type Access = 'none' | 'signup' | 'key' | 'approval' | 'account-or-business';
-export type Lead = 'instant' | 'hours' | 'days';
+/** 준비에 걸리는 시간. unknown은 직접 쓴 도구의 준비물에만 (상품 카드 스키마는 셋만 받는다) */
+export type Lead = 'instant' | 'hours' | 'days' | 'unknown';
 export type Scalar = string | number | boolean;
 
 export type ProductField =
@@ -136,6 +137,11 @@ export interface Product {
   keyExposureRisk: boolean;
   /** 화면 코드에 넣도록 만든 공개 키 (제공처 설정에서 사이트 주소로 사용을 제한) */
   publicKey?: boolean;
+  /**
+   * 가입하거나 키를 받으려면 결제 카드(결제 수단)를 등록해야 하는 상품 (설계서 5.6절, services.md 7.6절).
+   * 도구 고르기 꼬리표 '결제 카드 필요'만 그린다. 점수·규칙 조건에는 쓰지 않는다
+   */
+  paymentCard?: boolean;
   /** 이용자가 직접 쓴 도구(D74). 엔진이 만들고 products.json에는 없다 (규칙 조건 field 'custom') */
   custom?: true;
   /**
@@ -448,7 +454,7 @@ export interface Templates {
     labels: Record<PackLabel, string>;
     /** 설계도 1번 '내 말 그대로' (D74): {{chip}} 질문 이름, {{text}} 내 말, {{label}} 고른 보기, {{as}} 같게 계산한 것 */
     /** keptName: 계산에 쓰지 않는 이름 질문('쓰는 AI')을 그대로 뒀을 때 */
-    mine: { label: string; rule: string; picked: string; kept: string; keptName: string; customType: string };
+    mine: { label: string; rule: string; picked: string; kept: string; keptType: string; keptName: string; customType: string; hidden: string };
   };
   safetyDefaults: string[];
   conversationCards: { id: string; title: string; when: string; text: string }[];
@@ -472,6 +478,10 @@ export interface Templates {
     summary: string;
     cost: string;
     memo: string;
+    /** 이름이 없을 때(영수증 링크로 받음): 7번 메모와 9번 '무엇을' 앞에 붙는 말 (어떤 도구인지 먼저 물어보게) */
+    memoHidden: string;
+    /** 준비물 한 줄 ({{name}}, 걸리는 시간은 leadLabels.unknown) */
+    prep: string;
     mark: string;
     unchecked: string;
     message: string;

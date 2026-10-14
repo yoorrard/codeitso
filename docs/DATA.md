@@ -83,6 +83,7 @@
 | `setupMinutes` | 처음 붙이는 데 걸리는 어림 시간(분) | 진열 |
 | `keyExposureRisk` | 키를 화면 코드에 넣으면 안 되고 중간 서버에서만 써야 하는 상품 (혼자 쓸 때의 예외는 `safety.local-key`) | 모두 |
 | `publicKey` | 화면 코드에 넣도록 만든 공개 키를 쓰는 상품 (예: 지도 JavaScript 키, 사이트 주소로 사용을 제한). `keyExposureRisk`와 함께 켤 수 없다 | |
+| `paymentCard` | 가입하거나 키를 받으려면 결제 카드(결제 수단)를 등록해야 하는 상품. 도구 고르기 꼬리표 '결제 카드 필요'만 그리고 점수·규칙 조건에는 쓰지 않는다 (T37, 설계서 5.6절, `services.md` 7.6절). 지금은 `google-maps-js`·`naver-maps`·`papago-translation`·`heroku` 넷이고, 넷 다 상품 `prep`·`cost.note`에 이미 적힌 사실이며 `needsReview: true`다 | |
 | `recommendable` | false면 추천 표시를 붙이지 않는다 (MCP 서버, 비공식 패키지, 색인 상품) | 모두 |
 | `license` | 이름 + 쉬운 풀이 + 원문 링크 | 오픈소스면 |
 | `prep` | 준비물과 걸리는 시간(instant, hours, days) | 진열 |

@@ -3,24 +3,43 @@
 // → 접기 '원문만 있는 도구 n개'. 줄은 <button aria-pressed>이고, 눌린 줄 아래에만 따로 글 버튼 '자세히 ⌄'(버튼 안에 버튼을 두지 않는다).
 // 고르는 방식: 꼭 고를 것은 추천 줄이 '고를 예정'으로 미리 눌려 있고(저장 안 함), 다른 줄을 누르면 옮겨 간다.
 // 아래 막대의 [{도구}로 정하기](WaypointsAction)를 눌러야 저장된다. 있으면 좋은 것은 미리 누르지 않는다.
-// 점수·추천·이유·비교·꼬리표는 모두 엔진 결과(evaluate, badges)다. 눌린 줄·여는 칸은 pick-nav.ts의 화면 상태다.
+// 점수·추천·이유·비교·꼬리표는 모두 엔진 결과(evaluate, badges, prepWait)다. 눌린 줄·여는 칸은 pick-nav.ts의 화면 상태다.
+// 목록에 없는 도구 (T37, 설계서 7.5절): 기능마다 목록 끝 줄 [목록에 없는 도구 쓰기](CustomTool), 직접 쓴 도구 줄은 목록 맨 위
+// (둘째 줄 '직접 쓴 도구 · 확인 필요', 비용 '모름', 점수·추천·꼬리표 없음). 도구 줄 꼬리표: '승인 기다림 · 며칠'·'결제 카드 필요'(표시만).
+// 고른 웹 빌더가 공개 칸을 맡으면(B-02) 그 칸은 '쓰는 웹 빌더가 공개를 맡아요.' + [다른 곳에 공개하기](목록과 도구 이름 칸을 펼침).
+// 주소 ?slot=…&write=1(도구끼리 맞춰 보기의 [목록에 없는 도구 쓰기 ›])이면 그 칸의 도구 이름 칸을 펼친 채 글 칸에 초점.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { catalog } from '../lib/data.ts';
 import type { EngineResult, Scored, SlotRanking } from '../lib/engine/index.ts';
-import { badges, evaluate, fill, toolDifficultyWord } from '../lib/engine/index.ts';
+import { badges, evaluate, fill, prepWait, toolDifficultyWord } from '../lib/engine/index.ts';
 import type { Product } from '../lib/engine/types.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { josa } from '../lib/josa.ts';
 import { $mapFocus } from '../lib/map/focus.ts';
 import { reduced } from '../lib/motion.ts';
 import { slotArt } from '../lib/option-art.ts';
-import { $openSlot, $pending, $slotMoves, clearPending, initialSlot, plainName, pressedFor, rankingOf, savedFor, slotTitle } from '../lib/pick-nav.ts';
-import { $result } from '../lib/result.ts';
+import { withoutCustomTool } from '../lib/custom-input.ts';
+import { announce } from '../lib/announce.ts';
+import {
+  $openSlot,
+  $pending,
+  $slotMoves,
+  builderFills,
+  clearPending,
+  initialSlot,
+  plainName,
+  pressedFor,
+  rankingOf,
+  savedFor,
+  slotTitle,
+} from '../lib/pick-nav.ts';
+import { $result, updateSession } from '../lib/result.ts';
 import { termPath } from '../lib/routes.ts';
 import { EMPTY_SESSION } from '../lib/saved.ts';
 import { gate } from '../lib/stages.ts';
+import { CustomTool, focusWhenReady, refreshGaps } from './CustomTool.tsx';
 import { ArtTile, Glyph } from './Glyph.tsx';
 import { Icon } from './Icon.tsx';
 import { Lead } from './Lead.tsx';
@@ -61,6 +80,12 @@ function secondLine(p: Product): string {
 function reasonsLine(s: Scored, second: string): string | null {
   const labels = s.reasons.filter((k) => k !== 'official').map((k) => T.reasonLabels[k]).filter((l) => !second.includes(l));
   return labels.length > 0 ? fill(ko.shop.reasonsLine, { labels: labels.join(' · ') }) : null;
+}
+
+/** 도구 줄 꼬리표 (설계서 5.6절): 준비물 기다림(며칠·몇 시간) · 결제 카드 필요. 보이기만 하고 점수는 그대로 */
+function rowTags(p: Product): string[] {
+  const wait = prepWait(p);
+  return [...(wait === 'days' ? [ko.shop.waitDays] : wait === 'hours' ? [ko.shop.waitHours] : []), ...(p.paymentCard === true ? [ko.shop.paymentCard] : [])];
 }
 
 /** 기능 칩 앞 모양 16: 지도 마디와 같은 모양(표지 묶음의 mk-node-*). 중간 서버는 기능 그림 */
@@ -190,6 +215,7 @@ function ToolRow({ s, ranking, pressed, saved, more, onPress, onMore }: RowProps
   const factsId = `w-facts-${p.id}`;
   const second = secondLine(p);
   const why = isReco ? reasonsLine(s, second) : null;
+  const tags = rowTags(p);
   return (
     <li class={pressed ? 'w-item is-pressed' : 'w-item'}>
       <button type="button" class="list-row w-row" aria-pressed={pressed} data-product={p.id} onClick={() => onPress(p.id)}>
@@ -203,6 +229,15 @@ function ToolRow({ s, ranking, pressed, saved, more, onPress, onMore }: RowProps
           </span>
           <span class="list-sub">{second}</span>
           {why && <span class="list-sub">{why}</span>}
+          {tags.length > 0 && (
+            <span class="w-tags">
+              {tags.map((t) => (
+                <span key={t} class="tag">
+                  {t}
+                </span>
+              ))}
+            </span>
+          )}
         </span>
         {/* 눌림(aria-pressed)만으로는 '고를 예정'과 '정한 도구'가 같게 들린다: 숨은 글로 가르고, ✓는 정한 줄에만 */}
         {saved && <span class="visually-hidden">, {ko.shop.savedMark}</span>}
@@ -224,6 +259,64 @@ function ToolRow({ s, ranking, pressed, saved, more, onPress, onMore }: RowProps
   );
 }
 
+interface CustomRowProps {
+  p: Product;
+  ranking: SlotRanking;
+  pressed: boolean;
+  saved: boolean;
+  more: boolean;
+  onPress: (id: string) => void;
+  onMore: () => void;
+  onRemove: (p: Product) => void;
+}
+
+/** 직접 쓴 도구 줄 (input.md 8.1절): 타일(그 기능 그림) + 이름 + '직접 쓴 도구 · 확인 필요' + 오른쪽 비용 '모름'. 점수·추천·꼬리표 없음.
+ *  '자세히'를 펼치면 한 줄 풀이와 [이 도구 지우기] */
+function CustomRow({ p, ranking, pressed, saved, more, onPress, onMore, onRemove }: CustomRowProps) {
+  const factsId = `w-facts-${p.id}`;
+  return (
+    <li class={pressed ? 'w-item is-pressed' : 'w-item'}>
+      <button type="button" class="list-row w-row" aria-pressed={pressed} data-product={p.id} onClick={() => onPress(p.id)}>
+        <span class="list-tile">
+          <Glyph name={slotArt(ranking.slot.capability)} />
+        </span>
+        <span class="list-text">
+          <span class="w-name">
+            <span class="list-name">{p.name}</span>
+          </span>
+          <span class="list-sub">{ko.shop.customLine}</span>
+        </span>
+        {saved && <span class="visually-hidden">, {ko.shop.savedMark}</span>}
+        {pressed && !saved && <span class="visually-hidden">, {ko.shop.pendingMark}</span>}
+        <span class="visually-hidden">, {ko.shop.costHidden}</span>
+        <span class="list-value">{ko.shop.customCost}</span>
+        {saved && <span class="list-check" aria-hidden="true" />}
+      </button>
+      {pressed && (
+        <>
+          <button type="button" class="btn btn-text w-more" aria-expanded={more} aria-controls={factsId} onClick={onMore}>
+            <span class="visually-hidden">{p.name} </span>
+            {ko.shop.details}
+            <span class="i-mask i-caret-down w-more-caret" aria-hidden="true" />
+          </button>
+          <div class="w-facts w-custom-facts" id={factsId} hidden={!more}>
+            <p>{ko.shop.customDetail}</p>
+            <button type="button" class="btn btn-text w-remove" aria-label={fill(ko.shop.customRemoveLabel, { name: p.name })} onClick={() => onRemove(p)}>
+              {ko.shop.customRemove}
+            </button>
+          </div>
+        </>
+      )}
+    </li>
+  );
+}
+
+/** 도구 이름 칸을 펼치라는 신호: 칸 id와 바뀌는 번호 (같은 칸에서 다시 눌러도 다시 펼친다) */
+interface WriteSignal {
+  slot: string | null;
+  n: number;
+}
+
 export default function Shop() {
   const ready = useHydrated();
   const live = useStore($result);
@@ -235,12 +328,33 @@ export default function Shop() {
   const [more, setMore] = useState(false);
   // 칸 설명 글의 어려운 말에 점선 밑줄 (D69, 쉬는 시간에 더한다)
   const mark = useTermMarks();
+  // 빌더가 맡은 공개 칸에서 [다른 곳에 공개하기]를 누른 칸 (그 칸은 목록과 도구 이름 칸을 보인다)
+  const [other, setOther] = useState<string | null>(null);
+  const [write, setWrite] = useState<WriteSignal>({ slot: null, n: 0 });
+  const openWrite = (slot: string): void => {
+    setOther(slot);
+    setWrite({ slot, n: write.n + 1 });
+  };
 
-  // 처음 열 칸: 주소의 ?slot=(도구끼리 맞춰 보기의 '도구 바꾸기') → 고를 수 있는 첫 꼭 고를 것 → 첫 칸
+  // 처음 열 칸: 주소의 ?slot=(도구끼리 맞춰 보기의 '도구 바꾸기') → 고를 수 있는 첫 꼭 고를 것 → 첫 칸.
+  // ?write=1이면(막힌 곳의 [목록에 없는 도구 쓰기 ›]) 그 칸의 도구 이름 칸을 펼친다. 새로 고쳐도 다시 펼치지 않게 주소에서 뗀다
   useEffect(() => {
     if (!ready || $openSlot.get() !== null) return;
-    $openSlot.set(initialSlot(r, new URLSearchParams(window.location.search).get('slot')));
+    const url = new URL(window.location.href);
+    const asked = url.searchParams.get('slot');
+    const first = initialSlot(r, asked);
+    $openSlot.set(first);
+    if (url.searchParams.get('write') === '1') {
+      if (first !== null && first === asked) openWrite(first);
+      url.searchParams.delete('write');
+      history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+    }
   }, [ready]);
+
+  // 다른 칸으로 옮기면 펼치라는 신호를 거둔다 (돌아왔을 때 칸이 다시 펼쳐지며 초점을 가져가지 않게)
+  useEffect(() => {
+    if (write.slot !== null && open !== write.slot) setWrite({ slot: null, n: write.n });
+  }, [open]);
 
   // 여는 칸이 사라지면(다른 탭에서 답을 바꿈) 처음 열 칸으로 다시 정한다
   useEffect(() => {
@@ -275,6 +389,8 @@ export default function Shop() {
   const ranking = rankingOf(r, open);
   const pressed = ranking ? pressedFor(r, ranking, pending) : null;
   const saved = ranking ? savedFor(r, ranking) : null;
+  // 고른 웹 빌더가 공개를 맡는 칸 (B-02): 다른 공개 도구를 고르지 않았으면 한 줄 + [다른 곳에 공개하기]. 누르면 목록을 펼친다
+  const builderHere = ranking !== undefined && ranking.builder !== null && saved === null && other !== ranking.slot.id;
   const press = (id: string): void => {
     if (!ranking) return;
     const key = ranking.slot.id;
@@ -301,6 +417,35 @@ export default function Shop() {
       />
     );
   const indexPressed = ranking?.index.some((s) => s.product.id === pressed) ?? false;
+  const customRow = (p: Product) =>
+    ranking && (
+      <CustomRow
+        key={p.id}
+        p={p}
+        ranking={ranking}
+        pressed={pressed === p.id}
+        saved={saved === p.id}
+        more={more}
+        onPress={press}
+        onMore={() => setMore(!more)}
+        onRemove={remove}
+      />
+    );
+  // 직접 쓴 도구 지우기: 장바구니에서도 빼고 '고를 예정'을 거둔 뒤, 초점은 그 칸의 [목록에 없는 도구 쓰기] 줄로
+  function remove(p: Product): void {
+    if (!ranking) return;
+    const slotId = ranking.slot.id;
+    updateSession((s) => withoutCustomTool(s, p.id));
+    if ($pending.get()[slotId] === p.id) clearPending(slotId);
+    announce(fill(ko.shop.customRemoved, { obj: josa(p.name, 'obj') }));
+    focusWhenReady('#w-slot .custom-row');
+    refreshGaps();
+  }
+  const writeRow = ranking && (
+    <li class="w-custom">
+      <CustomTool r={r} ranking={ranking} openSignal={write.slot === ranking.slot.id ? write.n : 0} />
+    </li>
+  );
 
   return (
     <div class="shop" data-ready={ready ? '' : undefined}>
@@ -323,7 +468,7 @@ export default function Shop() {
                   <ChipShape capability={s.slot.capability} />
                   {s.slot.label}
                   <span class="visually-hidden">
-                    , {s.slot.required ? ko.shop.required : ko.shop.optional}, {filled ? ko.shop.filled : ko.shop.empty}
+                    , {s.slot.required ? ko.shop.required : ko.shop.optional}, {builderFills(s) ? ko.shop.builderChip : filled ? ko.shop.filled : ko.shop.empty}
                   </span>
                   {here && <span class="w-chip-now" aria-hidden="true" />}
                 </button>
@@ -345,27 +490,49 @@ export default function Shop() {
               {fill(ko.shop.alsoFills, { subj: josa(plainName(p.name), 'subj') })}
             </p>
           ))}
-          {/* 눌린 줄이 없으면(있으면 좋은 것, 추천이 없는 칸) 아래 막대의 꺼진 주 버튼이 이 줄을 까닭으로 읽는다. 맞는 도구가 없으면 알림 상자 글이 까닭 */}
-          {pressed === null && ranking.shelf.length > 0 && (
-            <p class="w-help" id="w-why">
-              {ko.shop.pickFirst}
-            </p>
-          )}
-          {ranking.shelf.length === 0 && (
-            <p class="alert w-alert">
-              <span class="alert-icon">
-                <Icon name="help" size="20px" />
-              </span>
-              <span id="w-why">{ko.shop.noProduct}</span>
-            </p>
-          )}
-          {ranking.shelf.length > 0 && <ul class="list w-list">{ranking.shelf.map(row)}</ul>}
-          {ranking.index.length > 0 && (
-            <details class="fold w-index" open={indexPressed || undefined}>
-              <summary>{fill(ko.shop.indexTitle, { n: ranking.index.length })}</summary>
-              <p class="w-index-note">{ko.shop.indexNote}</p>
-              <ul class="list w-list">{ranking.index.map(row)}</ul>
-            </details>
+          {builderHere ? (
+            // 고른 빌더가 공개를 맡는다: 이 줄이 꺼진 주 버튼의 까닭이기도 하다. 버튼은 목록을 펼치고 도구 이름 칸에 초점
+            <div class="w-builder">
+              <p class="alert w-alert">
+                <span class="alert-icon">
+                  <Icon name="check" size="20px" />
+                </span>
+                <span id="w-why">{ko.shop.builderLine}</span>
+              </p>
+              <button type="button" class="btn btn-neutral w-builder-other" onClick={() => openWrite(ranking.slot.id)}>
+                {ko.shop.builderOther}
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* 눌린 줄이 없으면(있으면 좋은 것, 추천이 없는 칸) 아래 막대의 꺼진 주 버튼이 이 줄을 까닭으로 읽는다. 맞는 도구가 없으면 알림 상자 글이 까닭 */}
+              {pressed === null && ranking.shelf.length + ranking.custom.length > 0 && (
+                <p class="w-help" id="w-why">
+                  {ko.shop.pickFirst}
+                </p>
+              )}
+              {ranking.shelf.length === 0 && ranking.custom.length === 0 && (
+                <p class="alert w-alert">
+                  <span class="alert-icon">
+                    <Icon name="help" size="20px" />
+                  </span>
+                  <span id="w-why">{ko.shop.noProduct}</span>
+                </p>
+              )}
+              {/* 직접 쓴 도구는 목록 맨 위, [목록에 없는 도구 쓰기]는 목록 끝(접기 '원문만 있는 도구' 위) */}
+              <ul class="list w-list">
+                {ranking.custom.map(customRow)}
+                {ranking.shelf.map(row)}
+                {writeRow}
+              </ul>
+              {ranking.index.length > 0 && (
+                <details class="fold w-index" open={indexPressed || undefined}>
+                  <summary>{fill(ko.shop.indexTitle, { n: ranking.index.length })}</summary>
+                  <p class="w-index-note">{ko.shop.indexNote}</p>
+                  <ul class="list w-list">{ranking.index.map(row)}</ul>
+                </details>
+              )}
+            </>
           )}
         </section>
       )}

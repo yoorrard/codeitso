@@ -15,7 +15,8 @@ export interface Progress {
    *  나중으로 미룬 칸과, 빈 칸을 알고 '그대로 가기'로 둔 칸은 이미 정한 것이라 남은 수에 넣지 않는다 */
   requiredTotal: number;
   requiredLeft: number;
-  /** requiredLeft 가운데 도구 모음에 맞는 도구가 없어 지금 고를 수 없는 것 (도구끼리 맞춰 볼 때 '그대로 가기'로 넘긴다) */
+  /** requiredLeft 가운데 도구 모음에 맞는 도구가 없어 지금 고를 수 없는 것 (도구끼리 맞춰 볼 때 '그대로 가기'로 넘긴다).
+   *  그 칸에 직접 쓴 도구가 있으면 그 도구로 정할 수 있으므로 고를 수 있는 쪽에 센다 */
   requiredNoTool: number;
   /** 아직 풀지 않은 막힌 곳 (그대로 가기를 고른 것은 빼고) */
   blocked: number;
@@ -46,7 +47,7 @@ export function progress(r: EngineResult, meta: Pick<Meta, 'lessonDone' | 'issue
     passed: STAGES.filter((s) => stages[s.id]).length,
     requiredTotal: required.length,
     requiredLeft: left.length,
-    requiredNoTool: left.filter((s) => s.shelf.length === 0).length,
+    requiredNoTool: left.filter((s) => s.shelf.length === 0 && s.custom.length === 0).length,
     blocked: r.done ? r.conflicts.filter((c) => !c.kept).length : 0,
   };
 }

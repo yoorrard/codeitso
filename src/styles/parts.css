@@ -138,7 +138,7 @@
   margin-inline: calc(-1 * var(--space-4));
 }
 
-.on-map :is(.list > li + li > .list-row, .list > .list-row + .list-row)::before {
+.on-map :is(.list > li + li > .list-row, .list > .list-row + .list-row, .list > li + li > .custom-answer > .list-row)::before {
   inset-inline-end: var(--space-4);
 }
 
@@ -211,7 +211,7 @@
   min-block-size: var(--row-2);
 }
 
-:is(.list > li + li > .list-row, .list > .list-row + .list-row)::before {
+:is(.list > li + li > .list-row, .list > .list-row + .list-row, .list > li + li > .custom-answer > .list-row)::before {
   content: '';
   position: absolute;
   inset-block-start: 0;
@@ -318,7 +318,7 @@
 /* 고른 줄은 고리가 나눔 선을 대신한다 (위아래 줄의 선이 고리에 붙어 보이지 않게).
    설정의 스위치 줄(role="switch")은 고름 고리를 그리지 않는다: 스위치가 상태를 보인다 */
 .list-row:is([aria-pressed='true'], [aria-checked='true'], [aria-selected='true'], .is-chosen):not([role='switch'])::before,
-.list > li:has(> .list-row:is([aria-pressed='true'], [aria-checked='true'], [aria-selected='true'], .is-chosen):not([role='switch'])) + li > .list-row::before {
+.list > li:has(> .list-row:is([aria-pressed='true'], [aria-checked='true'], [aria-selected='true'], .is-chosen):not([role='switch'])) + li > :is(.list-row, .custom-answer > .list-row)::before {
   content: none;
 }
 

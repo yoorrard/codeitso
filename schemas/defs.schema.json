@@ -30,12 +30,13 @@
         "serverRegion",
         "layer",
         "cost.free",
+        "cost.plan",
         "keyExposureRisk",
         "publicKey",
         "recommendable",
         "custom"
       ],
-      "description": "custom: 이용자가 직접 쓴 도구(목록에 없는 도구, D74)면 참. 진열·색인 도구는 늘 거짓"
+      "description": "custom: 이용자가 직접 쓴 도구(목록에 없는 도구, D74)면 참. 진열·색인 도구는 늘 거짓. cost.plan: cost에서 정하는 값 free(무료로 시작) · free-usage(결제 수단은 걸지만 매달 무료 사용량이 있음) · paid(처음부터 돈이 듦) (D101)"
     },
     "productPredicate": {
       "type": "object",

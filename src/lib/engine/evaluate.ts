@@ -30,7 +30,7 @@ export interface EngineResult {
   cart: Product[];
   slots: SlotRanking[];
   conflicts: Conflict[];
-  /** 모든 충돌(막힌 곳)을 고쳤거나 '그대로 가기'를 골랐으면 출발할 수 있다 (도착에서 영수증과 설계도를 받는다) */
+  /** 모든 충돌을 고쳤거나 '그대로 가기'를 골랐으면 출발할 수 있다. 주의는 막지 않는다 (도착에서 영수증과 설계도를 받는다) */
   canIssue: boolean;
   split: Split;
   orphans: string[];
@@ -93,7 +93,8 @@ export function evaluate(cat: Catalog, input: Partial<Session>): EngineResult {
 
   const slots = slotDefs.map((s) => rankSlot(cat, s, interview.tags, cart, slotDefs, base.customTools));
   const conflicts = findConflicts(cat, session, ctx, slotDefs);
-  const live = new Set(conflicts.filter((c) => c.keepable).map((c) => c.id));
+  // 이용자가 고른 '그대로 가기'만 남긴다. 주의(처음부터 kept)는 고를 것이 없으므로 저장하지 않는다 (옛 링크의 kept도 버린다)
+  const live = new Set(conflicts.filter((c) => c.keepable && c.severity === 'conflict').map((c) => c.id));
   session.kept = session.kept.filter((id) => live.has(id));
   const canIssue = interview.next === null && conflicts.every((c) => c.kept);
 

@@ -12,7 +12,8 @@ const SKIPS: Skip[] = ['tap', 'esc', 'button'];
 /** 1초 안쪽 장면: [건너뛰기]가 뜨지 않으니 화면 누르기·Esc로만 */
 const SHORT: Skip[] = ['tap', 'esc'];
 const c1 = golden('case-01');
-const c4 = golden('case-04');
+// 막힌 곳이 하나 남는 사례 (키 노출 충돌, 배포 칸. D101 뒤로 case-04의 개인정보는 주의라 막지 않는다)
+const c4 = golden('case-09');
 
 /** 저장 값을 처음 한 번만 심는다 (같은 탭에서 다시 불러와도 덮어쓰지 않는다) */
 async function seed(page: Page, items: Record<string, unknown>): Promise<void> {

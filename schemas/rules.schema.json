@@ -57,6 +57,10 @@
               "anchorSlot": {
                 "$ref": "defs.schema.json#/$defs/slotId",
                 "description": "지도에서 이 막힌 곳을 붙일 칸. 없으면 길 전체 (CONCEPT 3.7)"
+              },
+              "severity": {
+                "const": "warning",
+                "description": "주의: 설정·선택으로 풀 수 있어 출발을 막지 않는다. 처음부터 그대로 가기(kept)이고 조사 카드가 확인할 것에 붙는다. 없으면 충돌 (D101)"
               }
             },
             "required": ["message", "fixHint", "researchCard"]

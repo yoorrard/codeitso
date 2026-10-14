@@ -74,9 +74,26 @@ describe('규칙 충돌', () => {
       cards: [card('card.x')],
     });
     expect(evaluate(cat, { answers: ON }).conflicts).toEqual([
-      { id: 'conflict.a', kind: 'rule', message: 'conflict.a 충돌', fixHint: 'conflict.a 고치기', researchCard: 'card.x', keepable: true, kept: false },
+      { id: 'conflict.a', kind: 'rule', severity: 'conflict', message: 'conflict.a 충돌', fixHint: 'conflict.a 고치기', researchCard: 'card.x', keepable: true, kept: false },
     ]);
     expect(evaluate(cat, { answers: OFF }).conflicts).toEqual([]);
+  });
+
+  it('주의 규칙(severity warning, D101)은 처음부터 그대로 가기이고 출발을 막지 않으며, 조사 카드가 붙는다', () => {
+    const cat = tinyCatalog({
+      questions: [switchQuestion({ 'need.x': 1 })],
+      rules: [{ ...conflictRule('conflict.w', { tag: 'need.x', gte: 1 }), severity: 'warning' }, conflictRule('conflict.a', { tag: 'need.x', gte: 1 })],
+      cards: [card('card.x')],
+    });
+    const r = evaluate(cat, { answers: ON });
+    expect(conflictIn(r, 'conflict.w')).toMatchObject({ kind: 'rule', severity: 'warning', keepable: true, kept: true });
+    expect(conflictIn(r, 'conflict.a')).toMatchObject({ severity: 'conflict', kept: false });
+    expect(r.canIssue).toBe(false);
+    expect(ids(r.research)).toEqual(['card.x']);
+    // 충돌을 그대로 두면 출발한다. 주의 id는 고른 것이 아니므로 세션 kept에 남기지 않는다 (옛 링크의 kept도 버린다)
+    const kept = evaluate(cat, { answers: ON, kept: ['conflict.a', 'conflict.w'] });
+    expect(kept.canIssue).toBe(true);
+    expect(kept.session.kept).toEqual(['conflict.a']);
   });
 
   it('anchorSlot은 그 칸이 열렸을 때만 넘기고, 아니면 키도 없다 (지도에서 막힌 곳을 붙일 칸, 없으면 길 전체)', () => {
@@ -113,12 +130,19 @@ describe('규칙 충돌', () => {
     );
     expect(anchors).toEqual({
       'conflict.paid-on-free': null,
+      'conflict.paid-free-usage': null,
       'conflict.realtime-mismatch': 'slot.data',
       'conflict.personal-server': 'slot.store',
+      'conflict.personal-region': 'slot.store',
       'conflict.key-in-static-page': 'slot.host',
       'conflict.key-on-public-host': 'slot.host',
       'conflict.shared-without-login': null,
     });
+  });
+
+  it('진짜 규칙 중 충돌은 공식 문서로 확인한 셋뿐이고, 나머지는 주의다 (D101)', () => {
+    const rules = realData().rules.rules.filter((x): x is ConflictRule => x.type === 'conflict');
+    expect(rules.filter((x) => x.severity !== 'warning').map((x) => x.id)).toEqual(['conflict.paid-on-free', 'conflict.key-in-static-page', 'conflict.key-on-public-host']);
   });
 
   it('cartHas: 그 상품을 담았을 때만 켜진다', () => {
@@ -211,6 +235,7 @@ describe('빈 필수 칸', () => {
       {
         id: 'conflict.empty-slot:slot.store',
         kind: 'empty-slot',
+        severity: 'conflict',
         message: fill(t.message, { label: '저장' }),
         fixHint: fill(t.fixHint, { label: '저장' }),
         slotId: 'slot.store',
@@ -358,7 +383,8 @@ describe('그대로 두기와 발행 가능', () => {
 });
 
 // ── 진짜 규칙: conflict.paid-on-free ──────────────────────────────
-// 진열대에 유료 상품이 없어 골든 사례가 없다 (ENGINE.md 8절 '알려진 빈틈'). 가짜 유료 상품으로 확인한다.
+// 골든 case-32(Heroku)가 진짜 상품으로 본다. 여기서는 가짜 유료 상품으로 조건 하나하나를 확인한다.
+// 매달 무료 사용량이 있는 상품(cost.freeUsage)은 이 충돌이 아니라 주의 conflict.paid-free-usage다 (D101).
 
 describe('conflict.paid-on-free (진짜 규칙)', () => {
   const PAID_ON_FREE = realConflictRule('conflict.paid-on-free');
@@ -372,7 +398,8 @@ describe('conflict.paid-on-free (진짜 규칙)', () => {
 
   it('진짜 규칙은 0원만 태그와 유료 상품을 함께 본다', () => {
     expect(PAID_ON_FREE.researchCard).toBe('research.paid-limits');
-    expect(PAID_ON_FREE.when).toEqual({ all: [{ tag: 'budget.free', gte: 1 }, { cartAny: { field: 'cost.free', is: false } }] });
+    expect(PAID_ON_FREE.when).toEqual({ all: [{ tag: 'budget.free', gte: 1 }, { cartAny: { field: 'cost.plan', is: 'paid' } }] });
+    expect(PAID_ON_FREE.severity).toBeUndefined();
   });
 
   it('0원만인데 유료 상품을 담으면 켜진다', () => {
@@ -381,6 +408,7 @@ describe('conflict.paid-on-free (진짜 규칙)', () => {
       {
         id: 'conflict.paid-on-free',
         kind: 'rule',
+        severity: 'conflict',
         message: PAID_ON_FREE.message,
         fixHint: PAID_ON_FREE.fixHint,
         researchCard: 'research.paid-limits',
@@ -398,6 +426,21 @@ describe('conflict.paid-on-free (진짜 규칙)', () => {
 
   it('무료 상품만 담으면 켜지지 않는다', () => {
     expect(evaluate(cat, { answers: { 'q.budget': 'free-only' }, cart: ['free-screen'] }).conflicts).toEqual([]);
+  });
+
+  it('매달 무료 사용량이 있는 상품(cost.freeUsage)은 충돌이 아니라 주의로, 출발을 막지 않는다', () => {
+    const FREE_USAGE = realConflictRule('conflict.paid-free-usage');
+    const c2 = tinyCatalog({
+      questions: [budget],
+      rules: [SCREEN, PAID_ON_FREE, FREE_USAGE],
+      products: [tool('quota-screen', ['screen'], 1, { cost: { free: false, freeUsage: true, note: '매달 1만 건 무료' } })],
+      cards: [realCard(PAID_ON_FREE.researchCard)],
+    });
+    const r = evaluate(c2, { answers: { 'q.budget': 'free-only' }, cart: ['quota-screen'] });
+    expect(ids(r.conflicts)).toEqual(['conflict.paid-free-usage']);
+    expect(conflictIn(r, 'conflict.paid-free-usage')).toMatchObject({ severity: 'warning', kept: true });
+    expect(r.canIssue).toBe(true);
+    expect(ids(r.research)).toEqual(['research.paid-limits']);
   });
 
   it('예산이 0원만이 아니면 유료여도 켜지지 않는다', () => {

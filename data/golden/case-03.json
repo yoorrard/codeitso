@@ -1,6 +1,6 @@
 {
   "id": "case-03",
-  "title": "주식 알림 현황판 (실시간 충돌을 그대로 둠)",
+  "title": "주식 알림 현황판 (실시간 주의)",
   "note": "추천(한국투자증권) 대신 하루 단위 시세를 담고, 알림은 2위 상품을 골랐다. 난이도 합이 8이라 나누기를 제안한다.",
   "answers": {
     "q.type": "board",
@@ -16,7 +16,6 @@
     "q.style": "bold"
   },
   "cart": ["react-vite", "fsc-stock", "telegram-bot", "cloudflare-workers"],
-  "kept": ["conflict.realtime-mismatch"],
   "expect": {
     "asked": [
       "q.type",

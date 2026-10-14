@@ -1,7 +1,7 @@
 {
   "id": "case-14",
-  "title": "반 독서 기록장 (로그인 없이 개인정보, 충돌 둘을 그대로 둠)",
-  "note": "여럿이 쓰는 기록장에 로그인이 없으면 서로의 기록이 보인다. 같은 조사 카드는 한 번만 나온다.",
+  "title": "반 독서 기록장 (로그인 없이 개인정보, 주의 둘)",
+  "note": "여럿이 쓰는 기록장에 로그인이 없으면 서로의 기록이 보이므로 주의가 붙고, 설계도에 기록을 화면에 다시 보여 주지 말라는 지시가 붙는다. 같은 조사 카드는 한 번만 나온다.",
   "answers": {
     "q.type": "record",
     "q.audience": "few",
@@ -15,7 +15,6 @@
     "q.style": "clean"
   },
   "cart": ["html-single", "google-sheets-apps-script"],
-  "kept": ["conflict.personal-server", "conflict.shared-without-login"],
   "expect": {
     "asked": [
       "q.type",
@@ -61,7 +60,7 @@
     "conflicts": ["conflict.personal-server", "conflict.shared-without-login"],
     "canIssue": true,
     "research": ["research.privacy-personal", "research.privacy-overseas"],
-    "safety": ["safety.personal-minimum"],
+    "safety": ["safety.no-login-personal", "safety.personal-minimum"],
     "study": { "required": ["deploy"], "all": ["deploy"] },
     "steps": ["slot.screen", "slot.store", "slot.host"],
     "prep": ["개인 구글 계정 (학교 계정은 외부 공유가 막힐 수 있어요)"],

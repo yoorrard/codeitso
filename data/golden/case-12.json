@@ -1,7 +1,7 @@
 {
   "id": "case-12",
   "title": "버스 도착 알림 (공공데이터포털, 앱스 스크립트 예약 실행)",
-  "note": "버스 도착 정보 API(TAGO)가 데이터 칸에 추천되지만, 이용자는 공공데이터포털에서 고르기로 하고 포털 상품을 담는다. 실시간 충돌을 그대로 둔다.",
+  "note": "버스 도착 정보 API(TAGO)가 데이터 칸에 추천되지만, 이용자는 공공데이터포털에서 고르기로 하고 포털 상품을 담는다. 실시간 주의가 붙는다.",
   "answers": {
     "q.type": "board",
     "q.audience": "me",
@@ -15,7 +15,6 @@
     "q.style": "clean"
   },
   "cart": ["html-single", "data-go-kr", "discord-webhook", "google-sheets-apps-script"],
-  "kept": ["conflict.realtime-mismatch"],
   "expect": {
     "asked": [
       "q.type",

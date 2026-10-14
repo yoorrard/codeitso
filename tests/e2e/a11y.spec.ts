@@ -38,7 +38,7 @@ for (const route of ['/', '/destination', '/waypoints', '/check', '/arrival', '/
 // 초점이 아래 막대 뒤에 숨지 않는다 (WCAG 2.4.11). 막대가 큰 /check를 작은 휴대폰(360×640)에서 Tab으로 끝까지 걷는다
 test('작은 휴대폰에서 Tab으로 옮긴 초점이 아래 막대에 가리지 않는다 (/check, 360×640)', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 640 });
-  const c = JSON.parse(readFileSync('data/golden/case-04.json', 'utf8')) as { answers: Record<string, string>; cart: string[] };
+  const c = JSON.parse(readFileSync('data/golden/case-09.json', 'utf8')) as { answers: Record<string, string>; cart: string[] };
   await page.addInitScript((s) => localStorage.setItem('cc:session:v1', JSON.stringify(s)), { answers: c.answers, cart: c.cart, kept: [], deferred: [] });
   await page.goto('/check');
   await islandsReady(page);

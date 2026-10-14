@@ -317,7 +317,7 @@ describe('진짜 자료: case-04에서 로그인을 나중으로 미루면', () 
     expect(base.split).toEqual({ difficulty: 7, difficultyFirst: 7, needed: true, defer: ['slot.auth'], easier: [] });
   });
 
-  it('Supabase가 저장도 맡아 먼저 만들 것의 난이도·시간·읽어 둘 용어·충돌은 그대로', () => {
+  it('Supabase가 저장도 맡아 먼저 만들 것의 난이도·시간·읽어 둘 용어·주의는 그대로', () => {
     expect(later.session.deferred).toEqual(['slot.auth']);
     expect(later.split.difficultyFirst).toBe(7); // 2 + 3 + 2
     expect(later.minutes).toBe(170); // 30 + 40 + 60 + 40
@@ -325,8 +325,9 @@ describe('진짜 자료: case-04에서 로그인을 나중으로 미루면', () 
       required: ['api', 'api-key', 'env-var'],
       all: ['api', 'api-key', 'env-var', 'terminal', 'deploy', 'auth-login'],
     });
-    expect(later.conflicts.map((c) => c.id)).toEqual(['conflict.personal-server']);
-    expect(later.canIssue).toBe(false);
+    // Supabase는 지역을 고를 수 있어 서울을 고르라는 주의만 남고 출발을 막지 않는다 (D101)
+    expect(later.conflicts.map((c) => c.id)).toEqual(['conflict.personal-region']);
+    expect(later.canIssue).toBe(true);
   });
 
   it('제안은 남고, 미룰 칸 대신 저장 칸의 더 쉬운 상품을 알려 준다', () => {

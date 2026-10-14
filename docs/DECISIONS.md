@@ -853,3 +853,20 @@ v3 설계서의 결정 열둘을 그대로 옮긴다. 설계서가 짝 문서(`d
 - 결정 (개발 의존성 `@google/design.md` 0.4.0): 판 고정, `npm run design:lint`(check에 넣음)와 단위 시험에서만 쓴다. 화면 JS 0. `dist/index.js` gzip 165KB(풀린 1.6MB, 의존 9개), 라이선스 Apache-2.0(패키지 LICENSE 파일, package.json의 license 칸은 비어 있음). 이유: 설계서 4.11절. 틀렸을 때 비용: 낮음. 형식이 alpha라 판이 바뀌면 시험이 알린다.
 - 결정 (P1 '내 말로'): 앱 이름(설계도 1번·DESIGN.md name)·말투(6-1)·더하고 싶은 화면(3번 끝 '(내가 더함)', 6-7)을 `LookChoice`와 설계도에 먼저 넣었다. 시트 줄은 T38 2/4. 이유: 작은 칸이라 자료·엔진을 한 번에. 틀렸을 때 비용: 낮음.
 - 결정 (카드 둘과 집계 구간은 다음 파트로): AI에게 할 말 두 장(`design-keep`·`design-check`)과 `card_copy` 구간은 4단계 화면 수('AI에게 할 말 n장')와 e2e를 함께 바꾸므로 T38 3/4(설계도 칸)에서 더한다.
+
+## D101 v4 막힘 규칙 정정 (V4a, docs/review/v4/brief.md 6절, 2026-10-14, 자동 결정)
+
+- 결정 (충돌과 주의): 충돌 규칙에 `"severity": "warning"`(주의)을 더한다. 주의는 처음부터 그대로 가기(kept)라 출발을 막지 않고, `fixHint`가 할 일, `researchCard`가 알아볼 것에 붙는다. 주의 id는 `session.kept`에 저장하지 않는다(옛 링크의 kept도 버린다). `Conflict.severity`는 모든 막힌 곳에 적힌다(빈 칸 = 충돌, 직접 쓴 도구 = 주의). 이유: 소유자 요청 6번 "되는 조합이 막힘으로 나온다". 틀렸을 때 비용: 낮음(규칙 한 줄로 되돌림).
+- 결정 (규칙마다 공식 문서 확인, 2026-10-14):
+  - `conflict.paid-on-free` **충돌 유지**, 무료 사용량이 없는 도구만(`cost.plan` = `paid`): Heroku(무료 플랜 없음, Eco 월 5달러, heroku.com/pricing), Papago Translation(글자 100만 자 단위 과금, 무료 줄 없음, ncloud.com/product/aiService/papagoTranslation).
+  - 새 `conflict.paid-free-usage` **주의**: 결제 수단은 걸지만 매달 무료 사용량이 있는 도구(`cost.freeUsage: true`). 구글 지도 Dynamic Maps 월 1만 건 무료(developers.google.com/maps/billing-and-pricing/pricing), 할당량으로 상한을 걸 수 있다(…/manage-costs). 네이버 지도 Dynamic Map 대표 계정 하나에 월 600만 건 무료(ncloud.com/product/applicationService/maps). 할 일: 할당량·예산 알림.
+  - `conflict.realtime-mismatch` **주의**: 앱은 돌아가고 데이터가 덜 자주 바뀔 뿐이다. 급식·학사일정처럼 실시간 제공처가 없는 분야도 많다.
+  - `conflict.personal-server` **주의**, 서버 해외·모름만: 개인정보 보호법 제28조의8은 별도 동의, 계약 이행을 위한 처리위탁·보관의 처리방침 공개 등으로 국외 이전을 허용한다. 할 일: 처리방침에 나라·업체·항목, 동의, 학교·기관 허용 확인.
+  - 새 `conflict.personal-region` **주의**, 지역을 고르는 저장 도구: Supabase Northeast Asia (Seoul) ap-northeast-2(supabase.com/docs/guides/platform/regions), Firestore asia-northeast3(서울)이고 만든 뒤 바꿀 수 없다(firebase.google.com/docs/firestore/locations). 할 일: 만들 때 서울.
+  - `conflict.shared-without-login` **주의** + 새 `safety.no-login-personal`(같은 조건): 기록을 앱 화면에 다시 보여 주지 않으면 되는 설계 문제라 막지 않고, 설계도에 그 지시를 붙인다. 화면에서 기록을 봐야 하면 로그인을 고르라고 적는다.
+  - `conflict.key-in-static-page`·`conflict.key-on-public-host` **충돌 유지**: 제공처가 키를 공개 코드에 두지 말라고 한다(DeepL: 브라우저 호출은 CORS로 막고 키를 공개 코드에 드러내지 말라, developers.deepl.com/docs/best-practices/cors-requests. Unsplash: Access Key·Secret Key는 비밀, 화면에서 부르면 프록시, help.unsplash.com 가이드라인). 중간 서버 도구를 고르면 풀린다.
+  - 칸 규칙은 그대로: 화면은 모든 앱에 꼭 있고(통행 불가 유지), 다른 사람이 쓰면 배포가 필요하다. 빈 필수 칸은 그대로 가기·미루기·직접 쓴 도구로 풀린다(감사에서 막힘 0).
+- 결정 (자료): `cost.freeUsage`(스키마 `const: true`)와 계산 칸 `cost.plan`(free·free-usage·paid, 직접 쓴 도구는 모름)을 더했다. 구글 지도·네이버 지도에 `freeUsage: true`와 원문 주소, 비용 메모에 무료 건수. 두 상품 모두 `needsReview: true` 그대로(C01). 레시피 trip-form의 `kept` 삭제. `research.paid-limits`의 '왜'를 "돈이 들 수 있는 도구를 골랐다"로.
+- 결정 (막힘 감사 스크립트 `scripts/audit-blocks.ts`, 읽기만): 미리 짠 코스 다섯 + 씨앗 1의 무작위 답 300개(모르겠어요·직접 쓰기 보기 포함) × 칸마다 진열·색인 도구를 하나씩 바꿔 끼움(빈 칸은 이름 없는 직접 쓴 도구, 미룰 수 있는 칸은 미루기도). 결과: 4,116개 중 막힘 **2,373 → 476**(코스 조합 22 → 10). 남은 476은 Heroku·Papago 0원 충돌 198, 키 노출 278(162 + 116)뿐이고 모두 다른 도구를 고르면 풀린다. 이유: 브리프 6절. 틀렸을 때 비용: 낮음.
+- 결정 (골든): case-04(Supabase → personal-region 주의, 발행 가능), case-14·20(safety.no-login-personal, case-20 발행 가능), case-21(구글 지도 → paid-free-usage 주의, 발행 가능), 새 case-32(Heroku 0원 충돌, paid-on-free가 켜지는 사례). case-02·03·08·12·29는 입력의 kept만 지움(기대값 그대로).
+- 결정 (화면, 최소): 3단계 '그대로 가는 것' 줄에서 주의는 할 일(`fixHint`)을 둘째 줄로 보이고, [되돌리기] 대신 붙은 칸이 있으면 [바꾸기] 링크(직접 쓴 도구와 같음). 이름·색·문체는 V2·V3에서. e2e의 막힌 곳 사례는 case-04 → case-09(키 노출)로.

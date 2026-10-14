@@ -439,24 +439,24 @@ function golden(id: string): Partial<Session> {
 const near = (a: Pt, b: Pt, d: number): boolean => Math.abs(a.x - b.x) <= d && Math.abs(a.y - b.y) <= d;
 
 describe('표지', () => {
-  it('anchorSlot이 있는 막힌 곳은 그 마디 귀퉁이(막히면 변 가운데)에 붙는다 (case-04: 저장, 나라 밖 저장)', () => {
-    const r = evaluate(cat, golden('case-04'));
-    const c = r.conflicts.find((x) => x.id === 'conflict.personal-server');
-    expect(c?.anchorSlot).toBe('slot.store');
+  it('anchorSlot이 있는 막힌 곳은 그 마디 귀퉁이(막히면 변 가운데)에 붙는다 (case-09: 배포, 키 노출)', () => {
+    const r = evaluate(cat, golden('case-09'));
+    const c = r.conflicts.find((x) => x.id === 'conflict.key-in-static-page');
+    expect(c?.anchorSlot).toBe('slot.host');
     expect(c?.kept).toBe(false);
     const m = mapModel(r, { traffic: true });
-    const mk = m.markers.find((x) => x.id === 'conflict.personal-server');
-    const store = m.nodes.find((n) => n.id === 'slot.store');
-    expect(mk?.kind).toBe('globe');
-    expect(mk?.anchor).toBe('slot.store');
+    const mk = m.markers.find((x) => x.id === 'conflict.key-in-static-page');
+    const host = m.nodes.find((n) => n.id === 'slot.host');
+    expect(mk?.kind).toBe('lock');
+    expect(mk?.anchor).toBe('slot.host');
     expect(mk?.countAt).toBeNull();
-    expect(store?.state).toBe('jam');
-    if (!mk || !store) throw new Error('표지나 마디가 없음');
-    expect(near(mk, store, 18)).toBe(true);
+    expect(host?.state).toBe('jam');
+    if (!mk || !host) throw new Error('표지나 마디가 없음');
+    expect(near(mk, host, 18)).toBe(true);
     // 다른 마디보다 붙은 마디에 가장 가깝다
     const closest = [...m.nodes].sort((a, b) => Math.hypot(a.x - mk.x, a.y - mk.y) - Math.hypot(b.x - mk.x, b.y - mk.y))[0];
-    expect(closest?.id).toBe('slot.store');
-    expect(m.roads.find((x) => x.to === 'slot.store')?.state).toBe('jam');
+    expect(closest?.id).toBe('slot.host');
+    expect(m.roads.find((x) => x.to === 'slot.host')?.state).toBe('jam');
     expect(m.summary).toContain(fill(ko.map.summary.blocked, { n: 1 }));
   });
 
@@ -469,8 +469,8 @@ describe('표지', () => {
     expect(m.roads.find((x) => x.to === 'slot.store')?.state).toBe('slow');
   });
 
-  it('anchorSlot이 없으면 출발 고리 오른쪽 위 귀퉁이(+12, −12)에 길 전체 표지 하나 (case-21: 유료 도구)', () => {
-    const r = evaluate(cat, golden('case-21'));
+  it('anchorSlot이 없으면 출발 고리 오른쪽 위 귀퉁이(+12, −12)에 길 전체 표지 하나 (case-32: 유료 도구)', () => {
+    const r = evaluate(cat, golden('case-32'));
     const m = mapModel(r, { traffic: true });
     expect(m.markers).toHaveLength(1);
     const mk = m.markers[0];
@@ -486,7 +486,8 @@ describe('표지', () => {
   it('길 전체 표지는 여럿을 모아 세고, 개수 동그라미 자리를 함께 낸다', () => {
     const r = evaluate(cat, golden('case-20'));
     const m = mapModel(r, { traffic: true });
-    expect(m.markers.find((x) => x.anchor === 'slot.store')?.kind).toBe('globe');
+    // 개인정보 서버 위치는 주의라 처음부터 그대로 가기(물음표, D101)
+    expect(m.markers.find((x) => x.anchor === 'slot.store')?.kind).toBe('question');
     const whole = m.markers.find((x) => x.id === 'whole-route');
     expect(whole?.count).toBe(1);
     expect(whole?.conflicts).toEqual(['conflict.shared-without-login']);
@@ -843,7 +844,8 @@ describe('빈 터, 깃발, 집, 팔레트, 요약 글', () => {
   it('요약 글: 목적지 이름 · 남은 꼭 고를 것 · 막힌 곳 (상태 한 줄과 같은 수와 말)', () => {
     const trip = data.recipes.recipes.find((x) => x.id === 'trip-form');
     if (!trip) throw new Error('trip-form 없음');
-    const base: Partial<Session> = { answers: trip.answers, cart: trip.cart, kept: [], freeText: '체험학습 신청서' };
+    // 0원만인데 무료 플랜이 없는 Heroku를 더해 충돌 하나를 만든다 (trip-form의 개인정보 서버 위치는 주의라 막지 않는다, D101)
+    const base: Partial<Session> = { answers: trip.answers, cart: [...trip.cart, 'heroku'], kept: [], freeText: '체험학습 신청서' };
     const r: EngineResult = evaluate(cat, base);
     const p = progress(r, {});
     expect(p.blocked).toBe(1);
@@ -851,7 +853,7 @@ describe('빈 터, 깃발, 집, 팔레트, 요약 글', () => {
     expect(mapModel(r, { traffic: true }).summary).toBe(`목적지 체험학습 신청서. ${picks} 막힌 곳이 1개 있어요.`);
     expect(statusLine('check', r, {})).toContain(ko.progress.status.blocked.replace('{{n}}', '1'));
     // 그대로 가기로 두면 상태 한 줄처럼 '막힌 곳이 없어요' (그대로 가는 곳을 따로 세지 않는다)
-    const kept = evaluate(cat, { ...base, kept: ['conflict.personal-server'] });
+    const kept = evaluate(cat, { ...base, kept: ['conflict.paid-on-free'] });
     expect(mapModel(kept, { traffic: true }).summary).toBe(`목적지 체험학습 신청서. ${picks} ${ko.map.summary.clear}`);
     expect(statusLine('check', kept, {})).toContain(ko.progress.status.clear);
     expect(mapModel(kept, { arrived: true }).summary).toBe(`목적지 체험학습 신청서. ${ko.map.summary.arrived}`);

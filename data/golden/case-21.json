@@ -1,7 +1,7 @@
 {
   "id": "case-21",
-  "title": "우리 반 현장학습 지도 (0원만인데 구글 지도를 담음)",
-  "note": "0원만 쓰기로 했는데 결제 계정(카드)이 있어야 하는 구글 지도를 담아 conflict.paid-on-free가 켜지고 발행이 막힌다. 데이터 칸 추천은 카카오맵 4(분야+3, 무료+2, 공식+1, 키−1, 난이도 차−1), 구글 지도는 무료 아님 −4로 −2. 공개 키 상품이라 safety.public-key, 지도라서 위치 조사·안전 지시가 붙는다.",
+  "title": "우리 반 현장학습 지도 (0원만인데 구글 지도: 무료 사용량 주의)",
+  "note": "0원만 쓰기로 했는데 결제 계정(카드)이 있어야 하는 구글 지도를 담았다. 매달 무료 사용량이 있어 conflict.paid-free-usage(주의)만 켜지고 발행은 막지 않는다 (D101). 데이터 칸 추천은 카카오맵 4(분야+3, 무료+2, 공식+1, 키−1, 난이도 차−1), 구글 지도는 무료 아님 −4로 −2. 공개 키 상품이라 safety.public-key, 지도라서 위치 조사·안전 지시가 붙는다.",
   "answers": {
     "q.type": "page",
     "q.audience": "few",
@@ -46,9 +46,9 @@
         "reasons": ["aiTool", "budget", "official"]
       }
     ],
-    "conflicts": ["conflict.paid-on-free"],
-    "canIssue": false,
-    "research": ["research.location"],
+    "conflicts": ["conflict.paid-free-usage"],
+    "canIssue": true,
+    "research": ["research.location", "research.paid-limits"],
     "safety": ["safety.public-key", "safety.location-minimum"],
     "study": {
       "required": ["api", "api-key", "deploy"],

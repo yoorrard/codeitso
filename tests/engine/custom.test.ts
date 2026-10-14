@@ -79,7 +79,7 @@ describe('customProduct', () => {
   });
 
   it('규칙 조건에서 모르는 사실은 값이 없다 (서버 위치만 모름)', () => {
-    const none: ProductField[] = ['provider.type', 'access', 'realtime', 'cost.free', 'keyExposureRisk', 'publicKey'];
+    const none: ProductField[] = ['provider.type', 'access', 'realtime', 'cost.free', 'cost.plan', 'keyExposureRisk', 'publicKey'];
     for (const f of none) expect(productField(p, f), f).toBeUndefined();
     expect(productField(p, 'serverRegion')).toBe('unknown');
     expect(productField(p, 'layer')).toBe('index');
@@ -290,9 +290,9 @@ describe('모르는 사실은 맞지 않음, 서버 위치만 모름', () => {
     expect(ids.indexOf('conflict.custom-tool:custom-2')).toBe(ids.length - 1);
   });
 
-  it("직접 써도 서버 위치를 몰라 개인정보 막힌 곳은 풀리지 않는다 (막힌 곳 '바꾸기' 끝의 [목록에 없는 도구 쓰기 ›]를 달지 않음)", () => {
+  it("서버 위치를 몰라 켜지는 개인정보는 주의라 처음부터 그대로 가기이고, [목록에 없는 도구 쓰기 ›]를 달지 않는다 (D101)", () => {
     const jam = run({ answers, cart: ['html-single', 'custom-2', 'github-pages'], customTools: [notion] });
-    expect(jam.conflicts.find((c) => c.id === 'conflict.personal-server')?.kept).toBe(false);
+    expect(jam.conflicts.find((c) => c.id === 'conflict.personal-server')).toMatchObject({ severity: 'warning', kept: true });
     expect(customToolClears(cat, jam, 'conflict.personal-server')).toBe(false);
     // 그대로 둔 것·없는 것·기능에 붙지 않은 것은 false
     expect(customToolClears(cat, r, 'conflict.personal-server')).toBe(false);

@@ -1537,7 +1537,7 @@
       "domains": ["domain.map"],
       "provider": { "type": "official", "name": "네이버클라우드" },
       "access": "key",
-      "cost": { "free": false, "note": "쓴 만큼 요금이 나가요. 무료 이용량이 있는지는 요금 안내에서 확인하세요" },
+      "cost": { "free": false, "freeUsage": true, "note": "쓴 만큼 요금이 나가요. 대표 계정 하나에 Dynamic Map 월 600만 건까지는 무료예요" },
       "realtime": "static",
       "serverRegion": "kr",
       "difficulty": 2,
@@ -1576,7 +1576,8 @@
         "https://www.ncloud.com/support/notice/all/1965",
         "https://guide.ncloud-docs.com/docs/application-maps-overview",
         "https://guide.ncloud-docs.com/docs/maps-troubleshoot",
-        "https://www.ncloud-forums.com/topic/128/"
+        "https://www.ncloud-forums.com/topic/128/",
+        "https://www.ncloud.com/product/applicationService/maps"
       ]
     },
     {
@@ -1589,7 +1590,7 @@
       "domains": ["domain.map"],
       "provider": { "type": "official", "name": "구글" },
       "access": "key",
-      "cost": { "free": false, "note": "결제 계정(카드)을 연결해야 써요. 매달 무료 사용량을 넘으면 요금이 자동으로 나가요" },
+      "cost": { "free": false, "freeUsage": true, "note": "결제 계정(카드)을 연결해야 써요. Dynamic Maps는 매달 1만 건까지 무료이고, 넘으면 요금이 자동으로 나가요" },
       "freeLimit": "지도 불러오기는 매달 1만 건까지 무료예요. 매달 1일(미국 태평양 시간)에 다시 채워져요.",
       "realtime": "static",
       "serverRegion": "unknown",
@@ -1628,6 +1629,7 @@
         "https://developers.google.com/maps/billing-and-pricing/overview",
         "https://developers.google.com/maps/billing-and-pricing/pricing-categories",
         "https://developers.google.com/maps/billing-and-pricing/pricing",
+        "https://developers.google.com/maps/billing-and-pricing/manage-costs",
         "https://developers.google.com/maps/api-security-best-practices"
       ]
     },

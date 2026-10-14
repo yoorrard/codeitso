@@ -1,7 +1,7 @@
 {
   "id": "case-29",
-  "title": "직접 쓴 저장 도구 + 개인정보 신청서 (서버 위치를 몰라 개인정보 막힌 곳)",
-  "note": "저장 칸을 직접 쓴 도구 Notion(custom-2)으로 채운 신청서. 직접 쓴 도구의 서버 위치는 '모름'이라 개인정보 막힌 곳(conflict.personal-server)이 켜지고(그대로 가기로 둠), 그 뒤에 직접 쓴 도구의 서행이 온다. 유료·키 노출처럼 사실을 단정하는 막힌 곳은 켜지지 않는다.",
+  "title": "직접 쓴 저장 도구 + 개인정보 신청서 (서버 위치를 몰라 개인정보 주의)",
+  "note": "저장 칸을 직접 쓴 도구 Notion(custom-2)으로 채운 신청서. 직접 쓴 도구의 서버 위치는 '모름'이라 개인정보 주의(conflict.personal-server)가 켜지고, 그 뒤에 직접 쓴 도구의 주의가 온다. 유료·키 노출처럼 사실을 단정하는 충돌은 켜지지 않는다.",
   "answers": {
     "q.type": "form",
     "q.audience": "few",
@@ -22,7 +22,6 @@
     }
   ],
   "cart": ["html-single", "custom-2", "github-pages"],
-  "kept": ["conflict.personal-server"],
   "expect": {
     "asked": ["q.type", "q.audience", "q.ai", "q.login", "q.domain", "q.budget", "q.personal", "q.payment", "q.device", "q.style"],
     "tags": {

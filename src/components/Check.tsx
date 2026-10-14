@@ -252,8 +252,21 @@ export default function Check() {
                 <span class="list-text ck-row-name">
                   <span class="list-name">{whereOf(c)}</span>
                   <span class="list-sub">{sentences(c.message)[0]}</span>
+                  {/* 주의 규칙(D101)은 막지 않는 대신 할 일을 바로 보인다 */}
+                  {c.kind === 'rule' && c.severity === 'warning' && <span class="list-sub">{c.fixHint}</span>}
                 </span>
-                {c.kind === 'custom-tool' ? (
+                {c.kind === 'rule' && c.severity === 'warning' ? (
+                  // 주의는 고른 '그대로 가기'가 아니라 되돌릴 것이 없다: 붙은 칸이 있으면 그 칸의 도구 고르기로
+                  c.anchorSlot ? (
+                    <a
+                      class="btn btn-text ck-row-btn"
+                      href={waypointPath(c.anchorSlot)}
+                      aria-label={fill(ko.check.actionLabel, { where: whereOf(c), action: ko.check.change })}
+                    >
+                      {ko.check.change}
+                    </a>
+                  ) : null
+                ) : c.kind === 'custom-tool' ? (
                   // 직접 쓴 도구는 쓰는 순간 '확인 못 한 길'을 고른 것이라 되돌릴 막힌 곳이 없다: 그 칸을 연 도구 고르기로 (input.md 8.3절)
                   <a
                     class="btn btn-text ck-row-btn"

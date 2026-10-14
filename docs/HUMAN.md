@@ -6,9 +6,10 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 ## 계정·배포
 
-- [ ] H01 Cloudflare 계정 만들기(무료 플랜) — 미리 보기 배포(T21)에 필요 — T21 — (2026-10-12). 순서는 `docs/DEPLOY.md` 1~6단계 (계정 → API 토큰·Secrets → D1과 database_id → 저장소 변수 → 방문 통계(선택) → 첫 배포 확인)
-- [ ] H01b Cloudflare API 토큰을 GitHub 저장소 Secrets에 `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`로 넣기 — 권한 범위는 `docs/DEPLOY.md` 2단계 — T21 — (2026-10-12)
-- [ ] H11 D1 `code-chauffeur-events`를 만들고 database_id를 알려 주기(또는 `wrangler.jsonc`에 직접 넣기), 저장소 변수 `SITE_URL`·(선택) `CF_BEACON_TOKEN` 넣기 — `docs/DEPLOY.md` 3~5단계 — T21 — (2026-10-12)
+- [ ] H01 Cloudflare 계정 만들기(무료 플랜, 카드 필요 없음) — 미리 보기 배포(T21)에 필요 — T21 — (2026-10-14 고침, D72). 순서는 `docs/DEPLOY.md` 2~6단계 (계정 → D1 만들고 표 만들기·database_id → Workers Builds로 저장소 연결(빌드 명령 `npm run build:cf`)과 빌드 변수 → 방문 통계(선택) → 첫 배포 확인). 비용 비교는 0절: 하루 수천 명까지 0원, 책스책(Vercel·Supabase)에 영향 없음
+- [x] H01b (필요 없어짐, D72) Workers Builds로 연결하면 GitHub Secrets에 Cloudflare 토큰을 넣지 않는다. 예비 길(GitHub Actions 배포)을 쓸 때만 필요 — `docs/DEPLOY.md` 맨 아래 (2026-10-14)
+- [ ] H11 D1 `code-chauffeur-events`를 만들고 Console에서 `migrations/0001_events.sql`을 실행, database_id를 알려 주기(또는 `wrangler.jsonc`에 직접 넣기), Workers Builds 빌드 변수 `PUBLIC_SITE_URL`·(선택) `PUBLIC_CF_BEACON_TOKEN` 넣기 — `docs/DEPLOY.md` 3~5단계 — T21 — (2026-10-14 고침)
+- [ ] H12 저장소를 비공개로: Settings → Pages에서 켜진 Pages 끄기 → Settings → General → Danger Zone → Change repository visibility → Make private — 소유자 요청(2026-10-14), D72. 비공개가 되면 GitHub Actions 무료 시간이 월 2,000분이라 `check` 작업을 아껴 돌리게 바꿨다 — 막지 않음 — (2026-10-14)
 - [x] H02 GitHub 저장소 만들고 이 폴더 올리기 — yoorrard/code-chauffeur (2026-10-12)
 - [ ] H08 공공데이터포털(data.go.kr) 회원가입·약관 동의, '공공데이터활용지원센터_목록조회서비스'(15077093, 자동승인) 활용신청, 받은 일반 인증키를 GitHub Secrets `DATA_GO_KR_SERVICE_KEY`에 넣기(인코딩·디코딩 키 중 어느 쪽인지도 적어 주세요) — 색인 수집(T19) — T19 — (2026-10-12)
 - [ ] H09 브라우저로 직접 확인: `https://www.data.go.kr/robots.txt` 내용, 이용정책(https://www.data.go.kr/ugs/selectPortalPolicyView.do)의 "센터의 사전 승인 없이 포털 서비스의 지식재산을 이용하거나 제3자가 이용하게 해서는 안 된다" 조항이 목록(이름·기관·링크)을 우리 사이트에 싣는 일에 걸리는지. 괜찮으면 `data/sources.json`의 `redistribution`을 정해 주세요(지금 `metadata-only`, 확인 전에는 `link-only`로 다룬다) — T19 수집 시작 — T19 — (2026-10-12). 조사 내용은 D51
@@ -18,7 +19,7 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 - [ ] H03 KIPRIS 상표 검색, 도메인(codechauffeur.com 등) 확인과 결정 — 정식 출시 전 — T22
 - [ ] H04 교원 겸직 신고, '학원' 명칭, 국외 이전(Cloudflare) 고지, 개인정보 처리방침·이용 안내 최종 문구 — 정식 출시 전 — T22. 초안은 `/legal/privacy`·`/legal/notice`(`src/copy/ko.ts`의 legal 묶음)에 있고 '검토 중' 표시가 붙어 있다. 문의 방법도 정해 주세요.
-- [ ] H07 소개 페이지의 저장소 링크(https://github.com/yoorrard/code-chauffeur)가 공개 저장소인지 확인 — 비공개면 정식 출시 전 공개하거나 링크를 바꾼다 — T22 — (2026-10-12)
+- [x] H07 (정함, D72) 저장소는 비공개. 소개 페이지의 저장소 링크는 빼고, 문의는 정식 출시 전 정할 연락처로 바꾼다(H04) — (2026-10-14)
 - [ ] H06 설명문 초안에 AI를 쓸지 결정 — C02~C04 자료 채우기 방식 — 막지 않음 (지금은 에이전트가 초안을 쓰고 needsReview로 둔다)
 
 ## 자료 사실 확인

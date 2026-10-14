@@ -4,13 +4,14 @@
   "private": true,
   "description": "코드쇼퍼: 바이브코딩 초심자가 설계 꾸러미를 영수증처럼 받아 가는 무료 웹 서비스",
   "type": "module",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "engines": {
     "node": ">=22.18"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:cf": "node scripts/deploy/cf-build.ts",
     "preview": "astro preview",
     "validate": "node scripts/validate-data.ts",
     "validate:release": "node scripts/validate-data.ts --release",

@@ -5,7 +5,6 @@ import { ko } from '../../copy/ko.ts';
 import { ROUTES } from '../../lib/routes.ts';
 
 const A = ko.about;
-const REPO = 'https://github.com/yoorrard/code-chauffeur';
 ---
 
 <Base title={A.pageTitle}>
@@ -19,7 +18,6 @@ const REPO = 'https://github.com/yoorrard/code-chauffeur';
     {A.whyNoAIBody.map((t) => <p>{t}</p>)}
     <h2>{A.open}</h2>
     <p>{A.openBody}</p>
-    <p><a href={REPO} rel="noopener noreferrer" target="_blank">{A.repo}</a></p>
     <p><a href={ROUTES.criteria}>{A.scoringLink}</a> · <a href={ROUTES.credits}>{A.creditsLink}</a></p>
   </article>
 </Base>

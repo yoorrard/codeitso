@@ -145,10 +145,12 @@
   --bp-medium: 600px;
   --bp-expanded: 1024px;
   --bp-large: 1440px;
-  --container-max: 1440px;
+  --container-max: 1440px; /* ≥1680px 화면은 1680 (아래, D117) */
   --read-max: 72ch;
+  --facet-w: 15rem; /* 목록 왼쪽 거르기 칸 폭 */
   --header-h: 64px;
   --thumb-h: 132px; /* 카드 미리 보기 판 높이 */
+  --thumb-h-sm: 84px; /* 그림 없는 카드(머리글자·이모지)의 낮은 판: 스크롤을 줄인다 */
   --tap: 44px;
 
   /* 모서리 */
@@ -184,6 +186,13 @@
 
   /* 손맛 */
   --juice-press-scale: 0.97;
+}
+
+/* 넓은 화면 (S3, D117): 1920px 모니터에서 양옆이 비지 않게 본문을 1680까지 넓힌다 (상품 격자 5열 + 거르기 칸) */
+@media (min-width: 1680px) {
+  :root {
+    --container-max: 1680px;
+  }
 }
 
 /* 밤: 기기가 어두운 모드일 때. 같은 '대비:' 쌍을 이 값으로도 검사한다 */

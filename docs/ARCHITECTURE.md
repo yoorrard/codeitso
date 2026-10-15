@@ -7,7 +7,7 @@
 | 영역 | 선택 | 메모 |
 |---|---|---|
 | 사이트 | Astro 7 (정적 출력) + TypeScript strict | 서버 없이 HTML로 빌드한다. |
-| 움직이는 부분 | Preact 섬 | 목록(`Listing`), 상세(`ItemDetail`), 장바구니(`CartList`·`CartLink`), 검색(`SearchLite`), 어려운 말 풀이(`TermPopover`). 나머지는 정적 HTML. 카드의 [담기]는 섬이 아니라 `src/lib/cart-buttons.ts` 한 곳이 문서 전체의 누름을 받는다. |
+| 움직이는 부분 | Preact 섬 | 목록+거르기(`Listing`), 상세(`ItemDetail` + 종류별 미리 보기 `DetailPreview`), 장바구니(`CartDrawer`·`CartPage`), 전체 검색(`SearchPage`), 어려운 말 풀이(`TermPopover`). 쪽 번호 줄 `Pager`는 목록·검색이 같이 쓴다. 나머지는 정적 HTML. 카드의 [담기]는 섬이 아니라 `src/lib/cart-buttons.ts` 한 곳이 문서 전체의 누름을 받는다. |
 | 상태 | nanostores + @nanostores/persistent | localStorage. 저장 코드는 `src/lib/store.ts` 한 곳 (5절). |
 | 진열대 자료 | `data/catalog/<대분류>/<출처>.json` (약 13만 개, 124MB) | 가져오기 스크립트 `scripts/import/`(`npm run import`, 네트워크 필요)가 쓴다. 빌드는 커밋된 자료만 쓴다. 안내는 `docs/DATA.md`. |
 | 진열대 빌드 | `scripts/catalog/build.ts` (`npm run catalog`, `build`·`dev`가 먼저 돌린다) | 원본을 읽어 화면용 JSON(`public/catalog/`)과 Astro용 요약(`.cache/catalog/site.json`)을 쓴다. 4절. |
@@ -54,12 +54,12 @@ code-chauffeur/
 |---|---|---|
 | `/` | 정적 | 한 줄 소개 · 검색 · 대분류 타일(상품 수) · 기획전 여섯 줄(인기 폰트, 스타 많은 템플릿, 인기 MCP 서버, AI API, 인증 없이 쓰는 API, 최근 갱신) |
 | `/c/<대분류>` | 정적, 6쪽 | 소분류 타일(상품 수·출처) · 소분류마다 1등 상품 |
-| `/c/<대분류>/<소분류>?sort=&page=` | 정적, 소분류마다 1쪽 (100쪽) | 인기순 1쪽 60개를 HTML에 그린다. 다른 쪽·정렬은 목록 섬이 목록 묶음 JSON을 받아 같은 카드로 다시 그린다. 쪽·정렬은 진짜 주소(새 탭·공유 가능)이고 그냥 누르면 `pushState`. 주소가 인기순 1쪽이 아니면 첫 그림 전에 빌드 때 그린 카드를 감춘다(`html[data-list-pending]`, 4초 안전판). |
-| `/item?id=<id>` | 정적 1쪽 | 상세 섬이 id 해시로 상세 조각을 받아 그린다: 큰 미리 보기 · 이름·설명·[장바구니에 담기]+메모 · 정보 표(출처·라이선스·인기·갱신일·공식 주소·태그) · 쓰는 법(출처가 준 설치 명령·설정 조각·문서 주소만) · 관련 상품. 검색 엔진 색인은 목록 쪽이 맡는다. |
+| `/c/<대분류>/<소분류>?<거르기 칸>=&sort=&page=` | 정적, 소분류마다 1쪽 (100쪽) | 인기순 1쪽 60개를 HTML에 그린다. 다른 쪽·정렬·거르기는 목록 섬이 JSON을 받아 같은 카드로 다시 그린다(D115). 거르기 칸(출처·라이선스·인증·HTTPS·CORS·무료 한도·연결 방식·쓰는 곳·작업·언어·글꼴 모양·글자·형식·분야·태그…)은 넓은 화면 왼쪽 칸, 좁은 화면 [거르기] 시트(`<dialog>`). 같은 칸 안은 '또는', 칸끼리는 '그리고', 주소는 `license=MIT&license=Apache-2.0&auth=none`처럼 되풀이. 쪽·정렬·거르기는 진짜 주소(새 탭·공유 가능)이고 그냥 누르면 `pushState`. 주소가 인기순 1쪽(거르기 없음)이 아니면 첫 그림 전에 빌드 때 그린 카드를 감춘다(`html[data-list-pending]`, 4초 안전판). |
+| `/item?id=<id>` | 정적 1쪽 | 상세 섬이 id 해시로 상세 조각을 받아 그린다: 종류별 큰 미리 보기(D118: 폰트 견본 글꼴·색 띠와 대비 등급·색 단계표·아이콘 견본·스타일 견본 화면·API 배지와 무료 한도 원문·MCP 연결 정보·프롬프트 앞부분·저장소/모델/데이터셋 한눈에 칸) · 이름·설명·[장바구니에 담기]+메모 · 정보 표(출처·라이선스·인기·갱신일·공식 주소·태그) · 쓰는 법(출처가 준 설치 명령·설정 조각·문서 주소만) · 관련 상품. 검색 엔진 색인은 목록 쪽이 맡는다. |
 | `/cart` (`#s=<id>,…`) | 정적 + 섬 | 만들 앱 한 줄 · 대분류별 줄(메모 고치기·빼기) · 설치 명령 한꺼번에 복사 · 공유 링크 복사 · 모두 비우기 · 주문 요약(대분류별 개수, 합계 0원, [계산하기]). `#s=`로 열면 위에 공유받은 목록과 [모두 담기]. 머리줄 장바구니는 어느 쪽에서나 오른쪽 서랍(모달 `<dialog>`)을 연다. |
 | `/receipt?id=<id>` | 정적 + 섬 | 이 브라우저에 남긴 영수증 한 장: 0원 영수증(번호 `YYYYMMDD-NNNN`·때·만들 앱·대분류별 재료와 개수) · [.md 받기]·[복사]·[공유 링크 복사]·[장바구니에 다시 담기] · .md 미리 보기 |
 | `/receipts` | 정적 + 섬 | 지난 영수증(최근 30장): [열기]·[.md 받기]·[지우기] |
-| `/search?q=` | 정적 + 섬 | 임시 검색 (소분류 이름 + 소분류마다 인기 30개). 전체 검색은 S3. |
+| `/search?q=&cat=&page=` | 정적 + 섬 | 전체 검색(D114): 이름·태그·설명, 한글↔영어 같은 뜻 묶음(`data/search-words.json`). 대분류별 묶음 10장씩 + 맞는 소분류 칩, 대분류를 고르면 60장씩 쪽. 치는 대로 찾고(`replaceState`) 대분류·쪽은 `pushState`. |
 | `/terms` | 정적 | 용어 사전 (`data/glossary.json`) |
 | `/about`, `/about/credits`, `/legal/privacy`, `/legal/notice` | 정적 | 소개, 자료 출처(출처 파일마다 이름·수·이용 조건), 처리방침, 이용 안내 |
 | `/glossary.json`, `/manifest.webmanifest`, `/robots.txt` | 빌드 끝점 | 풀이 자료, 앱 정보, 검색 로봇 안내 |
@@ -77,16 +77,19 @@ data/catalog/**  ──npm run import(네트워크)──  출처 API·목록
       ▼ scripts/catalog/build.ts  (약 13초, 네트워크 없음, --if-stale면 자료·코드가 그대로일 때 건너뜀)
 public/catalog/list/<대분류>/<소분류>/<정렬>-<묶음>.json   카드 480장(8쪽)씩, 정렬 셋(popular·name·recent)  ≈1,020개
 public/catalog/item/<n>.json                              상세 조각 1,024개 (n = FNV-1a(id) % 1024), 관련 상품 [id, 이름] 6개 포함
-public/catalog/search-lite.json                           임시 검색 색인
-.cache/catalog/site.json                                  Astro용 요약: 대분류·소분류·출처·홈 기획전·스타터 키트(data/kits.json)·대분류 1등·소분류 1쪽 카드
+public/catalog/search/meta.json · t-<n>.json · b-<대분류>-<k>.json   전체 검색: 메타 1 + 낱말 조각 512 + 결과 카드 블록 ≈660 (D114)
+public/catalog/facet/<대분류>/<소분류>.json · -name.json · -recent.json  거르기: 값마다 인기순 자리 목록 + 정렬 순서 (D115, ≈300)
+.cache/catalog/site.json                                  Astro용 요약: 대분류·소분류·출처·홈 기획전·스타터 키트(data/kits.json)·대분류 1등·소분류 1쪽 카드·소분류 거르기 칸(값·개수)
       │
-      ▼ astro build  → dist/ (쪽 116 + 진열대 JSON 2,045 + 정적 파일 ≈ 2,300개)
+      ▼ astro build  → dist/ (쪽 118 + 진열대 JSON 3,514 + 정적 파일 ≈ 3,780개)
 ```
 
 - **왜 이렇게:** 상품마다 HTML을 만들면 13만 개라 Cloudflare 한 판 2만 개 한도와 빌드 시간을 넘는다. 쪽은 소분류마다 하나만 두고 나머지는 작은 JSON을 섬이 받아 그린다.
 - **목록 묶음:** 한 쪽 60개(2·3·4·5열이 모두 꽉 찬다), 파일 하나에 8쪽. 쪽 p는 묶음 `⌊(p−1)/8⌋`, 자리 `((p−1) mod 8)×60` (`chunkOf`). 받은 묶음은 섬이 기억해 이웃 쪽은 다시 받지 않는다. 보통 gzip 30KB 안팎, 배경 패턴처럼 SVG 조각을 싣는 소분류만 150KB.
 - **카드 모양(`Card`):** id·이름·대분류·소분류·한 줄 설명(110자)·출처 이름·라이선스·인기 지표 하나·갱신일·미리 보기 판(`Thumb`: 색 띠·그라디언트·아이콘·패턴·폰트 견본·스타일·이모지·출처 그림·머리글자)·짧은 사실(인증·HTTPS·CORS·언어·작업…) 3개.
-- **상세 조각:** 원본 항목 그대로(S3 거르기가 쓸 칸을 줄이지 않는다) + 관련 상품. 평균 gzip 40KB, 가장 큰 것 85KB. 같은 id가 두 진열대에 있으면(10건) 상세는 처음 것.
+- **전체 검색 (D114):** 문서 번호 = 대분류 순서 → 대분류 안 인기순. 낱말 조각은 낱말 앞 세 글자(영문)·두 글자(한글)의 해시라 앞부분으로 찾아도 조각 하나만 받는다. 조각에는 낱말마다 [이름에 든 문서, 태그·설명에 든 문서]를 차이·연속 줄임 글자로(`encodePostings`). 이름 밖에서 8천 문서 넘게 나오는 말(mcp·remote·api…)은 흔한 말로 보고 이름 밖 목록을 싣지 않으며 질의에서 꼭 들 낱말로 치지 않는다. 결과 카드는 대분류마다 인기순 200장씩 블록(무거운 아이콘 SVG는 머리글자로). 질의 하나에 보통 조각 2~4개(gzip 5~55KB)와 블록 몇 개를 받는다.
+- **거르기 (D115):** 소분류마다 칸 7개까지(값 둘 이상, 상품의 5%·10개 넘게 덮을 때), 값은 많은 순 24개(태그는 3개 넘게 붙고 90% 밑인 것). 값마다 인기순 자리 목록을 거르기 파일에, 이름순·최근 갱신순 순서를 순서 파일에 둔다. 섬은 자리 표시(Uint8Array)로 거르고, 정렬 순위가 든 목록 묶음만 받아 카드를 꺼낸다. 값마다 남는 개수는 그 칸의 고름을 빼고 센다.
+- **상세 조각:** 원본 항목 그대로(거르기·미리 보기가 쓸 칸을 줄이지 않는다) + 관련 상품. 평균 gzip 40KB, 가장 큰 것 85KB. 같은 id가 두 진열대에 있으면(10건) 상세는 처음 것.
 - **인기순:** 출처 파일 안에서 가장 많이 채워진 지표(내려받기 → 스타 → 좋아요)의 순위 백분위(D105). 출처마다 지표의 뜻이 달라 값끼리 견주지 않는다. 지표가 없는 손으로 고른 목록은 0.5.
 - **한도 지킴:** 빌드가 파일 수가 5천 개(`MAX_CATALOG_FILES`)를 넘으면 실패하고, 시험(`tests/lib/catalog.test.ts`)과 `npm run qa:budget`이 다시 본다.
 
@@ -110,7 +113,7 @@ public/catalog/search-lite.json                           임시 검색 색인
 
 - 스크립트·스타일·글꼴은 사이트 안 파일만. 예외는 쿠키 없는 Cloudflare Web Analytics 하나.
 - 상품 미리 보기 그림은 출처의 공식 주소(https)에서 지연 로드한다(`loading="lazy"`, 실패하면 머리글자). 그래서 CSP `img-src`에 `https:`를 연다. 검색 엔진 파비콘 서비스처럼 출처가 아닌 곳의 주소는 카드에 쓰지 않는다(`previewImage`). 자료 속 SVG 조각은 스크립트·이벤트·바깥 참조가 있으면 버린다(`safeSvg`).
-- 폰트 견본의 원본 글꼴(fonts.googleapis.com 등)은 S3가 `font-src`·`style-src`에 출처를 더해 지연 로드한다.
+- 폰트 견본 글꼴(D116)은 화면에 보일 때만 출처의 공식 CDN에서 받는다(`src/lib/font-preview.ts`, IntersectionObserver). 호스트는 `src/lib/catalog/hosts.ts` 한 곳(CSS: fonts.googleapis.com·api.fontshare.com·cdn.jsdelivr.net·hangeul.pstatic.net·spoqa.github.io, 파일: fonts.gstatic.com·cdn.fontshare.com·위와 같은 곳)이고 CSP `style-src`·`font-src`가 이 목록을 그대로 쓴다. Google Fonts 카드는 견본 글자만 담은 작은 글꼴(`text=`)을 받는다. 사이트 글꼴과 이름이 같은 Pretendard는 부르지 않는다.
 - CSP는 Astro가 해시로 `<meta>`에 넣는다(`astro.config.mjs`). `frame-ancestors` 같은 나머지는 `public/_headers`.
 
 ## 7. 집계 (Worker + D1)
@@ -125,10 +128,11 @@ Cloudflare Workers Builds가 푸시마다 `npm run build:cf`(= `npm run build`: 
 
 | 무엇 | 한도 |
 |---|---|
-| 처음 불러오는 JS (gzip) | 모든 쪽 100KB (지금 38~42KB, 머리줄 장바구니 서랍 포함) |
+| 처음 불러오는 JS (gzip) | 모든 쪽 100KB (지금 43~51KB: 목록 섬에 거르기, 상세에 종류별 미리 보기) |
 | 처음 불러오는 CSS (gzip) | 30KB |
 | 사이트 안 그림 | 쪽마다 300KB |
-| 임시 검색 색인 | 100KB |
+| 검색 메타 / 가장 큰 검색 조각·블록 (gzip) | 10KB / 80KB |
+| 가장 큰 거르기 파일 (gzip, MCP 서버 4.6만 개) | 120KB |
 | 목록 묶음 하나 / 상세 조각 하나 (gzip) | 160KB / 100KB |
 | 배포 파일 수 / 파일 하나 | 6,000개 / 25MiB |
 
@@ -143,5 +147,5 @@ Cloudflare Workers Builds가 푸시마다 `npm run build:cf`(= `npm run build`: 
 ## 12. 시험과 CI
 
 - 단위: `tests/lib/`(진열대 계산·실제 자료 개수·파일 수, 주소, 저장, 풀이), `tests/import/`(가져온 자료의 스키마·id·개수), `tests/*.test.ts`(품질 바닥선·빌드 지킴·쓰지 않는 말).
-- e2e(`tests/e2e/`, 먼저 `npm run build`): 홈 → 카테고리 → 소분류 2쪽 → 상세 → 메모와 담기 → 장바구니(390·1440), PC 첫 화면에 목록 첫 줄, 정렬 주소와 뒤로 가기, 카드 [담기], 카테고리 메뉴, 검색, 용어 풀이, CSP, axe(360·1440), 주소 바탕(`npm run e2e:base`).
+- e2e(`tests/e2e/`, 먼저 `npm run build`): 홈 → 카테고리 → 소분류 2쪽 → 상세 → 메모와 담기 → 장바구니(390·1440), PC 첫 화면에 목록 첫 줄, 정렬 주소와 뒤로 가기, 카드 [담기], 카테고리 메뉴, 검색, 용어 풀이, 장바구니·영수증·.md, 전체 검색(대분류·쪽·뒤로 가기·치는 대로), 거르기(왼쪽 칸·시트·주소·정렬과 함께·쪽 끝), 폰트 견본 지연 로드, 종류별 미리 보기, 서랍 여러 번, CSP, axe(360·1440), 주소 바탕(`npm run e2e:base`).
 - CI(`.github/workflows/check.yml`): 작업 브랜치 푸시는 빠른 검사(check·build·예산), `main` 푸시·PR·수동 실행은 e2e까지.

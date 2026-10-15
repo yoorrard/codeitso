@@ -1,13 +1,12 @@
 // 상품 상세 섬 (/item?id=…, D103): 상품이 13만 개라 쪽을 미리 만들지 않고, 빌드가 id 해시로 나눈 상세 조각
-// (/catalog/item/<n>.json, 1024개)에서 이 상품을 꺼내 그린다. 위에서 아래로: 위치 → 큰 미리 보기 | 이름·설명·담기(+메모)
+// (/catalog/item/<n>.json, 1024개)에서 이 상품을 꺼내 그린다. 위에서 아래로: 위치 → 종류별 큰 미리 보기(DetailPreview) | 이름·설명·담기(+메모)
 // → 상품 정보 표 → 쓰는 법(출처가 준 설치 명령·조각만) → 관련 상품. 넓은 화면은 오른쪽 담기 칸이 붙어 따라온다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
-import { dateOf, formatCount, paletteColors, pickSummary, shardOf, thumbOf } from '../lib/catalog/core.ts';
+import { dateOf, formatCount, pickSummary, shardOf } from '../lib/catalog/core.ts';
 import type { DetailRecord, NavCategory, Shard } from '../lib/catalog/types.ts';
-import { contrast, isHex, ratio2 } from '../lib/color.ts';
 import { METRIC_ICON } from '../lib/labels.ts';
 import { openCart } from '../lib/cart-ui.ts';
 import { ROUTES, categoryPath, itemDataPath, itemPath, listPath } from '../lib/routes.ts';
@@ -16,17 +15,14 @@ import { MEMO_MAX } from '../lib/saved.ts';
 import { fill } from '../lib/text.ts';
 import { trackAdd } from '../lib/track.ts';
 import CopyButton from './CopyButton.tsx';
+import { DetailPreview } from './DetailPreview.tsx';
 import { Icon } from './Icon.tsx';
-import { Thumb } from './Thumb.tsx';
 
 interface Props {
   nav: NavCategory[];
 }
 
 type State = { k: 'loading' } | { k: 'noId' } | { k: 'missing' } | { k: 'failed' } | { k: 'ok'; item: DetailRecord };
-
-const WHITE = '#FFFFFF'; // floor-guard-ignore: 색 견본의 대비를 재는 기준 흰색(자료 계산), 화면 색이 아니다
-const BLACK = '#000000'; // floor-guard-ignore: 색 견본의 대비를 재는 기준 검은색(자료 계산), 화면 색이 아니다
 
 function readId(): string {
   return new URLSearchParams(window.location.search).get('id')?.trim() ?? '';
@@ -115,38 +111,6 @@ function AddBox({ item }: { item: DetailRecord }) {
   );
 }
 
-function Preview({ item }: { item: DetailRecord }) {
-  const thumb = thumbOf(item, 8);
-  const colors = paletteColors(item);
-  return (
-    <section class="detail-preview" aria-labelledby="pv-title">
-      <h2 id="pv-title" class="visually-hidden">
-        {ko.item.preview}
-      </h2>
-      <Thumb thumb={thumb} uid={`detail:${item.id}`} large />
-      {colors.length > 0 && (
-        <ul class="swatches" aria-label={fill(ko.item.colors, { n: colors.length })}>
-          {colors.map((c) => (
-            <li>
-              <span class="swatch" style={{ background: c.hex }} aria-hidden="true" />
-              <span class="swatch-text">
-                <code>{c.hex.toUpperCase()}</code>
-                {c.name && <span>{c.name}</span>}
-                {isHex(c.hex) && (
-                  <span class="swatch-ratio">
-                    {fill(ko.item.onWhite, { r: ratio2(contrast(c.hex, WHITE)).toFixed(2) })} · {fill(ko.item.onBlack, { r: ratio2(contrast(c.hex, BLACK)).toFixed(2) })}
-                  </span>
-                )}
-              </span>
-            </li>
-          ))}
-        </ul>
-      )}
-      {thumb.t === 'img' && <p class="field-hint">{ko.item.externalNote}</p>}
-    </section>
-  );
-}
-
 function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
   const n = names(nav, item.category, item.kind);
   const m = item.metrics ?? {};
@@ -171,7 +135,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
         </ol>
       </nav>
       <div class="detail-top">
-        <Preview item={item} />
+        <DetailPreview item={item} />
         <div class="detail-buy">
           <p class="detail-cat">
             <a href={listPath(item.category, item.kind)}>{n.sub}</a>
@@ -257,7 +221,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
         {use.install && (
           <div class="code-block">
             <p class="code-label">{ko.item.install}</p>
-            <pre>
+            <pre tabIndex={0}>
               <code>{use.install}</code>
             </pre>
             <CopyButton text={use.install} srLabel={ko.item.install} />
@@ -266,7 +230,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
         {use.snippet && (
           <div class="code-block">
             <p class="code-label">{ko.item.snippet}</p>
-            <pre>
+            <pre tabIndex={0}>
               <code>{use.snippet}</code>
             </pre>
             <CopyButton text={use.snippet} srLabel={ko.item.snippet} />

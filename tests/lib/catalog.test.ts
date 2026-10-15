@@ -24,6 +24,7 @@ import {
   withCommas,
 } from '../../src/lib/catalog/core.ts';
 import { catalog, categories, homeRows, listOf, navData, shards } from '../../scripts/catalog/load.ts';
+import { SEARCH_BLOCK, SEARCH_SHARDS } from '../../src/lib/catalog/search.ts';
 import type { CatalogItem } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, CHUNK_PAGES, MAX_CATALOG_FILES, PAGE_SIZE, SHARDS, SORTS } from '../../src/lib/catalog/types.ts';
 
@@ -139,10 +140,12 @@ describe('카드 미리 보기 판', () => {
     expect(thumbOf(item('m', { preview: { type: 'mcp', icon: 'https://www.google.com/s2/favicons?domain=x' } })).t).toBe('mono');
   });
 
-  it('카드: 한국어 한 줄을 먼저, 사실은 3개까지', () => {
+  it('카드: 한국어 한 줄을 먼저, 사실은 4개까지 (API: 인증·HTTPS·CORS·무료 한도)', () => {
     const c = cardOf(item('api:x', { kind: 'weather', category: 'api', summaryKo: '날씨를 알려 준다', preview: { type: 'api', auth: 'none', https: true, cors: 'yes', formats: ['JSON'] } }));
     expect(c.summary).toBe('날씨를 알려 준다');
-    expect(c.facts).toEqual([{ k: 'auth', v: 'none' }, { k: 'https' }, { k: 'cors' }]);
+    expect(c.facts).toEqual([{ k: 'auth', v: 'none' }, { k: 'https' }, { k: 'cors' }, { k: 'format', v: 'JSON' }]);
+    const free = cardOf(item('api:y', { category: 'api', preview: { type: 'api', auth: 'apiKey', https: true, cors: 'no', freeTierQuote: 'Free forever.', formats: ['JSON'] } }));
+    expect(free.facts).toEqual([{ k: 'auth', v: 'apiKey' }, { k: 'https' }, { k: 'free' }, { k: 'format', v: 'JSON' }]);
     expect(factsOf(item('m', { preview: { type: 'mcp', transports: ['stdio'], remotes: [{ url: 'https://x' }] } }))).toEqual([
       { k: 'transport', v: 'stdio' },
       { k: 'transport', v: 'remote' },
@@ -206,11 +209,14 @@ describe('실제 자료 (data/catalog/**)', { timeout: 120_000 }, () => {
     expect(sample?.rel.length).toBeGreaterThan(0);
   });
 
-  it('배포 파일 수가 5천 개 아래다 (Cloudflare 한 판 2만 개, D103): 목록 묶음 + 상세 조각 + 쪽 + 정적 파일', () => {
+  it('배포 파일 수가 5천 개 아래다 (Cloudflare 한 판 2만 개, D103·D114·D115): 목록 묶음 + 상세 조각 + 검색 + 거르기 + 쪽 + 정적 파일', () => {
     let listFiles = 0;
     for (const c of categories()) for (const s of c.subcategories) listFiles += chunkCount(s.count) * SORTS.length;
-    const pages = categories().reduce((n, c) => n + 1 + c.subcategories.length, 0) + 20;
-    expect(listFiles + SHARDS + 1 + pages + 200).toBeLessThan(MAX_CATALOG_FILES);
+    const subs = categories().reduce((n, c) => n + c.subcategories.length, 0);
+    const searchFiles = 1 + SEARCH_SHARDS + categories().reduce((n, c) => n + Math.ceil(c.total / SEARCH_BLOCK), 0);
+    const facetFiles = subs * 3;
+    const pages = categories().length + subs + 20;
+    expect(listFiles + SHARDS + searchFiles + facetFiles + pages + 200).toBeLessThan(MAX_CATALOG_FILES);
   });
 
   it('홈 기획전 여섯 줄이 모두 찬다', () => {

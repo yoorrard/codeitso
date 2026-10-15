@@ -15,7 +15,7 @@ async function watchCsp(page: Page): Promise<() => Promise<string[]>> {
   return () => page.evaluate(() => (window as unknown as { __csp?: string[] }).__csp ?? []);
 }
 
-test('CSP: 목록 2쪽 → 상세 → 담기 → 검색 → 용어 풀이에서 막힌 것이 없다', async ({ page }) => {
+test('CSP: 목록 2쪽 → 상세 → 담기 → 검색 → 폰트 견본 → 스타일 견본 → 용어 풀이에서 막힌 것이 없다', async ({ page }) => {
   await blockExternal(page);
   const violations = await watchCsp(page);
   await page.goto('/c/design/palettes');
@@ -30,6 +30,13 @@ test('CSP: 목록 2쪽 → 상세 → 담기 → 검색 → 용어 풀이에서 
   await page.goto('/search?q=weather');
   await islandsReady(page);
   await expect(page.locator('.search-results')).toBeVisible();
+  // 폰트 견본 글꼴(출처 CDN의 CSS·글꼴 파일)은 CSP가 허락한다 (요청은 시험에서 막혀 실패로 남는다)
+  await page.goto('/c/design/fonts');
+  await islandsReady(page);
+  await expect(page.locator('.listing-grid .font-sample').first()).toHaveAttribute('data-font-state', /ok|fail/);
+  await page.goto('/item?id=styles%3Aaurora');
+  await islandsReady(page);
+  await expect(page.locator('.style-screen')).toBeVisible();
   await page.goto('/terms');
   await islandsReady(page);
   await selectText(page.locator('#api-key dd p').first(), 'API');

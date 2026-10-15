@@ -3,7 +3,25 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { blockExternal, islandsReady } from './helpers.ts';
 
-const PAGES = ['/', '/c/design', '/c/ai/mcp', '/c/api/weather?page=2', '/item?id=google-fonts%3Aroboto', '/item?id=tinted%3Abase16-3024', '/cart', '/receipts', '/search?q=font', '/terms', '/about', '/about/credits', '/legal/privacy'];
+const PAGES = [
+  '/',
+  '/c/design',
+  '/c/ai/mcp',
+  '/c/api/weather?page=2',
+  '/c/api/weather?auth=none&sort=name',
+  '/item?id=google-fonts%3Aroboto',
+  '/item?id=tinted%3Abase16-3024',
+  '/item?id=styles%3Aaurora',
+  '/item?id=official%3Aamazon-comprehend',
+  '/cart',
+  '/receipts',
+  '/search?q=font',
+  '/search?q=weather&cat=api',
+  '/terms',
+  '/about',
+  '/about/credits',
+  '/legal/privacy',
+];
 
 for (const width of [360, 1440]) {
   test.describe(`${width}px`, () => {

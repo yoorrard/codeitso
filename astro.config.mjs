@@ -4,6 +4,7 @@ import preact from '@astrojs/preact';
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import { basePathProblem, envProblems, hostProblem, oneLine, scanBuild } from './scripts/lib/build-guard.ts';
+import { FONT_CSS_HOSTS, FONT_FILE_HOSTS } from './src/lib/catalog/hosts.ts';
 
 // 빌드 변수: 셸·배포 환경 변수와 .env 파일 (화면의 import.meta.env와 같은 값을 보려고 Vite 규칙대로 읽는다)
 const env = loadEnv(process.env.NODE_ENV === 'development' ? 'development' : 'production', process.cwd(), 'PUBLIC_');
@@ -54,13 +55,13 @@ export default defineConfig({
   // 보안 헤더 (T21, D53): 스크립트·스타일은 Astro가 빌드 때 해시를 모아 CSP <meta>로 넣는다.
   // 외부 스크립트는 쿠키 없는 Cloudflare Web Analytics 하나뿐이다 (R-61). frame-ancestors는 meta에서 안 되므로 public/_headers에 둔다.
   // v5 (brief 5절, D107): 상품 미리 보기 그림은 출처의 공식 주소에서 지연 로드하므로 img-src에 https:를 연다 (그림은 스크립트를 돌리지 못한다).
-  // 폰트 견본의 원본 글꼴(fonts.googleapis.com·fonts.gstatic.com 등)은 S3에서 더한다.
+  // S3 (D116): 폰트 견본은 출처의 공식 CDN(src/lib/catalog/hosts.ts)에서만 CSS와 글꼴 파일을 받는다.
   security: {
     csp: {
       directives: [
         "default-src 'self'",
         "img-src 'self' data: https:",
-        "font-src 'self'",
+        `font-src 'self' ${FONT_FILE_HOSTS.map((h) => `https://${h}`).join(' ')}`,
         analytics ? "connect-src 'self' https://cloudflareinsights.com" : "connect-src 'self'",
         "base-uri 'self'",
         "form-action 'self'",
@@ -68,7 +69,7 @@ export default defineConfig({
       ],
       scriptDirective: { resources: analytics ? ["'self'", 'https://static.cloudflareinsights.com'] : ["'self'"] },
       // 상품 미리 보기의 색 띠·그라디언트 같은 인라인 style 속성만 허용 (스타일 요소는 해시)
-      styleDirective: { resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }] },
+      styleDirective: { resources: ["'self'", ...FONT_CSS_HOSTS.map((h) => `https://${h}`), { resource: "'unsafe-inline'", kind: 'attribute' }] },
     },
   },
 });

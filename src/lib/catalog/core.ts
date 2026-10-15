@@ -2,6 +2,7 @@
 // 빌드(load.ts)와 화면(섬)이 함께 쓴다. DOM·Node API·시각·난수를 쓰지 않는다. 정렬에 localeCompare를 쓰지 않는다 (CLAUDE.md 코드 규칙).
 import type { Card, CatalogItem, CategoryId, Fact, Metric, SortKey, Thumb } from './types.ts';
 import { CHUNK_PAGES, PAGE_SIZE, RELATED_MAX, SHARDS } from './types.ts';
+import { FONT_CSS_HOSTS, FONT_FILE_HOSTS, allowedUrl } from './hosts.ts';
 
 /** 이름 견주기: NFKC + 소문자의 코드 단위 순서 (로캘과 무관해 빌드마다 같다) */
 export function cmpText(a: string, b: string): number {
@@ -189,7 +190,14 @@ export function thumbOf(item: CatalogItem, iconMax = 4): Thumb {
     case 'font': {
       const family = typeof p['family'] === 'string' ? p['family'] : item.name;
       const generic = typeof p['generic'] === 'string' ? p['generic'] : 'sans-serif';
-      return { t: 'font', family, generic, ko: item.kind === 'fonts-ko' || p['sample'] === 'ko' };
+      const font: Thumb = { t: 'font', family, generic, ko: item.kind === 'fonts-ko' || p['sample'] === 'ko' };
+      // 사이트 글꼴(Pretendard Variable)과 이름이 같으면 부르지 않는다: 같은 이름의 글꼴 규칙이 화면 글꼴을 바꿔 버린다
+      if (/^pretendard/i.test(family)) return font;
+      const css = allowedUrl(p['cssUrl'], FONT_CSS_HOSTS);
+      const file = css ? null : allowedUrl(p['fileUrl'], FONT_FILE_HOSTS);
+      if (css) font.css = css;
+      if (file) font.file = file;
+      return font;
     }
     case 'icons': {
       const images = p['images'];
@@ -259,12 +267,12 @@ export function thumbOf(item: CatalogItem, iconMax = 4): Thumb {
 
 const str = (v: unknown): string | undefined => (typeof v === 'string' && v.trim() !== '' && v.length <= 60 ? v.trim() : undefined);
 
-/** 카드의 짧은 사실 (3개까지) */
+/** 카드의 짧은 사실 (4개까지: API는 인증·HTTPS·CORS·무료 한도) */
 export function factsOf(item: CatalogItem): Fact[] {
   const p = item.preview;
   const out: Fact[] = [];
   const add = (f: Fact): void => {
-    if (out.length < 3) out.push(f);
+    if (out.length < 4) out.push(f);
   };
   switch (p.type) {
     case 'api': {
@@ -272,6 +280,7 @@ export function factsOf(item: CatalogItem): Fact[] {
       if (auth) add({ k: 'auth', v: auth });
       if (p['https'] === true) add({ k: 'https' });
       if (p['cors'] === 'yes') add({ k: 'cors' });
+      if (typeof p['freeTierQuote'] === 'string' && p['freeTierQuote'].trim() !== '') add({ k: 'free' });
       const formats = Array.isArray(p['formats']) ? str(p['formats'][0]) : undefined;
       if (formats) add({ k: 'format', v: formats });
       break;

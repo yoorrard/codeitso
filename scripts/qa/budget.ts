@@ -161,10 +161,16 @@ function biggestJson(dir: string): { f: string; n: number } {
 }
 const bigList = biggestJson(join(DIST, 'catalog', 'list'));
 const bigItem = biggestJson(join(DIST, 'catalog', 'item'));
+const bigShard = biggestJson(join(DIST, 'catalog', 'search')); // 조각(t-)과 블록(b-) 가운데 큰 것
+const bigFacet = biggestJson(join(DIST, 'catalog', 'facet'));
 const lazyRows: [string, number, number][] = [
   ['풀이 섬 TermPopover', chunk(/[\\/]TermPopover\.[^\\/]+\.js$/), 6 * KB],
   ['풀이 자료 + 매처 /glossary.json + term-engine', gzSize(join(DIST, 'glossary.json')) + chunk(/[\\/]term-engine\.[^\\/]+\.js$/), 17 * KB],
-  ['임시 검색 색인 /catalog/search-lite.json (S3가 바꾼다)', gzSize(join(DIST, 'catalog', 'search-lite.json')), 100 * KB],
+  // 전체 검색 (D114): 메타는 검색 쪽마다, 낱말 조각·결과 블록은 질의마다 몇 개씩 받는다
+  ['검색 메타 /catalog/search/meta.json', gzSize(join(DIST, 'catalog', 'search', 'meta.json')), 10 * KB],
+  [`가장 큰 검색 조각·블록 ${relative(DIST, bigShard.f)}`, bigShard.n, 80 * KB],
+  // 거르기 (D115): 거르기를 켤 때만 받는다. MCP 서버(4.6만 개)가 가장 크다
+  [`가장 큰 거르기 파일 ${relative(DIST, bigFacet.f)}`, bigFacet.n, 120 * KB],
   // 묶음 하나는 보통 30KB 안팎이다. 배경 패턴처럼 SVG 조각을 싣는 소분류만 크다 (D103)
   [`가장 큰 목록 묶음 ${relative(DIST, bigList.f)}`, bigList.n, 160 * KB],
   [`가장 큰 상세 조각 ${relative(DIST, bigItem.f)}`, bigItem.n, 100 * KB],

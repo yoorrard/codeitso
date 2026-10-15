@@ -1,10 +1,9 @@
 ---
-// 검색 /search?q= (S1 임시판): 큰 검색창 + 임시 색인 결과 섬. 전체 검색은 S3에서 바꿔 넣는다.
+// 검색 /search?q=&cat=&page= (S3, D114): 검색창과 결과 섬. 결과는 진열대 빌드가 만든 검색 파일(/catalog/search/…)로 섬이 그린다.
 import Base from '../layouts/Base.astro';
-import Icon from '../components/Icon.astro';
-import SearchLite from '../components/SearchLite.tsx';
+import SearchPage from '../components/SearchPage.tsx';
 import { ko } from '../copy/ko.ts';
-import { ROUTES } from '../lib/routes.ts';
+import { navData } from '../lib/catalog/site.ts';
 ---
 
 <Base title={ko.search.pageTitle}>
@@ -12,21 +11,5 @@ import { ROUTES } from '../lib/routes.ts';
     <h1>{ko.search.title}</h1>
     <p class="page-lead">{ko.search.lead}</p>
   </header>
-  <form class="hero-search is-page" role="search" action={ROUTES.search} method="get">
-    <label class="visually-hidden" for="page-q">{ko.layout.searchLabel}</label>
-    <input id="page-q" name="q" type="search" placeholder={ko.layout.searchPlaceholder} enterkeyhint="search" autocomplete="off" />
-    <button type="submit" class="btn btn-primary">
-      <Icon name="search" size="20px" />
-      <span>{ko.layout.searchButton}</span>
-    </button>
-  </form>
-  <SearchLite client:load />
-  <script>
-    // 검색어를 검색창에 다시 넣는다 (정적 쪽이라 빌드 때는 비어 있다)
-    const q = new URLSearchParams(window.location.search).get('q') ?? '';
-    for (const id of ['page-q', 'hd-q']) {
-      const el = document.getElementById(id);
-      if (el instanceof HTMLInputElement) el.value = q;
-    }
-  </script>
+  <SearchPage client:load nav={navData()} />
 </Base>

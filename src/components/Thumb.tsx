@@ -1,5 +1,5 @@
 // 상품 미리 보기 판 (카드·상세). 자료에서 바로 그릴 수 있는 것만 그린다: 색 띠·그라디언트·아이콘 견본·배경 패턴·스타일 색·이모지,
-// 출처 그림(지연 로드, brief 5절), 그 밖에는 대분류 색 위 머리글자. 원본 글꼴 견본은 S3에서 지연 로드한다.
+// 출처 그림(지연 로드, brief 5절), 그 밖에는 대분류 색 위 머리글자. 폰트 견본 글꼴은 보일 때 src/lib/font-preview.ts가 받는다(data-font-*).
 // 색 값은 자료(#RRGGBB)라 인라인 style로 칠한다 (CSP는 style 속성만 허락). SVG 조각은 core.ts safeSvg를 거친 것만 온다.
 import { fnv1a } from '../lib/catalog/core.ts';
 import type { Thumb as ThumbData } from '../lib/catalog/types.ts';
@@ -69,7 +69,16 @@ export function Thumb({ thumb, uid, large = false }: Props) {
       const g = thumb.generic === 'serif' ? 'is-serif' : thumb.generic === 'monospace' ? 'is-mono' : 'is-sans';
       return (
         <div class={`${cls} ${g}`} aria-hidden="true">
-          <span class="font-sample">{thumb.ko ? ko.card.sampleKo : ko.card.sampleEn}</span>
+          <span
+            class="font-sample"
+            data-font-family={thumb.family}
+            data-font-generic={thumb.generic}
+            data-font-css={thumb.css}
+            data-font-file={thumb.file}
+            data-font-full={large ? 'true' : undefined}
+          >
+            {large ? (thumb.ko ? ko.item.fontSampleKo : ko.item.fontSampleEn) : thumb.ko ? ko.card.sampleKo : ko.card.sampleEn}
+          </span>
           <span class="font-family">{thumb.family}</span>
         </div>
       );

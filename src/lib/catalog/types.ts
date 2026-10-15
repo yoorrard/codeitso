@@ -1,3 +1,5 @@
+import type { FacetMeta } from './facets.ts';
+
 // 진열대 자료의 모양 (docs/review/v5/brief.md 2절, schemas/catalog-*.json). 가져오기 스크립트(scripts/import/)가 만든
 // data/catalog/<대분류>/<출처>.json의 항목은 모두 이 모양이다. 진열대 빌드(scripts/catalog/build.ts)와 화면(섬)이 함께 쓴다.
 
@@ -98,14 +100,15 @@ export type Thumb =
   | { t: 'img'; src: string; dark?: string; fit: 'cover' | 'contain'; label: string }
   | { t: 'icons'; w: number; h: number; bodies: string[] }
   | { t: 'pattern'; w: number; h: number; body: string; stroke: boolean }
-  | { t: 'font'; family: string; generic: string; ko: boolean }
+  /** css·file: 출처 CDN의 견본 글꼴 (화면에 보일 때 지연 로드, src/lib/font-preview.ts). 둘 다 없으면 일반 모양으로만 */
+  | { t: 'font'; family: string; generic: string; ko: boolean; css?: string; file?: string }
   | { t: 'style'; colors: string[] }
   | { t: 'emoji'; emoji: string }
   | { t: 'mono'; label: string };
 
 /** 카드에 붙는 짧은 사실 (인증·HTTPS·언어·작업…). 이름표 글은 화면(ko.ts)이 붙인다 */
 export interface Fact {
-  k: 'auth' | 'https' | 'cors' | 'lang' | 'task' | 'transport' | 'format' | 'agent' | 'size' | 'host';
+  k: 'auth' | 'https' | 'cors' | 'free' | 'lang' | 'task' | 'transport' | 'format' | 'agent' | 'size' | 'host';
   v?: string;
 }
 
@@ -190,8 +193,10 @@ export interface SiteData {
   kits: KitData[];
   tops: Record<string, Card[]>;
   first: Record<string, Card[]>;
+  /** `${대분류}/${소분류}` → 거르기 칸 (값·개수). 칸이 없으면 빈 배열 (facets.ts) */
+  facets: Record<string, FacetMeta[]>;
   sources: SourceFile[];
   /** 같은 id가 두 진열대에 놓인 수 (상세는 처음 것) */
   duplicates: number;
-  files: { list: number; item: number };
+  files: { list: number; item: number; search: number; facet: number };
 }

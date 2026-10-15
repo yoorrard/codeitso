@@ -66,16 +66,15 @@ for (const vp of [
 test.describe('PC 1440×900 첫 화면', () => {
   test.use({ viewport: { width: 1440, height: 900 }, isMobile: false, hasTouch: false });
 
-  test('목록 첫 줄 카드 5개가 첫 화면 안에 다 보인다 (홈 기획전 첫 줄도)', async ({ page }) => {
+  test('목록 첫 줄 카드(거르기 칸 옆 4열)가 첫 화면 안에 다 보인다 (홈 기획전 첫 줄도)', async ({ page }) => {
     await page.goto('/c/design/fonts');
     await islandsReady(page);
+    await expect(page.locator('.facet-side')).toBeVisible();
     const cards = page.locator('.listing-grid > li');
     const boxes = await Promise.all([0, 1, 2, 3, 4].map((i) => cards.nth(i).boundingBox()));
-    for (const b of boxes) {
-      expect(b).not.toBeNull();
-      expect((b?.y ?? 0) + (b?.height ?? 0)).toBeLessThanOrEqual(900);
-    }
-    expect(new Set(boxes.map((b) => b?.y)).size).toBe(1);
+    const firstRow = boxes.filter((b) => b?.y === boxes[0]?.y);
+    expect(firstRow.length).toBeGreaterThanOrEqual(4);
+    for (const b of firstRow) expect((b?.y ?? 0) + (b?.height ?? 0)).toBeLessThanOrEqual(900);
     await page.goto('/');
     const row = await page.locator('.row-track > li').first().boundingBox();
     expect((row?.y ?? 0) + (row?.height ?? 0)).toBeLessThanOrEqual(900);
@@ -138,16 +137,18 @@ test('카테고리 메뉴: 모든 대분류·소분류, Esc로 닫으면 단추�
   await expect(summary).toBeFocused();
 });
 
-test('검색: 머리줄 검색창 → 결과에 소분류와 상품', async ({ page }) => {
+test('검색: 머리줄 검색창 → 결과에 소분류와 대분류별 상품', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 800 });
   await page.goto('/');
   await page.locator('#hd-q').fill('MCP');
   await page.locator('#hd-q').press('Enter');
   await expect(page).toHaveURL(/\/search\?q=MCP$/);
   await islandsReady(page);
-  await expect(page.locator('.search-results [role="status"]')).toContainText('"MCP"');
-  await expect(page.locator('.search-results .chip').first()).toBeVisible();
+  await expect(page.locator('.search-sum')).toContainText('"MCP"');
+  await expect(page.locator('.search-subs .chip').first()).toBeVisible();
+  await expect(page.locator('.search-group .card').first()).toBeVisible();
   await expect(page.locator('#hd-q')).toHaveValue('MCP');
+  await expect(page.locator('#page-q')).toHaveValue('MCP');
 });
 
 test('용어 사전: 풀이 속 용어를 고르면 풀이 상자가 뜨고 Esc로 닫힌다', async ({ page }) => {

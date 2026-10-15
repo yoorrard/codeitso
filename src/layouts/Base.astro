@@ -4,6 +4,7 @@
 import '../styles/global.css';
 import '../styles/shop.css';
 import '../styles/cart.css';
+import '../styles/find.css';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import TermPopover from '../components/TermPopover.tsx';
@@ -72,7 +73,8 @@ const fetched = site().fetched;
         },
         true,
       );
-      if (/[?&](sort=(name|recent)|page=([2-9]|[1-9][0-9]+))(&|$)/.test(location.search)) {
+      // 소분류 목록 쪽 주소에 인기순 1쪽 말고 다른 것(정렬·쪽·거르기)이 있으면
+      if (/\/c\/[^/]+\/[^/]+\/?$/.test(location.pathname) && location.search.replace(/[?&](sort=popular|page=1)(?=&|$)/g, '').length > 1) {
         document.documentElement.setAttribute('data-list-pending', '');
         setTimeout(function () {
           document.documentElement.removeAttribute('data-list-pending');
@@ -95,10 +97,15 @@ const fetched = site().fetched;
       )
     }
     <script>
-      // [담기] 버튼 (src/lib/cart-buttons.ts)과 카테고리 메뉴 닫기 (Esc·바깥 누르기, 닫으면 단추로 초점)
+      // [담기] 버튼 (src/lib/cart-buttons.ts), 폰트 견본 (src/lib/font-preview.ts), 카테고리 메뉴 닫기 (Esc·바깥 누르기, 닫으면 단추로 초점)
       import { wireAddButtons } from '../lib/cart-buttons.ts';
+      import { CARDS_EVENT } from '../lib/cart-ui.ts';
+      import { watchFonts } from '../lib/font-preview.ts';
 
       wireAddButtons();
+      // 폰트 카드 견본 글꼴: 보일 때 받는다. 섬이 카드를 새로 그리면 다시 훑는다
+      watchFonts();
+      document.addEventListener(CARDS_EVENT, () => watchFonts());
       const menu = document.querySelector<HTMLDetailsElement>('details[data-menu]');
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && menu?.open) {

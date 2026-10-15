@@ -3,6 +3,8 @@
 // 기본(Cloudflare)은 루트 '/'라 주소가 그대로이고, GitHub Pages 같은 하위 주소(/code-chauffeur)면 모든 주소 앞에 바탕이 붙는다.
 // v5 (D103): 진열대 /c/<대분류>, 장바구니 /cart(공유 #s=), 영수증 /receipt?id=·/receipts, 목록 /c/<대분류>/<소분류>?sort=&page=, 상세 /item?id=, 자료 /catalog/list/…·/catalog/item/<n>.json
 // (자료 JSON은 scripts/catalog/build.ts가 public/catalog/에 만든다)
+import type { Selection } from './catalog/facets.ts';
+import { writeSelection } from './catalog/facets.ts';
 import type { SortKey } from './catalog/types.ts';
 import { shareFragment } from './share.ts';
 
@@ -78,7 +80,7 @@ export const FILES = based({
   wordmarkNight: '/brand/wordmark-night.webp',
   manifest: '/manifest.webmanifest',
   glossary: '/glossary.json',
-  searchLite: '/catalog/search-lite.json',
+  searchMeta: '/catalog/search/meta.json',
   event: '/api/event',
 });
 
@@ -87,9 +89,10 @@ export function categoryPath(cat: string): string {
   return withBase(`/c/${encodeURIComponent(cat)}`);
 }
 
-/** 목록 쪽: 기본(인기순 1쪽)은 주소에 붙이지 않는다 */
-export function listPath(cat: string, sub: string, sort: SortKey = 'popular', page = 1): string {
+/** 목록 쪽: 기본(인기순 1쪽, 거르기 없음)은 주소에 붙이지 않는다. 거르기는 칸 이름=값 (같은 칸 여러 값은 되풀이) */
+export function listPath(cat: string, sub: string, sort: SortKey = 'popular', page = 1, sel: Selection = {}): string {
   const q = new URLSearchParams();
+  writeSelection(q, sel);
   if (sort !== 'popular') q.set('sort', sort);
   if (page > 1) q.set('page', String(page));
   const qs = q.toString();
@@ -116,9 +119,32 @@ export function shareUrl(ids: readonly string[], origin?: string): string {
   return `${siteRoot(origin, '')}${sharePath(ids)}`;
 }
 
-/** 검색 결과 */
-export function searchPath(q: string): string {
-  return `${ROUTES.search}?q=${encodeURIComponent(q)}`;
+/** 검색 결과: 대분류 하나만(cat)·쪽 번호는 고른 때만 */
+export function searchPath(q: string, cat?: string, page = 1): string {
+  const p = new URLSearchParams({ q });
+  if (cat) p.set('cat', cat);
+  if (cat && page > 1) p.set('page', String(page));
+  return `${ROUTES.search}?${p.toString().replace(/\+/g, '%20')}`;
+}
+
+/** 검색 낱말 조각 (진열대 빌드가 만드는 JSON) */
+export function searchShardPath(n: number): string {
+  return withBase(`/catalog/search/t-${n}.json`);
+}
+
+/** 검색 결과 카드 블록 */
+export function searchBlockPath(cat: string, k: number): string {
+  return withBase(`/catalog/search/b-${cat}-${k}.json`);
+}
+
+/** 거르기 파일 (값마다 자리 목록) */
+export function facetDataPath(cat: string, sub: string): string {
+  return withBase(`/catalog/facet/${cat}/${sub}.json`);
+}
+
+/** 거르기용 정렬 순서 파일 (이름순·최근 갱신순) */
+export function facetOrderPath(cat: string, sub: string, sort: Exclude<SortKey, 'popular'>): string {
+  return withBase(`/catalog/facet/${cat}/${sub}-${sort}.json`);
 }
 
 /** 용어 사전의 한 용어 */

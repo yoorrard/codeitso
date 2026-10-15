@@ -1,11 +1,11 @@
 ---
-// 목록 쪽 /c/<대분류>/<소분류>?sort=&page= (D103): 소분류마다 HTML 한 쪽. 빌드 때 인기순 1쪽을 그리고, 다른 쪽·정렬은
+// 목록 쪽 /c/<대분류>/<소분류>?sort=&page=&<거르기 칸>= (D103·D115): 소분류마다 HTML 한 쪽. 빌드 때 인기순 1쪽을 그리고, 다른 쪽·정렬은
 // 목록 섬(Listing)이 진열대 빌드가 만든 JSON(/catalog/list/…)을 받아 그린다. 위: 위치 · 제목 · 출처 줄 · 같은 대분류의 다른 소분류(가로로 넘김).
 import Base from '../../../layouts/Base.astro';
 import Listing from '../../../components/Listing.tsx';
 import { ko } from '../../../copy/ko.ts';
 import { pageCount, withCommas } from '../../../lib/catalog/core.ts';
-import { categories, firstPage } from '../../../lib/catalog/site.ts';
+import { categories, facetsOf, firstPage } from '../../../lib/catalog/site.ts';
 import type { CategoryMeta, SubMeta } from '../../../lib/catalog/types.ts';
 import { ROUTES, categoryPath, listPath } from '../../../lib/routes.ts';
 
@@ -50,5 +50,5 @@ const pages = pageCount(sub.count);
       }
     </ul>
   </nav>
-  <Listing client:load cat={meta.id} sub={sub.id} total={sub.count} pages={pages} initial={initial} />
+  <Listing client:load cat={meta.id} sub={sub.id} total={sub.count} pages={pages} initial={initial} facets={facetsOf(meta.id, sub.id)} />
 </Base>

@@ -2,6 +2,7 @@
 // .cache/catalog/site.json에 쓴 것을 한 번 읽어 둔다. 13만 개 원본은 읽지 않는다. 빌드 때만 쓴다 (섬은 props로 받는다).
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import type { FacetMeta } from './facets.ts';
 import type { Card, CategoryId, CategoryMeta, KitData, NavCategory, Row, SiteData, SourceFile, SubMeta } from './types.ts';
 
 /** 진열대 빌드가 쓰고 Astro가 읽는 요약 파일 (저장소에 올리지 않는다, .cache/는 .gitignore) */
@@ -49,6 +50,11 @@ export function topsOf(cat: CategoryId): Card[] {
 /** 소분류 목록 쪽 HTML에 그리는 인기순 1쪽 */
 export function firstPage(cat: CategoryId, sub: SubMeta['id']): Card[] {
   return site().first[`${cat}/${sub}`] ?? [];
+}
+
+/** 소분류의 거르기 칸 (값·개수) */
+export function facetsOf(cat: CategoryId, sub: SubMeta['id']): FacetMeta[] {
+  return site().facets?.[`${cat}/${sub}`] ?? [];
 }
 
 export function sources(): SourceFile[] {

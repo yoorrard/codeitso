@@ -25,6 +25,7 @@ import layoutSvg from '@phosphor-icons/core/assets/regular/layout.svg?raw';
 import databaseSvg from '@phosphor-icons/core/assets/regular/database.svg?raw';
 import tagSvg from '@phosphor-icons/core/assets/regular/tag.svg?raw';
 import infoSvg from '@phosphor-icons/core/assets/regular/info.svg?raw';
+import filterSvg from '@phosphor-icons/core/assets/regular/sliders-horizontal.svg?raw';
 
 export const icons = {
   close: closeSvg,
@@ -46,6 +47,7 @@ export const icons = {
   plus: plusSvg,
   tag: tagSvg,
   info: infoSvg,
+  filter: filterSvg,
   /** 대분류 아이콘 (CATEGORY_ICON) */
   palette: paletteSvg,
   sparkle: sparkleSvg,

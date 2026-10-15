@@ -1,5 +1,5 @@
 /* 쇼핑몰 화면 (v5, brief 3·4절): 머리줄·메뉴·홈·목록·카드·상세·장바구니·바닥글. 값은 tokens.css 변수만.
-   구간: 휴대폰 <600 · 태블릿 600~1023 · PC 1024~1439 · 넓은 PC ≥1440, 본문 최대 1440 (--container-max). */
+   구간: 휴대폰 <600 · 태블릿 600~1023 · PC 1024~1439 · 넓은 PC ≥1440, 본문 최대 1440 (--container-max, ≥1680 화면은 1680). */
 
 /* ── 대분류 강조색: [data-cat]이 --cat·--cat-soft·--cat-ink를 정한다 ───────────── */
 :root,
@@ -188,6 +188,10 @@
 .chip-n {
   color: var(--text-3);
   font-size: var(--size-caption);
+}
+.chip[aria-current] .chip-n {
+  color: inherit;
+  font-weight: var(--weight-body);
 }
 
 .chip-list,
@@ -511,10 +515,14 @@
   margin-block-start: var(--space-3);
 }
 .hero-search input {
+  flex: 1;
+  min-inline-size: 0;
   min-block-size: var(--btn-lg);
   padding-inline-end: var(--space-4);
 }
 .hero-search .btn {
+  flex: none;
+  min-inline-size: var(--btn-lg);
   min-block-size: var(--btn-lg);
   border-radius: var(--radius-pill);
 }
@@ -757,6 +765,7 @@
 .card-facts li,
 .tag-list li,
 .src-pill {
+  max-inline-size: 100%;
   padding: 1px var(--space-2);
   border-radius: var(--radius-pill);
   background: var(--fill);
@@ -764,6 +773,11 @@
   font-size: var(--size-caption);
   line-height: var(--leading-caption);
   white-space: nowrap;
+}
+/* 긴 출처 이름(목록 머리)은 줄을 바꾼다: 휴대폰에서 가로로 넘치지 않게 */
+.list-sources .src-pill {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .card-meta {
   display: flex;
@@ -952,6 +966,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.thumb-emoji,
+.thumb-mono {
+  block-size: var(--thumb-h-sm);
+}
 .thumb-emoji {
   background: var(--cat-soft);
   font-size: var(--size-display);
@@ -965,6 +983,7 @@
 }
 .thumb.is-large.thumb-mono,
 .thumb.is-large.thumb-emoji {
+  block-size: clamp(8rem, 14vw, 11rem);
   font-size: var(--size-display);
 }
 
@@ -1397,14 +1416,6 @@
 }
 
 /* ── 검색 결과 ───────────────────────────────────────────────────────── */
-.search-results {
-  display: grid;
-  gap: var(--space-5);
-}
-.search-results h2 {
-  margin-block-end: var(--space-3);
-  font-size: var(--size-title-3);
-}
 
 /* ── 용어 사전 ───────────────────────────────────────────────────────── */
 .term-list {

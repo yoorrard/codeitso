@@ -9,7 +9,8 @@
 
 - 끝난 것: **D1 자료 가져오기**(6개 대분류 131,370개, `data/catalog/**`, 가져오기 스크립트·스키마·시험), **S1 새 틀**(옛 단계·엔진·자료·화면 지우기, 장바구니 로고·토큰, 머리줄·홈·카테고리·소분류 목록·쪽 번호·상세·장바구니 최소판·임시 검색·용어 사전, 진열대 빌드).
 - 끝난 것: **S2 장바구니·영수증·.md**(머리줄 서랍, `/cart`, 담은 뒤 작은 창, 계산 → 0원 영수증 `/receipt?id=`, .md 받기·복사, 지난 영수증 `/receipts`, 최근 본 재료, 스타터 키트 `data/kits.json`, 공유 링크 `/cart#s=`, 설치 명령 한꺼번에 복사, 집계 이벤트 다섯 교체).
-- 다음: **S3** 전체 검색·종류별 미리 보기(폰트 견본 글꼴 지연 로드 등)·거르기·반응형 점검·실제 사이트 QA.
+- 끝난 것: **S3 찾기·미리 보기·마무리**(전체 검색 `/search?q=&cat=&page=`: 낱말 조각 + 결과 카드 블록, 한글↔영어 같은 뜻 묶음 `data/search-words.json` · 목록 거르기: 소분류마다 자료에서 뽑은 칸, PC 왼쪽 칸·휴대폰 시트, 주소에 남음 · 종류별 상세 미리 보기와 폰트 견본 글꼴 지연 로드 · 넓은 화면 1680, D114~D118).
+- 다음: 실제 사이트 점검을 이어 가며 버그를 고치고, 사람 몫(배포 계정·법·상표)을 기다린다.
 - 사람 몫은 `docs/HUMAN.md`(계정·배포 H01·H11, 법·상표 H03·H04). 푸시마다 https://code-chauffeur.yoorrard.workers.dev 에 배포되므로 검사가 통과한 것만 푸시한다.
 
 ## 일하는 방식 (사람 개입 최소)
@@ -29,7 +30,7 @@
 3. **상품의 사실(설명·라이선스·인증·무료 여부·인기 지표)은 출처 자료 그대로만 쓴다.** 지어내지 않고, 출처가 없으면 비운다. 진열대 자료(`data/catalog/**`)는 손으로 고치지 않고 가져오기 스크립트를 고쳐 다시 받는다.
 4. 정렬·인기 점수·쪽 나누기·카드 모양 같은 진열대 계산은 `src/lib/catalog/core.ts`(순수 함수)에서만 한다. 빌드(`scripts/catalog/build.ts`)와 화면 섬이 같은 함수를 쓴다.
 5. 문장을 코드에 박지 않는다. 화면 고정 문구는 `src/copy/ko.ts`. 문체는 **다체**, 표준 용어·외래어는 그대로 (`.claude/rules/copy.md`).
-6. 접근성 WCAG 2.2 AA. 휴대폰 360~390px부터 1440px 이상까지(구간 <600 · 600~1023 · 1024~1439 · ≥1440, 최대 폭 1440). 모션은 하나에 1초 안쪽, 누르면 끝, '동작 줄이기'를 따른다.
+6. 접근성 WCAG 2.2 AA. 휴대폰 360~390px부터 1440px 이상까지(구간 <600 · 600~1023 · 1024~1439 · ≥1440, 최대 폭 1440, 1680px 이상 화면은 1680, D117). 모션은 하나에 1초 안쪽, 누르면 끝, '동작 줄이기'를 따른다.
 7. 색·글꼴·크기·모션 길이는 `src/styles/tokens.css`의 변수만 쓴다 (품질 바닥선 검사가 막는다).
 8. **Cloudflare 정적 파일은 한 판 2만 개까지.** 상품마다 HTML을 만들지 않는다. 진열대 JSON은 5천 개 아래(`MAX_CATALOG_FILES`), 첫 화면 JS 100KB(gzip), 쪽마다 사이트 안 그림 300KB.
 9. 새 의존성은 꼭 필요할 때만 더하고, 이유와 크기(gzip)를 `docs/DECISIONS.md`에 적는다.
@@ -42,11 +43,11 @@
 |---|---|
 | `npm run check` | 토큰 대비 + 글꼴 글자 + 품질 바닥선 + 쓰지 않는 말 + 하네스 + 타입 검사 + 단위 시험(진열대 계산·실제 자료 개수·가져온 자료 스키마 포함). 커밋 전에 반드시 |
 | `npm run build` | 진열대 빌드(`npm run catalog`, 자료·코드가 그대로면 건너뜀) → Astro 빌드 → `dist/` |
-| `npm run catalog` | `data/catalog/**` → `public/catalog/`(목록 묶음·상세 조각·임시 검색 색인) + `.cache/catalog/site.json`(Astro 요약) |
+| `npm run catalog` | `data/catalog/**` → `public/catalog/`(목록 묶음·상세 조각·검색 조각·결과 블록·거르기 파일, 약 25초) + `.cache/catalog/site.json`(Astro 요약) |
 | `npm run import` / `import:design` · `import:ai` · `import:api` · `import:oss` | 진열대 자료 다시 받기 (네트워크 필요, `docs/DATA.md`) |
 | `npm test` | Vitest 단위 시험 |
 | `npm run guard` / `words` | 품질 바닥선 (토큰 밖 값, 외부 자원, 코드 속 문장, any, 시험 건너뛰기, 주소 글자) / 쓰지 않는 말·해요체 |
-| `npm run e2e` | Playwright 주요 흐름(홈 → 카테고리 → 2쪽 → 상세 → 담기 → 장바구니, 390·1440), 정렬, 메뉴, 검색, 용어 풀이, CSP, axe. 먼저 `npm run build` |
+| `npm run e2e` | Playwright 주요 흐름(홈 → 카테고리 → 2쪽 → 상세 → 담기 → 장바구니, 390·1440), 정렬, 메뉴, 전체 검색, 거르기, 폰트 견본, 종류별 미리 보기, 장바구니·영수증, 용어 풀이, CSP, axe. 먼저 `npm run build` |
 | `npm run qa:budget` / `qa:shots` / `qa:base` | 성능 예산 / 시각 점검 스크린샷·axe → `.qa/` / 하위 주소 빌드 시험 |
 | `npm run logo` / `fonts` | 로고 크기별 그림·파비콘 / 글꼴 |
 
@@ -55,10 +56,10 @@
 ## 폴더
 
 ```text
-data/catalog/    진열대 자료 (<대분류>/index.json + <출처>.json), data/glossary.json 용어, data/kits.json 스타터 키트
+data/catalog/    진열대 자료 (<대분류>/index.json + <출처>.json), data/glossary.json 용어, data/kits.json 스타터 키트, data/search-words.json 검색 같은 뜻 묶음
 schemas/         자료 스키마
 scripts/import/  가져오기 · scripts/catalog/ 진열대 읽기·빌드 · scripts/brand/ 로고 · guard·qa·lib·fonts·deploy
-src/lib/catalog/ 진열대 모양(types)·순수 계산(core)·Astro 요약 읽기(site)
+src/lib/catalog/ 진열대 모양(types)·순수 계산(core·search·facets·preview)·미리 보기 CDN 호스트(hosts)·Astro 요약 읽기(site)
 src/             components(머리줄·메뉴·카드·섬), pages(라우트), layouts/Base.astro, copy/ko.ts, styles/tokens.css
 public/catalog/  진열대 빌드 결과 (저장소에 올리지 않는다)
 docs/            문서 (아래), docs/archive/v4/ 옛 문서·자료

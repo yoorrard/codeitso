@@ -30,6 +30,8 @@ import databaseSvg from '@phosphor-icons/core/assets/regular/database.svg?raw';
 import tagSvg from '@phosphor-icons/core/assets/regular/tag.svg?raw';
 import infoSvg from '@phosphor-icons/core/assets/regular/info.svg?raw';
 import filterSvg from '@phosphor-icons/core/assets/regular/sliders-horizontal.svg?raw';
+import helpSvg from '@phosphor-icons/core/assets/regular/question.svg?raw';
+import bookSvg from '@phosphor-icons/core/assets/regular/book-open-text.svg?raw';
 
 export const icons = {
   close: closeSvg,
@@ -57,6 +59,10 @@ export const icons = {
   tag: tagSvg,
   info: infoSvg,
   filter: filterSvg,
+  /** 이용 가이드 (O1): 머리줄 [?] */
+  help: helpSvg,
+  /** 어려운 말 풀이·용어 사전 (O1) */
+  book: bookSvg,
   /** 대분류 아이콘 (CATEGORY_ICON) */
   palette: paletteSvg,
   sparkle: sparkleSvg,

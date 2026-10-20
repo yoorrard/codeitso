@@ -1,5 +1,5 @@
 ---
-// 바닥글 (L, D136): 로고 · 법 문서와 정보 쪽 링크(개인정보 처리방침은 굵게, 국내 서비스 관례) · 운영자와 문의 메일 · 자료 갱신일과 상품 수 ·
+// 바닥글 (L, D136): 로고 · 법 문서와 정보 쪽 링크(개인정보 처리방침은 굵게, 국내 서비스 관례)와 이용 가이드 단추(O1) · 운영자와 문의 메일 · 자료 갱신일과 상품 수 ·
 // 상품 권리 한 줄 · 저작권 표시 (미리 보기 단계면 시험판 줄) · 방문 수(D134). 운영자 이름·메일은 저장소 설정(src/lib/site-config.ts), 메일은 빌드 변수가 먼저.
 import Logo from './Logo.astro';
 import VisitCount from './VisitCount.astro';
@@ -32,6 +32,7 @@ const email = CONTACT_EMAIL || SITE_CONFIG.email;
         <li><a href={ROUTES.credits}>{F.credits}</a></li>
         <li><a href={ROUTES.about}>{F.about}</a></li>
         <li><a href={ROUTES.terms}>{F.glossary}</a></li>
+        <li><button type="button" class="ft-guide" data-tour-open>{F.guide}</button></li>
       </ul>
     </nav>
     <p class="ft-line ft-operator">

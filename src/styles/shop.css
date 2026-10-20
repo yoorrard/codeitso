@@ -344,6 +344,7 @@
 }
 
 .hd-search-link,
+.hd-help,
 .hd-wish,
 .hd-cart {
   position: relative;
@@ -363,9 +364,17 @@
   margin-inline-start: auto;
 }
 .hd-search-link:hover,
+.hd-help:hover,
 .hd-wish:hover,
 .hd-cart:hover {
   background: var(--fill);
+}
+/* 이용 가이드 [?] (O1): 휴대폰 머리줄은 자리가 없어 카테고리 메뉴 아래·바닥글에 둔다 */
+.hd-help {
+  display: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
 }
 .hd-cart-word {
   display: none;
@@ -401,6 +410,9 @@
   }
   .hd-search-link {
     display: none;
+  }
+  .hd-help {
+    display: inline-flex;
   }
 }
 
@@ -509,6 +521,34 @@
   color: var(--text-3);
   font-size: var(--size-caption);
   font-variant-numeric: tabular-nums;
+}
+/* 메뉴 판 아래 도움말 줄 (O1): 이용 가이드 · 용어 사전 */
+.catmenu-help {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  inline-size: min(100% - 2 * var(--gutter), var(--container-max));
+  margin: calc(-1 * var(--space-3)) auto 0;
+  padding-block: var(--space-3) var(--space-5);
+  border-block-start: 1px solid var(--hairline);
+}
+.catmenu-help-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  padding-inline: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--size-label);
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+}
+.catmenu-help-btn:hover {
+  background: var(--fill-press);
 }
 .cat-dot {
   display: inline-grid;
@@ -1813,12 +1853,24 @@
   padding: 0;
   list-style: none;
 }
-.ft-links a {
+.ft-links a,
+.ft-guide {
   display: inline-flex;
   align-items: center;
   min-block-size: var(--tap);
   color: var(--text-2);
   font-size: var(--size-label);
+}
+/* 이용 가이드 (O1): 링크처럼 보이는 단추 (쪽을 옮기지 않고 가이드를 연다) */
+.ft-guide {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
 }
 .ft-line {
   color: var(--text-3);

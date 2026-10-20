@@ -3,6 +3,7 @@ import { BRAND_FILES } from '../lib/brand-files.ts';
 // 모든 화면의 기본 틀 (v5, brief 3절): 본문 바로 가기 → 머리줄(로고 · 카테고리 · 검색 · 찜 · 장바구니) → 본문 → 바닥글.
 // 본문 맨 위에는 처음 화면 말고 모든 화면에 [뒤로]와 위치(crumbs)를 한 줄로 둔다 (N1, D137: src/lib/page-nav.ts).
 // 화면 낭독기 알림 자리(#cc-live)와 어려운 말 풀이 섬(TermPopover), 맨 위로 단추도 여기 있다. 본문 폭은 최대 1440px (--container-max).
+// 처음 방문 가이드(O1, D138)는 src/lib/tour.ts가 열 때만 받는다. 가이드가 쓰는 진열대 요약(대분류 이름·상품 수)은 <template id="tour-data">에 둔다.
 import '../styles/global.css';
 import '../styles/shop.css';
 import '../styles/cart.css';
@@ -16,6 +17,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import TermPopover from '../components/TermPopover.tsx';
 import { ko } from '../copy/ko.ts';
 import { LIVE_ID } from '../lib/announce.ts';
+import { withCommas } from '../lib/catalog/core.ts';
 import { navData, site, totalItems } from '../lib/catalog/site.ts';
 import { FILES, ROUTES, absoluteUrl, stripBase } from '../lib/routes.ts';
 import { analyticsAllowed, BEACON_TOKEN, STAGE } from '../lib/stage.ts';
@@ -43,6 +45,7 @@ const nav = navData();
 const fetched = site().fetched;
 const isHome = stripBase(path || '/') === '/';
 const backHref = isHome || back === false ? null : (back ?? crumbs[crumbs.length - 1]?.href ?? ROUTES.home);
+const tourCats = JSON.stringify(nav.map((c) => ({ id: c.id, name: c.name, total: withCommas(c.total) })));
 ---
 
 <!doctype html>
@@ -107,6 +110,7 @@ const backHref = isHome || back === false ? null : (back ?? crumbs[crumbs.length
     </button>
     <SiteFooter fetched={fetched} total={totalItems()} />
     <TermPopover client:idle />
+    <template id="tour-data" data-cats={tourCats} data-total={withCommas(totalItems())}></template>
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
     {
       analyticsAllowed(Astro.url.pathname) && (
@@ -115,17 +119,19 @@ const backHref = isHome || back === false ? null : (back ?? crumbs[crumbs.length
     }
     <script>
       // [담기] 버튼 (src/lib/cart-buttons.ts), 찜 하트 (wish-buttons.ts), 뒤로·'/' 키·맨 위로 (page-nav.ts), 폰트 견본 (src/lib/font-preview.ts),
-      // 카테고리 메뉴 닫기 (Esc·바깥 누르기, 닫으면 단추로 초점)
+      // 이용 가이드 (tour.ts: 처음 한 번 저절로, [이용 가이드] 단추로 다시), 카테고리 메뉴 닫기 (Esc·바깥 누르기, 닫으면 단추로 초점)
       import { wireAddButtons } from '../lib/cart-buttons.ts';
       import { CARDS_EVENT } from '../lib/cart-ui.ts';
       import { watchFonts } from '../lib/font-preview.ts';
       import { outsidePress } from '../lib/overlay.ts';
       import { wirePageNav } from '../lib/page-nav.ts';
+      import { wireTour } from '../lib/tour.ts';
       import { wireWishButtons } from '../lib/wish-buttons.ts';
 
       wireAddButtons();
       wireWishButtons();
       wirePageNav();
+      wireTour();
       // 폰트 카드 견본 글꼴: 보일 때 받는다. 섬이 카드를 새로 그리면 다시 훑는다
       watchFonts();
       document.addEventListener(CARDS_EVENT, () => watchFonts());

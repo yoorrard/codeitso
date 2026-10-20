@@ -1,11 +1,12 @@
 // 브라우저 저장은 이 파일 한 곳에서만 한다 (docs/ARCHITECTURE.md 5절, CLAUDE.md 꼭 지킬 것 2).
-// v5.1: 장바구니(담은 재료와 메모), 프로젝트 메모, 지난 프롬프트, 최근 본 재료, 찜(N1), 설정, 연 용어, 집계 기록.
+// v5.1: 장바구니(담은 재료와 메모), 프로젝트 메모, 지난 프롬프트, 최근 본 재료, 찜(N1), 설정, 연 용어, 집계 기록, 이용 가이드(O1).
 // localStorage를 못 쓰면(사생활 보호 모드, 막힌 저장소) 메모리에만 두고 $storageOk를 false로 둔다.
 import { persistentAtom, setPersistentEngine } from '@nanostores/persistent';
 import { atom, computed } from 'nanostores';
-import type { AddResult, CartLine, Meta, Prefs, PromptEntry, RecentItem, WishItem } from './saved.ts';
+import type { AddResult, CartLine, Guide, Meta, Prefs, PromptEntry, RecentItem, WishItem } from './saved.ts';
 import {
   DEFAULT_PREFS,
+  EMPTY_GUIDE,
   EMPTY_META,
   KEYS,
   LEGACY_KEYS,
@@ -16,10 +17,12 @@ import {
   addLines,
   cleanMemo,
   isDefaultPrefs,
+  isEmptyGuide,
   isEmptyList,
   isEmptyMeta,
   pushRecent,
   readCart,
+  readGuide,
   readMeta,
   readPrefs,
   readProject,
@@ -86,6 +89,7 @@ export const $recent = persistentAtom<RecentItem[]>(KEYS.recent, [], codec((raw)
 export const $wish = persistentAtom<WishItem[]>(KEYS.wish, [], codec(readWish, isEmptyList));
 export const $meta = persistentAtom<Meta>(KEYS.meta, EMPTY_META, codec(readMeta, isEmptyMeta));
 export const $prefs = persistentAtom<Prefs>(KEYS.prefs, DEFAULT_PREFS, codec(readPrefs, isDefaultPrefs));
+export const $guide = persistentAtom<Guide>(KEYS.guide, EMPTY_GUIDE, codec(readGuide, isEmptyGuide));
 
 /** 담은 재료 개수 (머리줄 배지) */
 export const $cartCount = computed($cart, (l) => l.length);
@@ -187,6 +191,16 @@ export function setPrefs(patch: Partial<Prefs>): void {
   $prefs.set(readPrefs({ ...$prefs.get(), ...patch }));
 }
 
+/** 처음 방문 가이드를 열었다 (O1): 끝까지 봤든 건너뛰었든 다시 저절로 열지 않는다. [이용 가이드]로는 언제든 다시 연다 */
+export function markTourSeen(): void {
+  $guide.set({ ...$guide.get(), tour: true });
+}
+
+/** 상세의 '어려운 말 풀이' 안내를 닫았다 (O1): 다음부터는 작은 [어려운 말 풀이] 단추만 둔다 */
+export function closeTermHint(): void {
+  $guide.set({ ...$guide.get(), hint: true });
+}
+
 /** 한 번 연 어려운 말 풀이 용어 (D69). 고른 글은 저장하지 않는다 */
 export const TERMS_KEY = 'cc:terms:v1';
 export const TERMS_SEEN_MAX = 300;
@@ -215,7 +229,7 @@ export function rememberSent(key: string): boolean {
   return true;
 }
 
-/** '저장한 기록 지우기': 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·찜·연 용어·집계 기록을 지운다. 설정(동작 줄이기)은 기록이 아니라서 남긴다 */
+/** '저장한 기록 지우기': 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·찜·연 용어·집계 기록을 지운다. 설정(동작 줄이기)과 이용 가이드는 기록이 아니라서 남긴다 */
 export function clearAll(): void {
   $cart.set([]);
   $project.set('');

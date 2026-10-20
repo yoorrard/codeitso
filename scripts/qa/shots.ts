@@ -95,6 +95,8 @@ try {
         colorScheme: vp.name === '360-dark' ? 'dark' : 'light',
         locale: 'ko-KR',
       });
+      // 처음 방문 가이드(O1)가 화면을 가리지 않게 본 것으로 둔다
+      await context.addInitScript(() => window.localStorage.setItem('cc:guide:v1', JSON.stringify({ tour: true })));
       if (vp.name === '360-site-reduce') {
         await context.addInitScript(() => window.localStorage.setItem('cc:prefs:v1', JSON.stringify({ motion: 'reduce', sound: false })));
       }

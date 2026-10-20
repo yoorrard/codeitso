@@ -112,7 +112,15 @@ describe('저장소', () => {
     expect(store.$termsSeen.get()).toEqual(['api']);
   });
 
-  it('기록 지우기는 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·찜·메타·연 용어를 지우고 설정과 남의 키는 남긴다', () => {
+  it('이용 가이드(O1): 연 것·풀이 안내 닫은 것을 남긴다', () => {
+    expect(KEYS.guide in storage).toBe(false);
+    store.markTourSeen();
+    expect(JSON.parse(storage[KEYS.guide] ?? '{}')).toEqual({ tour: true, hint: false });
+    store.closeTermHint();
+    expect(store.$guide.get()).toEqual({ tour: true, hint: true });
+  });
+
+  it('기록 지우기는 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·찜·메타·연 용어를 지우고 설정·이용 가이드와 남의 키는 남긴다', () => {
     store.addToCart({ id: 'a:b', name: 'B', cat: 'api', sub: 'weather' }, 1);
     store.setProject('앱');
     store.savePrompt(prompt('c', 3));
@@ -127,6 +135,7 @@ describe('저장소', () => {
     expect(store.$recent.get()).toEqual([]);
     expect(store.$termsSeen.get()).toEqual([]);
     expect(store.$prefs.get().motion).toBe('reduce');
+    expect(store.$guide.get().tour).toBe(true);
     expect(storage['other:key']).toBe('그대로');
   });
 });

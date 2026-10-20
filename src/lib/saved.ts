@@ -1,6 +1,7 @@
 // 브라우저에 저장하는 값의 모양과, 읽은 값을 믿지 않고 고르는 함수 (부작용 없음, 시험 있음).
 // 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 5절).
-// v5.1: 장바구니(담은 재료와 메모) + 프로젝트 메모 + 지난 프롬프트(뽑은 때의 재료 사본) + 최근 본 재료 + 찜(N1) + 설정 + 연 용어 + 집계 기록.
+// v5.1: 장바구니(담은 재료와 메모) + 프로젝트 메모 + 지난 프롬프트(뽑은 때의 재료 사본) + 최근 본 재료 + 찜(N1) + 설정 + 연 용어 + 집계 기록
+// + 이용 가이드를 열었는지·풀이 안내를 닫았는지(O1).
 
 export const KEYS = {
   cart: 'cc:cart:v1',
@@ -10,6 +11,7 @@ export const KEYS = {
   wish: 'cc:wish:v1',
   meta: 'cc:meta:v1',
   prefs: 'cc:prefs:v1',
+  guide: 'cc:guide:v1',
 } as const;
 
 /** 더는 쓰지 않는 옛 키(v4 단계 흐름의 답·용어 카드·장면·영수증). 옮길 값이 없어 읽지 않고, 남아 있으면 지운다 */
@@ -78,6 +80,12 @@ export interface Prefs {
   glossary: boolean;
 }
 
+/** 이용 가이드 (O1, D138): 처음 방문 가이드를 한 번 열었는지(끝까지 봤든 건너뛰었든), 상세의 '어려운 말 풀이' 안내를 닫았는지 */
+export interface Guide {
+  tour: boolean;
+  hint: boolean;
+}
+
 export const SENT_MAX = 20;
 /** 장바구니에 담을 수 있는 줄 수 (넘치면 가장 오래된 것부터 빠지지 않고 담기를 막는다) */
 export const CART_MAX = 300;
@@ -96,6 +104,7 @@ export const PROMPT_FIELD_MAX = { url: 500, install: 300 } as const;
 
 export const DEFAULT_PREFS: Prefs = { motion: 'auto', glossary: true };
 export const EMPTY_META: Meta = { sent: [] };
+export const EMPTY_GUIDE: Guide = { tour: false, hint: false };
 
 function obj(raw: unknown): Record<string, unknown> {
   return typeof raw === 'object' && raw !== null && !Array.isArray(raw) ? (raw as Record<string, unknown>) : {};
@@ -255,6 +264,11 @@ export function readPrefs(raw: unknown): Prefs {
   return { motion: o['motion'] === 'reduce' ? 'reduce' : 'auto', glossary: o['glossary'] !== false };
 }
 
+export function readGuide(raw: unknown): Guide {
+  const o = obj(raw);
+  return { tour: o['tour'] === true, hint: o['hint'] === true };
+}
+
 /** 처음 값과 같으면 저장할 필요가 없다 (키를 지운다) */
 export function isEmptyList(l: readonly unknown[]): boolean {
   return l.length === 0;
@@ -262,6 +276,9 @@ export function isEmptyList(l: readonly unknown[]): boolean {
 export const isEmptyCart = isEmptyList;
 export function isEmptyMeta(m: Meta): boolean {
   return m.sent.length === 0;
+}
+export function isEmptyGuide(g: Guide): boolean {
+  return !g.tour && !g.hint;
 }
 export function isDefaultPrefs(p: Prefs): boolean {
   return p.motion === DEFAULT_PREFS.motion && p.glossary === DEFAULT_PREFS.glossary;

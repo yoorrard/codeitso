@@ -233,3 +233,64 @@
   translate: none;
   transition-duration: var(--dur-fade);
 }
+
+/* 상품 상세 '어려운 말 풀이' (O1, D138, TermHint.tsx): 접힌 작은 단추 + 펼친 안내 칸. 처음에는 펼쳐 둔다 */
+.drag-hint {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+}
+.drag-hint-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  margin-inline-start: calc(-1 * var(--space-2));
+  padding-inline: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--link);
+  font: inherit;
+  font-size: var(--size-label);
+  font-weight: var(--weight-strong);
+}
+.drag-hint-btn:hover {
+  background: var(--fill);
+}
+.drag-hint-btn > .icon-wrap:last-child {
+  transition: rotate var(--dur-ui) var(--ease-out);
+}
+.drag-hint[data-open] .drag-hint-btn > .icon-wrap:last-child {
+  rotate: 180deg;
+}
+.drag-hint-box {
+  display: grid;
+  gap: var(--space-2);
+  inline-size: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--text-2);
+  font-size: var(--size-label);
+  line-height: var(--leading-body);
+}
+.drag-hint-box[hidden] {
+  display: none;
+}
+.drag-hint-box p {
+  margin: 0;
+}
+.drag-hint-acts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.drag-hint-acts a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tap);
+  font-weight: var(--weight-strong);
+}

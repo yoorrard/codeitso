@@ -3,6 +3,7 @@
 // → 상품 정보 표 → 쓰는 법(출처가 준 설치 명령·조각만) → 관련 상품. 넓은 화면은 오른쪽 담기 칸이 붙어 따라온다.
 // N1 (D137): 맨 위 [뒤로]·위치(뒤로의 기본 행선지는 이 상품의 소분류 목록), 담기 옆 찜 하트(wish-buttons.ts가 맡는다),
 // 공유(기기 공유 창 또는 주소 복사), 관련 상품 머리의 [비슷한 재료와 비교](이 상품 + 관련 상품 3개).
+// O1 (D138): 설명 속 어려운 말에 점선 밑줄(누르면 풀이), 설명 아래 '어려운 말 풀이' 안내 (TermHint.tsx).
 import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
@@ -18,6 +19,7 @@ import { DetailPreview } from './DetailPreview.tsx';
 import { Icon } from './Icon.tsx';
 import { PageTop } from './PageTop.tsx';
 import { ShareButton } from './ShareButton.tsx';
+import { TermHint, TermText, useTermSegments } from './TermHint.tsx';
 
 interface Props {
   nav: NavCategory[];
@@ -96,6 +98,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
   const summary = pickSummary(item);
   const original = item.summaryKo && item.summary.trim() !== item.summaryKo.trim() ? item.summary : null;
   const use = item.use ?? {};
+  const segs = useTermSegments(summary);
   return (
     <article class="detail">
       <PageTop
@@ -114,7 +117,9 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
             <span class="detail-src">{item.source.name}</span>
           </p>
           <h1 class="detail-name">{item.name}</h1>
-          <p class="detail-sum">{summary}</p>
+          <p class="detail-sum">
+            <TermText text={summary} segs={segs} />
+          </p>
           {(item.written || item.koBy) && <p class="field-hint">{ko.item.summaryWritten}</p>}
           {original && (
             <details class="detail-orig">
@@ -122,6 +127,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
               <p lang="en">{original}</p>
             </details>
           )}
+          <TermHint marked={!!segs?.some((x) => typeof x !== 'string')} />
           {metrics.length > 0 && (
             <ul class="detail-metrics">
               {metrics.map((k) => (

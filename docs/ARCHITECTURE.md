@@ -123,6 +123,7 @@ public/catalog/facet/<대분류>/<소분류>.json · -name.json · -recent.json 
 | `cc:meta:v1` | `{ sent: string[] }` 보낸 집계 이벤트 열쇠 |
 | `cc:prefs:v1` | `{ motion: 'auto' \| 'reduce', glossary: boolean }` |
 | `cc:terms:v1` | 풀이를 연 용어 id (최근 300개) |
+| `cc:guide:v1` | `{ tour, hint }` 처음 방문 가이드를 열었는지·상세의 '어려운 말 풀이' 안내를 닫았는지 (O1, D138. 기록 지우기에 들지 않는다) |
 
 - 옛 v4 키(`cc:session:v1`·`cc:study:v1`·`cc:seen:v1`·`cc:receipts:v1`·`cc:trip:v1`)는 처음 불릴 때 지운다(`LEGACY_KEYS`). 공유 링크(`/cart#s=…`, `src/lib/share.ts`)에는 재료 id만 들어가고 메모·만들 앱은 들어가지 않는다. 계산(`src/lib/checkout.ts`)은 담은 재료의 상세 조각을 받아 영수증 사본을 만들고(`buildReceipt`, 출처 자료 그대로) 장바구니를 비운다. .md는 `src/lib/receipt-md.ts`가 만든다.
 

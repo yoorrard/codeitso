@@ -21,7 +21,7 @@ export interface Candidate {
 }
 
 /**
- * 번역할 상품을 고른다: 출처 한국어도, 코드쇼퍼 한국어(agent·auto)도 없는 상품.
+ * 번역할 상품을 고른다: 출처 한국어도, 코드잇소 한국어(agent·auto)도 없는 상품.
  * 순서: 자료로 만든 한 줄도 없는 것 먼저 → 소분류 안 인기 순위 → 원문 있는 것 → id. 이렇게 하면 모든 목록의 첫 쪽부터 고르게 채워진다.
  */
 export function pickCandidates(all: readonly Ranked[], have: ReadonlySet<string>, templated: ReadonlySet<string>, budget: number): Candidate[] {

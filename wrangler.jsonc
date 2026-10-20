@@ -1,9 +1,10 @@
 // Cloudflare Workers 설정 (docs/ARCHITECTURE.md 9절). 정적 파일(dist) + /api/*만 Worker 함수 (worker/index.ts).
+// name은 Cloudflare 대시보드의 Worker 이름과 같아야 한다(주소 codeitso.yoorrard.workers.dev, 2026-10-20 이름 바꿈 D129). D1 이름은 그대로다.
 // database_id는 소유자가 대시보드에서 만든 code-chauffeur-events의 번호다 (2026-10-14, 비밀 값이 아니다. CLAUDE.md 꼭 지킬 것 11).
 // 로컬 시험: npm run build → npx wrangler d1 migrations apply code-chauffeur-events --local → npx wrangler dev
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "code-chauffeur",
+  "name": "codeitso",
   "main": "worker/index.ts",
   "compatibility_date": "2026-09-20",
   "assets": {

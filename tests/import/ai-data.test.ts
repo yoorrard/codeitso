@@ -42,7 +42,7 @@ describe.skipIf(files.length === 0)('data/catalog/ai', () => {
     }
   });
 
-  it('한국어 설명은 출처가 준 것이거나 코드쇼퍼가 썼다고 표시한 것만 있다', () => {
+  it('한국어 설명은 출처가 준 것이거나 코드잇소가 썼다고 표시한 것만 있다', () => {
     const allowed = new Set(['prompt-lobehub', 'rules-format']);
     for (const d of data) {
       for (const it of d.json.items) {

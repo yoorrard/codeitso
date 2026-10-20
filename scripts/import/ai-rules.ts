@@ -1,5 +1,5 @@
 // AI 확장 › 규칙·지침 파일 (AGENTS.md, CLAUDE.md, Cursor 규칙, Copilot 지침 …).
-// 1) 형식 안내(코드쇼퍼가 쓴 글, 공식 문서 주소로 확인한 사실만) 2) 공개 규칙 모음 저장소에서 직접 읽은 템플릿.
+// 1) 형식 안내(코드잇소가 쓴 글, 공식 문서 주소로 확인한 사실만) 2) 공개 규칙 모음 저장소에서 직접 읽은 템플릿.
 // 실행: node scripts/import/ai-rules.ts
 import {
   type Item, checkout, cloneRepo, ensureProxy, isMain, log, makeItem, readRepoFile, repoMeta, repoTreeUrl,
@@ -10,7 +10,7 @@ import { AITMPL_LICENSE, aitmplItems } from './ai-aitmpl.ts';
 const KIND = 'rules';
 
 // ---------- 1. 형식 안내 (손으로 씀) ----------
-// 파일 이름과 읽는 도구는 각 공식 문서에서 확인했다 (2026-10-14). 설명은 코드쇼퍼가 쓴 한국어 한 줄.
+// 파일 이름과 읽는 도구는 각 공식 문서에서 확인했다 (2026-10-14). 설명은 코드잇소가 쓴 한국어 한 줄.
 
 export interface RuleFormat {
   slug: string; name: string; file: string; tools: string[]; docs: string; ko: string; tags: string[];
@@ -52,7 +52,7 @@ export function formatItems(): Item[] {
   return FORMATS.map((f) => makeItem({
     sourceId: 'rules-format', slug: f.slug, name: f.name, kind: KIND, summary: f.ko, summaryKo: f.ko, written: 'codeshopper',
     url: f.docs,
-    source: { name: '코드쇼퍼 정리 (공식 문서 기준)', url: f.docs },
+    source: { name: '코드잇소 정리 (공식 문서 기준)', url: f.docs },
     tags: ['format', ...f.tags, ...f.tools],
     preview: { type: 'prompt', file: f.file, tools: f.tools },
     use: { docs: f.docs },
@@ -118,7 +118,7 @@ export async function fromRuleRepo(cfg: RuleRepo): Promise<{ items: Item[]; avai
 export async function main(): Promise<void> {
   const formats = formatItems();
   writeCatalog({
-    source: { id: 'rules-format', name: '코드쇼퍼 정리: 지침 파일 형식', url: 'https://agents.md/', kind: KIND, license: '코드쇼퍼가 쓴 설명 (사실은 각 공식 문서 기준)', note: 'written: codeshopper' },
+    source: { id: 'rules-format', name: '코드잇소 정리: 지침 파일 형식', url: 'https://agents.md/', kind: KIND, license: '코드잇소가 쓴 설명 (사실은 각 공식 문서 기준)', note: 'written: codeshopper' },
     available: formats.length, items: formats,
   });
   let total = formats.length;

@@ -96,7 +96,7 @@ async function buildReceipt(chars: string): Promise<string> {
     if (f.sha256 && hashes[f.file] !== f.sha256) throw new Error(`${f.file} 원본이 고정해 둔 것과 다릅니다`);
     const sfnt = new Uint8Array(await subsetFont(Buffer.from(raw), chars, { targetFormat: 'sfnt' }));
     const names: NameRecords = {
-      copyright: 'Copyright (c) 2015, NAVER Corporation. Subset and renamed from D2Coding by Code Chauffeur contributors, 2026.',
+      copyright: 'Copyright (c) 2015, NAVER Corporation. Subset and renamed from D2Coding by codeitso (코드잇소) contributors, 2026.',
       family: RECEIPT_FAMILY,
       subfamily: f.style,
       uniqueId: `${RECEIPT_FAMILY} ${f.style}; 1.4.0-cc1`,
@@ -119,7 +119,7 @@ async function buildReceipt(chars: string): Promise<string> {
   const ofl = readFileSync(join(CACHE, 'D2Coding-OFL.txt'), 'utf8');
   writeFileSync(
     join(OUT_RECEIPT, 'OFL.txt'),
-    `CC Receipt는 D2Coding(NAVER Corporation, SIL OFL 1.1)에서 코드쇼퍼 화면에 필요한 글자만 골라 이름을 바꾼 수정본입니다.\nD2Coding은 예약 글꼴 이름이라 수정본에 쓰지 않았습니다. 원본: https://github.com/naver/d2-coding-font (${D2_TAG})\n\n${ofl}`,
+    `CC Receipt는 D2Coding(NAVER Corporation, SIL OFL 1.1)에서 코드잇소 화면에 필요한 글자만 골라 이름을 바꾼 수정본입니다.\nD2Coding은 예약 글꼴 이름이라 수정본에 쓰지 않았습니다. 원본: https://github.com/naver/d2-coding-font (${D2_TAG})\n\n${ofl}`,
   );
   writeFileSync(join(OUT_RECEIPT, 'manifest.json'), JSON.stringify({ family: RECEIPT_FAMILY, source: `naver/d2-coding-font ${D2_TAG}`, sha256: hashes, chars }, null, 2) + '\n');
   return faces.join('\n');

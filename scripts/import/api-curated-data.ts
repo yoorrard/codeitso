@@ -1,7 +1,7 @@
 // 손으로 고른 API 목록 (공식 쪽 주소만). 가져오기 스크립트(api-curated.ts, api-ai.ts)가 이 목록을 읽어
 // 주소가 살아 있는지 보고, 공식 쪽의 한 줄 소개(meta description)와 요금 쪽의 무료 사용 문장을 그대로 가져온다.
 // 여기에는 사실(무료 한도·요금)을 적지 않는다. 적는 것: 이름, 공식 주소, 인증 방식, 공식 SDK 꾸러미 이름,
-// 코드쇼퍼가 쓴 한국어 한 줄(ko: 무엇을 하는 API인지만).
+// 코드잇소가 쓴 한국어 한 줄(ko: 무엇을 하는 API인지만).
 import type { Kind } from './api-lib.ts';
 
 export interface CuratedApi {
@@ -14,7 +14,7 @@ export interface CuratedApi {
   auth: string; // apiKey · OAuth · cloud IAM · none …
   npm?: string; // 공식 JS SDK 꾸러미
   npmRepo?: string; // 그 꾸러미 저장소 주소에 들어 있어야 하는 글자 (공식인지 확인)
-  ko: string; // 코드쇼퍼가 쓴 한 줄 (written: 'codeshopper')
+  ko: string; // 코드잇소가 쓴 한 줄 (written: 'codeshopper')
   tags?: string[];
   serverKey?: boolean; // 비밀 키라 서버에만 둔다 (AI·결제·문자 API 대부분)
   aliases?: string[]; // 다른 목록에 같은 상품이 다른 이름으로 있을 때 (그 줄은 건너뛴다)

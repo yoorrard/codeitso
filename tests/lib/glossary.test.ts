@@ -241,7 +241,7 @@ describe('자료 약속 (data/glossary.json)', () => {
     expect(validate(glossary), JSON.stringify(validate.errors?.slice(0, 3))).toBe(true);
   });
 
-  it('손으로 쓴 용어는 204개 (v5에서 옛 코드쇼퍼 말 9개를 뺐다), id가 겹치지 않고 kind가 있다', () => {
+  it('손으로 쓴 용어는 204개 (v5에서 옛 코드잇소 말 9개를 뺐다), id가 겹치지 않고 kind가 있다', () => {
     expect(glossary.terms).toHaveLength(204);
     const all = glossary.terms.map((t) => t.id);
     expect(new Set(all).size).toBe(all.length);

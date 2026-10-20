@@ -18,6 +18,7 @@ import {
   relatedIndex,
   safeSvg,
   shardOf,
+  shortName,
   sortRanked,
   thumbOf,
   truncate,
@@ -114,6 +115,13 @@ describe('숫자·글 다듬기', () => {
     expect(monogram('01-ai/Yi-1.5-34B-Chat')).toBe('Y1');
     expect(monogram('Model Context Protocol')).toBe('MC');
     expect(monogram('한국문화관광연구원_서비스')).toBe('한국');
+  });
+
+  it('좁은 자리 짧은 이름: 공공데이터포털 이름은 마지막 _ 뒤만 (학교급마다 다른 시간표가 구별되게)', () => {
+    expect(shortName('data-go-kr:15122331', '교육부_나이스(NEIS) 교육정보 개방 포털_초등학교 시간표')).toBe('초등학교 시간표');
+    expect(shortName('data-go-kr-files:15013362', '경기도교육청_학사')).toBe('학사');
+    expect(shortName('data-go-kr:1', '이름_')).toBe('이름_');
+    expect(shortName('github:a--b', 'snake_case_lib')).toBe('snake_case_lib');
   });
 });
 

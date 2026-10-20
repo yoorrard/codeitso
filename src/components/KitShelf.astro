@@ -6,6 +6,7 @@ import Icon from './Icon.astro';
 import { ko } from '../copy/ko.ts';
 import type { KitData } from '../lib/catalog/types.ts';
 import { kitIconSvg } from '../lib/home-icons.ts';
+import { shortName } from '../lib/catalog/core.ts';
 import { itemPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
 
@@ -13,6 +14,8 @@ interface Props {
   kits: KitData[];
 }
 const { kits } = Astro.props;
+/** 카드의 재료 줄 수 한도. 넘으면 앞 6개 + '외 N개 더 보기'로 접는다 (다섯 장이 PC 첫 화면 한 줄에 들게) */
+const MAX_LINES = 7;
 ---
 
 {
@@ -31,12 +34,27 @@ const { kits } = Astro.props;
             </div>
             <p class="kit-desc">{k.desc}</p>
             <ul class="kit-items" aria-label={fill(ko.kits.count, { n: k.cards.length })}>
-              {k.cards.map((c) => (
+              {k.cards.slice(0, k.cards.length > MAX_LINES ? MAX_LINES - 1 : MAX_LINES).map((c) => (
                 <li data-cat={c.cat}>
                   <span class="kit-dot" aria-hidden="true" />
-                  <a href={itemPath(c.id)} title={c.name}>{c.name}</a>
+                  <a href={itemPath(c.id)} title={c.name}>{shortName(c.id, c.name)}</a>
                 </li>
               ))}
+              {k.cards.length > MAX_LINES && (
+                <li class="kit-more">
+                  <details>
+                    <summary>{fill(ko.kits.more, { n: k.cards.length - (MAX_LINES - 1) })}</summary>
+                    <ul class="kit-items">
+                      {k.cards.slice(MAX_LINES - 1).map((c) => (
+                        <li data-cat={c.cat}>
+                          <span class="kit-dot" aria-hidden="true" />
+                          <a href={itemPath(c.id)} title={c.name}>{shortName(c.id, c.name)}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              )}
             </ul>
             <button
               type="button"

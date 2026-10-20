@@ -1,6 +1,6 @@
 ---
 name: polish
-description: Final polish pass for 코드쇼퍼 UI. Use before marking any UI task done, or when asked to polish, refine or tidy a screen. Verifies the craft floor, polishes the whole path without redesigning it, and scores a five-part audit (accessibility, performance, tokens, responsive, integrity) with P0–P3 findings, using /visual-qa evidence and values from src/styles/tokens.css.
+description: Final polish pass for 코드잇소 UI. Use before marking any UI task done, or when asked to polish, refine or tidy a screen. Verifies the craft floor, polishes the whole path without redesigning it, and scores a five-part audit (accessibility, performance, tokens, responsive, integrity) with P0–P3 findings, using /visual-qa evidence and values from src/styles/tokens.css.
 license: Apache-2.0 (see LICENSE and NOTICE.md in this folder)
 paths:
   - "src/components/**"

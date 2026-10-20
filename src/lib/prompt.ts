@@ -30,9 +30,9 @@ export function groupByCategory<T extends { cat: string }>(lines: readonly T[]):
   return order.map((cat) => ({ cat, lines: lines.filter((l) => l.cat === cat) })).filter((g) => g.lines.length > 0);
 }
 
-/** .md 파일 이름: codeshopper-prompt-<yyyymmdd-hhmm>.md (이용자 기기 시각) */
+/** .md 파일 이름: codeitso-prompt-<yyyymmdd-hhmm>.md (이용자 기기 시각) */
 export function promptFileName(at: number): string {
-  return `codeshopper-prompt-${stamp(at)}.md`;
+  return `codeitso-prompt-${stamp(at)}.md`;
 }
 
 /** 줄바꿈·겹친 공백을 한 칸으로 (한 줄 안에 넣을 글) */

@@ -34,8 +34,8 @@ describe('보던 화면의 경로', () => {
 
 describe('mailto 주소', () => {
   it('제목과 본문을 % 인코딩한다 (공백은 %20, 줄바꿈은 CRLF)', () => {
-    expect(mailtoFor({ email: 'hello@example.org', subject: '코드쇼퍼 의견', lines: ['보던 화면: /about', '판 1'] })).toBe(
-      `mailto:hello@example.org?subject=${encodeURIComponent('코드쇼퍼 의견')}&body=${encodeURIComponent('보던 화면: /about\r\n판 1')}`,
+    expect(mailtoFor({ email: 'hello@example.org', subject: '코드잇소 의견', lines: ['보던 화면: /about', '판 1'] })).toBe(
+      `mailto:hello@example.org?subject=${encodeURIComponent('코드잇소 의견')}&body=${encodeURIComponent('보던 화면: /about\r\n판 1')}`,
     );
   });
 

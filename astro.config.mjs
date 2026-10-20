@@ -22,7 +22,7 @@ function stop(/** @type {string} */ line) {
  */
 function buildGuard() {
   return {
-    name: 'code-chauffeur:build-guard',
+    name: 'codeitso:build-guard',
     hooks: {
       'astro:config:setup': ({ command }) => {
         const problems = command === 'build' ? envProblems(env) : [basePathProblem(env.PUBLIC_BASE_PATH), hostProblem(env.PUBLIC_HOST)].filter((x) => x !== null);

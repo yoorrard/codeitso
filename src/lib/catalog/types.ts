@@ -52,10 +52,10 @@ export interface CatalogItem {
   category: string;
   /** 출처 원문 그대로 (지어내지 않는다) */
   summary: string;
-  /** 한국어 한 줄 (출처가 주었거나 코드쇼퍼가 쓴 것: written) */
+  /** 한국어 한 줄 (출처가 주었거나 코드잇소가 쓴 것: written) */
   summaryKo?: string;
   written?: string;
-  /** summaryKo가 data/catalog-ko에서 붙인 코드쇼퍼의 한국어 설명이면 'codeshopper' (v5.1 D122, 진열대 빌드가 붙인다) */
+  /** summaryKo가 data/catalog-ko에서 붙인 코드잇소의 한국어 설명이면 'codeshopper' (v5.1 D122, 진열대 빌드가 붙인다) */
   koBy?: 'codeshopper';
   url: string;
   source: { name: string; url: string };
@@ -109,7 +109,7 @@ export type Thumb =
   | { t: 'style'; colors: string[] }
   | { t: 'emoji'; emoji: string }
   | { t: 'mono'; label: string }
-  /** 그림이 없는 저장소·템플릿·모델·데이터셋: 만들면 이런 모양인 장면 (scene.ts, 코드쇼퍼가 그린 예시) */
+  /** 그림이 없는 저장소·템플릿·모델·데이터셋: 만들면 이런 모양인 장면 (scene.ts, 코드잇소가 그린 예시) */
   | { t: 'scene'; scene: SceneId; label: string; words?: string[] };
 
 /** 카드에 붙는 짧은 사실 (인증·HTTPS·언어·작업…). 이름표 글은 화면(ko.ts)이 붙인다 */

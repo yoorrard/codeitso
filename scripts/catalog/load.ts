@@ -9,7 +9,7 @@ import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
 
 export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog');
-/** 코드쇼퍼가 쓴 한국어 설명 (v5.1 D122): <이름>.json = { "<상품 id>": "한국어 설명" }. 폴더나 파일이 없어도 된다 */
+/** 코드잇소가 쓴 한국어 설명 (v5.1 D122): <이름>.json = { "<상품 id>": "한국어 설명" }. 폴더나 파일이 없어도 된다 */
 export const KO_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-ko');
 /** 저장소 README 첫 그림 (v5.1 D126, scripts/import/media-readme.ts): { images: id → 주소, stills: id → 멈춘 그림 }. 없어도 된다 */
 export const MEDIA_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-media');

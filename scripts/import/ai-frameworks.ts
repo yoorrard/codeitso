@@ -317,7 +317,7 @@ export async function main(): Promise<void> {
   const items = rows.filter((x): x is Item => !!x);
   if (missing.length) log(`  찾지 못한 저장소 ${missing.length}개: ${missing.join(', ')}`);
   writeCatalog({
-    source: { id: 'fw-github', name: '에이전트 프레임워크·AI SDK (GitHub 저장소)', url: 'https://github.com', kind: KIND, license: '저장소 메타데이터(GitHub API 또는 repos.ecosyste.ms, CC BY-SA 4.0). 고른 목록은 코드쇼퍼', note: '저장소 목록은 손으로 고름, 사실은 출처에서 받음' },
+    source: { id: 'fw-github', name: '에이전트 프레임워크·AI SDK (GitHub 저장소)', url: 'https://github.com', kind: KIND, license: '저장소 메타데이터(GitHub API 또는 repos.ecosyste.ms, CC BY-SA 4.0). 고른 목록은 코드잇소', note: '저장소 목록은 손으로 고름, 사실은 출처에서 받음' },
     available: SEEDS.length, items,
   });
 }

@@ -1,4 +1,4 @@
-// 디자인 > 디자인 스타일(톤) 쓰기. 코드쇼퍼가 직접 쓴 정의와 미리 보기용 토큰 묶음이다 (네트워크 없이 돈다).
+// 디자인 > 디자인 스타일(톤) 쓰기. 코드잇소가 직접 쓴 정의와 미리 보기용 토큰 묶음이다 (네트워크 없이 돈다).
 //   node scripts/import/design-styles.ts
 // preview.tokens는 사이트가 로컬 CSS로 작은 화면을 칠할 때 쓴다. 글꼴은 시스템 글꼴 계열 이름만 쓴다(외부 글꼴 없음).
 // use.snippet은 같은 토큰을 CSS 변수로 옮긴 것, preview.keywords는 AI에게 스타일을 설명할 때 쓰는 영어 낱말이다.
@@ -349,7 +349,7 @@ const FONT_STACK: Record<Tokens['font'], string> = {
 function cssVars(s: Style): string {
   const t = s.tokens;
   const lines = [
-    `/* ${s.name} (${s.nameKo}) — 코드쇼퍼 스타일 견본 */`,
+    `/* ${s.name} (${s.nameKo}) — 코드잇소 스타일 견본 */`,
     ':root {',
     `  --bg: ${t.bg};`, `  --surface: ${t.surface};`, `  --text: ${t.text};`, `  --muted: ${t.muted};`,
     `  --primary: ${t.primary};`, `  --on-primary: ${t.onPrimary};`, `  --accent: ${t.accent};`, `  --border: ${t.border};`,
@@ -373,7 +373,7 @@ await main('design-styles', async () => {
       summaryKo: s.summaryKo,
       written: 'codeshopper',
       url: `https://dribbble.com/search/${encodeURIComponent(s.keywords[0] as string)}`,
-      source: { name: '코드쇼퍼 (직접 정의)', url: 'https://github.com/yoorrard/code-chauffeur' },
+      source: { name: '코드잇소 (직접 정의)', url: 'https://github.com/yoorrard/code-chauffeur' },
       tags: ['style', ...s.tags],
       preview: { type: 'style', tokens: { ...s.tokens, fontStack: FONT_STACK[s.tokens.font] }, keywords: s.keywords, goodFor: s.goodFor },
       use: {
@@ -386,9 +386,9 @@ await main('design-styles', async () => {
   writeCatalog(
     {
       id: 'styles',
-      name: 'Design styles (tone presets written by 코드쇼퍼)',
+      name: 'Design styles (tone presets written by 코드잇소)',
       url: 'https://github.com/yoorrard/code-chauffeur',
-      license: 'Written by 코드쇼퍼 for this catalog. Token values are our own presets for local previews, not taken from any design system. url points to a Dribbble search for real-world examples.',
+      license: 'Written by 코드잇소 for this catalog. Token values are our own presets for local previews, not taken from any design system. url points to a Dribbble search for real-world examples.',
     },
     items,
   );

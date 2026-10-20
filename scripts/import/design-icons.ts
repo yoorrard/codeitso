@@ -183,7 +183,7 @@ interface ExtraIcons {
   repo?: string; install?: string; docs?: string;
 }
 
-// summary는 돌릴 때 각 사이트의 meta description 원문을 가져온다. summaryKo는 코드쇼퍼가 쓴 한 줄.
+// summary는 돌릴 때 각 사이트의 meta description 원문을 가져온다. summaryKo는 코드잇소가 쓴 한 줄.
 const EXTRA: ExtraIcons[] = [
   { slug: 'lordicon', name: 'Lordicon', summaryKo: '움직이는 아이콘 묶음. 무료 아이콘은 출처를 밝히면 쓸 수 있다(유료 요금제 따로).', url: 'https://lordicon.com', license: 'Lordicon Free License (attribution required) / paid plans', tags: ['animated', 'lottie', 'freemium'], docs: 'https://lordicon.com/licenses' },
   { slug: 'useanimations', name: 'useAnimations', summaryKo: '리액트에서 바로 쓰는 작은 움직이는 아이콘 묶음.', url: 'https://react.useanimations.com', license: 'MIT', tags: ['animated', 'react', 'lottie'], repo: 'useAnimations/react-useanimations', install: 'npm install react-useanimations' },

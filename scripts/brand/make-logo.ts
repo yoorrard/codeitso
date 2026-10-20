@@ -1,11 +1,13 @@
-// 로고 자산 만들기 (v5, D104): 소유자가 준 장바구니 로고(assets-src/brand/logo-cart-source.webp, 1254px 흰 바탕)에서
-// 머리줄·바닥글·공유 그림·앱 아이콘·파비콘을 만든다. 원본은 고치지 않는다.
+// 로고 자산 만들기 (v5, D104 · 이름 바꿈 D129): 소유자가 준 장바구니 로고(assets-src/brand/logo-cart-source.webp, 1254px 흰 바탕)의
+// 장바구니와 새 글자 로고(assets-src/brand/wordmark-codeitso.png, npm run logo:word)로 머리줄·바닥글·공유 그림·앱 아이콘·파비콘을 만든다.
+// 원본은 고치지 않는다.
 //   node scripts/brand/make-logo.ts   (npm run logo)
 // 1. 흰 바탕 빼기: 네 모서리에서 이어진 거의 흰 칸만 바탕으로 보고(MD 카드의 옅은 흰색은 테두리에 막혀 남는다),
 //    바탕과 그 둘레 2px는 흰색을 걷어 내는 식(color to alpha)으로 반투명하게 만든다. 그래서 어두운 바탕에도 흰 테두리가 남지 않는다.
-// 2. 자르기: 행 프로필로 장바구니(위)와 글자 '코드쇼퍼'(아래)를 나눈다.
+// 2. 자르기: 행 프로필로 장바구니(위)와 옛 글자(아래)를 나눈다. 옛 글자는 쓰지 않고 크기·간격만 본다(세로 묶음을 같은 비율로).
 // 3. 밤 짝: 남색 글자 '코드'와 바퀴는 어두운 바탕에서 묻히므로 밝은 색으로 바꾼 짝을 따로 만든다.
-// 4. 파비콘·앱 아이콘은 장바구니만, 흰 둥근 판 위에 둔다(어두운 탭 막대에서도 보이게).
+// 4. 파비콘·앱 아이콘은 장바구니만, 바탕 없이(투명) 둔다(소유자 요청 2026-10-20). 바탕이 꼭 필요한 iOS 홈 화면 아이콘과
+//    가림(maskable) 아이콘만 흰 판 위에 둔다.
 // sharp는 Astro가 함께 설치하는 그림 도구다(새 의존성 아님). 만든 파일은 저장소에 올린다.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -14,6 +16,7 @@ import type { Sharp } from 'sharp';
 import { ROOT } from '../lib/load-data.ts';
 
 const SRC = join(ROOT, 'assets-src', 'brand', 'logo-cart-source.webp');
+const WORD_SRC = join(ROOT, 'assets-src', 'brand', 'wordmark-codeitso.png');
 const PUBLIC = join(ROOT, 'public');
 const BRAND = join(PUBLIC, 'brand');
 
@@ -32,8 +35,8 @@ interface Raster {
   px: Uint8ClampedArray;
 }
 
-async function load(): Promise<Raster> {
-  const { data, info } = await sharp(SRC).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+async function load(file: string): Promise<Raster> {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   return { w: info.width, h: info.height, px: new Uint8ClampedArray(data) };
 }
 
@@ -133,21 +136,6 @@ function split(r: Raster): { cart: [number, number]; word: [number, number] } {
   return { cart: [first, y], word: [gapEnd + 1, last] };
 }
 
-/** 글자 속 막힌 흰 틈('쇼'의 ㅅ·ㅛ 사이)도 바탕이다: 글자 그림에는 흰색이 없으므로 밝은 칸은 모두 흰색을 걷어 낸다 */
-function clearLight(r: Raster): void {
-  for (let o = 0; o < r.px.length; o += 4) {
-    const c = [r.px[o] ?? 0, r.px[o + 1] ?? 0, r.px[o + 2] ?? 0];
-    if (Math.min(...c) < 170 || (r.px[o + 3] ?? 0) < 255) continue;
-    const a = Math.max(...c.map((v) => (255 - v) / 255));
-    if (a <= 0.004) {
-      r.px[o + 3] = 0;
-      continue;
-    }
-    for (let ch = 0; ch < 3; ch += 1) r.px[o + ch] = Math.round(((c[ch] ?? 0) - 255 * (1 - a)) / a);
-    r.px[o + 3] = Math.round(a * 255);
-  }
-}
-
 /** 남색 칸(어두운 칸)과 파랑 칸을 밤 색으로 바꾼다. rows가 있으면 그 행 범위만 */
 function nightCopy(r: Raster, rows?: [number, number]): Raster {
   const px = new Uint8ClampedArray(r.px);
@@ -182,14 +170,17 @@ async function webp(r: Raster, h: number, file: string): Promise<{ w: number; h:
   return { w: out.info.width, h: out.info.height };
 }
 
-/** 흰 둥근 판 위 장바구니 아이콘 (size 정사각, pad = 안쪽 여백 비율, round = 모서리 비율) */
-async function tile(cart: Raster, size: number, pad: number, round: number): Promise<Buffer> {
+const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 };
+
+/** 장바구니 아이콘 (size 정사각, pad = 안쪽 여백 비율). plate가 있으면 그 모서리 비율로 흰 둥근 판 위에, 없으면 투명 바탕 */
+async function tile(cart: Raster, size: number, pad: number, plate?: { round: number }): Promise<Buffer> {
   const inner = Math.round(size * (1 - pad * 2));
-  const icon = await image(cart).resize({ width: inner, height: inner, fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
-  const rr = Math.round(size * round);
-  const plate = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${rr}" fill="#ffffff"/></svg>`);
+  const icon = await image(cart).resize({ width: inner, height: inner, fit: 'contain', background: CLEAR }).png().toBuffer();
   const off = Math.round((size - inner) / 2);
-  return sharp(plate).composite([{ input: icon, left: off, top: off }]).png({ compressionLevel: 9 }).toBuffer();
+  const base = plate
+    ? sharp(Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${Math.round(size * plate.round)}" fill="#ffffff"/></svg>`))
+    : sharp({ create: { width: size, height: size, channels: 4, background: CLEAR } });
+  return base.composite([{ input: icon, left: off, top: off }]).png({ compressionLevel: 9 }).toBuffer();
 }
 
 /** PNG 여러 장을 담은 .ico (ICONDIR + ICONDIRENTRY + PNG 본문) */
@@ -216,14 +207,13 @@ function ico(pngs: { size: number; data: Buffer }[]): Buffer {
 
 async function main(): Promise<void> {
   mkdirSync(BRAND, { recursive: true });
-  const src = await load();
+  const src = await load(SRC);
   removeBackground(src);
   const parts = split(src);
   const cartBox = bbox(src, parts.cart[0], parts.cart[1]);
-  const wordBox = bbox(src, parts.word[0], parts.word[1]);
+  const oldWordBox = bbox(src, parts.word[0], parts.word[1]);
   const cart = await crop(src, cartBox);
-  const word = await crop(src, wordBox);
-  clearLight(word);
+  const word = await load(WORD_SRC);
   // 밤 짝: 장바구니는 바퀴(바구니 아래 행)만, 글자는 남색·파랑 모두
   const wheelsFrom = Math.round(cart.h * 0.86);
   const cartNight = nightCopy(cart, [wheelsFrom, cart.h - 1]);
@@ -235,30 +225,46 @@ async function main(): Promise<void> {
   sizes['cart-night'] = await webp(cartNight, 96, join(BRAND, 'cart-night.webp'));
   sizes['wordmark'] = await webp(word, 56, join(BRAND, 'wordmark.webp'));
   sizes['wordmark-night'] = await webp(wordNight, 56, join(BRAND, 'wordmark-night.webp'));
-  // 세로 묶음(장바구니 + 글자) 원본 비율 그대로: 홈 소개·공유 그림
-  const lockBox = { left: Math.min(cartBox.left, wordBox.left), top: cartBox.top, width: 0, height: 0 };
-  lockBox.width = Math.max(cartBox.left + cartBox.width, wordBox.left + wordBox.width) - lockBox.left;
-  lockBox.height = wordBox.top + wordBox.height - cartBox.top;
-  const lockup = await crop(src, lockBox);
+  // 세로 묶음(장바구니 + 글자): 원본의 글자 높이·간격 그대로, 가운데 맞춤. 공유 그림과 소유자용 로고 그림
+  const gap = oldWordBox.top - (cartBox.top + cartBox.height);
+  const wordH = oldWordBox.height;
+  const wordW = Math.round((word.w / word.h) * wordH);
+  const lockW = Math.max(cart.w, wordW);
+  const lockH = cart.h + gap + wordH;
+  const lockup = await sharp({ create: { width: lockW, height: lockH, channels: 4, background: CLEAR } })
+    .composite([
+      { input: await image(cart).png().toBuffer(), left: Math.round((lockW - cart.w) / 2), top: 0 },
+      { input: await image(word).resize({ height: wordH }).png().toBuffer(), left: Math.round((lockW - wordW) / 2), top: cart.h + gap },
+    ])
+    .png()
+    .toBuffer();
+  // 소유자가 다른 곳(프로필 사진 등)에 쓸 정사각 로고: 원본과 같은 1254px, 투명 바탕
+  const square = 1254;
+  const fit = await sharp(lockup).resize({ width: Math.round(square * 0.82), height: Math.round(square * 0.82), fit: 'inside' }).png().toBuffer();
+  const fitMeta = await sharp(fit).metadata();
+  await sharp({ create: { width: square, height: square, channels: 4, background: CLEAR } })
+    .composite([{ input: fit, left: Math.round((square - (fitMeta.width ?? 0)) / 2), top: Math.round((square - (fitMeta.height ?? 0)) / 2) }])
+    .png({ compressionLevel: 9 })
+    .toFile(join(ROOT, 'assets-src', 'brand', 'logo-codeitso.png'));
 
   // 공유 그림 1200×630: 흰 바탕 가운데 세로 묶음
-  const og = await image(lockup).resize({ height: 500 }).png().toBuffer();
+  const og = await sharp(lockup).resize({ height: 500 }).png().toBuffer();
   const ogMeta = await sharp(og).metadata();
   await sharp({ create: { width: 1200, height: 630, channels: 4, background: '#ffffff' } })
     .composite([{ input: og, left: Math.round((1200 - (ogMeta.width ?? 0)) / 2), top: 65 }])
     .png({ compressionLevel: 9 })
     .toFile(join(PUBLIC, 'og.png'));
 
-  // 앱 아이콘·파비콘: 장바구니만
-  writeFileSync(join(PUBLIC, 'apple-touch-icon.png'), await tile(cart, 180, 0.1, 0));
-  writeFileSync(join(PUBLIC, 'icon-192.png'), await tile(cart, 192, 0.08, 0.22));
-  writeFileSync(join(PUBLIC, 'icon-512.png'), await tile(cart, 512, 0.08, 0.22));
+  // 앱 아이콘·파비콘: 장바구니만. 탭·설명서 아이콘은 투명, iOS 홈 화면(투명이면 검게 칠함)과 가림 아이콘만 흰 판
+  writeFileSync(join(PUBLIC, 'apple-touch-icon.png'), await tile(cart, 180, 0.1, { round: 0 }));
+  writeFileSync(join(PUBLIC, 'icon-192.png'), await tile(cart, 192, 0.04));
+  writeFileSync(join(PUBLIC, 'icon-512.png'), await tile(cart, 512, 0.04));
   // 가림 아이콘: 가운데 원(지름 80%) 안에 들게
-  writeFileSync(join(PUBLIC, 'icon-maskable-512.png'), await tile(cart, 512, 0.2, 0));
-  const fav = await Promise.all([16, 32, 48].map(async (size) => ({ size, data: await tile(cart, size, 0.02, 0.18) })));
+  writeFileSync(join(PUBLIC, 'icon-maskable-512.png'), await tile(cart, 512, 0.2, { round: 0 }));
+  const fav = await Promise.all([16, 32, 48].map(async (size) => ({ size, data: await tile(cart, size, 0) })));
   writeFileSync(join(PUBLIC, 'favicon.ico'), ico(fav));
   writeFileSync(join(ROOT, 'src', 'lib', 'brand-sizes.json'), `${JSON.stringify(sizes, null, 2)}\n`);
-  console.log(`로고 자산: 장바구니 ${cart.w}×${cart.h}, 글자 ${word.w}×${word.h} → public/brand/, public/*.png, favicon.ico, og.png`);
+  console.log(`로고 자산: 장바구니 ${cart.w}×${cart.h}, 글자 ${word.w}×${word.h} → public/brand/, public/*.png, favicon.ico, og.png, assets-src/brand/logo-codeitso.png`);
   console.log(sizes);
 }
 

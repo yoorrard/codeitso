@@ -89,8 +89,8 @@ describe('프롬프트 글', () => {
 });
 
 describe('도우미', () => {
-  it('파일 이름은 codeshopper-prompt-<yyyymmdd-hhmm>.md', () => {
-    expect(promptFileName(at)).toBe('codeshopper-prompt-20261014-1530.md');
+  it('파일 이름은 codeitso-prompt-<yyyymmdd-hhmm>.md', () => {
+    expect(promptFileName(at)).toBe('codeitso-prompt-20261014-1530.md');
   });
   it('대분류 순서로 묶고 모르는 대분류는 끝에', () => {
     expect(groupByCategory([{ cat: 'zzz' }, { cat: 'api' }, { cat: 'design' }]).map((g) => g.cat)).toEqual(['design', 'api', 'zzz']);

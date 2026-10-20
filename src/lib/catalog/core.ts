@@ -107,7 +107,7 @@ export function pickSummary(item: Pick<CatalogItem, 'summary' | 'summaryKo'>): s
 }
 
 /**
- * 코드쇼퍼가 쓴 한국어 설명(data/catalog-ko, id → 한국어)을 붙인다 (v5.1 D122). 출처가 준 한국어 한 줄이 있으면 그것을 둔다.
+ * 코드잇소가 쓴 한국어 설명(data/catalog-ko, id → 한국어)을 붙인다 (v5.1 D122). 출처가 준 한국어 한 줄이 있으면 그것을 둔다.
  * 원문(summary)은 그대로라 상세의 '원문'에서 볼 수 있다. 빈 글이면 붙이지 않는다.
  */
 export function withKo(item: CatalogItem, ko: string | undefined): CatalogItem {
@@ -127,6 +127,14 @@ export function withMedia(item: CatalogItem, image: string | undefined, still?: 
 const isGif = (u: string): boolean => /\.gif([?#]|$)/i.test(u);
 
 /** 글자(코드 포인트) 수로 자르고 말줄임표를 붙인다 */
+/** 좁은 자리(키트 카드)의 짧은 이름. 공공데이터포털 이름은 '기관_…_데이터 이름' 꼴이라 앞이 같아 잘리면 구별되지 않는다:
+ *  마지막 '_' 뒤만 보인다. 온 이름은 부르는 쪽이 title에 둔다. 자료는 고치지 않는다 */
+export function shortName(id: string, name: string): string {
+  if (!id.startsWith('data-go-kr')) return name;
+  const tail = name.slice(name.lastIndexOf('_') + 1).trim();
+  return tail.length >= 2 ? tail : name;
+}
+
 export function truncate(s: string, max: number): string {
   const chars = [...s];
   return chars.length <= max ? s : `${chars.slice(0, max - 1).join('').trimEnd()}…`;
@@ -404,7 +412,7 @@ const POP_KEYS = ['downloads', 'stars', 'likes'] as const;
 /**
  * 출처 파일 하나 안의 인기 점수 0~1 (D105): 그 파일에서 가장 많이 채워진 지표(내려받기 → 별 → 좋아요)의 순위 백분위.
  * 출처마다 지표의 뜻(한 달·전체 내려받기, 별)이 달라 값끼리 견주지 않고 순위로 섞는다. 같은 값은 같은 점수.
- * 지표가 없는 파일(손으로 고른 목록)은 모두 0.5, 지표가 있는 파일에서 값이 빠진 항목은 코드쇼퍼가 쓴 것이면 0.5, 아니면 0.
+ * 지표가 없는 파일(손으로 고른 목록)은 모두 0.5, 지표가 있는 파일에서 값이 빠진 항목은 코드잇소가 쓴 것이면 0.5, 아니면 0.
  */
 export function filePopularity(items: readonly CatalogItem[]): number[] {
   let key: (typeof POP_KEYS)[number] | null = null;

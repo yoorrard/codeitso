@@ -864,6 +864,18 @@
   color: var(--link);
   text-decoration: underline;
 }
+.kit-more {
+  display: block;
+}
+.kit-more summary {
+  min-block-size: 26px;
+  padding-block: 3px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.kit-more summary:hover {
+  color: var(--link);
+}
 .kit-add {
   justify-content: space-between;
   margin-block-start: var(--space-2);

@@ -225,7 +225,7 @@ const coreDatasets: Run = async () => {
     info: {
       id: 'reference-data', name: '앱에 넣는 기본 데이터 (국가·통화·도시·지도 경계)', url: 'https://github.com/datasets',
       license: 'Repository metadata via repos.ecosyste.ms (CC BY-SA 4.0). DataHub core datasets are mostly ODC-PDDL; each repository keeps its own license (field license).',
-      note: `GitHub 'datasets' 조직(DataHub core datasets) 전체(별 5개 이상) + 널리 쓰는 참조 데이터 저장소: ${REFERENCE_REPOS.join(', ')} (고른 목록은 코드쇼퍼).`,
+      note: `GitHub 'datasets' 조직(DataHub core datasets) 전체(별 5개 이상) + 널리 쓰는 참조 데이터 저장소: ${REFERENCE_REPOS.join(', ')} (고른 목록은 코드잇소).`,
     },
     items,
   };

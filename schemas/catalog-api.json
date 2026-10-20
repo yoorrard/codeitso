@@ -122,17 +122,17 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 300,
-          "description": "출처의 원문(원래 언어). written이 있으면 코드쇼퍼가 쓴 한 줄일 수 있다"
+          "description": "출처의 원문(원래 언어). written이 있으면 코드잇소가 쓴 한 줄일 수 있다"
         },
         "summaryKo": {
           "type": "string",
           "minLength": 1,
           "maxLength": 300,
-          "description": "출처가 준 한국어 한 줄(public-apis-4Kr 번역) 또는 코드쇼퍼가 쓴 한 줄(written)"
+          "description": "출처가 준 한국어 한 줄(public-apis-4Kr 번역) 또는 코드잇소가 쓴 한 줄(written)"
         },
         "written": {
           "const": "codeshopper",
-          "description": "summaryKo(손 목록에서 소개를 못 읽은 것은 summary까지)를 코드쇼퍼가 직접 썼다"
+          "description": "summaryKo(손 목록에서 소개를 못 읽은 것은 summary까지)를 코드잇소가 직접 썼다"
         },
         "url": {
           "type": "string",

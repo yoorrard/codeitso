@@ -9,9 +9,9 @@ paths:
 ---
 
 > 출처: emilkowalski/skills `skills/animate` @ 2d228630ba1446365f614a108cb8252f1feda202 (MIT, LICENSE 동봉). `STANDARDS.md`는 같은 저장소 `skills/review-animations/STANDARDS.md`.
-> 코드쇼퍼에 맞게 고친 곳: 사용자를 기다리게 하는 'Initial Response' 절을 지웠고, 다른 스킬(improve-animations, review-animations,
+> 코드잇소에 맞게 고친 곳: 사용자를 기다리게 하는 'Initial Response' 절을 지웠고, 다른 스킬(improve-animations, review-animations,
 > find-animation-opportunities, animate-expo, pick-ui-library) 안내를 이 프로젝트의 것으로 바꿨다. Motion 라이브러리·React 전용 예시는
-> 이 프로젝트에서 쓰지 않으므로 CSS·WAAPI로 바꿨다. 맨 아래 '코드쇼퍼에서' 절을 더했다. RECIPES.md와 STANDARDS.md는 원문 그대로이며,
+> 이 프로젝트에서 쓰지 않으므로 CSS·WAAPI로 바꿨다. 맨 아래 '코드잇소에서' 절을 더했다. RECIPES.md와 STANDARDS.md는 원문 그대로이며,
 > 그 안의 React·Base UI·Motion 예시는 원리만 참고하고 Preact + CSS/WAAPI로 옮겨 쓴다.
 
 # Building Animations
@@ -198,7 +198,7 @@ Don't pad this into a report. The code is the deliverable.
 
 Opinionated and brief. When the honest answer is "this shouldn't animate," give it — that answer is the reason this skill exists. When feel genuinely can't be settled from code, say so instead of guessing at a value.
 
-## 코드쇼퍼에서
+## 코드잇소에서
 
 - 이 스킬의 'UI 300ms' 규칙은 버튼·칸·창 같은 **UI 조작**에 적용한다. 정류장 도착, 영수증 출력, 도장, 차 이동 같은 **게임 장면**은 드문 순간(delight tier)이며 `docs/UX.md` 4절의 한도(모션 하나 1초 안쪽, 공들인 장면 3초 이하, 누르면 끝 상태로)를 따른다. 장면 설계는 `game-motion` 스킬.
 - 모든 길이·곡선은 `src/styles/tokens.css` 변수. TS에서 길이가 필요하면 `src/lib/motion.ts`의 `dur('--dur-base')`로 읽는다 (동작 줄이기면 0 또는 fade 값).

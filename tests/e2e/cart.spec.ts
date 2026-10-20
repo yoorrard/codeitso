@@ -94,7 +94,7 @@ for (const vp of [
 
       // .md 받기: 파일 이름과 내용 (붙여 넣는 글과 같다)
       const [dl] = await Promise.all([page.waitForEvent('download'), dlg.getByRole('button', { name: ko.prompt.downloadLabel }).click()]);
-      expect(dl.suggestedFilename()).toMatch(/^codeshopper-prompt-\d{8}-\d{4}\.md$/);
+      expect(dl.suggestedFilename()).toMatch(/^codeitso-prompt-\d{8}-\d{4}\.md$/);
       expect(readFileSync((await dl.path()) ?? '', 'utf8')).toBe(text);
 
       // Esc로 닫으면 [프롬프트 뽑기]로 초점, 장바구니는 그대로
@@ -124,7 +124,7 @@ test('스타터 키트: 한 번에 담고, 장바구니에 대분류별로 묶�
   await islandsReady(page);
   const kit = page.locator('.kit[data-kit-id="school"]');
   const btn = kit.locator('button[data-kit]');
-  const n = await kit.locator('.kit-items li').count();
+  const n = await kit.locator('.kit-items a').count();
   const name = (await btn.getAttribute('data-name')) ?? '';
   expect(n).toBeGreaterThanOrEqual(3);
   await btn.click();

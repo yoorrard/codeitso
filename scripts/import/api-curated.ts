@@ -339,7 +339,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         name: 'models.dev (AI model providers)',
         url: 'https://models.dev',
         license: 'MIT (models.dev data); each provider has its own terms',
-        note: 'Every provider in api.json. summary = the provider page\'s own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드쇼퍼. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page.',
+        note: 'Every provider in api.json. summary = the provider page\'s own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page.',
       },
       fromModelsDev,
     );
@@ -356,9 +356,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     writeCatalog(
       {
         id: 'official',
-        name: '공식 문서에서 확인한 API (코드쇼퍼 손 목록)',
+        name: '공식 문서에서 확인한 API (코드잇소 손 목록)',
         url: 'https://github.com/yoorrard/code-chauffeur/blob/main/scripts/import/api-curated-data.ts',
-        license: 'Facts (names, official URLs) and the official pages\' own one-line descriptions; Korean lines written by 코드쇼퍼',
+        license: 'Facts (names, official URLs) and the official pages\' own one-line descriptions; Korean lines written by 코드잇소',
         note: 'AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise.',
       },
       official,

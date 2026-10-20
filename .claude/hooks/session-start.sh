@@ -39,7 +39,7 @@ if [ -f docs/TASKS.md ]; then
   next="$(grep -m1 -E '^### \[ \] T[0-9]+' docs/TASKS.md | sed -E 's/^### \[ \] //')"
   done_n="$(grep -cE '^### \[x\] T[0-9]+' docs/TASKS.md || true)"
   total_n="$(grep -cE '^### \[[ x]\] T[0-9]+' docs/TASKS.md || true)"
-  echo "코드쇼퍼 진행: T 작업 ${done_n}/${total_n} 완료. 다음 후보: ${next:-없음}. 이어서 하려면 /next-task."
+  echo "코드잇소 진행: T 작업 ${done_n}/${total_n} 완료. 다음 후보: ${next:-없음}. 이어서 하려면 /next-task."
 fi
 if [ -f docs/HUMAN.md ]; then
   open_h="$(grep -cE '^- \[ \]' docs/HUMAN.md || true)"

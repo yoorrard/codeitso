@@ -267,7 +267,7 @@ async function importKorean(): Promise<void> {
       name: '공개 한글 글꼴 (공식 출처 확인)',
       url: 'https://github.com/yoorrard/code-chauffeur',
       license: 'Hand-picked list; each font license was read on the official source (licenseUrl in preview). Google Fonts Korean families are in google-fonts (kind fonts-ko).',
-      note: 'summary = official source wording; summaryKo written by 코드쇼퍼 where marked written:codeshopper.',
+      note: 'summary = official source wording; summaryKo written by 코드잇소 where marked written:codeshopper.',
     },
     items,
   );

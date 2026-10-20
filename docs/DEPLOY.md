@@ -1,6 +1,6 @@
 # 배포 안내 (사람이 할 일)
 
-코드쇼퍼는 **Cloudflare Workers 무료 플랜**에 올린다: 정적 파일(`dist/`) + 익명 집계 `/api/event`(D1). 저장소는 비공개로 둔다. 배포는 Cloudflare의 **Workers Builds**가 한다(D72). 대시보드에서 GitHub 저장소를 한 번 연결해 두면, 지켜보는 브랜치에 푸시될 때마다 빌드해서 올린다. 정식으로 공개하기 전까지 지켜보는 브랜치는 작업 브랜치(`claude/…`, 세션마다 바뀔 수 있음)이고, 11단계에서 `main`으로 바꾼다. 에이전트는 실제 배포·원격 D1·비밀 값 명령을 쓰지 않는다.
+코드잇소는 **Cloudflare Workers 무료 플랜**에 올린다: 정적 파일(`dist/`) + 익명 집계 `/api/event`(D1). 저장소는 비공개로 둔다. 배포는 Cloudflare의 **Workers Builds**가 한다(D72). 대시보드에서 GitHub 저장소를 한 번 연결해 두면, 지켜보는 브랜치에 푸시될 때마다 빌드해서 올린다. 정식으로 공개하기 전까지 지켜보는 브랜치는 작업 브랜치(`claude/…`, 세션마다 바뀔 수 있음)이고, 11단계에서 `main`으로 바꾼다. 에이전트는 실제 배포·원격 D1·비밀 값 명령을 쓰지 않는다.
 
 > 화면 이름과 동작은 2026-10-14에 Cloudflare 공식 문서 원본 저장소 `cloudflare/cloudflare-docs`의 파일로 확인했다. 파일과 그 파일을 마지막으로 고친 날은 맨 아래 '근거 문서'에 있다. 문서에 없는 동작은 이 저장소에 설치된 wrangler 4.141.0 코드로 확인했다. 문서끼리 이름이 다른 곳(**Save and Deploy**/**Deploy**, **Settings** → **Build**/**Builds**, **Variables & Secrets**/**Variables and secrets**/**Environment variables**, **Build variables and secrets**/**Build Variables and Secrets**)은 화면에서 가장 비슷한 이름을 고른다. 안내는 영어 화면을 기준으로 쓴다(화면 언어는 **Profile** → **Settings** → **Language**). 실제 화면이 다르면 다른 점을 `docs/HUMAN.md`에 적어 주면 고친다.
 >
@@ -8,7 +8,7 @@
 
 ## 0절. 비용: 왜 Cloudflare인가 (2026-10-14)
 
-| 안 | 하루 수천 명일 때 비용 | 책스책(booklogbook)에 주는 영향 | 코드쇼퍼에서 못 쓰게 되는 것 |
+| 안 | 하루 수천 명일 때 비용 | 책스책(booklogbook)에 주는 영향 | 코드잇소에서 못 쓰게 되는 것 |
 |---|---|---|---|
 | **Cloudflare Workers 무료 + 비공개로 둔 저장소 (고름)** | **0원.** 정적 파일 요청은 무료·무제한이고 세지 않는다. Worker는 `/api/event`(`run_worker_first: ["/api/*"]`)에서만 돌고 하루 10만 요청까지 무료, D1 쓰기는 하루 10만 행까지 무료 | 없음 (다른 계정·다른 서비스) | 없음 |
 | Vercel Pro (지금 쓰는 팀) | 화면 하나에 요청 약 25개 → 하루 3,000명·8화면이면 한 달 약 1,800만 요청. Pro 포함분(1,000만)을 넘어 100만당 약 $2 | 같은 팀의 포함 사용량을 나눠 쓴다 | 없음 |
@@ -30,6 +30,17 @@
 
 알아 둘 것: 비공개로 돌리기 전에 만들어진 포크와 받아 간 사본은 그대로 남는다(되돌릴 수 없음).
 
+## 이름 바꾸기: 코드잇소 (2026-10-20, H25)
+
+앱 이름이 **코드잇소(codeitso)**로 바뀌었다(D129). 저장소의 `wrangler.jsonc` 이름은 이미 `codeitso`다. 대시보드의 Worker 이름만 소유자가 바꾸면 주소가 `https://codeitso.yoorrard.workers.dev`가 된다. workers.dev 주소는 `<Worker 이름>.<하위 도메인>.workers.dev` 꼴이다.
+
+1. **Workers & Pages** → `code-chauffeur` → **Settings**(설정) 탭에서 Worker 이름 옆 편집(연필)을 눌러 `codeitso`를 붙여 넣고 저장해요 (확인 필요: 이름 칸이 **General** 묶음에 있을 수 있어요).
+2. 같은 **Settings** → **Build** → **Variables and secrets**(빌드 변수)에서 `PUBLIC_SITE_URL`을 `https://codeitso.yoorrard.workers.dev`로 고쳐요. 지금은 `https://code-chauffeur.code-chauffeur.workers.dev`로 하위 도메인 자리가 틀려 있어요.
+3. Cloudflare가 저장소에 'name conflict'라는 PR을 열면 합치지 말고 닫아요. Workers Builds는 대시보드 이름과 `wrangler.jsonc`의 `name`이 다르면 대시보드 이름으로 덮어 배포하고 이름을 맞추는 PR을 연다. 저장소는 이미 `codeitso`라 순서와 상관없이 배포는 멈추지 않는다.
+4. **확인:** `https://codeitso.yoorrard.workers.dev`가 열리고 머리줄 로고 글자가 '코드잇소'면 끝이에요. 옛 주소는 더 열리지 않아요. 아직 검색에 나오지 않는 미리 보기라 괜찮아요.
+
+D1 이름(`code-chauffeur-events`)과 GitHub 저장소 이름(`code-chauffeur`)은 그대로 둔다. 둘 다 화면에 나오지 않고, 바꾸면 연결을 다시 해야 한다. 근거: [Workers Builds 자동 PR(이름 충돌)](https://developers.cloudflare.com/workers/ci-cd/builds/automatic-prs/) · [Workers Builds 문제 해결(이름 요구)](https://developers.cloudflare.com/workers/ci-cd/builds/troubleshoot/) · [workers.dev](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/).
+
 ---
 
 ## 한눈에
@@ -45,7 +56,7 @@
 - **대화창**은 저(Claude)와 이야기하던 창이에요. "알려 주세요"는 모두 그 대화창에 써 달라는 뜻이에요.
 - 컴퓨터 브라우저(크롬 등)에서 하세요. 휴대폰으로는 하지 마세요.
 - **→**는 차례로 눌러 들어가라는 뜻이에요. 버튼이 안 보이면 화면을 아래로 내려 보세요.
-- 회색 칸 안의 글자(예: `code-chauffeur`)는 손으로 치지 말고 복사해 붙여 넣으세요. 앞뒤에 빈칸이 붙지 않게 조심하세요.
+- 회색 칸 안의 글자(예: `codeitso`)는 손으로 치지 말고 복사해 붙여 넣으세요. 앞뒤에 빈칸이 붙지 않게 조심하세요.
 - 굵은 영어 글씨는 화면에 보이는 이름이고, 괄호 안은 뜻풀이예요. 화면 이름이 조금 달라도 가장 비슷한 것을 고르세요.
 - **(확인 필요)**가 붙은 곳은 화면 이름이나 자리가 다를 수 있어요. 비슷한 것이 안 보이면 멈추고 화면을 캡처해서(윈도: Win+Shift+S, 맥: Cmd+Shift+4) 대화창에 붙여 넣어 주세요.
 - 화면 이름은 2026-10-14에 Cloudflare 공식 문서 원본에서 확인했어요. 근거는 맨 아래에 모았어요(읽지 않아도 돼요).
@@ -69,7 +80,7 @@
 - 화면 위쪽에 **Switch to Worker Previews**라고 쓰인 알림 막대나 버튼이 보여도 누르지 마세요. 되돌릴 수 없어요.
 - Cloudflare가 GitHub에 저절로 연 PR을 합치지 마세요. 보이면 그대로 두고 알려 주세요.
 - GitHub 저장소의 기본 브랜치를 바꾸지 마세요.
-- Worker 이름(`code-chauffeur`)과 데이터베이스 이름(`code-chauffeur-events`)을 바꾸지 마세요. 같은 데이터베이스를 또 만들지도 마세요. 무료로는 10개까지만 만들 수 있어요.
+- Worker 이름(`codeitso`)과 데이터베이스 이름(`code-chauffeur-events`)을 바꾸지 마세요. 같은 데이터베이스를 또 만들지도 마세요. 무료로는 10개까지만 만들 수 있어요.
 - 빌드 변수 `PUBLIC_STAGE`를 지금 `release`로 바꾸지 마세요. 빌드가 멈춰요.
 
 알아 둘 것:
@@ -96,7 +107,7 @@
    - 왼쪽 메뉴로 가려면 **Compute & AI** → **Workers & Pages**예요.
    - 공식 문서를 보면 이 화면을 처음 열 때 하위 도메인이 저절로 만들어져요.
 5. 화면에서 **Your subdomain**(내 하위 도메인)을 찾아요. 계정 정보 칸(**Account Details**)에 있을 거예요 (확인 필요). 옆에 `무엇무엇.workers.dev`가 보이면 그 앞부분을 적어 두세요. 이 안내에서는 이 글자를 **〈내 하위 도메인〉**이라고 불러요.
-   - 예: 화면에 `hong-gil.workers.dev`가 보이면 〈내 하위 도메인〉은 `hong-gil`이고, 사이트 주소는 `https://code-chauffeur.hong-gil.workers.dev`예요.
+   - 예: 화면에 `hong-gil.workers.dev`가 보이면 〈내 하위 도메인〉은 `hong-gil`이고, 사이트 주소는 `https://codeitso.hong-gil.workers.dev`예요.
 6. 그 이름이 메일 주소 앞부분처럼 남에게 보이기 싫은 것이면 지금 바꿔요. 첫 배포 뒤에 바꾸면 사이트 주소도 바뀌어요.
    - **Your subdomain** 옆 **Change**(바꾸기)를 눌러요.
    - 영문 소문자, 숫자, `-`만 써서 새 이름을 넣고 저장 버튼을 눌러요. 확인 창이 나오면 한 번 더 눌러요.
@@ -109,7 +120,7 @@
 
 ## 2단계. 데이터베이스(D1) 만들기 (3분)
 
-D1은 Cloudflare의 작은 데이터베이스예요. 코드쇼퍼는 여기에 '오늘 설계도가 몇 번 나갔나' 같은 횟수만 세요. 누가 왔는지는 남기지 않아요.
+D1은 Cloudflare의 작은 데이터베이스예요. 코드잇소는 여기에 '오늘 설계도가 몇 번 나갔나' 같은 횟수만 세요. 누가 왔는지는 남기지 않아요.
 
 1. D1 화면을 열어요: https://dash.cloudflare.com/?to=/:account/workers/d1
    - 왼쪽 메뉴로 가려면 **Storage & databases** → **D1 SQL database**예요.
@@ -185,7 +196,7 @@ CREATE TABLE IF NOT EXISTS daily_events (
 
 | 칸 | 넣을 것 |
 |---|---|
-| 이름 (**Project name** 또는 **Worker name**) | `code-chauffeur` |
+| 이름 (**Project name** 또는 **Worker name**) | `codeitso` |
 | **Build command**(빌드 명령) | `npm run build:cf` |
 | **Deploy command**(배포 명령) | `npx wrangler deploy` |
 | **Git branch**(지켜볼 브랜치) | `claude/focused-bell-a92t1m` |
@@ -207,7 +218,7 @@ CREATE TABLE IF NOT EXISTS daily_events (
 
 ## 6단계. 지켜볼 브랜치를 작업 브랜치로 맞추기 (3분)
 
-1. **Workers & Pages** → `code-chauffeur` → **Settings**(설정) 탭으로 가요.
+1. **Workers & Pages** → `codeitso` → **Settings**(설정) 탭으로 가요.
 2. 화면을 내려 **Build**(빌드) 칸을 찾고, 그 안의 **Branch control**(브랜치 관리)을 봐요. **Build**가 **Builds**로 쓰여 있기도 해요.
 3. 드롭다운에서 `claude/focused-bell-a92t1m`을 골라요. `focused`를 쳐서 찾으면 쉬워요.
    - 5단계에서 이미 골랐으면 맞게 들어갔는지만 봐요.
@@ -232,7 +243,7 @@ CREATE TABLE IF NOT EXISTS daily_events (
 |---|---|
 | `NODE_VERSION` | `22` |
 | `PUBLIC_STAGE` | `preview` |
-| `PUBLIC_SITE_URL` | `https://code-chauffeur.〈내 하위 도메인〉.workers.dev` |
+| `PUBLIC_SITE_URL` | `https://codeitso.〈내 하위 도메인〉.workers.dev` |
 | `ASTRO_TELEMETRY_DISABLED` | `1` |
 | `WRANGLER_SEND_METRICS` | `false` |
 
@@ -264,7 +275,7 @@ CREATE TABLE IF NOT EXISTS daily_events (
 
 제가 "빌드가 끝났어요"라고 하면 확인해 주세요.
 
-- **사이트 주소:** `https://code-chauffeur.〈내 하위 도메인〉.workers.dev`
+- **사이트 주소:** `https://codeitso.〈내 하위 도메인〉.workers.dev`
 - 이 주소는 빌드 로그 끝쪽에도 찍혀요. Worker 화면의 **Domains** 탭 → **Worker URL**에서도 볼 수 있어요. **Domains** 탭이 없으면 **Settings** → **Domains & Routes**에 있어요.
 - 사이트를 열어서 즐겨찾기(Ctrl+D, 맥은 Cmd+D) 해 두세요.
 
@@ -272,7 +283,7 @@ CREATE TABLE IF NOT EXISTS daily_events (
 - [ ] **1.** 사이트 주소를 열면 홈이 나와요.
 - [ ] **2.** 맨 아래 바닥글에 **'시험판이에요. 도구 정보가 바뀔 수 있어요.'**가 보여요.
 - [ ] **3.** 홈 → 카테고리 → 재료 몇 개 담기(메모 포함) → 장바구니 → 계산 → 영수증에서 .md 받기까지 끝까지 가 봐요.
-- [ ] **4. 새 화면인지 확인:** 홈 제목이 '코드쇼퍼: 바이브코딩 재료 쇼핑몰'이고 머리줄에 장바구니 로고가 보이면 v5 화면이다.
+- [ ] **4. 새 화면인지 확인:** 홈 제목이 '코드잇소: 바이브코딩 재료 쇼핑몰'이고 머리줄에 장바구니 로고가 보이면 v5 화면이다.
 - [ ] **5.** 휴대폰으로도 열어 봐요. 카카오톡 '나와의 채팅'에 주소를 보낸 뒤 휴대폰에서 누르면 쉬워요.
 - [ ] **6.** (선택) 방문 횟수가 쌓이는지 확인하기:
   - 시크릿 창(크롬: Ctrl+Shift+N, 맥: Cmd+Shift+N)에서 사이트를 열어요.
@@ -292,7 +303,7 @@ CREATE TABLE IF NOT EXISTS daily_events (
 
 ## 9단계. 빌드가 실패할 때
 
-**로그 보는 곳:** **Workers & Pages** → `code-chauffeur` → **Deployments**(배포) 탭 → 맨 아래 **View build history**(빌드 기록 보기)로 가요. 실패한 빌드를 누르면 로그가 나와요.
+**로그 보는 곳:** **Workers & Pages** → `codeitso` → **Deployments**(배포) 탭 → 맨 아래 **View build history**(빌드 기록 보기)로 가요. 실패한 빌드를 누르면 로그가 나와요.
 
 **로그 보내는 법:** 로그 맨 아래로 내려요. 빨간 글이 처음 보이는 곳부터 맨 끝까지 마우스로 끌어 고르고 Ctrl+C(맥은 Cmd+C)를 눌러요. 복사 버튼이 있으면 그걸 써요. 어려우면 화면 캡처를 보내 주세요. 대화창에 붙여 넣어 주시면 원인을 찾아 알려 드릴게요.
 
@@ -305,7 +316,7 @@ CREATE TABLE IF NOT EXISTS daily_events (
 | `You need to register a workers.dev subdomain` 또는 `register a workers.dev subdomain here` | 하위 도메인이 없어요 | 1단계 7번을 하고 알려 주세요 |
 | `Please verify your account's email address` | 가입 확인 메일을 아직 안 눌렀어요 | 1단계 1번을 하고 알려 주세요 |
 | `You must use a real database in the database_id configuration`, `must have a valid id specified`, `Skipping automatic provisioning` | 데이터베이스 번호가 들어가지 않은 코드로 빌드했어요 | 4단계 번호를 보냈는지, 6단계 브랜치가 맞는지 보고 알려 주세요 |
-| `must match the name of your Worker` 또는 `Failed to match Worker name` | 5단계 이름 칸이 `code-chauffeur`가 아니에요 | 알려 주세요. Cloudflare가 연 PR은 합치지 말고 그대로 둬요 |
+| `must match the name of your Worker` 또는 `Failed to match Worker name` | 5단계 이름 칸이 `codeitso`가 아니에요 | 알려 주세요. Cloudflare가 연 PR은 합치지 말고 그대로 둬요 |
 | `빌드를 멈췄어요: …`로 시작하는 한국어 줄 | 우리 빌드가 스스로 멈췄어요. 7단계 값의 모양이 틀렸을 때 나와요 | 그 줄을 보내 주세요 |
 | `Build was timed out` | 빌드가 20분을 넘었어요 | 알려 주세요 |
 | `build token ... has been deleted or rolled` | 빌드용 열쇠(토큰)를 쓸 수 없어요 | 알려 주세요. 새 열쇠를 만드는 순서를 함께 볼게요 |
@@ -332,7 +343,7 @@ Web Analytics는 무료예요. 쿠키를 쓰지 않고, 방문자가 누구인�
 1. Web Analytics 화면을 열어요: https://dash.cloudflare.com/?to=/:account/web-analytics
    - 왼쪽 메뉴로 가려면 **Analytics & logs** → **Web analytics**예요.
 2. **Add a site**를 눌러요.
-3. **Set up hostname** 칸에 `code-chauffeur.〈내 하위 도메인〉.workers.dev`를 써요(〈 〉 자리에는 1단계에서 적은 글자).
+3. **Set up hostname** 칸에 `codeitso.〈내 하위 도메인〉.workers.dev`를 써요(〈 〉 자리에는 1단계에서 적은 글자).
 4. 아래에 나타나는 상자에서 방금 쓴 이름을 누르고 **Done**을 눌러요.
    - 오류가 나거나 고를 이름이 나오지 않으면 그만두고 알려 주세요. Web Analytics가 workers.dev 주소를 받아 주는지는 문서에 나와 있지 않아요.
 5. **Manage site**에서 코드 조각(JS snippet)을 찾아요. 그중 `"token": "…"` 부분의 따옴표 안 값만 복사해요.

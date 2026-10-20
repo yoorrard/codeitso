@@ -1,5 +1,5 @@
 // 손으로 고른 디자인 사이트 목록 (2026-10-14 주소 확인).
-// summary는 가져올 때 사이트가 스스로 쓴 한 줄(meta description)을 읽어 채운다. summaryKo는 코드쇼퍼가 쓴 한 줄.
+// summary는 가져올 때 사이트가 스스로 쓴 한 줄(meta description)을 읽어 채운다. summaryKo는 코드잇소가 쓴 한 줄.
 // license는 공식 라이선스 페이지에서 확인한 것만 적는다. 확인하지 못한 곳은 비우고 licenseUrl만 남긴다.
 
 export type CuratedKind =

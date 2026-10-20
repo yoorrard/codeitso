@@ -6,6 +6,7 @@
 import {
   type Item, CURATED_AT, fetchJson, fetchRaw, main, makeItem, mapLimit, npmMonthlyDownloads, progress, repoMeta, siteMeta, siteSummary, slugify, writeCatalog,
 } from './design-lib.ts';
+import { cruxList, npmDownloads, siteRankNote, withSiteRank } from './signals.ts';
 
 const only = process.argv.find((a) => a.startsWith('--only='))?.slice(7).split(',');
 const want = (k: string) => !only || only.includes(k);
@@ -35,6 +36,18 @@ async function iconifyJson<T>(path: string): Promise<T> {
   throw new Error(`Iconify API가 계속 429: ${path}`);
 }
 
+// 인기 신호 (D133): 아이콘 묶음을 앱에서 쓰는 사람은 보통 Iconify 꾸러미가 아니라 그 묶음의 공식 npm 꾸러미를 깐다.
+// 공식 꾸러미가 있는 묶음은 그 꾸러미의 지난 한 달 내려받기를 쓰고(preview.downloadsOf), 없으면 @iconify-json/<prefix>.
+// 꾸러미 이름만 손으로 적는다. 숫자는 npm이 준 값 그대로이고, 꾸러미가 없으면(404) Iconify 꾸러미로 돌아간다.
+export const OFFICIAL_ICON_PACKAGES: Record<string, string> = {
+  lucide: 'lucide-react', heroicons: '@heroicons/react', tabler: '@tabler/icons-react', mdi: '@mdi/js', ph: '@phosphor-icons/react',
+  bi: 'bootstrap-icons', ri: 'remixicon', 'simple-icons': 'simple-icons', carbon: '@carbon/icons-react', ion: 'ionicons',
+  octicon: '@primer/octicons-react', 'radix-icons': '@radix-ui/react-icons', iconoir: 'iconoir-react', fluent: '@fluentui/react-icons',
+  'ant-design': '@ant-design/icons', 'fa7-solid': '@fortawesome/free-solid-svg-icons', 'fa7-regular': '@fortawesome/free-regular-svg-icons',
+  'fa7-brands': '@fortawesome/free-brands-svg-icons', boxicons: 'boxicons', devicon: 'devicon', codicon: '@vscode/codicons', eva: 'eva-icons',
+  gg: 'css.gg', 'grommet-icons': 'grommet-icons', pixelarticons: 'pixelarticons', hugeicons: '@hugeicons/react', uil: '@iconscout/react-unicons',
+};
+
 const SAMPLE_COUNT = 8;
 const MAX_BODY = 6000; // 미리 보기 자료가 너무 커지지 않게 긴 본문은 건너뛴다
 
@@ -45,6 +58,7 @@ async function importIconify(): Promise<void> {
   const hidden = prefixes.filter((p) => all[p]?.hidden);
   const visible = prefixes.filter((p) => !all[p]?.hidden);
   console.log(`  묶음 ${prefixes.length}개 (숨김 ${hidden.length}개는 뺀다: Iconify가 목록에서 감춘 옛 묶음)`);
+  const official = await npmDownloads(Object.values(OFFICIAL_ICON_PACKAGES), 'last-month');
   let done = 0;
   const rows = await mapLimit(visible, 3, async (prefix) => {
     const info = all[prefix] as IconifyInfo;
@@ -72,16 +86,20 @@ async function importIconify(): Promise<void> {
       });
     }
     const gh = info.author.url?.match(/github\.com\/([^/]+\/[^/#?]+)/)?.[1];
-    const [downloads, repo] = await Promise.all([
+    const [iconifyDownloads, repo] = await Promise.all([
       npmMonthlyDownloads(`@iconify-json/${prefix}`),
       gh ? repoMeta(gh).catch(() => undefined) : Promise.resolve(undefined),
     ]);
+    const pkg = OFFICIAL_ICON_PACKAGES[prefix];
+    const officialDownloads = pkg ? official.get(pkg) : undefined;
+    const downloads = officialDownloads ?? iconifyDownloads;
+    const downloadsOf = officialDownloads !== undefined ? `npm:${pkg}` : iconifyDownloads !== undefined ? `npm:@iconify-json/${prefix}` : undefined;
     if (picked.length < SAMPLE_COUNT) console.log(`  · ${prefix}: 대표 아이콘 ${picked.length}개`);
     progress('묶음', ++done, visible.length);
-    return { prefix, info, picked, width: data?.width ?? 16, height: data?.height ?? 16, downloads, repo };
+    return { prefix, info, picked, width: data?.width ?? 16, height: data?.height ?? 16, downloads, downloadsOf, repo };
   });
 
-  const items: Item[] = rows.map(({ prefix, info, picked, width, height, downloads, repo }) => {
+  const items: Item[] = rows.map(({ prefix, info, picked, width, height, downloads, downloadsOf, repo }) => {
     const cat = info.category ?? 'Other';
     const archived = cat.startsWith('Archive');
     const firstSample = picked[0]?.name ?? info.samples?.[0] ?? 'icon';
@@ -109,6 +127,7 @@ async function importIconify(): Promise<void> {
         width,
         height,
         icons: picked,
+        ...(downloadsOf ? { downloadsOf } : {}),
       },
       use: {
         install: `npm install -D @iconify-json/${prefix}`,
@@ -123,7 +142,7 @@ async function importIconify(): Promise<void> {
       name: 'Iconify',
       url: 'https://iconify.design',
       license: 'Collection metadata from the public Iconify API (api.iconify.design). Each icon set keeps its own license (field license, preview.licenseUrl); the 8 sample SVG bodies per set are redistributed under that set\'s license with its author credited.',
-      note: `metrics.downloads = npm downloads last month of @iconify-json/<prefix>; metrics.stars = stars of the set's source repository (GitHub, via repos.ecosyste.ms when no GitHub token). ${hidden.length} hidden legacy sets skipped: ${hidden.join(', ')}.`,
+      note: `metrics.downloads = npm downloads last month of the set's official package when it has one (preview.downloadsOf, e.g. npm:lucide-react), otherwise of @iconify-json/<prefix>; metrics.stars = stars of the set's source repository (GitHub, via repos.ecosyste.ms when no GitHub token). ${hidden.length} hidden legacy sets skipped: ${hidden.join(', ')}.`,
     },
     items,
   );
@@ -139,6 +158,7 @@ interface SvglLogo {
 async function importSvgl(): Promise<void> {
   console.log('svgl');
   const logos = await fetchJson<SvglLogo[]>('https://api.svgl.app');
+  const crux = await cruxList();
   const used = new Map<string, number>();
   const items = logos.map((l) => {
     let slug = slugify(l.title) || `logo-${l.id}`;
@@ -148,7 +168,7 @@ async function importSvgl(): Promise<void> {
     const cats = Array.isArray(l.category) ? l.category : [l.category];
     const route = typeof l.route === 'string' ? { light: l.route, dark: l.route } : l.route;
     const wordmark = l.wordmark ? (typeof l.wordmark === 'string' ? { light: l.wordmark, dark: l.wordmark } : l.wordmark) : undefined;
-    return makeItem({
+    return withSiteRank(makeItem({
       id: `svgl:${slug}`,
       name: l.title,
       kind: 'logos',
@@ -163,7 +183,7 @@ async function importSvgl(): Promise<void> {
         ...(l.brandUrl ? { brandUrl: l.brandUrl } : {}),
       },
       use: { snippet: `<img src="${route.light}" alt="${l.title}" width="32" height="32">`, docs: l.brandUrl ?? 'https://svgl.app' },
-    });
+    }), crux);
   });
   writeCatalog(
     {
@@ -171,6 +191,7 @@ async function importSvgl(): Promise<void> {
       name: 'svgl',
       url: 'https://svgl.app',
       license: 'Listing from the public svgl API (api.svgl.app, repository MIT). Logos are trademarks of their owners: follow each brand\'s guidelines (preview.brandUrl).',
+      note: siteRankNote(),
     },
     items,
   );
@@ -199,15 +220,21 @@ const EXTRA: ExtraIcons[] = [
   { slug: 'icones', name: 'Icônes', summaryKo: 'Iconify의 모든 아이콘을 빠르게 찾아 SVG·컴포넌트 코드로 복사하는 사이트.', url: 'https://icones.js.org', license: 'MIT (site); icons keep their set licenses', tags: ['search', 'iconify', 'tool'], repo: 'antfu-collective/icones' },
 ];
 
+const installPkg = (install: string | undefined): string | undefined => /^npm install (?:-D )?(\S+)$/.exec(install ?? '')?.[1];
+
 async function importExtra(): Promise<void> {
   console.log('Iconify 밖 아이콘');
+  const crux = await cruxList();
+  const pkgDownloads = await npmDownloads(EXTRA.map((e) => installPkg(e.install)).filter((x): x is string => Boolean(x)), 'last-month');
   const items = await mapLimit(EXTRA, 4, async (e) => {
     const [repo, meta] = await Promise.all([
       e.repo ? repoMeta(e.repo).catch(() => undefined) : Promise.resolve(undefined),
       siteMeta(e.url),
     ]);
     if (!meta.ok) console.log(`  ! 주소 확인 실패 ${meta.status} ${e.url}`);
-    return makeItem({
+    const pkg = installPkg(e.install);
+    const downloads = pkg ? pkgDownloads.get(pkg) : undefined;
+    return withSiteRank(makeItem({
       id: `icons-extra:${e.slug}`,
       name: e.name,
       kind: 'icons',
@@ -217,12 +244,12 @@ async function importExtra(): Promise<void> {
       url: e.url,
       source: { name: e.name, url: e.url },
       license: e.license,
-      metrics: repo ? { stars: repo.stars, updatedAt: repo.pushedAt } : undefined,
+      metrics: repo || downloads !== undefined ? { stars: repo?.stars, downloads, updatedAt: repo?.pushedAt } : undefined,
       tags: e.tags,
-      preview: { type: 'site', url: e.url },
+      preview: { type: 'site', url: e.url, ...(downloads !== undefined && pkg ? { downloadsOf: `npm:${pkg}` } : {}) },
       use: { install: e.install, docs: e.docs ?? e.url },
       fetchedAt: CURATED_AT,
-    });
+    }), crux);
   });
   writeCatalog(
     {
@@ -230,6 +257,7 @@ async function importExtra(): Promise<void> {
       name: 'Icon sources outside Iconify (hand-picked)',
       url: 'https://github.com/yoorrard/code-chauffeur',
       license: 'Hand-written listing of public sites (names, links, the site\'s own one-line description). Licenses summarised from each site\'s license page; check the page before use.',
+      note: `metrics.downloads = npm downloads last month of the install package (preview.downloadsOf); metrics.stars = repository stars. ${siteRankNote()}`,
     },
     items,
   );

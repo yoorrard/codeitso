@@ -10,6 +10,7 @@ import {
   type Item, type Kind, type NpmInfo, type SiteMeta, CURATED_AT, cmp, fetchJson, freeSentence, hostOf, main, makeItem, mapLimit,
   npmInfo, readCache, siteMeta, usableDescription, writeCache, writeCatalog,
 } from './api-lib.ts';
+import { cruxList, npmDownloads, siteRankNote, withSiteRank } from './signals.ts';
 
 const MODELS_DEV = 'https://models.dev/api.json';
 const OPENROUTER_PROVIDERS = 'https://openrouter.ai/api/v1/providers';
@@ -166,7 +167,19 @@ function newestModels(p: MdProvider, n: number): string[] {
     .map((m) => m.name);
 }
 
-function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, NpmInfo>, problems: string[]): Item {
+/**
+ * 인기 신호 (D133): 그 회사 전용 AI SDK 꾸러미의 주간 내려받기. 후보는 models.dev가 적어 둔 꾸러미(이름에 제공자 id가 들어 있을 때만,
+ * @ai-sdk/openai-compatible처럼 여러 회사가 함께 쓰는 꾸러미는 뺀다)와 Vercel AI SDK의 제공자 꾸러미 이름 꼴 @ai-sdk/<id>.
+ * npm에 없는 이름(404)은 값이 없어 저절로 빠진다.
+ */
+export function aiSdkCandidates(p: Pick<MdProvider, 'id' | 'npm'>): string[] {
+  const norm = (x: string) => x.toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (norm(p.id).length < 3) return [];
+  const own = p.npm && p.npm !== '@ai-sdk/openai-compatible' && norm(p.npm).includes(norm(p.id)) ? [p.npm] : [];
+  return [...new Set([...own, `@ai-sdk/${p.id}`])];
+}
+
+function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, NpmInfo>, problems: string[], aiSdk: ReadonlyMap<string, number>): Item {
   const o = PROVIDER_OVERLAY[p.id];
   const docsUrl = o?.docs ?? p.doc;
   const mainUrl = o?.url ?? docsUrl ?? `https://models.dev/?search=${encodeURIComponent(p.id)}`;
@@ -179,6 +192,13 @@ function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, Npm
   const pricing = o?.pricing ? pages[o.pricing] : undefined;
   const quote = freeQuote(p.id, pricing);
   const npm = verifiedNpm(o?.npm, o?.npmRepo, infos, problems, p.id);
+  // 공식 SDK와 AI SDK 꾸러미 가운데 주간 내려받기가 많은 쪽을 인기 신호로 쓴다 (어느 꾸러미인지 downloadsOf에 적는다)
+  const sdkPkg = aiSdkCandidates(p).find((n) => aiSdk.has(n));
+  const sdkWeekly = sdkPkg ? aiSdk.get(sdkPkg) : undefined;
+  const officialWeekly = npm?.weeklyDownloads;
+  const useSdk = sdkWeekly !== undefined && (officialWeekly === undefined || sdkWeekly > officialWeekly);
+  const weekly = useSdk ? sdkWeekly : officialWeekly;
+  const downloadsOf = useSdk ? `npm:${sdkPkg}` : officialWeekly !== undefined && npm ? `npm:${npm.name}` : undefined;
   const outputs = [...new Set(models.flatMap((m) => m.modalities?.output ?? []))].sort(cmp);
   const kind = providerKind(p.id, o);
   const plan = /(coding|token|step)-plan/.test(p.id);
@@ -190,7 +210,7 @@ function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, Npm
     ...(o?.ko ? { summaryKo: o.ko, written: 'codeshopper' as const } : {}),
     url: alive(mainPage) || !docsUrl ? mainUrl : docsUrl,
     source: { name: 'models.dev', url: 'https://models.dev' },
-    ...(npm?.weeklyDownloads !== undefined ? { metrics: { downloads: npm.weeklyDownloads } } : {}),
+    ...(weekly !== undefined ? { metrics: { downloads: weekly } } : {}),
     tags: [
       'ai',
       kind === 'ai-llm' ? 'llm' : 'inference',
@@ -209,7 +229,7 @@ function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, Npm
       env: p.env,
       aiSdk: p.npm,
       sdk: npm ? npm.name : undefined,
-      downloadsOf: npm?.weeklyDownloads !== undefined ? `npm:${npm.name}` : undefined,
+      downloadsOf,
       modelCount: models.length,
       openWeightModels: models.filter((m) => m.open_weights).length || undefined,
       models: newestModels(p, 8),
@@ -313,6 +333,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const pages = await readPages(urls, withFree);
     const npmNames = [...ALL_CURATED.map((c) => c.npm), ...Object.values(PROVIDER_OVERLAY).map((o) => o.npm)].filter((n): n is string => Boolean(n));
     const infos = await readNpm(npmNames);
+    const aiSdk = await npmDownloads(providers.flatMap(aiSdkCandidates), 'last-week');
+    const crux = await cruxList();
 
     const problems: string[] = [];
     const slugs = new Set<string>();
@@ -329,8 +351,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       }
     }
     const generic = new Set([...seenDesc].filter(([, who]) => who.size > 1).map(([d]) => d));
-    const official = ALL_CURATED.map((c) => curatedItem(c, pages, infos, problems, generic));
-    const fromModelsDev = providers.map((p) => providerItem(p, pages, infos, problems));
+    // 인기 신호 (D133): SDK 내려받기가 없는 상품은 사이트의 Chrome 이용 순위 묶음을 붙인다
+    const official = ALL_CURATED.map((c) => withSiteRank(curatedItem(c, pages, infos, problems, generic), crux));
+    const fromModelsDev = providers.map((p) => withSiteRank(providerItem(p, pages, infos, problems, aiSdk), crux));
     for (const id of Object.keys(PROVIDER_OVERLAY)) if (!md[id]) problems.push(`덧씌우기 ${id}: models.dev에 없음`);
 
     writeCatalog(
@@ -339,7 +362,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         name: 'models.dev (AI model providers)',
         url: 'https://models.dev',
         license: 'MIT (models.dev data); each provider has its own terms',
-        note: 'Every provider in api.json. summary = the provider page\'s own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page.',
+        note: `Every provider in api.json. summary = the provider page\'s own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page. metrics.downloads = npm weekly downloads of the official SDK or of the provider\'s own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). ${siteRankNote()}`,
       },
       fromModelsDev,
     );
@@ -349,9 +372,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         name: 'OpenRouter providers (AI inference companies)',
         url: 'https://openrouter.ai/docs/api-reference/providers/list-providers',
         license: 'Facts (provider names, links) from OpenRouter\'s public providers endpoint; one-line descriptions are each company\'s own homepage meta description',
-        note: `OpenRouter lists ${orAll.length} providers; kept the ${orFresh.length} not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API.`,
+        note: `OpenRouter lists ${orAll.length} providers; kept the ${orFresh.length} not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. ${siteRankNote()}`,
       },
-      orFresh.map(({ p, home }) => openRouterItem(p, home, pages)),
+      orFresh.map(({ p, home }) => withSiteRank(openRouterItem(p, home, pages), crux)),
     );
     writeCatalog(
       {
@@ -359,7 +382,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         name: '공식 문서에서 확인한 API (코드잇소 손 목록)',
         url: 'https://github.com/yoorrard/code-chauffeur/blob/main/scripts/import/api-curated-data.ts',
         license: 'Facts (names, official URLs) and the official pages\' own one-line descriptions; Korean lines written by 코드잇소',
-        note: 'AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise.',
+        note: `AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). ${siteRankNote()}`,
       },
       official,
     );

@@ -4,7 +4,7 @@
     "name": "UI/UX reference sites (hand-picked)",
     "url": "https://github.com/yoorrard/code-chauffeur",
     "license": "Hand-written list of public sites (name, link, Korean one-liner by 코드잇소). summary = the site's own meta description fetched on the date above. license is filled only where the site's license page was read; otherwise follow preview.licenseUrl.",
-    "note": "Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all."
+    "note": "Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-20",
   "count": 56,
@@ -41,7 +41,7 @@
       "name": "Awwwards",
       "kind": "references",
       "category": "design",
-      "summary": "Awwwards are the Website Awards that recognize and promote the talent and effort of the best developers, designers and web agencies in the world.",
+      "summary": "Awwwards (awwwards.com)",
       "summaryKo": "웹 디자인 시상 사이트. 그날의 사이트(SOTD) 등 실험적인 웹을 볼 수 있다.",
       "written": "codeshopper",
       "url": "https://www.awwwards.com",
@@ -52,17 +52,21 @@
       "tags": [
         "awards",
         "inspiration",
+        "link-check-failed",
         "web"
       ],
       "preview": {
         "type": "site",
         "url": "https://www.awwwards.com",
-        "linkStatus": 200
+        "linkStatus": 0
       },
       "use": {
         "docs": "https://www.awwwards.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:behance",
@@ -90,7 +94,10 @@
       "use": {
         "docs": "https://www.behance.net"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "curated:bento-grids",
@@ -256,7 +263,10 @@
       "use": {
         "docs": "https://component.gallery"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:cosmos",
@@ -283,7 +293,10 @@
       "use": {
         "docs": "https://www.cosmos.so"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:css-design-awards",
@@ -310,7 +323,10 @@
       "use": {
         "docs": "https://www.cssdesignawards.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:curated-design",
@@ -337,7 +353,10 @@
       "use": {
         "docs": "https://www.curated.design"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:dark-mode-design",
@@ -392,7 +411,10 @@
       "use": {
         "docs": "https://dribbble.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:figma-community",
@@ -420,7 +442,10 @@
       "use": {
         "docs": "https://www.figma.com/community"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "curated:fonts-in-use",
@@ -447,7 +472,10 @@
       "use": {
         "docs": "https://fontsinuse.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:footer-design",
@@ -475,7 +503,10 @@
       "use": {
         "docs": "https://www.footer.design"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:framer-gallery",
@@ -502,7 +533,10 @@
       "use": {
         "docs": "https://www.framer.com/gallery"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:gdweb",
@@ -530,14 +564,17 @@
       "use": {
         "docs": "https://gdweb.co.kr"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:godly",
       "name": "Godly",
       "kind": "references",
       "category": "design",
-      "summary": "The best design inspiration on the Internet.",
+      "summary": "Godly (godly.website)",
       "summaryKo": "감각적인 웹사이트를 움직임과 함께 보여 주는 갤러리.",
       "written": "codeshopper",
       "url": "https://godly.website",
@@ -547,13 +584,14 @@
       },
       "tags": [
         "inspiration",
+        "link-check-failed",
         "motion",
         "web"
       ],
       "preview": {
         "type": "site",
         "url": "https://godly.website",
-        "linkStatus": 200
+        "linkStatus": 0
       },
       "use": {
         "docs": "https://godly.website"
@@ -668,7 +706,10 @@
       "use": {
         "docs": "https://land-book.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:landingfolio",
@@ -722,7 +763,10 @@
       "use": {
         "docs": "https://www.lapa.ninja"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:laws-of-ux",
@@ -835,7 +879,10 @@
       "use": {
         "docs": "https://webflow.com/made-in-webflow"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:maxibestof",
@@ -889,7 +936,10 @@
       "use": {
         "docs": "https://minimal.gallery"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:mobbin",
@@ -920,7 +970,10 @@
       "use": {
         "docs": "https://mobbin.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:muzli",
@@ -975,14 +1028,17 @@
       "use": {
         "docs": "https://www.navbar.gallery"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:nicely-done",
       "name": "Nicely Done",
       "kind": "references",
       "category": "design",
-      "summary": "Search 214,215 real UI screenshots from 500+ SaaS apps. Find pricing pages, onboarding flows, settings screens, and more, searchable like Google and draggable into Figma.",
+      "summary": "Nicely Done (nicelydone.club)",
       "summaryKo": "SaaS 제품의 화면과 사용 흐름을 모은 곳. 온보딩·설정 화면 참고에 좋다.",
       "written": "codeshopper",
       "url": "https://nicelydone.club",
@@ -999,7 +1055,7 @@
       "preview": {
         "type": "site",
         "url": "https://nicelydone.club",
-        "linkStatus": 200,
+        "linkStatus": 403,
         "pricing": "freemium"
       },
       "use": {
@@ -1034,7 +1090,10 @@
       "use": {
         "docs": "https://notefolio.net"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:one-page-love",
@@ -1062,7 +1121,10 @@
       "use": {
         "docs": "https://onepagelove.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:page-flows",
@@ -1092,7 +1154,10 @@
       "use": {
         "docs": "https://pageflows.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:pinterest",
@@ -1119,7 +1184,10 @@
       "use": {
         "docs": "https://www.pinterest.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "curated:really-good-emails",
@@ -1146,7 +1214,10 @@
       "use": {
         "docs": "https://reallygoodemails.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:refero",
@@ -1177,7 +1248,10 @@
       "use": {
         "docs": "https://refero.design"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:saas-landing-page",
@@ -1205,7 +1279,10 @@
       "use": {
         "docs": "https://saaslandingpage.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:saas-pages",
@@ -1260,7 +1337,10 @@
       "use": {
         "docs": "https://www.saasframe.io"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:savee",
@@ -1287,7 +1367,10 @@
       "use": {
         "docs": "https://savee.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:screenlane",
@@ -1342,7 +1425,10 @@
       "use": {
         "docs": "https://screensdesign.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:siteinspire",
@@ -1369,7 +1455,10 @@
       "use": {
         "docs": "https://www.siteinspire.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:spotted-in-prod",
@@ -1432,7 +1521,7 @@
       "name": "The FWA",
       "kind": "references",
       "category": "design",
-      "summary": "The FWA (thefwa.com)",
+      "summary": "Awards - The FWA",
       "summaryKo": "인터랙티브·실험적 웹 작품 시상 사이트.",
       "written": "codeshopper",
       "url": "https://thefwa.com",
@@ -1443,13 +1532,12 @@
       "tags": [
         "awards",
         "inspiration",
-        "interactive",
-        "link-check-failed"
+        "interactive"
       ],
       "preview": {
         "type": "site",
         "url": "https://thefwa.com",
-        "linkStatus": 0
+        "linkStatus": 200
       },
       "use": {
         "docs": "https://thefwa.com"
@@ -1481,7 +1569,10 @@
       "use": {
         "docs": "https://www.typewolf.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:ui-patterns",
@@ -1565,7 +1656,10 @@
       "use": {
         "docs": "https://www.webdesignmuseum.org"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     }
   ]
 }

@@ -6,7 +6,8 @@
 import {
   type Item, clip, fetchJson, main, makeItem, mapLimit, progress, repoMeta, slugify, stripHtml, writeCatalog,
 } from './design-lib.ts';
-import { KOREAN_FONTS } from './design-fonts-ko.ts';
+import { KOREAN_FONTS, type KoreanFont } from './design-fonts-ko.ts';
+import { jsdelivrMonthly } from './signals.ts';
 
 const only = process.argv.find((a) => a.startsWith('--only='))?.slice(7).split(',');
 const want = (k: string) => !only || only.includes(k);
@@ -238,10 +239,23 @@ async function importFontshare(): Promise<void> {
 
 // ---------- 공개 한글 글꼴 (손으로 확인) ----------
 
+/** jsDelivr로 받는 글꼴이면 그 꾸러미(gh/<주인>/<저장소> · npm/<꾸러미>), 아니면 GitHub 저장소 (D133) */
+export function jsdelivrSpec(k: Pick<KoreanFont, 'cssUrl' | 'fileUrl' | 'repo'>): string | undefined {
+  for (const u of [k.cssUrl, k.fileUrl]) {
+    const m = u ? /^https:\/\/cdn\.jsdelivr\.net\/(gh\/[^/@]+\/[^/@]+|npm\/(?:@[^/@]+\/)?[^/@]+)/.exec(u) : null;
+    if (m?.[1]) return m[1];
+  }
+  return k.repo ? `gh/${k.repo}` : undefined;
+}
+
 async function importKorean(): Promise<void> {
   console.log('공개 한글 글꼴');
+  // 인기 신호 (D133): Google Fonts의 30일 조회와 같은 단위(한 달 요청 수)로 견주려고 jsDelivr 지난 한 달 요청 수를 받는다.
+  const hits = await jsdelivrMonthly(KOREAN_FONTS.map(jsdelivrSpec).filter((x): x is string => Boolean(x)));
   const items = await mapLimit(KOREAN_FONTS, 4, async (k) => {
     const repo = k.repo ? await repoMeta(k.repo).catch(() => undefined) : undefined;
+    const spec = jsdelivrSpec(k);
+    const monthly = spec ? hits.get(spec) : undefined;
     return makeItem({
       id: `korean-fonts:${k.slug}`,
       name: k.name,
@@ -252,11 +266,12 @@ async function importKorean(): Promise<void> {
       url: k.url,
       source: { name: k.sourceName, url: k.sourceUrl },
       license: k.license,
-      metrics: repo ? { stars: repo.stars, updatedAt: repo.pushedAt } : undefined,
+      metrics: repo || monthly !== undefined ? { stars: repo?.stars, downloads: monthly, updatedAt: repo?.pushedAt } : undefined,
       tags: ['korean', ...k.tags],
       preview: {
         type: 'font', family: k.family, ...(k.cssUrl ? { cssUrl: k.cssUrl } : {}), ...(k.fileUrl ? { fileUrl: k.fileUrl } : {}),
         weights: k.weights, generic: k.generic, sample: 'ko', licenseUrl: k.licenseUrl,
+        ...(monthly !== undefined && spec ? { downloadsOf: `jsdelivr:${spec}` } : {}),
       },
       use: { install: k.install, snippet: k.snippet, docs: k.docs ?? k.url },
     });
@@ -267,7 +282,7 @@ async function importKorean(): Promise<void> {
       name: '공개 한글 글꼴 (공식 출처 확인)',
       url: 'https://github.com/yoorrard/code-chauffeur',
       license: 'Hand-picked list; each font license was read on the official source (licenseUrl in preview). Google Fonts Korean families are in google-fonts (kind fonts-ko).',
-      note: 'summary = official source wording; summaryKo written by 코드잇소 where marked written:codeshopper.',
+      note: 'summary = official source wording; summaryKo written by 코드잇소 where marked written:codeshopper. metrics.downloads = jsDelivr requests in the last month (data.jsdelivr.com, package in preview.downloadsOf), the same unit as Google Fonts 30-day views; metrics.stars = stars of the source repository.',
     },
     items,
   );

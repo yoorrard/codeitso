@@ -36,7 +36,8 @@ export interface Item {
   url: string;
   source: { name: string; url: string };
   license?: string;
-  metrics?: { stars?: number; downloads?: number; likes?: number; updatedAt?: string };
+  /** views·trend·siteRank는 인기 점수용 (D133, scripts/import/signals.ts) */
+  metrics?: { stars?: number; downloads?: number; likes?: number; views?: number; trend?: number; siteRank?: number; updatedAt?: string };
   tags: string[];
   preview?: Preview;
   use?: { install?: string; snippet?: string; docs?: string };
@@ -639,6 +640,9 @@ function cleanMetrics(m: NonNullable<Item['metrics']>): NonNullable<Item['metric
   if (m.stars !== undefined) out.stars = m.stars;
   if (m.downloads !== undefined) out.downloads = m.downloads;
   if (m.likes !== undefined) out.likes = m.likes;
+  if (m.views !== undefined) out.views = m.views;
+  if (m.trend !== undefined && m.trend > 0) out.trend = m.trend;
+  if (m.siteRank !== undefined) out.siteRank = m.siteRank;
   if (m.updatedAt) out.updatedAt = m.updatedAt;
   return out;
 }

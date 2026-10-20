@@ -9,6 +9,7 @@ import {
   type Item, type RepoMeta, OUT_DIR, cmp, fetchJson, fetchRaw, fetchText, main, makeItem, mapLimit, progress, repoMeta,
   searchTopic, siteMeta, siteSummary, slugify, writeCatalog,
 } from './design-lib.ts';
+import { cruxList, siteRankNote, withSiteRank } from './signals.ts';
 import { AWESOME, SEEDS, TOPICS, type UiKind } from './design-ui-seeds.ts';
 
 const only = process.argv.find((a) => a.startsWith('--only='))?.slice(7).split(',');
@@ -104,6 +105,9 @@ const KIND_SOURCE_NOTE: Record<UiKind, string> = {
   charts: 'Chart and data-visualisation libraries',
 };
 
+/** 주제 검색으로 잡힌 저장소 이름이 이 꼴이면 라이브러리가 아니다: 어썸 목록, 템플릿·스타터·보일러플레이트, 관리자 화면·대시보드, SaaS 스타터 */
+export const NOT_A_LIBRARY = /^awesome[-_.]|[-_.]awesome$|(^|[-_.])(templates?|boilerplate|starter|starter[-_.]kit|admin|dashboard|saas)([-_.]|$)/i;
+
 async function importRepos(): Promise<void> {
   console.log('UI 저장소 모으기');
   const cands = new Map<string, Candidate>();
@@ -158,7 +162,7 @@ async function importRepos(): Promise<void> {
   });
 
   const kept: { c: Candidate; meta: RepoMeta }[] = [];
-  const dropped = { missing: 0, fork: 0, archived: 0, stars: 0, offTopic: 0 };
+  const dropped = { missing: 0, fork: 0, archived: 0, stars: 0, offTopic: 0, notLibrary: 0 };
   const seenFull = new Set<string>();
   for (const { c, meta } of rows) {
     if (!meta) {
@@ -173,6 +177,9 @@ async function importRepos(): Promise<void> {
     const fromAwesome = [...c.from].some((f) => f.startsWith('awesome:'));
     const min = isSeed ? 0 : fromAwesome ? MIN_STARS_AWESOME : MIN_STARS_TOPIC;
     if (meta.stars < min) { dropped.stars++; continue; }
+    // 주제 검색으로만 찾은 저장소 가운데 이름이 목록(awesome-…)·템플릿·관리자 화면인 것은 라이브러리가 아니다 (D133 점검:
+    // awesome-react-components·full-stack-fastapi-template이 UI 라이브러리 첫 줄에 섰다). 그런 저장소는 오픈소스·템플릿 진열대에 있다.
+    if (!isSeed && !fromAwesome && NOT_A_LIBRARY.test(meta.fullName.split('/')[1] ?? '')) { dropped.notLibrary++; continue; }
     if (!isSeed && !fromAwesome) {
       const k = topicKind(c.kind, meta);
       if (!k) { dropped.offTopic++; continue; }
@@ -181,7 +188,7 @@ async function importRepos(): Promise<void> {
     seenFull.add(meta.fullName.toLowerCase());
     kept.push({ c, meta });
   }
-  console.log(`  남김 ${kept.length}개 / 뺌: 없는 저장소 ${dropped.missing}, 포크 ${dropped.fork}, 보관됨 ${dropped.archived}, 별 부족 ${dropped.stars}, 주제 밖 ${dropped.offTopic}`);
+  console.log(`  남김 ${kept.length}개 / 뺌: 없는 저장소 ${dropped.missing}, 포크 ${dropped.fork}, 보관됨 ${dropped.archived}, 별 부족 ${dropped.stars}, 주제 밖 ${dropped.offTopic}, 라이브러리 아님 ${dropped.notLibrary}`);
 
   done = 0;
   const pkgs = await mapLimit(kept, 6, async ({ c }) => {
@@ -243,9 +250,11 @@ async function importShadcn(): Promise<void> {
   const regs = await fetchJson<ShadcnRegistry[]>('https://ui.shadcn.com/r/registries.json');
   const usable = regs.filter((r) => r.health?.status !== 'unavailable');
   const totalItems = usable.reduce((n, r) => n + (r.ranking?.itemCount ?? 0), 0);
+  // 인기 신호 (D133): 디렉터리의 rankingScore는 상태 점수라 인기가 아니다. 레지스트리 사이트의 Chrome 이용 순위 묶음을 붙인다.
+  const crux = await cruxList();
   const items: Item[] = usable.map((r) => {
     const slug = slugify(r.name.replace(/^@/, '')) || 'registry';
-    return makeItem({
+    return withSiteRank(makeItem({
       id: `shadcn-registry:${slug}`,
       name: r.name,
       kind: 'ui-registries',
@@ -258,7 +267,7 @@ async function importShadcn(): Promise<void> {
         rankingScore: r.ranking?.score, health: r.health?.status,
       },
       use: { install: `npx shadcn@latest add ${r.name}/<component>`, docs: 'https://ui.shadcn.com/docs/directory' },
-    });
+    }), crux, r.homepage);
   });
   writeCatalog(
     {
@@ -266,7 +275,7 @@ async function importShadcn(): Promise<void> {
       name: 'shadcn/ui registry directory',
       url: 'https://ui.shadcn.com/docs/directory',
       license: 'Directory data from ui.shadcn.com/r/registries.json (shadcn/ui, MIT). Each registry\'s components keep their own license — check the registry site.',
-      note: `${regs.length} registries listed; ${regs.length - usable.length} marked unavailable by the directory's health check were skipped. Individual components of community registries (${totalItems} in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount.`,
+      note: `${regs.length} registries listed; ${regs.length - usable.length} marked unavailable by the directory's health check were skipped. Individual components of community registries (${totalItems} in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. ${siteRankNote()}`,
     },
     items,
   );
@@ -311,6 +320,8 @@ const EXTRA_DESIGN_SYSTEMS: { name: string; url: string; repo?: string; summaryK
 
 async function importDesignSystems(): Promise<void> {
   console.log('디자인 시스템');
+  // 인기 신호 (D133): 지표가 없는 목록이라 사이트의 Chrome 이용 순위 묶음을 붙인다.
+  const crux = await cruxList();
   const md = await fetchText('https://raw.githubusercontent.com/alexpate/awesome-design-systems/master/README.md');
   const rows: { name: string; url: string; components: boolean; voice: boolean; kit: boolean; code?: string }[] = [];
   for (const line of md.split('\n')) {
@@ -322,39 +333,43 @@ async function importDesignSystems(): Promise<void> {
   }
   const listMeta = await repoMeta('alexpate/awesome-design-systems').catch(() => undefined);
   let done = 0;
+  // 인기 신호 (D133): 표가 소스 코드 저장소(GitHub)를 알려 주면 그 저장소의 스타와 마지막 푸시 날짜를 붙인다.
   const items = await mapLimit(rows, 6, async (r) => {
-    const meta = await siteMeta(r.url);
+    const gh = r.code?.match(/github\.com\/([^/#?]+\/[^/#?]+)/)?.[1]?.replace(/\.git$/, '');
+    const [meta, repo] = await Promise.all([siteMeta(r.url), gh ? repoMeta(gh).catch(() => undefined) : Promise.resolve(undefined)]);
     progress('사이트', ++done, rows.length);
-    return { r, meta };
+    return { r, meta, repo };
   });
   const out: Item[] = [];
   const used = new Set<string>();
-  for (const { r, meta } of items) {
+  for (const { r, meta, repo } of items) {
     let slug = slugify(r.name);
     while (used.has(slug)) slug = `${slug}-2`;
     used.add(slug);
-    out.push(makeItem({
+    out.push(withSiteRank(makeItem({
       id: `design-systems:${slug}`,
       name: r.name,
       kind: 'design-systems',
       summary: siteSummary(r.name, r.url, meta),
       url: r.url,
       source: { name: 'awesome-design-systems', url: 'https://github.com/alexpate/awesome-design-systems' },
+      ...(repo ? { metrics: { stars: repo.stars, updatedAt: repo.pushedAt } } : {}),
       tags: [
         'design-system', ...(r.components ? ['components'] : []), ...(r.voice ? ['voice-and-tone'] : []),
         ...(r.kit ? ['designers-kit'] : []), ...(r.code ? ['source-code'] : []), ...(meta.ok ? [] : ['link-check-failed']),
       ],
       preview: { type: 'site', url: r.url, ...(r.code ? { sourceCode: r.code } : {}), linkStatus: meta.status },
       use: { docs: r.url },
-    }));
+    }), crux));
   }
   for (const e of EXTRA_DESIGN_SYSTEMS) {
     const meta = await siteMeta(e.url);
     if (!meta.ok) console.log(`  ! 주소 확인 실패 ${meta.status} ${e.url}`);
     const id = `design-systems:${slugify(e.name)}`;
+    const repo = e.repo ? await repoMeta(e.repo).catch(() => undefined) : undefined;
     const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
     if (out.some((x) => x.id === id || host(x.url) === host(e.url))) continue;
-    out.push(makeItem({
+    out.push(withSiteRank(makeItem({
       id,
       name: e.name,
       kind: 'design-systems',
@@ -363,10 +378,11 @@ async function importDesignSystems(): Promise<void> {
       written: 'codeshopper',
       url: e.url,
       source: { name: e.name, url: e.url },
+      ...(repo ? { metrics: { stars: repo.stars, updatedAt: repo.pushedAt } } : {}),
       tags: ['design-system', 'guidelines', ...(e.name.startsWith('KRDS') ? ['korea', 'government', 'accessibility'] : [])],
       preview: { type: 'site', url: e.url, ...(e.repo ? { sourceCode: `https://github.com/${e.repo}` } : {}) },
       use: { docs: e.url },
-    }));
+    }), crux));
   }
   const failed = out.filter((x) => x.tags.includes('link-check-failed')).length;
   writeCatalog(
@@ -375,7 +391,7 @@ async function importDesignSystems(): Promise<void> {
       name: 'Design systems (awesome-design-systems + hand-picked)',
       url: 'https://github.com/alexpate/awesome-design-systems',
       license: `List from alexpate/awesome-design-systems (${listMeta?.license ?? 'see repo'}); summaries are each site's own meta description.`,
-      note: `${rows.length} rows in the list; ${failed} failed the link check today (kept with tag link-check-failed so they can be reviewed, not hidden).`,
+      note: `${rows.length} rows in the list; ${failed} failed the link check today (kept with tag link-check-failed so they can be reviewed, not hidden). metrics.stars = stars of the source code repository named in the list (preview.sourceCode). ${siteRankNote()}`,
     },
     out,
   );

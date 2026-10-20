@@ -29,6 +29,10 @@ export interface Metrics {
   stars?: number;
   downloads?: number;
   likes?: number;
+  /** 인기 점수용 (D133, scripts/import/signals.ts): 조회 수·최근 뜨는 정도·사이트 순위 묶음 */
+  views?: number;
+  trend?: number;
+  siteRank?: number;
   updatedAt?: string;
 }
 
@@ -493,6 +497,9 @@ export function makeItem(x: Omit<Item, 'fetchedAt'> & { fetchedAt?: string }): I
     if (m.stars !== undefined) metrics.stars = m.stars;
     if (m.downloads !== undefined) metrics.downloads = m.downloads;
     if (m.likes !== undefined) metrics.likes = m.likes;
+    if (m.views !== undefined) metrics.views = m.views;
+    if (m.trend !== undefined && m.trend > 0) metrics.trend = m.trend;
+    if (m.siteRank !== undefined) metrics.siteRank = m.siteRank;
     if (m.updatedAt) metrics.updatedAt = m.updatedAt;
     if (Object.keys(metrics).length) item.metrics = metrics;
   }

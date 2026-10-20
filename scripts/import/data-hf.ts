@@ -12,12 +12,15 @@ import {
 export const MIN_DOWNLOADS = 10_000;
 export const MIN_LIKES = 100;
 export const NO_CARD_MIN_LIKES = 20;
+/** 요즘 뜨는 순(trendingScore) 상위 몇 개를 더한다 (D133) */
+export const TRENDING_TOP = 300;
 
 interface HfDataset {
   id: string;
   author?: string;
   downloads?: number;
   likes?: number;
+  trendingScore?: number;
   lastModified?: string;
   gated?: boolean | string;
   tags?: string[];
@@ -25,7 +28,7 @@ interface HfDataset {
   cardData?: Record<string, unknown>;
 }
 
-const EXPAND = ['downloads', 'likes', 'lastModified', 'cardData', 'tags', 'description', 'gated', 'author']
+const EXPAND = ['downloads', 'likes', 'trendingScore', 'lastModified', 'cardData', 'tags', 'description', 'gated', 'author']
   .map((e) => `expand[]=${e}`)
   .join('&');
 
@@ -56,15 +59,18 @@ function tagValues(tags: string[] | undefined, prefix: string): string[] {
 }
 
 main(async () => {
-  const byDownloads = await cached('hf-datasets-downloads', () =>
+  const byDownloads = await cached('hf-datasets-v2-downloads', () =>
     hfList<HfDataset>('datasets', `sort=downloads&direction=-1&${EXPAND}`, (d) => (d.downloads ?? 0) >= MIN_DOWNLOADS),
   );
-  const byLikes = await cached('hf-datasets-likes', () =>
+  const byLikes = await cached('hf-datasets-v2-likes', () =>
     hfList<HfDataset>('datasets', `sort=likes&direction=-1&${EXPAND}`, (d) => (d.likes ?? 0) >= MIN_LIKES),
   );
+  const trending = await cached('hf-datasets-v2-trending', () =>
+    hfList<HfDataset>('datasets', `sort=trendingScore&direction=-1&${EXPAND}`, (_d, i) => i < TRENDING_TOP),
+  );
   const picked = new Map<string, HfDataset>();
-  for (const d of [...byDownloads, ...byLikes]) if (!picked.has(d.id)) picked.set(d.id, d);
-  console.log(`  내려받기 ${byDownloads.length}, 좋아요 ${byLikes.length}, 합계 ${picked.size}`);
+  for (const d of [...byDownloads, ...byLikes, ...trending]) if (!picked.has(d.id)) picked.set(d.id, d);
+  console.log(`  내려받기 ${byDownloads.length}, 좋아요 ${byLikes.length}, 요즘 뜨는 ${trending.length}, 합계 ${picked.size}`);
 
   const kept = [...picked.values()].filter((d) => (datasetSummary(d.description) || (d.likes ?? 0) >= NO_CARD_MIN_LIKES) && !isAdult([d.id, datasetSummary(d.description)], d.tags ?? []));
   console.log(`  카드 설명이 없고 좋아요가 적거나 성인물 표시인 ${picked.size - kept.length}개를 뺀다`);
@@ -96,7 +102,7 @@ main(async () => {
       url: `${HF}/datasets/${d.id}`,
       source: { name: 'Hugging Face Datasets', url: `${HF}/datasets` },
       license: hfLicense(d.cardData?.license),
-      metrics: { downloads: int(d.downloads), likes: int(d.likes), updatedAt: toDate(d.lastModified) },
+      metrics: { downloads: int(d.downloads), likes: int(d.likes), trend: d.trendingScore, updatedAt: toDate(d.lastModified) },
       tags: tagify([...tasks.slice(0, 4), ...modalities, ...(langs.length > 6 ? ['multilingual'] : langs), gated ? 'gated' : undefined]),
       preview,
     });
@@ -106,7 +112,7 @@ main(async () => {
     name: 'Hugging Face 데이터셋',
     url: `${HF}/datasets`,
     license: 'Hugging Face Hub public API metadata (dataset id, card description, tasks, downloads, likes, license tag); each dataset keeps its own license (field license).',
-    cut: `최근 30일 내려받기 ${MIN_DOWNLOADS.toLocaleString('en-US')}회 이상 또는 좋아요 ${MIN_LIKES}개 이상. 카드 설명이 없으면 좋아요 ${NO_CARD_MIN_LIKES}개 이상만`,
-    note: 'Hub에는 공개 데이터셋이 50만 개 넘게 있다. 설명이 없는 데이터셋은 이름과 만든 곳으로 짧게 적는다.',
+    cut: `최근 30일 내려받기 ${MIN_DOWNLOADS.toLocaleString('en-US')}회 이상 또는 좋아요 ${MIN_LIKES}개 이상 또는 요즘 뜨는 순 상위 ${TRENDING_TOP}개. 카드 설명이 없으면 좋아요 ${NO_CARD_MIN_LIKES}개 이상만`,
+    note: 'Hub에는 공개 데이터셋이 50만 개 넘게 있다. 설명이 없는 데이터셋은 이름과 만든 곳으로 짧게 적는다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다).',
   }, items);
 });

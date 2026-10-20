@@ -179,6 +179,21 @@
             },
             "updatedAt": {
               "$ref": "#/$defs/date"
+            },
+            "views": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "조회 수 (출처가 주는 값만). 인기 점수에만 쓴다 (D133)"
+            },
+            "trend": {
+              "type": "number",
+              "minimum": 0,
+              "description": "최근 뜨는 정도 (예: Hugging Face trendingScore). 인기 점수에만 쓴다 (D133)"
+            },
+            "siteRank": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Chrome UX Report 세계 순위 묶음 (다른 지표가 없을 때만). 인기 점수에만 쓴다 (D133)"
             }
           }
         },

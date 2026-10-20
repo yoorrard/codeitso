@@ -458,3 +458,5 @@ T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 �
 2026-10-20 하네스 간소화(D130): v4 스킬 둘·에이전트 넷 지움, /next-task 간소화(검토 에이전트 없이 증거로), 멈춤 훅 통과 기억, 세션 알림 v5로, copy.md 말투를 v5.1에 맞춤.
 2026-10-20 K1 스타터 키트 42개·구현안·/kits, 홈 모든 칸 '모두 보기'(D131): data/kits.json 주제 다섯(교육 12·게임 7·업무·행정 8·가게·생활 7·요즘 인기 AI 8)과 outlineKo, KitCard(홈 다섯 장 / /kits 전부), 새 쪽 /kits·/c(전체 카테고리)·/recent, 홈 줄 more를 모든 줄에(AI 코딩 툴 → /c/ai, 키 없는 API → /c/api), e2e kits.spec(390·1440)·a11y 쪽 셋 더함.
 2026-10-20 버그 고침(D131): 이름 바꿈 뒤 로고·파비콘·공유 그림·글꼴이 Cloudflare 가장자리 캐시 때문에 옛것으로 보이던 것. 그림·글꼴 이름에 내용 해시(npm run logo → src/lib/brand-files.ts, npm run fonts → fonts.css), /brand/* 1년 캐시. 검사 620·e2e 88 통과.
+
+2026-10-20 R1 인기순 점검·고도화(D133): 인기 점수를 출처 파일 안 백분위(D105)에서 소분류 안 log 크기로(core.ts rankScores·POP_RULES, 시험 10개). 사실 신호를 가져오기에서 받음(scripts/import/signals.ts): 한글 폰트 jsDelivr 한 달 요청, 아이콘 공식 npm 꾸러미, AI 제공자 SDK·@ai-sdk 주간 내려받기, MCP GitHub 스타 2,498개·참조 서버 꾸러미 내려받기, n8n 조회, HF trendingScore와 요즘 뜨는 순 상위, 디자인 시스템 저장소 스타, 지표 없는 손 목록·공개 API·로고·레지스트리는 Chrome UX Report 순위 묶음. UI 라이브러리에서 어썸 목록·템플릿 25개 뺌, Smithery 사용 횟수는 preview로. 옛 이름이 남은 자료 다시 받음(grep 코드쇼퍼 data/catalog 0건). 점검표 docs/review/v5/popularity-audit.md(소분류 100개 전·후).

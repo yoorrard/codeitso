@@ -23,7 +23,8 @@
 | `summary` | 출처 원문 그대로 (최대 300자) |
 | `summaryKo`, `written` | 한국어 한 줄. 코드잇소가 쓴 것이면 `written: 'codeshopper'` |
 | `url`, `source{name,url}`, `license`(SPDX, 모르면 비움) | |
-| `metrics{stars,downloads,likes,updatedAt}` | 출처가 준 값만. `downloads`의 뜻은 출처마다 다르다(30일 조회·한 달 내려받기·전체 내려받기·활용신청 수) → 파일의 `note` |
+| `metrics{stars,downloads,likes,updatedAt}` | 출처가 준 값만. `downloads`의 뜻은 출처마다 다르다(30일 조회·한 달 내려받기·전체 내려받기·활용신청 수) → 파일의 `note`. 다른 꾸러미의 값이면 `preview.downloadsOf`에 그 이름 |
+| `metrics{views,trend,siteRank}` | 인기순에만 쓰는 사실 신호 (D133, `scripts/import/signals.ts`): 조회 수, 요즘 뜨는 정도(HF trendingScore), Chrome UX Report 세계 순위 묶음(다른 지표가 없을 때만). 카드에는 보이지 않는다 |
 | `tags` | 출처의 분류·주제 |
 | `preview{type,…}` | 미리 보기 재료: font·palette·icons·asset·style·site·repo·template·model·dataset·api·mcp·skill·prompt… |
 | `use{install,snippet,docs}` | 출처가 준 설치 명령·설정 조각·문서 주소만 |

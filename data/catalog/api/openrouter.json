@@ -4,7 +4,7 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 112 providers; kept the 32 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API."
+    "note": "OpenRouter lists 112 providers; kept the 32 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-20",
   "count": 32,
@@ -94,7 +94,10 @@
         "summarySource": "official page meta description",
         "viaOpenRouter": "https://openrouter.ai/provider/atlas-cloud"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "openrouter:avian",
@@ -947,7 +950,10 @@
         "terms": "https://typesafe.ai/legal/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/typesafe"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "openrouter:unbiased",

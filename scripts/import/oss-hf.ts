@@ -10,13 +10,16 @@
 //       스페이스는 카드의 short_description, 없으면 README 첫 문단, 그것도 없으면 제목.
 import {
   HF, type Item, type Preview, asStrings, cached, cleanLicense, fetchRaw, fetchJson, hfLicense, hfList, int, isAdult, main,
-  makeId, makeItem, mapLimit, progress, readmeFirstParagraph, summaryOf, tagify, toDate, writeCatalog,
+  makeId, makeItem, mapLimit, progress, readmeFirstParagraph, summaryOf, tagify, toDate, writeCache, writeCatalog,
 } from './oss-lib.ts';
 
 export const MODEL_MIN_DOWNLOADS = 10_000;
 export const MODEL_MIN_PER_TASK = 20;
 export const MODEL_MIN_LIKES = 300;
 export const SPACE_MIN_LIKES = 100;
+/** 요즘 뜨는 순(trendingScore) 상위 몇 개를 더한다 (D133: 인기순에 최근 흐름을 넣으려고) */
+export const MODEL_TRENDING_TOP = 500;
+export const SPACE_TRENDING_TOP = 300;
 
 const SOURCE_MODELS = { name: 'Hugging Face', url: `${HF}/models` };
 const SOURCE_SPACES = { name: 'Hugging Face Spaces', url: `${HF}/spaces` };
@@ -26,6 +29,7 @@ interface HfModel {
   author?: string;
   downloads?: number;
   likes?: number;
+  trendingScore?: number;
   pipeline_tag?: string;
   library_name?: string;
   lastModified?: string;
@@ -38,6 +42,7 @@ interface HfSpace {
   id: string;
   author?: string;
   likes?: number;
+  trendingScore?: number;
   sdk?: string;
   lastModified?: string;
   tags?: string[];
@@ -50,7 +55,7 @@ interface HfTask {
   label: string;
 }
 
-const MODEL_EXPAND = ['downloads', 'likes', 'pipeline_tag', 'library_name', 'lastModified', 'cardData', 'gated', 'tags', 'author']
+const MODEL_EXPAND = ['downloads', 'likes', 'trendingScore', 'pipeline_tag', 'library_name', 'lastModified', 'cardData', 'gated', 'tags', 'author']
   .map((e) => `expand[]=${e}`)
   .join('&');
 
@@ -87,30 +92,34 @@ async function importModels(): Promise<void> {
   const label = new Map(taskList.map((t) => [t.id, t.label]));
   const picked = new Map<string, HfModel>();
   for (const t of taskList) {
-    const rows = await cached(`hf-models-${t.id}`, () =>
+    const rows = await cached(`hf-models-v2-${t.id}`, () =>
       hfList<HfModel>('models', `pipeline_tag=${t.id}&sort=downloads&direction=-1&${MODEL_EXPAND}`, (m, i) =>
         i < MODEL_MIN_PER_TASK || (m.downloads ?? 0) >= MODEL_MIN_DOWNLOADS),
     );
     for (const m of rows) if (!picked.has(m.id)) picked.set(m.id, m);
     console.log(`  ${t.id}: ${rows.length}`);
   }
-  const liked = await cached('hf-models-likes', () =>
+  const liked = await cached('hf-models-v2-likes', () =>
     hfList<HfModel>('models', `sort=likes&direction=-1&${MODEL_EXPAND}`, (m) => (m.likes ?? 0) >= MODEL_MIN_LIKES),
   );
   for (const m of liked) if (!picked.has(m.id)) picked.set(m.id, m);
-  console.log(`  좋아요 ${MODEL_MIN_LIKES}+: ${liked.length}, 합계 ${picked.size}`);
+  const trending = await cached('hf-models-v2-trending', () =>
+    hfList<HfModel>('models', `sort=trendingScore&direction=-1&${MODEL_EXPAND}`, (_m, i) => i < MODEL_TRENDING_TOP),
+  );
+  for (const m of trending) if (!picked.has(m.id)) picked.set(m.id, m);
+  console.log(`  좋아요 ${MODEL_MIN_LIKES}+: ${liked.length}, 요즘 뜨는 ${trending.length}, 합계 ${picked.size}`);
 
   const models = [...picked.values()].filter((m) => !isAdult([m.id], m.tags ?? []));
   console.log(`  성인물 표시 ${picked.size - models.length}개를 뺀다`);
   let done = 0;
-  const paragraphs = await cached('hf-models-cards', async () => {
-    const out: Record<string, string | null> = {};
-    await mapLimit(models, 8, async (m) => {
-      out[m.id] = m.gated ? null : ((await cardParagraph(m.id)) ?? null);
-      progress('카드', ++done, models.length, 500);
-    });
-    return out;
-  }, 7);
+  // 카드 첫 문단은 7일 캐시. 캐시에 없는 모델(새로 뜬 모델 등)만 더 읽는다.
+  const paragraphs = await cached('hf-models-cards', async () => ({}) as Record<string, string | null>, 7);
+  const missing = models.filter((m) => !(m.id in paragraphs));
+  await mapLimit(missing, 8, async (m) => {
+    paragraphs[m.id] = m.gated ? null : ((await cardParagraph(m.id)) ?? null);
+    progress('카드', ++done, missing.length, 500);
+  });
+  if (missing.length) writeCache('hf-models-cards', paragraphs);
 
   const clean = models.filter((m) => !isAdult([paragraphs[m.id]]));
   console.log(`  카드 첫 문단이 성인물을 알리는 ${models.length - clean.length}개를 더 뺀다`);
@@ -137,7 +146,7 @@ async function importModels(): Promise<void> {
       url: `${HF}/${m.id}`,
       source: SOURCE_MODELS,
       license: hfLicense(m.cardData?.license),
-      metrics: { downloads: int(m.downloads), likes: int(m.likes), updatedAt: toDate(m.lastModified) },
+      metrics: { downloads: int(m.downloads), likes: int(m.likes), trend: m.trendingScore, updatedAt: toDate(m.lastModified) },
       tags: tagify([task, m.library_name, ...langTags(m.cardData), gated ? 'gated' : undefined]),
       preview,
     });
@@ -147,30 +156,34 @@ async function importModels(): Promise<void> {
     name: 'Hugging Face 모델',
     url: `${HF}/models`,
     license: 'Hugging Face Hub public API metadata (model id, task, downloads, likes, license tag) and the first paragraph of each public model card; each model keeps its own license (field license).',
-    cut: `작업(${taskList.length}개)마다 최근 30일 내려받기 ${MODEL_MIN_DOWNLOADS.toLocaleString('en-US')}회 이상 + 작업마다 상위 ${MODEL_MIN_PER_TASK}개 + 좋아요 ${MODEL_MIN_LIKES}개 이상`,
-    note: 'Hub에는 공개 모델이 200만 개 넘게 있다. 카드를 읽을 수 없는 모델(동의가 필요한 모델 등)은 허브 정보(작업·라이브러리·만든 곳)로 설명을 짧게 만든다.',
+    cut: `작업(${taskList.length}개)마다 최근 30일 내려받기 ${MODEL_MIN_DOWNLOADS.toLocaleString('en-US')}회 이상 + 작업마다 상위 ${MODEL_MIN_PER_TASK}개 + 좋아요 ${MODEL_MIN_LIKES}개 이상 + 요즘 뜨는 순 상위 ${MODEL_TRENDING_TOP}개`,
+    note: 'Hub에는 공개 모델이 200만 개 넘게 있다. 카드를 읽을 수 없는 모델(동의가 필요한 모델 등)은 허브 정보(작업·라이브러리·만든 곳)로 설명을 짧게 만든다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다).',
   }, items);
 }
 
-const SPACE_EXPAND = ['likes', 'sdk', 'lastModified', 'cardData', 'tags', 'runtime', 'author'].map((e) => `expand[]=${e}`).join('&');
+const SPACE_EXPAND = ['likes', 'trendingScore', 'sdk', 'lastModified', 'cardData', 'tags', 'runtime', 'author'].map((e) => `expand[]=${e}`).join('&');
 
 async function importSpaces(): Promise<void> {
-  const all = await cached('hf-spaces', () =>
+  const liked = await cached('hf-spaces-v2', () =>
     hfList<HfSpace>('spaces', `sort=likes&direction=-1&${SPACE_EXPAND}`, (s) => (s.likes ?? 0) >= SPACE_MIN_LIKES),
   );
+  const trending = await cached('hf-spaces-v2-trending', () =>
+    hfList<HfSpace>('spaces', `sort=trendingScore&direction=-1&${SPACE_EXPAND}`, (_s, i) => i < SPACE_TRENDING_TOP),
+  );
+  const seen = new Set(liked.map((s) => s.id));
+  const all = [...liked, ...trending.filter((s) => !seen.has(s.id))];
   const spaces = all.filter((s) => !isAdult([s.id, typeof s.cardData?.title === 'string' ? s.cardData.title : undefined, typeof s.cardData?.short_description === 'string' ? s.cardData.short_description : undefined], [...(s.tags ?? []), ...asStrings(s.cardData?.tags)]));
   console.log(`  성인물 표시 ${all.length - spaces.length}개를 뺀다`);
   console.log(`  스페이스 ${spaces.length}`);
   const need = spaces.filter((s) => typeof s.cardData?.short_description !== 'string');
   let done = 0;
-  const paragraphs = await cached('hf-spaces-cards', async () => {
-    const out: Record<string, string | null> = {};
-    await mapLimit(need, 8, async (s) => {
-      out[s.id] = (await cardParagraph(`spaces/${s.id}`)) ?? null;
-      progress('카드', ++done, need.length, 200);
-    });
-    return out;
-  }, 7);
+  const paragraphs = await cached('hf-spaces-cards', async () => ({}) as Record<string, string | null>, 7);
+  const missing = need.filter((s) => !(s.id in paragraphs));
+  await mapLimit(missing, 8, async (s) => {
+    paragraphs[s.id] = (await cardParagraph(`spaces/${s.id}`)) ?? null;
+    progress('카드', ++done, missing.length, 200);
+  });
+  if (missing.length) writeCache('hf-spaces-cards', paragraphs);
 
   const cleanSpaces = spaces.filter((s) => !isAdult([paragraphs[s.id]]));
   const items: Item[] = cleanSpaces.map((s) => {
@@ -199,7 +212,7 @@ async function importSpaces(): Promise<void> {
       url: `${HF}/spaces/${s.id}`,
       source: SOURCE_SPACES,
       license: cleanLicense(typeof card.license === 'string' ? card.license : undefined),
-      metrics: { likes: int(s.likes), updatedAt: toDate(s.lastModified) },
+      metrics: { likes: int(s.likes), trend: s.trendingScore, updatedAt: toDate(s.lastModified) },
       tags: tagify([sdk, ...asStrings(card.tags).slice(0, 6)]),
       preview,
     });
@@ -209,8 +222,8 @@ async function importSpaces(): Promise<void> {
     name: 'Hugging Face 스페이스',
     url: `${HF}/spaces`,
     license: 'Hugging Face Hub public API metadata (space id, title, short description, SDK, likes); each Space keeps its own license (field license).',
-    cut: `좋아요 ${SPACE_MIN_LIKES}개 이상`,
-    note: 'Hub에는 스페이스가 100만 개 넘게 있다. status는 받은 날의 실행 상태(running·sleeping 등)다.',
+    cut: `좋아요 ${SPACE_MIN_LIKES}개 이상 + 요즘 뜨는 순 상위 ${SPACE_TRENDING_TOP}개`,
+    note: 'Hub에는 스페이스가 100만 개 넘게 있다. status는 받은 날의 실행 상태(running·sleeping 등)다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다).',
   }, items);
 }
 

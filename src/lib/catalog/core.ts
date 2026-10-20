@@ -407,34 +407,165 @@ export function cardOf(item: CatalogItem): Card {
   return card;
 }
 
-const POP_KEYS = ['downloads', 'stars', 'likes'] as const;
+/** 인기 점수에 쓰는 지표 (D133). 앞이 같은 수일 때 이긴다. siteRank = Chrome UX Report 순위 묶음(작을수록 인기) */
+const POP_KINDS = ['downloads', 'stars', 'likes', 'views', 'siteRank'] as const;
+type PopKind = (typeof POP_KINDS)[number];
+
+/** 인기 점수 규칙 (D133). 값을 바꾸면 docs/review/v5/popularity-audit.md의 표를 다시 본다 */
+export const POP_RULES = {
+  /** 소분류에서 가장 많이 채워진 지표가 아닌 지표로만 잰 상품의 몫 (지표끼리 단위가 달라 한쪽 맨 위가 다른 쪽 맨 위와 같아지지 않게) */
+  secondary: 0.85,
+  /** 누적 지표(스타·좋아요)는 오래 갱신되지 않으면 이만큼까지 깎는다: freshDays까지는 그대로, staleDays에서 다 깎는다 */
+  staleMax: 0.2,
+  freshDays: 365,
+  staleDays: 1095,
+  /** 최근 뜨는 정도(metrics.trend, 예: Hugging Face trendingScore)에 얹는 최대 몫 */
+  trendBonus: 0.3,
+  /** 같은 신호(같은 저장소의 스타·같은 사이트의 순위·같은 SDK의 내려받기)나 같은 이름을 나눠 가진 두 번째부터 곱하는 값.
+   *  열쇠가 여럿 겹치면 열쇠마다 곱한다(이름과 저장소가 다 같으면 거의 같은 상품) */
+  dup: 0.8,
+  /** 같은 저장소 안의 서로 다른 폴더(모노레포의 서버·예제 하나하나)는 덜 줄인다 */
+  dupSubpath: 0.9,
+  /** 손으로 고른 상품(written)의 바닥: 손으로 고르지 않은 잰 상품 이만큼 바로 뒤 (그런 상품이 더 적으면 지표 없는 상품 바로 앞) */
+  curatedAfter: 24,
+} as const;
+
+/** 사이트 순위의 크기 기준: 1천 위 안(가장 높은 묶음) = log10(1천만/1천) = 4 */
+const SITE_RANK_TOP = 4;
+
+/** 지표 값을 크기로: 수는 log10(1+값), 사이트 순위는 log10(1천만/순위) (1천 위 → 4, 100만 위 → 1) */
+function popMagnitude(item: CatalogItem, k: PopKind): number | undefined {
+  const v = item.metrics?.[k];
+  if (typeof v !== 'number' || !Number.isFinite(v) || v < 0) return undefined;
+  if (k === 'siteRank') return v >= 1 ? Math.max(0, Math.log10(10_000_000 / v)) : undefined;
+  return Math.log10(1 + v);
+}
+
+/** YYYY-MM-DD 두 날의 차이(일). 날짜가 아니면 없음 */
+function daysBetween(from: string, to: string): number | undefined {
+  const day = (s: string): number | undefined => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+    return m ? Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])) / 86_400_000 : undefined;
+  };
+  const a = day(from);
+  const b = day(to);
+  return a === undefined || b === undefined ? undefined : b - a;
+}
+
+/** 주소의 호스트 (www. 뗌). 사이트 순위를 나눠 가진 상품을 알아보는 데 쓴다 */
+function hostKey(url: string): string | undefined {
+  const host = /^https?:\/\/([^/:?#]+)/i.exec(url)?.[1]?.toLowerCase();
+  return host ? `site:${host.replace(/^www\./, '')}` : undefined;
+}
+
+/** 저장소 주소의 '주인/이름' (GitHub·GitLab·Codeberg), 아니면 없음. 저장소 안 폴더를 가리키면 '주인/이름|폴더' */
+function repoKey(item: CatalogItem): string | undefined {
+  const raw = [item.preview['repo'], item.url].find((v): v is string => typeof v === 'string' && v !== '');
+  if (!raw) return undefined;
+  const m = /(?:github\.com|gitlab\.com|codeberg\.org)\/([^/#?\s]+)\/([^/#?\s]+)(\/(?:tree|blob)\/[^/#?\s]+\/\S+)?/i.exec(raw) ?? /^([\w.-]+)\/([\w.-]+)$/.exec(raw);
+  if (!m) return undefined;
+  const folder = m[3]?.replace(/^\/(?:tree|blob)\/[^/]+\//i, '').replace(/\/+$/, '').toLowerCase();
+  return `repo:${(m[1] ?? '').toLowerCase()}/${(m[2] ?? '').toLowerCase().replace(/\.git$/, '')}${folder ? `|${folder}` : ''}`;
+}
 
 /**
- * 출처 파일 하나 안의 인기 점수 0~1 (D105): 그 파일에서 가장 많이 채워진 지표(내려받기 → 별 → 좋아요)의 순위 백분위.
- * 출처마다 지표의 뜻(한 달·전체 내려받기, 별)이 달라 값끼리 견주지 않고 순위로 섞는다. 같은 값은 같은 점수.
- * 지표가 없는 파일(손으로 고른 목록)은 모두 0.5, 지표가 있는 파일에서 값이 빠진 항목은 코드잇소가 쓴 것이면 0.5, 아니면 0.
+ * 소분류 하나 안의 인기 점수 (D133, D105를 바꿈). 같은 소분류의 모든 상품을 한꺼번에 받는다.
+ * 1) 지표마다 log 크기를 그 소분류의 가장 큰 값으로 나눈다(0~1). 출처가 달라도 같은 지표면 값끼리 견준다.
+ *    사이트 순위는 세계 순위라 소분류와 상관없이 1천 위 안 = 1로 나눈다(작은 무리의 맨 위가 1이 되지 않게).
+ * 2) 소분류에서 가장 많이 채워진 지표가 으뜸(사이트 순위는 다른 지표가 없을 때만). 으뜸 지표가 있는 상품은 그것으로만 재고,
+ *    없는 상품은 가진 다른 지표 가운데 큰 값에 secondary를 곱한다.
+ * 3) 누적 지표(스타·좋아요)로 잰 상품은 오래 갱신되지 않았으면 깎고(기준일 = 소분류에서 가장 늦은 fetchedAt), trend가 있으면 얹는다.
+ * 4) 손으로 고른 상품(written)은 지표가 없거나 약해도 출처 목록에서 잰 상품 curatedAfter개 바로 뒤에는 선다. 그 밖의 지표 없는 상품은 0.
+ * 5) 같은 신호나 같은 이름을 나눠 가진 상품, 다른 지표로 잰 같은 출처의 상품은 두 번째부터 dup을 거듭 곱해 한 쪽에 몰리지 않게 한다.
  */
-export function filePopularity(items: readonly CatalogItem[]): number[] {
-  let key: (typeof POP_KEYS)[number] | null = null;
-  let best = 0;
-  for (const k of POP_KEYS) {
-    const n = items.filter((i) => typeof i.metrics?.[k] === 'number').length;
-    if (n > best) {
-      best = n;
-      key = k;
-    }
-  }
-  if (key === null) return items.map(() => 0.5);
-  const k = key;
-  const values = items.map((i) => i.metrics?.[k]).filter((v): v is number => typeof v === 'number');
-  const distinct = [...new Set(values)].sort((a, b) => b - a);
-  const rank = new Map(distinct.map((v, i) => [v, i]));
-  const n = distinct.length;
-  return items.map((i) => {
-    const v = i.metrics?.[k];
-    if (typeof v !== 'number') return i.written ? 0.5 : 0;
-    return 1 - (rank.get(v) ?? n) / n;
+export function rankScores(items: readonly CatalogItem[]): number[] {
+  const mags = items.map((it) => POP_KINDS.map((k) => popMagnitude(it, k)));
+  const max = POP_KINDS.map(() => 0);
+  const count = POP_KINDS.map(() => 0);
+  let trendMax = 0;
+  let ref = '';
+  items.forEach((it, i) => {
+    (mags[i] ?? []).forEach((m, j) => {
+      if (m === undefined) return;
+      count[j] = (count[j] ?? 0) + 1;
+      if (m > (max[j] ?? 0)) max[j] = m;
+    });
+    const t = it.metrics?.trend;
+    if (typeof t === 'number' && t > 0) trendMax = Math.max(trendMax, Math.log10(1 + t));
+    if (it.fetchedAt > ref) ref = it.fetchedAt;
   });
+  // 으뜸 지표: 가장 많이 채워진 것. 사이트 순위는 다른 지표가 하나도 없을 때만 으뜸이 된다(상품 자체가 아니라 사이트의 인기라서).
+  let primary = 0;
+  count.forEach((c, j) => {
+    const site = POP_KINDS[j] === 'siteRank';
+    const realElsewhere = count.some((x, k) => POP_KINDS[k] !== 'siteRank' && x > 0);
+    if (c > (count[primary] ?? 0) && !(site && realElsewhere)) primary = j;
+  });
+
+  const signal: (string | undefined)[] = items.map(() => undefined);
+  const viaSecondary: (string | undefined)[] = items.map(() => undefined);
+  const measured: boolean[] = items.map(() => false);
+  const scores = items.map((it, i) => {
+    let best = -1;
+    let bestKind: PopKind | undefined;
+    const hasPrimary = mags[i]?.[primary] !== undefined;
+    (mags[i] ?? []).forEach((m, j) => {
+      // 으뜸 지표가 있는 상품은 으뜸 지표로만 잰다 (작은 무리의 다른 지표로 앞서지 않게)
+      if (m === undefined || (hasPrimary && j !== primary)) return;
+      const top = POP_KINDS[j] === 'siteRank' ? SITE_RANK_TOP : (max[j] ?? 0);
+      const v = (top > 0 ? Math.min(1, m / top) : 0) * (j === primary ? 1 : POP_RULES.secondary);
+      if (v > best) {
+        best = v;
+        bestKind = POP_KINDS[j];
+      }
+    });
+    if (bestKind === undefined) return 0;
+    measured[i] = true;
+    let score = best;
+    if (bestKind === 'stars' || bestKind === 'likes') {
+      const age = it.metrics?.updatedAt ? daysBetween(it.metrics.updatedAt, ref) : undefined;
+      if (age !== undefined) {
+        const stale = Math.min(1, Math.max(0, (age - POP_RULES.freshDays) / (POP_RULES.staleDays - POP_RULES.freshDays)));
+        score *= 1 - POP_RULES.staleMax * stale;
+      }
+    }
+    const t = it.metrics?.trend;
+    if (typeof t === 'number' && t > 0 && trendMax > 0) score += (POP_RULES.trendBonus * Math.log10(1 + t)) / trendMax;
+    if (bestKind === 'stars') signal[i] = repoKey(it);
+    else if (bestKind === 'siteRank') signal[i] = hostKey(it.url);
+    else if (bestKind === 'downloads' && typeof it.preview['downloadsOf'] === 'string') signal[i] = `dl:${it.preview['downloadsOf']}`;
+    // 다른 지표로 잰 상품은 그 출처 안의 잣대라 같은 출처끼리도 두 번째부터 줄인다 (한 출처가 첫 쪽을 채우지 않게)
+    if (bestKind !== POP_KINDS[primary]) viaSecondary[i] = `via:${it.source.name}:${bestKind}`;
+    return score;
+  });
+
+  // 손으로 고른 상품의 바닥: 출처 목록에서 잰 상품(손으로 고르지 않은 것)의 curatedAfter번째 바로 뒤. 바닥 아래 상품끼리는 원래 순서를 지킨다.
+  const ranked = scores.filter((_, i) => measured[i] && !items[i]?.written).sort((a, b) => b - a);
+  const after = ranked[POP_RULES.curatedAfter - 1];
+  const floor = after !== undefined && after > 0 ? after * (1 - 1e-5) : 1e-6;
+  items.forEach((it, i) => {
+    const s = scores[i] ?? 0;
+    if (it.written && s < floor) scores[i] = floor * (1 + s * 1e-6);
+  });
+
+  // 같은 점수(같은 신호를 나눠 가진 상품)끼리는 그 상품만의 지표(내려받기 → 좋아요)가 큰 것이 먼저 대표가 된다
+  const own = (i: number): number => items[i]?.metrics?.downloads ?? items[i]?.metrics?.likes ?? -1;
+  const order = items.map((_, i) => i).filter((i) => (scores[i] ?? 0) > 0);
+  order.sort((a, b) => (scores[b] ?? 0) - (scores[a] ?? 0) || own(b) - own(a) || cmpText(items[a]?.name ?? '', items[b]?.name ?? '') || cmpText(items[a]?.id ?? '', items[b]?.id ?? ''));
+  const seen = new Map<string, number>();
+  for (const i of order) {
+    const it = items[i];
+    if (!it) continue;
+    const keys = [`name:${it.name.normalize('NFKC').toLowerCase().trim()}`, signal[i], viaSecondary[i]].filter((k): k is string => k !== undefined);
+    // 같은 저장소의 다른 폴더끼리는 '주인/이름' 열쇠로 묶되 덜 줄인다
+    const repoBase = signal[i]?.startsWith('repo:') && signal[i]?.includes('|') ? signal[i]?.split('|')[0] : undefined;
+    if (repoBase) keys.push(repoBase);
+    let factor = 1;
+    for (const k of keys) factor *= (k === repoBase ? POP_RULES.dupSubpath : POP_RULES.dup) ** (seen.get(k) ?? 0);
+    if (factor < 1) scores[i] = (scores[i] ?? 0) * factor;
+    for (const k of keys) seen.set(k, (seen.get(k) ?? 0) + 1);
+  }
+  return scores;
 }
 
 export interface Ranked {

@@ -4,7 +4,7 @@
     "name": "Illustration, photo, 3D, motion, mockup and sound sources (hand-picked)",
     "url": "https://github.com/yoorrard/code-chauffeur",
     "license": "Hand-written list of public sites (name, link, Korean one-liner by 코드잇소). summary = the site's own meta description fetched on the date above. license is filled only where the site's license page was read; otherwise follow preview.licenseUrl.",
-    "note": "Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all."
+    "note": "Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-20",
   "count": 72,
@@ -92,7 +92,10 @@
       "use": {
         "docs": "https://developer.apple.com/design/resources/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "curated:artic",
@@ -122,7 +125,10 @@
       "use": {
         "docs": "https://www.artic.edu/open-access/open-access-images"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:bbc-sound-effects",
@@ -150,7 +156,10 @@
       "use": {
         "docs": "https://sound-effects.bbcrewind.co.uk/licensing"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:blush",
@@ -237,7 +246,10 @@
       "use": {
         "docs": "https://ccmixter.org"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:cgbookcase",
@@ -294,7 +306,10 @@
       "use": {
         "docs": "https://coverr.co/license"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:device-frames",
@@ -409,14 +424,17 @@
       "use": {
         "docs": "https://www.fab.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:fluent-emoji",
       "name": "Fluent Emoji (Microsoft)",
       "kind": "illustrations",
       "category": "design",
-      "summary": "A collection of familiar, friendly, and modern emoji from Microsoft - microsoft/fluentui-emoji",
+      "summary": "Fluent Emoji (Microsoft) (github.com)",
       "summaryKo": "마이크로소프트의 3D·플랫 이모지 세트.",
       "written": "codeshopper",
       "url": "https://github.com/microsoft/fluentui-emoji",
@@ -433,7 +451,7 @@
       "preview": {
         "type": "site",
         "url": "https://github.com/microsoft/fluentui-emoji",
-        "linkStatus": 200,
+        "linkStatus": 403,
         "licenseUrl": "https://github.com/microsoft/fluentui-emoji/blob/main/LICENSE"
       },
       "use": {
@@ -468,7 +486,10 @@
       "use": {
         "docs": "https://freemusicarchive.org/License_Guide"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:freepik",
@@ -506,7 +527,7 @@
       "name": "Freesound",
       "kind": "sounds",
       "category": "design",
-      "summary": "Freesound: collaborative database of creative-commons licensed sound for musicians and sound lovers. Have you freed your sound today?",
+      "summary": "Freesound (freesound.org)",
       "summaryKo": "효과음 데이터베이스. 소리마다 크리에이티브 커먼즈 라이선스(CC0·CC BY 등)가 다르다.",
       "written": "codeshopper",
       "url": "https://freesound.org",
@@ -523,13 +544,16 @@
       "preview": {
         "type": "site",
         "url": "https://freesound.org",
-        "linkStatus": 200,
+        "linkStatus": 403,
         "licenseUrl": "https://freesound.org/help/faq/"
       },
       "use": {
         "docs": "https://freesound.org/help/faq/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:gratisography",
@@ -594,7 +618,7 @@
       "name": "IconScout Lottie",
       "kind": "motion",
       "category": "design",
-      "summary": "IconScout Lottie (iconscout.com)",
+      "summary": "Download the best collection of Lottie Animations (Lottie Files). Lightweight Lottie JSON and GIFs compatible with React, Webflow, iOS, and Android. Tested with Lottie Preview.",
       "summaryKo": "로티 애니메이션 장터. 무료 자료도 있다.",
       "written": "codeshopper",
       "url": "https://iconscout.com/lottie-animations",
@@ -611,13 +635,16 @@
       "preview": {
         "type": "site",
         "url": "https://iconscout.com/lottie-animations",
-        "linkStatus": 403,
+        "linkStatus": 200,
         "pricing": "freemium"
       },
       "use": {
         "docs": "https://iconscout.com/lottie-animations"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:illlustrations",
@@ -652,7 +679,7 @@
       "name": "Incompetech (Kevin MacLeod)",
       "kind": "sounds",
       "category": "design",
-      "summary": "Custom graph paper generators and royalty-free music.",
+      "summary": "Incompetech (Kevin MacLeod) (incompetech.com)",
       "summaryKo": "Kevin MacLeod의 배경음악. 무료로 쓰려면 크레딧(CC BY)을 단다.",
       "written": "codeshopper",
       "url": "https://incompetech.com/music/royalty-free/",
@@ -663,18 +690,21 @@
       "license": "CC BY (free with credit) / paid standard license",
       "tags": [
         "audio",
+        "link-check-failed",
         "music"
       ],
       "preview": {
         "type": "site",
         "url": "https://incompetech.com/music/royalty-free/",
-        "linkStatus": 200,
-        "licenseUrl": "https://incompetech.com/music/royalty-free/licenses/"
+        "linkStatus": 0
       },
       "use": {
-        "docs": "https://incompetech.com/music/royalty-free/licenses/"
+        "docs": "https://incompetech.com/music/royalty-free/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:ira-design",
@@ -730,7 +760,10 @@
       "use": {
         "docs": "https://www.kaboompics.com/license"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:kenney-audio",
@@ -761,7 +794,10 @@
       "use": {
         "docs": "https://kenney.nl/support"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:life-of-pix",
@@ -818,7 +854,10 @@
       "use": {
         "docs": "https://lordicon.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:lottiefiles",
@@ -849,7 +888,10 @@
       "use": {
         "docs": "https://lottiefiles.com/page/license"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:ls-graphics-free",
@@ -877,7 +919,10 @@
       "use": {
         "docs": "https://www.ls.graphics/free"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:lukasz-adam",
@@ -962,7 +1007,10 @@
       "use": {
         "docs": "https://www.metmuseum.org/policies/image-resources"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:meta-devices",
@@ -1017,7 +1065,10 @@
       "use": {
         "docs": "https://www.mixamo.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:mixkit-audio",
@@ -1047,7 +1098,10 @@
       "use": {
         "docs": "https://mixkit.co/license/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:mixkit-video",
@@ -1076,14 +1130,17 @@
       "use": {
         "docs": "https://mixkit.co/license/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:mockup-world",
       "name": "Mockup World",
       "kind": "mockups",
       "category": "design",
-      "summary": "Mockup World (mockupworld.co)",
+      "summary": "Discover the best free mockups for your design projects. Browse high-quality PSD mockups for iPhone, MacBook, packaging, posters and more.",
       "summaryKo": "무료 PSD 목업 모음.",
       "written": "codeshopper",
       "url": "https://www.mockupworld.co",
@@ -1097,20 +1154,22 @@
       "preview": {
         "type": "site",
         "url": "https://www.mockupworld.co",
-        "linkStatus": 403,
-        "licenseUrl": "https://www.mockupworld.co/license/"
+        "linkStatus": 200
       },
       "use": {
-        "docs": "https://www.mockupworld.co/license/"
+        "docs": "https://www.mockupworld.co"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:mockuuups",
       "name": "Mockuuups Studio",
       "kind": "mockups",
       "category": "design",
-      "summary": "Mockuuups Studio (mockuuups.studio)",
+      "summary": "Create iPhone, MacBook, and print mockups in seconds. Free online mockup generator with 5,200+ templates. Drag, drop, download.",
       "summaryKo": "스크린샷을 넣어 기기·인쇄물 목업을 만드는 도구.",
       "written": "codeshopper",
       "url": "https://mockuuups.studio",
@@ -1120,19 +1179,21 @@
       },
       "tags": [
         "freemium",
-        "link-check-failed",
         "mockup"
       ],
       "preview": {
         "type": "site",
         "url": "https://mockuuups.studio",
-        "linkStatus": 0,
+        "linkStatus": 200,
         "pricing": "freemium"
       },
       "use": {
         "docs": "https://mockuuups.studio"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:nasa-3d",
@@ -1159,7 +1220,10 @@
       "use": {
         "docs": "https://science.nasa.gov/3d-resources/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "curated:nasa-images",
@@ -1189,7 +1253,10 @@
       "use": {
         "docs": "https://www.nasa.gov/nasa-brand-center/images-and-media/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:open-doodles",
@@ -1276,7 +1343,10 @@
       "use": {
         "docs": "https://opengameart.org/content/faq"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:openverse",
@@ -1306,7 +1376,10 @@
       "use": {
         "docs": "https://openverse.org/about"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:ouch",
@@ -1335,7 +1408,10 @@
       "use": {
         "docs": "https://icons8.com/license"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:pexels",
@@ -1366,14 +1442,17 @@
       "use": {
         "docs": "https://www.pexels.com/license/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "curated:picjumbo",
       "name": "picjumbo",
       "kind": "photos",
       "category": "design",
-      "summary": "picjumbo (picjumbo.com)",
+      "summary": "Free images, free photos, backgrounds and wallpapers. Download the best images for your websites, templates, blogs or designs.️ It's free!",
       "summaryKo": "무료 사진과 유료 묶음.",
       "written": "codeshopper",
       "url": "https://picjumbo.com",
@@ -1389,13 +1468,16 @@
       "preview": {
         "type": "site",
         "url": "https://picjumbo.com",
-        "linkStatus": 403,
+        "linkStatus": 200,
         "pricing": "freemium"
       },
       "use": {
         "docs": "https://picjumbo.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:pixabay",
@@ -1427,7 +1509,10 @@
       "use": {
         "docs": "https://pixabay.com/service/license-summary/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "curated:pixabay-audio",
@@ -1457,7 +1542,10 @@
       "use": {
         "docs": "https://pixabay.com/service/license-summary/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "curated:pixeltrue",
@@ -1514,7 +1602,10 @@
       "use": {
         "docs": "https://poly.pizza/faq"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:previewed",
@@ -1570,7 +1661,10 @@
       "use": {
         "docs": "https://quaternius.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:rawpixel-public-domain",
@@ -1597,7 +1691,10 @@
       "use": {
         "docs": "https://www.rawpixel.com/public-domain"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:reshot",
@@ -1688,7 +1785,7 @@
       "name": "Sketchfab",
       "kind": "3d",
       "category": "design",
-      "summary": "With a community of over one million creators, we are the world’s largest platform to publish, share, and discover 3D content on web, mobile, AR, and VR.",
+      "summary": "Sketchfab (sketchfab.com)",
       "summaryKo": "3D 모델 공유·장터. 내려받을 수 있는 모델은 모델마다 CC 라이선스가 적혀 있다.",
       "written": "codeshopper",
       "url": "https://sketchfab.com",
@@ -1705,14 +1802,17 @@
       "preview": {
         "type": "site",
         "url": "https://sketchfab.com",
-        "linkStatus": 200,
+        "linkStatus": 202,
         "pricing": "freemium",
         "licenseUrl": "https://sketchfab.com/licenses"
       },
       "use": {
         "docs": "https://sketchfab.com/licenses"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "curated:smithsonian-open-access",
@@ -1743,7 +1843,10 @@
       "use": {
         "docs": "https://www.si.edu/openaccess"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:sonniss-gdc",
@@ -1771,7 +1874,10 @@
       "use": {
         "docs": "https://sonniss.com/gameaudiogdc"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:spline-community",
@@ -1827,7 +1933,10 @@
       "use": {
         "docs": "https://stocksnap.io/license"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:storyset",
@@ -1857,7 +1966,10 @@
       "use": {
         "docs": "https://storyset.com/terms"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:unblast",
@@ -1884,14 +1996,17 @@
       "use": {
         "docs": "https://unblast.com/license/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:undraw",
       "name": "unDraw",
       "kind": "illustrations",
       "category": "design",
-      "summary": "unDraw (undraw.co)",
+      "summary": "Open-source illustrations for any idea you can imagine and create. Build beautiful websites, products and applications with your color, for free.",
       "summaryKo": "색을 바꿔 받는 무료 SVG 일러스트 모음. 이용 조건은 공식 라이선스 페이지를 본다.",
       "written": "codeshopper",
       "url": "https://undraw.co",
@@ -1906,13 +2021,16 @@
       "preview": {
         "type": "site",
         "url": "https://undraw.co",
-        "linkStatus": 403,
+        "linkStatus": 200,
         "licenseUrl": "https://undraw.co/license"
       },
       "use": {
         "docs": "https://undraw.co/license"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:unsplash",
@@ -1942,7 +2060,10 @@
       "use": {
         "docs": "https://unsplash.com/license"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "curated:uppbeat",
@@ -1971,7 +2092,10 @@
       "use": {
         "docs": "https://uppbeat.io"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:videvo",
@@ -2028,7 +2152,10 @@
       "use": {
         "docs": "https://commons.wikimedia.org/wiki/Commons:Licensing"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "curated:youtube-audio-library",
@@ -2056,7 +2183,10 @@
       "use": {
         "docs": "https://www.youtube.com/audiolibrary"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "curated:zapsplat",
@@ -2086,7 +2216,10 @@
       "use": {
         "docs": "https://www.zapsplat.com/license-type/standard-license/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     }
   ]
 }

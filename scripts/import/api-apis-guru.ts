@@ -2,6 +2,7 @@
 //   node scripts/import/api-apis-guru.ts
 // 출처: https://api.apis.guru/v2/list.json (자료 CC0 1.0). API마다 '우선 판(preferred)' 하나만 싣는다.
 import { type Item, fetchJson, hostOf, kindByKeywords, kindForGuru, main, makeItem, stripMarkdown, writeCatalog } from './api-lib.ts';
+import { cruxList, siteRankNote, withSiteRank } from './signals.ts';
 
 const LIST_URL = 'https://api.apis.guru/v2/list.json';
 
@@ -96,15 +97,21 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       return n === 1 ? it : { ...it, id: `${it.id}-${n}` };
     });
     console.log(`  APIs.guru: API ${keys.length}개 → ${unique.length}개`);
+    // 인기 신호 (D133): 사이트 순위는 회사 하나가 API를 여럿(4개 이상) 올린 경우 붙이지 않는다. 큰 회사의 하위 API마다 회사 사이트 순위가 붙으면
+    // 잘 쓰이지 않는 하위 API가 맨 앞에 선다.
+    const perProvider = new Map<string, number>();
+    for (const it of unique) perProvider.set(String(it.preview?.provider ?? ''), (perProvider.get(String(it.preview?.provider ?? '')) ?? 0) + 1);
+    const crux = await cruxList();
+    const ranked = unique.map((it) => ((perProvider.get(String(it.preview?.provider ?? '')) ?? 0) > 3 ? it : withSiteRank(it, crux)));
     writeCatalog(
       {
         id: 'apis-guru',
         name: 'APIs.guru OpenAPI Directory',
         url: 'https://apis.guru',
         license: 'CC0-1.0 (directory data); each API has its own terms',
-        note: 'Every API in list.json, preferred version only. Specs for Azure, AWS and Google services are kept and land on the cloud shelf.',
+        note: `Every API in list.json, preferred version only. Specs for Azure, AWS and Google services are kept and land on the cloud shelf. ${siteRankNote()} Not set for providers with 4 or more APIs in the directory.`,
       },
-      unique,
+      ranked,
     );
   });
 }

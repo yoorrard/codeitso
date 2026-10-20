@@ -5,6 +5,7 @@
 import { ALL_CURATED } from './api-curated-data.ts';
 import { type Item, type Kind, fetchText, hostOf, main, makeItem, normUrl, writeCatalog } from './api-lib.ts';
 import { readPublicApiRows } from './api-public-apis.ts';
+import { siteRankNote, withSiteRanks } from './signals.ts';
 
 const REPO = 'yybmion/public-apis-4Kr';
 const README = `https://raw.githubusercontent.com/${REPO}/main/README.md`;
@@ -82,9 +83,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         name: 'public-apis-4Kr (한국 공개 API 목록)',
         url: `https://github.com/${REPO}`,
         license: 'MIT (list text); each API has its own terms',
-        note: 'Every row of the Korean README tables. Rows that duplicate an entry of the hand-checked list (official.json) are skipped.',
+        note: `Every row of the Korean README tables. Rows that duplicate an entry of the hand-checked list (official.json) are skipped. ${siteRankNote()}`,
       },
-      items,
+      await withSiteRanks(items),
     );
   });
 }

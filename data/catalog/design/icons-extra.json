@@ -3,9 +3,10 @@
     "id": "icons-extra",
     "name": "Icon sources outside Iconify (hand-picked)",
     "url": "https://github.com/yoorrard/code-chauffeur",
-    "license": "Hand-written listing of public sites (names, links, the site's own one-line description). Licenses summarised from each site's license page; check the page before use."
+    "license": "Hand-written listing of public sites (names, links, the site's own one-line description). Licenses summarised from each site's license page; check the page before use.",
+    "note": "metrics.downloads = npm downloads last month of the install package (preview.downloadsOf); metrics.stars = repository stars. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-14",
+  "fetchedAt": "2026-10-20",
   "count": 12,
   "items": [
     {
@@ -22,13 +23,17 @@
         "url": "https://www.flaticon.com/uicons"
       },
       "license": "Flaticon license (free with attribution) / Premium",
+      "metrics": {
+        "downloads": 91242
+      },
       "tags": [
         "freemium",
         "icon-font"
       ],
       "preview": {
         "type": "site",
-        "url": "https://www.flaticon.com/uicons"
+        "url": "https://www.flaticon.com/uicons",
+        "downloadsOf": "npm:@flaticon/flaticon-uicons"
       },
       "use": {
         "install": "npm install @flaticon/flaticon-uicons",
@@ -51,7 +56,7 @@
       },
       "license": "MIT (site); icons keep their set licenses",
       "metrics": {
-        "stars": 7462,
+        "stars": 7476,
         "updatedAt": "2026-08-24"
       },
       "tags": [
@@ -93,7 +98,10 @@
       "use": {
         "docs": "https://icons8.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "icons-extra:iconscout",
@@ -122,7 +130,10 @@
       "use": {
         "docs": "https://iconscout.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "icons-extra:lordicon",
@@ -150,7 +161,10 @@
       "use": {
         "docs": "https://lordicon.com/licenses"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "icons-extra:lucide-animated",
@@ -167,8 +181,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 8166,
-        "updatedAt": "2026-08-22"
+        "stars": 8209,
+        "updatedAt": "2026-10-14"
       },
       "tags": [
         "animated",
@@ -210,7 +224,10 @@
       "use": {
         "docs": "https://thenounproject.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "icons-extra:react-icons",
@@ -227,7 +244,8 @@
       },
       "license": "MIT (each pack keeps its license)",
       "metrics": {
-        "stars": 12674,
+        "stars": 12675,
+        "downloads": 36982643,
         "updatedAt": "2026-10-09"
       },
       "tags": [
@@ -236,7 +254,8 @@
       ],
       "preview": {
         "type": "site",
-        "url": "https://react-icons.github.io/react-icons/"
+        "url": "https://react-icons.github.io/react-icons/",
+        "downloadsOf": "npm:react-icons"
       },
       "use": {
         "install": "npm install react-icons",
@@ -270,7 +289,10 @@
       "use": {
         "docs": "https://www.streamlinehq.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "icons-extra:svgrepo",
@@ -297,7 +319,10 @@
       "use": {
         "docs": "https://www.svgrepo.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "icons-extra:unplugin-icons",
@@ -315,6 +340,7 @@
       "license": "MIT",
       "metrics": {
         "stars": 4953,
+        "downloads": 2922534,
         "updatedAt": "2026-09-11"
       },
       "tags": [
@@ -324,7 +350,8 @@
       ],
       "preview": {
         "type": "site",
-        "url": "https://github.com/unplugin/unplugin-icons"
+        "url": "https://github.com/unplugin/unplugin-icons",
+        "downloadsOf": "npm:unplugin-icons"
       },
       "use": {
         "install": "npm install -D unplugin-icons",
@@ -347,8 +374,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 1248,
-        "updatedAt": "2026-10-11"
+        "stars": 1251,
+        "downloads": 46795,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "animated",
@@ -357,7 +385,8 @@
       ],
       "preview": {
         "type": "site",
-        "url": "https://react.useanimations.com"
+        "url": "https://react.useanimations.com",
+        "downloadsOf": "npm:react-useanimations"
       },
       "use": {
         "install": "npm install react-useanimations",

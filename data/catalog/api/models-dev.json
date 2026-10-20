@@ -4,7 +4,7 @@
     "name": "models.dev (AI model providers)",
     "url": "https://models.dev",
     "license": "MIT (models.dev data); each provider has its own terms",
-    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page."
+    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-20",
   "count": 231,
@@ -111,7 +111,10 @@
         "snippet": "ABACUS_API_KEY=",
         "docs": "https://abacus.ai/help/api"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:abliteration-ai",
@@ -156,7 +159,10 @@
         "snippet": "ABLIT_KEY=",
         "docs": "https://docs.abliteration.ai/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:above",
@@ -253,7 +259,10 @@
         "snippet": "AGENTROUTER_API_KEY=",
         "docs": "https://agentrouter.org/docs/opencode.html"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:agnes",
@@ -299,7 +308,10 @@
         "snippet": "AGNES_API_KEY=",
         "docs": "https://agnes-ai.com/doc"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:ai-router",
@@ -384,7 +396,6 @@
         "outputs": [
           "text"
         ],
-        "pricingUrl": "https://www.ai21.com/pricing/",
         "summarySource": "official page meta description"
       },
       "use": {
@@ -455,6 +466,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 20832
+      },
       "tags": [
         "ai",
         "inference",
@@ -465,6 +479,7 @@
         "type": "api",
         "aiSdk": "@aihubmix/ai-sdk-provider",
         "auth": "apiKey",
+        "downloadsOf": "npm:@aihubmix/ai-sdk-provider",
         "env": [
           "AIHUBMIX_API_KEY"
         ],
@@ -544,7 +559,10 @@
         "snippet": "AIMLAPI_API_KEY=",
         "docs": "https://docs.aimlapi.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:ainetcafe",
@@ -700,6 +718,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 168589
+      },
       "tags": [
         "ai",
         "llm",
@@ -712,6 +733,7 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/alibaba",
         "env": [
           "DASHSCOPE_API_KEY"
         ],
@@ -793,7 +815,10 @@
         "snippet": "DASHSCOPE_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:alibaba-coding-plan",
@@ -844,7 +869,10 @@
         "snippet": "ALIBABA_CODING_PLAN_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/coding-plan"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:alibaba-coding-plan-cn",
@@ -896,7 +924,10 @@
         "snippet": "ALIBABA_CODING_PLAN_API_KEY=",
         "docs": "https://help.aliyun.com/zh/model-studio/coding-plan"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:alibaba-token-plan",
@@ -951,7 +982,10 @@
         "snippet": "ALIBABA_TOKEN_PLAN_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/token-plan-overview"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:alibaba-token-plan-cn",
@@ -1007,7 +1041,10 @@
         "snippet": "ALIBABA_TOKEN_PLAN_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/zh/model-studio/token-plan-overview"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:amazon-bedrock",
@@ -1164,7 +1201,10 @@
         "snippet": "AMD_API_KEY=",
         "docs": "https://developer.amd.com.cn/radeon/tokenfactory"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:anthropic",
@@ -1365,7 +1405,10 @@
         "snippet": "ATOMIC_CHAT_API_KEY=",
         "docs": "https://atomic.chat"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:auriko",
@@ -1430,6 +1473,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 1606699
+      },
       "tags": [
         "ai",
         "inference",
@@ -1440,6 +1486,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/azure",
         "auth": "apiKey / Entra ID",
+        "downloadsOf": "npm:@ai-sdk/azure",
         "env": [
           "AZURE_RESOURCE_NAME",
           "AZURE_API_KEY"
@@ -1522,7 +1569,10 @@
         "snippet": "AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=\nAZURE_COGNITIVE_SERVICES_API_KEY=",
         "docs": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "models-dev:bailing",
@@ -1581,6 +1631,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 65505
+      },
       "tags": [
         "ai",
         "inference",
@@ -1592,6 +1645,7 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://inference.baseten.co/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/baseten",
         "env": [
           "BASETEN_API_KEY"
         ],
@@ -1806,7 +1860,10 @@
         "snippet": "BOTHUB_API_KEY=",
         "docs": "https://bothub.ru/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:boundless",
@@ -1872,7 +1929,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 61556
+        "downloads": 847665
       },
       "tags": [
         "ai",
@@ -1883,7 +1940,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/cerebras",
         "auth": "apiKey",
-        "downloadsOf": "npm:@cerebras/cerebras_cloud_sdk",
+        "downloadsOf": "npm:@ai-sdk/cerebras",
         "env": [
           "CEREBRAS_API_KEY"
         ],
@@ -2099,7 +2156,10 @@
         "snippet": "CLINE_API_KEY=",
         "docs": "https://docs.cline.bot/getting-started/clinepass"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:cloudferro-sherlock",
@@ -2198,7 +2258,10 @@
         "snippet": "CLOUDFLARE_API_TOKEN=\nCLOUDFLARE_ACCOUNT_ID=\nCLOUDFLARE_GATEWAY_ID=",
         "docs": "https://developers.cloudflare.com/ai-gateway/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "models-dev:cloudflare-workers-ai",
@@ -2254,7 +2317,10 @@
         "snippet": "CLOUDFLARE_ACCOUNT_ID=\nCLOUDFLARE_API_KEY=",
         "docs": "https://developers.cloudflare.com/workers-ai/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "models-dev:cohere",
@@ -2269,6 +2335,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 593502
+      },
       "tags": [
         "ai",
         "llm",
@@ -2278,6 +2347,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/cohere",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/cohere",
         "env": [
           "COHERE_API_KEY"
         ],
@@ -2356,7 +2426,10 @@
         "snippet": "CMD_API_KEY=",
         "docs": "https://commandcode.ai/docs/provider"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:coralbricks",
@@ -2650,7 +2723,10 @@
         "snippet": "DATABRICKS_HOST=\nDATABRICKS_TOKEN=",
         "docs": "https://docs.databricks.com/aws/en/machine-learning/foundation-models/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:deepinfra",
@@ -2665,6 +2741,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 181278
+      },
       "tags": [
         "ai",
         "inference",
@@ -2674,6 +2753,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/deepinfra",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/deepinfra",
         "env": [
           "DEEPINFRA_API_KEY"
         ],
@@ -2716,6 +2796,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 1610540
+      },
       "tags": [
         "ai",
         "llm",
@@ -2727,9 +2810,12 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://api.deepseek.com",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/deepseek",
         "env": [
           "DEEPSEEK_API_KEY"
         ],
+        "freeTierCheckedAt": "2026-10-20",
+        "freeTierQuote": "These calls are currently free of charge; per-request billing starts at 00:00 Beijing time on November 1, 2026.",
         "keyServerSide": true,
         "modelCount": 4,
         "models": [
@@ -2806,7 +2892,10 @@
         "snippet": "DIGITALOCEAN_ACCESS_TOKEN=",
         "docs": "https://docs.digitalocean.com/products/gradient-ai-platform/details/models/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:dinference",
@@ -3299,7 +3388,10 @@
         "snippet": "FIREWORKS_API_KEY=",
         "docs": "https://docs.fireworks.ai"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:freemodel",
@@ -3347,7 +3439,10 @@
         "snippet": "FREEMODEL_API_KEY=",
         "docs": "https://freemodel.dev"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:friendli",
@@ -3514,6 +3609,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 165171
+      },
       "tags": [
         "ai",
         "inference",
@@ -3523,6 +3621,7 @@
         "type": "api",
         "aiSdk": "gitlab-ai-provider",
         "auth": "apiKey",
+        "downloadsOf": "npm:gitlab-ai-provider",
         "env": [
           "GITLAB_TOKEN"
         ],
@@ -3561,6 +3660,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 1784
+      },
       "tags": [
         "ai",
         "inference",
@@ -3572,6 +3674,7 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://api.gmi-serving.com/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/gmicloud",
         "env": [
           "GMICLOUD_API_KEY"
         ],
@@ -3677,6 +3780,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 2324012
+      },
       "tags": [
         "ai",
         "inference",
@@ -3688,6 +3794,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/google-vertex",
         "auth": "cloud IAM",
+        "downloadsOf": "npm:@ai-sdk/google-vertex",
         "env": [
           "GOOGLE_VERTEX_PROJECT",
           "GOOGLE_VERTEX_LOCATION",
@@ -3770,7 +3877,10 @@
         "snippet": "GOOGLE_VERTEX_PROJECT=\nGOOGLE_VERTEX_LOCATION=\nGOOGLE_APPLICATION_CREDENTIALS=",
         "docs": "https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/claude"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "models-dev:greenpt",
@@ -3836,7 +3946,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 510920
+        "downloads": 1169574
       },
       "tags": [
         "ai",
@@ -3848,7 +3958,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/groq",
         "auth": "apiKey",
-        "downloadsOf": "npm:groq-sdk",
+        "downloadsOf": "npm:@ai-sdk/groq",
         "env": [
           "GROQ_API_KEY"
         ],
@@ -4132,7 +4242,10 @@
         "snippet": "HYPER_API_KEY=",
         "docs": "https://hyper.charm.land"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:iflowcn",
@@ -4565,7 +4678,10 @@
         "snippet": "INFOMANIAK_API_KEY=\nINFOMANIAK_PRODUCT_ID=",
         "docs": "https://www.infomaniak.com/en/hosting/ai-services/open-source-models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:io-net",
@@ -4819,7 +4935,10 @@
         "snippet": "KENARI_API_KEY=",
         "docs": "https://kenari.id/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:kilo",
@@ -4873,7 +4992,10 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:kimi-code-plan-cn",
@@ -4919,7 +5041,10 @@
         "snippet": "KIMI_API_KEY=",
         "docs": "https://www.kimi.com/code/docs/en/kimi-code/models.html"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:kimi-code-plan-global",
@@ -4965,7 +5090,10 @@
         "snippet": "KIMI_API_KEY=",
         "docs": "https://www.kimi.ai/code/docs/en/kimi-code/models.html"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:klokintegration",
@@ -5439,7 +5567,10 @@
         "snippet": "LMSTUDIO_API_KEY=",
         "docs": "https://lmstudio.ai/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:longcat",
@@ -5482,7 +5613,10 @@
         "snippet": "LONGCAT_API_KEY=",
         "docs": "https://longcat.chat/platform/docs/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:lowrouter",
@@ -5584,7 +5718,7 @@
       "name": "Lynkr",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Streamline your workflow with Lynkr, a CLI tool that acts as an HTTP proxy for efficient code interactions using Claude Code CLI. - Fast-Editor/Lynkr",
+      "summary": "Lynkr: 1 model listed on models.dev (newest: Lynkr Auto (complexity routing)).",
       "url": "https://github.com/Fast-Editor/Lynkr",
       "source": {
         "name": "models.dev",
@@ -5612,7 +5746,7 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "official page meta description"
+        "summarySource": "models.dev data"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
@@ -5732,6 +5866,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 1021
+      },
       "tags": [
         "ai",
         "inference",
@@ -5744,6 +5881,7 @@
         "aiSdk": "merge-gateway-ai-sdk-provider",
         "apiBase": "https://api-gateway.merge.dev/v1/ai-sdk",
         "auth": "apiKey",
+        "downloadsOf": "npm:merge-gateway-ai-sdk-provider",
         "env": [
           "MERGE_GATEWAY_API_KEY"
         ],
@@ -5818,7 +5956,10 @@
         "snippet": "META_MODEL_API_KEY=",
         "docs": "https://dev.meta.ai/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "models-dev:minimax",
@@ -5833,6 +5974,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 36780
+      },
       "tags": [
         "ai",
         "llm",
@@ -5843,6 +5987,7 @@
         "aiSdk": "@ai-sdk/anthropic",
         "apiBase": "https://api.minimax.io/anthropic/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/minimax",
         "env": [
           "MINIMAX_API_KEY"
         ],
@@ -6018,7 +6163,10 @@
         "snippet": "MINIMAX_API_KEY=",
         "docs": "https://platform.minimax.io/docs/token-plan/intro"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:mistral",
@@ -6221,7 +6369,10 @@
         "snippet": "MODAL_PROXY_TOKEN=",
         "docs": "https://modal.com/docs/guide/endpoints"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:model-oracle-ai",
@@ -6370,7 +6521,10 @@
         "snippet": "MODELSCOPE_API_KEY=",
         "docs": "https://modelscope.cn/docs/model-service/API-Inference/intro"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:moonshotai",
@@ -6385,6 +6539,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 73481
+      },
       "tags": [
         "ai",
         "llm",
@@ -6396,6 +6553,7 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://api.moonshot.ai/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/moonshotai",
         "env": [
           "MOONSHOT_API_KEY"
         ],
@@ -6611,7 +6769,10 @@
         "snippet": "NANO_GPT_API_KEY=",
         "docs": "https://docs.nano-gpt.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:nearai",
@@ -6768,7 +6929,10 @@
         "snippet": "NEON_AI_GATEWAY_BASE_URL=\nNEON_AI_GATEWAY_TOKEN=",
         "docs": "https://neon.com/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:neosmith",
@@ -6862,7 +7026,10 @@
         "snippet": "NEURALWATT_API_KEY=",
         "docs": "https://portal.neuralwatt.com/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:nova",
@@ -6957,7 +7124,10 @@
         "snippet": "NOVITA_API_KEY=",
         "docs": "https://novita.ai/docs/guides/introduction"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:nvidia",
@@ -7015,7 +7185,10 @@
         "snippet": "NVIDIA_API_KEY=",
         "docs": "https://docs.api.nvidia.com/nim/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:oci",
@@ -7067,7 +7240,10 @@
         "snippet": "OCI_GENAI_API_KEY=",
         "docs": "https://docs.oracle.com/en-us/iaas/Content/generative-ai/pretrained-models.htm"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:ofox",
@@ -7169,7 +7345,10 @@
         "snippet": "OLLAMA_API_KEY=",
         "docs": "https://docs.ollama.com/cloud"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:openai",
@@ -7278,7 +7457,10 @@
         "snippet": "OPENCODE_API_KEY=",
         "docs": "https://opencode.ai/v2/docs/console/models/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:opencode-go",
@@ -7328,7 +7510,10 @@
         "snippet": "OPENCODE_API_KEY=",
         "docs": "https://opencode.ai/v2/docs/console/go/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:openreason",
@@ -7388,6 +7573,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 1948810
+      },
       "tags": [
         "ai",
         "inference",
@@ -7400,6 +7588,7 @@
         "aiSdk": "@openrouter/ai-sdk-provider",
         "apiBase": "https://openrouter.ai/api/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@openrouter/ai-sdk-provider",
         "env": [
           "OPENROUTER_API_KEY"
         ],
@@ -7531,7 +7720,10 @@
         "snippet": "ORCAROUTER_API_KEY=",
         "docs": "https://docs.orcarouter.ai"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:ovhcloud",
@@ -7581,7 +7773,10 @@
         "snippet": "OVHCLOUD_API_KEY=",
         "docs": "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog//"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:pareto",
@@ -7687,6 +7882,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 799589
+      },
       "tags": [
         "ai",
         "llm",
@@ -7696,6 +7894,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/perplexity",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/perplexity",
         "env": [
           "PERPLEXITY_API_KEY"
         ],
@@ -7767,7 +7966,10 @@
         "snippet": "PERPLEXITY_API_KEY=",
         "docs": "https://docs.perplexity.ai/docs/agent-api/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "models-dev:pioneer",
@@ -8137,6 +8339,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 545
+      },
       "tags": [
         "ai",
         "inference",
@@ -8146,6 +8351,7 @@
         "type": "api",
         "aiSdk": "@qvac/ai-sdk-provider",
         "auth": "apiKey",
+        "downloadsOf": "npm:@qvac/ai-sdk-provider",
         "env": [
           "QVAC_API_KEY"
         ],
@@ -8505,7 +8711,10 @@
         "snippet": "SALAD_CLOUD_API_KEY=",
         "docs": "https://docs.salad.com/ai-gateway/explanation/overview"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:sambanova",
@@ -8603,7 +8812,10 @@
         "snippet": "AICORE_SERVICE_KEY=",
         "docs": "https://help.sap.com/docs/sap-ai-core"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:sarvam",
@@ -8647,7 +8859,10 @@
         "snippet": "SARVAM_API_KEY=",
         "docs": "https://docs.sarvam.ai/api-reference-docs/getting-started/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:scaleway",
@@ -8697,7 +8912,10 @@
         "snippet": "SCALEWAY_API_KEY=",
         "docs": "https://www.scaleway.com/en/docs/generative-apis/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:scnet-token-plan",
@@ -8748,7 +8966,10 @@
         "snippet": "SCNET_API_KEY=",
         "docs": "https://www.scnet.cn/ac/openapi/doc/2.0/moduleapi/plans/token-plan.html"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:scx-ai",
@@ -8843,7 +9064,10 @@
         "snippet": "SENSENOVA_API_KEY=",
         "docs": "https://platform.sensenova.cn/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:siliconflow",
@@ -8995,7 +9219,10 @@
         "snippet": "SNOWFLAKE_ACCOUNT=\nSNOWFLAKE_CORTEX_PAT=",
         "docs": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-rest-api"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:stackit",
@@ -9148,7 +9375,10 @@
         "snippet": "STEPFUN_API_KEY=",
         "docs": "https://platform.stepfun.com/docs/zh/overview/concept"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:stepfun-ai",
@@ -9296,7 +9526,10 @@
         "snippet": "STEPFUN_API_KEY=",
         "docs": "https://platform.stepfun.com/docs/zh/step-plan/integrations/reasoning-api"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:subconscious",
@@ -9541,7 +9774,10 @@
         "snippet": "TENCENT_CODING_PLAN_API_KEY=",
         "docs": "https://cloud.tencent.com/document/product/1772/128947"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:tencent-token-plan",
@@ -9586,14 +9822,17 @@
         "snippet": "TENCENT_TOKEN_PLAN_API_KEY=",
         "docs": "https://cloud.tencent.com/document/product/1823/130060"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:tencent-tokenhub",
       "name": "Tencent TokenHub",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "大模型服务平台TokenHub是一站式AI大模型服务平台，聚合腾讯混元、DeepSeek等多家模型，提供统一API、灵活计费和在线体验，帮助企业快速集成AI能力",
+      "summary": "Tencent TokenHub: 3 models listed on models.dev (newest: Hy4 preview, Hy3, Hy3 preview).",
       "url": "https://cloud.tencent.com/document/product/1823/130050",
       "source": {
         "name": "models.dev",
@@ -9624,14 +9863,17 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "official page meta description"
+        "summarySource": "models.dev data"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "TENCENT_TOKENHUB_API_KEY=",
         "docs": "https://cloud.tencent.com/document/product/1823/130050"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:tensorx",
@@ -9839,7 +10081,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 50607
+        "downloads": 557746
       },
       "tags": [
         "ai",
@@ -9850,7 +10092,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/togetherai",
         "auth": "apiKey",
-        "downloadsOf": "npm:together-ai",
+        "downloadsOf": "npm:@ai-sdk/togetherai",
         "env": [
           "TOGETHER_API_KEY"
         ],
@@ -9972,7 +10214,10 @@
         "snippet": "TOKENROUTER_API_KEY=",
         "docs": "https://www.tokenrouter.com/docs/tokenrouter-feature-guide/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:trustedrouter",
@@ -10170,7 +10415,10 @@
         "snippet": "UNOROUTER_API_KEY=",
         "docs": "https://unorouter.com/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:upstage",
@@ -10283,6 +10531,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 124737
+      },
       "tags": [
         "ai",
         "inference",
@@ -10292,6 +10543,7 @@
         "type": "api",
         "aiSdk": "venice-ai-sdk-provider",
         "auth": "apiKey",
+        "downloadsOf": "npm:venice-ai-sdk-provider",
         "env": [
           "VENICE_API_KEY"
         ],
@@ -10333,6 +10585,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 201315
+      },
       "tags": [
         "ai",
         "inference",
@@ -10345,6 +10600,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/gateway",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/vercel",
         "env": [
           "AI_GATEWAY_API_KEY"
         ],
@@ -10519,7 +10775,10 @@
         "snippet": "ARK_API_KEY=",
         "docs": "https://www.volcengine.com/docs/82379/1330310"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:volcengine-coding-plan",
@@ -10570,7 +10829,10 @@
         "snippet": "ARK_CODING_PLAN_API_KEY=",
         "docs": "https://www.volcengine.com/docs/82379/1928261"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:vultr",
@@ -10760,7 +11022,10 @@
         "snippet": "WANDB_API_KEY=",
         "docs": "https://docs.wandb.ai/inference"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:watsonx",
@@ -10775,6 +11040,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 445
+      },
       "tags": [
         "ai",
         "inference",
@@ -10784,6 +11052,7 @@
         "type": "api",
         "aiSdk": "watsonx-ai-provider",
         "auth": "cloud IAM",
+        "downloadsOf": "npm:watsonx-ai-provider",
         "env": [
           "WATSONX_AI_APIKEY",
           "WATSONX_AI_PROJECT_ID"
@@ -10823,6 +11092,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 1723544
+      },
       "tags": [
         "ai",
         "llm",
@@ -10834,6 +11106,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/xai",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/xai",
         "env": [
           "XAI_API_KEY"
         ],
@@ -10911,7 +11184,10 @@
         "snippet": "XIAOMI_API_KEY=",
         "docs": "https://platform.xiaomimimo.com/#/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:xiaomi-token-plan-ams",
@@ -10964,7 +11240,10 @@
         "snippet": "XIAOMI_API_KEY=",
         "docs": "https://platform.xiaomimimo.com/#/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:xiaomi-token-plan-cn",
@@ -11018,7 +11297,10 @@
         "snippet": "XIAOMI_API_KEY=",
         "docs": "https://platform.xiaomimimo.com/#/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:xiaomi-token-plan-sgp",
@@ -11071,7 +11353,10 @@
         "snippet": "XIAOMI_API_KEY=",
         "docs": "https://platform.xiaomimimo.com/#/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:xpersona",
@@ -11135,6 +11420,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 18728
+      },
       "tags": [
         "ai",
         "llm",
@@ -11146,6 +11434,7 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://api.z.ai/api/paas/v4",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/zai",
         "env": [
           "ZHIPU_API_KEY"
         ],
@@ -11222,7 +11511,10 @@
         "snippet": "ZHIPU_API_KEY=",
         "docs": "https://docs.z.ai/devpack/overview"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "models-dev:zeldoc",
@@ -11361,7 +11653,10 @@
         "snippet": "ZENMUX_API_KEY=",
         "docs": "https://docs.zenmux.ai"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "models-dev:zhipuai",
@@ -11413,7 +11708,10 @@
         "snippet": "ZHIPU_API_KEY=",
         "docs": "https://docs.bigmodel.cn/cn/guide/start/pricing"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:zhipuai-coding-plan",
@@ -11460,7 +11758,10 @@
         "snippet": "ZHIPU_API_KEY=",
         "docs": "https://docs.bigmodel.cn/cn/coding-plan/overview"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     }
   ]
 }

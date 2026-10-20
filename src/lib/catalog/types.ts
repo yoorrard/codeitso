@@ -32,6 +32,12 @@ export interface ItemMetrics {
   stars?: number;
   downloads?: number;
   likes?: number;
+  /** 조회 수 (출처가 주는 값만, 예: n8n 템플릿 조회). 인기 점수에만 쓴다 (D133) */
+  views?: number;
+  /** 최근 뜨는 정도 (출처가 주는 값만, 예: Hugging Face trendingScore). 인기 점수에만 쓴다 (D133) */
+  trend?: number;
+  /** 사이트 인기 순위 묶음 (Chrome UX Report 상위 1천·5천·1만·5만·10만·50만·100만). 지표가 없는 사이트·API의 인기 점수에만 쓴다 (D133) */
+  siteRank?: number;
   /** YYYY-MM-DD */
   updatedAt?: string;
 }

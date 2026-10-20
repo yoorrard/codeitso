@@ -42,6 +42,10 @@ export interface Metrics {
   stars?: number;
   downloads?: number;
   likes?: number;
+  /** 인기 점수용 (D133, scripts/import/signals.ts): 조회 수·최근 뜨는 정도·사이트 순위 묶음 */
+  views?: number;
+  trend?: number;
+  siteRank?: number;
   updatedAt?: string;
 }
 
@@ -734,6 +738,9 @@ function cleanMetrics(m: Metrics | undefined): Metrics | undefined {
   if (typeof m.stars === 'number' && Number.isFinite(m.stars) && m.stars >= 0) out.stars = Math.round(m.stars);
   if (typeof m.downloads === 'number' && Number.isFinite(m.downloads) && m.downloads >= 0) out.downloads = Math.round(m.downloads);
   if (typeof m.likes === 'number' && Number.isFinite(m.likes) && m.likes >= 0) out.likes = Math.round(m.likes);
+  if (typeof m.views === 'number' && Number.isFinite(m.views) && m.views >= 0) out.views = Math.round(m.views);
+  if (typeof m.trend === 'number' && Number.isFinite(m.trend) && m.trend > 0) out.trend = m.trend;
+  if (typeof m.siteRank === 'number' && m.siteRank >= 1) out.siteRank = Math.round(m.siteRank);
   if (m.updatedAt) out.updatedAt = m.updatedAt;
   return Object.keys(out).length ? out : undefined;
 }

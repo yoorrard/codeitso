@@ -6,6 +6,7 @@
 // 4) APIs-guru/graphql-apis (MIT)                 → graphql-apis.json      (공개 GraphQL API)
 // 한국어 한 줄(summaryKo)은 yybmion/public-apis-4Kr(MIT)의 '글로벌 public API' 번역에서 주소가 같은 줄만 붙인다.
 import { ALL_CURATED, PROVIDER_OVERLAY } from './api-curated-data.ts';
+import { siteRankNote, withSiteRanks } from './signals.ts';
 import {
   type Item, type Kind, type MdRow, cmp, fetchText, firstLink, hostOf, kindByKeywords, kindForPublicApis, main, makeItem,
   normUrl, parseMarkdownTables, slugify, stripMarkdown, writeCatalog,
@@ -221,9 +222,9 @@ async function importLists(): Promise<void> {
         note:
           (src.id === 'public-apis' ? 'All rows of the README tables' : 'Only rows whose URL is not already in the lists above (public-apis first)') +
           ', minus products already in the hand-checked list (official.json, models-dev.json).' +
-          ' Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL.',
+          ' Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. ' + siteRankNote(),
       },
-      items,
+      await withSiteRanks(items),
     );
   }
 }
@@ -266,9 +267,9 @@ async function importGraphql(): Promise<void> {
       name: 'Public GraphQL APIs (APIs.guru)',
       url: `https://github.com/${repo}`,
       license: 'MIT (list text); each API has its own terms',
-      note: 'Every row of the README tables. The list has no categories, so the shelf is picked from words in the description.',
+      note: `Every row of the README tables. The list has no categories, so the shelf is picked from words in the description. ${siteRankNote()}`,
     },
-    items,
+    await withSiteRanks(items),
   );
 }
 

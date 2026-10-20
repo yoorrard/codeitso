@@ -4,7 +4,7 @@
     "name": "Design tools and generators (hand-picked)",
     "url": "https://github.com/yoorrard/code-chauffeur",
     "license": "Hand-written list of public sites (name, link, Korean one-liner by 코드잇소). summary = the site's own meta description fetched on the date above. license is filled only where the site's license page was read; otherwise follow preview.licenseUrl.",
-    "note": "Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all."
+    "note": "Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-20",
   "count": 62,
@@ -34,7 +34,10 @@
       "use": {
         "docs": "https://color.adobe.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:animista",
@@ -120,7 +123,10 @@
       "use": {
         "docs": "https://www.blender.org/about/license/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:blobmaker",
@@ -244,7 +250,7 @@
       "name": "Color Hunt",
       "kind": "design-tools",
       "category": "design",
-      "summary": "Color Hunt (colorhunt.co)",
+      "summary": "Discover the newest hand-picked color palettes of Color Hunt. Get color inspiration for your design and art projects.",
       "summaryKo": "사람들이 고른 4색 팔레트를 모아 둔 곳.",
       "written": "codeshopper",
       "url": "https://colorhunt.co",
@@ -260,19 +266,22 @@
       "preview": {
         "type": "site",
         "url": "https://colorhunt.co",
-        "linkStatus": 403
+        "linkStatus": 200
       },
       "use": {
         "docs": "https://colorhunt.co"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:coolors",
       "name": "Coolors",
       "kind": "design-tools",
       "category": "design",
-      "summary": "Coolors (coolors.co)",
+      "summary": "Generate or browse beautiful color combinations for your designs.",
       "summaryKo": "스페이스바를 누를 때마다 색 조합을 만들어 주는 팔레트 생성기.",
       "written": "codeshopper",
       "url": "https://coolors.co",
@@ -289,13 +298,16 @@
       "preview": {
         "type": "site",
         "url": "https://coolors.co",
-        "linkStatus": 403,
+        "linkStatus": 200,
         "pricing": "freemium"
       },
       "use": {
         "docs": "https://coolors.co"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:cssgradient",
@@ -323,7 +335,10 @@
       "use": {
         "docs": "https://cssgradient.io"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:cubic-bezier",
@@ -408,7 +423,10 @@
       "use": {
         "docs": "https://excalidraw.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:favicon-io",
@@ -435,7 +453,10 @@
       "use": {
         "docs": "https://favicon.io"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:fffuel",
@@ -492,7 +513,10 @@
       "use": {
         "docs": "https://www.figma.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "curated:fontjoy",
@@ -550,7 +574,10 @@
       "use": {
         "docs": "https://www.framer.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:get-waves",
@@ -634,7 +661,10 @@
       "use": {
         "docs": "https://stitch.withgoogle.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:haikei",
@@ -690,7 +720,10 @@
       "use": {
         "docs": "https://huemint.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:inkscape",
@@ -718,7 +751,10 @@
       "use": {
         "docs": "https://inkscape.org"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:league-of-moveable-type",
@@ -804,7 +840,10 @@
       "use": {
         "docs": "https://picsum.photos"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:magic-pattern-tools",
@@ -917,7 +956,10 @@
       "use": {
         "docs": "https://noonnu.cc"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:oklch-picker",
@@ -1030,7 +1072,10 @@
       "use": {
         "docs": "https://penpot.app"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:photopea",
@@ -1059,7 +1104,10 @@
       "use": {
         "docs": "https://www.photopea.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "curated:placehold",
@@ -1115,7 +1163,10 @@
       "use": {
         "docs": "https://www.radix-ui.com/colors/custom"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:realfavicongenerator",
@@ -1142,7 +1193,10 @@
       "use": {
         "docs": "https://realfavicongenerator.net"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:realtime-colors",
@@ -1256,7 +1310,10 @@
       "use": {
         "docs": "https://ui.shadcn.com/themes"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:shadow-palette",
@@ -1314,7 +1371,10 @@
       "use": {
         "docs": "https://shots.so"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:smooth-shadow",
@@ -1373,7 +1433,10 @@
       "use": {
         "docs": "https://spline.design"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:squoosh",
@@ -1402,7 +1465,10 @@
       "use": {
         "docs": "https://squoosh.app"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:svgomg",
@@ -1488,7 +1554,10 @@
       "use": {
         "docs": "https://tinypng.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "curated:tldraw",
@@ -1516,7 +1585,10 @@
       "use": {
         "docs": "https://www.tldraw.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "curated:tweakcn",
@@ -1687,7 +1759,10 @@
       "use": {
         "docs": "https://v0.app"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "curated:velvetyne",
@@ -1716,7 +1791,10 @@
       "use": {
         "docs": "https://velvetyne.fr"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "curated:wakamai-fondue",
@@ -1771,7 +1849,10 @@
       "use": {
         "docs": "https://webaim.org/resources/contrastchecker/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 1000000
+      }
     }
   ]
 }

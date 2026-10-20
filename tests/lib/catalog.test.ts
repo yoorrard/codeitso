@@ -7,7 +7,6 @@ import {
   chunkOf,
   cmpText,
   factsOf,
-  filePopularity,
   fnv1a,
   formatCount,
   metricOf,
@@ -15,6 +14,8 @@ import {
   pageCount,
   pageSlice,
   pageWindow,
+  POP_RULES,
+  rankScores,
   relatedIndex,
   safeSvg,
   shardOf,
@@ -162,10 +163,119 @@ describe('카드 미리 보기 판', () => {
 });
 
 describe('인기 점수와 정렬', () => {
-  it('파일 안에서 가장 많이 채워진 지표의 순위 백분위, 없으면 0.5·0', () => {
-    const items = [item('a', { metrics: { downloads: 100 } }), item('b', { metrics: { downloads: 10 } }), item('c', { metrics: { downloads: 100 } }), item('d'), item('e', { written: 'codeshopper' })];
-    expect(filePopularity(items)).toEqual([1, 0.5, 1, 0, 0.5]);
-    expect(filePopularity([item('x'), item('y')])).toEqual([0.5, 0.5]);
+  const order = (items: CatalogItem[]): string[] => {
+    const s = rankScores(items);
+    return items.map((it, i) => ({ id: it.id, s: s[i] ?? 0 })).sort((a, b) => b.s - a.s || cmpText(a.id, b.id)).map((x) => x.id);
+  };
+
+  it('같은 지표는 출처가 달라도 값끼리 견준다: 작은 출처의 1등이 큰 출처의 1등과 같아지지 않는다 (D133)', () => {
+    const big = item('google:roboto', { metrics: { downloads: 1_000_000_000 } });
+    const niche = item('niche:top', { metrics: { downloads: 1000 } });
+    const s = rankScores([big, niche]);
+    expect(s[0]).toBe(1);
+    expect(s[1]).toBeCloseTo(Math.log10(1001) / Math.log10(1_000_000_001), 6);
+    expect(order([niche, big])).toEqual(['google:roboto', 'niche:top']);
+  });
+
+  it('가장 많이 채워진 지표가 으뜸, 다른 지표로만 잰 상품은 secondary를 곱한다', () => {
+    const items = [
+      item('a', { metrics: { downloads: 100 } }),
+      item('b', { metrics: { downloads: 10 } }),
+      item('c', { metrics: { stars: 50 } }),
+    ];
+    const s = rankScores(items);
+    expect(s[2]).toBeCloseTo(POP_RULES.secondary, 6);
+    expect(s[0]).toBe(1);
+    // 으뜸 지표가 있는 상품은 다른 지표가 커도 으뜸 지표로만 잰다
+    const both = rankScores([...items, item('d', { metrics: { downloads: 10, stars: 1_000_000 } })]);
+    expect(both[3]).toBeCloseTo(both[1] ?? 0, 6);
+  });
+
+  it('사이트 순위는 세계 순위라 1천 위 = 1, 100만 위 = 0.25로 잰다', () => {
+    const s = rankScores([item('a', { url: 'https://a.example', metrics: { siteRank: 1000 } }), item('b', { url: 'https://b.example', metrics: { siteRank: 1_000_000 } })]);
+    expect(s[0]).toBe(1);
+    expect(s[1]).toBeCloseTo(0.25, 6);
+    // 다른 지표가 으뜸인 소분류에서는 secondary를 곱한다. 작은 무리의 맨 위라도 1이 되지 않는다
+    const mixed = rankScores([
+      item('x', { metrics: { downloads: 5 } }),
+      item('y', { metrics: { downloads: 9 } }),
+      item('z', { url: 'https://z.example', metrics: { siteRank: 100_000 } }),
+    ]);
+    expect(mixed[2]).toBeCloseTo(0.5 * POP_RULES.secondary, 6);
+    // 사이트 순위를 가진 상품이 더 많아도, 다른 지표가 하나라도 있으면 그쪽이 으뜸이다
+    const fewDownloads = rankScores([
+      item('sdk', { metrics: { downloads: 100 } }),
+      ...['p', 'q', 'r'].map((x) => item(x, { url: `https://${x}.example`, metrics: { siteRank: 1000 } })),
+    ]);
+    expect(fewDownloads[0]).toBe(1);
+    expect(fewDownloads[1]).toBeCloseTo(POP_RULES.secondary, 6);
+  });
+
+  it('누적 지표(스타)는 오래 갱신되지 않으면 깎고, 내려받기(기간 지표)는 깎지 않는다', () => {
+    const fresh = item('fresh', { metrics: { stars: 1000, updatedAt: '2026-09-01' }, fetchedAt: '2026-10-14' });
+    const stale = item('stale', { metrics: { stars: 1000, updatedAt: '2023-01-01' }, fetchedAt: '2026-10-14' });
+    const s = rankScores([fresh, stale]);
+    expect(s[0]).toBe(1);
+    expect(s[1]).toBeCloseTo(1 - POP_RULES.staleMax, 6);
+    const dl = rankScores([item('d1', { metrics: { downloads: 1000, updatedAt: '2020-01-01' } }), item('d2', { metrics: { downloads: 1000 } })]);
+    expect(dl[0]).toBe(dl[1]);
+  });
+
+  it('요즘 뜨는 정도(trend)가 있으면 얹어 준다', () => {
+    const s = rankScores([item('old', { metrics: { downloads: 1000 } }), item('new', { metrics: { downloads: 500, trend: 500 } })]);
+    expect(s[1]).toBeGreaterThan(s[0] ?? 0);
+    expect(s[1]).toBeCloseTo(Math.log10(501) / Math.log10(1001) + POP_RULES.trendBonus, 6);
+  });
+
+  it('지표가 없는 손으로 고른 상품은 지표로 잰 상품 curatedAfter개 뒤, 그 밖은 0', () => {
+    const measured = Array.from({ length: POP_RULES.curatedAfter + 5 }, (_, i) => item(`m${String(i).padStart(2, '0')}`, { metrics: { downloads: 1000 - i } }));
+    const curated = item('curated', { written: 'codeshopper' });
+    const plain = item('plain');
+    const ranked = order([plain, curated, ...measured]);
+    expect(ranked.indexOf('curated')).toBe(POP_RULES.curatedAfter);
+    expect(ranked.at(-1)).toBe('plain');
+    // 지표로 잰 상품이 적으면 그 뒤, 지표 없는 다른 상품보다는 앞
+    expect(order([plain, curated, item('m', { metrics: { downloads: 3 } })])).toEqual(['m', 'curated', 'plain']);
+    expect(rankScores([plain])).toEqual([0]);
+    // 지표가 약한 손으로 고른 상품도 같은 바닥까지 올라오고, 바닥 아래끼리는 원래 순서를 지킨다
+    const weak = item('curated-weak', { written: 'codeshopper', url: 'https://weak.example', metrics: { siteRank: 1_000_000 } });
+    const weaker = item('curated-weaker', { written: 'codeshopper' });
+    const lifted = order([weaker, weak, ...measured]);
+    expect(lifted.indexOf('curated-weak')).toBe(POP_RULES.curatedAfter);
+    expect(lifted.indexOf('curated-weaker')).toBe(POP_RULES.curatedAfter + 1);
+  });
+
+  it('같은 저장소의 스타·같은 사이트 순위·같은 이름을 나눠 가진 상품은 두 번째부터 dup을 거듭 곱한다', () => {
+    // 같은 저장소의 다른 폴더(모노레포 예제·서버)는 dupSubpath, 같은 저장소 뿌리는 dup
+    const repo = (id: string) => item(id, { url: `https://github.com/vercel/next.js/tree/canary/examples/${id}`, metrics: { stars: 100_000 } });
+    const s = rankScores([repo('a'), repo('b'), repo('c'), item('other', { url: 'https://github.com/x/y', metrics: { stars: 100_000 } })]);
+    expect(s[0]).toBe(1);
+    expect(s[1]).toBeCloseTo(POP_RULES.dupSubpath, 6);
+    expect(s[2]).toBeCloseTo(POP_RULES.dupSubpath ** 2, 6);
+    expect(s[3]).toBe(1);
+    const root = rankScores([item('r1', { url: 'https://github.com/x/y', metrics: { stars: 10 } }), item('r2', { url: 'https://github.com/x/y', metrics: { stars: 10 } })]);
+    expect(root[1]).toBeCloseTo(POP_RULES.dup, 6);
+    // 이름과 저장소가 다 같으면 열쇠마다 곱한다
+    const same = rankScores([item('m1', { name: 'Markitdown', url: 'https://github.com/microsoft/markitdown', metrics: { stars: 10 } }), item('m2', { name: 'Markitdown', url: 'https://github.com/microsoft/markitdown', metrics: { stars: 10 } })]);
+    expect(same[1]).toBeCloseTo(POP_RULES.dup ** 2, 6);
+    // 같은 신호끼리는 그 상품만의 내려받기가 큰 것이 대표가 된다
+    const pkg = (id: string, n: number) => item(id, { url: `https://github.com/mcp/servers/tree/main/src/${id}`, metrics: { stars: 1000, downloads: n } });
+    const rep = rankScores([...['x1', 'x2', 'x3'].map((x) => item(x, { url: `https://github.com/o/${x}`, metrics: { stars: 5 } })), pkg('everything', 10), pkg('filesystem', 500)]);
+    expect(rep[4]).toBe(1);
+    expect(rep[3]).toBeCloseTo(POP_RULES.dupSubpath, 6);
+    const site = rankScores([
+      item('aws1', { url: 'https://docs.aws.amazon.com/a', metrics: { siteRank: 1000 } }),
+      item('aws2', { url: 'https://docs.aws.amazon.com/b', metrics: { siteRank: 1000 } }),
+    ]);
+    expect(site[1]).toBeCloseTo(POP_RULES.dup, 6);
+    const named = rankScores([item('p1', { name: 'SparkForge', metrics: { downloads: 10 } }), item('p2', { name: 'sparkforge', metrics: { downloads: 10 } })]);
+    expect(named[1]).toBeCloseTo((named[0] ?? 0) * POP_RULES.dup, 6);
+    // 다른 지표로 잰 같은 출처의 상품도 두 번째부터 줄인다
+    const html = (id: string, n: number) => item(id, { source: { name: 'html5up', url: 'https://html5up.net' }, metrics: { downloads: n } });
+    const star = (id: string, n: number) => item(id, { url: `https://github.com/o/${id}`, metrics: { stars: n } });
+    const viaOther = rankScores([star('s1', 10), star('s2', 20), star('s3', 30), html('h1', 100), html('h2', 100)]);
+    expect(viaOther[3]).toBeCloseTo(POP_RULES.secondary, 6);
+    expect(viaOther[4]).toBeCloseTo(POP_RULES.secondary * POP_RULES.dup, 6);
   });
 
   it('인기순은 점수 → 지표 → 이름, 이름순, 최근 갱신순은 날짜 없는 것을 뒤로', () => {

@@ -3,7 +3,7 @@
 // 빌드는 네트워크 없이 커밋된 자료만 쓴다 (brief 2절). 계산은 src/lib/catalog/core.ts의 순수 함수로 한다.
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { cardOf, filePopularity, relatedIndex, shardOf, sortRanked, withKo, withMedia } from '../../src/lib/catalog/core.ts';
+import { cardOf, rankScores, relatedIndex, shardOf, sortRanked, withKo, withMedia } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
@@ -78,20 +78,37 @@ export function readMedia(dir: string = MEDIA_DIR): Map<string, [string, string 
   return out;
 }
 
-/** 가져온 그대로의 상품(한국어·그림을 붙이기 전)과 출처 파일 안 인기 점수. 한국어 설명 스크립트(scripts/i18n/)가 쓴다 */
+/** 소분류마다 인기 점수를 매긴다 (D131): 같은 소분류의 상품을 한꺼번에 rankScores에 넣는다. raw는 한국어·그림을 붙이기 전 상품 */
+function scoreBySub(entries: readonly { raw: CatalogItem; r: Ranked }[]): void {
+  const groups = new Map<string, { raw: CatalogItem; r: Ranked }[]>();
+  for (const e of entries) {
+    const key = `${e.raw.category}/${e.raw.kind}`;
+    const g = groups.get(key);
+    if (g) g.push(e);
+    else groups.set(key, [e]);
+  }
+  for (const g of groups.values()) {
+    const scores = rankScores(g.map((e) => e.raw));
+    g.forEach((e, i) => {
+      e.r.pop = scores[i] ?? 0;
+    });
+  }
+}
+
+/** 가져온 그대로의 상품(한국어·그림을 붙이기 전)과 소분류 안 인기 점수. 한국어 설명 스크립트(scripts/i18n/)가 쓴다 */
 export function rawItems(dir: string = DIR): Ranked[] {
-  const out: Ranked[] = [];
+  const entries: { raw: CatalogItem; r: Ranked }[] = [];
   for (const cat of CATEGORY_ORDER) {
     const catDir = join(dir, cat);
     if (!existsSync(catDir)) continue;
     for (const name of readdirSync(catDir).filter((n) => n.endsWith('.json') && n !== 'index.json').sort()) {
       const file = readJson<{ items?: CatalogItem[] }>(join(catDir, name));
       if (!Array.isArray(file.items)) continue;
-      const pops = filePopularity(file.items);
-      file.items.forEach((item, i) => out.push({ item, pop: pops[i] ?? 0 }));
+      for (const item of file.items) entries.push({ raw: item, r: { item, pop: 0 } });
     }
   }
-  return out;
+  scoreBySub(entries);
+  return entries.map((e) => e.r);
 }
 
 function load(): Loaded {
@@ -102,6 +119,7 @@ function load(): Loaded {
   const byId = new Map<string, Ranked>();
   const sources: SourceFile[] = [];
   let duplicates = 0;
+  const entries: { raw: CatalogItem; r: Ranked }[] = [];
   for (const cat of CATEGORY_ORDER) {
     const dir = join(DIR, cat);
     const index = readJson<IndexFile>(join(dir, 'index.json'));
@@ -109,20 +127,21 @@ function load(): Loaded {
     for (const name of readdirSync(dir).filter((n) => n.endsWith('.json') && n !== 'index.json').sort()) {
       const file = readJson<{ source?: { name?: string; url?: string; license?: string }; items?: CatalogItem[] }>(join(dir, name));
       if (!Array.isArray(file.items)) continue; // 가져오기 보조 파일 (예: github-topics-snapshot.json)
-      const pops = filePopularity(file.items);
       sources.push({ category: cat, file: name, name: file.source?.name ?? name, url: file.source?.url ?? '', license: file.source?.license ?? '', count: file.items.length });
-      file.items.forEach((raw, i) => {
+      file.items.forEach((raw) => {
         const m = media.get(raw.id);
         const item = withMedia(withKo(raw, koMap.get(raw.id)), m?.[0], m?.[1]);
         if (item.category !== cat || !isCategoryId(item.category)) throw new Error(`${cat}/${name}: ${item.id}의 category가 ${item.category}다`);
         const list = subs.get(item.kind);
         if (!list) throw new Error(`${cat}/${name}: ${item.id}의 소분류 ${item.kind}가 index.json에 없다`);
-        const r: Ranked = { item, pop: pops[i] ?? 0 };
+        const r: Ranked = { item, pop: 0 };
+        entries.push({ raw, r });
         list.push(r);
         if (byId.has(item.id)) duplicates += 1;
         else byId.set(item.id, r);
       });
     }
+    scoreBySub(entries.splice(0));
     const subcategories: SubMeta[] = [];
     let total = 0;
     for (const s of index.subcategories) {

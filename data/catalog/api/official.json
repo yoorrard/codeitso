@@ -4,7 +4,7 @@
     "name": "공식 문서에서 확인한 API (코드잇소 손 목록)",
     "url": "https://github.com/yoorrard/code-chauffeur/blob/main/scripts/import/api-curated-data.ts",
     "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드잇소",
-    "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise."
+    "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-20",
   "count": 225,
@@ -36,7 +36,10 @@
       "use": {
         "docs": "https://developer.adobe.com/firefly-services/docs/firefly-api/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "official:adyen",
@@ -100,7 +103,10 @@
       "use": {
         "docs": "https://smartsms.aligo.in/admin/api/info.html"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:amazon-comprehend",
@@ -380,6 +386,9 @@
         "name": "docs.apify.com",
         "url": "https://docs.apify.com/api/v2"
       },
+      "metrics": {
+        "downloads": 263422
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -388,6 +397,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:apify-client",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Enjoy $500 worth of free usage to build your own Actors and AI agents along with other benefits for 6 months.",
         "keyServerSide": true,
@@ -481,6 +491,9 @@
         "name": "auth0.com",
         "url": "https://auth0.com/docs"
       },
+      "metrics": {
+        "downloads": 1129888
+      },
       "tags": [
         "auth-oauth",
         "server-key"
@@ -488,6 +501,7 @@
       "preview": {
         "type": "api",
         "auth": "OAuth / OIDC",
+        "downloadsOf": "npm:auth0",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Flexible pricing for all your apps and AI agents from user 1 to 1,000,000+ Start building for free.",
         "keyServerSide": true,
@@ -529,7 +543,10 @@
       "use": {
         "docs": "https://learn.microsoft.com/azure/ai-services/language-service/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:azure-ai-vision",
@@ -559,7 +576,10 @@
       "use": {
         "docs": "https://learn.microsoft.com/azure/ai-services/computer-vision/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:azure-document-intelligence",
@@ -589,7 +609,10 @@
       "use": {
         "docs": "https://learn.microsoft.com/azure/ai-services/document-intelligence/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:azure-speech",
@@ -660,7 +683,10 @@
       "use": {
         "docs": "https://learn.microsoft.com/azure/ai-services/translator/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:baichuan",
@@ -720,7 +746,10 @@
       "use": {
         "docs": "https://cloud.baidu.com/doc/qianfan/index.html"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:black-forest-labs",
@@ -750,7 +779,10 @@
       "use": {
         "docs": "https://docs.bfl.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:bland",
@@ -794,6 +826,9 @@
         "name": "developer.paypal.com",
         "url": "https://developer.paypal.com/braintree/docs"
       },
+      "metrics": {
+        "downloads": 98616
+      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -801,6 +836,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:braintree",
         "keyServerSide": true,
         "sdk": "braintree",
         "summarySource": "https://www.braintreepayments.com"
@@ -841,7 +877,10 @@
       "use": {
         "docs": "https://api-dashboard.search.brave.com/app/documentation"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:brevo",
@@ -856,6 +895,9 @@
         "name": "developers.brevo.com",
         "url": "https://developers.brevo.com"
       },
+      "metrics": {
+        "downloads": 220974
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -864,13 +906,16 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@getbrevo/brevo",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Free forever, no credit card needed.",
         "keyServerSide": true,
         "pricingUrl": "https://www.brevo.com/pricing/",
+        "sdk": "@getbrevo/brevo",
         "summarySource": "https://www.brevo.com"
       },
       "use": {
+        "install": "npm install @getbrevo/brevo",
         "docs": "https://developers.brevo.com"
       },
       "fetchedAt": "2026-10-14"
@@ -932,7 +977,10 @@
       "use": {
         "docs": "https://docs.brightdata.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:browser-use",
@@ -961,7 +1009,10 @@
       "use": {
         "docs": "https://docs.browser-use.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:browserbase",
@@ -1028,7 +1079,10 @@
       "use": {
         "docs": "https://docs.byteplus.com/en/docs/ModelArk"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:cafe24",
@@ -1058,7 +1112,10 @@
       "use": {
         "docs": "https://developers.cafe24.com/docs/api/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:cartesia",
@@ -1125,7 +1182,10 @@
       "use": {
         "docs": "https://developers.channel.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:checkout-com",
@@ -1153,7 +1213,10 @@
       "use": {
         "docs": "https://www.checkout.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:clerk",
@@ -1220,7 +1283,10 @@
       "use": {
         "docs": "https://clipdrop.co/apis/docs/text-to-image"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:cloudflare-turnstile",
@@ -1247,7 +1313,10 @@
       "use": {
         "docs": "https://developers.cloudflare.com/turnstile/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "official:clova-ocr",
@@ -1278,7 +1347,10 @@
       "use": {
         "docs": "https://api.ncloud-docs.com/docs/ai-application-service-ocr"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:clova-speech",
@@ -1306,7 +1378,10 @@
       "use": {
         "docs": "https://api.ncloud-docs.com/docs/ai-application-service-clovaspeech"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:clova-studio",
@@ -1335,7 +1410,10 @@
       "use": {
         "docs": "https://api.ncloud-docs.com/docs/clovastudio-chatcompletionsv3"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:clova-voice",
@@ -1363,7 +1441,10 @@
       "use": {
         "docs": "https://api.ncloud-docs.com/docs/ai-naver-clovavoice"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:cohere-embed-rerank",
@@ -1378,6 +1459,9 @@
         "name": "docs.cohere.com",
         "url": "https://docs.cohere.com/docs/embeddings"
       },
+      "metrics": {
+        "downloads": 322585
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -1386,6 +1470,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:cohere-ai",
         "keyServerSide": true,
         "pricingUrl": "https://cohere.com/pricing",
         "sdk": "cohere-ai",
@@ -1453,7 +1538,10 @@
       "use": {
         "docs": "https://docs.d-id.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:dataforseo",
@@ -1483,7 +1571,10 @@
       "use": {
         "docs": "https://docs.dataforseo.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:daum-postcode",
@@ -1541,7 +1632,10 @@
       "use": {
         "docs": "https://deepai.org/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "official:deepgram",
@@ -1704,7 +1798,10 @@
       "use": {
         "docs": "https://discord.com/developers/docs/intro"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "official:elevenlabs",
@@ -1755,6 +1852,9 @@
         "name": "docs.exa.ai",
         "url": "https://docs.exa.ai"
       },
+      "metrics": {
+        "downloads": 527075
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -1763,6 +1863,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:exa-js",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Start for free with over $120 in credits per year.",
         "keyServerSide": true,
@@ -1868,7 +1969,10 @@
       "use": {
         "docs": "https://featherless.ai/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:firebase-auth",
@@ -1883,6 +1987,9 @@
         "name": "firebase.google.com",
         "url": "https://firebase.google.com/docs/auth"
       },
+      "metrics": {
+        "downloads": 6174971
+      },
       "tags": [
         "auth-cloud-iam",
         "firebase"
@@ -1890,10 +1997,13 @@
       "preview": {
         "type": "api",
         "auth": "apiKey (public) / service account",
+        "downloadsOf": "npm:firebase",
         "pricingUrl": "https://firebase.google.com/pricing",
+        "sdk": "firebase",
         "summarySource": "https://firebase.google.com/docs/auth"
       },
       "use": {
+        "install": "npm install firebase",
         "docs": "https://firebase.google.com/docs/auth"
       },
       "fetchedAt": "2026-10-14"
@@ -1998,7 +2108,10 @@
       "use": {
         "docs": "https://docs.fish.audio"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "official:freepik",
@@ -2158,7 +2271,10 @@
       "use": {
         "docs": "https://docs.getimg.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:github-oauth",
@@ -2321,7 +2437,10 @@
       "use": {
         "docs": "https://developers.google.com/custom-search/v1/overview"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "official:google-document-ai",
@@ -2385,7 +2504,10 @@
       "use": {
         "docs": "https://developers.google.com/identity/gsi/web/guides/overview"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "official:google-maps-platform",
@@ -2400,6 +2522,9 @@
         "name": "developers.google.com",
         "url": "https://developers.google.com/maps/documentation"
       },
+      "metrics": {
+        "downloads": 3520586
+      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -2407,13 +2532,16 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@googlemaps/js-api-loader",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "We have also replaced the USD $200 monthly credit with free monthly calls per SKU across Essentials, Pro and Enterprise.",
         "keyServerSide": true,
         "pricingUrl": "https://mapsplatform.google.com/pricing/",
+        "sdk": "@googlemaps/js-api-loader",
         "summarySource": "https://mapsplatform.google.com"
       },
       "use": {
+        "install": "npm install @googlemaps/js-api-loader",
         "docs": "https://developers.google.com/maps/documentation"
       },
       "fetchedAt": "2026-10-14"
@@ -2551,7 +2679,10 @@
       "use": {
         "docs": "https://docs.hcaptcha.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:here",
@@ -2579,7 +2710,10 @@
       "use": {
         "docs": "https://www.here.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:heygen",
@@ -2608,7 +2742,10 @@
       "use": {
         "docs": "https://docs.heygen.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:hive",
@@ -2638,7 +2775,10 @@
       "use": {
         "docs": "https://docs.thehive.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:hume",
@@ -2653,6 +2793,9 @@
         "name": "dev.hume.ai",
         "url": "https://dev.hume.ai"
       },
+      "metrics": {
+        "downloads": 46954
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -2661,6 +2804,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:hume",
         "keyServerSide": true,
         "pricingUrl": "https://www.hume.ai/pricing",
         "sdk": "hume",
@@ -2758,7 +2902,10 @@
       "use": {
         "docs": "https://developer.ideogram.ai/ideogram-api/api-overview"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:iflytek-spark",
@@ -2847,7 +2994,10 @@
       "use": {
         "docs": "https://manual.inicis.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:inworld-tts",
@@ -2876,7 +3026,10 @@
       "use": {
         "docs": "https://docs.inworld.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:jina",
@@ -2906,7 +3059,10 @@
       "use": {
         "docs": "https://jina.ai/embeddings/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:jina-reader",
@@ -2936,7 +3092,10 @@
       "use": {
         "docs": "https://jina.ai/reader/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:kagi",
@@ -2993,7 +3152,10 @@
       "use": {
         "docs": "https://developers.kakao.com/docs/latest/ko/local/dev-guide"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:kinde",
@@ -3052,7 +3214,10 @@
       "use": {
         "docs": "https://openapi.kiwoom.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:kling",
@@ -3081,7 +3246,10 @@
       "use": {
         "docs": "https://app.klingai.com/global/dev/document-api"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:korbit",
@@ -3120,7 +3288,7 @@
       "category": "api",
       "summary": "국립국어원 한국어기초사전 낱말 검색 API",
       "written": "codeshopper",
-      "url": "https://krdict.korean.go.kr/kor/openApi/openApiInfo",
+      "url": "https://krdict.korean.go.kr",
       "source": {
         "name": "krdict.korean.go.kr",
         "url": "https://krdict.korean.go.kr/kor/openApi/openApiInfo"
@@ -3136,7 +3304,10 @@
       "use": {
         "docs": "https://krdict.korean.go.kr/kor/openApi/openApiInfo"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:krea",
@@ -3165,7 +3336,10 @@
       "use": {
         "docs": "https://docs.krea.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:landing-ai-ade",
@@ -3259,7 +3433,10 @@
       "use": {
         "docs": "https://docs.leonardo.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:line-messaging",
@@ -3353,7 +3530,10 @@
       "use": {
         "docs": "https://docs.cloud.llamaindex.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:loops",
@@ -3632,7 +3812,10 @@
       "use": {
         "docs": "https://docs.maptiler.com/cloud/api/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:mathpix",
@@ -3663,7 +3846,10 @@
       "use": {
         "docs": "https://docs.mathpix.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:meshy",
@@ -3693,7 +3879,10 @@
       "use": {
         "docs": "https://docs.meshy.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:microsoft-identity",
@@ -3721,7 +3910,10 @@
       "use": {
         "docs": "https://learn.microsoft.com/entra/identity-platform/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "official:mindee",
@@ -3921,7 +4113,10 @@
       "use": {
         "docs": "https://mubert.com/api"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:murf",
@@ -3951,7 +4146,10 @@
       "use": {
         "docs": "https://murf.ai/api/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:nanonets",
@@ -4014,7 +4212,10 @@
       "use": {
         "docs": "https://api.ncloud-docs.com/docs/sens-overview"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:neis",
@@ -4041,7 +4242,10 @@
       "use": {
         "docs": "https://open.neis.go.kr/portal/guide/actKeyPage.do"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:neuphonic",
@@ -4213,7 +4417,10 @@
       "use": {
         "docs": "https://docs.nscale.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:okta",
@@ -4241,7 +4448,10 @@
       "use": {
         "docs": "https://developer.okta.com/docs/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:onesignal",
@@ -4256,6 +4466,9 @@
         "name": "documentation.onesignal.com",
         "url": "https://documentation.onesignal.com"
       },
+      "metrics": {
+        "downloads": 104734
+      },
       "tags": [
         "auth-apikey",
         "push",
@@ -4264,11 +4477,14 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@onesignal/node-onesignal",
         "keyServerSide": true,
         "pricingUrl": "https://onesignal.com/pricing",
+        "sdk": "@onesignal/node-onesignal",
         "summarySource": "https://onesignal.com"
       },
       "use": {
+        "install": "npm install @onesignal/node-onesignal",
         "docs": "https://documentation.onesignal.com"
       },
       "fetchedAt": "2026-10-14"
@@ -4507,7 +4723,10 @@
       "use": {
         "docs": "https://api.ncloud-docs.com/docs/ai-naver-papagonmt"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:parallel",
@@ -4539,7 +4758,10 @@
       "use": {
         "docs": "https://docs.parallel.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:paypal",
@@ -4603,7 +4825,10 @@
       "use": {
         "docs": "https://docs.perplexity.ai/guides/search-quickstart"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "official:photoroom",
@@ -4633,7 +4858,10 @@
       "use": {
         "docs": "https://docs.photoroom.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "official:picovoice",
@@ -4994,7 +5222,10 @@
       "use": {
         "docs": "https://developers.google.com/recaptcha/docs/v3"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "official:recraft",
@@ -5023,7 +5254,10 @@
       "use": {
         "docs": "https://www.recraft.ai/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:reducto",
@@ -5085,7 +5319,10 @@
       "use": {
         "docs": "https://docs.reka.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:remove-bg",
@@ -5115,7 +5352,10 @@
       "use": {
         "docs": "https://www.remove.bg/api"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "official:replicate",
@@ -5130,6 +5370,9 @@
         "name": "replicate.com",
         "url": "https://replicate.com/docs"
       },
+      "metrics": {
+        "downloads": 390200
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5138,6 +5381,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:replicate",
         "keyServerSide": true,
         "pricingUrl": "https://replicate.com/pricing",
         "sdk": "replicate",
@@ -5177,7 +5421,10 @@
       "use": {
         "docs": "https://docs.app.resemble.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:resend",
@@ -5192,6 +5439,9 @@
         "name": "resend.com",
         "url": "https://resend.com/docs"
       },
+      "metrics": {
+        "downloads": 8132768
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5200,6 +5450,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:resend",
         "keyServerSide": true,
         "pricingUrl": "https://resend.com/pricing",
         "sdk": "resend",
@@ -5224,6 +5475,9 @@
         "name": "docs.retellai.com",
         "url": "https://docs.retellai.com"
       },
+      "metrics": {
+        "downloads": 131074
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5232,6 +5486,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:retell-sdk",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Go live in minutes with $10 in free credits.",
         "keyServerSide": true,
@@ -5258,6 +5513,9 @@
         "name": "docs.rev.ai",
         "url": "https://docs.rev.ai"
       },
+      "metrics": {
+        "downloads": 5355
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5266,6 +5524,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:revai-node-sdk",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Free credits equivalent to 5 hours of Reverb ASR (free credits can be used for all products).",
         "keyServerSide": true,
@@ -5306,7 +5565,10 @@
       "use": {
         "docs": "https://www.revenuecat.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:rime",
@@ -5365,7 +5627,10 @@
       "use": {
         "docs": "https://docs.roboflow.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:rodin",
@@ -5395,7 +5660,10 @@
       "use": {
         "docs": "https://developer.hyper3d.ai"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:rtzr-stt",
@@ -5455,7 +5723,10 @@
       "use": {
         "docs": "https://docs.runpod.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:runware",
@@ -5561,7 +5832,10 @@
       "use": {
         "docs": "https://www.scrapingbee.com/documentation/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:searchapi",
@@ -5643,6 +5917,9 @@
         "name": "serpapi.com",
         "url": "https://serpapi.com/search-api"
       },
+      "metrics": {
+        "downloads": 76065
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5651,6 +5928,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:serpapi",
         "keyServerSide": true,
         "pricingUrl": "https://serpapi.com/pricing",
         "sdk": "serpapi",
@@ -5692,7 +5970,10 @@
       "use": {
         "docs": "https://serper.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:sightengine",
@@ -5725,7 +6006,10 @@
       "use": {
         "docs": "https://sightengine.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:sign-in-with-apple",
@@ -5753,7 +6037,10 @@
       "use": {
         "docs": "https://developer.apple.com/documentation/signinwithapple"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "official:sinch",
@@ -5781,7 +6068,10 @@
       "use": {
         "docs": "https://developers.sinch.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:slack-api",
@@ -5909,7 +6199,10 @@
       "use": {
         "docs": "https://soniox.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:speechify",
@@ -5970,7 +6263,10 @@
       "use": {
         "docs": "https://docs.speechmatics.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:square",
@@ -6036,7 +6332,10 @@
       "use": {
         "docs": "https://platform.stability.ai/docs/getting-started"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:stadia-maps",
@@ -6092,7 +6391,10 @@
       "use": {
         "docs": "https://stdict.korean.go.kr/openapi/openApiInfo.do"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:steel",
@@ -6208,6 +6510,9 @@
         "name": "supabase.com",
         "url": "https://supabase.com/docs/guides/auth"
       },
+      "metrics": {
+        "downloads": 20655219
+      },
       "tags": [
         "auth-apikey",
         "supabase"
@@ -6215,6 +6520,7 @@
       "preview": {
         "type": "api",
         "auth": "anon key (public) / service key",
+        "downloadsOf": "npm:@supabase/supabase-js",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Free projects are paused after 1 week of inactivity.",
         "pricingUrl": "https://supabase.com/pricing",
@@ -6254,7 +6560,10 @@
       "use": {
         "docs": "https://docs.synthesia.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:tavily",
@@ -6269,6 +6578,9 @@
         "name": "docs.tavily.com",
         "url": "https://docs.tavily.com"
       },
+      "metrics": {
+        "downloads": 227800
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -6277,6 +6589,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@tavily/core",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Get 100k free API credits, hands-on support from our team, and help bringing your product to market.",
         "keyServerSide": true,
@@ -6317,7 +6630,10 @@
       "use": {
         "docs": "https://docs.tavus.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:telegram-bot-api",
@@ -6346,7 +6662,10 @@
       "use": {
         "docs": "https://core.telegram.org/bots/api"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:telnyx",
@@ -6410,7 +6729,10 @@
       "use": {
         "docs": "https://cloud.tencent.com/document/product/1729"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:tmap",
@@ -6468,7 +6790,10 @@
       "use": {
         "docs": "https://docs.tomtom.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:topaz",
@@ -6497,7 +6822,10 @@
       "use": {
         "docs": "https://developer.topazlabs.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:tripo",
@@ -6525,7 +6853,10 @@
       "use": {
         "docs": "https://platform.tripo3d.ai/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:twelve-labs",
@@ -6631,7 +6962,10 @@
       "use": {
         "docs": "https://typecast.ai/docs/overview"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:unstructured",
@@ -6738,6 +7072,9 @@
         "name": "docs.vapi.ai",
         "url": "https://docs.vapi.ai"
       },
+      "metrics": {
+        "downloads": 85508
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -6746,6 +7083,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@vapi-ai/server-sdk",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "$5 free credits to get you started.",
         "keyServerSide": true,
@@ -6816,7 +7154,10 @@
       "use": {
         "docs": "https://platform.vidu.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:vonage",
@@ -6831,6 +7172,9 @@
         "name": "developer.vonage.com",
         "url": "https://developer.vonage.com/en/documentation"
       },
+      "metrics": {
+        "downloads": 72961
+      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -6838,6 +7182,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey / JWT",
+        "downloadsOf": "npm:@vonage/server-sdk",
         "keyServerSide": true,
         "sdk": "@vonage/server-sdk",
         "summarySource": "https://developer.vonage.com"
@@ -6913,7 +7258,10 @@
       "use": {
         "docs": "https://wavespeed.ai/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:whatsapp-cloud",
@@ -6940,7 +7288,10 @@
       "use": {
         "docs": "https://developers.facebook.com/docs/whatsapp/cloud-api"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000
+      }
     },
     {
       "id": "official:work24",
@@ -6965,7 +7316,10 @@
       "use": {
         "docs": "https://www.work24.go.kr/cm/e/a/0110/selectOpenApiIntro.do"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "official:workos",
@@ -6980,6 +7334,9 @@
         "name": "workos.com",
         "url": "https://workos.com/docs"
       },
+      "metrics": {
+        "downloads": 2096646
+      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -6987,6 +7344,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@workos-inc/node",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "First 1 million active users free.",
         "keyServerSide": true,
@@ -7061,7 +7419,10 @@
       "use": {
         "docs": "https://documentation.you.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:zeroentropy",

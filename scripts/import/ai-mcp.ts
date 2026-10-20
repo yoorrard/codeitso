@@ -5,9 +5,10 @@
 // 실행: node scripts/import/ai-mcp.ts
 import {
   type Item, type Preview, type CatalogFile, CATEGORY, checkout, cloneRepo, dedupeAcross, dedupeKey, ensureProxy, fetchJson,
-  githubSlug, isMain, isoDate, log, makeItem, parseYaml, readRepoFile, repoTreeUrl, str, strList, textKey, writeCatalog, type Yaml,
+  githubSlug, isMain, isoDate, log, makeItem, mapLimit, parseYaml, readRepoFile, repoMeta, repoTreeUrl, str, strList, textKey, writeCatalog, type Yaml,
 } from './ai-lib.ts';
 import { AITMPL_LICENSE, aitmplItems } from './ai-aitmpl.ts';
+import { npmDownloads, pypiWeekly } from './signals.ts';
 
 const KIND = 'mcp';
 
@@ -101,6 +102,18 @@ export async function fromReference(): Promise<{ items: Item[]; available: numbe
       preview: mcpPreview({ transports: ['stdio'], packages: pkg ? [pkg] : undefined }),
       use: { install: pkg && installFor(pkg), snippet: snippetFor(name, pkg), docs: repoTreeUrl(repo, path) },
     }));
+  }
+  // 인기 신호 (D133): 참조 서버는 한 저장소(모노레포)를 나눠 써서 스타가 같다. 서버마다 꾸러미의 지난 한 주 내려받기를 붙여 구별한다.
+  const pkgOf = (it: Item) => (it.preview?.packages as PackageRef[] | undefined)?.[0];
+  const npm = await npmDownloads(items.map(pkgOf).filter((p) => p?.registry === 'npm').map((p) => p?.name ?? ''), 'last-week');
+  const pypi = await pypiWeekly(items.map(pkgOf).filter((p) => p?.registry === 'pypi').map((p) => p?.name ?? ''));
+  for (const it of items) {
+    const p = pkgOf(it);
+    const weekly = p ? (p.registry === 'npm' ? npm : pypi).get(p.name) : undefined;
+    if (p && weekly !== undefined) {
+      it.metrics = { ...it.metrics, downloads: weekly };
+      it.preview = { ...(it.preview ?? { type: 'mcp' }), downloadsOf: `${p.registry}:${p.name}` };
+    }
   }
   return { items, available: items.length };
 }
@@ -318,9 +331,9 @@ export async function fromSmithery(): Promise<{ items: Item[]; available: number
         sourceId: 'mcp-smithery', slug: s.qualifiedName, name: s.displayName || s.qualifiedName, kind: KIND, summary: s.description,
         url: `https://smithery.ai/servers/${s.qualifiedName}`,
         source: { name: 'Smithery', url: 'https://smithery.ai' },
-        metrics: { downloads: s.useCount },
+        // useCount는 Smithery에서 부른 횟수라 내려받기와 단위가 다르다: 미리 보기에만 두고 인기순은 저장소 스타로 본다 (D133)
         tags: [s.remote ? 'remote' : 'local', s.verified ? 'verified' : undefined],
-        preview: { ...mcpPreview({ transports: s.remote ? ['streamable-http'] : undefined }), icon: s.iconUrl, repo: gh ? `https://github.com/${gh}` : undefined },
+        preview: { ...mcpPreview({ transports: s.remote ? ['streamable-http'] : undefined }), icon: s.iconUrl, repo: gh ? `https://github.com/${gh}` : undefined, useCount: s.useCount },
         use: { docs: s.homepage },
       }));
     }
@@ -504,6 +517,30 @@ export async function fromWong2(): Promise<{ items: Item[]; available: number }>
   return { items, available: rows.length };
 }
 
+// ---------- 인기 신호: 저장소 스타 (D133) ----------
+// 등록소마다 인기 지표가 다르거나 없어서(사용 횟수·설치 수·없음) 인기순이 틀렸다. GitHub 저장소가 있는 상품은 그 저장소의 스타와
+// 마지막 푸시 날짜를 받아 붙인다(gh → GITHUB_TOKEN → repos.ecosyste.ms). 4만 개가 넘는 공식 등록소는 요청이 너무 많아 붙이지 않는다.
+export async function withRepoStars(items: Item[]): Promise<number> {
+  const slugOf = (it: Item): string | undefined =>
+    githubSlug(typeof it.preview?.repo === 'string' ? it.preview.repo : undefined) ?? githubSlug(it.url) ?? githubSlug(it.use?.docs);
+  const need = items.filter((it) => it.metrics?.stars === undefined && slugOf(it));
+  const slugs = [...new Set(need.map((it) => (slugOf(it) as string).toLowerCase()))].sort();
+  const metas = new Map<string, Awaited<ReturnType<typeof repoMeta>>>();
+  let done = 0;
+  await mapLimit(slugs, 6, async (slug) => {
+    metas.set(slug, await repoMeta(slug));
+    if (++done % 250 === 0) log(`  저장소 스타 ${done}/${slugs.length}`);
+  });
+  let n = 0;
+  for (const it of need) {
+    const meta = metas.get((slugOf(it) as string).toLowerCase());
+    if (!meta) continue;
+    it.metrics = { ...it.metrics, stars: meta.stars, ...(it.metrics?.updatedAt || !meta.pushedAt ? {} : { updatedAt: meta.pushedAt }) };
+    n++;
+  }
+  return n;
+}
+
 // ---------- 모으기 ----------
 
 export async function main(): Promise<void> {
@@ -548,18 +585,20 @@ export async function main(): Promise<void> {
   const r9b = (r9 ?? []).filter((it) => !knownRemotes.has(remoteKey(it)));
 
   const files: Omit<CatalogFile, 'count' | 'fetchedAt'>[] = [
-    { source: { id: 'mcp-reference', name: 'MCP Reference Servers', url: 'https://github.com/modelcontextprotocol/servers', kind: KIND, license: 'MIT (저장소 README·패키지 정보)' }, available: ref.available, items: r1 ?? [] },
+    { source: { id: 'mcp-reference', name: 'MCP Reference Servers', url: 'https://github.com/modelcontextprotocol/servers', kind: KIND, license: 'MIT (저장소 README·패키지 정보)', note: 'metrics.stars = 저장소(모노레포) 스타, metrics.downloads = 서버 꾸러미의 지난 한 주 내려받기(npm 또는 pypistats.org, preview.downloadsOf)' }, available: ref.available, items: r1 ?? [] },
     { source: { id: 'mcp-registry', name: 'Official MCP Registry', url: 'https://registry.modelcontextprotocol.io', kind: KIND, license: '공개 등록소 API (게시자가 올린 server.json 메타데이터, 재배포를 위한 공개 API)', note: 'version=latest, status=active만 싣는다' }, available: off.available, cut: '활성(active) 최신판만', items: r2 ?? [] },
     { source: { id: 'mcp-github', name: 'GitHub MCP Registry', url: 'https://github.com/mcp', kind: KIND, license: '공개 API (api.mcp.github.com) 메타데이터, 원문은 각 저장소 라이선스' }, available: ghr.available, items: r3 ?? [] },
     { source: { id: 'mcp-docker', name: 'Docker MCP Catalog', url: 'https://github.com/docker/mcp-registry', kind: KIND, license: 'MIT (docker/mcp-registry)' }, available: dock.available, cut: '보관(Archived) 표시 서버 제외', items: r4 ?? [] },
     { source: { id: 'mcp-toolhive', name: 'ToolHive Registry', url: 'https://github.com/stacklok/toolhive-registry', kind: KIND, license: 'Apache-2.0' }, available: tool.available, items: r5 ?? [] },
     { source: { id: 'mcp-mcpm', name: 'MCPM registry', url: 'https://github.com/pathintegral-institute/mcpm.sh', kind: KIND, license: 'MIT' }, available: mcpm.available, items: r7 ?? [] },
-    { source: { id: 'mcp-smithery', name: 'Smithery', url: 'https://smithery.ai', kind: KIND, license: '공개 등록소 API (registry.smithery.ai) 메타데이터', note: `등록 ${smith.available}개 중 API가 사용량 순 상위 ${smith.exposed}개만 내준다` }, available: smith.available, cut: `API가 내주는 사용량 순 상위 ${smith.exposed}개`, items: r8 ?? [] },
+    { source: { id: 'mcp-smithery', name: 'Smithery', url: 'https://smithery.ai', kind: KIND, license: '공개 등록소 API (registry.smithery.ai) 메타데이터', note: `등록 ${smith.available}개 중 API가 사용량 순 상위 ${smith.exposed}개만 내준다. preview.useCount = Smithery에서 부른 횟수(인기순에는 쓰지 않음). metrics.stars = 저장소 스타(GitHub, 없으면 repos.ecosyste.ms)` }, available: smith.available, cut: `API가 내주는 사용량 순 상위 ${smith.exposed}개`, items: r8 ?? [] },
     { source: { id: 'mcp-remote', name: 'Awesome Remote MCP Servers', url: 'https://github.com/jaw9c/awesome-remote-mcp-servers', kind: KIND, license: 'MIT' }, available: remote.available, items: r9b },
     { source: { id: 'mcp-awesome', name: 'awesome-mcp-servers', url: 'https://github.com/punkpeye/awesome-mcp-servers', kind: KIND, license: 'MIT' }, available: awe.available, items: r10 ?? [] },
     { source: { id: 'mcp-wong2', name: 'mcpservers.org (awesome-mcp-servers)', url: 'https://github.com/wong2/awesome-mcp-servers', kind: KIND, license: 'MIT' }, available: wong.available, items: r11 ?? [] },
     { source: { id: 'mcp-aitmpl', name: 'Claude Code Templates (MCP)', url: 'https://www.aitmpl.com', kind: KIND, license: AITMPL_LICENSE }, available: tmpl.available, items: r12 ?? [] },
   ];
+  const curated = files.filter((f) => f.source.id !== 'mcp-registry').flatMap((f) => f.items);
+  log(`· 저장소 스타 붙이기: ${await withRepoStars(curated)}개`);
   for (const f of files) {
     f.items.forEach((it) => { it.category = CATEGORY; });
     writeCatalog(f);

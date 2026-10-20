@@ -27,7 +27,8 @@ export function n8nItem(t: N8nTemplate): Item {
     sourceId: 'wf-n8n', slug: String(t.id), name: t.name, kind: KIND, summary: t.description ?? t.name,
     url: `https://n8n.io/workflows/${t.id}/`,
     source: { name: 'n8n workflow templates', url: 'https://n8n.io/workflows/' },
-    // 조회 수는 내려받기와 달라서 metrics에 넣지 않고 미리 보기 정보로 둔다. 날짜도 게시일이라 updatedAt이 아니다.
+    // 조회 수는 내려받기와 달라서 metrics.views(인기 점수에만 쓰는 칸, D133)에 둔다. 날짜는 게시일이라 updatedAt이 아니다.
+    metrics: { views: t.totalViews },
     tags: ['n8n', ...nodes.slice(0, 8), t.user?.verified ? 'verified-creator' : undefined],
     preview: { type: 'template', platform: 'n8n', nodes: nodes.slice(0, 12), author: t.user?.username, views: t.totalViews, publishedAt: isoDate(t.createdAt) },
     use: { docs: 'https://docs.n8n.io/workflows/templates/' },

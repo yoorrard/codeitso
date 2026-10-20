@@ -3,12 +3,60 @@
     "id": "github-css-frameworks",
     "name": "CSS frameworks and styling tools (GitHub)",
     "url": "https://github.com",
-    "license": "Repository metadata (description, stars, license, topics) from GitHub via repos.ecosyste.ms (CC BY-SA 4.0 data mirror of GitHub); each library keeps its own license (field license). Discovery lists: brillout/awesome-react-components (CC0-1.0); vuejs/awesome-vue (MIT); birobirobiro/awesome-shadcn-ui (MIT); jondot/awesome-react-native (no license file); Solido/awesome-flutter (no license file); PatrickJS/awesome-angular (CC0-1.0); web-padawan/awesome-web-components (CC0-1.0); aniftyco/awesome-tailwindcss (CC0-1.0).",
-    "note": "Found via hand-picked seeds, awesome-list sections and GitHub topic search (snapshot 2026-10-14). Kept: seeds always; awesome-list repos with ≥300 stars; topic repos with ≥1000 stars; forks and archived repos dropped unless hand-picked. metrics.downloads = last-month downloads of the repo's most-downloaded npm/pub package (packages.ecosyste.ms); use.install = that package unless the official docs command was hand-copied."
+    "license": "Repository metadata (description, stars, license, topics) from GitHub via the GitHub REST API; each library keeps its own license (field license). Discovery lists: brillout/awesome-react-components (CC0-1.0); vuejs/awesome-vue (MIT); birobirobiro/awesome-shadcn-ui (MIT); jondot/awesome-react-native (no license file); Solido/awesome-flutter (no license file); PatrickJS/awesome-angular (CC0-1.0); web-padawan/awesome-web-components (CC0-1.0); aniftyco/awesome-tailwindcss (CC0-1.0).",
+    "note": "Found via hand-picked seeds, awesome-list sections and GitHub topic search (live). Kept: seeds always; awesome-list repos with ≥300 stars; topic repos with ≥1000 stars; forks and archived repos dropped unless hand-picked. metrics.downloads = last-month downloads of the repo's most-downloaded npm/pub package (packages.ecosyste.ms); use.install = that package unless the official docs command was hand-copied."
   },
-  "fetchedAt": "2026-10-14",
-  "count": 34,
+  "fetchedAt": "2026-10-20",
+  "count": 60,
   "items": [
+    {
+      "id": "github:ajusa--lit",
+      "name": "ajusa/lit",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "World's smallest responsive 🔥 css framework (395 bytes)",
+      "url": "https://ajusa.github.io/lit",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/ajusa/lit"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 2010,
+        "downloads": 301,
+        "updatedAt": "2026-03-25"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "flat",
+        "lit",
+        "microframework"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "ajusa/lit",
+        "stars": 2010,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "flat",
+          "lit",
+          "microframework"
+        ],
+        "image": "https://opengraph.githubassets.com/1/ajusa/lit",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install @ajusa/lit",
+        "docs": "https://ajusa.github.io/lit"
+      },
+      "fetchedAt": "2026-10-20"
+    },
     {
       "id": "github:andybrewer--mvp",
       "name": "andybrewer/mvp",
@@ -22,7 +70,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 5127,
+        "stars": 5129,
         "downloads": 7730,
         "updatedAt": "2026-09-14"
       },
@@ -37,7 +85,7 @@
       "preview": {
         "type": "repo",
         "fullName": "andybrewer/mvp",
-        "stars": 5127,
+        "stars": 5129,
         "language": "HTML",
         "license": "MIT",
         "topics": [
@@ -56,7 +104,7 @@
         "install": "npm install mvp.css",
         "docs": "https://andybrewer.github.io/mvp/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:argyleink--open-props",
@@ -71,9 +119,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 5536,
-        "downloads": 144269,
-        "updatedAt": "2026-08-11"
+        "stars": 5549,
+        "downloads": 145690,
+        "updatedAt": "2026-10-11"
       },
       "tags": [
         "css",
@@ -89,7 +137,7 @@
       "preview": {
         "type": "repo",
         "fullName": "argyleink/open-props",
-        "stars": 5536,
+        "stars": 5549,
         "language": "HTML",
         "license": "MIT",
         "topics": [
@@ -111,7 +159,173 @@
         "install": "npm install open-props",
         "docs": "https://open-props.style"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:awssat--tailwindo",
+      "name": "tailwindo",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "🔌 Convert Bootstrap CSS code to Tailwind CSS code",
+      "url": "https://github.com/awssat/tailwindo",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/awssat/tailwindo"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1116,
+        "updatedAt": "2025-04-12"
+      },
+      "tags": [
+        "bootstrap",
+        "bootstrap-css",
+        "bootstrap4",
+        "converter",
+        "css",
+        "css-converter",
+        "css-framework",
+        "css-framework-bootstrap",
+        "html",
+        "php",
+        "tailwind",
+        "tailwind-css",
+        "tailwind-scaffolding"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "awssat/tailwindo",
+        "stars": 1116,
+        "language": "PHP",
+        "license": "MIT",
+        "topics": [
+          "bootstrap",
+          "bootstrap-css",
+          "bootstrap4",
+          "converter",
+          "css",
+          "css-converter",
+          "css-framework",
+          "css-framework-bootstrap",
+          "html",
+          "tailwind",
+          "tailwind-css",
+          "tailwind-scaffolding"
+        ],
+        "image": "https://opengraph.githubassets.com/1/awssat/tailwindo",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "https://github.com/awssat/tailwindo#readme"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:bafs--gutenberg",
+      "name": "Gutenberg",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Modern framework to print the web correctly.",
+      "url": "https://bafs.github.io/Gutenberg",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/BafS/Gutenberg"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 4925,
+        "downloads": 2968,
+        "updatedAt": "2024-02-03"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "framework",
+        "print",
+        "print-framework",
+        "printer",
+        "printing",
+        "scss",
+        "scss-framework"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "BafS/Gutenberg",
+        "stars": 4925,
+        "language": "SCSS",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "framework",
+          "print",
+          "print-framework",
+          "printer",
+          "printing",
+          "scss",
+          "scss-framework"
+        ],
+        "image": "https://opengraph.githubassets.com/1/BafS/Gutenberg",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install gutenberg-css",
+        "docs": "https://bafs.github.io/Gutenberg"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:bansal--pattern.css",
+      "name": "pattern.css",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "CSS only library to fill empty background with beautiful patterns.",
+      "url": "https://bansal.io/pattern-css",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/bansal/pattern.css"
+      },
+      "metrics": {
+        "stars": 3923,
+        "updatedAt": "2022-03-26"
+      },
+      "tags": [
+        "bootstrap",
+        "css",
+        "css-framework",
+        "css3",
+        "frontend",
+        "html",
+        "patterns",
+        "ui"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "bansal/pattern.css",
+        "stars": 3923,
+        "language": "HTML",
+        "topics": [
+          "bootstrap",
+          "css",
+          "css-framework",
+          "css3",
+          "frontend",
+          "patterns",
+          "ui"
+        ],
+        "image": "https://opengraph.githubassets.com/1/bansal/pattern.css",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "https://bansal.io/pattern-css"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:botoxparty--xp.css",
@@ -126,7 +340,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 3102,
+        "stars": 3116,
         "downloads": 8274,
         "updatedAt": "2025-03-08"
       },
@@ -137,7 +351,7 @@
       "preview": {
         "type": "repo",
         "fullName": "botoxparty/XP.css",
-        "stars": 3102,
+        "stars": 3116,
         "language": "SCSS",
         "license": "MIT",
         "topics": [],
@@ -150,7 +364,7 @@
         "install": "npm install xp.css",
         "docs": "https://botoxparty.github.io/XP.css/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:callstack--linaria",
@@ -166,8 +380,8 @@
       "license": "MIT",
       "metrics": {
         "stars": 12350,
-        "downloads": 2777833,
-        "updatedAt": "2026-10-10"
+        "downloads": 2870627,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "css",
@@ -197,7 +411,7 @@
         "install": "npm install @linaria/core",
         "docs": "https://linaria.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:chakra-ui--panda",
@@ -212,9 +426,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 6220,
+        "stars": 6232,
         "downloads": 4542412,
-        "updatedAt": "2026-10-09"
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "atomic-css",
@@ -234,7 +448,7 @@
       "preview": {
         "type": "repo",
         "fullName": "chakra-ui/panda",
-        "stars": 6220,
+        "stars": 6232,
         "language": "Rust",
         "license": "MIT",
         "topics": [
@@ -260,7 +474,105 @@
         "install": "npm install @pandacss/is-valid-prop",
         "docs": "https://panda-css.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:codedgar--puppertino",
+      "name": "Puppertino",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "A CSS framework based on Human Guidelines from apple",
+      "url": "http://puppertino.com/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/codedgar/Puppertino"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1196,
+        "downloads": 412,
+        "updatedAt": "2026-10-13"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "human-guidelines",
+        "macos",
+        "mdx",
+        "modular"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "codedgar/Puppertino",
+        "stars": 1196,
+        "language": "MDX",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "human-guidelines",
+          "macos",
+          "modular"
+        ],
+        "image": "https://opengraph.githubassets.com/1/codedgar/Puppertino",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install @codedgar/puppertino",
+        "docs": "http://puppertino.com/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:corebunch--instatic",
+      "name": "Instatic",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "The open-source alternative to Webflow, Framer and WordPress. Agentic self-hosted visual CMS outputting clean static pages. Users, roles, plugins, content, database, it's all there.",
+      "url": "https://instatic.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/CoreBunch/Instatic"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 8984,
+        "updatedAt": "2026-10-13"
+      },
+      "tags": [
+        "cms",
+        "css",
+        "css-framework",
+        "page-builder",
+        "static",
+        "typescript",
+        "website"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "CoreBunch/Instatic",
+        "stars": 8984,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "cms",
+          "css",
+          "css-framework",
+          "page-builder",
+          "static",
+          "website"
+        ],
+        "image": "https://opengraph.githubassets.com/1/CoreBunch/Instatic",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "https://instatic.com"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:dhg--skeleton",
@@ -275,7 +587,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 19349,
+        "stars": 19346,
         "downloads": 57,
         "updatedAt": "2023-11-14"
       },
@@ -285,7 +597,7 @@
       "preview": {
         "type": "repo",
         "fullName": "dhg/Skeleton",
-        "stars": 19349,
+        "stars": 19346,
         "language": "CSS",
         "license": "MIT",
         "topics": [],
@@ -298,7 +610,177 @@
         "install": "npm install skeleton-css-webpack",
         "docs": "http://www.getskeleton.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:digicorp--propeller",
+      "name": "propeller",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Propeller - Develop more, Code less. Propeller is a front-end responsive framework based on Google's Material Design Standards & Bootstrap.",
+      "url": "http://propeller.in",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/digicorp/propeller"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1116,
+        "downloads": 1599,
+        "updatedAt": "2021-05-20"
+      },
+      "tags": [
+        "bootstrap3",
+        "css",
+        "css-framework",
+        "gitter",
+        "html",
+        "javascript",
+        "material-design",
+        "propeller",
+        "sass",
+        "web"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "digicorp/propeller",
+        "stars": 1116,
+        "language": "HTML",
+        "license": "MIT",
+        "topics": [
+          "bootstrap3",
+          "css",
+          "css-framework",
+          "gitter",
+          "html",
+          "javascript",
+          "material-design",
+          "propeller",
+          "sass",
+          "web"
+        ],
+        "image": "https://opengraph.githubassets.com/1/digicorp/propeller",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install propellerkit",
+        "docs": "http://propeller.in"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:dogfalo--materialize",
+      "name": "materialize",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Materialize, a CSS Framework based on Material Design",
+      "url": "https://materializecss.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/Dogfalo/materialize"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 38784,
+        "downloads": 156020,
+        "updatedAt": "2026-08-20"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "design",
+        "framework",
+        "javascript",
+        "material",
+        "material-design"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "Dogfalo/materialize",
+        "stars": 38784,
+        "language": "JavaScript",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "design",
+          "framework",
+          "javascript",
+          "material",
+          "material-design"
+        ],
+        "image": "https://opengraph.githubassets.com/1/Dogfalo/materialize",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install materialize-css",
+        "docs": "https://materializecss.com"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:dohliam--dropin-minimal-css",
+      "name": "dropin-minimal-css",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Drop-in switcher for previewing minimal CSS frameworks",
+      "url": "https://dohliam.github.io/dropin-minimal-css",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/dohliam/dropin-minimal-css"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1831,
+        "updatedAt": "2026-10-19"
+      },
+      "tags": [
+        "classless",
+        "classless-css",
+        "classless-theme",
+        "css",
+        "css-boilerplate",
+        "css-framework",
+        "css-switcher",
+        "html",
+        "minimal",
+        "minimal-css",
+        "minimal-framework",
+        "minimalist"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "dohliam/dropin-minimal-css",
+        "stars": 1831,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "classless",
+          "classless-css",
+          "classless-theme",
+          "css",
+          "css-boilerplate",
+          "css-framework",
+          "css-switcher",
+          "html",
+          "minimal",
+          "minimal-css",
+          "minimal-framework",
+          "minimalist"
+        ],
+        "image": "https://opengraph.githubassets.com/1/dohliam/dropin-minimal-css",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "https://dohliam.github.io/dropin-minimal-css"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:emotion-js--emotion",
@@ -313,8 +795,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 18020,
-        "downloads": 165626169,
+        "stars": 18017,
+        "downloads": 170539928,
         "updatedAt": "2026-08-28"
       },
       "tags": [
@@ -330,7 +812,7 @@
       "preview": {
         "type": "repo",
         "fullName": "emotion-js/emotion",
-        "stars": 18020,
+        "stars": 18017,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -351,7 +833,7 @@
         "install": "npm install @emotion/memoize",
         "docs": "https://emotion.sh/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:facebook--stylex",
@@ -366,9 +848,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 10387,
-        "downloads": 9143673,
-        "updatedAt": "2026-10-08"
+        "stars": 10422,
+        "downloads": 8247410,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "css-in-js",
@@ -377,7 +859,7 @@
       "preview": {
         "type": "repo",
         "fullName": "facebook/stylex",
-        "stars": 10387,
+        "stars": 10422,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -390,7 +872,7 @@
         "install": "npm install @stylexjs/stylex",
         "docs": "https://stylexjs.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:fomantic--fomantic-ui",
@@ -405,9 +887,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 3770,
-        "downloads": 74645,
-        "updatedAt": "2026-10-12"
+        "stars": 3769,
+        "downloads": 71074,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "component-library",
@@ -424,7 +906,7 @@
       "preview": {
         "type": "repo",
         "fullName": "fomantic/Fomantic-UI",
-        "stars": 3770,
+        "stars": 3769,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -442,14 +924,120 @@
         "image": "https://opengraph.githubassets.com/1/fomantic/Fomantic-UI",
         "foundIn": [
           "seed",
-          "topic:component-library"
+          "topic:component-library",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install fomantic-ui",
         "docs": "https://fomantic-ui.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:foundation--yeti",
+      "name": "yeti",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "A CSS-first, native, zero-build layout and styling framework for web designers.",
+      "url": "https://foundationcss.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/foundation/yeti"
+      },
+      "metrics": {
+        "stars": 29803,
+        "downloads": 508308,
+        "updatedAt": "2026-10-14"
+      },
+      "tags": [
+        "css",
+        "foundation",
+        "html",
+        "javascript",
+        "website"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "foundation/yeti",
+        "stars": 29803,
+        "language": "JavaScript",
+        "topics": [
+          "css",
+          "foundation",
+          "html",
+          "website"
+        ],
+        "image": "https://opengraph.githubassets.com/1/foundation/yeti",
+        "foundIn": [
+          "seed"
+        ]
+      },
+      "use": {
+        "install": "npm install foundation-sites",
+        "docs": "https://foundationcss.com"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:halfmoonui--halfmoon",
+      "name": "halfmoon",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Halfmoon is a highly customizable, drop-in Bootstrap replacement. It comes with three built-in core themes, with dark mode support for all themes and components.",
+      "url": "https://www.gethalfmoon.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/halfmoonui/halfmoon"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 3108,
+        "downloads": 3540,
+        "updatedAt": "2024-12-16"
+      },
+      "tags": [
+        "bootstrap",
+        "bootstrap5",
+        "css",
+        "css-custom-properties",
+        "css-framework",
+        "css-variables",
+        "dark-mode",
+        "dark-theme",
+        "dashboard",
+        "halfmoon",
+        "web-framework"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "halfmoonui/halfmoon",
+        "stars": 3108,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "bootstrap",
+          "bootstrap5",
+          "css",
+          "css-custom-properties",
+          "css-framework",
+          "css-variables",
+          "dark-mode",
+          "dark-theme",
+          "dashboard",
+          "halfmoon",
+          "web-framework"
+        ],
+        "image": "https://opengraph.githubassets.com/1/halfmoonui/halfmoon",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install halfmoon",
+        "docs": "https://www.gethalfmoon.com"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:jdan--98.css",
@@ -464,7 +1052,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 11530,
+        "stars": 11547,
         "downloads": 18632,
         "updatedAt": "2025-09-07"
       },
@@ -477,7 +1065,7 @@
       "preview": {
         "type": "repo",
         "fullName": "jdan/98.css",
-        "stars": 11530,
+        "stars": 11547,
         "language": "CSS",
         "license": "MIT",
         "topics": [
@@ -495,7 +1083,7 @@
         "install": "npm install 98.css",
         "docs": "https://jdan.github.io/98.css"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:jgthms--bulma",
@@ -510,8 +1098,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 50048,
-        "downloads": 1642149,
+        "stars": 50039,
+        "downloads": 1574529,
         "updatedAt": "2026-09-21"
       },
       "tags": [
@@ -524,7 +1112,7 @@
       "preview": {
         "type": "repo",
         "fullName": "jgthms/bulma",
-        "stars": 50048,
+        "stars": 50039,
         "language": "CSS",
         "license": "MIT",
         "topics": [
@@ -536,14 +1124,15 @@
         ],
         "image": "https://opengraph.githubassets.com/1/jgthms/bulma",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install bulma",
         "docs": "https://bulma.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:kevquirk--simple.css",
@@ -558,8 +1147,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 5017,
-        "downloads": 6588,
+        "stars": 5021,
+        "downloads": 6800,
         "updatedAt": "2026-07-19"
       },
       "tags": [
@@ -570,7 +1159,7 @@
       "preview": {
         "type": "repo",
         "fullName": "kevquirk/simple.css",
-        "stars": 5017,
+        "stars": 5021,
         "language": "HTML",
         "license": "MIT",
         "topics": [
@@ -587,7 +1176,7 @@
         "install": "npm install simpledotcss",
         "docs": "https://simplecss.org"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:khang-nd--7.css",
@@ -602,8 +1191,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 2449,
-        "downloads": 2556,
+        "stars": 2460,
+        "downloads": 3318,
         "updatedAt": "2026-09-30"
       },
       "tags": [
@@ -616,7 +1205,7 @@
       "preview": {
         "type": "repo",
         "fullName": "khang-nd/7.css",
-        "stars": 2449,
+        "stars": 2460,
         "language": "SCSS",
         "license": "MIT",
         "topics": [
@@ -635,7 +1224,7 @@
         "install": "npm install 7.css",
         "docs": "https://khang-nd.github.io/7.css/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:kognise--water.css",
@@ -650,7 +1239,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 8655,
+        "stars": 8654,
         "downloads": 4725,
         "updatedAt": "2024-02-11"
       },
@@ -664,7 +1253,7 @@
       "preview": {
         "type": "repo",
         "fullName": "kognise/water.css",
-        "stars": 8655,
+        "stars": 8654,
         "language": "CSS",
         "license": "MIT",
         "topics": [
@@ -676,14 +1265,164 @@
         ],
         "image": "https://opengraph.githubassets.com/1/kognise/water.css",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install water.css",
         "docs": "https://watercss.kognise.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:kylelogue--mustard-ui",
+      "name": "mustard-ui",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "A starter CSS framework that actually looks good.",
+      "url": "https://kylelogue.github.io/mustard-ui",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/kylelogue/mustard-ui"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1017,
+        "downloads": 724,
+        "updatedAt": "2022-12-02"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "scss",
+        "scss-framework"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "kylelogue/mustard-ui",
+        "stars": 1017,
+        "language": "SCSS",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "scss",
+          "scss-framework"
+        ],
+        "image": "https://opengraph.githubassets.com/1/kylelogue/mustard-ui",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install mustard-ui",
+        "docs": "https://kylelogue.github.io/mustard-ui"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:lowlighter--matcha",
+      "name": "matcha",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "🍵 Drop-in semantic styling library in pure CSS. Highly customizable and perfect for simple websites and prototyping web apps!",
+      "url": "https://matcha.mizu.sh",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/lowlighter/matcha"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1943,
+        "downloads": 303,
+        "updatedAt": "2025-09-13"
+      },
+      "tags": [
+        "classless",
+        "classless-css",
+        "css",
+        "css-framework",
+        "design",
+        "minimalist",
+        "semantic-web",
+        "simple",
+        "theme",
+        "web"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "lowlighter/matcha",
+        "stars": 1943,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "classless",
+          "classless-css",
+          "css",
+          "css-framework",
+          "design",
+          "minimalist",
+          "semantic-web",
+          "simple",
+          "theme",
+          "web"
+        ],
+        "image": "https://opengraph.githubassets.com/1/lowlighter/matcha",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install @lowlighter/matcha",
+        "docs": "https://matcha.mizu.sh"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:madeleineostoja--rucksack",
+      "name": "rucksack",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "A little bag of CSS superpowers, built on PostCSS",
+      "url": "https://www.rucksackcss.org",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/madeleineostoja/rucksack"
+      },
+      "metrics": {
+        "stars": 1823,
+        "updatedAt": "2021-01-24"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "javascript",
+        "postcss",
+        "postcss-plugins",
+        "responsive-typography"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "madeleineostoja/rucksack",
+        "stars": 1823,
+        "language": "JavaScript",
+        "topics": [
+          "css",
+          "css-framework",
+          "postcss",
+          "postcss-plugins",
+          "responsive-typography"
+        ],
+        "image": "https://opengraph.githubassets.com/1/madeleineostoja/rucksack",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "https://www.rucksackcss.org"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:materializecss--materialize",
@@ -698,8 +1437,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 994,
-        "downloads": 20915,
+        "stars": 993,
+        "downloads": 20043,
         "updatedAt": "2026-10-12"
       },
       "tags": [
@@ -716,7 +1455,7 @@
       "preview": {
         "type": "repo",
         "fullName": "materializecss/materialize",
-        "stars": 994,
+        "stars": 993,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -738,7 +1477,59 @@
         "install": "npm install @materializecss/materialize",
         "docs": "https://materializeweb.com/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:mblode--marx",
+      "name": "marx",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "The classless CSS reset (perfect for Communists).",
+      "url": "https://blode.co/marx",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/mblode/marx"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1711,
+        "downloads": 3283,
+        "updatedAt": "2026-10-19"
+      },
+      "tags": [
+        "classless-css",
+        "css",
+        "css-framework",
+        "css-reset",
+        "dark-mode",
+        "html",
+        "npm-package"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "mblode/marx",
+        "stars": 1711,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "classless-css",
+          "css",
+          "css-framework",
+          "css-reset",
+          "dark-mode",
+          "html",
+          "npm-package"
+        ],
+        "image": "https://opengraph.githubassets.com/1/mblode/marx",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install marx-css",
+        "docs": "https://blode.co/marx"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:milligram--milligram",
@@ -754,7 +1545,7 @@
       "license": "MIT",
       "metrics": {
         "stars": 10215,
-        "downloads": 8845,
+        "downloads": 8629,
         "updatedAt": "2026-09-01"
       },
       "tags": [
@@ -789,14 +1580,124 @@
         ],
         "image": "https://opengraph.githubassets.com/1/milligram/milligram",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install milligram",
         "docs": "https://milligram.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:mobi-css--mobi.css",
+      "name": "mobi.css",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "A lightweight, scalable, mobile-first CSS framework",
+      "url": "http://getmobicss.com/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/mobi-css/mobi.css"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 2311,
+        "downloads": 4724,
+        "updatedAt": "2017-09-29"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "cssnext",
+        "design",
+        "flexbox",
+        "mobi-css",
+        "mobile",
+        "mobile-first",
+        "postcss"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "mobi-css/mobi.css",
+        "stars": 2311,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "cssnext",
+          "design",
+          "flexbox",
+          "mobi-css",
+          "mobile",
+          "mobile-first",
+          "postcss"
+        ],
+        "image": "https://opengraph.githubassets.com/1/mobi-css/mobi.css",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install mobi-theme-base",
+        "docs": "http://getmobicss.com/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:muicss--mui",
+      "name": "muicss/mui",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Lightweight CSS framework",
+      "url": "https://www.muicss.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/muicss/mui"
+      },
+      "metrics": {
+        "stars": 4477,
+        "downloads": 9250,
+        "updatedAt": "2021-08-23"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "google-material",
+        "javascript",
+        "lightweight-css-framework",
+        "material",
+        "meteor",
+        "mui",
+        "nodejs"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "muicss/mui",
+        "stars": 4477,
+        "language": "JavaScript",
+        "topics": [
+          "css-framework",
+          "google-material",
+          "javascript",
+          "lightweight-css-framework",
+          "material",
+          "meteor",
+          "mui",
+          "nodejs"
+        ],
+        "image": "https://opengraph.githubassets.com/1/muicss/mui",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install muicss",
+        "docs": "https://www.muicss.com"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:nativewind--nativewind",
@@ -811,9 +1712,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 8109,
-        "downloads": 7457277,
-        "updatedAt": "2026-09-15"
+        "stars": 8116,
+        "downloads": 7954768,
+        "updatedAt": "2026-10-16"
       },
       "tags": [
         "css",
@@ -829,7 +1730,7 @@
       "preview": {
         "type": "repo",
         "fullName": "nativewind/nativewind",
-        "stars": 8109,
+        "stars": 8116,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -851,7 +1752,7 @@
         "install": "npm install nativewind",
         "docs": "https://nativewind.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:necolas--normalize.css",
@@ -866,8 +1767,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 53508,
-        "downloads": 5956487,
+        "stars": 53504,
+        "downloads": 5255391,
         "updatedAt": "2024-06-12"
       },
       "tags": [
@@ -878,7 +1779,7 @@
       "preview": {
         "type": "repo",
         "fullName": "necolas/normalize.css",
-        "stars": 53508,
+        "stars": 53504,
         "language": "CSS",
         "license": "MIT",
         "topics": [
@@ -895,7 +1796,7 @@
         "install": "npm install normalize.css",
         "docs": "http://necolas.github.io/normalize.css/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:nostalgic-css--nes.css",
@@ -910,7 +1811,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 21841,
+        "stars": 21837,
         "downloads": 20272,
         "updatedAt": "2024-01-17"
       },
@@ -924,7 +1825,7 @@
       "preview": {
         "type": "repo",
         "fullName": "nostalgic-css/NES.css",
-        "stars": 21841,
+        "stars": 21837,
         "language": "SCSS",
         "license": "MIT",
         "topics": [
@@ -936,14 +1837,70 @@
         ],
         "image": "https://opengraph.githubassets.com/1/nostalgic-css/NES.css",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install @16bits/nes.css",
         "docs": "https://nostalgic-css.github.io/NES.css/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:oxalorg--sakura",
+      "name": "sakura",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": ":cherry_blossom: a minimal css framework/theme.",
+      "url": "https://oxal.org/projects/sakura",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/oxalorg/sakura"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 4388,
+        "downloads": 1827,
+        "updatedAt": "2026-04-07"
+      },
+      "tags": [
+        "classless",
+        "classless-theme",
+        "css",
+        "css-framework",
+        "design",
+        "html",
+        "sakura",
+        "theme",
+        "web"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "oxalorg/sakura",
+        "stars": 4388,
+        "language": "HTML",
+        "license": "MIT",
+        "topics": [
+          "classless",
+          "classless-theme",
+          "css",
+          "css-framework",
+          "design",
+          "sakura",
+          "theme",
+          "web"
+        ],
+        "image": "https://opengraph.githubassets.com/1/oxalorg/sakura",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install sakura.css",
+        "docs": "https://oxal.org/projects/sakura"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:picocss--pico",
@@ -958,7 +1915,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 16853,
+        "stars": 16841,
         "downloads": 235580,
         "updatedAt": "2026-10-04"
       },
@@ -980,7 +1937,7 @@
       "preview": {
         "type": "repo",
         "fullName": "picocss/pico",
-        "stars": 16853,
+        "stars": 16841,
         "language": "CSS",
         "license": "MIT",
         "topics": [
@@ -1006,7 +1963,7 @@
         "install": "npm install @picocss/pico",
         "docs": "https://picocss.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:picturepan2--spectre",
@@ -1021,8 +1978,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 11309,
-        "downloads": 32107,
+        "stars": 11306,
+        "downloads": 30793,
         "updatedAt": "2024-04-11"
       },
       "tags": [
@@ -1038,7 +1995,7 @@
       "preview": {
         "type": "repo",
         "fullName": "picturepan2/spectre",
-        "stars": 11309,
+        "stars": 11306,
         "language": "CSS",
         "license": "MIT",
         "topics": [
@@ -1053,14 +2010,15 @@
         ],
         "image": "https://opengraph.githubassets.com/1/picturepan2/spectre",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install spectre.css",
         "docs": "https://picturepan2.github.io/spectre/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:propjockey--augmented-ui",
@@ -1075,7 +2033,7 @@
       },
       "license": "BSD-2-Clause",
       "metrics": {
-        "stars": 1405,
+        "stars": 1411,
         "downloads": 4965,
         "updatedAt": "2024-05-28"
       },
@@ -1089,7 +2047,7 @@
       "preview": {
         "type": "repo",
         "fullName": "propjockey/augmented-ui",
-        "stars": 1405,
+        "stars": 1411,
         "language": "CSS",
         "license": "BSD-2-Clause",
         "topics": [
@@ -1107,7 +2065,7 @@
         "install": "npm install augmented-ui",
         "docs": "http://augmented-ui.com/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:pure-css--pure",
@@ -1121,9 +2079,9 @@
         "url": "https://github.com/pure-css/pure"
       },
       "metrics": {
-        "stars": 23717,
-        "downloads": 85654,
-        "updatedAt": "2026-10-09"
+        "stars": 23712,
+        "downloads": 86442,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "css",
@@ -1134,7 +2092,7 @@
       "preview": {
         "type": "repo",
         "fullName": "pure-css/pure",
-        "stars": 23717,
+        "stars": 23712,
         "language": "JavaScript",
         "topics": [
           "css",
@@ -1150,7 +2108,7 @@
         "install": "npm install purecss",
         "docs": "http://purecss.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:semantic-org--semantic-ui",
@@ -1165,12 +2123,13 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 51015,
-        "downloads": 28158,
+        "stars": 51008,
+        "downloads": 28234,
         "updatedAt": "2024-11-27"
       },
       "tags": [
         "button",
+        "css",
         "css-framework",
         "dropdown",
         "flexbox",
@@ -1185,7 +2144,7 @@
       "preview": {
         "type": "repo",
         "fullName": "Semantic-Org/Semantic-UI",
-        "stars": 51015,
+        "stars": 51008,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -1202,6 +2161,7 @@
         ],
         "image": "https://opengraph.githubassets.com/1/Semantic-Org/Semantic-UI",
         "foundIn": [
+          "topic:css-framework",
           "topic:ui-components"
         ]
       },
@@ -1209,7 +2169,7 @@
         "install": "npm install semantic-ui",
         "docs": "http://www.semantic-ui.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:sindresorhus--modern-normalize",
@@ -1224,8 +2184,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 7418,
-        "downloads": 2392081,
+        "stars": 7420,
+        "downloads": 2410549,
         "updatedAt": "2026-09-18"
       },
       "tags": [
@@ -1240,7 +2200,7 @@
       "preview": {
         "type": "repo",
         "fullName": "sindresorhus/modern-normalize",
-        "stars": 7418,
+        "stars": 7420,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -1260,7 +2220,131 @@
         "install": "npm install modern-normalize",
         "docs": "https://github.com/sindresorhus/modern-normalize#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:slicejack--bojler",
+      "name": "bojler",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Bojler is an email framework",
+      "url": "https://bojler.slicejack.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/Slicejack/bojler"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1049,
+        "downloads": 34,
+        "updatedAt": "2023-12-06"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "email",
+        "email-template",
+        "framework",
+        "grid",
+        "html-email",
+        "reset",
+        "scss",
+        "templates",
+        "typography",
+        "utilities"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "Slicejack/bojler",
+        "stars": 1049,
+        "language": "SCSS",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "email",
+          "email-template",
+          "framework",
+          "grid",
+          "html-email",
+          "reset",
+          "templates",
+          "typography",
+          "utilities"
+        ],
+        "image": "https://opengraph.githubassets.com/1/Slicejack/bojler",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install @slicejack/bojler",
+        "docs": "https://bojler.slicejack.com"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:spiderpig86--cirrus",
+      "name": "Cirrus",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": ":cloud: The SCSS framework for the modern web.",
+      "url": "https://www.cirrus-ui.com/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/Spiderpig86/Cirrus"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1432,
+        "downloads": 2095,
+        "updatedAt": "2026-10-19"
+      },
+      "tags": [
+        "card",
+        "cirrus",
+        "css",
+        "css-framework",
+        "css-grid",
+        "css3",
+        "flexbox",
+        "font",
+        "front-end",
+        "responsive",
+        "sass",
+        "sass-framework",
+        "scss"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "Spiderpig86/Cirrus",
+        "stars": 1432,
+        "language": "SCSS",
+        "license": "MIT",
+        "topics": [
+          "card",
+          "cirrus",
+          "css",
+          "css-framework",
+          "css-grid",
+          "css3",
+          "flexbox",
+          "font",
+          "front-end",
+          "responsive",
+          "sass",
+          "sass-framework"
+        ],
+        "image": "https://opengraph.githubassets.com/1/Spiderpig86/Cirrus",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install cirrus-ui",
+        "docs": "https://www.cirrus-ui.com/"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:styled-components--styled-components",
@@ -1276,8 +2360,8 @@
       "license": "MIT",
       "metrics": {
         "stars": 41090,
-        "downloads": 48652973,
-        "updatedAt": "2026-10-12"
+        "downloads": 50140660,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "css",
@@ -1313,7 +2397,7 @@
         "install": "npm install styled-components",
         "docs": "https://styled-components.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:tachyons-css--tachyons",
@@ -1329,7 +2413,7 @@
       "license": "MIT",
       "metrics": {
         "stars": 11726,
-        "downloads": 326680,
+        "downloads": 388960,
         "updatedAt": "2026-07-20"
       },
       "tags": [
@@ -1369,7 +2453,7 @@
         "install": "npm install tachyons",
         "docs": "https://tachyons.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:tailwindlabs--tailwindcss",
@@ -1384,9 +2468,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 97851,
-        "downloads": 598708841,
-        "updatedAt": "2026-10-09"
+        "stars": 97943,
+        "downloads": 562479872,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "css",
@@ -1401,7 +2485,7 @@
       "preview": {
         "type": "repo",
         "fullName": "tailwindlabs/tailwindcss",
-        "stars": 97851,
+        "stars": 97943,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -1415,14 +2499,15 @@
         ],
         "image": "https://opengraph.githubassets.com/1/tailwindlabs/tailwindcss",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install tailwindcss",
         "docs": "https://tailwindcss.com/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:tailwindlabs--tailwindcss-typography",
@@ -1437,8 +2522,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 6476,
-        "downloads": 89336834,
+        "stars": 6478,
+        "downloads": 92861646,
         "updatedAt": "2026-06-08"
       },
       "tags": [
@@ -1448,7 +2533,7 @@
       "preview": {
         "type": "repo",
         "fullName": "tailwindlabs/tailwindcss-typography",
-        "stars": 6476,
+        "stars": 6478,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -1461,7 +2546,106 @@
         "install": "npm install @tailwindcss/typography",
         "docs": "https://tailwindcss-typography.vercel.app/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:thomaspark--bootswatch",
+      "name": "bootswatch",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "Themes for Bootstrap",
+      "url": "https://bootswatch.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/thomaspark/bootswatch"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 14749,
+        "downloads": 354103,
+        "updatedAt": "2026-06-06"
+      },
+      "tags": [
+        "bootstrap",
+        "bootswatch",
+        "css",
+        "css-framework",
+        "javascript",
+        "theme"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "thomaspark/bootswatch",
+        "stars": 14749,
+        "language": "JavaScript",
+        "license": "MIT",
+        "topics": [
+          "bootstrap",
+          "bootswatch",
+          "css",
+          "css-framework",
+          "theme"
+        ],
+        "image": "https://opengraph.githubassets.com/1/thomaspark/bootswatch",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install bootswatch",
+        "docs": "https://bootswatch.com"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:troxler--awesome-css-frameworks",
+      "name": "awesome-css-frameworks",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "List of awesome CSS frameworks in 2026",
+      "url": "https://frontaid.ch/web/ui/libraries.html",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/troxler/awesome-css-frameworks"
+      },
+      "metrics": {
+        "stars": 9549,
+        "updatedAt": "2026-06-08"
+      },
+      "tags": [
+        "awesome",
+        "awesome-list",
+        "collection",
+        "css",
+        "css-framework",
+        "framework",
+        "list",
+        "scss"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "troxler/awesome-css-frameworks",
+        "stars": 9549,
+        "language": "CSS",
+        "topics": [
+          "awesome",
+          "awesome-list",
+          "collection",
+          "css",
+          "css-framework",
+          "framework",
+          "list",
+          "scss"
+        ],
+        "image": "https://opengraph.githubassets.com/1/troxler/awesome-css-frameworks",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "https://frontaid.ch/web/ui/libraries.html"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:twbs--bootstrap",
@@ -1476,9 +2660,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 174835,
-        "downloads": 15435,
-        "updatedAt": "2026-10-13"
+        "stars": 175011,
+        "downloads": 24754721,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "bootstrap",
@@ -1493,7 +2677,7 @@
       "preview": {
         "type": "repo",
         "fullName": "twbs/bootstrap",
-        "stars": 174835,
+        "stars": 175011,
         "language": "MDX",
         "license": "MIT",
         "topics": [
@@ -1507,14 +2691,15 @@
         ],
         "image": "https://opengraph.githubassets.com/1/twbs/bootstrap",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-framework"
         ]
       },
       "use": {
-        "install": "npm install bootstrap3",
+        "install": "npm install bootstrap",
         "docs": "https://getbootstrap.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:uikit--uikit",
@@ -1529,9 +2714,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 18533,
-        "downloads": 214635,
-        "updatedAt": "2026-10-09"
+        "stars": 18532,
+        "downloads": 232542,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "css",
@@ -1540,7 +2725,7 @@
       "preview": {
         "type": "repo",
         "fullName": "uikit/uikit",
-        "stars": 18533,
+        "stars": 18532,
         "language": "HTML",
         "license": "MIT",
         "topics": [],
@@ -1553,7 +2738,7 @@
         "install": "npm install uikit",
         "docs": "http://getuikit.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:unocss--unocss",
@@ -1567,9 +2752,9 @@
         "url": "https://github.com/unocss/unocss"
       },
       "metrics": {
-        "stars": 18977,
+        "stars": 18979,
         "downloads": 3668713,
-        "updatedAt": "2026-10-12"
+        "updatedAt": "2026-10-20"
       },
       "tags": [
         "atomic-css",
@@ -1583,7 +2768,7 @@
       "preview": {
         "type": "repo",
         "fullName": "unocss/unocss",
-        "stars": 18977,
+        "stars": 18979,
         "language": "TypeScript",
         "topics": [
           "atomic-css",
@@ -1601,7 +2786,49 @@
         "install": "npm install @unocss/core",
         "docs": "https://unocss.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:usablica--front-end-frameworks",
+      "name": "front-end-frameworks",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "A collection of best front-end frameworks for faster and easier web development.",
+      "url": "http://usablica.github.com/front-end-frameworks/compare.html",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/usablica/front-end-frameworks"
+      },
+      "metrics": {
+        "stars": 2780,
+        "updatedAt": "2023-12-11"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "css-grid",
+        "responsive-css",
+        "responsive-grid"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "usablica/front-end-frameworks",
+        "stars": 2780,
+        "topics": [
+          "css-framework",
+          "css-grid",
+          "responsive-css",
+          "responsive-grid"
+        ],
+        "image": "https://opengraph.githubassets.com/1/usablica/front-end-frameworks",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "http://usablica.github.com/front-end-frameworks/compare.html"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:vanilla-extract-css--vanilla-extract",
@@ -1616,8 +2843,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 10435,
-        "downloads": 11441090,
+        "stars": 10437,
+        "downloads": 11535974,
         "updatedAt": "2026-10-08"
       },
       "tags": [
@@ -1627,7 +2854,7 @@
       "preview": {
         "type": "repo",
         "fullName": "vanilla-extract-css/vanilla-extract",
-        "stars": 10435,
+        "stars": 10437,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [],
@@ -1637,10 +2864,134 @@
         ]
       },
       "use": {
-        "install": "npm install @vanilla-extract/css",
+        "install": "npm install @vanilla-extract/private",
         "docs": "https://vanilla-extract.style"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:wenzhixin--bootstrap-table",
+      "name": "bootstrap-table",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "An extended table for integration with some of the most widely used CSS frameworks. (Supports Bootstrap, Semantic UI, Bulma, Material Design, Foundation, Vue.js)",
+      "url": "https://bootstrap-table.com/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/wenzhixin/bootstrap-table"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 11807,
+        "downloads": 155891,
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "bootstrap",
+        "bootstrap-table",
+        "bulma",
+        "checkbox",
+        "css",
+        "css-framework",
+        "datatables",
+        "foundation",
+        "hacktoberfest",
+        "javascript",
+        "material",
+        "material-design",
+        "materialize"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "wenzhixin/bootstrap-table",
+        "stars": 11807,
+        "language": "JavaScript",
+        "license": "MIT",
+        "topics": [
+          "bootstrap",
+          "bootstrap-table",
+          "bulma",
+          "checkbox",
+          "css",
+          "css-framework",
+          "datatables",
+          "foundation",
+          "hacktoberfest",
+          "material",
+          "material-design",
+          "materialize"
+        ],
+        "image": "https://opengraph.githubassets.com/1/wenzhixin/bootstrap-table",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install bootstrap-table",
+        "docs": "https://bootstrap-table.com/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:wintermute-cell--magick.css",
+      "name": "magick.css",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "magically playful, yet simple styling. all in one file.",
+      "url": "https://css.winterveil.net",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/wintermute-cell/magick.css"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1039,
+        "downloads": 160,
+        "updatedAt": "2024-06-01"
+      },
+      "tags": [
+        "brutalism",
+        "classless",
+        "classless-css",
+        "css",
+        "css-framework",
+        "html",
+        "latex",
+        "magic",
+        "old-school",
+        "ttrpg",
+        "webdesign",
+        "wizard"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "wintermute-cell/magick.css",
+        "stars": 1039,
+        "language": "HTML",
+        "license": "MIT",
+        "topics": [
+          "brutalism",
+          "classless",
+          "classless-css",
+          "css",
+          "css-framework",
+          "latex",
+          "magic",
+          "old-school",
+          "ttrpg",
+          "webdesign",
+          "wizard"
+        ],
+        "image": "https://opengraph.githubassets.com/1/wintermute-cell/magick.css",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install magick.css",
+        "docs": "https://css.winterveil.net"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:xz--new.css",
@@ -1655,7 +3006,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 4049,
+        "stars": 4050,
         "downloads": 767,
         "updatedAt": "2026-09-04"
       },
@@ -1666,7 +3017,7 @@
       "preview": {
         "type": "repo",
         "fullName": "xz/new.css",
-        "stars": 4049,
+        "stars": 4050,
         "language": "HTML",
         "license": "MIT",
         "topics": [],
@@ -1679,7 +3030,62 @@
         "install": "npm install @exampledev/new.css",
         "docs": "https://new.css.site"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:yegor256--tacit",
+      "name": "tacit",
+      "kind": "css-frameworks",
+      "category": "design",
+      "summary": "CSS framework for dummies, without a single CSS class: nicely renders properly formatted HTML5 pages",
+      "url": "https://yegor256.github.io/tacit/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/yegor256/tacit"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1880,
+        "downloads": 561,
+        "updatedAt": "2026-10-18"
+      },
+      "tags": [
+        "css",
+        "css-framework",
+        "css3",
+        "dummies",
+        "grunt",
+        "html",
+        "html5",
+        "responsive",
+        "scss"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "yegor256/tacit",
+        "stars": 1880,
+        "language": "SCSS",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-framework",
+          "css3",
+          "dummies",
+          "grunt",
+          "html",
+          "html5",
+          "responsive"
+        ],
+        "image": "https://opengraph.githubassets.com/1/yegor256/tacit",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "install": "npm install tacit-css",
+        "docs": "https://yegor256.github.io/tacit/"
+      },
+      "fetchedAt": "2026-10-20"
     }
   ]
 }

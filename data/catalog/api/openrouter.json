@@ -4,10 +4,10 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 112 providers; kept the 31 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API."
+    "note": "OpenRouter lists 112 providers; kept the 32 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API."
   },
-  "fetchedAt": "2026-10-14",
-  "count": 31,
+  "fetchedAt": "2026-10-20",
+  "count": 32,
   "items": [
     {
       "id": "openrouter:aion-labs",
@@ -37,7 +37,7 @@
         "terms": "https://www.aionlabs.ai/terms/",
         "viaOpenRouter": "https://openrouter.ai/provider/aion-labs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:akashml",
@@ -65,7 +65,7 @@
         "terms": "https://akashml.com/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/akashml"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:atlas-cloud",
@@ -94,7 +94,7 @@
         "summarySource": "official page meta description",
         "viaOpenRouter": "https://openrouter.ai/provider/atlas-cloud"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:avian",
@@ -124,7 +124,7 @@
         "terms": "https://avian.io/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/avian"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:cirrascale",
@@ -152,7 +152,7 @@
         "terms": "https://www.cirrascale.com/terms-of-service",
         "viaOpenRouter": "https://openrouter.ai/provider/cirrascale"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:darkbloom",
@@ -180,7 +180,7 @@
         "terms": "https://www.darkbloom.dev/terms.html",
         "viaOpenRouter": "https://openrouter.ai/provider/darkbloom"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:decart",
@@ -213,7 +213,7 @@
         "terms": "https://cogito.decart.ai/legal/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/decart"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:dekallm",
@@ -246,7 +246,41 @@
         "terms": "https://docs.cloudeka.ai/service-portal-ai/end-user-license-agreement",
         "viaOpenRouter": "https://openrouter.ai/provider/dekallm"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:inferact-vllm",
+      "name": "Inferact vLLM",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Inferact is frontier inference you control. Built by the creators of vLLM, it lets you deploy on your GPUs or ours with open weight models and production performance.",
+      "url": "https://inferact.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US",
+          "FI"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://inferact.ai/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://inferact.ai/ortoc",
+        "viaOpenRouter": "https://openrouter.ai/provider/inferact-vllm"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:infermatic",
@@ -274,7 +308,7 @@
         "terms": "https://infermatic.ai/terms-and-conditions/",
         "viaOpenRouter": "https://openrouter.ai/provider/infermatic"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:inflection",
@@ -302,7 +336,7 @@
         "terms": "https://developers.inflection.ai/tos",
         "viaOpenRouter": "https://openrouter.ai/provider/inflection"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:ionstream",
@@ -335,7 +369,7 @@
         "terms": "https://ionstream.ai/terms-and-conditions/",
         "viaOpenRouter": "https://openrouter.ai/provider/ionstream"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:liquid",
@@ -363,7 +397,7 @@
         "terms": "https://www.liquid.ai/terms-conditions",
         "viaOpenRouter": "https://openrouter.ai/provider/liquid"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:mancer",
@@ -391,7 +425,7 @@
         "terms": "https://mancer.tech/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/mancer"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:mara",
@@ -424,7 +458,7 @@
         "terms": "https://www.mara.com/mara-legals/ai-policies#cloud-toc",
         "viaOpenRouter": "https://openrouter.ai/provider/mara"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:modelrun",
@@ -457,7 +491,7 @@
         "terms": "https://www.modular.com/legal/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/modelrun"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:modular",
@@ -490,7 +524,7 @@
         "terms": "https://www.runmodelrun.com/TOS.html",
         "viaOpenRouter": "https://openrouter.ai/provider/modular"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:nex-agi",
@@ -522,7 +556,7 @@
         "summarySource": "OpenRouter data",
         "viaOpenRouter": "https://openrouter.ai/provider/nex-agi"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:nextbit",
@@ -555,7 +589,7 @@
         "terms": "https://www.nextbit256.com/docs/terms-of-service",
         "viaOpenRouter": "https://openrouter.ai/provider/nextbit"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:open-inference",
@@ -585,7 +619,7 @@
         "terms": "https://www.openinference.ai/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/open-inference"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:parasail",
@@ -615,7 +649,7 @@
         "terms": "https://parasail.io/legal/terms-of-service",
         "viaOpenRouter": "https://openrouter.ai/provider/parasail"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:perceptron",
@@ -645,7 +679,7 @@
         "terms": "https://www.perceptron.inc/terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/perceptron"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:phala",
@@ -676,7 +710,7 @@
         "terms": "https://redpill.ai/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/phala"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:relace",
@@ -705,7 +739,7 @@
         "terms": "https://www.relace.ai/terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/relace"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:respan",
@@ -733,7 +767,7 @@
         "terms": "https://respan.ai/legal/terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/respan"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:sail-research",
@@ -764,7 +798,7 @@
         "terms": "https://www.sailresearch.com/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/sail-research"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:scaledown",
@@ -792,7 +826,7 @@
         "terms": "https://scaledown.ai/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/scaledown"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:sourceful",
@@ -820,7 +854,7 @@
         "terms": "https://www.sourceful.com/legal/spring-terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/sourceful"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:streamlake",
@@ -851,7 +885,7 @@
         "terms": "https://www.streamlake.ai/document/DOC/mgkchnd89grpt1961fw",
         "viaOpenRouter": "https://openrouter.ai/provider/streamlake"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:tenstorrent",
@@ -885,7 +919,7 @@
         "terms": "https://console.tenstorrent.com/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/tenstorrent"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:typesafe",
@@ -913,14 +947,14 @@
         "terms": "https://typesafe.ai/legal/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/typesafe"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "openrouter:unbiased",
       "name": "Unbiased",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Frontier intelligence. Zero data retention. Open-source pricing.",
+      "summary": "Frontier answers at open-source prices. Zero data retention on designated API traffic (not Chat). Plans from $10/month.",
       "url": "https://unbiased.ai",
       "source": {
         "name": "OpenRouter providers",
@@ -941,7 +975,7 @@
         "terms": "https://unbiased.ai/terms/",
         "viaOpenRouter": "https://openrouter.ai/provider/unbiased"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     }
   ]
 }

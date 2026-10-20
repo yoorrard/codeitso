@@ -1,42 +1,42 @@
 {
   "category": "datasets",
   "nameKo": "데이터셋",
-  "fetchedAt": "2026-10-14",
-  "total": 17672,
+  "fetchedAt": "2026-10-20",
+  "total": 17832,
   "subcategories": [
     {
       "id": "ai-training",
       "nameKo": "AI 학습 데이터셋",
-      "count": 2186,
+      "count": 2321,
       "sources": [
         {
           "id": "hf-datasets",
           "name": "Hugging Face 데이터셋",
-          "count": 2186
+          "count": 2321
         }
       ]
     },
     {
       "id": "kaggle",
       "nameKo": "Kaggle 데이터셋",
-      "count": 3027,
+      "count": 3034,
       "sources": [
         {
           "id": "kaggle",
           "name": "Kaggle 데이터셋",
-          "count": 3027
+          "count": 3034
         }
       ]
     },
     {
       "id": "ml-classic",
       "nameKo": "머신러닝 기본 데이터셋",
-      "count": 814,
+      "count": 815,
       "sources": [
         {
           "id": "awesome-public-datasets",
           "name": "Awesome Public Datasets (분야별)",
-          "count": 125
+          "count": 126
         },
         {
           "id": "uci",
@@ -89,17 +89,17 @@
     {
       "id": "open-data",
       "nameKo": "분야별 공개 데이터",
-      "count": 2162,
+      "count": 2179,
       "sources": [
         {
           "id": "awesome-public-datasets",
           "name": "Awesome Public Datasets (분야별)",
-          "count": 927
+          "count": 943
         },
         {
           "id": "aws-open-data",
           "name": "Registry of Open Data on AWS",
-          "count": 1235
+          "count": 1236
         }
       ]
     },
@@ -122,7 +122,7 @@
       "name": "Awesome Public Datasets (분야별)",
       "url": "https://github.com/awesomedata/awesome-public-datasets",
       "license": "Dataset list from awesomedata/apd-core (GPL-3.0 list repository; names, links and one-line descriptions). Each dataset keeps its own terms.",
-      "count": 1052,
+      "count": 1069,
       "note": "원본 저장소가 깨진 링크로 표시한 항목은 뺀다."
     },
     {
@@ -130,8 +130,8 @@
       "name": "Registry of Open Data on AWS",
       "url": "https://registry.opendata.aws/",
       "license": "Registry entries from awslabs/open-data-registry (Apache-2.0 registry repository); each dataset keeps the license named by its provider.",
-      "count": 1235,
-      "total": 1241,
+      "count": 1236,
+      "total": 1242,
       "cut": "폐기(Deprecated) 0개 제외"
     },
     {
@@ -148,7 +148,7 @@
       "name": "Hugging Face 데이터셋",
       "url": "https://huggingface.co/datasets",
       "license": "Hugging Face Hub public API metadata (dataset id, card description, tasks, downloads, likes, license tag); each dataset keeps its own license (field license).",
-      "count": 2186,
+      "count": 2321,
       "cut": "최근 30일 내려받기 10,000회 이상 또는 좋아요 100개 이상. 카드 설명이 없으면 좋아요 20개 이상만",
       "note": "Hub에는 공개 데이터셋이 50만 개 넘게 있다. 설명이 없는 데이터셋은 이름과 만든 곳으로 짧게 적는다."
     },
@@ -157,7 +157,7 @@
       "name": "Kaggle 데이터셋",
       "url": "https://www.kaggle.com/datasets",
       "license": "Kaggle public API listing metadata (title, subtitle, owner, license name, votes, downloads); each dataset keeps its own license (field license). Downloading needs a Kaggle account.",
-      "count": 3027,
+      "count": 3034,
       "cut": "투표 100개 이상 (투표 많은 순으로 넘겨 받다가 기준 밑에서 멈춘다)",
       "note": "Kaggle에는 공개 데이터셋이 50만 개 넘게 있고, 목록 API는 깊은 쪽을 주지 않는다. 설치 명령은 Kaggle 공식 명령줄 도구(kaggle) 형식이다."
     },

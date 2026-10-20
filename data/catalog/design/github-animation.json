@@ -3,12 +3,122 @@
     "id": "github-animation",
     "name": "Animation libraries (CSS, JS, Lottie, Rive, 3D) (GitHub)",
     "url": "https://github.com",
-    "license": "Repository metadata (description, stars, license, topics) from GitHub via repos.ecosyste.ms (CC BY-SA 4.0 data mirror of GitHub); each library keeps its own license (field license). Discovery lists: brillout/awesome-react-components (CC0-1.0); vuejs/awesome-vue (MIT); birobirobiro/awesome-shadcn-ui (MIT); jondot/awesome-react-native (no license file); Solido/awesome-flutter (no license file); PatrickJS/awesome-angular (CC0-1.0); web-padawan/awesome-web-components (CC0-1.0); aniftyco/awesome-tailwindcss (CC0-1.0).",
-    "note": "Found via hand-picked seeds, awesome-list sections and GitHub topic search (snapshot 2026-10-14). Kept: seeds always; awesome-list repos with ≥300 stars; topic repos with ≥1000 stars; forks and archived repos dropped unless hand-picked. metrics.downloads = last-month downloads of the repo's most-downloaded npm/pub package (packages.ecosyste.ms); use.install = that package unless the official docs command was hand-copied."
+    "license": "Repository metadata (description, stars, license, topics) from GitHub via the GitHub REST API; each library keeps its own license (field license). Discovery lists: brillout/awesome-react-components (CC0-1.0); vuejs/awesome-vue (MIT); birobirobiro/awesome-shadcn-ui (MIT); jondot/awesome-react-native (no license file); Solido/awesome-flutter (no license file); PatrickJS/awesome-angular (CC0-1.0); web-padawan/awesome-web-components (CC0-1.0); aniftyco/awesome-tailwindcss (CC0-1.0).",
+    "note": "Found via hand-picked seeds, awesome-list sections and GitHub topic search (live). Kept: seeds always; awesome-list repos with ≥300 stars; topic repos with ≥1000 stars; forks and archived repos dropped unless hand-picked. metrics.downloads = last-month downloads of the repo's most-downloaded npm/pub package (packages.ecosyste.ms); use.install = that package unless the official docs command was hand-copied."
   },
-  "fetchedAt": "2026-10-14",
-  "count": 68,
+  "fetchedAt": "2026-10-20",
+  "count": 107,
   "items": [
+    {
+      "id": "github:7ph--powerglitch",
+      "name": "powerglitch",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Tiny JS library to glitch anything on the web",
+      "url": "https://7ph.github.io/powerglitch/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/7PH/powerglitch"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1498,
+        "downloads": 16461,
+        "updatedAt": "2026-01-20"
+      },
+      "tags": [
+        "css",
+        "css-animations",
+        "gifs",
+        "glitch-art",
+        "glitch-effect",
+        "glitched-images",
+        "glitchify-images",
+        "glitching",
+        "javascript",
+        "library",
+        "mosh",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "7PH/powerglitch",
+        "stars": 1498,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "css",
+          "css-animations",
+          "gifs",
+          "glitch-art",
+          "glitch-effect",
+          "glitched-images",
+          "glitchify-images",
+          "glitching",
+          "javascript",
+          "library",
+          "mosh"
+        ],
+        "image": "https://opengraph.githubassets.com/1/7PH/powerglitch",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install powerglitch",
+        "docs": "https://7ph.github.io/powerglitch/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:aholachek--react-flip-toolkit",
+      "name": "react-flip-toolkit",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A lightweight magic-move library for configurable layout transitions",
+      "url": "https://github.com/aholachek/react-flip-toolkit",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/aholachek/react-flip-toolkit"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 4184,
+        "downloads": 833908,
+        "updatedAt": "2024-09-28"
+      },
+      "tags": [
+        "animation-library",
+        "flip-animations",
+        "layout-animation",
+        "reactjs",
+        "scale-animation",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "aholachek/react-flip-toolkit",
+        "stars": 4184,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "animation-library",
+          "flip-animations",
+          "layout-animation",
+          "reactjs",
+          "scale-animation"
+        ],
+        "image": "https://opengraph.githubassets.com/1/aholachek/react-flip-toolkit",
+        "foundIn": [
+          "topic:animation-library"
+        ]
+      },
+      "use": {
+        "install": "npm install react-flip-toolkit",
+        "docs": "https://github.com/aholachek/react-flip-toolkit#readme"
+      },
+      "fetchedAt": "2026-10-20"
+    },
     {
       "id": "github:airbnb--lottie-web",
       "name": "lottie-web",
@@ -22,8 +132,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 32178,
-        "downloads": 32997995,
+        "stars": 32250,
+        "downloads": 30411709,
         "updatedAt": "2025-09-01"
       },
       "tags": [
@@ -33,7 +143,7 @@
       "preview": {
         "type": "repo",
         "fullName": "airbnb/lottie-web",
-        "stars": 32178,
+        "stars": 32250,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -46,7 +156,7 @@
         "install": "npm install lottie-web",
         "docs": "https://github.com/airbnb/lottie-web#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:animate-css--animate.css",
@@ -60,8 +170,8 @@
         "url": "https://github.com/animate-css/animate.css"
       },
       "metrics": {
-        "stars": 82851,
-        "downloads": 2643585,
+        "stars": 82892,
+        "downloads": 2473724,
         "updatedAt": "2024-07-29"
       },
       "tags": [
@@ -73,7 +183,7 @@
       "preview": {
         "type": "repo",
         "fullName": "animate-css/animate.css",
-        "stars": 82851,
+        "stars": 82892,
         "language": "CSS",
         "topics": [
           "animation",
@@ -83,14 +193,15 @@
         ],
         "image": "https://opengraph.githubassets.com/1/animate-css/animate.css",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-animations"
         ]
       },
       "use": {
         "install": "npm install animate.css",
         "docs": "https://animate.style/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:ant-design--ant-motion",
@@ -105,7 +216,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 4618,
+        "stars": 4621,
         "updatedAt": "2022-07-05"
       },
       "tags": [
@@ -122,7 +233,7 @@
       "preview": {
         "type": "repo",
         "fullName": "ant-design/ant-motion",
-        "stars": 4618,
+        "stars": 4621,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -144,7 +255,7 @@
       "use": {
         "docs": "http://motion.ant.design"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:azazdeaz--react-gsap-enhancer",
@@ -183,7 +294,7 @@
         "install": "npm install react-gsap-enhancer",
         "docs": "https://github.com/azazdeaz/react-gsap-enhancer#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:babylonjs--babylon.js",
@@ -198,9 +309,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "stars": 26140,
-        "downloads": 1573313,
-        "updatedAt": "2026-10-07"
+        "stars": 26199,
+        "downloads": 1762913,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "3d",
@@ -219,7 +330,7 @@
       "preview": {
         "type": "repo",
         "fullName": "BabylonJS/Babylon.js",
-        "stars": 26140,
+        "stars": 26199,
         "language": "TypeScript",
         "license": "Apache-2.0",
         "topics": [
@@ -245,7 +356,7 @@
         "install": "npm install @babylonjs/core",
         "docs": "http://www.babylonjs.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:barbajs--barba",
@@ -260,7 +371,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 12992,
+        "stars": 13000,
         "downloads": 26790,
         "updatedAt": "2024-12-02"
       },
@@ -283,7 +394,7 @@
       "preview": {
         "type": "repo",
         "fullName": "barbajs/barba",
-        "stars": 12992,
+        "stars": 13000,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -309,7 +420,7 @@
         "install": "npm install @barba/core",
         "docs": "https://barba.js.org/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:chenglou--react-motion",
@@ -324,8 +435,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 21912,
-        "downloads": 2282041,
+        "stars": 21907,
+        "downloads": 2469910,
         "updatedAt": "2024-01-05"
       },
       "tags": [
@@ -335,7 +446,7 @@
       "preview": {
         "type": "repo",
         "fullName": "chenglou/react-motion",
-        "stars": 21912,
+        "stars": 21907,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -348,7 +459,7 @@
         "install": "npm install react-motion",
         "docs": "https://github.com/chenglou/react-motion#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:chenqingspring--vue-lottie",
@@ -400,7 +511,7 @@
         "install": "npm install vue-lottie",
         "docs": "https://github.com/chenqingspring/vue-lottie#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:chrisabdo--motionvariants",
@@ -414,8 +525,8 @@
         "url": "https://github.com/ChrisAbdo/MotionVariants"
       },
       "metrics": {
-        "stars": 971,
-        "updatedAt": "2023-07-26"
+        "stars": 997,
+        "updatedAt": "2025-09-08"
       },
       "tags": [
         "animation",
@@ -431,7 +542,7 @@
       "preview": {
         "type": "repo",
         "fullName": "ChrisAbdo/MotionVariants",
-        "stars": 971,
+        "stars": 997,
         "language": "TypeScript",
         "topics": [
           "animation",
@@ -449,7 +560,116 @@
       "use": {
         "docs": "https://variantvault.vercel.app"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:codeestx--enviews",
+      "name": "ENViews",
+      "kind": "animation",
+      "category": "design",
+      "summary": ":star2:A cool dynamic view library",
+      "url": "https://github.com/codeestX/ENViews",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/codeestX/ENViews"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "stars": 1753,
+        "updatedAt": "2017-04-01"
+      },
+      "tags": [
+        "android-library",
+        "android-view",
+        "animation",
+        "customview",
+        "dynamic",
+        "effects",
+        "java",
+        "ui-components",
+        "view"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "codeestX/ENViews",
+        "stars": 1753,
+        "language": "Java",
+        "license": "Apache-2.0",
+        "topics": [
+          "android-library",
+          "android-view",
+          "animation",
+          "customview",
+          "dynamic",
+          "effects",
+          "ui-components",
+          "view"
+        ],
+        "image": "https://opengraph.githubassets.com/1/codeestX/ENViews",
+        "foundIn": [
+          "topic:ui-components"
+        ]
+      },
+      "use": {
+        "docs": "https://github.com/codeestX/ENViews#readme"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:codse--animata",
+      "name": "animata",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Bring your site to life with easy to use animation & interaction code. Copy. Paste. Animate.",
+      "url": "https://animata.design",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/codse/animata"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 2973,
+        "updatedAt": "2026-10-14"
+      },
+      "tags": [
+        "animation",
+        "css",
+        "css-animations",
+        "hacktober",
+        "hacktoberfest",
+        "hacktoberfest-accepted",
+        "interaction",
+        "nextjs",
+        "react",
+        "tailwindcss",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "codse/animata",
+        "stars": 2973,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "css-animations",
+          "hacktober",
+          "hacktoberfest",
+          "hacktoberfest-accepted",
+          "interaction",
+          "nextjs",
+          "react",
+          "tailwindcss"
+        ],
+        "image": "https://opengraph.githubassets.com/1/codse/animata",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "docs": "https://animata.design"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:danielpetho--fancy",
@@ -464,7 +684,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 3219,
+        "stars": 3257,
         "updatedAt": "2026-03-14"
       },
       "tags": [
@@ -479,7 +699,7 @@
       "preview": {
         "type": "repo",
         "fullName": "danielpetho/fancy",
-        "stars": 3219,
+        "stars": 3257,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -498,7 +718,7 @@
       "use": {
         "docs": "https://fancycomponents.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:darkroomengineering--lenis",
@@ -513,9 +733,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 16482,
-        "downloads": 7252725,
-        "updatedAt": "2026-10-02"
+        "stars": 16731,
+        "downloads": 7510701,
+        "updatedAt": "2026-10-18"
       },
       "tags": [
         "darkroom-engineering",
@@ -533,7 +753,7 @@
       "preview": {
         "type": "repo",
         "fullName": "darkroomengineering/lenis",
-        "stars": 16482,
+        "stars": 16731,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -556,7 +776,69 @@
         "install": "npm install lenis",
         "docs": "https://lenis.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:dingyi214--slash-admin",
+      "name": "slash-admin",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A Modern React Admin Template. It is based on React 19, Vite and TypeScript. It's fast !",
+      "url": "https://admin.slashspaces.com/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/dingyi214/slash-admin"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 3015,
+        "updatedAt": "2026-06-19"
+      },
+      "tags": [
+        "admin",
+        "admin-dashboard",
+        "admin-template",
+        "ant-design",
+        "antd",
+        "framer-motion",
+        "react",
+        "react-admin",
+        "react-admin-dashboard",
+        "react-admin-kit",
+        "react-admin-template",
+        "react-markdown",
+        "shadcn",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "dingyi214/slash-admin",
+        "stars": 3015,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "admin",
+          "admin-dashboard",
+          "admin-template",
+          "ant-design",
+          "antd",
+          "framer-motion",
+          "react",
+          "react-admin",
+          "react-admin-dashboard",
+          "react-admin-kit",
+          "react-admin-template",
+          "react-markdown"
+        ],
+        "image": "https://opengraph.githubassets.com/1/dingyi214/slash-admin",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://admin.slashspaces.com/"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:epicmaxco--epic-spinners",
@@ -570,8 +852,8 @@
         "url": "https://github.com/epicmaxco/epic-spinners"
       },
       "metrics": {
-        "stars": 3912,
-        "downloads": 86245,
+        "stars": 3911,
+        "downloads": 98185,
         "updatedAt": "2024-09-05"
       },
       "tags": [
@@ -592,7 +874,7 @@
       "preview": {
         "type": "repo",
         "fullName": "epicmaxco/epic-spinners",
-        "stars": 3912,
+        "stars": 3911,
         "language": "Vue",
         "topics": [
           "animations",
@@ -610,6 +892,7 @@
         ],
         "image": "https://opengraph.githubassets.com/1/epicmaxco/epic-spinners",
         "foundIn": [
+          "topic:css-animations",
           "topic:vue-components"
         ]
       },
@@ -617,7 +900,70 @@
         "install": "npm install epic-spinners",
         "docs": "https://epic-spinners.epicmax.co"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:f--vue-wait",
+      "name": "vue-wait",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Complex Loader and Progress Management for Vue/Vuex and Nuxt Applications",
+      "url": "https://github.com/f/vue-wait",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/f/vue-wait"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1972,
+        "downloads": 14443,
+        "updatedAt": "2022-12-10"
+      },
+      "tags": [
+        "activity-indicator",
+        "javascript",
+        "loader",
+        "loader-component",
+        "loaders",
+        "loading",
+        "nuxt-module",
+        "progress",
+        "progress-bar",
+        "spinner",
+        "vue",
+        "vue-components",
+        "vue-progress"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "f/vue-wait",
+        "stars": 1972,
+        "language": "JavaScript",
+        "license": "MIT",
+        "topics": [
+          "activity-indicator",
+          "loader",
+          "loader-component",
+          "loaders",
+          "loading",
+          "nuxt-module",
+          "progress",
+          "progress-bar",
+          "spinner",
+          "vue",
+          "vue-components",
+          "vue-progress"
+        ],
+        "image": "https://opengraph.githubassets.com/1/f/vue-wait",
+        "foundIn": [
+          "topic:vue-components"
+        ]
+      },
+      "use": {
+        "install": "npm install vue-wait",
+        "docs": "https://github.com/f/vue-wait#readme"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:formkit--auto-animate",
@@ -632,8 +978,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 13927,
-        "downloads": 6513159,
+        "stars": 13934,
+        "downloads": 6875236,
         "updatedAt": "2026-07-10"
       },
       "tags": [
@@ -647,7 +993,7 @@
       "preview": {
         "type": "repo",
         "fullName": "formkit/auto-animate",
-        "stars": 13927,
+        "stars": 13934,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -666,7 +1012,7 @@
         "install": "npm install @formkit/auto-animate",
         "docs": "https://auto-animate.formkit.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:geosigno--simpleparallax.js",
@@ -681,8 +1027,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 2158,
-        "downloads": 120779,
+        "stars": 2160,
+        "downloads": 104251,
         "updatedAt": "2026-07-14"
       },
       "tags": [
@@ -699,7 +1045,7 @@
       "preview": {
         "type": "repo",
         "fullName": "geosigno/simpleParallax.js",
-        "stars": 2158,
+        "stars": 2160,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -721,7 +1067,7 @@
         "install": "npm install simple-parallax-js",
         "docs": "https://simpleparallax.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:gilbox--react-spark-scroll",
@@ -735,7 +1081,7 @@
         "url": "https://github.com/gilbox/react-spark-scroll"
       },
       "metrics": {
-        "stars": 353,
+        "stars": 354,
         "downloads": 346,
         "updatedAt": "2017-07-04"
       },
@@ -746,7 +1092,7 @@
       "preview": {
         "type": "repo",
         "fullName": "gilbox/react-spark-scroll",
-        "stars": 353,
+        "stars": 354,
         "language": "JavaScript",
         "topics": [],
         "image": "https://opengraph.githubassets.com/1/gilbox/react-spark-scroll",
@@ -758,7 +1104,7 @@
         "install": "npm install react-spark-scroll",
         "docs": "https://github.com/gilbox/react-spark-scroll#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:gilbox--react-track",
@@ -772,7 +1118,7 @@
         "url": "https://github.com/gilbox/react-track"
       },
       "metrics": {
-        "stars": 341,
+        "stars": 342,
         "downloads": 1676,
         "updatedAt": "2017-06-02"
       },
@@ -785,7 +1131,7 @@
       "preview": {
         "type": "repo",
         "fullName": "gilbox/react-track",
-        "stars": 341,
+        "stars": 342,
         "language": "JavaScript",
         "topics": [
           "animation",
@@ -801,7 +1147,53 @@
         "install": "npm install react-track",
         "docs": "https://github.com/gilbox/react-track#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:glorylab--wave",
+      "name": "wave",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A Flutter package for displaying waves.",
+      "url": "https://wave.glorylab.xyz",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/glorylab/wave"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1124,
+        "updatedAt": "2026-08-17"
+      },
+      "tags": [
+        "animation",
+        "dart",
+        "dartlang",
+        "flutter",
+        "wave"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "glorylab/wave",
+        "stars": 1124,
+        "language": "Dart",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "dart",
+          "dartlang",
+          "flutter",
+          "wave"
+        ],
+        "image": "https://opengraph.githubassets.com/1/glorylab/wave",
+        "foundIn": [
+          "awesome:Solido/awesome-flutter"
+        ]
+      },
+      "use": {
+        "docs": "https://wave.glorylab.xyz"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:graingert--wow",
@@ -815,7 +1207,7 @@
         "url": "https://github.com/graingert/WOW"
       },
       "metrics": {
-        "stars": 1679,
+        "stars": 1676,
         "downloads": 25306,
         "updatedAt": "2023-05-12"
       },
@@ -825,7 +1217,7 @@
       "preview": {
         "type": "repo",
         "fullName": "graingert/WOW",
-        "stars": 1679,
+        "stars": 1676,
         "language": "JavaScript",
         "topics": [],
         "image": "https://opengraph.githubassets.com/1/graingert/WOW",
@@ -837,7 +1229,7 @@
         "install": "npm install wow.js",
         "docs": "https://wowjs.uk"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:greensock--gsap",
@@ -851,7 +1243,7 @@
         "url": "https://github.com/greensock/GSAP"
       },
       "metrics": {
-        "stars": 28860,
+        "stars": 29511,
         "downloads": 24280530,
         "updatedAt": "2026-04-13"
       },
@@ -865,7 +1257,7 @@
       "preview": {
         "type": "repo",
         "fullName": "greensock/GSAP",
-        "stars": 28860,
+        "stars": 29511,
         "language": "JavaScript",
         "topics": [
           "animation",
@@ -883,7 +1275,70 @@
         "install": "npm install gsap",
         "docs": "https://gsap.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:greyby--vue-spinner",
+      "name": "vue-spinner",
+      "kind": "animation",
+      "category": "design",
+      "summary": "vue spinners",
+      "url": "http://greyby.github.io/vue-spinner/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/greyby/vue-spinner"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1807,
+        "downloads": 109904,
+        "updatedAt": "2026-06-06"
+      },
+      "tags": [
+        "css",
+        "css-animations",
+        "css-loaders",
+        "css-spinners",
+        "loader",
+        "loading-animations",
+        "loading-spinner",
+        "spinner",
+        "spinners",
+        "vue",
+        "vue-spinner-component",
+        "vue-spinners",
+        "vue3"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "greyby/vue-spinner",
+        "stars": 1807,
+        "language": "Vue",
+        "license": "MIT",
+        "topics": [
+          "css-animations",
+          "css-loaders",
+          "css-spinners",
+          "loader",
+          "loading-animations",
+          "loading-spinner",
+          "spinner",
+          "spinners",
+          "vue",
+          "vue-spinner-component",
+          "vue-spinners",
+          "vue3"
+        ],
+        "image": "https://opengraph.githubassets.com/1/greyby/vue-spinner",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install vue-spinner",
+        "docs": "http://greyby.github.io/vue-spinner/"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:hnvn--flutter-shimmer",
@@ -927,7 +1382,7 @@
       "use": {
         "docs": "https://github.com/hnvn/flutter_shimmer#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:iamsahdeep--liquid-swipe-flutter",
@@ -942,7 +1397,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "stars": 1267,
+        "stars": 1266,
         "updatedAt": "2024-02-08"
       },
       "tags": [
@@ -959,7 +1414,7 @@
       "preview": {
         "type": "repo",
         "fullName": "iamSahdeep/liquid_swipe_flutter",
-        "stars": 1267,
+        "stars": 1266,
         "language": "Dart",
         "license": "Apache-2.0",
         "topics": [
@@ -980,7 +1435,7 @@
       "use": {
         "docs": "https://github.com/iamSahdeep/liquid_swipe_flutter#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:ianlunn--hover",
@@ -994,7 +1449,7 @@
         "url": "https://github.com/IanLunn/Hover"
       },
       "metrics": {
-        "stars": 29399,
+        "stars": 29408,
         "downloads": 36538,
         "updatedAt": "2023-10-28"
       },
@@ -1007,7 +1462,7 @@
       "preview": {
         "type": "repo",
         "fullName": "IanLunn/Hover",
-        "stars": 29399,
+        "stars": 29408,
         "language": "SCSS",
         "topics": [
           "css",
@@ -1023,7 +1478,114 @@
         "install": "npm install hover.css",
         "docs": "http://ianlunn.github.io/Hover/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:ibanimatable--ibanimatable",
+      "name": "IBAnimatable",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Design and prototype customized UI, interaction, navigation, transition and animation for App Store ready Apps in Interface Builder with IBAnimatable.",
+      "url": "https://github.com/IBAnimatable/IBAnimatable",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/IBAnimatable/IBAnimatable"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 8634,
+        "updatedAt": "2023-02-21"
+      },
+      "tags": [
+        "animation",
+        "interface-builder",
+        "ios",
+        "protocol-oriented",
+        "prototyping",
+        "swift",
+        "transition-animation",
+        "ui-components",
+        "uikit"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "IBAnimatable/IBAnimatable",
+        "stars": 8634,
+        "language": "Swift",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "interface-builder",
+          "ios",
+          "protocol-oriented",
+          "prototyping",
+          "swift",
+          "transition-animation",
+          "ui-components",
+          "uikit"
+        ],
+        "image": "https://opengraph.githubassets.com/1/IBAnimatable/IBAnimatable",
+        "foundIn": [
+          "topic:ui-components"
+        ]
+      },
+      "use": {
+        "docs": "https://github.com/IBAnimatable/IBAnimatable#readme"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:imskyleen--animate-ui",
+      "name": "animate-ui",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Fully animated, open-source component distribution built with React, TypeScript, Tailwind CSS, Motion, and Shadcn CLI. Browse a list of components you can install, modify, and use in your projects.",
+      "url": "https://animate-ui.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/imskyleen/animate-ui"
+      },
+      "metrics": {
+        "stars": 4526,
+        "updatedAt": "2026-10-19"
+      },
+      "tags": [
+        "components",
+        "framer-motion",
+        "motion",
+        "nextjs",
+        "radix",
+        "react",
+        "shadcn",
+        "shadcn-ui",
+        "tailwindcss",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "imskyleen/animate-ui",
+        "stars": 4526,
+        "language": "TypeScript",
+        "topics": [
+          "components",
+          "framer-motion",
+          "motion",
+          "nextjs",
+          "radix",
+          "react",
+          "shadcn-ui",
+          "tailwindcss",
+          "typescript"
+        ],
+        "image": "https://opengraph.githubassets.com/1/imskyleen/animate-ui",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://animate-ui.com"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:ingram-projects--animxyz",
@@ -1038,9 +1600,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 2497,
-        "downloads": 12099,
-        "updatedAt": "2026-09-29"
+        "stars": 2499,
+        "downloads": 9092,
+        "updatedAt": "2026-10-08"
       },
       "tags": [
         "animation",
@@ -1057,7 +1619,7 @@
       "preview": {
         "type": "repo",
         "fullName": "ingram-projects/animxyz",
-        "stars": 2497,
+        "stars": 2499,
         "language": "CSS",
         "license": "MIT",
         "topics": [
@@ -1074,14 +1636,126 @@
         ],
         "image": "https://opengraph.githubassets.com/1/ingram-projects/animxyz",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:css-animations",
+          "topic:css-framework"
         ]
       },
       "use": {
         "install": "npm install @animxyz/core",
         "docs": "https://animxyz.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:itshover--itshover",
+      "name": "itshover",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Icons that move with intent",
+      "url": "https://itshover.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/itshover/itshover"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "stars": 2697,
+        "updatedAt": "2026-09-26"
+      },
+      "tags": [
+        "animation",
+        "icons",
+        "motion",
+        "shadcn",
+        "shadcn-ui",
+        "svg",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "itshover/itshover",
+        "stars": 2697,
+        "language": "TypeScript",
+        "license": "Apache-2.0",
+        "topics": [
+          "animation",
+          "icons",
+          "motion",
+          "shadcn",
+          "shadcn-ui",
+          "svg"
+        ],
+        "image": "https://opengraph.githubassets.com/1/itshover/itshover",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://itshover.com"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:ivanvorobei--awesome-ios",
+      "name": "awesome-ios",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A collaborative list of awesome for iOS developers. Include quick preview.",
+      "url": "https://opensource.ivanvorobei.by",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/ivanvorobei/awesome-ios"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1651,
+        "updatedAt": "2023-03-06"
+      },
+      "tags": [
+        "animation",
+        "awesome",
+        "awesome-ios-ui",
+        "awesome-list",
+        "cocoapods",
+        "frameworks",
+        "ios",
+        "php",
+        "spm",
+        "swift",
+        "swift5",
+        "ui",
+        "ui-components"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "ivanvorobei/awesome-ios",
+        "stars": 1651,
+        "language": "PHP",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "awesome",
+          "awesome-ios-ui",
+          "awesome-list",
+          "cocoapods",
+          "frameworks",
+          "ios",
+          "spm",
+          "swift",
+          "swift5",
+          "ui",
+          "ui-components"
+        ],
+        "image": "https://opengraph.githubassets.com/1/ivanvorobei/awesome-ios",
+        "foundIn": [
+          "topic:ui-components"
+        ]
+      },
+      "use": {
+        "docs": "https://opensource.ivanvorobei.by"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:jamiebuilds--tailwindcss-animate",
@@ -1118,7 +1792,7 @@
       "use": {
         "docs": "https://github.com/jamiebuilds/tailwindcss-animate#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:jlmakes--scrollreveal",
@@ -1132,8 +1806,8 @@
         "url": "https://github.com/jlmakes/scrollreveal"
       },
       "metrics": {
-        "stars": 22477,
-        "downloads": 48526,
+        "stars": 22472,
+        "downloads": 52727,
         "updatedAt": "2024-04-05"
       },
       "tags": [
@@ -1149,7 +1823,7 @@
       "preview": {
         "type": "repo",
         "fullName": "jlmakes/scrollreveal",
-        "stars": 22477,
+        "stars": 22472,
         "language": "JavaScript",
         "topics": [
           "animation",
@@ -1170,7 +1844,67 @@
         "install": "npm install scrollreveal",
         "docs": "https://scrollrevealjs.org/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:jogboms--flutter-spinkit",
+      "name": "flutter_spinkit",
+      "kind": "animation",
+      "category": "design",
+      "summary": "✨ A collection of loading indicators animated with flutter. Heavily Inspired by http://tobiasahlin.com/spinkit.",
+      "url": "https://github.com/jogboms/flutter_spinkit",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/jogboms/flutter_spinkit"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 3150,
+        "updatedAt": "2026-06-22"
+      },
+      "tags": [
+        "android",
+        "animation",
+        "animation-library",
+        "dart",
+        "dartlang",
+        "flutter",
+        "flutter-plugin",
+        "ios",
+        "loaders",
+        "loading",
+        "loading-animations",
+        "spinkit"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "jogboms/flutter_spinkit",
+        "stars": 3150,
+        "language": "Dart",
+        "license": "MIT",
+        "topics": [
+          "android",
+          "animation",
+          "animation-library",
+          "dart",
+          "dartlang",
+          "flutter",
+          "flutter-plugin",
+          "ios",
+          "loaders",
+          "loading",
+          "loading-animations",
+          "spinkit"
+        ],
+        "image": "https://opengraph.githubassets.com/1/jogboms/flutter_spinkit",
+        "foundIn": [
+          "topic:animation-library"
+        ]
+      },
+      "use": {
+        "docs": "https://github.com/jogboms/flutter_spinkit#readme"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:joshwcomeau--react-flip-move",
@@ -1185,7 +1919,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 4135,
+        "stars": 4136,
         "downloads": 932530,
         "updatedAt": "2022-12-06"
       },
@@ -1202,7 +1936,7 @@
       "preview": {
         "type": "repo",
         "fullName": "joshwcomeau/react-flip-move",
-        "stars": 4135,
+        "stars": 4136,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -1223,7 +1957,110 @@
         "install": "npm install react-flip-move",
         "docs": "http://joshwcomeau.github.io/react-flip-move/examples"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:joyceql--magic-resume",
+      "name": "magic-resume",
+      "kind": "animation",
+      "category": "design",
+      "summary": "free online AI resume editor，the only official website is https://magicv.art",
+      "url": "https://magicv.art",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/JOYCEQL/magic-resume"
+      },
+      "metrics": {
+        "stars": 11140,
+        "updatedAt": "2026-10-19"
+      },
+      "tags": [
+        "ai",
+        "deepseek",
+        "doubao",
+        "motion",
+        "react",
+        "resume-website",
+        "shadcn",
+        "shadcn-ui",
+        "tanstack",
+        "tanstack-start",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "JOYCEQL/magic-resume",
+        "stars": 11140,
+        "language": "TypeScript",
+        "topics": [
+          "ai",
+          "deepseek",
+          "doubao",
+          "motion",
+          "react",
+          "resume-website",
+          "shadcn-ui",
+          "tanstack",
+          "tanstack-start"
+        ],
+        "image": "https://opengraph.githubassets.com/1/JOYCEQL/magic-resume",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://magicv.art"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:jschr--textillate",
+      "name": "textillate",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A jquery plugin for CSS3 text animations.",
+      "url": "http://textillate.js.org",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/jschr/textillate"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 3650,
+        "downloads": 991,
+        "updatedAt": "2021-08-04"
+      },
+      "tags": [
+        "css",
+        "css-animations",
+        "javascript",
+        "jquery",
+        "text",
+        "textillate"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "jschr/textillate",
+        "stars": 3650,
+        "language": "JavaScript",
+        "license": "MIT",
+        "topics": [
+          "css-animations",
+          "javascript",
+          "jquery",
+          "text",
+          "textillate"
+        ],
+        "image": "https://opengraph.githubassets.com/1/jschr/textillate",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install textillate",
+        "docs": "http://textillate.js.org"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:juliangarnier--anime",
@@ -1238,8 +2075,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 73440,
-        "downloads": 3785534,
+        "stars": 73721,
+        "downloads": 4913896,
         "updatedAt": "2026-08-21"
       },
       "tags": [
@@ -1254,7 +2091,7 @@
       "preview": {
         "type": "repo",
         "fullName": "juliangarnier/anime",
-        "stars": 73440,
+        "stars": 73721,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -1275,7 +2112,7 @@
         "install": "npm install animejs",
         "docs": "https://animejs.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:julianshapiro--velocity",
@@ -1290,8 +2127,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 17190,
-        "downloads": 846245,
+        "stars": 17188,
+        "downloads": 869237,
         "updatedAt": "2020-10-24"
       },
       "tags": [
@@ -1300,7 +2137,7 @@
       "preview": {
         "type": "repo",
         "fullName": "julianshapiro/velocity",
-        "stars": 17190,
+        "stars": 17188,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -1313,7 +2150,65 @@
         "install": "npm install velocity-animate",
         "docs": "https://github.com/julianshapiro/velocity#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:l-hammer--you-need-to-know-css",
+      "name": "You-need-to-know-css",
+      "kind": "animation",
+      "category": "design",
+      "summary": "💄CSS tricks for web developers~",
+      "url": "https://lhammer.cn/You-need-to-know-css/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/l-hammer/You-need-to-know-css"
+      },
+      "metrics": {
+        "stars": 5444,
+        "updatedAt": "2024-07-28"
+      },
+      "tags": [
+        "css",
+        "css-animations",
+        "css-center",
+        "css-effects",
+        "css-experiment",
+        "css-flexbox",
+        "css-layout",
+        "css-properties",
+        "css-scrollbar",
+        "css-shadow-parts",
+        "css-shapes",
+        "css-snippets"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "l-hammer/You-need-to-know-css",
+        "stars": 5444,
+        "language": "CSS",
+        "topics": [
+          "css",
+          "css-animations",
+          "css-center",
+          "css-effects",
+          "css-experiment",
+          "css-flexbox",
+          "css-layout",
+          "css-properties",
+          "css-scrollbar",
+          "css-shadow-parts",
+          "css-shapes",
+          "css-snippets"
+        ],
+        "image": "https://opengraph.githubassets.com/1/l-hammer/You-need-to-know-css",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "docs": "https://lhammer.cn/You-need-to-know-css/"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:lindelof--particles-bg",
@@ -1327,7 +2222,7 @@
         "url": "https://github.com/lindelof/particles-bg"
       },
       "metrics": {
-        "stars": 670,
+        "stars": 673,
         "downloads": 3168,
         "updatedAt": "2021-04-02"
       },
@@ -1349,7 +2244,7 @@
       "preview": {
         "type": "repo",
         "fullName": "lindelof/particles-bg",
-        "stars": 670,
+        "stars": 673,
         "language": "JavaScript",
         "topics": [
           "backgrounds",
@@ -1373,7 +2268,7 @@
         "install": "npm install particles-bg",
         "docs": "https://stackblitz.com/edit/react-a6pm3w"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:locomotivemtl--locomotive-scroll",
@@ -1388,8 +2283,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 8868,
-        "downloads": 67515,
+        "stars": 8881,
+        "downloads": 69162,
         "updatedAt": "2026-06-30"
       },
       "tags": [
@@ -1401,7 +2296,7 @@
       "preview": {
         "type": "repo",
         "fullName": "locomotivemtl/locomotive-scroll",
-        "stars": 8868,
+        "stars": 8881,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -1419,7 +2314,7 @@
         "install": "npm install locomotive-scroll",
         "docs": "https://scroll.locomotive.ca"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:lottie-react-native--lottie-react-native",
@@ -1434,9 +2329,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "stars": 17206,
-        "downloads": 6232214,
-        "updatedAt": "2026-10-05"
+        "stars": 17207,
+        "downloads": 6403458,
+        "updatedAt": "2026-10-14"
       },
       "tags": [
         "after-effects",
@@ -1450,7 +2345,7 @@
       "preview": {
         "type": "repo",
         "fullName": "lottie-react-native/lottie-react-native",
-        "stars": 17206,
+        "stars": 17207,
         "language": "TypeScript",
         "license": "Apache-2.0",
         "topics": [
@@ -1470,7 +2365,7 @@
         "install": "npm install lottie-react-native",
         "docs": "https://airbnb.io/lottie/#/react-native"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:lottiefiles--dotlottie-web",
@@ -1485,9 +2380,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 892,
-        "downloads": 7475652,
-        "updatedAt": "2026-10-07"
+        "stars": 920,
+        "downloads": 6745353,
+        "updatedAt": "2026-10-16"
       },
       "tags": [
         "animation",
@@ -1507,7 +2402,7 @@
       "preview": {
         "type": "repo",
         "fullName": "LottieFiles/dotlottie-web",
-        "stars": 892,
+        "stars": 920,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -1533,7 +2428,7 @@
         "install": "npm install @lottiefiles/dotlottie-web",
         "docs": "https://lottiefiles.com/dotlottie"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:lottiefiles--lottie-react",
@@ -1577,7 +2472,7 @@
         "install": "npm install @lottiefiles/react-lottie-player",
         "docs": "https://lottiefiles.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:lukepeavey--splittype",
@@ -1592,7 +2487,7 @@
       },
       "metrics": {
         "stars": 733,
-        "downloads": 71707,
+        "downloads": 221974,
         "updatedAt": "2023-12-03"
       },
       "tags": [
@@ -1621,7 +2516,7 @@
         "install": "npm install split-type",
         "docs": "https://lukepeavey.github.io/SplitType/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:luukdv--gooey-react",
@@ -1684,7 +2579,7 @@
         "install": "npm install gooey-react",
         "docs": "https://gooey-react.netlify.app"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:maisano--react-router-transition",
@@ -1699,7 +2594,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 2572,
+        "stars": 2573,
         "downloads": 23502,
         "updatedAt": "2021-04-30"
       },
@@ -1710,7 +2605,7 @@
       "preview": {
         "type": "repo",
         "fullName": "maisano/react-router-transition",
-        "stars": 2572,
+        "stars": 2573,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -1723,7 +2618,62 @@
         "install": "npm install react-router-transition",
         "docs": "http://maisano.github.io/react-router-transition/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:martz90--vivify",
+      "name": "vivify",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Vivify is free CSS animation library.",
+      "url": "https://github.com/Martz90/vivify",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/Martz90/vivify"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1671,
+        "downloads": 154,
+        "updatedAt": "2022-07-19"
+      },
+      "tags": [
+        "animation",
+        "animation-library",
+        "css",
+        "css-animations",
+        "css3",
+        "css3-animations",
+        "helper",
+        "helpers"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "Martz90/vivify",
+        "stars": 1671,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "animation-library",
+          "css",
+          "css-animations",
+          "css3",
+          "css3-animations",
+          "helper",
+          "helpers"
+        ],
+        "image": "https://opengraph.githubassets.com/1/Martz90/vivify",
+        "foundIn": [
+          "topic:animation-library",
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install vivify.css",
+        "docs": "https://github.com/Martz90/vivify#readme"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:mattboldt--typed.js",
@@ -1737,7 +2687,7 @@
         "url": "https://github.com/mattboldt/typed.js"
       },
       "metrics": {
-        "stars": 16271,
+        "stars": 16269,
         "downloads": 890240,
         "updatedAt": "2026-01-25"
       },
@@ -1747,7 +2697,7 @@
       "preview": {
         "type": "repo",
         "fullName": "mattboldt/typed.js",
-        "stars": 16271,
+        "stars": 16269,
         "language": "JavaScript",
         "topics": [],
         "image": "https://opengraph.githubassets.com/1/mattboldt/typed.js",
@@ -1759,7 +2709,7 @@
         "install": "npm install typed.js",
         "docs": "http://www.mattboldt.com/demos/typed-js/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:maxwellito--vivus",
@@ -1774,8 +2724,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 15484,
-        "downloads": 57684,
+        "stars": 15480,
+        "downloads": 59161,
         "updatedAt": "2022-07-06"
       },
       "tags": [
@@ -1784,7 +2734,7 @@
       "preview": {
         "type": "repo",
         "fullName": "maxwellito/vivus",
-        "stars": 15484,
+        "stars": 15480,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -1797,7 +2747,63 @@
         "install": "npm install vivus",
         "docs": "https://github.com/maxwellito/vivus#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:merri-ment--lazy-line-painter",
+      "name": "lazy-line-painter",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Lazy Line Painter - A Modern JS library for SVG path animation",
+      "url": "https://lazylinepainter.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/merri-ment/lazy-line-painter"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1979,
+        "downloads": 204,
+        "updatedAt": "2023-12-12"
+      },
+      "tags": [
+        "animation",
+        "animation-library",
+        "drawing",
+        "javascript",
+        "js",
+        "lightweight",
+        "path-animation",
+        "responsive",
+        "svg"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "merri-ment/lazy-line-painter",
+        "stars": 1979,
+        "language": "JavaScript",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "animation-library",
+          "drawing",
+          "javascript",
+          "js",
+          "lightweight",
+          "path-animation",
+          "responsive",
+          "svg"
+        ],
+        "image": "https://opengraph.githubassets.com/1/merri-ment/lazy-line-painter",
+        "foundIn": [
+          "topic:animation-library"
+        ]
+      },
+      "use": {
+        "install": "npm install lazy-line-painter",
+        "docs": "https://lazylinepainter.com"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:metafizzy--zdog",
@@ -1811,8 +2817,8 @@
         "url": "https://github.com/metafizzy/zdog"
       },
       "metrics": {
-        "stars": 10671,
-        "downloads": 1405570,
+        "stars": 10674,
+        "downloads": 1469785,
         "updatedAt": "2023-07-18"
       },
       "tags": [
@@ -1824,7 +2830,7 @@
       "preview": {
         "type": "repo",
         "fullName": "metafizzy/zdog",
-        "stars": 10671,
+        "stars": 10674,
         "language": "JavaScript",
         "topics": [
           "3d",
@@ -1840,7 +2846,48 @@
         "install": "npm install zdog",
         "docs": "https://zzz.dog"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:michaelcharles--clay-containers",
+      "name": "clay_containers",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Neumorphic containers and text widget primitives to serve as the foundation of your own unique neumorphic designs.",
+      "url": "https://github.com/MichaelCharles/clay_containers",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/MichaelCharles/clay_containers"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 460,
+        "updatedAt": "2024-02-02"
+      },
+      "tags": [
+        "c",
+        "flutter",
+        "neumorphic"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "MichaelCharles/clay_containers",
+        "stars": 460,
+        "language": "C++",
+        "license": "MIT",
+        "topics": [
+          "flutter",
+          "neumorphic"
+        ],
+        "image": "https://opengraph.githubassets.com/1/MichaelCharles/clay_containers",
+        "foundIn": [
+          "awesome:Solido/awesome-flutter"
+        ]
+      },
+      "use": {
+        "docs": "https://github.com/MichaelCharles/clay_containers#readme"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:michalsnik--aos",
@@ -1855,8 +2902,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 28055,
-        "downloads": 1223034,
+        "stars": 28053,
+        "downloads": 1255928,
         "updatedAt": "2024-03-26"
       },
       "tags": [
@@ -1865,7 +2912,7 @@
       "preview": {
         "type": "repo",
         "fullName": "michalsnik/aos",
-        "stars": 28055,
+        "stars": 28053,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [],
@@ -1878,7 +2925,7 @@
         "install": "npm install aos",
         "docs": "https://github.com/michalsnik/aos#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:minimac--magic",
@@ -1893,7 +2940,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 8601,
+        "stars": 8597,
         "downloads": 6988,
         "updatedAt": "2022-08-23"
       },
@@ -1911,7 +2958,7 @@
       "preview": {
         "type": "repo",
         "fullName": "miniMAC/magic",
-        "stars": 8601,
+        "stars": 8597,
         "language": "SCSS",
         "license": "MIT",
         "topics": [
@@ -1933,7 +2980,69 @@
         "install": "npm install magic.css",
         "docs": "https://www.minimamente.com/project/magic/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:miromannino--justified-gallery",
+      "name": "Justified-Gallery",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Javascript library to help creating high quality justified galleries of images. Used by thousands of websites as well as the photography community 500px.",
+      "url": "http://miromannino.github.io/Justified-Gallery/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/miromannino/Justified-Gallery"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1744,
+        "downloads": 5823,
+        "updatedAt": "2026-10-17"
+      },
+      "tags": [
+        "bricklayer",
+        "css",
+        "css-animations",
+        "gallery",
+        "infinite-scroll",
+        "javascript",
+        "justification",
+        "justified-layout",
+        "mason",
+        "masonry",
+        "masonry-layout",
+        "thumbnails",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "miromannino/Justified-Gallery",
+        "stars": 1744,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "bricklayer",
+          "css-animations",
+          "gallery",
+          "infinite-scroll",
+          "javascript",
+          "justification",
+          "justified-layout",
+          "mason",
+          "masonry",
+          "masonry-layout",
+          "thumbnails"
+        ],
+        "image": "https://opengraph.githubassets.com/1/miromannino/Justified-Gallery",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install justifiedGallery",
+        "docs": "http://miromannino.github.io/Justified-Gallery/"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:mkosir--react-parallax-tilt",
@@ -1948,9 +3057,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 1082,
-        "downloads": 215412,
-        "updatedAt": "2026-10-06"
+        "stars": 1083,
+        "downloads": 204106,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "gyroscope",
@@ -1965,7 +3074,7 @@
       "preview": {
         "type": "repo",
         "fullName": "mkosir/react-parallax-tilt",
-        "stars": 1082,
+        "stars": 1083,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -1987,7 +3096,7 @@
         "install": "npm install react-parallax-tilt",
         "docs": "https://mkosir.github.io/react-parallax-tilt"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:moarwick--react-mt-svg-lines",
@@ -2041,7 +3150,7 @@
         "install": "npm install react-mt-svg-lines",
         "docs": "http://moarwick.github.io/react-mt-svg-lines"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:mojs--mojs",
@@ -2056,8 +3165,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 18798,
-        "downloads": 35392,
+        "stars": 18822,
+        "downloads": 38279,
         "updatedAt": "2026-07-30"
       },
       "tags": [
@@ -2078,7 +3187,7 @@
       "preview": {
         "type": "repo",
         "fullName": "mojs/mojs",
-        "stars": 18798,
+        "stars": 18822,
         "language": "CoffeeScript",
         "license": "MIT",
         "topics": [
@@ -2104,7 +3213,7 @@
         "install": "npm install @mojs/core",
         "docs": "https://mojs.github.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:motiondivision--motion",
@@ -2119,9 +3228,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 34064,
+        "stars": 34372,
         "downloads": 218897254,
-        "updatedAt": "2026-10-13"
+        "updatedAt": "2026-10-20"
       },
       "tags": [
         "animation",
@@ -2136,7 +3245,7 @@
       "preview": {
         "type": "repo",
         "fullName": "motiondivision/motion",
-        "stars": 34064,
+        "stars": 34372,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2156,7 +3265,53 @@
         "install": "npm install framer-motion",
         "docs": "https://motion.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:moumen-soliman--uitripled",
+      "name": "uitripled",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Production-ready UI blocks, components, and full pages available in shadcn/ui and Base UI, powered by Framer Motion, with a Landing Page Builder, Background Builder, and Grid Generator.",
+      "url": "https://ui.tripled.work",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/moumen-soliman/uitripled"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1360,
+        "updatedAt": "2026-08-28"
+      },
+      "tags": [
+        "base-ui",
+        "framer-motion",
+        "shadcn",
+        "shadcn-ui",
+        "tailwindcss",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "moumen-soliman/uitripled",
+        "stars": 1360,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "base-ui",
+          "framer-motion",
+          "shadcn-ui",
+          "tailwindcss"
+        ],
+        "image": "https://opengraph.githubassets.com/1/moumen-soliman/uitripled",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://ui.tripled.work"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:mrdoob--three.js",
@@ -2171,9 +3326,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 116375,
-        "downloads": 83509977,
-        "updatedAt": "2026-10-14"
+        "stars": 116647,
+        "downloads": 85705259,
+        "updatedAt": "2026-10-20"
       },
       "tags": [
         "3d",
@@ -2192,7 +3347,7 @@
       "preview": {
         "type": "repo",
         "fullName": "mrdoob/three.js",
-        "stars": 116375,
+        "stars": 116647,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -2218,7 +3373,7 @@
         "install": "npm install three",
         "docs": "https://threejs.org/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:nandorojo--moti",
@@ -2233,8 +3388,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 4554,
-        "downloads": 1421418,
+        "stars": 4555,
+        "downloads": 1282753,
         "updatedAt": "2025-03-11"
       },
       "tags": [
@@ -2244,7 +3399,7 @@
       "preview": {
         "type": "repo",
         "fullName": "nandorojo/moti",
-        "stars": 4554,
+        "stars": 4555,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [],
@@ -2257,7 +3412,123 @@
         "install": "npm install moti",
         "docs": "https://moti.fyi"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:ncdai--chanhdai.com",
+      "name": "chanhdai.com",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A pixel-perfect dev portfolio and shadcn registry.",
+      "url": "https://chanhdai.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/ncdai/chanhdai.com"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 2394,
+        "downloads": 21,
+        "updatedAt": "2026-10-19"
+      },
+      "tags": [
+        "base-ui",
+        "components",
+        "dev-portfolio",
+        "motion",
+        "nextjs",
+        "portfolio",
+        "radix-ui",
+        "react",
+        "shadcn",
+        "shadcn-components",
+        "shadcn-registry",
+        "shadcn-ui",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "ncdai/chanhdai.com",
+        "stars": 2394,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "base-ui",
+          "components",
+          "dev-portfolio",
+          "motion",
+          "nextjs",
+          "portfolio",
+          "radix-ui",
+          "react",
+          "shadcn",
+          "shadcn-components",
+          "shadcn-registry",
+          "shadcn-ui"
+        ],
+        "image": "https://opengraph.githubassets.com/1/ncdai/chanhdai.com",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "install": "npm install ncdai",
+        "docs": "https://chanhdai.com"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:nolly-studio--cult-ui",
+      "name": "cult-ui",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Animated components for design engineers. 150+ free shadcn/ui components, built with Tailwind CSS and Motion. MIT licensed.",
+      "url": "https://www.cult-ui.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/nolly-studio/cult-ui"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 6629,
+        "updatedAt": "2026-10-14"
+      },
+      "tags": [
+        "components",
+        "design-engineering",
+        "framer-motion",
+        "nextjs",
+        "react",
+        "shadcn",
+        "shadcn-ui",
+        "tailwindcss",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "nolly-studio/cult-ui",
+        "stars": 6629,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "components",
+          "design-engineering",
+          "framer-motion",
+          "nextjs",
+          "react",
+          "shadcn-ui",
+          "tailwindcss",
+          "typescript"
+        ],
+        "image": "https://opengraph.githubassets.com/1/nolly-studio/cult-ui",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://www.cult-ui.com"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:oblador--react-native-animatable",
@@ -2302,7 +3573,118 @@
         "install": "npm install react-native-animatable",
         "docs": "https://github.com/oblador/react-native-animatable#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:ocnyang--android-animation-set",
+      "name": "Android-Animation-Set",
+      "kind": "animation",
+      "category": "design",
+      "summary": ":books: Android 所有动画系列详尽教程。 Explain all animations in Android.",
+      "url": "https://www.jianshu.com/p/0eb89d43eea4",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/OCNYang/Android-Animation-Set"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "stars": 3138,
+        "updatedAt": "2023-02-21"
+      },
+      "tags": [
+        "android-animation",
+        "android-animations",
+        "animated-vector-drawable",
+        "animation",
+        "animation-library",
+        "animatorset",
+        "constraintlayout",
+        "constraintset",
+        "drawable-animation",
+        "frame-animation",
+        "java",
+        "property-animation",
+        "reveal-effect"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "OCNYang/Android-Animation-Set",
+        "stars": 3138,
+        "language": "Java",
+        "license": "Apache-2.0",
+        "topics": [
+          "android-animation",
+          "android-animations",
+          "animated-vector-drawable",
+          "animation",
+          "animation-library",
+          "animatorset",
+          "constraintlayout",
+          "constraintset",
+          "drawable-animation",
+          "frame-animation",
+          "property-animation",
+          "reveal-effect"
+        ],
+        "image": "https://opengraph.githubassets.com/1/OCNYang/Android-Animation-Set",
+        "foundIn": [
+          "topic:animation-library"
+        ]
+      },
+      "use": {
+        "docs": "https://www.jianshu.com/p/0eb89d43eea4"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:plus1tv--react-anime",
+      "name": "react-anime",
+      "kind": "animation",
+      "category": "design",
+      "summary": "✨ (ﾉ´ヮ´)ﾉ*:･ﾟ✧ A super easy animation library for React!",
+      "url": "https://codepen.io/collection/nrkjgo/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/plus1tv/react-anime"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1565,
+        "updatedAt": "2023-02-27"
+      },
+      "tags": [
+        "animation",
+        "anime",
+        "dynamic",
+        "hooks",
+        "npm",
+        "react",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "plus1tv/react-anime",
+        "stars": 1565,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "anime",
+          "dynamic",
+          "hooks",
+          "npm",
+          "react",
+          "typescript"
+        ],
+        "image": "https://opengraph.githubassets.com/1/plus1tv/react-anime",
+        "foundIn": [
+          "awesome:brillout/awesome-react-components"
+        ]
+      },
+      "use": {
+        "docs": "https://codepen.io/collection/nrkjgo/"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:pmndrs--drei",
@@ -2317,9 +3699,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 9941,
+        "stars": 10004,
         "downloads": 18400245,
-        "updatedAt": "2026-10-05"
+        "updatedAt": "2026-10-20"
       },
       "tags": [
         "3d",
@@ -2333,7 +3715,7 @@
       "preview": {
         "type": "repo",
         "fullName": "pmndrs/drei",
-        "stars": 9941,
+        "stars": 10004,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -2352,7 +3734,7 @@
         "install": "npm install @react-three/drei",
         "docs": "https://docs.pmnd.rs/drei"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:pmndrs--react-spring",
@@ -2367,9 +3749,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 29164,
-        "downloads": 28115083,
-        "updatedAt": "2026-10-11"
+        "stars": 29173,
+        "downloads": 28139102,
+        "updatedAt": "2026-10-20"
       },
       "tags": [
         "animation-library",
@@ -2382,7 +3764,7 @@
       "preview": {
         "type": "repo",
         "fullName": "pmndrs/react-spring",
-        "stars": 29164,
+        "stars": 29173,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2394,14 +3776,15 @@
         ],
         "image": "https://opengraph.githubassets.com/1/pmndrs/react-spring",
         "foundIn": [
-          "seed"
+          "seed",
+          "topic:animation-library"
         ]
       },
       "use": {
-        "install": "npm install @react-spring/animated",
+        "install": "npm install @react-spring/shared",
         "docs": "http://www.react-spring.dev/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:pmndrs--react-three-fiber",
@@ -2416,9 +3799,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 32922,
+        "stars": 33091,
         "downloads": 25730881,
-        "updatedAt": "2026-10-12"
+        "updatedAt": "2026-10-17"
       },
       "tags": [
         "3d",
@@ -2432,7 +3815,7 @@
       "preview": {
         "type": "repo",
         "fullName": "pmndrs/react-three-fiber",
-        "stars": 32922,
+        "stars": 33091,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2452,7 +3835,7 @@
         "install": "npm install @react-three/fiber",
         "docs": "https://docs.pmnd.rs/react-three-fiber"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:popmotion--popmotion",
@@ -2467,7 +3850,7 @@
       },
       "metrics": {
         "stars": 20150,
-        "downloads": 12910385,
+        "downloads": 12498490,
         "updatedAt": "2024-03-12"
       },
       "tags": [
@@ -2505,7 +3888,129 @@
         "install": "npm install framesync",
         "docs": "https://popmotion.io"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:rcaferati--react-awesome-slider",
+      "name": "react-awesome-slider",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A performant, lightweight React slider/carousel for media and content transitions, featuring 60fps animations, modular styling, optional HOCs, and fullpage navigation utilities. 🖥️📱",
+      "url": "https://fullpage.caferati.dev",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/rcaferati/react-awesome-slider"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 2975,
+        "downloads": 35211,
+        "updatedAt": "2026-07-13"
+      },
+      "tags": [
+        "carousel",
+        "carousel-component",
+        "fullpage-navigation-hoc",
+        "gallery",
+        "gallery-component",
+        "gatsbyjs",
+        "image-gallery",
+        "image-slider",
+        "media-gallery",
+        "media-slider",
+        "next",
+        "next-page-transitions",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "rcaferati/react-awesome-slider",
+        "stars": 2975,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "carousel",
+          "carousel-component",
+          "fullpage-navigation-hoc",
+          "gallery",
+          "gallery-component",
+          "gatsbyjs",
+          "image-gallery",
+          "image-slider",
+          "media-gallery",
+          "media-slider",
+          "next",
+          "next-page-transitions"
+        ],
+        "image": "https://opengraph.githubassets.com/1/rcaferati/react-awesome-slider",
+        "foundIn": [
+          "topic:ui-components"
+        ]
+      },
+      "use": {
+        "install": "npm install react-awesome-slider",
+        "docs": "https://fullpage.caferati.dev"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:ritikpatni--front-end-web-development-resources",
+      "name": "Front-End-Web-Development-Resources",
+      "kind": "animation",
+      "category": "design",
+      "summary": "This repository contains content which will be helpful in your journey as a front-end Web Developer",
+      "url": "https://github.com/RitikPatni/Front-End-Web-Development-Resources",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/RitikPatni/Front-End-Web-Development-Resources"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 5170,
+        "updatedAt": "2024-06-24"
+      },
+      "tags": [
+        "animation-frameworks",
+        "color-scheme",
+        "css",
+        "css-framework",
+        "css-grid",
+        "framework",
+        "free-photos",
+        "front-end",
+        "front-end-development",
+        "frontend",
+        "frontend-framework",
+        "hacktoberfest"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "RitikPatni/Front-End-Web-Development-Resources",
+        "stars": 5170,
+        "license": "MIT",
+        "topics": [
+          "animation-frameworks",
+          "color-scheme",
+          "css",
+          "css-framework",
+          "css-grid",
+          "framework",
+          "free-photos",
+          "front-end",
+          "front-end-development",
+          "frontend",
+          "frontend-framework",
+          "hacktoberfest"
+        ],
+        "image": "https://opengraph.githubassets.com/1/RitikPatni/Front-End-Web-Development-Resources",
+        "foundIn": [
+          "topic:css-framework"
+        ]
+      },
+      "use": {
+        "docs": "https://github.com/RitikPatni/Front-End-Web-Development-Resources#readme"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:rive-app--rive-react",
@@ -2520,9 +4025,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 1168,
+        "stars": 1174,
         "downloads": 4783496,
-        "updatedAt": "2026-09-30"
+        "updatedAt": "2026-10-18"
       },
       "tags": [
         "animation",
@@ -2533,7 +4038,7 @@
       "preview": {
         "type": "repo",
         "fullName": "rive-app/rive-react",
-        "stars": 1168,
+        "stars": 1174,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2549,7 +4054,7 @@
         "install": "npm install @rive-app/react-canvas",
         "docs": "https://rive.app/docs/runtimes/react/react"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:rive-app--rive-wasm",
@@ -2564,9 +4069,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 971,
-        "downloads": 5453807,
-        "updatedAt": "2026-10-08"
+        "stars": 1008,
+        "downloads": 4837384,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "rive",
@@ -2575,7 +4080,7 @@
       "preview": {
         "type": "repo",
         "fullName": "rive-app/rive-wasm",
-        "stars": 971,
+        "stars": 1008,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [],
@@ -2588,7 +4093,7 @@
         "install": "npm install @rive-app/canvas",
         "docs": "https://github.com/rive-app/rive-wasm#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:rnosov--react-reveal",
@@ -2603,8 +4108,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 2727,
-        "downloads": 210432,
+        "stars": 2725,
+        "downloads": 221179,
         "updatedAt": "2023-03-01"
       },
       "tags": [
@@ -2618,7 +4123,7 @@
       "preview": {
         "type": "repo",
         "fullName": "rnosov/react-reveal",
-        "stars": 2727,
+        "stars": 2725,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -2636,7 +4141,7 @@
         "install": "npm install react-reveal",
         "docs": "https://www.react-reveal.com/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:roughike--page-transformer",
@@ -2673,7 +4178,239 @@
       "use": {
         "docs": "https://github.com/roughike/page-transformer#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:sachinchoolur--lightgallery",
+      "name": "lightGallery",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A customizable, modular, responsive, lightbox gallery plugin.",
+      "url": "https://www.lightgalleryjs.com/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/sachinchoolur/lightGallery"
+      },
+      "license": "GPL-3.0",
+      "metrics": {
+        "stars": 7054,
+        "downloads": 443339,
+        "updatedAt": "2026-10-14"
+      },
+      "tags": [
+        "angular",
+        "angular-gallery",
+        "css",
+        "css-animations",
+        "html5-video",
+        "image-gallery",
+        "lightbox",
+        "lightbox-gallery-plugin",
+        "lit-element",
+        "react",
+        "react-gallery",
+        "thumbnails",
+        "typescript",
+        "video"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "sachinchoolur/lightGallery",
+        "stars": 7054,
+        "language": "TypeScript",
+        "license": "GPL-3.0",
+        "topics": [
+          "angular",
+          "angular-gallery",
+          "css-animations",
+          "html5-video",
+          "image-gallery",
+          "lightbox",
+          "lightbox-gallery-plugin",
+          "lit-element",
+          "react",
+          "react-gallery",
+          "thumbnails",
+          "video"
+        ],
+        "image": "https://opengraph.githubassets.com/1/sachinchoolur/lightGallery",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install lightgallery",
+        "docs": "https://www.lightgalleryjs.com/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:sachinchoolur--lightgallery.js",
+      "name": "lightgallery.js",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Full featured JavaScript image & video gallery. No dependencies",
+      "url": "https://sachinchoolur.github.io/lightgallery.js/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/sachinchoolur/lightgallery.js"
+      },
+      "metrics": {
+        "stars": 5318,
+        "downloads": 46489,
+        "updatedAt": "2026-02-17"
+      },
+      "tags": [
+        "animation",
+        "css",
+        "css-animations",
+        "gallery",
+        "html5-video",
+        "image-gallery",
+        "javascript",
+        "lightbox",
+        "lightbox-gallery-plugin",
+        "thumbnails",
+        "video-gallery",
+        "vimeo",
+        "youtube"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "sachinchoolur/lightgallery.js",
+        "stars": 5318,
+        "language": "JavaScript",
+        "topics": [
+          "animation",
+          "css-animations",
+          "gallery",
+          "html5-video",
+          "image-gallery",
+          "lightbox",
+          "lightbox-gallery-plugin",
+          "thumbnails",
+          "video-gallery",
+          "vimeo",
+          "youtube"
+        ],
+        "image": "https://opengraph.githubassets.com/1/sachinchoolur/lightgallery.js",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install lightgallery.js",
+        "docs": "https://sachinchoolur.github.io/lightgallery.js/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:sergey-pimenov--awesome-web-animation",
+      "name": "awesome-web-animation",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A list of awesome web animation libraries, books, apps etc.",
+      "url": "https://awesome-web-animation.netlify.app",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/sergey-pimenov/awesome-web-animation"
+      },
+      "license": "CC0-1.0",
+      "metrics": {
+        "stars": 1593,
+        "updatedAt": "2026-09-20"
+      },
+      "tags": [
+        "animation",
+        "awesome",
+        "awesome-list",
+        "canvas-animation",
+        "css",
+        "css-animations",
+        "javascript",
+        "transitions",
+        "web-animation"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "sergey-pimenov/awesome-web-animation",
+        "stars": 1593,
+        "language": "JavaScript",
+        "license": "CC0-1.0",
+        "topics": [
+          "animation",
+          "awesome",
+          "awesome-list",
+          "canvas-animation",
+          "css-animations",
+          "transitions",
+          "web-animation"
+        ],
+        "image": "https://opengraph.githubassets.com/1/sergey-pimenov/awesome-web-animation",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "docs": "https://awesome-web-animation.netlify.app"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:shoheiyokoyama--gemini",
+      "name": "Gemini",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Gemini is rich scroll based animation framework for iOS, written in Swift.",
+      "url": "https://www.youtube.com/watch?v=bPtq5E6lKzw&utm_content=bufferfa3fd&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/shoheiyokoyama/Gemini"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 3309,
+        "updatedAt": "2025-06-28"
+      },
+      "tags": [
+        "animation-3d",
+        "animation-effects",
+        "animation-library",
+        "carthage",
+        "cocoapods",
+        "ios",
+        "ios-animation",
+        "swift",
+        "swift-library",
+        "uicollectionview"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "shoheiyokoyama/Gemini",
+        "stars": 3309,
+        "language": "Swift",
+        "license": "MIT",
+        "topics": [
+          "animation-3d",
+          "animation-effects",
+          "animation-library",
+          "carthage",
+          "cocoapods",
+          "ios",
+          "ios-animation",
+          "swift",
+          "swift-library",
+          "uicollectionview"
+        ],
+        "image": "https://opengraph.githubassets.com/1/shoheiyokoyama/Gemini",
+        "foundIn": [
+          "topic:animation-library"
+        ]
+      },
+      "use": {
+        "docs": "https://www.youtube.com/watch?v=bPtq5E6lKzw&utm_content=bufferfa3fd&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:shshaw--splitting",
@@ -2688,7 +4425,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 1757,
+        "stars": 1756,
         "downloads": 33606,
         "updatedAt": "2024-06-19"
       },
@@ -2706,7 +4443,7 @@
       "preview": {
         "type": "repo",
         "fullName": "shshaw/Splitting",
-        "stars": 1757,
+        "stars": 1756,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -2728,7 +4465,7 @@
         "install": "npm install splitting",
         "docs": "https://splitting.js.org"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:skkallayath--photofilters",
@@ -2743,7 +4480,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 430,
+        "stars": 429,
         "updatedAt": "2024-01-21"
       },
       "tags": [
@@ -2761,7 +4498,7 @@
       "preview": {
         "type": "repo",
         "fullName": "skkallayath/photofilters",
-        "stars": 430,
+        "stars": 429,
         "language": "Dart",
         "license": "MIT",
         "topics": [
@@ -2784,7 +4521,7 @@
       "use": {
         "docs": "https://github.com/skkallayath/photofilters#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:software-mansion--react-native-gesture-handler",
@@ -2799,9 +4536,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 6789,
-        "downloads": 38781474,
-        "updatedAt": "2026-10-07"
+        "stars": 6793,
+        "downloads": 39209597,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "gesture",
@@ -2812,7 +4549,7 @@
       "preview": {
         "type": "repo",
         "fullName": "software-mansion/react-native-gesture-handler",
-        "stars": 6789,
+        "stars": 6793,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2829,7 +4566,7 @@
         "install": "npm install react-native-gesture-handler",
         "docs": "https://docs.swmansion.com/react-native-gesture-handler/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:software-mansion--react-native-reanimated",
@@ -2844,9 +4581,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 11021,
-        "downloads": 40478756,
-        "updatedAt": "2026-10-09"
+        "stars": 11031,
+        "downloads": 38504471,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "animation",
@@ -2863,7 +4600,7 @@
       "preview": {
         "type": "repo",
         "fullName": "software-mansion/react-native-reanimated",
-        "stars": 11021,
+        "stars": 11031,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2886,7 +4623,7 @@
         "install": "npm install react-native-reanimated",
         "docs": "http://docs.swmansion.com/react-native-reanimated/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:software-mansion--typegpu",
@@ -2901,9 +4638,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 3269,
-        "downloads": 1413537,
-        "updatedAt": "2026-10-13"
+        "stars": 3280,
+        "downloads": 1421815,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "gpgpu",
@@ -2923,7 +4660,7 @@
       "preview": {
         "type": "repo",
         "fullName": "software-mansion/TypeGPU",
-        "stars": 3269,
+        "stars": 3280,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2946,10 +4683,10 @@
         ]
       },
       "use": {
-        "install": "npm install tinyest",
+        "install": "npm install typegpu",
         "docs": "http://typegpu.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:splinetool--react-spline",
@@ -2964,8 +4701,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 1318,
-        "updatedAt": "2025-07-15"
+        "stars": 1424,
+        "updatedAt": "2026-03-13"
       },
       "tags": [
         "3d",
@@ -2975,7 +4712,7 @@
       "preview": {
         "type": "repo",
         "fullName": "splinetool/react-spline",
-        "stars": 1318,
+        "stars": 1424,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -2989,7 +4726,107 @@
       "use": {
         "docs": "https://github.com/splinetool/react-spline#readme"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:starc007--ui-components",
+      "name": "ui-components",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Motion components for React. Copy, paste, done.",
+      "url": "https://beui.dev",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/starc007/ui-components"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1825,
+        "updatedAt": "2026-10-19"
+      },
+      "tags": [
+        "framer-motion",
+        "motion",
+        "nextjs",
+        "react",
+        "react-19",
+        "tailwindcss",
+        "tailwindcss-v4",
+        "typescript",
+        "ui",
+        "ui-components"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "starc007/ui-components",
+        "stars": 1825,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "framer-motion",
+          "motion",
+          "nextjs",
+          "react",
+          "react-19",
+          "tailwindcss",
+          "tailwindcss-v4",
+          "typescript",
+          "ui",
+          "ui-components"
+        ],
+        "image": "https://opengraph.githubassets.com/1/starc007/ui-components",
+        "foundIn": [
+          "topic:ui-components"
+        ]
+      },
+      "use": {
+        "docs": "https://beui.dev"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:swamimalode07--rare-ui",
+      "name": "rare-ui",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A collection of rare, ready-to-use UI components and animations you can actually drop into your next project. Free and open source.",
+      "url": "https://rareui.com",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/swamimalode07/rare-ui"
+      },
+      "metrics": {
+        "stars": 1791,
+        "updatedAt": "2026-10-17"
+      },
+      "tags": [
+        "components",
+        "nextjs",
+        "reactjs",
+        "shadcn",
+        "shadcn-ui",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "swamimalode07/rare-ui",
+        "stars": 1791,
+        "language": "TypeScript",
+        "topics": [
+          "components",
+          "nextjs",
+          "reactjs",
+          "shadcn-ui"
+        ],
+        "image": "https://opengraph.githubassets.com/1/swamimalode07/rare-ui",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://rareui.com"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:swup--swup",
@@ -3004,7 +4841,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 5238,
+        "stars": 5248,
         "downloads": 162833,
         "updatedAt": "2026-10-06"
       },
@@ -3020,7 +4857,7 @@
       "preview": {
         "type": "repo",
         "fullName": "swup/swup",
-        "stars": 5238,
+        "stars": 5248,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -3040,7 +4877,51 @@
         "install": "npm install swup",
         "docs": "https://swup.js.org"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:taqui-786--mixcnui",
+      "name": "mixcnui",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Collection of Nextjs Components",
+      "url": "https://mixcn-ui.vercel.app",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/taqui-786/mixcnui"
+      },
+      "metrics": {
+        "stars": 316,
+        "updatedAt": "2026-02-16"
+      },
+      "tags": [
+        "react",
+        "reactjs",
+        "shadcn",
+        "taiwindcss",
+        "typescript",
+        "ui-components"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "taqui-786/mixcnui",
+        "stars": 316,
+        "language": "TypeScript",
+        "topics": [
+          "react",
+          "reactjs",
+          "taiwindcss",
+          "ui-components"
+        ],
+        "image": "https://opengraph.githubassets.com/1/taqui-786/mixcnui",
+        "foundIn": [
+          "awesome:birobirobiro/awesome-shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://mixcn-ui.vercel.app"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:tengbao--vanta",
@@ -3055,8 +4936,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 7151,
-        "downloads": 150828,
+        "stars": 7248,
+        "downloads": 149951,
         "updatedAt": "2024-03-03"
       },
       "tags": [
@@ -3071,7 +4952,7 @@
       "preview": {
         "type": "repo",
         "fullName": "tengbao/vanta",
-        "stars": 7151,
+        "stars": 7248,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -3091,7 +4972,7 @@
         "install": "npm install vanta",
         "docs": "http://vantajs.com/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:theatre-js--theatre",
@@ -3106,7 +4987,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "stars": 12738,
+        "stars": 12781,
         "downloads": 138,
         "updatedAt": "2024-08-14"
       },
@@ -3123,7 +5004,7 @@
       "preview": {
         "type": "repo",
         "fullName": "theatre-js/theatre",
-        "stars": 12738,
+        "stars": 12781,
         "language": "TypeScript",
         "license": "Apache-2.0",
         "topics": [
@@ -3143,7 +5024,7 @@
         "install": "npm install theatric",
         "docs": "https://www.theatrejs.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:tkh44--data-driven-motion",
@@ -3158,7 +5039,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 550,
+        "stars": 551,
         "downloads": 76,
         "updatedAt": "2017-06-08"
       },
@@ -3175,7 +5056,7 @@
       "preview": {
         "type": "repo",
         "fullName": "tkh44/data-driven-motion",
-        "stars": 550,
+        "stars": 551,
         "language": "JavaScript",
         "license": "MIT",
         "topics": [
@@ -3196,7 +5077,56 @@
         "install": "npm install data-driven-motion",
         "docs": "https://tkh44.github.io/data-driven-motion/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:triggerjs--trigger",
+      "name": "trigger",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A library for creating scroll-based animation with HTML attributes and CSS variables.",
+      "url": "https://github.com/triggerjs/trigger",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/triggerjs/trigger"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1262,
+        "downloads": 301,
+        "updatedAt": "2025-05-10"
+      },
+      "tags": [
+        "animation",
+        "animation-css",
+        "animation-library",
+        "css",
+        "javascript",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "triggerjs/trigger",
+        "stars": 1262,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "animation-css",
+          "animation-library",
+          "css",
+          "javascript"
+        ],
+        "image": "https://opengraph.githubassets.com/1/triggerjs/trigger",
+        "foundIn": [
+          "topic:animation-library"
+        ]
+      },
+      "use": {
+        "install": "npm install @triggerjs/trigger",
+        "docs": "https://github.com/triggerjs/trigger#readme"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:tsparticles--tsparticles",
@@ -3211,9 +5141,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 8992,
-        "downloads": 1743527,
-        "updatedAt": "2026-10-06"
+        "stars": 8996,
+        "downloads": 1692396,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "2d",
@@ -3233,7 +5163,7 @@
       "preview": {
         "type": "repo",
         "fullName": "tsparticles/tsparticles",
-        "stars": 8992,
+        "stars": 8996,
         "language": "TypeScript",
         "license": "MIT",
         "topics": [
@@ -3256,10 +5186,10 @@
         ]
       },
       "use": {
-        "install": "npm install @tsparticles/shape-circle",
+        "install": "npm install @tsparticles/shape-emoji",
         "docs": "https://particles.js.org"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:vincentgarreau--particles.js",
@@ -3275,7 +5205,7 @@
       "license": "MIT",
       "metrics": {
         "stars": 30200,
-        "downloads": 85596,
+        "downloads": 104101,
         "updatedAt": "2024-03-28"
       },
       "tags": [
@@ -3297,7 +5227,106 @@
         "install": "npm install particles.js",
         "docs": "https://vincentgarreau.com/particles.js/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:wcandillon--react-native-skia",
+      "name": "react-native-skia",
+      "kind": "animation",
+      "category": "design",
+      "summary": "High-performance React Native Graphics using Skia",
+      "url": "https://wcandillon.github.io/react-native-skia/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/wcandillon/react-native-skia"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 8744,
+        "downloads": 5182785,
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "react",
+        "react-native",
+        "skia",
+        "typescript"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "wcandillon/react-native-skia",
+        "stars": 8744,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "react",
+          "react-native",
+          "skia"
+        ],
+        "image": "https://opengraph.githubassets.com/1/wcandillon/react-native-skia",
+        "foundIn": [
+          "awesome:jondot/awesome-react-native"
+        ]
+      },
+      "use": {
+        "install": "npm install @shopify/react-native-skia",
+        "docs": "https://wcandillon.github.io/react-native-skia/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:webkul--micron",
+      "name": "micron",
+      "kind": "animation",
+      "category": "design",
+      "summary": "a [μ] microInteraction library built with CSS Animations and controlled by JavaScript Power",
+      "url": "https://webkul.github.io/micron/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/webkul/micron"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 2312,
+        "downloads": 405,
+        "updatedAt": "2018-10-04"
+      },
+      "tags": [
+        "animation",
+        "css",
+        "css-animations",
+        "css-modules",
+        "css3",
+        "javascript",
+        "javascript-library",
+        "js"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "webkul/micron",
+        "stars": 2312,
+        "language": "CSS",
+        "license": "MIT",
+        "topics": [
+          "animation",
+          "css",
+          "css-animations",
+          "css-modules",
+          "css3",
+          "javascript",
+          "javascript-library",
+          "js"
+        ],
+        "image": "https://opengraph.githubassets.com/1/webkul/micron",
+        "foundIn": [
+          "topic:css-animations"
+        ]
+      },
+      "use": {
+        "install": "npm install webkul-micron",
+        "docs": "https://webkul.github.io/micron/"
+      },
+      "fetchedAt": "2026-10-20"
     },
     {
       "id": "github:xvrh--lottie-flutter",
@@ -3312,8 +5341,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "stars": 1301,
-        "updatedAt": "2026-09-18"
+        "stars": 1302,
+        "updatedAt": "2026-10-19"
       },
       "tags": [
         "dart",
@@ -3328,7 +5357,7 @@
       "preview": {
         "type": "repo",
         "fullName": "xvrh/lottie-flutter",
-        "stars": 1301,
+        "stars": 1302,
         "language": "Dart",
         "license": "MIT",
         "topics": [
@@ -3349,7 +5378,106 @@
       "use": {
         "docs": "https://pub.dev/packages/lottie"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:xxtomm--spell-ui",
+      "name": "spell-ui",
+      "kind": "animation",
+      "category": "design",
+      "summary": "A large collection of high-quality React components that you can copy and paste into any project.",
+      "url": "https://spell.sh",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/xxtomm/spell-ui"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1356,
+        "updatedAt": "2026-10-10"
+      },
+      "tags": [
+        "components",
+        "motion",
+        "nextjs",
+        "react",
+        "shadcn",
+        "shadcn-ui",
+        "tailwindcss",
+        "typescript",
+        "ui"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "xxtomm/spell-ui",
+        "stars": 1356,
+        "language": "TypeScript",
+        "license": "MIT",
+        "topics": [
+          "components",
+          "motion",
+          "nextjs",
+          "react",
+          "shadcn-ui",
+          "tailwindcss",
+          "typescript",
+          "ui"
+        ],
+        "image": "https://opengraph.githubassets.com/1/xxtomm/spell-ui",
+        "foundIn": [
+          "topic:shadcn-ui"
+        ]
+      },
+      "use": {
+        "docs": "https://spell.sh"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "github:yysskk--swipemenuviewcontroller",
+      "name": "SwipeMenuViewController",
+      "kind": "animation",
+      "category": "design",
+      "summary": "Swipe-based paging UI for iOS",
+      "url": "https://yysskk.github.io/SwipeMenuViewController/documentation/swipemenuviewcontroller/",
+      "source": {
+        "name": "GitHub",
+        "url": "https://github.com/yysskk/SwipeMenuViewController"
+      },
+      "license": "MIT",
+      "metrics": {
+        "stars": 1275,
+        "updatedAt": "2026-07-23"
+      },
+      "tags": [
+        "animation-library",
+        "ios",
+        "swift",
+        "swiftui",
+        "uikit"
+      ],
+      "preview": {
+        "type": "repo",
+        "fullName": "yysskk/SwipeMenuViewController",
+        "stars": 1275,
+        "language": "Swift",
+        "license": "MIT",
+        "topics": [
+          "animation-library",
+          "ios",
+          "swift",
+          "swiftui",
+          "uikit"
+        ],
+        "image": "https://opengraph.githubassets.com/1/yysskk/SwipeMenuViewController",
+        "foundIn": [
+          "topic:animation-library"
+        ]
+      },
+      "use": {
+        "docs": "https://yysskk.github.io/SwipeMenuViewController/documentation/swipemenuviewcontroller/"
+      },
+      "fetchedAt": "2026-10-20"
     }
   ]
 }

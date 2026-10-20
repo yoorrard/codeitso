@@ -73,6 +73,17 @@ describe('칸 고르기 (빌드)', () => {
     expect(live.free).toEqual([0]);
   });
 
+  it('먼저 좁힌 자리(소분류 안 검색 결과) 안에서만 거르고 센다', () => {
+    const idx = openFacets(file);
+    const within = new Uint8Array(20);
+    for (const i of [0, 1, 12]) within[i] = 1;
+    expect(applySelection(idx, {}, undefined, within)).toEqual([0, 1, 12]);
+    expect(applySelection(idx, { license: ['Apache-2.0'] }, undefined, within)).toEqual([12]);
+    const live = liveCounts(idx, { license: ['MIT'] }, within);
+    expect(live.license).toEqual([2, 1]);
+    expect(live.auth).toEqual([2, 0]);
+  });
+
   it('주소: 아는 칸·값만 읽고, 칸 순서대로 쓴다', () => {
     const q = new URLSearchParams('license=MIT&license=GPL&auth=none&sort=name&bogus=1');
     const sel = readSelection(q, file.facets);
@@ -83,6 +94,10 @@ describe('칸 고르기 (빌드)', () => {
     expect(out.toString()).toBe('license=MIT&license=Apache-2.0&auth=none');
     expect(listPath('api', 'weather', 'name', 2, { auth: ['none'] })).toBe('/c/api/weather?auth=none&sort=name&page=2');
     expect(listPath('api', 'weather')).toBe('/c/api/weather');
+    // 소분류 안 검색어: 기본 정렬이 관련도순이라 인기순을 적고, 관련도순은 뺀다
+    expect(listPath('api', 'weather', 'match', 1, {}, ' 한글 폰트 ')).toBe('/c/api/weather?q=%ED%95%9C%EA%B8%80%20%ED%8F%B0%ED%8A%B8');
+    expect(listPath('api', 'weather', 'popular', 2, { auth: ['none'] }, 'rain')).toBe('/c/api/weather?q=rain&auth=none&sort=popular&page=2');
+    expect(listPath('api', 'weather', 'match')).toBe('/c/api/weather');
   });
 });
 

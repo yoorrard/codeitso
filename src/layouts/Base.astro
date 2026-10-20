@@ -1,11 +1,16 @@
 ---
 import { BRAND_FILES } from '../lib/brand-files.ts';
-// 모든 화면의 기본 틀 (v5, brief 3절): 본문 바로 가기 → 머리줄(로고 · 카테고리 · 검색 · 장바구니) → 본문 → 바닥글.
-// 화면 낭독기 알림 자리(#cc-live)와 어려운 말 풀이 섬(TermPopover)도 여기 있다. 본문 폭은 최대 1440px (--container-max).
+// 모든 화면의 기본 틀 (v5, brief 3절): 본문 바로 가기 → 머리줄(로고 · 카테고리 · 검색 · 찜 · 장바구니) → 본문 → 바닥글.
+// 본문 맨 위에는 처음 화면 말고 모든 화면에 [뒤로]와 위치(crumbs)를 한 줄로 둔다 (N1, D137: src/lib/page-nav.ts).
+// 화면 낭독기 알림 자리(#cc-live)와 어려운 말 풀이 섬(TermPopover), 맨 위로 단추도 여기 있다. 본문 폭은 최대 1440px (--container-max).
 import '../styles/global.css';
 import '../styles/shop.css';
 import '../styles/cart.css';
 import '../styles/find.css';
+import '../styles/nav.css';
+import Icon from '../components/Icon.astro';
+import { PageTop } from '../components/PageTop.tsx';
+import type { Crumb } from '../components/PageTop.tsx';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import TermPopover from '../components/TermPopover.tsx';
@@ -23,8 +28,12 @@ interface Props {
   query?: string;
   /** 읽는 글 폭(소개·처리방침)으로 줄인다 */
   read?: boolean;
+  /** 위치: 이 화면까지 거쳐 온 위 단계들 (지금 화면은 빼고). 마지막 것이 [뒤로]의 기본 행선지 */
+  crumbs?: Crumb[];
+  /** [뒤로]가 이전 화면이 없을 때 갈 곳. 없으면 위치의 마지막 단계 → 처음 화면. false면 쪽이 직접 그린다(상세 섬) */
+  back?: string | false;
 }
-const { title, description = ko.site.description, query, read = false } = Astro.props;
+const { title, description = ko.site.description, query, read = false, crumbs = [], back } = Astro.props;
 const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
 // 배포 서버는 끝 빗금을 뗀 주소로 맞춘다 (wrangler.jsonc html_handling, D50). 홈만 바탕 폴더 주소
 const path = Astro.url.pathname.replace(/\/+$/, '');
@@ -32,6 +41,8 @@ const canonical = Astro.site ? new URL(stripBase(path || '/') === '/' ? ROUTES.h
 const ogImage = Astro.site ? absoluteUrl(Astro.site, `/${BRAND_FILES.og}`) : undefined;
 const nav = navData();
 const fetched = site().fetched;
+const isHome = stripBase(path || '/') === '/';
+const backHref = isHome || back === false ? null : (back ?? crumbs[crumbs.length - 1]?.href ?? ROUTES.home);
 ---
 
 <!doctype html>
@@ -88,8 +99,12 @@ const fetched = site().fetched;
     <a class="skip-link" href="#main">{ko.layout.skip}</a>
     <SiteHeader nav={nav} query={query} />
     <main id="main" tabindex="-1" class:list={['page', { 'is-read': read }]}>
+      <PageTop back={backHref} crumbs={crumbs} />
       <slot />
     </main>
+    <button type="button" class="to-top" data-to-top hidden aria-label={ko.layout.toTop}>
+      <Icon name="up" size="22px" />
+    </button>
     <SiteFooter fetched={fetched} total={totalItems()} />
     <TermPopover client:idle />
     <div id={LIVE_ID} class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
@@ -99,13 +114,18 @@ const fetched = site().fetched;
       )
     }
     <script>
-      // [담기] 버튼 (src/lib/cart-buttons.ts), 폰트 견본 (src/lib/font-preview.ts), 카테고리 메뉴 닫기 (Esc·바깥 누르기, 닫으면 단추로 초점)
+      // [담기] 버튼 (src/lib/cart-buttons.ts), 찜 하트 (wish-buttons.ts), 뒤로·'/' 키·맨 위로 (page-nav.ts), 폰트 견본 (src/lib/font-preview.ts),
+      // 카테고리 메뉴 닫기 (Esc·바깥 누르기, 닫으면 단추로 초점)
       import { wireAddButtons } from '../lib/cart-buttons.ts';
       import { CARDS_EVENT } from '../lib/cart-ui.ts';
       import { watchFonts } from '../lib/font-preview.ts';
       import { outsidePress } from '../lib/overlay.ts';
+      import { wirePageNav } from '../lib/page-nav.ts';
+      import { wireWishButtons } from '../lib/wish-buttons.ts';
 
       wireAddButtons();
+      wireWishButtons();
+      wirePageNav();
       // 폰트 카드 견본 글꼴: 보일 때 받는다. 섬이 카드를 새로 그리면 다시 훑는다
       watchFonts();
       document.addEventListener(CARDS_EVENT, () => watchFonts());

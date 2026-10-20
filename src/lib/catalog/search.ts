@@ -2,6 +2,7 @@
 //   /catalog/search/meta.json        대분류별 문서 범위·블록 수·소분류 이름·같은 뜻 묶음 (작다)
 //   /catalog/search/t-<n>.json       낱말 조각 SEARCH_SHARDS개: 낱말 → [이름에 든 문서, 그 밖(태그·설명·출처·소분류)에 든 문서]
 //   /catalog/search/b-<대분류>-<k>.json  결과 카드 블록: 대분류 안 인기순으로 SEARCH_BLOCK장씩
+//   /catalog/search/s-<대분류>-<소분류>.json  소분류 안 검색(N1): 소분류 인기순 자리 → 문서 번호 (SubDocsFile)
 // 문서 번호는 대분류 순서 → 대분류 안 인기순이라, 대분류 묶기는 번호 범위로 하고 인기 많은 결과는 앞 블록에 모인다.
 // 낱말 조각은 낱말의 앞 두 글자로 고르므로 앞부분만 쳐도(접두 일치) 한 조각만 받으면 된다.
 // 순수 함수 (DOM·Node API 없음). 빌드(scripts/catalog/build.ts)와 검색 섬(SearchPage)이 같이 쓴다. 시험: tests/lib/search.test.ts
@@ -260,9 +261,20 @@ export interface SearchResult {
  * 낱말이 모두 흔한 말이면 하나라도 든 문서. 그리고로 찾은 문서가 없고 꼭 들어야 하는 낱말이 둘 이상이면 하나라도 든 문서로 넓힌다 (loose).
  * 같은 점수는 문서 번호 순 = 대분류 안 인기순.
  */
-export function runQuery(terms: readonly QueryTerm[], get: (shard: number) => TokenShard | undefined, shards: number = SEARCH_SHARDS): SearchResult {
+export function runQuery(
+  terms: readonly QueryTerm[],
+  get: (shard: number) => TokenShard | undefined,
+  shards: number = SEARCH_SHARDS,
+  keep?: (doc: number) => boolean,
+): SearchResult {
   if (terms.length === 0) return { hits: [], loose: false };
-  const per = terms.map((t) => ({ m: termMatches(t, get, shards), optional: t.optional === true }));
+  // keep: 소분류 안에서 찾을 때 그 소분류 문서만 남긴다. 낱말마다 먼저 거르므로 '그리고'·넓히기(loose)도 그 안에서 정한다
+  const only = (m: Map<number, number>): Map<number, number> => {
+    if (!keep) return m;
+    for (const d of [...m.keys()]) if (!keep(d)) m.delete(d);
+    return m;
+  };
+  const per = terms.map((t) => ({ m: only(termMatches(t, get, shards)), optional: t.optional === true }));
   const required = per.filter((p) => !p.optional).map((p) => p.m);
   const optional = per.filter((p) => p.optional).map((p) => p.m);
   const orAll = (lists: Map<number, number>[]): Hit[] => {
@@ -315,6 +327,66 @@ export function blockOf(doc: number, cats: readonly SearchCat[], block: number =
   if (!c) return null;
   const local = doc - c.start;
   return { cat: c.id, k: Math.floor(local / block), at: local % block };
+}
+
+/**
+ * 소분류 안 검색 파일 (/catalog/search/s-<대분류>-<소분류>.json, N1): 소분류 인기순 자리마다 그 재료의 검색 문서 번호.
+ * 대분류 문서 번호도 같은 인기 비교로 매겼으므로 소분류 자리 순서대로 문서 번호가 커진다(asc, encodePostings로 짧게).
+ * 다른 소분류에 먼저 놓인 같은 재료처럼 순서를 어기는 자리만 따로 [자리, 문서 번호]로 싣는다(extra).
+ */
+export interface SubDocsFile {
+  v: 1;
+  total: number;
+  asc: string;
+  extra: [number, number][];
+}
+
+/** 소분류 인기순 자리 → 문서 번호 목록을 파일 모양으로 */
+export function encodeSubDocs(docs: readonly number[]): SubDocsFile {
+  const asc: number[] = [];
+  const extra: [number, number][] = [];
+  let last = -1;
+  docs.forEach((d, pos) => {
+    if (d > last) {
+      asc.push(d);
+      last = d;
+    } else extra.push([pos, d]);
+  });
+  return { v: 1, total: docs.length, asc: encodePostings(asc), extra };
+}
+
+/** 파일 → 문서 번호 → 소분류 인기순 자리 */
+export function decodeSubDocs(file: SubDocsFile): Map<number, number> {
+  const out = new Map<number, number>();
+  const skip = new Set<number>();
+  for (const [pos, d] of file.extra) {
+    out.set(d, pos);
+    skip.add(pos);
+  }
+  const asc = decodePostings(file.asc);
+  let i = 0;
+  for (let pos = 0; pos < file.total && i < asc.length; pos += 1) {
+    if (skip.has(pos)) continue;
+    out.set(asc[i] ?? -1, pos);
+    i += 1;
+  }
+  return out;
+}
+
+/** 소분류 안 결과 한 줄: 소분류 인기순 자리와 점수 */
+export interface PosHit {
+  pos: number;
+  score: number;
+}
+
+/** 검색 결과(문서 번호)를 소분류 인기순 자리로: 점수 높은 순 → 인기순 */
+export function hitsInSub(hits: readonly Hit[], posOf: ReadonlyMap<number, number>): PosHit[] {
+  const out: PosHit[] = [];
+  for (const h of hits) {
+    const pos = posOf.get(h.doc);
+    if (pos !== undefined) out.push({ pos, score: h.score });
+  }
+  return out.sort((a, b) => b.score - a.score || a.pos - b.pos);
 }
 
 /** 소분류 이름·id로 맞는 소분류 (질의 낱말 하나라도) */

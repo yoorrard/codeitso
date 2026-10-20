@@ -1,8 +1,9 @@
-// 복사 버튼 섬: 클립보드에 넣고 결과를 화면 낭독기에 알린다. 클립보드를 못 쓰면 숨은 글 상자로 한 번 더 시도한다.
+// 복사 버튼 섬: 클립보드에 넣고 결과를 화면 낭독기에 알린다. 클립보드를 못 쓰면 숨은 글 상자로 한 번 더 시도한다 (src/lib/clipboard.ts).
 // '복사했어요.'는 잠깐만 보이고 원래 글로 돌아간다 (같은 화면의 복사 버튼들이 같은 이름으로 남지 않게, WCAG 2.4.6).
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
+import { copyText } from '../lib/clipboard.ts';
 import { fill } from '../lib/text.ts';
 import { Icon } from './Icon.tsx';
 
@@ -18,23 +19,6 @@ interface Props {
   primary?: boolean;
 }
 
-function legacyCopy(text: string): boolean {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.setAttribute('readonly', '');
-  ta.className = 'visually-hidden';
-  document.body.append(ta);
-  ta.select();
-  let ok = false;
-  try {
-    ok = document.execCommand('copy');
-  } catch {
-    ok = false;
-  }
-  ta.remove();
-  return ok;
-}
-
 /** '복사했어요.'를 보이는 시간 (모션이 아니라 글이 바뀌어 있는 시간) */
 const DONE_MS = 2000;
 
@@ -44,13 +28,7 @@ export default function CopyButton({ text, srLabel, label, done, onCopied, prima
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function copy(): Promise<void> {
-    let ok = false;
-    try {
-      await navigator.clipboard.writeText(text);
-      ok = true;
-    } catch {
-      ok = legacyCopy(text);
-    }
+    const ok = await copyText(text);
     setState(ok ? 'done' : 'fail');
     window.clearTimeout(timer.current);
     if (ok) timer.current = window.setTimeout(() => setState('idle'), DONE_MS);

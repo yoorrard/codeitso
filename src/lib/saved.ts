@@ -1,12 +1,13 @@
 // 브라우저에 저장하는 값의 모양과, 읽은 값을 믿지 않고 고르는 함수 (부작용 없음, 시험 있음).
 // 저장·불러오기 자체는 store.ts가 한다 (docs/ARCHITECTURE.md 5절).
-// v5.1: 장바구니(담은 재료와 메모) + 프로젝트 메모 + 지난 프롬프트(뽑은 때의 재료 사본) + 최근 본 재료 + 설정 + 연 용어 + 집계 기록.
+// v5.1: 장바구니(담은 재료와 메모) + 프로젝트 메모 + 지난 프롬프트(뽑은 때의 재료 사본) + 최근 본 재료 + 찜(N1) + 설정 + 연 용어 + 집계 기록.
 
 export const KEYS = {
   cart: 'cc:cart:v1',
   project: 'cc:project:v1',
   prompts: 'cc:prompts:v1',
   recent: 'cc:recent:v1',
+  wish: 'cc:wish:v1',
   meta: 'cc:meta:v1',
   prefs: 'cc:prefs:v1',
 } as const;
@@ -63,6 +64,9 @@ export interface RecentItem {
   at: number;
 }
 
+/** 찜한 재료 한 줄 (N1): 나중에 쓸 재료. 장바구니(이번 앱에 쓸 재료)와 따로 둔다 */
+export type WishItem = RecentItem;
+
 export interface Meta {
   /** 보낸 집계 이벤트 열쇠 (최근 SENT_MAX개) */
   sent: string[];
@@ -83,6 +87,8 @@ export const PROJECT_MAX = 300;
 export const PROMPTS_MAX = 30;
 /** 최근 본 재료 수 */
 export const RECENT_MAX = 20;
+/** 찜할 수 있는 재료 수 (넘치면 찜을 막는다) */
+export const WISH_MAX = 300;
 const ID_MAX = 200;
 const NAME_MAX = 200;
 /** 프롬프트 사본 칸의 길이 상한 (글자): 저장소를 지키고, 넘는 것은 공식 주소가 대신한다 */
@@ -208,7 +214,7 @@ export function samePrompt(a: PromptEntry, b: PromptEntry): boolean {
   return key(a) === key(b);
 }
 
-export function readRecent(raw: unknown): RecentItem[] {
+export function readRecent(raw: unknown, max: number = RECENT_MAX): RecentItem[] {
   if (!Array.isArray(raw)) return [];
   const out: RecentItem[] = [];
   const seen = new Set<string>();
@@ -218,9 +224,21 @@ export function readRecent(raw: unknown): RecentItem[] {
     if (!h || seen.has(h.id)) continue;
     seen.add(h.id);
     out.push({ ...h, at: time(o['at']) });
-    if (out.length === RECENT_MAX) break;
+    if (out.length === max) break;
   }
   return out;
+}
+
+/** 찜: 모양이 맞는 줄만, 같은 id는 처음 것 하나, WISH_MAX개까지 (새것이 앞) */
+export function readWish(raw: unknown): WishItem[] {
+  return readRecent(raw, WISH_MAX);
+}
+
+/** 찜을 켜고 끈다: 없으면 맨 앞에 더하고, 있으면 뺀다. 가득 찼으면 그대로 (full) */
+export function toggleWishList(list: readonly WishItem[], item: WishItem): { list: WishItem[]; on: boolean; full: boolean } {
+  if (list.some((x) => x.id === item.id)) return { list: list.filter((x) => x.id !== item.id), on: false, full: false };
+  if (list.length >= WISH_MAX) return { list: [...list], on: false, full: true };
+  return { list: [item, ...list], on: true, full: false };
 }
 
 /** 본 재료를 맨 앞에 (이미 있으면 앞으로 옮긴다), RECENT_MAX개까지 */

@@ -1,12 +1,13 @@
 ---
 // 상품 상세 /item?id=… (D103): 쪽은 하나이고, 상세 섬이 주소의 id로 상세 조각(/catalog/item/<n>.json)을 받아 그린다.
 // 검색 엔진에는 목록 쪽이 상품 이름과 설명을 보여 주므로 이 쪽은 색인하지 않는다.
+// [뒤로]·위치는 상품을 읽은 뒤에야 소분류를 알 수 있어 섬이 그린다 (back={false}).
 import Base from '../layouts/Base.astro';
 import ItemDetail from '../components/ItemDetail.tsx';
 import { ko } from '../copy/ko.ts';
 import { navData } from '../lib/catalog/site.ts';
 ---
 
-<Base title={ko.item.pageTitle}>
+<Base title={ko.item.pageTitle} back={false}>
   <ItemDetail client:load nav={navData()} />
 </Base>

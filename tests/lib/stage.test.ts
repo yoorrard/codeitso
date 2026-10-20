@@ -13,6 +13,8 @@ describe('방문 통계를 싣는 화면', () => {
     expect(analyticsAllowed('/cart', 'cloudflare', 'tok', '')).toBe(false);
     expect(analyticsAllowed('/prompts/', 'cloudflare', 'tok', '')).toBe(false);
     expect(analyticsAllowed('/receipt', 'cloudflare', 'tok', '')).toBe(false);
+    // 찜한 재료(N1)도 내가 고른 목록이 보이는 쪽이라 뺀다
+    expect(analyticsAllowed('/wishlist', 'cloudflare', 'tok', '')).toBe(false);
   });
 
   it('주소 바탕이 있어도 장바구니를 알아본다', () => {

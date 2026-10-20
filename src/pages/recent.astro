@@ -8,12 +8,7 @@ import { categoryNames } from '../lib/catalog/site.ts';
 import { ROUTES } from '../lib/routes.ts';
 ---
 
-<Base title={ko.recent.title} description={ko.recent.pageLead}>
-  <nav class="crumbs" aria-label={ko.list.breadcrumb}>
-    <ol>
-      <li><a href={ROUTES.home}>{ko.site.name}</a></li>
-    </ol>
-  </nav>
+<Base title={ko.recent.title} description={ko.recent.pageLead} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
   <header class="list-head">
     <h1 id="recent-title" tabindex="-1">{ko.recent.title}</h1>
     <p class="page-lead">{ko.recent.pageLead}</p>

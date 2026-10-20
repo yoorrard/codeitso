@@ -1,5 +1,5 @@
 // UI 아이콘 (Phosphor Icons, MIT). 쓰는 것만 빌드 때 SVG 글자로 넣는다 (D27). 새 아이콘은 여기 더한다.
-// 스타일은 Regular 한 가지. 색은 currentColor라 글자색 토큰을 따른다.
+// 스타일은 Regular 한 가지 (찜한 하트만 Fill). 색은 currentColor라 글자색 토큰을 따른다.
 import closeSvg from '@phosphor-icons/core/assets/regular/x.svg?raw';
 import copySvg from '@phosphor-icons/core/assets/regular/copy.svg?raw';
 import backSvg from '@phosphor-icons/core/assets/regular/arrow-left.svg?raw';
@@ -16,6 +16,10 @@ import prevSvg from '@phosphor-icons/core/assets/regular/caret-left.svg?raw';
 import chevronSvg from '@phosphor-icons/core/assets/regular/caret-right.svg?raw';
 import starSvg from '@phosphor-icons/core/assets/regular/star.svg?raw';
 import heartSvg from '@phosphor-icons/core/assets/regular/heart.svg?raw';
+import heartFillSvg from '@phosphor-icons/core/assets/fill/heart-fill.svg?raw';
+import shareSvg from '@phosphor-icons/core/assets/regular/share-network.svg?raw';
+import upSvg from '@phosphor-icons/core/assets/regular/arrow-up.svg?raw';
+import columnsSvg from '@phosphor-icons/core/assets/regular/columns.svg?raw';
 import plusSvg from '@phosphor-icons/core/assets/regular/plus.svg?raw';
 import paletteSvg from '@phosphor-icons/core/assets/regular/palette.svg?raw';
 import sparkleSvg from '@phosphor-icons/core/assets/regular/sparkle.svg?raw';
@@ -44,6 +48,11 @@ export const icons = {
   chevron: chevronSvg,
   star: starSvg,
   heart: heartSvg,
+  /** 찜한 하트 (Fill 스타일, N1) */
+  heartFill: heartFillSvg,
+  share: shareSvg,
+  up: upSvg,
+  columns: columnsSvg,
   plus: plusSvg,
   tag: tagSvg,
   info: infoSvg,

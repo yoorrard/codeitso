@@ -1,6 +1,6 @@
 ---
-// 머리줄 (brief 3절): 로고 · 카테고리 메뉴 · 전체 검색창 · 장바구니(담은 개수 배지, 누르면 오른쪽 서랍).
-// 휴대폰(<600)은 메뉴 · 로고 · 검색 아이콘 · 장바구니, 검색창은 /search 쪽에서 연다. 위에 붙어 따라온다.
+// 머리줄 (brief 3절): 로고 · 카테고리 메뉴 · 전체 검색창 · 찜(N1, 개수 배지는 src/lib/wish-buttons.ts) · 장바구니(담은 개수 배지, 누르면 오른쪽 서랍).
+// 휴대폰(<600)은 메뉴 · 로고 · 검색 아이콘 · 찜 · 장바구니, 검색창은 /search 쪽에서 연다. 위에 붙어 따라온다.
 import CartDrawer from './CartDrawer.tsx';
 import CategoryMenu from './CategoryMenu.astro';
 import Icon from './Icon.astro';
@@ -32,6 +32,11 @@ const { nav, query = '' } = Astro.props;
     </form>
     <a class="hd-search-link" href={ROUTES.search} aria-label={ko.layout.searchLabel}>
       <Icon name="search" size="24px" />
+    </a>
+    <a class="hd-wish" href={ROUTES.wishlist} data-wish-link aria-label={ko.layout.wish}>
+      <Icon name="heart" size="24px" />
+      <span class="hd-cart-word">{ko.layout.wish}</span>
+      <span class="hd-wish-n" data-n="0" aria-hidden="true">0</span>
     </a>
     <CartDrawer client:load nav={nav} />
   </div>

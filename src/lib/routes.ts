@@ -61,6 +61,10 @@ export const PATHS = {
   recent: '/recent',
   /** 전체 카테고리 (K1) */
   categories: '/c',
+  /** 찜한 재료 (N1) */
+  wishlist: '/wishlist',
+  /** 재료 비교 ?ids= (N1) */
+  compare: '/compare',
   item: '/item',
   terms: '/terms',
   about: '/about',
@@ -101,13 +105,21 @@ export function categoryPath(cat: string): string {
   return withBase(`/c/${encodeURIComponent(cat)}`);
 }
 
-/** 목록 쪽: 기본(인기순 1쪽, 거르기 없음)은 주소에 붙이지 않는다. 거르기는 칸 이름=값 (같은 칸 여러 값은 되풀이) */
-export function listPath(cat: string, sub: string, sort: SortKey = 'popular', page = 1, sel: Selection = {}): string {
+/** 목록 정렬: 진열대 정렬 셋 + 소분류 안 검색의 관련도순(match, 검색어가 있을 때만) */
+export type ListSort = SortKey | 'match';
+
+/**
+ * 목록 쪽: 기본(인기순 1쪽, 거르기 없음)은 주소에 붙이지 않는다. 거르기는 칸 이름=값 (같은 칸 여러 값은 되풀이).
+ * 소분류 안 검색어(q, N1)가 있으면 기본 정렬이 관련도순이라 인기순을 적고 관련도순을 뺀다.
+ */
+export function listPath(cat: string, sub: string, sort: ListSort = 'popular', page = 1, sel: Selection = {}, find = ''): string {
   const q = new URLSearchParams();
+  const text = find.trim();
+  if (text) q.set('q', text);
   writeSelection(q, sel);
-  if (sort !== 'popular') q.set('sort', sort);
+  if (text ? sort !== 'match' : sort !== 'popular' && sort !== 'match') q.set('sort', sort);
   if (page > 1) q.set('page', String(page));
-  const qs = q.toString();
+  const qs = q.toString().replace(/\+/g, '%20');
   return withBase(`/c/${encodeURIComponent(cat)}/${encodeURIComponent(sub)}${qs ? `?${qs}` : ''}`);
 }
 
@@ -137,6 +149,16 @@ export function searchPath(q: string, cat?: string, page = 1): string {
 /** 검색 낱말 조각 (진열대 빌드가 만드는 JSON) */
 export function searchShardPath(n: number): string {
   return withBase(`/catalog/search/t-${n}.json`);
+}
+
+/** 소분류 안 검색 파일: 소분류 인기순 자리 → 문서 번호 (N1) */
+export function searchSubPath(cat: string, sub: string): string {
+  return withBase(`/catalog/search/s-${cat}-${sub}.json`);
+}
+
+/** 재료 비교 (N1): id 2~4개 */
+export function comparePath(ids: readonly string[]): string {
+  return `${ROUTES.compare}?ids=${ids.map((id) => encodeURIComponent(id)).join(',')}`;
 }
 
 /** 검색 결과 카드 블록 */

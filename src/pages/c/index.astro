@@ -18,12 +18,7 @@ const lead = fill(ko.allCategories.lead, {
 });
 ---
 
-<Base title={ko.allCategories.pageTitle} description={lead}>
-  <nav class="crumbs" aria-label={ko.list.breadcrumb}>
-    <ol>
-      <li><a href={ROUTES.home}>{ko.site.name}</a></li>
-    </ol>
-  </nav>
+<Base title={ko.allCategories.pageTitle} description={lead} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
   <header class="list-head">
     <h1>{ko.allCategories.pageTitle}</h1>
     <p class="page-lead">{lead}</p>

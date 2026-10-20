@@ -6,8 +6,11 @@ import type { TokenShard } from '../../src/lib/catalog/search.ts';
 import {
   blockOf,
   decodePostings,
+  decodeSubDocs,
   encodePostings,
+  encodeSubDocs,
   groupByCategory,
+  hitsInSub,
   indexTokens,
   matchSubs,
   prefixable,
@@ -112,6 +115,43 @@ describe('질의 실행', () => {
     expect(r.loose).toBe(false);
   });
 
+  it('소분류 안에서 찾기(keep): 낱말마다 먼저 거르고, 그 안에서 그리고·넓히기를 정한다', () => {
+    // 문서 2·3만 이 소분류: 'weather'는 이름 문서 0이 빠지고 남는 것이 없다
+    const keep = (d: number): boolean => d === 2 || d === 3;
+    expect(runQuery(queryTerms('weather'), get, undefined, keep).hits).toEqual([]);
+    expect(runQuery(queryTerms('api'), get, undefined, keep).hits.map((h) => h.doc)).toEqual([3]);
+    // 전체에서는 '알림 api'가 넓혀야 하지만, 소분류 안에서도 그리고로 찾은 것이 없으니 넓힌다
+    const loose = runQuery(queryTerms('알림 api'), get, undefined, keep);
+    expect(loose.loose).toBe(true);
+    expect(loose.hits.map((h) => h.doc).sort()).toEqual([2, 3]);
+  });
+
+  it('소분류 안 검색 파일: 인기순 자리 → 문서 번호를 줄였다 되돌리고, 순서를 어기는 자리는 따로 싣는다', () => {
+    const docs = [4, 9, 10, 11, 12, 2, 30, 31];
+    const f = encodeSubDocs(docs);
+    expect(f.total).toBe(8);
+    expect(f.extra).toEqual([[5, 2]]);
+    const posOf = decodeSubDocs(JSON.parse(JSON.stringify(f)));
+    expect([...posOf].sort((a, b) => a[1] - b[1])).toEqual(docs.map((d, i) => [d, i]));
+    expect(decodeSubDocs(encodeSubDocs([]))).toEqual(new Map());
+    // 점수 높은 순 → 소분류 인기순, 소분류 밖 문서는 뺀다
+    expect(
+      hitsInSub(
+        [
+          { doc: 31, score: 6 },
+          { doc: 2, score: 6 },
+          { doc: 99, score: 6 },
+          { doc: 4, score: 2 },
+        ],
+        posOf,
+      ),
+    ).toEqual([
+      { pos: 5, score: 6 },
+      { pos: 7, score: 6 },
+      { pos: 0, score: 2 },
+    ]);
+  });
+
   it('대분류는 문서 번호 범위로 묶고, 블록 자리를 셈한다', () => {
     const cats = [
       { id: 'design', start: 0, count: 2 },
@@ -182,6 +222,12 @@ describe('색인 만들기 (빌드)', () => {
     ]);
     expect(runQuery(queryTerms('날씨', syn, common), get, built.meta.shards).hits.map((h) => h.doc)).toEqual([0, 1, 2]);
     expect(runQuery(queryTerms('tiles', syn, common), get, built.meta.shards).hits.map((h) => h.doc)).toEqual([2]);
+  });
+
+  it('소분류마다 인기순 자리 → 문서 번호 파일을 만든다 (소분류 안 검색)', () => {
+    expect([...built.subDocs.keys()]).toEqual(['design-fonts', 'api-weather', 'api-maps']);
+    expect(decodeSubDocs(built.subDocs.get('api-maps') as never)).toEqual(new Map([[2, 0]]));
+    expect(decodeSubDocs(built.subDocs.get('design-fonts') as never)).toEqual(new Map([[0, 0]]));
   });
 
   it('흔한 말(이름 밖 문서가 너무 많은 낱말)은 이름 밖 목록을 싣지 않는다', () => {

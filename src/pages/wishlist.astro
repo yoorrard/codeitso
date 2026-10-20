@@ -1,0 +1,16 @@
+---
+// 찜한 재료 /wishlist (N1, D137): 카드·상세의 하트로 모은 재료. 기록은 localStorage에만 있으므로 목록은 섬(WishPage)이 그린다.
+import Base from '../layouts/Base.astro';
+import WishPage from '../components/WishPage.tsx';
+import { ko } from '../copy/ko.ts';
+import { categoryNames } from '../lib/catalog/site.ts';
+import { ROUTES } from '../lib/routes.ts';
+---
+
+<Base title={ko.wish.title} description={ko.wish.pageLead} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
+  <header class="list-head">
+    <h1 id="wish-title" tabindex="-1">{ko.wish.title}</h1>
+    <p class="page-lead">{ko.wish.pageLead}</p>
+  </header>
+  <WishPage client:load names={categoryNames()} />
+</Base>

@@ -1,4 +1,4 @@
-// 저장 값 읽기 (saved.ts): 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·메타·설정. 읽은 값은 믿지 않고 모양을 고른다.
+// 저장 값 읽기 (saved.ts): 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·찜·메타·설정. 읽은 값은 믿지 않고 모양을 고른다.
 import { describe, expect, it } from 'vitest';
 import {
   CART_MAX,
@@ -9,6 +9,7 @@ import {
   PROMPT_FIELD_MAX,
   RECENT_MAX,
   SENT_MAX,
+  WISH_MAX,
   addLine,
   addLines,
   cleanMemo,
@@ -23,8 +24,10 @@ import {
   readPrompt,
   readPrompts,
   readRecent,
+  readWish,
   samePrompt,
   stamp,
+  toggleWishList,
 } from '../../src/lib/saved.ts';
 
 const line = (id: string, extra: Record<string, unknown> = {}) => ({ id, name: `이름 ${id}`, cat: 'design', sub: 'fonts', addedAt: 1, ...extra });
@@ -128,6 +131,17 @@ describe('프로젝트 메모·영수증·최근 본 재료 읽기', () => {
     const many = Array.from({ length: RECENT_MAX + 3 }, (_, i) => ({ ...it0, id: `x${i}` }));
     expect(readRecent(many)).toHaveLength(RECENT_MAX);
     expect(readRecent([{ id: 'a' }, 'x'])).toEqual([]);
+  });
+
+  it(`찜: 켜면 앞에, 다시 누르면 빼고, ${WISH_MAX}개가 차면 더 켜지 않는다`, () => {
+    const it0 = { id: 'a', name: 'A', cat: 'api', sub: 'weather', at: 1 };
+    const on = toggleWishList([], it0);
+    expect(on).toMatchObject({ on: true, full: false });
+    expect(toggleWishList(on.list, it0)).toEqual({ list: [], on: false, full: false });
+    const many = Array.from({ length: WISH_MAX }, (_, i) => ({ ...it0, id: `x${i}` }));
+    expect(toggleWishList(many, it0)).toMatchObject({ on: false, full: true });
+    expect(readWish([...many, it0])).toHaveLength(WISH_MAX);
+    expect(readWish('x')).toEqual([]);
   });
 });
 

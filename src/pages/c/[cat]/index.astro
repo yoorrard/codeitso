@@ -1,5 +1,5 @@
 ---
-// 대분류 쪽 /c/<대분류>: 소분류 타일(상품 수·출처) → 소분류마다 1등 상품을 모은 인기 상품 줄.
+// 대분류 쪽 /c/<대분류>: 이 대분류 안 검색창(N1: /search?q=&cat=로 보낸다) → 소분류 타일(상품 수·출처) → 소분류마다 1등 상품을 모은 인기 상품 줄.
 import Base from '../../../layouts/Base.astro';
 import Icon from '../../../components/Icon.astro';
 import { ProductCard } from '../../../components/ProductCard.tsx';
@@ -21,14 +21,10 @@ interface Props {
 }
 const { meta } = Astro.props;
 const tops = topsOf(meta.id);
+const findLabel = fill(ko.list.findLabel, { name: meta.nameKo });
 ---
 
-<Base title={meta.nameKo} description={`${meta.nameKo}: ${ko.categories[meta.id]}`}>
-  <nav class="crumbs" aria-label={ko.list.breadcrumb}>
-    <ol>
-      <li><a href={ROUTES.home}>{ko.site.name}</a></li>
-    </ol>
-  </nav>
+<Base title={meta.nameKo} description={`${meta.nameKo}: ${ko.categories[meta.id]}`} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
   <header class="page-head" data-cat={meta.id}>
     <span class="cat-dot is-lg" aria-hidden="true"><Icon name={CATEGORY_ICON[meta.id]} size="26px" /></span>
     <div>
@@ -36,6 +32,14 @@ const tops = topsOf(meta.id);
       <p class="page-lead">{ko.categories[meta.id]} · {fill(ko.category.count, { n: withCommas(meta.total) })}</p>
     </div>
   </header>
+  <form class="find-box is-cat" role="search" action={ROUTES.search} method="get">
+    <label class="visually-hidden" for="cat-q">{findLabel}</label>
+    <input id="cat-q" name="q" type="search" placeholder={findLabel} enterkeyhint="search" autocomplete="off" spellcheck="false" aria-keyshortcuts="/" data-find />
+    <input type="hidden" name="cat" value={meta.id} />
+    <button type="submit" class="find-go" aria-label={findLabel}>
+      <Icon name="search" size="20px" />
+    </button>
+  </form>
 
   <section class="sec" aria-labelledby="subs-title">
     <h2 id="subs-title" class="visually-hidden">{fill(ko.category.subsTitle, { name: meta.nameKo })}</h2>

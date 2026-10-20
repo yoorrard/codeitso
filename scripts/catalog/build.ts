@@ -3,6 +3,7 @@
 //   public/catalog/list/<대분류>/<소분류>/<정렬>-<묶음>.json  카드 480장(8쪽)씩, 정렬(인기·이름·최근)마다
 //   public/catalog/item/<n>.json                              상세 조각 1024개 (id 해시 → 조각, 관련 상품 포함)
 //   public/catalog/search/meta.json · t-<n>.json · b-<대분류>-<k>.json   전체 검색 (D114: 낱말 조각 256개 + 결과 카드 블록)
+//   public/catalog/search/s-<대분류>-<소분류>.json                         소분류 안 검색 (N1 D137: 인기순 자리 → 문서 번호)
 //   public/catalog/facet/<대분류>/<소분류>.json · -name.json · -recent.json  거르기 (D115: 값마다 자리 목록 + 정렬 순서)
 //   .cache/catalog/site.json                                  Astro 페이지 머리말이 읽는 요약 (메뉴·홈 기획전·스타터 키트·목록 1쪽·출처)
 // Cloudflare 정적 파일은 한 판 2만 개까지라(brief 5절) 쪽마다 HTML을 만들지 않고, 파일 수를 5천 개 아래로 지킨다.
@@ -100,7 +101,8 @@ const search = buildSearch(cats, lists, byId, (r) => card(r.item), readWords());
 write(join(OUT, 'search', 'meta.json'), search.meta);
 search.shards.forEach((t, i) => write(join(OUT, 'search', `t-${i}.json`), t));
 for (const [key, b] of search.blocks) write(join(OUT, 'search', `b-${key}.json`), b);
-const searchFiles = 1 + search.shards.length + search.blocks.size;
+for (const [key, f] of search.subDocs) write(join(OUT, 'search', `s-${key}.json`), f);
+const searchFiles = 1 + search.shards.length + search.blocks.size + search.subDocs.size;
 
 // 4. 거르기 (D115): 소분류마다 값별 자리 목록 + 이름순·최근 갱신순 순서
 const facets: Record<string, FacetMeta[]> = {};
@@ -110,14 +112,16 @@ for (const c of cats) {
     const popular = listOf(c.id, s.id, 'popular');
     const file = buildFacets(popular.map((r) => r.item));
     facets[`${c.id}/${s.id}`] = file.facets;
-    if (file.facets.length === 0) continue;
-    write(join(OUT, 'facet', c.id, `${s.id}.json`), file);
+    // 정렬 순서 파일은 거르기 칸이 없어도 쓴다: 소분류 안 검색 결과를 이름순·최근 갱신순으로 볼 때도 쓴다 (N1)
     const at = new Map(popular.map((r, i) => [r, i]));
     for (const sort of ['name', 'recent'] as const) {
       const body: OrderFile = { v: 1, order: encodeOrder(listOf(c.id, s.id, sort).map((r) => at.get(r) ?? 0)) };
       write(join(OUT, 'facet', c.id, `${s.id}-${sort}.json`), body);
     }
-    facetFiles += 3;
+    facetFiles += 2;
+    if (file.facets.length === 0) continue;
+    write(join(OUT, 'facet', c.id, `${s.id}.json`), file);
+    facetFiles += 1;
   }
 }
 

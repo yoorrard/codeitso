@@ -253,19 +253,23 @@ function facetMask(index: FacetIndex, k: FacetKey, picked: readonly string[]): U
   return out;
 }
 
-/** 걸러진 인기순 자리 (오름차순). skip 칸은 빼고 거른다 (그 칸의 값 개수를 셀 때) */
-export function applySelection(index: FacetIndex, sel: Selection, skip?: FacetKey): number[] {
+/**
+ * 걸러진 인기순 자리 (오름차순). skip 칸은 빼고 거른다 (그 칸의 값 개수를 셀 때).
+ * within: 소분류 안 검색 결과처럼 먼저 좁힌 자리 표시 (N1). 있으면 그 안에서만 거른다
+ */
+export function applySelection(index: FacetIndex, sel: Selection, skip?: FacetKey, within?: Uint8Array): number[] {
   const masks = index.facets.filter((f) => f.k !== skip).map((f) => facetMask(index, f.k, sel[f.k] ?? [])).filter((m): m is Uint8Array => m !== null);
+  if (within) masks.push(within);
   const out: number[] = [];
   for (let i = 0; i < index.total; i += 1) if (masks.every((m) => m[i])) out.push(i);
   return out;
 }
 
-/** 지금 고른 것에서 값마다 몇 개가 남는지 (그 칸 자신의 고름은 빼고 센다: 같은 칸은 '또는'이라) */
-export function liveCounts(index: FacetIndex, sel: Selection): Partial<Record<FacetKey, number[]>> {
+/** 지금 고른 것에서 값마다 몇 개가 남는지 (그 칸 자신의 고름은 빼고 센다: 같은 칸은 '또는'이라). within은 applySelection과 같다 */
+export function liveCounts(index: FacetIndex, sel: Selection, within?: Uint8Array): Partial<Record<FacetKey, number[]>> {
   const out: Partial<Record<FacetKey, number[]>> = {};
   for (const f of index.facets) {
-    const base = applySelection(index, sel, f.k);
+    const base = applySelection(index, sel, f.k, within);
     const masks = index.masks[f.k] ?? [];
     out[f.k] = f.values.map((_, j) => {
       const m = masks[j];

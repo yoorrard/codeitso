@@ -4,8 +4,8 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { monogram, sortRanked } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
-import type { SearchCat, SearchMeta, TokenShard } from '../../src/lib/catalog/search.ts';
-import { COMMON_DF, INDEX_TEXT_MAX, SEARCH_BLOCK, SEARCH_SHARDS, encodePostings, indexTokens, tokenShard } from '../../src/lib/catalog/search.ts';
+import type { SearchCat, SearchMeta, SubDocsFile, TokenShard } from '../../src/lib/catalog/search.ts';
+import { COMMON_DF, INDEX_TEXT_MAX, SEARCH_BLOCK, SEARCH_SHARDS, encodePostings, encodeSubDocs, indexTokens, tokenShard } from '../../src/lib/catalog/search.ts';
 import type { Card, CategoryMeta } from '../../src/lib/catalog/types.ts';
 
 export const WORDS_FILE = join(import.meta.dirname, '..', '..', 'data', 'search-words.json');
@@ -31,6 +31,8 @@ export interface SearchBuild {
   shards: TokenShard[];
   /** `${대분류}-${블록}` → 카드 */
   blocks: Map<string, Card[]>;
+  /** `${대분류}-${소분류}` → 소분류 안 검색 파일 (N1) */
+  subDocs: Map<string, SubDocsFile>;
 }
 
 /**
@@ -50,6 +52,7 @@ export function buildSearch(
   const subs: SearchMeta['subs'] = [];
   const blocks = new Map<string, Card[]>();
   const postings: Map<string, { n: number[]; o: number[] }>[] = Array.from({ length: shardCount }, () => new Map());
+  const docOf = new Map<string, number>();
   let doc = 0;
   for (const c of categories) {
     const mine: Ranked[] = [];
@@ -68,6 +71,7 @@ export function buildSearch(
         blocks.set(key, b);
       }
       b.push(searchCard(card(r)));
+      docOf.set(r.item.id, doc);
       const it = r.item;
       const titleKo = typeof it.preview['titleKo'] === 'string' ? it.preview['titleKo'] : '';
       const name = new Set(indexTokens(`${it.name} ${titleKo}`));
@@ -89,8 +93,16 @@ export function buildSearch(
     return out;
   });
   common.sort();
+  // 소분류 안 검색 (N1): 소분류 인기순 자리마다 문서 번호. 같은 재료가 다른 소분류에 먼저 놓였으면 그 문서 번호
+  const subDocs = new Map<string, SubDocsFile>();
+  for (const c of categories) {
+    for (const s of c.subcategories) {
+      const docs = (lists.get(`${c.id}/${s.id}`) ?? []).map((r) => docOf.get(r.item.id) ?? -1);
+      subDocs.set(`${c.id}-${s.id}`, encodeSubDocs(docs));
+    }
+  }
   const meta: SearchMeta = { v: 1, docs: doc, shards: shardCount, block, cats, subs, syn: words, common };
-  return { meta, shards, blocks };
+  return { meta, shards, blocks, subDocs };
 }
 
 function add(postings: Map<string, { n: number[]; o: number[] }>[], shardCount: number, token: string, field: 'n' | 'o', doc: number): void {

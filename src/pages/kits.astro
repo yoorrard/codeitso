@@ -13,12 +13,7 @@ const kits = allKits();
 const groups = KIT_THEMES.map((t) => ({ id: t, ...ko.kits.themes[t], kits: kits.filter((k) => k.theme === t) })).filter((g) => g.kits.length > 0);
 ---
 
-<Base title={ko.kits.pageTitle} description={fill(ko.kits.pageLead, { n: kits.length })}>
-  <nav class="crumbs" aria-label={ko.list.breadcrumb}>
-    <ol>
-      <li><a href={ROUTES.home}>{ko.site.name}</a></li>
-    </ol>
-  </nav>
+<Base title={ko.kits.pageTitle} description={fill(ko.kits.pageLead, { n: kits.length })} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
   <header class="list-head">
     <h1>{ko.kits.pageTitle}</h1>
     <p class="page-lead">{fill(ko.kits.pageLead, { n: kits.length })}</p>

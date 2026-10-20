@@ -1,9 +1,9 @@
 // 브라우저 저장은 이 파일 한 곳에서만 한다 (docs/ARCHITECTURE.md 5절, CLAUDE.md 꼭 지킬 것 2).
-// v5.1: 장바구니(담은 재료와 메모), 프로젝트 메모, 지난 프롬프트, 최근 본 재료, 설정, 연 용어, 집계 기록.
+// v5.1: 장바구니(담은 재료와 메모), 프로젝트 메모, 지난 프롬프트, 최근 본 재료, 찜(N1), 설정, 연 용어, 집계 기록.
 // localStorage를 못 쓰면(사생활 보호 모드, 막힌 저장소) 메모리에만 두고 $storageOk를 false로 둔다.
 import { persistentAtom, setPersistentEngine } from '@nanostores/persistent';
 import { atom, computed } from 'nanostores';
-import type { AddResult, CartLine, Meta, Prefs, PromptEntry, RecentItem } from './saved.ts';
+import type { AddResult, CartLine, Meta, Prefs, PromptEntry, RecentItem, WishItem } from './saved.ts';
 import {
   DEFAULT_PREFS,
   EMPTY_META,
@@ -25,7 +25,9 @@ import {
   readProject,
   readPrompts,
   readRecent,
+  readWish,
   samePrompt,
+  toggleWishList,
 } from './saved.ts';
 
 /** 빌드(서버)에서는 저장소가 없어도 안내를 띄우지 않는다. 브라우저에서만 실제로 써 본다. */
@@ -80,7 +82,8 @@ function codec<T>(read: (raw: unknown) => T, empty: (v: T) => boolean): { encode
 export const $cart = persistentAtom<CartLine[]>(KEYS.cart, [], codec(readCart, isEmptyList));
 export const $project = persistentAtom<string>(KEYS.project, '', codec(readProject, (s) => s === ''));
 export const $prompts = persistentAtom<PromptEntry[]>(KEYS.prompts, [], codec(readPrompts, isEmptyList));
-export const $recent = persistentAtom<RecentItem[]>(KEYS.recent, [], codec(readRecent, isEmptyList));
+export const $recent = persistentAtom<RecentItem[]>(KEYS.recent, [], codec((raw) => readRecent(raw), isEmptyList));
+export const $wish = persistentAtom<WishItem[]>(KEYS.wish, [], codec(readWish, isEmptyList));
 export const $meta = persistentAtom<Meta>(KEYS.meta, EMPTY_META, codec(readMeta, isEmptyMeta));
 export const $prefs = persistentAtom<Prefs>(KEYS.prefs, DEFAULT_PREFS, codec(readPrefs, isDefaultPrefs));
 
@@ -160,6 +163,26 @@ export function clearRecent(): void {
   $recent.set([]);
 }
 
+/** 찜을 켜고 끈다. 켰으면 'on', 껐으면 'off', 가득 차서 못 켰으면 'full' */
+export function toggleWish(item: Omit<WishItem, 'at'>, now: number): 'on' | 'off' | 'full' {
+  const r = toggleWishList($wish.get(), { ...item, at: now });
+  if (!r.full) $wish.set(readWish(r.list));
+  return r.full ? 'full' : r.on ? 'on' : 'off';
+}
+
+export function removeWish(id: string): void {
+  $wish.set($wish.get().filter((x) => x.id !== id));
+}
+
+export function clearWish(): void {
+  $wish.set([]);
+}
+
+/** 뺀 찜을 되돌린다 (찜한 재료 쪽의 [되돌리기]): 뺄 때 잡아 둔 목록 그대로 */
+export function restoreWish(list: readonly WishItem[]): void {
+  $wish.set(readWish(list));
+}
+
 export function setPrefs(patch: Partial<Prefs>): void {
   $prefs.set(readPrefs({ ...$prefs.get(), ...patch }));
 }
@@ -192,12 +215,13 @@ export function rememberSent(key: string): boolean {
   return true;
 }
 
-/** '저장한 기록 지우기': 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·연 용어·집계 기록을 지운다. 설정(동작 줄이기)은 기록이 아니라서 남긴다 */
+/** '저장한 기록 지우기': 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·찜·연 용어·집계 기록을 지운다. 설정(동작 줄이기)은 기록이 아니라서 남긴다 */
 export function clearAll(): void {
   $cart.set([]);
   $project.set('');
   $prompts.set([]);
   $recent.set([]);
+  $wish.set([]);
   $meta.set(EMPTY_META);
   $termsSeen.set([]);
 }

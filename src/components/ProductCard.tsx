@@ -1,6 +1,7 @@
 // 상품 카드 (목록·기획전·검색). Astro가 빌드 때 정적으로 그리고(홈·카테고리), 목록 섬(Listing)이 다른 쪽을 같은 모양으로 그린다.
 // 카드 전체를 누르면 상세로 간다(이름 링크를 카드 위로 넓힌다). [담기]는 링크 밖의 따로 누르는 버튼이고,
 // 누름·담은 상태는 src/lib/cart-buttons.ts가 한 곳에서 맡는다 (data-add, data-in). 이미 담은 카드를 누르면 장바구니 서랍이 그 줄을 연다.
+// 오른쪽 위 하트(찜, N1)도 링크 밖 버튼이고 src/lib/wish-buttons.ts가 맡는다 (data-wish, aria-pressed).
 import { ko } from '../copy/ko.ts';
 import type { Card } from '../lib/catalog/types.ts';
 import { METRIC_ICON, factLabel, metricText } from '../lib/labels.ts';
@@ -49,6 +50,23 @@ export function ProductCard({ card, slot = '', level = 'h3' }: Props) {
           {card.license && <span class="card-lic">{card.license}</span>}
         </p>
       </div>
+      <button
+        type="button"
+        class="wish-btn"
+        data-wish={card.id}
+        data-name={card.name}
+        data-cat={card.cat}
+        data-sub={card.sub}
+        aria-pressed="false"
+        aria-label={fill(ko.card.wishLabel, { name: card.name })}
+      >
+        <span class="wish-off" aria-hidden="true">
+          <Icon name="heart" size="20px" />
+        </span>
+        <span class="wish-on" aria-hidden="true">
+          <Icon name="heartFill" size="20px" />
+        </span>
+      </button>
       <button
         type="button"
         class="add-btn"

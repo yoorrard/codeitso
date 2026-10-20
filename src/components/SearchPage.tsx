@@ -2,6 +2,7 @@
 // 진열대 빌드가 만든 작은 파일만 그때그때 받는다: 메타 1개 → 질의 낱말의 조각 몇 개 → 보일 카드가 든 블록 몇 개 (src/lib/catalog/search.ts).
 // 결과는 대분류별로 묶어 10장씩 보이고, 대분류를 고르면 그 안에서 60장씩 쪽을 넘긴다. 치는 동안 잠깐 멈추면 찾고 주소를 바꾼다(replaceState),
 // 대분류·쪽을 바꾸면 기록을 남긴다(pushState, 뒤로 가기 됨). 바꾼 뒤에는 결과 제목으로 초점을 옮기고 결과 수를 알린다.
+// 대분류 쪽 검색창(?cat=)으로 왔거나 대분류를 골랐으면 고쳐 쳐도 그 대분류 안에서 찾는다(N1). 그 대분류에 결과가 없으면 그렇게 알리고 전체 결과로 가는 링크를 둔다.
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
@@ -105,6 +106,8 @@ export default function SearchPage({ nav }: Props) {
   const timer = useRef<number | undefined>(undefined);
   const catOrder = useMemo(() => nav.map((c) => c.id), [nav]);
   const catName = (id: string): string => nav.find((c) => c.id === id)?.name ?? id;
+  /** 고쳐 칠 때 지킬 대분류: 지금 보고 있는(또는 바라는) 대분류 */
+  const scope = (): string | null => (shown ? shown.want.cat : (want?.cat ?? null));
 
   async function run(w: Want, how: 'push' | 'replace' | 'none', focus: boolean): Promise<void> {
     const my = (ticket.current += 1);
@@ -130,7 +133,8 @@ export default function SearchPage({ nav }: Props) {
       if (my !== ticket.current) return;
       const res = runQuery(terms, (n) => loaded.get(n), meta.shards);
       const groups = orderGroups(groupByCategory(res.hits, meta.cats), catOrder);
-      const cat = w.cat && groups.some((g) => g.cat === w.cat) ? w.cat : null;
+      // 아는 대분류만 지킨다 (결과가 없어도 지켜서 '여기에는 없다'를 알린다)
+      const cat = w.cat && (catOrder as readonly string[]).includes(w.cat) ? w.cat : null;
       const cards = new Map<string, Card[]>();
       let page = 1;
       if (cat) {
@@ -181,13 +185,13 @@ export default function SearchPage({ nav }: Props) {
     const v = (e.target as HTMLInputElement).value;
     setInput(v);
     window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => void run({ q: v.trim(), cat: null, page: 1 }, 'replace', false), DEBOUNCE_MS);
+    timer.current = window.setTimeout(() => void run({ q: v.trim(), cat: scope(), page: 1 }, 'replace', false), DEBOUNCE_MS);
   };
 
   const onSubmit = (e: Event): void => {
     e.preventDefault();
     window.clearTimeout(timer.current);
-    void run({ q: input.trim(), cat: null, page: 1 }, 'push', false);
+    void run({ q: input.trim(), cat: scope(), page: 1 }, 'push', false);
   };
 
   const move = (cat: string | null, page = 1): void => {
@@ -289,6 +293,13 @@ function Results({ shown, busy, head, catName, move }: ResultsProps) {
                 </a>
               </li>
             ))}
+            {cat && inCat === 0 && (
+              <li>
+                <a class="chip" href={searchPath(want.q, cat)} aria-current="page" data-cat={cat}>
+                  {catName(cat)} <span class="chip-n">0</span>
+                </a>
+              </li>
+            )}
           </ul>
         </nav>
       )}
@@ -316,6 +327,14 @@ function Results({ shown, busy, head, catName, move }: ResultsProps) {
           <p>{ko.search.empty}</p>
           <a class="btn" href={ROUTES.home}>
             {ko.search.emptyBrowse}
+          </a>
+        </div>
+      )}
+      {cat && total > 0 && inCat === 0 && (
+        <div class="search-empty">
+          <p>{fill(ko.search.emptyIn, { cat: catName(cat), q: want.q })}</p>
+          <a class="btn" href={searchPath(want.q)} onClick={go(null)}>
+            {fill(ko.search.emptyInAll, { n: withCommas(total) })}
           </a>
         </div>
       )}

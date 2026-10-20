@@ -6,6 +6,7 @@ import notices from '../../../THIRD_PARTY_NOTICES.md?raw';
 import { ko } from '../../copy/ko.ts';
 import { withCommas } from '../../lib/catalog/core.ts';
 import { categories, sources } from '../../lib/catalog/site.ts';
+import { ROUTES } from '../../lib/routes.ts';
 
 const C = ko.credits;
 const names = new Map(categories().map((c) => [c.id, c.nameKo]));
@@ -23,7 +24,7 @@ const rows = section
   );
 ---
 
-<Base title={C.pageTitle}>
+<Base title={C.pageTitle} back={ROUTES.about}>
   <article class="prose is-wide">
     <h1>{C.title}</h1>
     <p class="page-lead">{C.lead}</p>

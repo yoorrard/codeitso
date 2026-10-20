@@ -38,7 +38,10 @@
     "import:ai": "node scripts/import/ai-import.ts",
     "import:api": "node scripts/import/api-all.ts",
     "import:oss": "node scripts/import/oss-all.ts",
-    "import:media": "node scripts/import/media-readme.ts"
+    "import:media": "node scripts/import/media-readme.ts",
+    "refresh": "node scripts/import/refresh-all.ts",
+    "ko": "node scripts/i18n/template-ko.ts",
+    "ko:translate": "node scripts/i18n/translate.ts"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",

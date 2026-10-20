@@ -43,11 +43,14 @@ function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, 'utf8')) as T;
 }
 
-/** data/catalog-ko/*.json을 모두 읽어 id → 한국어 설명. 읽지 못한 파일(쓰는 중이거나 깨진 JSON)은 알리고 건너뛴다 */
-export function readKo(dir: string = KO_DIR): Map<string, string> {
+/**
+ * data/catalog-ko/*.json을 모두 읽어 id → 한국어 설명. 읽지 못한 파일(쓰는 중이거나 깨진 JSON)은 알리고 건너뛴다.
+ * 같은 id가 여러 파일에 있으면 이름 순으로 먼저 읽은 것이 이긴다: agent(사람이 살핀 번역) → auto-<n>(매일 번역) → template(자료로 만든 문장) (D128).
+ */
+export function readKo(dir: string = KO_DIR, skip: readonly string[] = []): Map<string, string> {
   const out = new Map<string, string>();
   if (!existsSync(dir)) return out;
-  for (const name of readdirSync(dir).filter((n) => n.endsWith('.json')).sort()) {
+  for (const name of readdirSync(dir).filter((n) => n.endsWith('.json') && !skip.includes(n)).sort()) {
     let raw: unknown;
     try {
       raw = readJson<unknown>(join(dir, name));
@@ -56,7 +59,7 @@ export function readKo(dir: string = KO_DIR): Map<string, string> {
       continue;
     }
     if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) continue;
-    for (const [id, v] of Object.entries(raw)) if (typeof v === 'string' && v.trim() !== '') out.set(id, v);
+    for (const [id, v] of Object.entries(raw)) if (typeof v === 'string' && v.trim() !== '' && !out.has(id)) out.set(id, v);
   }
   return out;
 }
@@ -70,6 +73,22 @@ export function readMedia(dir: string = MEDIA_DIR): Map<string, [string, string 
   for (const [id, v] of Object.entries(raw.images ?? {})) {
     const still = raw.stills?.[id];
     if (typeof v === 'string') out.set(id, [v, typeof still === 'string' ? still : undefined]);
+  }
+  return out;
+}
+
+/** 가져온 그대로의 상품(한국어·그림을 붙이기 전)과 출처 파일 안 인기 점수. 한국어 설명 스크립트(scripts/i18n/)가 쓴다 */
+export function rawItems(dir: string = DIR): Ranked[] {
+  const out: Ranked[] = [];
+  for (const cat of CATEGORY_ORDER) {
+    const catDir = join(dir, cat);
+    if (!existsSync(catDir)) continue;
+    for (const name of readdirSync(catDir).filter((n) => n.endsWith('.json') && n !== 'index.json').sort()) {
+      const file = readJson<{ items?: CatalogItem[] }>(join(catDir, name));
+      if (!Array.isArray(file.items)) continue;
+      const pops = filePopularity(file.items);
+      file.items.forEach((item, i) => out.push({ item, pop: pops[i] ?? 0 }));
+    }
   }
   return out;
 }

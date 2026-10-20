@@ -23,6 +23,8 @@ interface Step {
 interface Lane {
   group: Group;
   steps: Step[];
+  /** GitHub 토큰을 넘길 줄 (주제 검색을 하는 oss-github·tpl-github). 나머지 줄은 토큰 없이 거울 서버(ecosyste.ms)로 받는다 */
+  token?: boolean;
 }
 
 const s = (...files: string[]): Step[] => files.map((file) => ({ file }));
@@ -39,10 +41,13 @@ export const LANES: Record<string, Lane> = {
   'ai-rules': { group: 'ai', steps: s('ai-rules.ts', 'ai-workflows.ts') },
   api: { group: 'api', steps: s('api-curated.ts', 'api-public-apis.ts', 'api-kr-4kr.ts', 'api-apis-guru.ts') },
   'api-kr': { group: 'api', steps: [weekly('api-data-go-kr.ts')] },
-  oss: { group: 'oss', steps: s('oss-hf.ts', 'oss-ollama.ts', 'oss-selfhosted.ts', 'oss-awesome.ts', 'oss-packages.ts', 'oss-forges.ts', 'oss-github.ts') },
+  // oss-github은 같은 대분류의 다른 출처 파일로 겹침을 뺀다. HF·꾸러미 목록은 GitHub 저장소와 거의 겹치지 않아(겹쳐도 하루 늦게 빠짐) 따로 돈다
+  'oss-hf': { group: 'oss', steps: s('oss-hf.ts') },
+  'oss-pkg': { group: 'oss', steps: s('oss-packages.ts') },
+  oss: { group: 'oss', token: true, steps: s('oss-ollama.ts', 'oss-selfhosted.ts', 'oss-awesome.ts', 'oss-forges.ts', 'oss-github.ts') },
   data: { group: 'oss', steps: [...s('data-hf.ts', 'data-kaggle.ts', 'data-worldbank.ts'), weekly('data-go-kr.ts'), ...s('data-collections.ts')] },
   'data-owid': { group: 'oss', steps: [weekly('data-owid.ts')] },
-  tpl: { group: 'oss', steps: s('tpl-vercel.ts', 'tpl-official.ts', 'tpl-astro.ts', 'tpl-galleries.ts', 'tpl-github.ts') },
+  tpl: { group: 'oss', token: true, steps: s('tpl-vercel.ts', 'tpl-official.ts', 'tpl-astro.ts', 'tpl-galleries.ts', 'tpl-github.ts') },
 };
 
 const INDEX: Record<Group, string> = { design: 'design-index.ts', ai: 'ai-index.ts', api: 'api-index.ts', oss: 'oss-index.ts' };
@@ -70,6 +75,11 @@ const withWeekly = process.env.REFRESH_ALL === '1' || isWeeklyDay(new Date());
 const logDir = join(ROOT, '.cache', 'refresh');
 mkdirSync(logDir, { recursive: true });
 const baseEnv = { ...process.env, ...(process.env.HTTPS_PROXY || process.env.https_proxy ? { NODE_USE_ENV_PROXY: '1', NODE_NO_WARNINGS: '1' } : {}) };
+// 토큰이 있으면 디자인·AI 가져오기는 저장소마다 gh CLI를 차례로 불러(동시 요청 없음) 시간당 1,000회 한도를 다 쓰고 느려진다
+// (첫 Actions 실행에서 45분 넘게 걸림). 그래서 토큰은 주제 검색 줄에만 준다.
+const noTokenEnv: NodeJS.ProcessEnv = { ...baseEnv };
+delete noTokenEnv.GITHUB_TOKEN;
+delete noTokenEnv.GH_TOKEN;
 const aiCache = process.env.AI_IMPORT_CACHE ?? join(ROOT, '.cache', 'ai-import');
 
 const stepLimitMs = (Number(process.env.REFRESH_STEP_MINUTES) || 25) * 60_000;
@@ -96,7 +106,8 @@ function runScript(file: string, log: string, env: NodeJS.ProcessEnv, limitMs: n
 async function runLane(name: string, lane: Lane): Promise<StepResult[]> {
   const log = join(logDir, `${name}.log`);
   writeFileSync(log, '');
-  const env = lane.group === 'ai' ? { ...baseEnv, AI_IMPORT_CACHE: join(aiCache, name) } : baseEnv;
+  const own = lane.token ? baseEnv : noTokenEnv;
+  const env = lane.group === 'ai' ? { ...own, AI_IMPORT_CACHE: join(aiCache, name) } : own;
   const out: StepResult[] = [];
   for (const step of lane.steps) {
     if (step.weekly && !withWeekly) continue;

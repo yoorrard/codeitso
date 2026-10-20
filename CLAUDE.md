@@ -46,7 +46,7 @@
 | `npm run build` | 진열대 빌드(`npm run catalog`, 자료·코드가 그대로면 건너뜀) → Astro 빌드 → `dist/` |
 | `npm run catalog` | `data/catalog/**` → `public/catalog/`(목록 묶음·상세 조각·검색 조각·결과 블록·거르기 파일, 약 25초) + `.cache/catalog/site.json`(Astro 요약) |
 | `npm run import` / `import:design` · `import:ai` · `import:api` · `import:oss` | 진열대 자료 다시 받기 (네트워크 필요, `docs/DATA.md`) |
-| `npm run refresh` / `ko` / `ko:translate` | 가져오기 14줄을 함께 다시 받기(매일 작업 흐름이 쓴다, 느린 출처는 월요일만) / 자료로 만드는 한국어 설명 / 남은 상품 번역(OpenAI 호환 주소·열쇠가 있을 때만, D128) |
+| `npm run refresh` / `ko` / `ko:translate` | 가져오기 16줄을 함께 다시 받기(매일 작업 흐름이 쓴다, 느린 출처는 월요일만) / 자료로 만드는 한국어 설명 / 남은 상품 번역(OpenAI 호환 주소·열쇠가 있을 때만, D128) |
 | `npm test` | Vitest 단위 시험 |
 | `npm run guard` / `words` | 품질 바닥선 (토큰 밖 값, 외부 자원, 코드 속 문장, any, 시험 건너뛰기, 주소 글자) / 쓰지 않는 말·해요체 |
 | `npm run e2e` | Playwright 주요 흐름(홈 → 카테고리 → 2쪽 → 상세 → 담기 → 장바구니, 390·1440), 정렬, 메뉴, 전체 검색, 거르기, 폰트 견본, 종류별 미리 보기, 장바구니·영수증, 용어 풀이, CSP, axe. 먼저 `npm run build` |

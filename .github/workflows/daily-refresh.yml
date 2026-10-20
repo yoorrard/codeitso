@@ -4,7 +4,7 @@
 # - 배포 가지: 저장소 변수 DEPLOY_BRANCH (없으면 claude/focused-bell-a92t1m).
 # - 번역: OpenAI 호환 주소를 저장소 변수 TRANSLATE_API_URL·TRANSLATE_MODEL, 비밀 값 TRANSLATE_API_KEY로 주면 돈다. 없으면 건너뛴다.
 #   (GitHub Models는 2026-07-30에 닫혀 쓸 수 없다.) 한 번에 번역할 수는 TRANSLATE_BUDGET(기본 200).
-# - 시간: 가져오기를 14줄로 나눠 함께 돌린다(scripts/import/refresh-all.ts). 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록·Iconify 묶음 전체·OWID)는
+# - 시간: 가져오기를 16줄로 나눠 함께 돌린다(scripts/import/refresh-all.ts). 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록·Iconify 묶음 전체·OWID)는
 #   월요일(KST)에만 받는다. 비공개 저장소의 Actions 무료 시간(월 2,000분) 안에 들도록 매일 약 18분, 월요일 약 60분을 어림한다.
 # - GITHUB_TOKEN으로 한 푸시는 다른 작업 흐름(check)을 다시 띄우지 않는다.
 name: daily-refresh
@@ -57,13 +57,14 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: 자료 다시 받기 (디자인·AI·API·오픈소스, 14줄을 함께)
+      - name: 자료 다시 받기 (디자인·AI·API·오픈소스, 16줄을 함께)
         run: node scripts/import/refresh-all.ts $GROUPS
         env:
           GROUPS: ${{ github.event.inputs.groups }}
           REFRESH_ALL: ${{ github.event.inputs.all == 'true' && '1' || '' }}
+          # 토큰은 주제 검색 줄(oss·tpl)에만 넘긴다 (refresh-all.ts). 주제마다 별 많은 순 500개까지
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOPIC_PAGES: '5'
       - name: 새 상품의 README 첫 그림
         continue-on-error: true
         run: node scripts/import/media-readme.ts

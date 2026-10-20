@@ -1120,12 +1120,15 @@ export async function repoItems(cands: RepoCandidate[], o: RepoItemOptions): Pro
 // 주제마다 별 많은 순으로 최대 1,000개(API 한도)까지 받는다. 막히면 빈 배열을 돌려주고 알린다.
 let githubSearchBlocked = false;
 
+// 검색 결과에 저장소 정보가 다 들어 있으므로 repoMeta 기억에 넣어 둔다 (후보마다 거울 서버에 다시 묻지 않는다, D128).
+// 쪽 수는 GITHUB_TOPIC_PAGES(기본 10, 쪽마다 100개)로 줄일 수 있다: 매일 작업 흐름은 5쪽만 받는다.
 export async function githubTopicRepos(topic: string, minStars: number): Promise<RepoMeta[]> {
   if (githubSearchBlocked) return [];
-  return cached(`gh-topic-${topic}-${minStars}`, async () => {
+  const pages = Math.min(10, Math.max(1, Number(process.env.GITHUB_TOPIC_PAGES) || 10));
+  const list = await cached(`gh-topic-${topic}-${minStars}-${pages}`, async () => {
     const out: RepoMeta[] = [];
     const token = process.env.GITHUB_TOKEN ?? process.env.GH_TOKEN;
-    for (let page = 1; page <= 10; page++) {
+    for (let page = 1; page <= pages; page++) {
       const q = encodeURIComponent(`topic:${topic} stars:>=${minStars} fork:false`);
       const res = await fetchRaw(`https://api.github.com/search/repositories?q=${q}&sort=stars&order=desc&per_page=100&page=${page}`, {
         headers: { accept: 'application/vnd.github+json', ...(token ? { authorization: `Bearer ${token}` } : {}) },
@@ -1156,6 +1159,8 @@ export async function githubTopicRepos(topic: string, minStars: number): Promise
     }
     return out;
   }, 7);
+  for (const m of list) if (!repoMemo.has(m.fullName.toLowerCase())) repoMemo.set(m.fullName.toLowerCase(), m);
+  return list;
 }
 
 // ---------- 출처 사이 겹침 ----------

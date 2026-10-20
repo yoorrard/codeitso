@@ -34,7 +34,7 @@
 - `npm run import`(전체) 또는 `import:design`·`import:ai`·`import:api`·`import:oss`(오픈소스·데이터셋·템플릿). 네트워크가 필요하고 처음에는 오래 걸린다(공식 MCP 등록소 약 60분, 공공데이터포털 약 15분). 요청 캐시는 저장소 밖.
 - 같은 날 다시 돌리면 바이트가 같은 파일이 나온다. 다 받은 뒤 `npx vitest run tests/import`로 스키마·id·개수를 본다.
 - GitHub 검색 API가 막힌 환경에서는 repos.ecosyste.ms와 awesome 목록으로 대신 받는다. `GITHUB_TOKEN`이 있으면 GitHub 주제 검색을 더한다.
-- **매일 (D128):** `.github/workflows/daily-refresh.yml`이 03:17 KST에 가져오기를 14줄로 함께 받고(`npm run refresh`, 기록은 `.cache/refresh/`, 공공데이터포털·Iconify 묶음·OWID는 월요일에만) → 새 상품 README 그림 → `npm run ko` → 번역(열쇠가 있을 때만) → `npm test` → `npm run catalog`가 통과하면 `data/`를 배포 가지에 올린다. 예약 실행은 이 파일이 main에 있어야 돈다(HUMAN H24).
+- **매일 (D128):** `.github/workflows/daily-refresh.yml`이 03:17 KST에 가져오기를 16줄로 함께 받고(`npm run refresh`, 기록은 `.cache/refresh/`, 공공데이터포털·Iconify 묶음·OWID는 월요일에만) → 새 상품 README 그림 → `npm run ko` → 번역(열쇠가 있을 때만) → `npm test` → `npm run catalog`가 통과하면 `data/`를 배포 가지에 올린다. 예약 실행은 이 파일이 main에 있어야 돈다(HUMAN H24).
 
 ## 4. 화면에 싣기
 

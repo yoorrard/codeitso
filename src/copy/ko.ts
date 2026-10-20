@@ -53,7 +53,7 @@ export const ko = {
     stepsFile: 'my-app-prompt.md',
     steps: [
       { title: '담기', desc: '마음에 드는 재료를 장바구니에 담아요.' },
-      { title: '어디에 쓸지 메모', desc: '쓰고 싶을 때만 한 줄 적어요.' },
+      { title: '어디에 쓸지 메모', desc: '구체적인 요구 사항이 있을 때만 적어요.' },
       { title: '프롬프트 뽑기', desc: '복사해서 내 AI에 붙여 넣어요.' },
     ],
     stepsNote: '프롬프트에는 재료와 쓸 곳만 적혀요. 만드는 방법은 내 AI와 이야기해요.',

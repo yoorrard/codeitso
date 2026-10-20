@@ -1,8 +1,9 @@
 ---
 // 홈 (brief 3절·7절, v5.1 D124): 처음·중간 바이브코더가 '무엇을 만들지'에서 출발하게 짠다.
 // 검색이 먼저인 첫 칸(큰 검색창 + 많이 찾는 재료 칩) 옆에 쓰는 법 세 걸음(프롬프트 창과 같은 단말 모양) →
-// 무엇을 만들고 싶어요?(키트) → 카테고리 → 최근 본 재료(있을 때만) → 기획전 다섯 줄(AI 코딩 툴 재료가 먼저, 한글 폰트는 끝).
-// PC 첫 화면(1440×900)에 검색·세 걸음·키트 카드가 다 보이게 위를 낮게 둔다.
+// 무엇을 만들고 싶어요?(키트 다섯 장) → 카테고리 → 최근 본 재료(있을 때만) → 기획전 다섯 줄(AI 코딩 툴 재료가 먼저, 한글 폰트는 끝).
+// PC 첫 화면(1440×900)에 검색·세 걸음·키트 카드가 다 보이게 위를 낮게 둔다. 진열 칸마다 '모두 보기'를 둔다 (K1 D131, 더 볼 게 없어도):
+// 키트 → /kits, 카테고리 → /c, 최근 본 재료 → /recent, 기획전 줄 → 소분류 목록이나 대분류 쪽.
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import KitShelf from '../components/KitShelf.astro';
@@ -10,7 +11,7 @@ import { ProductCard } from '../components/ProductCard.tsx';
 import RecentRow from '../components/RecentRow.tsx';
 import { ko } from '../copy/ko.ts';
 import { withCommas } from '../lib/catalog/core.ts';
-import { categories, homeKits, homeRows, totalItems } from '../lib/catalog/site.ts';
+import { categories, categoryNames, homeKits, homeRows, totalItems } from '../lib/catalog/site.ts';
 import { CATEGORY_ICON } from '../lib/icons.ts';
 import { ROUTES, categoryPath, listPath, searchPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
@@ -18,8 +19,6 @@ import { fill } from '../lib/text.ts';
 const cats = categories();
 const rows = homeRows();
 const kits = homeKits();
-/** 최근 본 재료 줄의 이름표: 대분류 id → 이름, '대분류/소분류' → 소분류 이름 */
-const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c.id, c.nameKo], ...c.subcategories.map((s) => [`${c.id}/${s.id}`, s.nameKo])]));
 ---
 
 <Base>
@@ -77,6 +76,10 @@ const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c
   <section class="sec" aria-labelledby="cats-title">
     <div class="sec-head">
       <h2 id="cats-title">{ko.home.categoriesTitle}</h2>
+      <a class="sec-more" href={ROUTES.categories} aria-label={fill(ko.home.moreOf, { title: ko.home.categoriesTitle })}>
+        {ko.home.more}
+        <Icon name="chevron" size="16px" />
+      </a>
     </div>
     <ul class="cat-tiles">
       {
@@ -96,7 +99,7 @@ const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c
     </ul>
   </section>
 
-  <RecentRow client:idle names={names} />
+  <RecentRow client:idle names={categoryNames()} />
 
   {
     rows.map((r) => (
@@ -106,12 +109,14 @@ const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c
             <h2 id={`row-${r.id}`}>{ko.home.rows[r.id]}</h2>
             <p class="sec-lead">{ko.home.rowLeads[r.id]}</p>
           </div>
-          {r.more && (
-            <a class="sec-more" href={listPath(r.more.cat, r.more.sub)} aria-label={fill(ko.home.moreOf, { title: ko.home.rows[r.id] })}>
-              {ko.home.more}
-              <Icon name="chevron" size="16px" />
-            </a>
-          )}
+          <a
+            class="sec-more"
+            href={r.more.sub ? listPath(r.more.cat, r.more.sub) : categoryPath(r.more.cat)}
+            aria-label={fill(ko.home.moreOf, { title: ko.home.rows[r.id] })}
+          >
+            {ko.home.more}
+            <Icon name="chevron" size="16px" />
+          </a>
         </div>
         <ul class="row-track">
           {r.cards.map((c, i) => (

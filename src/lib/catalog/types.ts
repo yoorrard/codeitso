@@ -1,4 +1,5 @@
 import type { FacetMeta } from './facets.ts';
+import type { KitTheme } from '../kits.ts';
 import type { SceneId } from './scene.ts';
 
 // 진열대 자료의 모양 (docs/review/v5/brief.md 2절, schemas/catalog-*.json). 가져오기 스크립트(scripts/import/)가 만든
@@ -163,17 +164,20 @@ export interface ListChunk {
 export interface Row {
   id: 'aiTools' | 'openApis' | 'aiApis' | 'templates' | 'fontsKo';
   cards: Card[];
-  /** '모두 보기' 대상 소분류 */
-  more?: { cat: CategoryId; sub: string };
+  /** '모두 보기' 대상: 소분류 목록, sub가 없으면 대분류 쪽 (K1: 홈의 모든 줄에 있다) */
+  more: { cat: CategoryId; sub?: string };
 }
 
-/** 스타터 키트 한 묶음 (홈, data/kits.json → 진열대 빌드): 한 번에 담는 재료 카드 */
+/** 스타터 키트 한 묶음 (홈·/kits, data/kits.json → 진열대 빌드): 한 번에 담는 재료 카드와 구현안 */
 export interface KitData {
   /** src/lib/kits.ts KIT_IDS 중 하나 */
   id: string;
+  theme: KitTheme;
   name: string;
   desc: string;
   cards: Card[];
+  /** 구현안: 만드는 차례 3~6줄 */
+  outline: string[];
 }
 
 /** 출처 파일 머리 (/about/credits): 출처 이름·주소·라이선스 설명 */
@@ -196,7 +200,10 @@ export interface SiteData {
   fetched: string;
   categories: CategoryMeta[];
   rows: Row[];
+  /** 모든 키트 (data/kits.json 순서, 주제끼리 붙어 있다) */
   kits: KitData[];
+  /** 홈에 싣는 키트 id (data/kits.json home) */
+  kitHome: string[];
   tops: Record<string, Card[]>;
   first: Record<string, Card[]>;
   /** `${대분류}/${소분류}` → 거르기 칸 (값·개수). 칸이 없으면 빈 배열 (facets.ts) */

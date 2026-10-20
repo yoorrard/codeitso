@@ -3,12 +3,13 @@
 import Base from '../../../layouts/Base.astro';
 import Icon from '../../../components/Icon.astro';
 import { ProductCard } from '../../../components/ProductCard.tsx';
+import SubTiles from '../../../components/SubTiles.astro';
 import { ko } from '../../../copy/ko.ts';
 import { withCommas } from '../../../lib/catalog/core.ts';
 import { categories, topsOf } from '../../../lib/catalog/site.ts';
 import type { CategoryMeta } from '../../../lib/catalog/types.ts';
 import { CATEGORY_ICON } from '../../../lib/icons.ts';
-import { ROUTES, listPath } from '../../../lib/routes.ts';
+import { ROUTES } from '../../../lib/routes.ts';
 import { fill } from '../../../lib/text.ts';
 
 export function getStaticPaths() {
@@ -38,20 +39,7 @@ const tops = topsOf(meta.id);
 
   <section class="sec" aria-labelledby="subs-title">
     <h2 id="subs-title" class="visually-hidden">{fill(ko.category.subsTitle, { name: meta.nameKo })}</h2>
-    <ul class="sub-tiles" data-cat={meta.id}>
-      {
-        meta.subcategories.map((s) => (
-          <li>
-            <a class="sub-tile" href={listPath(meta.id, s.id)}>
-              <span class="sub-tile-name">{s.nameKo}</span>
-              <span class="sub-tile-n">{withCommas(s.count)}</span>
-              {s.descKo && <span class="sub-tile-desc">{s.descKo}</span>}
-              <span class="sub-tile-src">{s.sources.map((x) => x.name).slice(0, 3).join(' · ')}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <SubTiles meta={meta} />
   </section>
 
   <section class="sec" aria-labelledby="tops-title">

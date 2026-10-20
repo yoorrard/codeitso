@@ -54,6 +54,12 @@ export const PATHS = {
   search: '/search',
   cart: '/cart',
   prompts: '/prompts',
+  /** 스타터 키트 모두 (K1) */
+  kits: '/kits',
+  /** 최근 본 재료 모두 (K1) */
+  recent: '/recent',
+  /** 전체 카테고리 (K1) */
+  categories: '/c',
   item: '/item',
   terms: '/terms',
   about: '/about',
@@ -139,6 +145,16 @@ export function facetDataPath(cat: string, sub: string): string {
 /** 거르기용 정렬 순서 파일 (이름순·최근 갱신순) */
 export function facetOrderPath(cat: string, sub: string, sort: Exclude<SortKey, 'popular'>): string {
   return withBase(`/catalog/facet/${cat}/${sub}-${sort}.json`);
+}
+
+/** 스타터 키트 쪽의 한 키트 (K1) */
+export function kitPath(id: string): string {
+  return `${ROUTES.kits}#kit-${encodeURIComponent(id)}`;
+}
+
+/** 스타터 키트 쪽의 한 주제 묶음 (K1) */
+export function kitThemePath(theme: string): string {
+  return `${ROUTES.kits}#theme-${encodeURIComponent(theme)}`;
 }
 
 /** 용어 사전의 한 용어 */

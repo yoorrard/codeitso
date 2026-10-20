@@ -34,7 +34,7 @@ const HEAVY_INK = /var\(\s*--(text|brand-navy|primary)\s*\)/;
  * 단계·둘러보는 곳·정보 화면, v3 새 화면, public/ 파일, 빌드가 만드는 끝점.
  */
 export const INTERNAL_PATHS = [
-  'c', 'item', 'search', 'cart', 'prompts', 'receipts', 'receipt', 'terms', 'about', 'legal',
+  'c', 'item', 'search', 'cart', 'prompts', 'receipts', 'receipt', 'terms', 'about', 'legal', 'kits', 'recent',
   'catalog', 'brand', 'fonts', 'og.png', '_astro', 'favicon.ico', 'icon-192.png', 'icon-512.png', 'apple-touch-icon', 'manifest.webmanifest',
   'glossary', 'robots.txt', 'sitemap.xml', 'api',
 ] as const;

@@ -7,6 +7,7 @@ import { cardOf, filePopularity, relatedIndex, shardOf, sortRanked, withKo, with
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
+import { isKitTheme } from '../../src/lib/kits.ts';
 
 export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog');
 /** 코드잇소가 쓴 한국어 설명 (v5.1 D122): <이름>.json = { "<상품 id>": "한국어 설명" }. 폴더나 파일이 없어도 된다 */
@@ -251,8 +252,8 @@ export function homeRows(): Row[] {
     .sort((a, b) => b.pop - a.pop);
   // 홈 줄 순서 (v5.1 D124): AI 코딩 툴 재료 → 키 없이 쓰는 API → AI API → 템플릿 → 한글 폰트. 인기 폰트가 맨 앞에 서지 않게 한다.
   return [
-    { id: 'aiTools', cards: cards(interleave(get('ai/mcp'), get('ai/skill'), ROW_SIZE)), more: { cat: 'ai', sub: 'mcp' } },
-    { id: 'openApis', cards: take(openApis) },
+    { id: 'aiTools', cards: cards(interleave(get('ai/mcp'), get('ai/skill'), ROW_SIZE)), more: { cat: 'ai' } },
+    { id: 'openApis', cards: take(openApis), more: { cat: 'api' } },
     { id: 'aiApis', cards: take(get('api/ai-llm')), more: { cat: 'api', sub: 'ai-llm' } },
     { id: 'templates', cards: take(templates), more: { cat: 'templates', sub: 'web-starter' } },
     { id: 'fontsKo', cards: take(get('design/fonts-ko')), more: { cat: 'design', sub: 'fonts-ko' } },
@@ -264,21 +265,32 @@ export function topOf(cat: CategoryId, sub: string, n: number): Card[] {
   return take(listOf(cat, sub, 'popular'), n);
 }
 
-interface KitsFile {
-  kits: { id: string; nameKo: string; descKo: string; items: string[] }[];
+export interface KitsFile {
+  home: string[];
+  kits: { id: string; theme: string; nameKo: string; descKo: string; items: string[]; outlineKo: string[] }[];
 }
 
-/** 스타터 키트 (data/kits.json): id마다 진열대 카드로. 없는 id가 있으면 빌드를 멈춘다 (자료를 다시 받아 빠진 재료) */
+/** 스타터 키트 파일 (data/kits.json) 그대로 */
+export function kitsFile(file: string = KITS_FILE): KitsFile {
+  return readJson<KitsFile>(file);
+}
+
+/** 스타터 키트 (data/kits.json): id마다 진열대 카드로. 없는 id나 모르는 주제가 있으면 빌드를 멈춘다 (자료를 다시 받아 빠진 재료) */
 export function kits(file: string = KITS_FILE): KitData[] {
   const { byId } = catalog();
-  return readJson<KitsFile>(file).kits.map((k) => ({
-    id: k.id,
-    name: k.nameKo,
-    desc: k.descKo,
-    cards: k.items.map((id) => {
-      const r = byId.get(id);
-      if (!r) throw new Error(`data/kits.json: 키트 ${k.id}의 ${id}가 진열대에 없다`);
-      return card(r.item);
-    }),
-  }));
+  return kitsFile(file).kits.map((k) => {
+    if (!isKitTheme(k.theme)) throw new Error(`data/kits.json: 키트 ${k.id}의 주제 ${k.theme}를 모른다 (src/lib/kits.ts KIT_THEMES)`);
+    return {
+      id: k.id,
+      theme: k.theme,
+      name: k.nameKo,
+      desc: k.descKo,
+      outline: k.outlineKo,
+      cards: k.items.map((id) => {
+        const r = byId.get(id);
+        if (!r) throw new Error(`data/kits.json: 키트 ${k.id}의 ${id}가 진열대에 없다`);
+        return card(r.item);
+      }),
+    };
+  });
 }

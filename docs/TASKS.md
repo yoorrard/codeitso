@@ -456,3 +456,4 @@ T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 �
 2026-10-20 이름 바꿈(D129): 코드쇼퍼 → 코드잇소(codeitso). 화면 문구·문서·규칙·스킬·가져오기 스크립트의 출처 이름, 새 글자 로고(Black Han Sans OFL, 원본처럼 둥근 모서리), 투명 파비콘, wrangler name codeitso, 프롬프트 파일 codeitso-prompt-*.md, words.ts가 옛 이름을 막음. 소유자 몫 H25(대시보드 Worker 이름·PUBLIC_SITE_URL). 학교 정보 키트에 초·중·특수학교 시간표 더함.
 
 2026-10-20 하네스 간소화(D130): v4 스킬 둘·에이전트 넷 지움, /next-task 간소화(검토 에이전트 없이 증거로), 멈춤 훅 통과 기억, 세션 알림 v5로, copy.md 말투를 v5.1에 맞춤.
+2026-10-20 K1 스타터 키트 42개·구현안·/kits, 홈 모든 칸 '모두 보기'(D131): data/kits.json 주제 다섯(교육 12·게임 7·업무·행정 8·가게·생활 7·요즘 인기 AI 8)과 outlineKo, KitCard(홈 다섯 장 / /kits 전부), 새 쪽 /kits·/c(전체 카테고리)·/recent, 홈 줄 more를 모든 줄에(AI 코딩 툴 → /c/ai, 키 없는 API → /c/api), e2e kits.spec(390·1440)·a11y 쪽 셋 더함.

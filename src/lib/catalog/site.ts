@@ -33,13 +33,24 @@ export function navData(): NavCategory[] {
   return categories().map((c) => ({ id: c.id, name: c.nameKo, total: c.total, subs: c.subcategories.map((s) => ({ id: s.id, name: s.nameKo, count: s.count })) }));
 }
 
+/** 최근 본 재료의 이름표: 대분류 id → 이름, '대분류/소분류' → 소분류 이름 */
+export function categoryNames(): Record<string, string> {
+  return Object.fromEntries(categories().flatMap((c) => [[c.id, c.nameKo], ...c.subcategories.map((s) => [`${c.id}/${s.id}`, s.nameKo])]));
+}
+
 export function homeRows(): Row[] {
   return site().rows;
 }
 
-/** 스타터 키트 (data/kits.json) */
-export function homeKits(): KitData[] {
+/** 모든 스타터 키트 (data/kits.json 순서, /kits) */
+export function allKits(): KitData[] {
   return site().kits ?? [];
+}
+
+/** 홈에 싣는 스타터 키트 (data/kits.json home 순서) */
+export function homeKits(): KitData[] {
+  const all = allKits();
+  return (site().kitHome ?? []).flatMap((id) => all.filter((k) => k.id === id));
 }
 
 /** 대분류 쪽의 소분류별 1등 상품 */

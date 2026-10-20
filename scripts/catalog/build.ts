@@ -17,7 +17,7 @@ import { buildFacets, encodeOrder } from '../../src/lib/catalog/facets.ts';
 import { SITE_FILE } from '../../src/lib/catalog/site.ts';
 import type { ListChunk, SiteData } from '../../src/lib/catalog/types.ts';
 import { CHUNK_PAGES, MAX_CATALOG_FILES, PAGE_SIZE, SORTS } from '../../src/lib/catalog/types.ts';
-import { CATALOG_DIR, KITS_FILE, KO_DIR, MEDIA_DIR, card, cards, catalog, categories, homeRows, kits, listOf, shards, topOf } from './load.ts';
+import { CATALOG_DIR, KITS_FILE, KO_DIR, MEDIA_DIR, card, cards, catalog, categories, homeRows, kits, kitsFile, listOf, shards, topOf } from './load.ts';
 import { WORDS_FILE, buildSearch, readWords } from './search-index.ts';
 
 const ROOT = join(import.meta.dirname, '..', '..');
@@ -134,6 +134,7 @@ const site: SiteData = {
   categories: cats,
   rows: homeRows(),
   kits: kits(),
+  kitHome: kitsFile().home,
   tops: Object.fromEntries(cats.map((c) => [c.id, c.subcategories.flatMap((s) => topOf(c.id, s.id, 1)).slice(0, 10)])),
   first: Object.fromEntries(cats.flatMap((c) => c.subcategories.map((s) => [`${c.id}/${s.id}`, listOf(c.id, s.id, 'popular').slice(0, PAGE_SIZE).map((r) => card(r.item))]))),
   facets,

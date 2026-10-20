@@ -82,6 +82,29 @@
   font-size: var(--size-label);
   text-wrap: pretty;
 }
+/* 제목 옆 단추 여럿 (최근 본 재료: 기록 지우기 · 모두 보기) */
+.sec-acts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+/* /c 전체 카테고리: 대분류 제목 (아이콘·이름·개수) */
+.all-cat .sec-head {
+  align-items: center;
+}
+.all-cat-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.all-cat-n {
+  color: var(--text-3);
+  font-size: var(--size-label);
+  font-weight: var(--weight-body);
+}
 .sec-more {
   display: inline-flex;
   align-items: center;

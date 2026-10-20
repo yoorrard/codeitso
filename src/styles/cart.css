@@ -891,6 +891,77 @@
   background: var(--primary);
   color: var(--on-primary);
 }
+/* 홈 카드 이름은 /kits의 그 키트(구현안)로 잇는다 */
+.kit-name a {
+  color: inherit;
+  text-decoration: none;
+}
+.kit-name a:hover {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+/* ── /kits 스타터 키트 쪽 (K1 D131): 주제 칩 → 주제마다 카드 격자, 카드는 재료를 다 펴고 구현안을 함께 ── */
+.kit-themes ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.kit-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 600px) {
+  .kit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .kit-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+}
+@media (min-width: 1440px) {
+  .kit-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.kit.is-full .kit-desc {
+  display: block;
+  overflow: visible;
+}
+.kit.is-full .kit-items {
+  flex: none;
+}
+.kit-sub {
+  margin-block-start: var(--space-1);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.kit-outline {
+  display: grid;
+  gap: var(--space-1);
+  flex: 1;
+  align-content: start;
+  margin: 0;
+  padding-inline-start: 1.4em;
+  color: var(--text);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+.kit-outline li::marker {
+  color: var(--primary);
+  font-weight: var(--weight-strong);
+}
 
 /* ── 홈: 최근 본 재료 ────────────────────────────────────────────────── */
 .recent-track {
@@ -905,6 +976,27 @@
   .recent-track {
     grid-auto-columns: calc((100% - 5 * var(--space-4)) / 6);
   }
+}
+/* /recent: 격자로 모두 (K1) */
+.recent-acts {
+  display: flex;
+  justify-content: flex-end;
+  margin-block: var(--space-4) var(--space-2);
+}
+.recent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.recent-empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  margin-block-start: var(--space-5);
+  color: var(--text-2);
 }
 .recent-tile {
   display: grid;

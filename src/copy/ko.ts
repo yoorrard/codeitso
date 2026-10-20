@@ -429,12 +429,38 @@ export const ko = {
     addedLive: '{{name}}: {{added}}개를 담았어요.',
     addedSkip: '{{name}}: {{added}}개를 담았어요. {{skipped}}개는 이미 담겨 있었어요.',
     allIn: '{{name}}: 모두 이미 담겨 있어요.',
+    /** /kits 스타터 키트 쪽 (K1 D131) */
+    pageTitle: '스타터 키트',
+    pageLead: '만들 앱을 고르면 처음 담기 좋은 재료와 만드는 차례(구현안)를 함께 보여 드려요. 키트 {{n}}개가 주제별로 있어요.',
+    themesLabel: '주제로 보기',
+    themeCount: '{{n}}개',
+    themes: {
+      edu: { name: '교육', lead: '선생님과 학생이 수업·학급·학교생활에 쓰는 앱이에요.' },
+      game: { name: '게임', lead: '2D·3D 웹 게임, 교육용 게임, 3D 에셋 만들기까지 모았어요.' },
+      work: { name: '업무·행정', lead: '문서·회의·예약·보고처럼 되풀이하는 일을 줄여요.' },
+      biz: { name: '가게·생활', lead: '가게 홈페이지·주문부터 날씨·교통·집값·건강 앱까지 모았어요.' },
+      trend: { name: '요즘 인기 AI', lead: '챗봇·에이전트·음성 비서·로컬 LLM처럼 요즘 많이 만드는 앱이에요.' },
+    },
+    itemsTitle: '담기는 재료',
+    outlineTitle: '구현안',
+    /** 한 키트에 같은 이름이 둘일 때 (예: Blender · MCP 서버) */
+    sameName: '{{name}} · {{sub}}',
   },
   recent: {
     title: '최근 본 재료',
     clear: '기록 지우기',
     clearLabel: '최근 본 재료 기록 지우기',
     clearedLive: '최근 본 재료 기록을 지웠어요.',
+    /** /recent 최근 본 재료 쪽 (K1: 홈 '모두 보기') */
+    pageLead: '이 브라우저에서 상세를 열어 본 재료예요. 최근 20개까지 남고, 이 기기 밖으로 나가지 않아요.',
+    empty: '아직 열어 본 재료가 없어요. 재료 상세를 열면 여기에 모여요.',
+    browse: '카테고리 둘러보기',
+  },
+  /** /c 전체 카테고리 쪽 (K1: 홈 '카테고리로 둘러보기' 모두 보기) */
+  allCategories: {
+    pageTitle: '전체 카테고리',
+    lead: '대분류 {{c}}개, 소분류 {{s}}개에 재료 {{n}}개가 있어요.',
+    open: '{{name}} 쪽 열기',
   },
   search: {
     pageTitle: '검색',

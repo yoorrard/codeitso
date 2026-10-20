@@ -5,6 +5,9 @@ import { blockExternal, islandsReady } from './helpers.ts';
 
 const PAGES = [
   '/',
+  '/kits',
+  '/c',
+  '/recent',
   '/c/design',
   '/c/ai/mcp',
   '/c/api/weather?page=2',

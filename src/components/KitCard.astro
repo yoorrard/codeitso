@@ -1,0 +1,100 @@
+---
+// 스타터 키트 카드 하나 (홈 다섯 장·/kits 모두, K1 D131): 아이콘·이름·설명·재료(상세 링크)와 [키트 담기] 한 번.
+// 홈(full 아님)은 재료를 일곱 줄로 접고 이름을 /kits의 그 키트로 잇는다. /kits(full)는 재료를 다 펴고 구현안(만드는 차례)을 함께 보인다.
+// 정적 HTML이고, 누름은 src/lib/cart-buttons.ts가 맡는다 (button[data-kit], 재료는 data-items에 [id, 이름, 대분류, 소분류]).
+import Icon from './Icon.astro';
+import { ko } from '../copy/ko.ts';
+import type { Card, KitData } from '../lib/catalog/types.ts';
+import { kitIconSvg } from '../lib/home-icons.ts';
+import { shortName } from '../lib/catalog/core.ts';
+import { categoryNames } from '../lib/catalog/site.ts';
+import { itemPath, kitPath } from '../lib/routes.ts';
+import { fill } from '../lib/text.ts';
+
+interface Props {
+  kit: KitData;
+  /** /kits: 재료를 다 펴고 구현안을 보인다 */
+  full?: boolean;
+}
+const { kit: k, full = false } = Astro.props;
+/** 홈 카드의 재료 줄 수 한도. 넘으면 앞 6개 + '외 N개 더 보기'로 접는다 (다섯 장이 PC 첫 화면 한 줄에 들게) */
+const MAX_LINES = 7;
+const fold = !full && k.cards.length > MAX_LINES;
+const shown = fold ? k.cards.slice(0, MAX_LINES - 1) : k.cards;
+const outlineId = `kit-${k.id}-outline`;
+// 같은 이름이 한 키트에 둘이면(예: Blender 앱과 Blender MCP 서버) 소분류 이름을 붙여 가른다
+const subNames = categoryNames();
+const seen = new Map<string, number>();
+for (const c of k.cards) seen.set(c.name, (seen.get(c.name) ?? 0) + 1);
+const label = (c: Card): string => {
+  const name = shortName(c.id, c.name);
+  const sub = subNames[`${c.cat}/${c.sub}`];
+  return (seen.get(c.name) ?? 0) > 1 && sub ? fill(ko.kits.sameName, { name, sub }) : name;
+};
+---
+
+<li class:list={['kit', { 'is-full': full }]} data-kit-id={k.id} id={full ? `kit-${k.id}` : undefined}>
+  <div class="kit-head">
+    <span class="kit-icon" aria-hidden="true" set:html={kitIconSvg(k.id)} />
+    <h3 class="kit-name">{full ? k.name : <a href={kitPath(k.id)}>{k.name}</a>}</h3>
+  </div>
+  <p class="kit-desc">{k.desc}</p>
+  {full && <h4 class="kit-sub">{ko.kits.itemsTitle}</h4>}
+  <ul class="kit-items" aria-label={fill(ko.kits.count, { n: k.cards.length })}>
+    {
+      shown.map((c) => (
+        <li data-cat={c.cat}>
+          <span class="kit-dot" aria-hidden="true" />
+          <a href={itemPath(c.id)} title={c.name}>
+            {label(c)}
+          </a>
+        </li>
+      ))
+    }
+    {
+      fold && (
+        <li class="kit-more">
+          <details>
+            <summary>{fill(ko.kits.more, { n: k.cards.length - (MAX_LINES - 1) })}</summary>
+            <ul class="kit-items">
+              {k.cards.slice(MAX_LINES - 1).map((c) => (
+                <li data-cat={c.cat}>
+                  <span class="kit-dot" aria-hidden="true" />
+                  <a href={itemPath(c.id)} title={c.name}>
+                    {label(c)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </li>
+      )
+    }
+  </ul>
+  {
+    full && (
+      <>
+        <h4 class="kit-sub" id={outlineId}>
+          {ko.kits.outlineTitle}
+        </h4>
+        <ol class="kit-outline" aria-labelledby={outlineId}>
+          {k.outline.map((step) => (
+            <li>{step}</li>
+          ))}
+        </ol>
+      </>
+    )
+  }
+  <button
+    type="button"
+    class="btn btn-soft kit-add"
+    data-kit={k.id}
+    data-name={k.name}
+    data-items={JSON.stringify(k.cards.map((c) => [c.id, c.name, c.cat, c.sub]))}
+    aria-label={fill(ko.kits.addLabel, { name: k.name, n: k.cards.length })}
+  >
+    <Icon name="cart" size="18px" />
+    <span class="kit-add-label">{ko.kits.add}</span>
+    <span class="kit-add-n">{fill(ko.kits.count, { n: k.cards.length })}</span>
+  </button>
+</li>

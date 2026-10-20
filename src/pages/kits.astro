@@ -1,0 +1,55 @@
+---
+// 스타터 키트 쪽 /kits (K1 D131): 모든 키트를 주제(교육·게임·업무·행정·가게·생활·요즘 인기 AI)로 묶어 보인다.
+// 위의 주제 칩은 같은 쪽 안 묶음으로 건너뛴다. 카드는 재료를 다 펴고 구현안(만드는 차례)을 함께 보인다 (KitCard full).
+import Base from '../layouts/Base.astro';
+import KitCard from '../components/KitCard.astro';
+import { ko } from '../copy/ko.ts';
+import { allKits } from '../lib/catalog/site.ts';
+import { KIT_THEMES } from '../lib/kits.ts';
+import { ROUTES, kitThemePath } from '../lib/routes.ts';
+import { fill } from '../lib/text.ts';
+
+const kits = allKits();
+const groups = KIT_THEMES.map((t) => ({ id: t, ...ko.kits.themes[t], kits: kits.filter((k) => k.theme === t) })).filter((g) => g.kits.length > 0);
+---
+
+<Base title={ko.kits.pageTitle} description={fill(ko.kits.pageLead, { n: kits.length })}>
+  <nav class="crumbs" aria-label={ko.list.breadcrumb}>
+    <ol>
+      <li><a href={ROUTES.home}>{ko.site.name}</a></li>
+    </ol>
+  </nav>
+  <header class="list-head">
+    <h1>{ko.kits.pageTitle}</h1>
+    <p class="page-lead">{fill(ko.kits.pageLead, { n: kits.length })}</p>
+  </header>
+  <nav class="kit-themes" aria-label={ko.kits.themesLabel}>
+    <ul>
+      {
+        groups.map((g) => (
+          <li>
+            <a class="chip" href={kitThemePath(g.id)}>
+              {g.name}
+              <span class="chip-n">{fill(ko.kits.themeCount, { n: g.kits.length })}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  {
+    groups.map((g) => (
+      <section class="sec kit-theme" id={`theme-${g.id}`} aria-labelledby={`theme-${g.id}-title`}>
+        <div class="sec-head is-stacked">
+          <h2 id={`theme-${g.id}-title`}>{g.name}</h2>
+          <p class="sec-lead">{g.lead}</p>
+        </div>
+        <ul class="kit-grid">
+          {g.kits.map((k) => (
+            <KitCard kit={k} full />
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</Base>

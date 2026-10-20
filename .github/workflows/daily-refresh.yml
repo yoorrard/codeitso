@@ -4,7 +4,7 @@
 # - 배포 가지: 저장소 변수 DEPLOY_BRANCH (없으면 claude/focused-bell-a92t1m).
 # - 번역: OpenAI 호환 주소를 저장소 변수 TRANSLATE_API_URL·TRANSLATE_MODEL, 비밀 값 TRANSLATE_API_KEY로 주면 돈다. 없으면 건너뛴다.
 #   (GitHub Models는 2026-07-30에 닫혀 쓸 수 없다.) 한 번에 번역할 수는 TRANSLATE_BUDGET(기본 200).
-# - 시간: 가져오기를 16줄로 나눠 함께 돌린다(scripts/import/refresh-all.ts). 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록·Iconify 묶음 전체·OWID)는
+# - 시간: 가져오기를 16줄로 나눠 함께 돌린다(scripts/import/refresh-all.ts). 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록·Iconify 묶음 전체·OWID·MCP 등록소)는
 #   월요일(KST)에만 받는다. 비공개 저장소의 Actions 무료 시간(월 2,000분) 안에 들도록 매일 약 18분, 월요일 약 60분을 어림한다.
 # - GITHUB_TOKEN으로 한 푸시는 다른 작업 흐름(check)을 다시 띄우지 않는다.
 name: daily-refresh
@@ -23,7 +23,7 @@ on:
         required: false
         default: ''
       all:
-        description: 주간 몫(공공데이터포털·Iconify·OWID)까지 받기
+        description: 주간 몫(공공데이터포털·Iconify·OWID·MCP 등록소)까지 받기
         type: boolean
         default: false
   # 이 파일을 고쳐 올리면 한 번 돌려 본다

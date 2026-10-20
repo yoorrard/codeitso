@@ -5,7 +5,7 @@
 //   REFRESH_ALL=1 node scripts/import/refresh-all.ts 주간 몫까지 모두
 // 왜 이렇게: 차례로 돌리면 이 작업 환경에서 갈래마다 23~40분이 걸렸다(2026-10-20 측정). 출처 파일은 서로 다르므로
 // 같은 대분류 안에서 겹침을 빼는 차례(손 목록 → 넓은 목록, 다른 출처 → oss-github·tpl-github)만 한 줄 안에 지키고 나머지는 함께 돈다.
-// 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록, Iconify 묶음 전체, OWID 차트 목록)는 주간 몫이다.
+// 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록, Iconify 묶음 전체, OWID 차트 목록, MCP 등록소 전체)는 주간 몫이다.
 // AI 갈래는 줄마다 저장소 복제 폴더를 따로 써서(AI_IMPORT_CACHE) 같은 저장소를 함께 받다 부딪히지 않게 한다.
 // 출처 하나가 실패하면 그 파일은 지난 자료 그대로 남는다. 실패는 경고로 알리고 다음 단계(단위 시험)가 판단한다. 모두 실패했을 때만 1로 끝낸다.
 // 스크립트 하나가 REFRESH_STEP_MINUTES(기본 25분, 주간 몫은 두 배)를 넘기면 멈춘다. 가져오기는 끝에 한 번 쓰므로 멈춘 출처도 지난 자료 그대로다.
@@ -34,7 +34,8 @@ export const LANES: Record<string, Lane> = {
   'design-type': { group: 'design', steps: s('design-fonts.ts', 'design-colors.ts', 'design-gradients.ts', 'design-styles.ts', 'design-assets.ts') },
   'design-icons': { group: 'design', steps: [weekly('design-icons.ts')] },
   'design-ui': { group: 'design', steps: s('design-ui.ts', 'design-curated.ts') },
-  'ai-mcp': { group: 'ai', steps: s('ai-mcp.ts') },
+  // 공식 MCP 등록소(4만 6천 개)는 Actions에서 쪽 넘기기가 느려 25분을 넘긴다 → 주간 몫
+  'ai-mcp': { group: 'ai', steps: [weekly('ai-mcp.ts')] },
   'ai-skills': { group: 'ai', steps: s('ai-skills.ts') },
   'ai-plugins': { group: 'ai', steps: s('ai-plugins.ts', 'ai-prompts.ts', 'ai-hooks.ts') },
   'ai-agents': { group: 'ai', steps: s('ai-agents.ts', 'ai-frameworks.ts') },

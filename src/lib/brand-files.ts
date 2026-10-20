@@ -1,4 +1,4 @@
-// npm run logo가 만든다. 손으로 고치지 않는다. 그림 이름에 내용 해시가 들어 있다 (D131). 주소 바탕은 routes.ts가 붙인다
+// npm run logo가 만든다. 손으로 고치지 않는다. 그림 이름에 내용 해시가 들어 있다 (D132). 주소 바탕은 routes.ts가 붙인다
 export const BRAND_FILES = {
   "appleTouchIcon": "brand/apple-touch-icon.cfb4e05d.png",
   "cart": "brand/cart.cdfa6a90.webp",

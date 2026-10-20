@@ -78,7 +78,7 @@ export function readMedia(dir: string = MEDIA_DIR): Map<string, [string, string 
   return out;
 }
 
-/** 소분류마다 인기 점수를 매긴다 (D131): 같은 소분류의 상품을 한꺼번에 rankScores에 넣는다. raw는 한국어·그림을 붙이기 전 상품 */
+/** 소분류마다 인기 점수를 매긴다 (D133): 같은 소분류의 상품을 한꺼번에 rankScores에 넣는다. raw는 한국어·그림을 붙이기 전 상품 */
 function scoreBySub(entries: readonly { raw: CatalogItem; r: Ranked }[]): void {
   const groups = new Map<string, { raw: CatalogItem; r: Ranked }[]>();
   for (const e of entries) {
@@ -264,15 +264,11 @@ export function homeRows(): Row[] {
     .flatMap(([, l]) => l)
     .filter((r) => typeof r.item.metrics?.stars === 'number')
     .sort((a, b) => (b.item.metrics?.stars ?? 0) - (a.item.metrics?.stars ?? 0));
-  const openApis = [...lists.entries()]
-    .filter(([k]) => k.startsWith('api/') && k !== 'api/kr-public' && k !== 'api/cloud')
-    .flatMap(([, l]) => l)
-    .filter((r) => r.item.preview['auth'] === 'none' && r.item.preview['https'] === true)
-    .sort((a, b) => b.pop - a.pop);
-  // 홈 줄 순서 (v5.1 D124): AI 코딩 툴 재료 → 키 없이 쓰는 API → AI API → 템플릿 → 한글 폰트. 인기 폰트가 맨 앞에 서지 않게 한다.
+  // 홈 줄 순서 (v5.1 D124 → D135): AI 코딩 툴 재료 → UI 컴포넌트 → AI API → 템플릿 → 한글 폰트. 인기 폰트가 맨 앞에 서지 않게 한다.
+  // '키 없이 쓰는 API' 줄은 홈에서 뺐다(소유자 요청: 바이브코딩에서 잘 쓰지 않음). 재료는 API 카테고리에 그대로 있다.
   return [
     { id: 'aiTools', cards: cards(interleave(get('ai/mcp'), get('ai/skill'), ROW_SIZE)), more: { cat: 'ai' } },
-    { id: 'openApis', cards: take(openApis), more: { cat: 'api' } },
+    { id: 'uiLibs', cards: take(get('design/ui-libraries')), more: { cat: 'design', sub: 'ui-libraries' } },
     { id: 'aiApis', cards: take(get('api/ai-llm')), more: { cat: 'api', sub: 'ai-llm' } },
     { id: 'templates', cards: take(templates), more: { cat: 'templates', sub: 'web-starter' } },
     { id: 'fontsKo', cards: take(get('design/fonts-ko')), more: { cat: 'design', sub: 'fonts-ko' } },

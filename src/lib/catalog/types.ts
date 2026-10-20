@@ -168,7 +168,7 @@ export interface ListChunk {
 
 /** 기획전 한 줄 (홈): 진열대를 가로지르는 고르기 */
 export interface Row {
-  id: 'aiTools' | 'openApis' | 'aiApis' | 'templates' | 'fontsKo';
+  id: 'aiTools' | 'uiLibs' | 'aiApis' | 'templates' | 'fontsKo';
   cards: Card[];
   /** '모두 보기' 대상: 소분류 목록, sub가 없으면 대분류 쪽 (K1: 홈의 모든 줄에 있다) */
   more: { cat: CategoryId; sub?: string };

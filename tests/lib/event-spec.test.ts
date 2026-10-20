@@ -1,6 +1,6 @@
 // 익명 집계의 약속 (v5 S2): 정해진 이벤트·구간만 받고, 큰 본문·다른 칸은 버린다. 재료 수 구간과 짧은 해시.
 import { describe, expect, it } from 'vitest';
-import { BODY_MAX, EVENT_SPEC, countBucket, isBucket, parseEvent, shortHash, utcDay } from '../../src/lib/event-spec.ts';
+import { BODY_MAX, EVENT_SPEC, countBucket, dayKey, isBucket, kstDay, parseEvent, shortHash, utcDay } from '../../src/lib/event-spec.ts';
 import { KIT_IDS } from '../../src/lib/kits.ts';
 
 describe('본문 검사', () => {
@@ -60,5 +60,10 @@ describe('짧은 해시와 날짜', () => {
   it('UTC 날짜', () => {
     expect(utcDay(Date.UTC(2026, 9, 12, 23, 59))).toBe('2026-10-12');
     expect(utcDay(Date.UTC(2026, 9, 13, 0, 0))).toBe('2026-10-13');
+    // 방문 수의 '오늘'은 한국 날짜 (자정 KST = 전날 15:00 UTC)
+    expect(kstDay(Date.UTC(2026, 9, 12, 14, 59))).toBe('2026-10-12');
+    expect(kstDay(Date.UTC(2026, 9, 12, 15, 0))).toBe('2026-10-13');
+    expect(dayKey('visit', Date.UTC(2026, 9, 12, 15, 0))).toBe('2026-10-13');
+    expect(dayKey('cart_add', Date.UTC(2026, 9, 12, 15, 0))).toBe('2026-10-12');
   });
 });

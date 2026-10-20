@@ -1,6 +1,7 @@
 ---
-// 바닥글: 로고 · 정보 쪽 링크 · 자료 갱신일과 상품 수 · 라이선스 한 줄 (미리 보기 단계면 시험판 줄).
+// 바닥글: 로고 · 정보 쪽 링크 · 자료 갱신일과 상품 수 · 라이선스 한 줄 (미리 보기 단계면 시험판 줄) · 방문 수(D134).
 import Logo from './Logo.astro';
+import VisitCount from './VisitCount.astro';
 import { ko } from '../copy/ko.ts';
 import { withCommas } from '../lib/catalog/core.ts';
 import { ROUTES } from '../lib/routes.ts';
@@ -29,5 +30,6 @@ const { fetched, total } = Astro.props;
     <p class="ft-line">{fill(ko.footer.fetched, { date: fetched, n: withCommas(total) })}</p>
     <p class="ft-line">{ko.footer.license}</p>
     {STAGE === 'preview' && <p class="ft-line">{ko.footer.trial}</p>}
+    <VisitCount />
   </div>
 </footer>

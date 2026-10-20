@@ -339,7 +339,7 @@ describe('실제 자료 (data/catalog/**)', { timeout: 120_000 }, () => {
 
   it('홈 기획전 다섯 줄이 모두 차고, AI 코딩 툴 줄에는 MCP 서버와 스킬이 섞인다', () => {
     const rows = homeRows();
-    expect(rows.map((r) => r.id)).toEqual(['aiTools', 'openApis', 'aiApis', 'templates', 'fontsKo']);
+    expect(rows.map((r) => r.id)).toEqual(['aiTools', 'uiLibs', 'aiApis', 'templates', 'fontsKo']);
     expect(new Set(rows[0]?.cards.map((c) => c.sub))).toEqual(new Set(['mcp', 'skill']));
     for (const r of rows) expect(r.cards.length, r.id).toBe(10);
   });

@@ -109,7 +109,7 @@ async function buildReceipt(chars: string): Promise<string> {
     const renamed = renameFont(sfnt, names);
     if (readName(renamed, 1) !== RECEIPT_FAMILY) throw new Error('글꼴 이름 바꾸기에 실패했습니다');
     const woff2 = await fontverter.convert(Buffer.from(renamed), 'woff2');
-    // 이름에 내용 해시를 넣는다: Cloudflare 가장자리 캐시는 이름이 같은 글꼴을 배포 뒤에도 한동안 옛것으로 준다 (D131)
+    // 이름에 내용 해시를 넣는다: Cloudflare 가장자리 캐시는 이름이 같은 글꼴을 배포 뒤에도 한동안 옛것으로 준다 (D132)
     const name = `cc-receipt-${f.style.toLowerCase()}.${createHash('sha256').update(woff2).digest('hex').slice(0, 8)}.woff2`;
     writeFileSync(join(OUT_RECEIPT, name), woff2);
     console.log(`${RECEIPT_FAMILY} ${f.style}: 글자 ${[...chars].length}개, ${(woff2.length / 1024).toFixed(1)}KB`);

@@ -165,7 +165,7 @@ async function crop(r: Raster, box: { left: number; top: number; width: number; 
 }
 
 /** 화면이 쓰는 그림 주소 (public/ 기준). 파일 이름에 내용 해시를 넣는다: Cloudflare 가장자리 캐시는 이름이 같은 그림을
- *  배포 뒤에도 한동안 옛것으로 준다(이름 바꿈 뒤 옛 로고가 보임, D131). 그래서 바뀌면 이름도 바뀌게 한다 */
+ *  배포 뒤에도 한동안 옛것으로 준다(이름 바꿈 뒤 옛 로고가 보임, D132). 그래서 바뀌면 이름도 바뀌게 한다 */
 const files: Record<string, string> = {};
 
 /** public/brand/<이름>.<해시 8자>.<확장자>로 쓰고 주소를 files에 적는다 */
@@ -289,7 +289,7 @@ async function main(): Promise<void> {
     .map(([k, v]) => `  ${JSON.stringify(k)}: ${JSON.stringify(v.slice(1))},`);
   writeFileSync(
     join(ROOT, 'src', 'lib', 'brand-files.ts'),
-    `// npm run logo가 만든다. 손으로 고치지 않는다. 그림 이름에 내용 해시가 들어 있다 (D131). 주소 바탕은 routes.ts가 붙인다\nexport const BRAND_FILES = {\n${lines.join('\n')}\n} as const;\n`,
+    `// npm run logo가 만든다. 손으로 고치지 않는다. 그림 이름에 내용 해시가 들어 있다 (D132). 주소 바탕은 routes.ts가 붙인다\nexport const BRAND_FILES = {\n${lines.join('\n')}\n} as const;\n`,
   );
   console.log(`로고 자산: 장바구니 ${cart.w}×${cart.h}, 글자 ${word.w}×${word.h} → public/brand/ (이름에 해시, src/lib/brand-files.ts), favicon.ico·apple-touch-icon.png, assets-src/brand/logo-codeitso.png`);
   console.log(readdirSync(BRAND).join(' '));

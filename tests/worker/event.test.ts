@@ -1,6 +1,6 @@
 // 집계 Worker: 같은 사이트·작은 본문·정해진 이벤트만 그날 횟수를 1 늘린다. 나머지는 버린다. 저장이 실패해도 204.
 import { describe, expect, it } from 'vitest';
-import { handleEvent } from '../../worker/index.ts';
+import { handleEvent, handleStats } from '../../worker/index.ts';
 
 interface Call {
   sql: string;
@@ -81,5 +81,58 @@ describe('POST /api/event', () => {
   });
   it('저장이 실패해도 204 (그날 집계만 빠진다)', async () => {
     expect((await run(post('{"t":"checkout","b":"n04-06"}'), true)).status).toBe(204);
+  });
+});
+
+describe('방문 수 (D134)', () => {
+  it('방문은 한국 날짜 줄과 누적 줄을 함께 1 늘린다 (센 뒤 숫자를 읽지 못하면 204)', async () => {
+    const r = await run(post('{"t":"visit"}'));
+    expect(r.status).toBe(204);
+    expect(r.calls.map((c) => c.args)).toEqual([
+      ['2026-10-12', 'visit', ''],
+      ['all', 'visit_total', ''],
+    ]);
+  });
+
+  function statsDb(rows: { day: string; count: number }[] | Error): Parameters<typeof handleStats>[1]['DB'] {
+    // 시험용 가짜 D1: prepare·bind·all만 흉내 낸다
+    return {
+      prepare: () => ({
+        bind: () => ({
+          all: async () => {
+            if (rows instanceof Error) throw rows;
+            return { results: rows };
+          },
+        }),
+      }),
+    } as unknown as Parameters<typeof handleStats>[1]['DB'];
+  }
+
+  it('GET /api/stats는 오늘(한국 날짜)과 누적 방문 수를 준다 (60초 캐시)', async () => {
+    const res = await handleStats(new Request(`${SITE}/api/stats`), { DB: statsDb([{ day: '2026-10-12', count: 5 }, { day: 'all', count: 120 }]) }, NOW);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ today: 5, total: 120 });
+    expect(res.headers.get('Cache-Control')).toContain('max-age=60');
+  });
+
+  it('처음 방문은 센 뒤의 숫자를 바로 돌려준다 (자기 방문 포함, 캐시하지 않음)', async () => {
+    const db = {
+      prepare: () => ({
+        bind: () => ({
+          run: async () => ({}),
+          all: async () => ({ results: [{ day: '2026-10-12', count: 1 }, { day: 'all', count: 7 }] }),
+        }),
+      }),
+    } as unknown as Parameters<typeof handleEvent>[1]['DB'];
+    const res = await handleEvent(post('{"t":"visit"}'), { DB: db }, NOW);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ today: 1, total: 7 });
+    expect(res.headers.get('Cache-Control')).toBe('no-store');
+  });
+
+  it('줄이 없으면 0, 저장소가 안 되면 503, GET이 아니면 405', async () => {
+    expect(await (await handleStats(new Request(`${SITE}/api/stats`), { DB: statsDb([]) }, NOW)).json()).toEqual({ today: 0, total: 0 });
+    expect((await handleStats(new Request(`${SITE}/api/stats`), { DB: statsDb(new Error('D1')) }, NOW)).status).toBe(503);
+    expect((await handleStats(new Request(`${SITE}/api/stats`, { method: 'POST' }), { DB: statsDb([]) }, NOW)).status).toBe(405);
   });
 });

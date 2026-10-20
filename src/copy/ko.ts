@@ -63,14 +63,14 @@ export const ko = {
     moreOf: '{{title}} 모두 보기',
     rows: {
       aiTools: 'AI 코딩 툴에 바로 붙이는 MCP·스킬',
-      openApis: '키 없이 바로 쓰는 API',
+      uiLibs: '화면을 빨리 만드는 UI 컴포넌트',
       aiApis: '내 앱에 AI를 붙이는 API',
       templates: '바로 시작하는 템플릿',
       fontsKo: '한글 폰트',
     },
     rowLeads: {
       aiTools: 'Claude Code·Cursor 같은 AI 코딩 툴에 연결하면 AI가 할 수 있는 일이 늘어나요.',
-      openApis: '회원가입이나 API 키 없이 바로 불러 써 볼 수 있어요.',
+      uiLibs: '버튼·입력 칸·표 같은 화면 부품 모음이에요. AI 코딩 툴이 많이 쓰는 shadcn/ui도 여기 있어요.',
       aiApis: '내 앱이 글을 쓰고 질문에 답하게 하는 AI 언어 모델 API예요.',
       templates: '화면 틀과 설정이 갖춰진 시작 코드예요. 받아서 고쳐 쓰면 돼요.',
       fontsKo: '앱 화면에 쓰기 좋은 한글 폰트예요. 라이선스는 상세에서 확인해요.',
@@ -654,5 +654,11 @@ export const ko = {
     copiedLabel: '{{label}} 복사했어요',
     copyFailed: '복사하지 못했어요. 글을 직접 골라 복사해 주세요.',
     external: '새 창에서 열려요',
+  },
+  /** 바닥글 방문 수 (D134): 짧은 영어 낱말과 숫자, 화면 낭독기에는 한국어 한 줄 */
+  visits: {
+    today: 'Today',
+    total: 'Total',
+    label: '방문 수: 오늘 {{today}}, 누적 {{total}}',
   },
 } as const;

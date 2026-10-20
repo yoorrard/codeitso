@@ -74,7 +74,7 @@ export const ROUTES = based(PATHS);
 
 /** public/ 파일과 빌드가 만드는 끝점 (바탕을 붙인 것) */
 export const FILES = based({
-  // 로고·아이콘·공유 그림은 이름에 내용 해시가 든 파일 (npm run logo, D131)
+  // 로고·아이콘·공유 그림은 이름에 내용 해시가 든 파일 (npm run logo, D132)
   favicon: `/${BRAND_FILES.favicon}`,
   appleTouchIcon: `/${BRAND_FILES.appleTouchIcon}`,
   icon192: `/${BRAND_FILES.icon192}`,
@@ -89,6 +89,7 @@ export const FILES = based({
   glossary: '/glossary.json',
   searchMeta: '/catalog/search/meta.json',
   event: '/api/event',
+  stats: '/api/stats',
 });
 
 /** 대분류 쪽 */

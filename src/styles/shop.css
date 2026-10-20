@@ -1766,3 +1766,7 @@
   font-size: var(--size-caption);
   line-height: var(--leading-caption);
 }
+/* 방문 수: 숫자 폭이 바뀌어도 줄이 흔들리지 않게 */
+.ft-visits {
+  font-variant-numeric: tabular-nums;
+}

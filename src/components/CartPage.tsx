@@ -1,21 +1,21 @@
 // 장바구니 쪽 섬 (/cart, brief 3절): 공유받은 목록(#s=…) → 만들 앱 한 줄 → 대분류별 줄(메모 고치기·빼기)
-// → 장바구니 도구(설치 명령 한꺼번에 복사·공유 링크 복사·모두 비우기) | 주문 요약(대분류별 개수, 합계 0원, [계산하기]).
+// → 장바구니 도구(설치 명령 한꺼번에 복사·공유 링크 복사·모두 비우기) | 담은 재료 요약(대분류별 개수, 합계 0원, [프롬프트 뽑기] → 단말 화면 창).
 import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import type { DetailRecord, NavCategory } from '../lib/catalog/types.ts';
-import { fetchDetails } from '../lib/checkout.ts';
+import { fetchDetails } from '../lib/pull.ts';
 import { useHydrated } from '../lib/hydrated.ts';
-import { groupByCategory, installBundle, namesOf } from '../lib/receipt-md.ts';
+import { groupByCategory, installBundle, namesOf } from '../lib/prompt.ts';
 import { ROUTES, shareUrl } from '../lib/routes.ts';
 import { PROJECT_MAX } from '../lib/saved.ts';
 import { readShare } from '../lib/share.ts';
 import { $cart, $project, $storageOk, addManyToCart, clearCart, setProject } from '../lib/store.ts';
 import { fill } from '../lib/text.ts';
 import { CartLines } from './CartLines.tsx';
-import { CheckoutButton } from './CheckoutButton.tsx';
 import CopyButton from './CopyButton.tsx';
+import { PromptButton } from './PromptButton.tsx';
 
 interface Props {
   nav: NavCategory[];
@@ -111,7 +111,7 @@ function InstallAll({ ids }: { ids: string[] }) {
   );
 }
 
-/** 만들 앱 한 줄: 쓰는 동안은 칸 안에만 두고, 칸을 떠날 때(계산하기를 누를 때도) 저장한다 */
+/** 만들 앱 한 줄: 쓰는 동안은 칸 안에만 두고, 칸을 떠날 때(프롬프트 뽑기를 누를 때도) 저장한다 */
 function ProjectBox() {
   const [draft, setDraft] = useState($project.get());
   return (
@@ -199,8 +199,8 @@ export default function CartPage({ nav }: Props) {
           <a class="btn btn-primary" href={ROUTES.home}>
             {ko.cart.browse}
           </a>
-          <a class="btn btn-text" href={ROUTES.receipts}>
-            {ko.cart.receipts}
+          <a class="btn btn-text" href={ROUTES.prompts}>
+            {ko.cart.history}
           </a>
         </div>
       ) : (
@@ -235,9 +235,9 @@ export default function CartPage({ nav }: Props) {
               <strong>{ko.cart.free}</strong>
             </p>
             <p class="field-hint">{ko.cart.freeNote}</p>
-            <CheckoutButton wide />
-            <a class="btn btn-text" href={ROUTES.receipts}>
-              {ko.cart.receipts}
+            <PromptButton nav={nav} wide />
+            <a class="btn btn-text" href={ROUTES.prompts}>
+              {ko.cart.history}
             </a>
           </aside>
         </div>

@@ -393,7 +393,7 @@
 .catmenu[open] > .catmenu-btn {
   background: var(--fill);
 }
-/* 휴대폰은 아이콘만 보이고 글은 낭독기용으로 남긴다 (summary의 이름) */
+/* 모든 폭에서 햄버거 아이콘만 보이고 글은 낭독기용으로 남긴다 (summary의 이름, v5.1) */
 .catmenu-word {
   position: absolute;
   width: 1px;
@@ -466,16 +466,6 @@
   font-size: var(--size-caption);
   font-variant-numeric: tabular-nums;
 }
-@media (min-width: 1024px) {
-  .catmenu-word {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-  }
-}
-
 .cat-dot {
   display: inline-grid;
   place-items: center;
@@ -1275,17 +1265,10 @@
 .buy-add {
   inline-size: 100%;
 }
-.buy-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-.in-cart {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--ok-ink);
-  font-weight: var(--weight-strong);
+.buy-memo {
+  color: var(--text-2);
+  font-size: var(--size-label);
+  overflow-wrap: anywhere;
 }
 .detail-sec {
   margin-block-start: var(--space-7);

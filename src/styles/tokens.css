@@ -98,13 +98,20 @@
   /* 초점: 2px 고리 + 2px 띄움 */
   --focus: var(--blue-8); /* 대비: --surface 3, --bg 3, --surface-raised 3 */
 
-  /* 영수증 종이 (낮·밤 모두 흰 종이, S2) */
-  --receipt: #ffffff;
-  --receipt-ink: #142a4c; /* 대비: --receipt 4.5 */
+  /* 프롬프트 판 (낮·밤 모두 어두운 단말 화면, v5.1 D121): 고정폭 글, 네온 강조 하나 */
+  --term: #0a1020;
+  --term-raised: #121b30;
+  --term-line: #26344f;
+  --term-ink: #e2eaff; /* 대비: --term 7, --term-raised 7 */
+  --term-dim: #93a4c6; /* 대비: --term 4.5, --term-raised 4.5 */
+  --term-neon: #3cf2b0; /* 대비: --term 7, --term-raised 7 */
+  --term-cyan: #6ad6ff; /* 대비: --term 7, --term-raised 7 */
+  --on-term-neon: #03150e; /* 대비: --term-neon 7 */
+  --term-glow: 0 0 0 1px rgb(60 242 176 / 0.28), 0 0 32px -6px rgb(60 242 176 / 0.5);
 
   /* 글꼴 */
   --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  --font-mono: 'CC Receipt', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; /* 설치 명령·설정 조각·영수증 */
+  --font-mono: 'CC Receipt', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; /* 설치 명령·설정 조각·프롬프트 판 */
   --font-preview-serif: Georgia, 'Times New Roman', 'Noto Serif KR', serif; /* 폰트 카드의 일반 모양 견본 (원본 글꼴은 S3에서 지연 로드) */
   --weight-body: 400;
   --weight-strong: 600;
@@ -176,6 +183,7 @@
   --dur-ui: 200ms;
   --dur-exit: 160ms;
   --dur-sheet: 280ms;
+  --dur-reveal: 600ms; /* 프롬프트 판이 펼쳐지는 길이 (700ms 안쪽, 누르면 끝) */
   --dur-fade: 150ms; /* 동작 줄이기에서도 남긴다 (D30) */
 
   /* 곡선 */
@@ -263,6 +271,7 @@
     --dur-ui: 0ms;
     --dur-exit: 0ms;
     --dur-sheet: 0ms;
+    --dur-reveal: 0ms;
     --juice-press-scale: 1;
   }
 }
@@ -272,5 +281,6 @@
   --dur-ui: 0ms;
   --dur-exit: 0ms;
   --dur-sheet: 0ms;
+  --dur-reveal: 0ms;
   --juice-press-scale: 1;
 }

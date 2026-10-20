@@ -11,7 +11,7 @@ describe('방문 통계를 싣는 화면', () => {
     expect(analyticsAllowed('/', 'cloudflare', 'tok', '')).toBe(true);
     expect(analyticsAllowed('/c/design/fonts', 'cloudflare', 'tok', '')).toBe(true);
     expect(analyticsAllowed('/cart', 'cloudflare', 'tok', '')).toBe(false);
-    expect(analyticsAllowed('/receipts/', 'cloudflare', 'tok', '')).toBe(false);
+    expect(analyticsAllowed('/prompts/', 'cloudflare', 'tok', '')).toBe(false);
     expect(analyticsAllowed('/receipt', 'cloudflare', 'tok', '')).toBe(false);
   });
 

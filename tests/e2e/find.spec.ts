@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/text.ts';
-import { blockExternal, islandsReady } from './helpers.ts';
+import { addWithSheet, blockExternal, islandsReady } from './helpers.ts';
 
 test.beforeEach(async ({ page }) => {
   await blockExternal(page);
@@ -46,7 +46,7 @@ test.describe('PC 1440', () => {
     await expect(page).toHaveURL(/\/search\?q=weather$/);
     await expect(page.locator('.search-group').first()).toBeVisible();
     const add = page.locator('.search-grid button[data-add]').first();
-    await add.click();
+    await addWithSheet(page, add);
     await expect(add).toHaveAttribute('data-in', 'true');
     await expect(page.locator('.hd-badge')).toHaveText('1');
     await axeClean(page);
@@ -148,8 +148,7 @@ test.describe('PC 1440', () => {
   test('장바구니 서랍을 여러 번 열고 닫아도 초점이 돌아오고 하나만 열린다', async ({ page }) => {
     await page.goto('/c/design/gradients');
     await islandsReady(page);
-    await page.locator('.listing-grid button[data-add]').first().click();
-    await page.keyboard.press('Escape');
+    await addWithSheet(page, page.locator('.listing-grid button[data-add]').first());
     const cart = page.locator('a.hd-cart');
     for (let i = 0; i < 8; i += 1) {
       await cart.click();

@@ -1,0 +1,22 @@
+---
+// 옛 영수증 주소(/receipt, /receipts)를 지난 프롬프트(/prompts)로 넘기는 작은 쪽 (v5.1 D121). 정적 호스트 어디서나 되게 meta refresh로 넘기고,
+// 넘어가지 않으면 링크를 누른다. 검색에 싣지 않는다.
+import { ko } from '../copy/ko.ts';
+import { ROUTES } from '../lib/routes.ts';
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${ROUTES.prompts}`} />
+    <link rel="canonical" href={ROUTES.prompts} />
+    <title>{ko.moved.pageTitle}</title>
+  </head>
+  <body>
+    <p>{ko.moved.body}</p>
+    <p><a href={ROUTES.prompts}>{ko.moved.link}</a></p>
+  </body>
+</html>

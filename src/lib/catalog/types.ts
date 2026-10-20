@@ -54,6 +54,8 @@ export interface CatalogItem {
   /** 한국어 한 줄 (출처가 주었거나 코드쇼퍼가 쓴 것: written) */
   summaryKo?: string;
   written?: string;
+  /** summaryKo가 data/catalog-ko에서 붙인 코드쇼퍼의 한국어 설명이면 'codeshopper' (v5.1 D122, 진열대 빌드가 붙인다) */
+  koBy?: 'codeshopper';
   url: string;
   source: { name: string; url: string };
   license?: string;

@@ -105,6 +105,16 @@ export function pickSummary(item: Pick<CatalogItem, 'summary' | 'summaryKo'>): s
   return item.summaryKo?.trim() || item.summary.trim();
 }
 
+/**
+ * 코드쇼퍼가 쓴 한국어 설명(data/catalog-ko, id → 한국어)을 붙인다 (v5.1 D122). 출처가 준 한국어 한 줄이 있으면 그것을 둔다.
+ * 원문(summary)은 그대로라 상세의 '원문'에서 볼 수 있다. 빈 글이면 붙이지 않는다.
+ */
+export function withKo(item: CatalogItem, ko: string | undefined): CatalogItem {
+  const t = ko?.replace(/\s+/g, ' ').trim();
+  if (!t || item.summaryKo?.trim()) return item;
+  return { ...item, summaryKo: t, koBy: 'codeshopper' };
+}
+
 /** 글자(코드 포인트) 수로 자르고 말줄임표를 붙인다 */
 export function truncate(s: string, max: number): string {
   const chars = [...s];

@@ -12,8 +12,8 @@ import { ROUTES } from '../lib/routes.ts';
 import { $cart, $storageOk } from '../lib/store.ts';
 import { fill } from '../lib/text.ts';
 import { CartLines } from './CartLines.tsx';
-import { CheckoutButton } from './CheckoutButton.tsx';
 import { Icon } from './Icon.tsx';
+import { PromptButton } from './PromptButton.tsx';
 
 interface Props {
   nav: NavCategory[];
@@ -122,7 +122,7 @@ export default function CartDrawer({ nav }: Props) {
                 <a class="btn" href={ROUTES.cart}>
                   {ko.drawer.toCart}
                 </a>
-                <CheckoutButton />
+                <PromptButton nav={nav} />
               </div>
             </footer>
           )}

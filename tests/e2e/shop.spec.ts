@@ -3,7 +3,7 @@
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/text.ts';
-import { blockExternal, cardName, islandsReady, selectText } from './helpers.ts';
+import { addWithSheet, blockExternal, cardName, islandsReady, selectText } from './helpers.ts';
 
 test.beforeEach(async ({ page }) => {
   await blockExternal(page);
@@ -44,9 +44,11 @@ for (const vp of [
       await expect(page).toHaveURL(/\/item\?id=/);
       await expect(page.locator('h1.detail-name')).toHaveText(second ?? '');
       await expect(page.locator('.info-table')).toBeVisible();
-      await page.locator('#item-memo').fill('파일 읽기에 쓴다');
-      await page.getByRole('button', { name: ko.item.add }).click();
-      await expect(page.locator('.in-cart')).toBeVisible();
+      const buy = page.getByRole('button', { name: ko.item.add });
+      await addWithSheet(page, buy, '파일 읽기에 쓴다');
+      await expect(page.locator('.buy-add')).toHaveAttribute('data-in', 'true');
+      await expect(page.locator('.buy-add')).toBeFocused();
+      await expect(page.locator('.buy-memo')).toContainText('파일 읽기에 쓴다');
       await expect(page.locator('.hd-badge')).toHaveText('1');
 
       // 머리줄 장바구니 → 서랍 → 장바구니 쪽
@@ -95,27 +97,50 @@ test('정렬: 이름순·최근 갱신순 주소, 뒤로 가기', async ({ page 
   await expect(cardName(page)).toHaveText(popular ?? '');
 });
 
-test('카드 [담기]: 누르면 담음·배지 1·작은 창, 다시 누르면 서랍이 그 줄로 초점 (상태는 쪽을 옮겨도 남는다)', async ({ page }) => {
+test('카드 [담기]: 창이 뜨고 [취소]·Esc면 담기지 않는다, 창의 [담기]로 담기면 담겼어요·배지 1, 다시 누르면 메모 고치기 → 서랍 (상태는 쪽을 옮겨도 남는다)', async ({ page }) => {
   await page.goto('/c/design/gradients');
   await islandsReady(page);
   const btn = page.locator('.listing-grid button[data-add]').first();
   const name = (await btn.getAttribute('data-name')) ?? '';
+  const sheet = page.locator('dialog.add-sheet');
   await expect(btn).toHaveAttribute('data-in', 'false');
+  // 누르기만 해서는 담기지 않는다: [취소]와 Esc
   await btn.click();
+  await expect(sheet).toBeVisible();
+  await expect(sheet).toContainText(name);
+  await sheet.getByRole('button', { name: ko.sheet.cancel }).click();
+  await expect(sheet).toBeHidden();
+  await expect(btn).toBeFocused();
+  await btn.press('Enter');
+  await expect(sheet).toBeVisible();
+  await expect(sheet.getByLabel(ko.sheet.memoLabel)).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(sheet).toBeHidden();
+  await expect(btn).toBeFocused();
+  await expect(btn).toHaveAttribute('data-in', 'false');
+  await expect(page.locator('.hd-badge')).toBeHidden();
+  // 키보드만으로: 메모를 적고 Enter
+  await btn.press('Enter');
+  await page.keyboard.type('배경으로');
+  await page.keyboard.press('Enter');
+  await expect(sheet).toBeHidden();
   await expect(btn).toHaveAttribute('data-in', 'true');
   await expect(btn).toContainText(ko.card.added);
   await expect(btn).toHaveAccessibleName(fill(ko.card.inCartLabel, { name }));
-  await expect(page.locator('.hd-badge')).toHaveText('1');
-  await expect(page.locator('#cc-live')).toContainText(ko.card.addedLive.split(':')[0] ?? '');
-  await expect(page.locator('.add-pop')).toBeVisible();
-  await page.keyboard.press('Escape');
-  await expect(page.locator('.add-pop')).toHaveCount(0);
   await expect(btn).toBeFocused();
+  await expect(page.locator('.hd-badge')).toHaveText('1');
+  await expect(page.locator('#cc-live')).toContainText(fill(ko.card.addedLive, { name }));
   await page.reload();
   await islandsReady(page);
   const again = page.locator('.listing-grid button[data-add]').first();
   await expect(again).toHaveAttribute('data-in', 'true');
+  // 담긴 재료: 같은 창에서 메모 고치기, [장바구니 보기]면 서랍이 그 줄로
   await again.click();
+  await expect(sheet).toBeVisible();
+  await expect(sheet).toContainText(ko.sheet.kickerIn);
+  await expect(sheet.getByLabel(ko.sheet.memoLabel)).toHaveValue('배경으로');
+  await sheet.getByRole('button', { name: ko.sheet.view }).click();
+  await expect(sheet).toBeHidden();
   await expect(page.locator('dialog.drawer')).toBeVisible();
   await expect(page.locator('dialog.drawer [data-line]').first()).toBeFocused();
   await expect(page.locator('.hd-badge')).toHaveText('1');

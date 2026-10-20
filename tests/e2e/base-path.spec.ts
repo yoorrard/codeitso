@@ -5,7 +5,7 @@ import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/text.ts';
-import { blockExternal, islandsReady } from './helpers.ts';
+import { addWithSheet, blockExternal, islandsReady } from './helpers.ts';
 
 const BASE = '/code-chauffeur';
 
@@ -48,7 +48,7 @@ test('하위 주소: 홈 → 대분류 → 2쪽 → 상세 → 담기 → 장바
   await expect(page).toHaveURL(new RegExp(`${BASE}/item\\?id=`));
   await islandsReady(page);
   await expect(page.locator('h1.detail-name')).toBeVisible();
-  await page.getByRole('button', { name: ko.item.add }).click();
+  await addWithSheet(page, page.getByRole('button', { name: ko.item.add }));
   await page.locator('a.hd-cart').click();
   await expect(page.locator('dialog.drawer')).toBeVisible();
   await page.locator('dialog.drawer').getByRole('link', { name: ko.drawer.toCart }).click();

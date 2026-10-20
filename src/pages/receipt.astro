@@ -1,12 +1,6 @@
 ---
-// 영수증 /receipt?id=… (brief 3절): 이 브라우저에 남긴 영수증 한 장과 [.md 받기]·[복사]. 쪽은 하나이고 섬이 저장된 영수증을 그린다.
-// 방문 통계를 싣지 않는 쪽이다 (stage.ts analyticsAllowed).
-import Base from '../layouts/Base.astro';
-import ReceiptView from '../components/ReceiptView.tsx';
-import { ko } from '../copy/ko.ts';
-import { navData } from '../lib/catalog/site.ts';
+// 옛 영수증 한 장 주소 /receipt?id=… → 지난 프롬프트 (v5.1 D121)
+import Moved from '../components/Moved.astro';
 ---
 
-<Base title={ko.receipt.pageTitle}>
-  <ReceiptView client:load nav={navData()} />
-</Base>
+<Moved />

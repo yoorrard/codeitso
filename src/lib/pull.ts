@@ -1,12 +1,13 @@
-// 계산하기 (brief 3절): 담은 재료의 상세 자료(조각 JSON)를 받아 영수증 사본을 만들고, 지난 영수증에 남기고, 장바구니를 비운다.
-// 상세 조각은 한 번 받은 것을 기억한다 (장바구니 쪽의 설치 명령 모으기와 계산이 같이 쓴다).
+// 프롬프트 뽑기 (v5.1 D121): 담은 재료의 상세 자료(조각 JSON)를 받아 프롬프트 사본을 만들고 지난 프롬프트에 남긴다.
+// 장바구니는 비우지 않는다 (재료를 더하거나 메모를 고쳐 다시 뽑는다). 상세 조각은 한 번 받은 것을 기억한다
+// (장바구니 쪽의 설치 명령 모으기·공유 목록과 뽑기가 같이 쓴다).
 import { shardOf } from './catalog/core.ts';
 import type { DetailRecord, Shard } from './catalog/types.ts';
 import { countBucket } from './event-spec.ts';
-import { buildReceipt } from './receipt-md.ts';
+import { buildPrompt } from './prompt.ts';
 import { itemDataPath } from './routes.ts';
-import type { Receipt } from './saved.ts';
-import { $cart, $project, clearCart, saveReceipt } from './store.ts';
+import type { PromptEntry } from './saved.ts';
+import { $cart, $project, savePrompt } from './store.ts';
 import { track } from './track.ts';
 
 const shards = new Map<number, Promise<Shard>>();
@@ -34,13 +35,13 @@ export async function fetchDetails(ids: readonly string[]): Promise<Map<string, 
   return all;
 }
 
-/** 지금 장바구니로 영수증을 만들고 남긴다. 장바구니는 비우고 프로젝트 메모는 남긴다 */
-export async function checkout(now: number): Promise<Receipt> {
+/** 지금 장바구니로 프롬프트를 뽑아 지난 프롬프트에 남긴다. 장바구니와 만들 앱 한 줄은 그대로 둔다 */
+export async function pullPrompt(now: number): Promise<PromptEntry> {
   const lines = $cart.get();
   const details = await fetchDetails(lines.map((l) => l.id));
-  const r = buildReceipt(lines, details, $project.get(), now, Math.floor(Math.random() * 1296).toString(36));
-  saveReceipt(r);
-  clearCart();
-  track('checkout', countBucket(r.lines.length));
-  return r;
+  const p = buildPrompt(lines, details, $project.get(), now, Math.floor(Math.random() * 1296).toString(36));
+  savePrompt(p);
+  // 집계 이벤트 이름은 서버(worker)와 맞춘 그대로 둔다: checkout = 프롬프트 뽑기
+  track('checkout', countBucket(p.lines.length));
+  return p;
 }

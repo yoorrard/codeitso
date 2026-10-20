@@ -1,31 +1,27 @@
-// 장바구니·영수증·.md (v5 S2): 두 대분류에서 메모와 함께 담기 → 서랍(메모 더하기·다시 담기는 그 줄로) → 계산 → 0원 영수증
-// → .md 받기(내용 확인)·복사 → 지난 영수증 → 다시 열기, 스타터 키트 한 번에 담기, 공유 링크로 주고받기, 휴대폰 390과 PC 1440.
+// 장바구니·프롬프트 (v5 S2 → v5.1): 두 대분류에서 담기 창으로 메모와 함께 담기 → 서랍 → [프롬프트 뽑기] → 단말 화면 창
+// → 복사·.md 받기(내용 확인) → 지난 프롬프트 → 다시 보기, 옛 영수증 주소 넘기기, 스타터 키트 한 번에 담기, 공유 링크로 주고받기, 휴대폰 390과 PC 1440.
 import { readFileSync } from 'node:fs';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/text.ts';
-import { blockExternal, islandsReady } from './helpers.ts';
+import { addWithSheet, blockExternal, islandsReady } from './helpers.ts';
 
 test.beforeEach(async ({ page, context }) => {
   await blockExternal(page);
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 });
 
-/** 목록 첫 카드를 담고, 뜬 작은 창에 메모를 적어 저장한다. 담은 재료 이름을 돌려준다 */
+/** 목록 첫 카드를 담기 창에서 메모와 함께 담는다. 담은 재료 이름을 돌려준다 */
 async function addFirstWithMemo(page: Page, path: string, memo: string): Promise<string> {
   await page.goto(path);
   await islandsReady(page);
   const btn = page.locator('.listing-grid button[data-add]').first();
   const name = (await btn.getAttribute('data-name')) ?? '';
-  await btn.click();
-  const pop = page.locator('.add-pop');
-  await expect(pop).toBeVisible();
-  await pop.getByLabel(ko.pop.memoLabel).fill(memo);
-  await pop.getByRole('button', { name: ko.pop.save }).click();
-  await expect(pop).toHaveCount(0);
+  await addWithSheet(page, btn, memo);
   await expect(btn).toBeFocused();
+  await expect(btn).toHaveAttribute('data-in', 'true');
   return name;
 }
 
@@ -42,22 +38,20 @@ for (const vp of [
   test.describe(`${vp.width}×${vp.height}`, () => {
     test.use({ viewport: vp, isMobile: vp.width < 600, hasTouch: vp.width < 600 });
 
-    test('두 대분류 + 메모 → 서랍 → 계산 → 영수증 → .md 받기·복사 → 지난 영수증 → 다시 열기', async ({ page }) => {
+    test('두 대분류 + 메모 → 서랍 → 프롬프트 뽑기 → 단말 창 복사·.md 받기 → 지난 프롬프트 → 다시 보기', async ({ page }) => {
       const font = await addFirstWithMemo(page, '/c/design/fonts-ko', '제목 글꼴로 쓴다');
       const mcp = await addFirstWithMemo(page, '/c/ai/mcp', '최신 문서 읽기');
       await expect(page.locator('.hd-badge')).toHaveText('2');
 
-      // 이미 담은 카드를 다시 누르면 서랍이 열리고 그 줄로 초점
-      const mcpBtn = page.locator('.listing-grid button[data-add]').first();
-      await mcpBtn.click();
+      // 머리줄 서랍: 대분류별 두 묶음, 메모, 서랍에서 메모 고치기(Enter), Esc로 닫으면 연 자리로 초점
+      const cartLink = page.locator('a.hd-cart');
+      await cartLink.click();
       const drawer = page.locator('dialog.drawer');
       await expect(drawer).toBeVisible();
-      await expect(drawer.locator(`[data-line]`).filter({ hasText: mcp })).toBeFocused();
       await expect(drawer.locator('.cart-group')).toHaveCount(2);
       await expect(drawer.locator('.cart-memo')).toHaveText([`${ko.cart.memo}: 제목 글꼴로 쓴다`, `${ko.cart.memo}: 최신 문서 읽기`]);
+      await expect(drawer.getByRole('button', { name: ko.cart.checkout })).toBeVisible();
       await axeClean(page);
-
-      // 서랍에서 메모 고치기 (Enter로 저장), Esc로 닫으면 연 자리로 초점
       await drawer.getByRole('button', { name: fill(ko.line.editMemoLabel, { name: mcp }) }).click();
       await page.keyboard.press('Control+A');
       await page.keyboard.type('MCP로 최신 문서 읽기');
@@ -65,54 +59,62 @@ for (const vp of [
       await expect(drawer.locator('.cart-memo').nth(1)).toContainText('MCP로 최신 문서 읽기');
       await page.keyboard.press('Escape');
       await expect(drawer).toBeHidden();
-      await expect(mcpBtn).toBeFocused();
+      await expect(cartLink).toBeFocused();
 
-      // 장바구니 쪽: 만들 앱 한 줄 → 계산
+      // 장바구니 쪽: 만들 앱 한 줄 → [프롬프트 뽑기] → 바로 단말 창
       await page.goto('/cart');
       await islandsReady(page);
       await expect(page.locator('.cart-page .cart-name')).toHaveText([font, mcp]);
       await page.locator('#cart-project').fill('우리 반 급식 앱');
-      await page.locator('.cart-summary').getByRole('button', { name: ko.cart.checkout }).click();
-      await expect(page).toHaveURL(/\/receipt\?id=[a-z0-9]+$/);
-      await islandsReady(page);
-      const no = (await page.locator('.receipt-no').textContent())?.trim() ?? '';
-      expect(no).toMatch(/^No\. \d{8}-\d{4}$/);
-      await expect(page.locator('.receipt-group')).toHaveCount(2);
-      await expect(page.locator('.receipt-total')).toContainText(ko.receipt.free);
-      await expect(page.locator('.receipt-project')).toContainText('우리 반 급식 앱');
-      await expect(page.locator('.hd-badge')).toBeHidden();
+      const pull = page.locator('.cart-summary').getByRole('button', { name: ko.cart.checkout });
+      await pull.click();
+      const dlg = page.locator('dialog.prompt-dlg');
+      await expect(dlg).toBeVisible();
+      await expect(dlg.getByRole('heading', { name: ko.prompt.title })).toBeVisible();
+      await expect(dlg.getByRole('button', { name: ko.prompt.copyLabel })).toBeFocused();
+      await expect(page).toHaveURL(/\/cart$/);
+      await expect(page.locator('.hd-badge')).toHaveText('2');
+      const text = (await dlg.locator('.term-text code').textContent()) ?? '';
+      const rows = text.split('\n');
+      expect(rows[0]).toBe(ko.prompt.text.lead);
+      expect(rows[1]).toBe('만들 앱: 우리 반 급식 앱');
+      expect(rows.filter((r) => r.startsWith('- ['))).toHaveLength(2);
+      expect(text).toContain(`] ${font} — 제목 글꼴로 쓴다 · http`);
+      expect(text).toContain(`] ${mcp} — MCP로 최신 문서 읽기 · http`);
+      expect(text.indexOf(font)).toBeLessThan(text.indexOf(mcp));
+      expect(text.trimEnd().endsWith(ko.prompt.text.license)).toBe(true);
+      expect(text).not.toContain('영수증');
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(vp.width);
       await axeClean(page);
 
-      // .md 받기: 파일 이름과 내용
-      const [dl] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: ko.receipt.downloadLabel }).click()]);
-      expect(dl.suggestedFilename()).toMatch(/^codeshopper-\d{8}-\d{4}\.md$/);
-      const md = readFileSync((await dl.path()) ?? '', 'utf8');
-      expect(md.startsWith(ko.md.title)).toBe(true);
-      expect(md).toContain(`영수증 ${no}`);
-      expect(md).toContain(ko.md.aiLead);
-      expect(md).toContain('우리 반 급식 앱');
-      expect(md).toContain(`#### ${font}`);
-      expect(md).toContain(`#### ${mcp}`);
-      expect(md).toContain('- 내 메모: 제목 글꼴로 쓴다');
-      expect(md).toContain('- 내 메모: MCP로 최신 문서 읽기');
-      expect(md).toMatch(/- 공식 주소: https?:\/\//);
-      expect(md.indexOf('### ')).toBeLessThan(md.indexOf(`#### ${font}`));
-      expect(md).toContain(ko.md.noteTitle);
-
       // 복사: 클립보드에 같은 글
-      await page.getByRole('button', { name: ko.receipt.copyLabel }).click();
-      expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(md);
+      await dlg.getByRole('button', { name: ko.prompt.copyLabel }).click();
+      expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(text);
+      await expect(dlg.locator('[data-live]')).toContainText(ko.prompt.copied);
 
-      // 지난 영수증 → 다시 열기
-      await page.goto('/receipts');
+      // .md 받기: 파일 이름과 내용 (붙여 넣는 글과 같다)
+      const [dl] = await Promise.all([page.waitForEvent('download'), dlg.getByRole('button', { name: ko.prompt.downloadLabel }).click()]);
+      expect(dl.suggestedFilename()).toMatch(/^codeshopper-prompt-\d{8}-\d{4}\.md$/);
+      expect(readFileSync((await dl.path()) ?? '', 'utf8')).toBe(text);
+
+      // Esc로 닫으면 [프롬프트 뽑기]로 초점, 장바구니는 그대로
+      await page.keyboard.press('Escape');
+      await expect(dlg).toHaveCount(0);
+      await expect(pull).toBeFocused();
+      await expect(page.locator('.cart-page .cart-line')).toHaveCount(2);
+
+      // 지난 프롬프트 → 다시 보기 (같은 글)
+      await page.goto('/prompts');
       await islandsReady(page);
       await expect(page.locator('.rc-item')).toHaveCount(1);
-      await expect(page.locator('.rc-no')).toHaveText(no);
-      await page.getByRole('link', { name: fill(ko.receipts.openLabel, { no: no.replace('No. ', '') }) }).click();
-      await expect(page).toHaveURL(/\/receipt\?id=/);
-      await islandsReady(page);
-      await expect(page.locator('.receipt-no')).toHaveText(no);
+      await expect(page.locator('.rc-project')).toHaveText('우리 반 급식 앱');
+      await page.locator('.rc-item').getByRole('button', { name: new RegExp(`${ko.prompts.open}$`) }).click();
+      await expect(page.locator('dialog.prompt-dlg .term-text code')).toHaveText(text);
+      await page.keyboard.press('Escape');
+
+      // 옛 영수증 주소는 지난 프롬프트로 넘어간다
+      await page.goto('/receipts');
+      await expect(page).toHaveURL(/\/prompts$/);
     });
   });
 }

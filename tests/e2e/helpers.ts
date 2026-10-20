@@ -1,5 +1,7 @@
 // e2e 도우미: 섬이 붙기를 기다리기, 바깥 요청 막기 (출처 그림·글꼴은 시험에서 부르지 않는다).
+import { expect } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
+import { ko } from '../../src/copy/ko.ts';
 
 /** 바로 붙는 섬(client:load·idle)이 다 붙을 때까지 */
 export async function islandsReady(page: Page): Promise<void> {
@@ -52,4 +54,14 @@ export async function selectText(target: Locator, text: string): Promise<void> {
     }
     throw new Error(`글이 없다: ${t}`);
   }, text);
+}
+
+/** [담기]를 누르면 뜨는 담기 창 (v5.1 D120): 메모를 적고(있으면) 창의 [담기]를 눌러야 담긴다. 닫히면 누른 버튼으로 초점이 돌아온다 */
+export async function addWithSheet(page: Page, btn: Locator, memo = ''): Promise<void> {
+  await btn.click();
+  const sheet = page.locator('dialog.add-sheet');
+  await expect(sheet).toBeVisible();
+  if (memo) await sheet.getByLabel(ko.sheet.memoLabel).fill(memo);
+  await sheet.getByRole('button', { name: ko.sheet.add, exact: true }).click();
+  await expect(sheet).toBeHidden();
 }

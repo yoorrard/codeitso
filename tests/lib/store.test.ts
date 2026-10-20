@@ -1,8 +1,8 @@
-// 저장소(store.ts): 깨진 저장 값, 처음 값이면 키 지우기, 장바구니 담기·여러 개 담기·빼기·메모·비우기, 프로젝트 메모, 영수증, 최근 본 재료, 옛 키 지우기
+// 저장소(store.ts): 깨진 저장 값, 처음 값이면 키 지우기, 장바구니 담기·여러 개 담기·빼기·메모·비우기, 프로젝트 메모, 지난 프롬프트(v5 영수증 옮기기), 최근 본 재료, 옛 키 지우기
 import { setPersistentEngine } from '@nanostores/persistent';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { DEFAULT_PREFS, KEYS } from '../../src/lib/saved.ts';
-import type { Receipt } from '../../src/lib/saved.ts';
+import type { PromptEntry } from '../../src/lib/saved.ts';
 
 // store.ts를 불러오기 전에 가짜 저장소를 끼운다 (일부러 깨진 값과 남의 키를 넣어 둔다)
 const storage: Record<string, string> = {
@@ -17,7 +17,7 @@ beforeAll(async () => {
   store = await import('../../src/lib/store.ts');
 });
 
-const receipt = (id: string, at: number): Receipt => ({ id, no: '20261014-0001', at, lines: [{ id: 'x:y', name: 'Y', cat: 'api', sub: 'weather' }] });
+const prompt = (id: string, at: number, memo?: string): PromptEntry => ({ id, at, lines: [{ id: 'x:y', name: 'Y', cat: 'api', sub: 'weather', ...(memo ? { memo } : {}) }] });
 
 describe('저장소', () => {
   it('깨진 저장 값은 처음 값으로 읽는다', () => {
@@ -65,14 +65,15 @@ describe('저장소', () => {
     expect(KEYS.project in storage).toBe(false);
   });
 
-  it('영수증은 새것이 앞에 남고, 찾고, 지운다', () => {
-    store.saveReceipt(receipt('a', 1));
-    store.saveReceipt(receipt('b', 2));
-    expect(store.$receipts.get().map((r) => r.id)).toEqual(['b', 'a']);
-    expect(store.findReceipt('a')?.at).toBe(1);
-    store.removeReceipt('a');
-    store.removeReceipt('b');
-    expect(KEYS.receipts in storage).toBe(false);
+  it('지난 프롬프트는 새것이 앞에 남고, 같은 재료로 다시 뽑으면 하나만 남고, 지운다', () => {
+    store.savePrompt(prompt('a', 1, '메모'));
+    store.savePrompt(prompt('b', 2));
+    expect(store.$prompts.get().map((r) => r.id)).toEqual(['b', 'a']);
+    store.savePrompt(prompt('c', 3));
+    expect(store.$prompts.get().map((r) => r.id)).toEqual(['c', 'a']);
+    store.removePrompt('a');
+    store.removePrompt('c');
+    expect(KEYS.prompts in storage).toBe(false);
   });
 
   it('최근 본 재료는 맨 앞에, 지우면 키도 지운다', () => {
@@ -99,16 +100,16 @@ describe('저장소', () => {
     expect(store.$termsSeen.get()).toEqual(['api']);
   });
 
-  it('기록 지우기는 장바구니·프로젝트 메모·영수증·최근 본 재료·메타·연 용어를 지우고 설정과 남의 키는 남긴다', () => {
+  it('기록 지우기는 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·메타·연 용어를 지우고 설정과 남의 키는 남긴다', () => {
     store.addToCart({ id: 'a:b', name: 'B', cat: 'api', sub: 'weather' }, 1);
     store.setProject('앱');
-    store.saveReceipt(receipt('c', 3));
+    store.savePrompt(prompt('c', 3));
     store.markViewed({ id: 'a', name: 'A', cat: 'api', sub: 'weather' }, 1);
     store.setPrefs({ motion: 'reduce' });
     store.clearAll();
     expect(store.$cart.get()).toEqual([]);
     expect(store.$project.get()).toBe('');
-    expect(store.$receipts.get()).toEqual([]);
+    expect(store.$prompts.get()).toEqual([]);
     expect(store.$recent.get()).toEqual([]);
     expect(store.$termsSeen.get()).toEqual([]);
     expect(store.$prefs.get().motion).toBe('reduce');

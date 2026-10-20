@@ -1,4 +1,4 @@
-/* 장바구니·영수증 (v5 S2, brief 3·7절): 머리줄 서랍, 장바구니 줄, /cart 쪽(주문 요약), 담은 뒤 작은 창, 영수증 종이, 지난 영수증,
+/* 장바구니·프롬프트 (v5 S2 → v5.1): 머리줄 서랍, 장바구니 줄, /cart 쪽(담은 재료 요약), 담기 창, 프롬프트 단말 창, 지난 프롬프트,
    스타터 키트, 최근 본 재료. 값은 tokens.css 변수만. 동작 줄이기면 --dur-sheet가 0이라 서랍이 바로 뜬다. */
 
 /* ── 아이콘만 있는 버튼 ─────────────────────────────────────────────── */
@@ -87,8 +87,7 @@
   background: var(--surface-raised);
 }
 .drawer-total,
-.sum-total,
-.receipt-total {
+.sum-total {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -359,20 +358,27 @@
   gap: var(--space-2);
 }
 
-/* ── 담은 뒤 작은 창 (카드 안, [담기] 바로 위) ─────────────────────── */
-.add-pop {
-  position: absolute;
-  inset-inline: var(--space-2);
-  inset-block-end: calc(var(--tap) + 2 * var(--space-3));
-  z-index: 3;
-  display: grid;
-  gap: var(--space-1);
-  padding: var(--space-3);
+/* ── 담기 창 (v5.1 D120, cart-buttons.ts): 넓은 화면은 누른 버튼 옆에 뜨는 작은 창, 휴대폰은 아래에서 올라오는 시트 ── */
+.add-sheet {
+  position: fixed;
+  inset: var(--sheet-y, 30vh) auto auto var(--sheet-x, var(--space-4));
+  inline-size: min(22rem, 100vw - 2 * var(--space-4));
+  max-inline-size: none;
+  margin: 0;
+  padding: var(--space-4);
   border: 1px solid var(--hairline);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background: var(--surface-raised);
+  color: var(--text);
   box-shadow: var(--elev-3);
+}
+.add-sheet[open] {
+  display: grid;
+  gap: var(--space-2);
   animation: pop-in var(--dur-ui) var(--ease-out);
+}
+.add-sheet::backdrop {
+  background: transparent;
 }
 @keyframes pop-in {
   from {
@@ -380,26 +386,60 @@
     translate: 0 var(--space-2);
   }
 }
+@media (max-width: 599px) {
+  .add-sheet {
+    inset: auto 0 0 0;
+    inline-size: 100%;
+    padding-block-end: calc(var(--space-4) + env(safe-area-inset-bottom));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+  .add-sheet[open] {
+    animation: sheet-up var(--dur-sheet) var(--ease-drawer);
+  }
+  .add-sheet::backdrop {
+    background: var(--scrim);
+  }
+}
+@keyframes sheet-up {
+  from {
+    translate: 0 100%;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
-  .add-pop {
+  .add-sheet[open] {
     animation: none;
   }
 }
-:root[data-motion='reduce'] .add-pop {
+:root[data-motion='reduce'] .add-sheet[open] {
   animation: none;
 }
-.add-pop-title {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
+.add-sheet-head {
+  display: grid;
+  gap: 2px;
   padding-inline-end: var(--tap);
-  color: var(--ok-ink);
-  font-weight: var(--weight-heading);
 }
-.add-pop-x {
+.add-sheet-kicker {
+  color: var(--link);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.add-sheet[data-in='true'] .add-sheet-kicker {
+  color: var(--ok-ink);
+}
+.add-sheet-name {
+  font-size: var(--size-title-3);
+  font-weight: var(--weight-heading);
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.add-sheet-x {
   position: absolute;
-  inset-block-start: var(--space-1);
-  inset-inline-end: var(--space-1);
+  inset-block-start: var(--space-2);
+  inset-inline-end: var(--space-2);
   display: inline-grid;
   place-items: center;
   inline-size: var(--tap);
@@ -408,18 +448,19 @@
   border-radius: var(--radius-md);
   background: transparent;
   color: var(--text-2);
-  font-size: var(--size-title-3);
+  font-size: var(--size-title-2);
   line-height: 1;
 }
-.add-pop-x:hover {
+.add-sheet-x:hover {
   background: var(--fill);
 }
-.add-pop-label {
+.add-sheet-label {
+  margin-block-start: var(--space-1);
   color: var(--text-2);
-  font-size: var(--size-caption);
+  font-size: var(--size-label);
   font-weight: var(--weight-strong);
 }
-.add-pop-input {
+.add-sheet-input {
   inline-size: 100%;
   min-block-size: var(--btn-md);
   padding-inline: var(--space-3);
@@ -428,172 +469,237 @@
   background: var(--surface);
   color: var(--text);
 }
-.add-pop-acts {
+.add-sheet-hint {
+  color: var(--text-3);
+  font-size: var(--size-caption);
+}
+.add-sheet-acts {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1);
+  gap: var(--space-2);
+  margin-block-start: var(--space-1);
 }
-.add-pop-acts .btn {
+.add-sheet-acts .btn {
   flex: 1 1 auto;
 }
-
-/* ── 영수증 (/receipt) ───────────────────────────────────────────────── */
-.receipt-page {
-  display: grid;
-  gap: var(--space-5);
-  align-items: start;
-  margin-block-start: var(--space-3);
+.add-sheet-acts .add-sheet-ok {
+  flex: 2 1 auto;
 }
-@media (min-width: 1024px) {
-  .receipt-page {
-    grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
-    gap: var(--space-7);
+.add-sheet-acts .add-sheet-view {
+  flex-basis: 100%;
+}
+
+/* ── 프롬프트 단말 창 (v5.1 D121, PromptDialog): 낮·밤 모두 어두운 화면, 고정폭 글, 네온 강조 하나 ── */
+.prompt-dlg {
+  inline-size: min(46rem, 100vw - 2 * var(--space-4));
+  max-inline-size: none;
+  max-block-size: min(46rem, 100dvh - 2 * var(--space-4));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xl);
+  background: transparent;
+  color: var(--term-ink);
+}
+.prompt-dlg::backdrop {
+  background: var(--scrim);
+}
+@media (max-width: 599px) {
+  .prompt-dlg {
+    inline-size: 100vw;
+    max-block-size: 100dvh;
+    block-size: 100dvh;
+    margin: 0;
+    border-radius: 0;
   }
 }
-.receipt {
-  display: grid;
-  gap: var(--space-4);
-  padding: var(--space-5) var(--space-5) var(--space-6);
-  border: 1px solid var(--hairline);
+.term {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  block-size: 100%;
+  max-block-size: inherit;
+  padding: 0 var(--space-4) var(--space-4);
+  border: 1px solid var(--term-line);
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--term-neon) 6%, transparent), transparent 40%),
+    var(--term);
+  box-shadow: var(--term-glow);
+  font-family: var(--font-mono);
+}
+.term :focus-visible {
+  outline-color: var(--term-neon);
+}
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-inline: calc(-1 * var(--space-4));
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
+  border-block-end: 1px solid var(--term-line);
+  background: var(--term-raised);
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+.term-dots {
+  display: inline-flex;
+  gap: 6px;
+}
+.term-dots i {
+  inline-size: 10px;
+  block-size: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--term-line);
+}
+.term-dots i:first-child {
+  background: var(--term-neon);
+}
+.term-file {
+  flex: 1;
+  color: var(--term-dim);
+  font-size: var(--size-caption);
+}
+.term-x {
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  border: 0;
   border-radius: var(--radius-md);
-  background: var(--receipt);
-  color: var(--receipt-ink);
-  /* 위쪽 파란 띠 (영수증 용지 머리) */
-  box-shadow: inset 0 4px 0 var(--primary), var(--elev-2);
-  font-variant-numeric: tabular-nums;
+  background: transparent;
+  color: var(--term-dim);
 }
-.receipt-head {
+.term-x:hover {
+  background: var(--term-line);
+  color: var(--term-ink);
+}
+.term-head {
   display: grid;
-  gap: var(--space-2);
-  justify-items: center;
-  padding-block-end: var(--space-4);
-  border-block-end: 1px dashed var(--border);
-  text-align: center;
+  gap: 2px;
 }
-.receipt-shop {
-  color: var(--primary);
-  font-weight: var(--weight-brand);
-  letter-spacing: var(--tracking-title);
-}
-.receipt-title {
-  font-size: var(--size-title-2);
-}
-.receipt-meta {
-  display: grid;
-  gap: var(--space-1);
-  inline-size: 100%;
-  margin: 0;
-  font-size: var(--size-label);
-}
-.receipt-meta > div {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-.receipt-meta dt {
-  color: var(--text-2);
-}
-.receipt-meta dd {
-  margin: 0;
-  font-weight: var(--weight-strong);
-}
-.receipt-project {
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  background: var(--surface-sunken);
-}
-.receipt-label {
-  display: block;
-  color: var(--text-2);
-  font-size: var(--size-caption);
-  font-weight: var(--weight-strong);
-}
-.receipt-cat {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-3);
-  font-size: var(--size-body);
-  color: var(--cat-ink);
-}
-.receipt-qty {
-  color: var(--text-2);
-  font-weight: var(--weight-body);
-}
-.receipt-lines {
-  display: grid;
-  gap: var(--space-1);
-  margin: var(--space-2) 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--size-label);
-}
-.receipt-lines li {
-  display: grid;
-  grid-template-columns: auto minmax(var(--space-4), 1fr) auto;
-  align-items: baseline;
-  gap: var(--space-2);
-}
-.receipt-name {
-  min-inline-size: 0;
-  overflow-wrap: anywhere;
-}
-.receipt-dots {
-  border-block-end: 1px dotted var(--border);
-}
-.receipt-price {
-  color: var(--text-2);
-}
-.receipt-memo {
-  grid-column: 1 / -1;
-  color: var(--text-2);
-  font-size: var(--size-caption);
-}
-.receipt-total {
-  padding-block-start: var(--space-3);
-  border-block-start: 1px dashed var(--border);
+.term-title {
+  color: var(--term-neon);
+  font-family: var(--font-body);
   font-size: var(--size-title-3);
+  font-weight: var(--weight-heading);
 }
-.receipt-paid,
-.receipt-thanks {
-  color: var(--text-2);
+.term-title::before {
+  content: '> ';
+  font-family: var(--font-mono);
+}
+.term-meta,
+.term-hint {
+  color: var(--term-dim);
+  font-family: var(--font-body);
   font-size: var(--size-caption);
-  text-align: center;
 }
-.receipt-side {
-  display: grid;
-  gap: var(--space-3);
-  justify-items: start;
-  min-inline-size: 0;
-}
-.receipt-acts {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-}
-.md-preview {
-  inline-size: 100%;
-}
-.md-preview summary {
-  min-block-size: var(--tap);
-  display: flex;
-  align-items: center;
-  font-weight: var(--weight-strong);
-  cursor: pointer;
-}
-.md-preview pre {
-  max-block-size: 28rem;
+.term-text {
+  position: relative;
+  flex: 1 1 auto;
+  min-block-size: 8rem;
+  margin: 0;
   overflow: auto;
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--hairline);
+  padding: var(--space-3);
+  border: 1px solid var(--term-line);
   border-radius: var(--radius-md);
-  background: var(--surface-sunken);
-  font-size: var(--size-caption);
+  background: color-mix(in srgb, var(--term) 70%, black);
+  color: var(--term-ink);
+  font-size: var(--size-label);
+  line-height: var(--leading-body);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+.term-text code {
+  display: block;
+  font: inherit;
+  background: none;
+  padding: 0;
+}
+/* 펼침: 글이 위에서 아래로 줄줄이 찍히고(steps), 네온 줄이 훑고 지나간다. 누르거나 키를 치면 data-done이 되어 바로 끝난다 */
+.term[data-done='false'] .term-text code {
+  animation: term-print var(--dur-reveal) steps(14, end) both;
+}
+.term[data-done='false'] .term-text::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 2px;
+  background: var(--term-neon);
+  box-shadow: 0 0 12px var(--term-neon);
+  animation: term-scan var(--dur-reveal) linear both;
+}
+@keyframes term-print {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes term-scan {
+  from {
+    inset-block-start: 0;
+    opacity: 1;
+  }
+  to {
+    inset-block-start: 100%;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .term .term-text code,
+  .term .term-text::after {
+    animation: none;
+  }
+  .term .term-text::after {
+    display: none;
+  }
+}
+:root[data-motion='reduce'] .term .term-text code,
+:root[data-motion='reduce'] .term .term-text::after {
+  animation: none;
+  display: none;
+}
+:root[data-motion='reduce'] .term .term-text code {
+  display: block;
+}
+.term-acts {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-2);
+}
+.term-acts .copy-wrap,
+.term-acts .copy-btn,
+.term-dl {
+  inline-size: 100%;
+}
+.term-acts .copy-btn {
+  min-block-size: var(--btn-lg);
+  border: 0;
+  background: var(--term-neon);
+  color: var(--on-term-neon);
+  font-weight: var(--weight-heading);
+  box-shadow: 0 0 18px -4px var(--term-neon);
+}
+.term-acts .copy-btn:hover {
+  background: var(--term-cyan);
+}
+.term-dl {
+  min-block-size: var(--btn-lg);
+  border: 1px solid var(--term-line);
+  background: var(--term-raised);
+  color: var(--term-ink);
+}
+.term-dl:hover {
+  background: var(--term-line);
+}
+.term-acts .copy-fail {
+  color: var(--term-ink);
+}
 
-/* ── 지난 영수증 (/receipts) ─────────────────────────────────────────── */
+/* ── 지난 프롬프트 (/prompts) ─────────────────────────────────────────── */
 .rc-list {
   display: grid;
   gap: var(--space-3);
@@ -751,12 +857,7 @@
   overflow: hidden;
 }
 
-/* 영수증 번호·때·값은 영수증 글꼴 (CC Receipt, 글자는 ko.cart·ko.receipt에서 뽑아 만든다: npm run fonts) */
-.receipt-meta dd,
-.receipt-qty,
-.receipt-price,
-.receipt-total,
-.receipt-paid,
+/* 지난 프롬프트의 때는 고정폭 글꼴 (CC Receipt, 글자는 ko.cart·ko.prompt에서 뽑아 만든다: npm run fonts) */
 .rc-no {
   font-family: var(--font-mono);
 }

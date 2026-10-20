@@ -4,7 +4,7 @@ import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
 import { fill } from '../../src/lib/text.ts';
-import { blockExternal, islandsReady, selectText } from './helpers.ts';
+import { addWithSheet, blockExternal, islandsReady, selectText } from './helpers.ts';
 
 async function watchCsp(page: Page): Promise<() => Promise<string[]>> {
   await page.addInitScript(() => {
@@ -25,7 +25,7 @@ test('CSP: 목록 2쪽 → 상세 → 담기 → 검색 → 폰트 견본 → �
   await page.locator('.listing-grid .card-link').first().click();
   await islandsReady(page);
   await expect(page.locator('.swatches')).toBeVisible();
-  await page.getByRole('button', { name: ko.item.add }).click();
+  await addWithSheet(page, page.getByRole('button', { name: ko.item.add }));
   await expect(page.locator('.hd-badge')).toHaveText('1');
   await page.goto('/search?q=weather');
   await islandsReady(page);

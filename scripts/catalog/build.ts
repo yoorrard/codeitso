@@ -17,7 +17,7 @@ import { buildFacets, encodeOrder } from '../../src/lib/catalog/facets.ts';
 import { SITE_FILE } from '../../src/lib/catalog/site.ts';
 import type { ListChunk, SiteData } from '../../src/lib/catalog/types.ts';
 import { CHUNK_PAGES, MAX_CATALOG_FILES, PAGE_SIZE, SORTS } from '../../src/lib/catalog/types.ts';
-import { CATALOG_DIR, KITS_FILE, card, cards, catalog, categories, homeRows, kits, listOf, shards, topOf } from './load.ts';
+import { CATALOG_DIR, KITS_FILE, KO_DIR, card, cards, catalog, categories, homeRows, kits, listOf, shards, topOf } from './load.ts';
 import { WORDS_FILE, buildSearch, readWords } from './search-index.ts';
 
 const ROOT = join(import.meta.dirname, '..', '..');
@@ -40,6 +40,7 @@ function signature(): string {
     }
   };
   for (const d of [CATALOG_DIR, join(ROOT, 'scripts', 'catalog'), join(ROOT, 'src', 'lib', 'catalog')]) walk(d);
+  if (existsSync(KO_DIR)) walk(KO_DIR);
   for (const f of [KITS_FILE, WORDS_FILE]) {
     const st = statSync(f);
     h.update(`${relative(ROOT, f)}:${st.size}:${st.mtimeMs}\n`);

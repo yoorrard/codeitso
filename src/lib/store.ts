@@ -1,15 +1,16 @@
 // 브라우저 저장은 이 파일 한 곳에서만 한다 (docs/ARCHITECTURE.md 5절, CLAUDE.md 꼭 지킬 것 2).
-// v5: 장바구니(담은 재료와 메모), 프로젝트 메모, 지난 영수증, 최근 본 재료, 설정, 연 용어, 집계 기록.
+// v5.1: 장바구니(담은 재료와 메모), 프로젝트 메모, 지난 프롬프트, 최근 본 재료, 설정, 연 용어, 집계 기록.
 // localStorage를 못 쓰면(사생활 보호 모드, 막힌 저장소) 메모리에만 두고 $storageOk를 false로 둔다.
 import { persistentAtom, setPersistentEngine } from '@nanostores/persistent';
 import { atom, computed } from 'nanostores';
-import type { AddResult, CartLine, Meta, Prefs, Receipt, RecentItem } from './saved.ts';
+import type { AddResult, CartLine, Meta, Prefs, PromptEntry, RecentItem } from './saved.ts';
 import {
   DEFAULT_PREFS,
   EMPTY_META,
   KEYS,
   LEGACY_KEYS,
-  RECEIPTS_MAX,
+  OLD_RECEIPTS_KEY,
+  PROMPTS_MAX,
   SENT_MAX,
   addLine,
   addLines,
@@ -22,8 +23,9 @@ import {
   readMeta,
   readPrefs,
   readProject,
-  readReceipts,
+  readPrompts,
   readRecent,
+  samePrompt,
 } from './saved.ts';
 
 /** 빌드(서버)에서는 저장소가 없어도 안내를 띄우지 않는다. 브라우저에서만 실제로 써 본다. */
@@ -41,7 +43,22 @@ function storageWorks(): boolean {
 
 const ok = storageWorks();
 if (!ok) setPersistentEngine({}, { addEventListener() {}, removeEventListener() {} });
-else if (typeof window !== 'undefined') for (const k of LEGACY_KEYS) window.localStorage.removeItem(k);
+else if (typeof window !== 'undefined') {
+  for (const k of LEGACY_KEYS) window.localStorage.removeItem(k);
+  // v5 영수증 → v5.1 지난 프롬프트 (한 번만 옮긴다)
+  const old = window.localStorage.getItem(OLD_RECEIPTS_KEY);
+  if (old !== null) {
+    if (window.localStorage.getItem(KEYS.prompts) === null) {
+      try {
+        const moved = readPrompts(JSON.parse(old));
+        if (moved.length > 0) window.localStorage.setItem(KEYS.prompts, JSON.stringify(moved));
+      } catch {
+        // 깨진 옛 값은 버린다
+      }
+    }
+    window.localStorage.removeItem(OLD_RECEIPTS_KEY);
+  }
+}
 
 /** localStorage를 쓸 수 있는가 (false면 '담은 것이 저장되지 않는다' 한 줄) */
 export const $storageOk = atom(ok);
@@ -62,7 +79,7 @@ function codec<T>(read: (raw: unknown) => T, empty: (v: T) => boolean): { encode
 
 export const $cart = persistentAtom<CartLine[]>(KEYS.cart, [], codec(readCart, isEmptyList));
 export const $project = persistentAtom<string>(KEYS.project, '', codec(readProject, (s) => s === ''));
-export const $receipts = persistentAtom<Receipt[]>(KEYS.receipts, [], codec(readReceipts, isEmptyList));
+export const $prompts = persistentAtom<PromptEntry[]>(KEYS.prompts, [], codec(readPrompts, isEmptyList));
 export const $recent = persistentAtom<RecentItem[]>(KEYS.recent, [], codec(readRecent, isEmptyList));
 export const $meta = persistentAtom<Meta>(KEYS.meta, EMPTY_META, codec(readMeta, isEmptyMeta));
 export const $prefs = persistentAtom<Prefs>(KEYS.prefs, DEFAULT_PREFS, codec(readPrefs, isDefaultPrefs));
@@ -120,22 +137,18 @@ export function inCart(id: string): boolean {
   return $cart.get().some((x) => x.id === id);
 }
 
-/** 프로젝트 메모 (만들 앱 한 줄). 계산해도 지우지 않는다 */
+/** 프로젝트 메모 (만들 앱 한 줄). 프롬프트를 뽑아도 지우지 않는다 */
 export function setProject(text: string): void {
   $project.set(readProject(text));
 }
 
-/** 영수증을 맨 앞에 남긴다 (RECEIPTS_MAX개 넘으면 오래된 것부터 빠진다) */
-export function saveReceipt(r: Receipt): void {
-  $receipts.set(readReceipts([r, ...$receipts.get().filter((x) => x.id !== r.id)]).slice(0, RECEIPTS_MAX));
+/** 뽑은 프롬프트를 맨 앞에 남긴다. 같은 재료·메모로 다시 뽑으면 지난 것을 지우고 새것만 남긴다 (PROMPTS_MAX개까지) */
+export function savePrompt(p: PromptEntry): void {
+  $prompts.set(readPrompts([p, ...$prompts.get().filter((x) => x.id !== p.id && !samePrompt(x, p))]).slice(0, PROMPTS_MAX));
 }
 
-export function removeReceipt(id: string): void {
-  $receipts.set($receipts.get().filter((x) => x.id !== id));
-}
-
-export function findReceipt(id: string): Receipt | undefined {
-  return $receipts.get().find((x) => x.id === id);
+export function removePrompt(id: string): void {
+  $prompts.set($prompts.get().filter((x) => x.id !== id));
 }
 
 /** 상세를 연 재료를 최근 본 재료 맨 앞에 */
@@ -179,11 +192,11 @@ export function rememberSent(key: string): boolean {
   return true;
 }
 
-/** '저장한 기록 지우기': 장바구니·프로젝트 메모·영수증·최근 본 재료·연 용어·집계 기록을 지운다. 설정(동작 줄이기)은 기록이 아니라서 남긴다 */
+/** '저장한 기록 지우기': 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·연 용어·집계 기록을 지운다. 설정(동작 줄이기)은 기록이 아니라서 남긴다 */
 export function clearAll(): void {
   $cart.set([]);
   $project.set('');
-  $receipts.set([]);
+  $prompts.set([]);
   $recent.set([]);
   $meta.set(EMPTY_META);
   $termsSeen.set([]);

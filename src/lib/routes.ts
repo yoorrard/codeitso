@@ -1,7 +1,7 @@
 // 사이트 주소는 이 파일 한 곳에서 정한다. 화면 코드에 주소를 직접 쓰지 않는다 (품질 바닥선 base-path 규칙).
 // 주소 바탕(base path, D81): 빌드 변수 PUBLIC_BASE_PATH → astro.config.mjs의 base → import.meta.env.BASE_URL.
 // 기본(Cloudflare)은 루트 '/'라 주소가 그대로이고, GitHub Pages 같은 하위 주소(/code-chauffeur)면 모든 주소 앞에 바탕이 붙는다.
-// v5 (D103): 진열대 /c/<대분류>, 장바구니 /cart(공유 #s=), 영수증 /receipt?id=·/receipts, 목록 /c/<대분류>/<소분류>?sort=&page=, 상세 /item?id=, 자료 /catalog/list/…·/catalog/item/<n>.json
+// v5 (D103): 진열대 /c/<대분류>, 장바구니 /cart(공유 #s=), 지난 프롬프트 /prompts (v5.1, 옛 /receipt·/receipts는 넘긴다), 목록 /c/<대분류>/<소분류>?sort=&page=, 상세 /item?id=, 자료 /catalog/list/…·/catalog/item/<n>.json
 // (자료 JSON은 scripts/catalog/build.ts가 public/catalog/에 만든다)
 import type { Selection } from './catalog/facets.ts';
 import { writeSelection } from './catalog/facets.ts';
@@ -53,8 +53,7 @@ export const PATHS = {
   home: '/',
   search: '/search',
   cart: '/cart',
-  receipt: '/receipt',
-  receipts: '/receipts',
+  prompts: '/prompts',
   item: '/item',
   terms: '/terms',
   about: '/about',
@@ -102,11 +101,6 @@ export function listPath(cat: string, sub: string, sort: SortKey = 'popular', pa
 /** 상품 상세 */
 export function itemPath(id: string): string {
   return `${ROUTES.item}?id=${encodeURIComponent(id)}`;
-}
-
-/** 영수증 한 장 (지난 영수증에서 연다, 저장은 이 브라우저에만) */
-export function receiptPath(id: string): string {
-  return `${ROUTES.receipt}?id=${encodeURIComponent(id)}`;
 }
 
 /** 장바구니 공유 링크 (바탕을 붙인 경로 + #s=…, 재료 id만). 바깥에 줄 때는 siteRoot와 합친다 (shareUrl) */

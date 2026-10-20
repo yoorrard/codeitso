@@ -1,12 +1,12 @@
-// 저장 값 읽기 (saved.ts): 장바구니·프로젝트 메모·영수증·최근 본 재료·메타·설정. 읽은 값은 믿지 않고 모양을 고른다.
+// 저장 값 읽기 (saved.ts): 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·메타·설정. 읽은 값은 믿지 않고 모양을 고른다.
 import { describe, expect, it } from 'vitest';
 import {
   CART_MAX,
   DEFAULT_PREFS,
   MEMO_MAX,
   PROJECT_MAX,
-  RECEIPTS_MAX,
-  RECEIPT_FIELD_MAX,
+  PROMPTS_MAX,
+  PROMPT_FIELD_MAX,
   RECENT_MAX,
   SENT_MAX,
   addLine,
@@ -20,10 +20,10 @@ import {
   readMeta,
   readPrefs,
   readProject,
-  readReceipt,
-  readReceipts,
+  readPrompt,
+  readPrompts,
   readRecent,
-  receiptNumber,
+  samePrompt,
   stamp,
 } from '../../src/lib/saved.ts';
 
@@ -83,33 +83,40 @@ describe('프로젝트 메모·영수증·최근 본 재료 읽기', () => {
     expect(readProject('가'.repeat(PROJECT_MAX + 1))).toHaveLength(PROJECT_MAX);
   });
 
-  const receipt = (id: string, at: number, extra: Record<string, unknown> = {}) => ({
+  const prompt = (id: string, at: number, extra: Record<string, unknown> = {}) => ({
     id,
-    no: '20261014-0427',
     at,
-    lines: [{ id: 'google-fonts:roboto', name: 'Roboto', cat: 'design', sub: 'fonts', url: 'https://fonts.google.com/specimen/Roboto', license: 'OFL-1.1', install: 'npm i @fontsource/roboto' }],
+    lines: [{ id: 'google-fonts:roboto', name: 'Roboto', cat: 'design', sub: 'fonts', url: 'https://fonts.google.com/specimen/Roboto', install: 'npm i @fontsource/roboto', auth: 'key' }],
     ...extra,
   });
 
-  it('영수증: 모양이 맞는 것만, 주소는 http(s)만, 칸은 길이 상한까지', () => {
-    const r = readReceipt(receipt('abc', 5, { project: ' 급식 앱 ' }));
-    expect(r).toMatchObject({ id: 'abc', no: '20261014-0427', at: 5, project: '급식 앱' });
-    expect(r?.lines[0]).toMatchObject({ url: 'https://fonts.google.com/specimen/Roboto', license: 'OFL-1.1', install: 'npm i @fontsource/roboto' });
-    expect(readReceipt(receipt('abc', 5, { lines: [{ ...receipt('x', 1).lines[0], url: 'javascript:alert(1)', docs: 'ftp://x' }] }))?.lines[0]?.url).toBeUndefined();
-    const long = readReceipt(receipt('abc', 5, { lines: [{ ...receipt('x', 1).lines[0], snippet: 'x'.repeat(RECEIPT_FIELD_MAX.snippet + 50) }] }));
-    expect(long?.lines[0]?.snippet).toHaveLength(RECEIPT_FIELD_MAX.snippet);
-    expect(readReceipt(receipt('ABC!', 5))).toBeNull();
-    expect(readReceipt(receipt('abc', 0))).toBeNull();
-    expect(readReceipt(receipt('abc', 5, { no: '1234' }))).toBeNull();
-    expect(readReceipt(receipt('abc', 5, { lines: [] }))).toBeNull();
+  it('지난 프롬프트: 모양이 맞는 것만, 주소는 http(s)만, 칸은 길이 상한까지, v5 영수증도 읽는다', () => {
+    const r = readPrompt(prompt('abc', 5, { project: ' 급식 앱 ' }));
+    expect(r).toMatchObject({ id: 'abc', at: 5, project: '급식 앱' });
+    expect(r?.lines[0]).toEqual({ id: 'google-fonts:roboto', name: 'Roboto', cat: 'design', sub: 'fonts', url: 'https://fonts.google.com/specimen/Roboto', install: 'npm i @fontsource/roboto', auth: 'key' });
+    expect(readPrompt(prompt('abc', 5, { lines: [{ ...prompt('x', 1).lines[0], url: 'javascript:alert(1)', auth: 'yes' }] }))?.lines[0]).toEqual({ id: 'google-fonts:roboto', name: 'Roboto', cat: 'design', sub: 'fonts', install: 'npm i @fontsource/roboto' });
+    const long = readPrompt(prompt('abc', 5, { lines: [{ ...prompt('x', 1).lines[0], install: 'x'.repeat(PROMPT_FIELD_MAX.install + 50) }] }));
+    expect(long?.lines[0]?.install).toHaveLength(PROMPT_FIELD_MAX.install);
+    expect(readPrompt(prompt('ABC!', 5))).toBeNull();
+    expect(readPrompt(prompt('abc', 0))).toBeNull();
+    expect(readPrompt(prompt('abc', 5, { lines: [] }))).toBeNull();
+    expect(readPrompt({ ...prompt('old', 5), no: '20261014-0427', lines: [{ id: 'a:b', name: 'B', cat: 'api', sub: 'weather', license: 'MIT', snippet: 'x' }] })?.lines[0]).toEqual({ id: 'a:b', name: 'B', cat: 'api', sub: 'weather' });
   });
 
-  it(`지난 영수증: 새것이 앞, 같은 id는 하나, ${RECEIPTS_MAX}장까지`, () => {
-    expect(readReceipts([receipt('a', 1), receipt('b', 3), receipt('a', 9), 'x']).map((r) => r.id)).toEqual(['b', 'a']);
-    const many = Array.from({ length: RECEIPTS_MAX + 4 }, (_, i) => receipt(`r${i}`, i + 1));
-    const got = readReceipts(many);
-    expect(got).toHaveLength(RECEIPTS_MAX);
-    expect(got[0]?.id).toBe(`r${RECEIPTS_MAX + 3}`);
+  it(`지난 프롬프트 목록: 새것이 앞, 같은 id는 하나, ${PROMPTS_MAX}개까지`, () => {
+    expect(readPrompts([prompt('a', 1), prompt('b', 3), prompt('a', 9), 'x']).map((r) => r.id)).toEqual(['b', 'a']);
+    const many = Array.from({ length: PROMPTS_MAX + 4 }, (_, i) => prompt(`r${i}`, i + 1));
+    const got = readPrompts(many);
+    expect(got).toHaveLength(PROMPTS_MAX);
+    expect(got[0]?.id).toBe(`r${PROMPTS_MAX + 3}`);
+  });
+
+  it('같은 재료·메모·만들 앱이면 같은 프롬프트다', () => {
+    const a = readPrompt(prompt('a', 1));
+    const b = readPrompt(prompt('b', 2));
+    const c = readPrompt(prompt('c', 3, { project: '앱' }));
+    expect(a && b && samePrompt(a, b)).toBe(true);
+    expect(a && c && samePrompt(a, c)).toBe(false);
   });
 
   it(`최근 본 재료: 본 것이 앞, 다시 보면 앞으로, ${RECENT_MAX}개까지`, () => {
@@ -124,11 +131,10 @@ describe('프로젝트 메모·영수증·최근 본 재료 읽기', () => {
   });
 });
 
-describe('번호와 시각', () => {
-  it('영수증 번호는 날짜 8자리-네 자리, 파일 이름 시각은 YYYYMMDD-HHMM (기기 시각)', () => {
+describe('시각', () => {
+  it('파일 이름 시각은 YYYYMMDD-HHMM (기기 시각)', () => {
     const at = new Date(2026, 9, 14, 9, 5).getTime();
     expect(stamp(at)).toBe('20261014-0905');
-    expect(receiptNumber(at, '0427')).toBe('20261014-0427');
   });
 });
 

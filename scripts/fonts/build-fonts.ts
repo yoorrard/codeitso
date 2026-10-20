@@ -25,7 +25,7 @@ const D2_FILES: { weight: number; style: string; file: string; sha256: string }[
 ];
 const RECEIPT_FAMILY = 'CC Receipt';
 
-/** 영수증 글꼴에 넣을 글자: 출력 가능한 ASCII + 기호 + 화면 문구의 장바구니·영수증 묶음 (v5: S2가 ko.receipt를 더하면 함께 넣는다) */
+/** 고정폭 글꼴(CC Receipt)에 넣을 글자: 출력 가능한 ASCII + 기호 + 화면 문구의 장바구니·프롬프트 묶음 (v5.1: 영수증 대신 프롬프트 판) */
 export async function receiptChars(): Promise<string> {
   const set = new Set<string>();
   const add = (s: string): void => {
@@ -35,7 +35,7 @@ export async function receiptChars(): Promise<string> {
   add('·…─—–₩×•↑↓←→✓★%°');
   const { ko } = await import('../../src/copy/ko.ts');
   const copy = ko as unknown as Record<string, unknown>;
-  add(JSON.stringify([copy['cart'], copy['receipt'] ?? null]).replace(/\{\{[a-z]+\}\}/g, ''));
+  add(JSON.stringify([copy['cart'], copy['prompt'] ?? null]).replace(/\{\{[a-z]+\}\}/g, ''));
   return [...set].sort().join('');
 }
 

@@ -1,19 +1,16 @@
 // 상품 상세 섬 (/item?id=…, D103): 상품이 13만 개라 쪽을 미리 만들지 않고, 빌드가 id 해시로 나눈 상세 조각
-// (/catalog/item/<n>.json, 1024개)에서 이 상품을 꺼내 그린다. 위에서 아래로: 위치 → 종류별 큰 미리 보기(DetailPreview) | 이름·설명·담기(+메모)
+// (/catalog/item/<n>.json, 1024개)에서 이 상품을 꺼내 그린다. 위에서 아래로: 위치 → 종류별 큰 미리 보기(DetailPreview) | 이름·한국어 설명(원문은 접어 둔다)·담기
 // → 상품 정보 표 → 쓰는 법(출처가 준 설치 명령·조각만) → 관련 상품. 넓은 화면은 오른쪽 담기 칸이 붙어 따라온다.
 import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
-import { announce } from '../lib/announce.ts';
 import { dateOf, formatCount, pickSummary, shardOf } from '../lib/catalog/core.ts';
 import type { DetailRecord, NavCategory, Shard } from '../lib/catalog/types.ts';
 import { METRIC_ICON } from '../lib/labels.ts';
 import { openCart } from '../lib/cart-ui.ts';
 import { ROUTES, categoryPath, itemDataPath, itemPath, listPath } from '../lib/routes.ts';
-import { $cart, addToCart, markViewed, removeFromCart, setCartMemo } from '../lib/store.ts';
-import { MEMO_MAX } from '../lib/saved.ts';
+import { $cart, markViewed } from '../lib/store.ts';
 import { fill } from '../lib/text.ts';
-import { trackAdd } from '../lib/track.ts';
 import CopyButton from './CopyButton.tsx';
 import { DetailPreview } from './DetailPreview.tsx';
 import { Icon } from './Icon.tsx';
@@ -33,78 +30,30 @@ function names(nav: NavCategory[], cat: string, sub: string): { cat: string; sub
   return { cat: c?.name ?? cat, sub: c?.subs.find((s) => s.id === sub)?.name ?? sub };
 }
 
+/** 담기 칸: [장바구니에 담기]를 누르면 담기 창(메모 선택 → [담기])이 뜬다 (src/lib/cart-buttons.ts, data-add). 담긴 뒤에는 [담겼어요]로 메모 고치기·빼기 */
 function AddBox({ item }: { item: DetailRecord }) {
   const cart = useStore($cart);
   const line = cart.find((x) => x.id === item.id);
-  const [memo, setMemo] = useState(line?.memo ?? '');
-  useEffect(() => setMemo(line?.memo ?? ''), [line?.id]);
-  const memoId = 'item-memo';
+  const on = line !== undefined;
   return (
     <div class="buy-box">
-      <label class="field-label" for={memoId}>
-        {ko.item.memoLabel}
-      </label>
-      <textarea
-        id={memoId}
-        class="memo"
-        rows={2}
-        maxLength={MEMO_MAX}
-        placeholder={ko.item.memoPlaceholder}
-        aria-describedby="item-memo-hint"
-        value={memo}
-        onInput={(e) => setMemo((e.target as HTMLTextAreaElement).value)}
-      />
-      <p id="item-memo-hint" class="field-hint">
-        {ko.item.memoHint}
-      </p>
-      {line ? (
-        <>
-          <p class="in-cart" role="status">
-            <Icon name="check" size="18px" />
-            {ko.item.inCart}
-          </p>
-          <div class="buy-actions">
-            <button
-              type="button"
-              class="btn btn-soft"
-              onClick={() => {
-                setCartMemo(item.id, memo);
-                announce(ko.item.savedLive);
-              }}
-            >
-              {ko.item.saveMemo}
-            </button>
-            <button
-              type="button"
-              class="btn"
-              onClick={() => {
-                removeFromCart(item.id);
-                announce(fill(ko.card.removedLive, { name: item.name }));
-              }}
-            >
-              {ko.item.remove}
-            </button>
-            <button type="button" class="btn btn-text" onClick={() => openCart(item.id)}>
-              {ko.item.goCart}
-            </button>
-          </div>
-        </>
-      ) : (
-        <button
-          type="button"
-          class="btn btn-primary btn-lg buy-add"
-          onClick={() => {
-            const r = addToCart({ id: item.id, name: item.name, cat: item.category, sub: item.kind, memo }, Date.now());
-            if (r === 'full') {
-              announce(ko.card.full);
-              return;
-            }
-            if (r === 'added') trackAdd(item.category);
-            announce(fill(ko.card.addedLive, { name: item.name }));
-          }}
-        >
-          <Icon name="cart" size="20px" />
-          {ko.item.add}
+      <button
+        type="button"
+        class={on ? 'btn btn-soft btn-lg buy-add' : 'btn btn-primary btn-lg buy-add'}
+        data-add={item.id}
+        data-name={item.name}
+        data-cat={item.category}
+        data-sub={item.kind}
+        data-in={String(on)}
+        aria-label={fill(on ? ko.card.inCartLabel : ko.card.addLabel, { name: item.name })}
+      >
+        <Icon name={on ? 'check' : 'cart'} size="20px" />
+        {on ? ko.card.added : ko.item.add}
+      </button>
+      {line?.memo && <p class="buy-memo">{fill(ko.item.memo, { memo: line.memo })}</p>}
+      {on && (
+        <button type="button" class="btn btn-text" onClick={() => openCart(item.id)}>
+          {ko.item.goCart}
         </button>
       )}
     </div>
@@ -143,7 +92,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
           </p>
           <h1 class="detail-name">{item.name}</h1>
           <p class="detail-sum">{summary}</p>
-          {item.written && <p class="field-hint">{ko.item.summaryWritten}</p>}
+          {(item.written || item.koBy) && <p class="field-hint">{ko.item.summaryWritten}</p>}
           {original && (
             <details class="detail-orig">
               <summary>{ko.item.summarySource}</summary>

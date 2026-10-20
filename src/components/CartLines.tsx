@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import type { NavCategory } from '../lib/catalog/types.ts';
-import { groupByCategory, namesOf } from '../lib/receipt-md.ts';
+import { groupByCategory, namesOf } from '../lib/prompt.ts';
 import { itemPath, listPath } from '../lib/routes.ts';
 import type { CartLine } from '../lib/saved.ts';
 import { MEMO_MAX } from '../lib/saved.ts';
@@ -81,7 +81,7 @@ function Line({ line, sub, idPrefix }: { line: CartLine; sub: string; idPrefix: 
               rows={2}
               maxLength={MEMO_MAX}
               value={draft}
-              placeholder={ko.item.memoPlaceholder}
+              placeholder={ko.sheet.memoPlaceholder}
               onInput={(e) => setDraft((e.target as HTMLTextAreaElement).value)}
               onKeyDown={(e) => {
                 if (e.key === 'Escape') {

@@ -21,6 +21,8 @@ export const OLD_TOKENS = [
   'accent', 'accent-press', 'on-accent', 'accent-soft', 'on-accent-soft', 'chosen', 'on-chosen', 'tile', 'on-tile',
   'plate', 'plate-line', 'plate-read', 'plate-ring', 'seal', 'receipt-soft', 'receipt-bad', 'on-navy', 'on-navy-2', 'focus-on-navy',
   'warn', 'on-warn', 'bad', 'on-bad', 'font-receipt', 'bar-top', 'bar-bottom', 'pane-left', 'card-min', 'content-max',
+  // v5.1에서 지운 영수증 종이 (프롬프트 단말 판 --term-*로 바뀌었다)
+  'receipt', 'receipt-ink',
 ] as const;
 
 /** 카드·상자에 두르면 싸 보이는 진한 테두리 색 (brief 5.5, 10절) */
@@ -32,7 +34,7 @@ const HEAVY_INK = /var\(\s*--(text|brand-navy|primary)\s*\)/;
  * 단계·둘러보는 곳·정보 화면, v3 새 화면, public/ 파일, 빌드가 만드는 끝점.
  */
 export const INTERNAL_PATHS = [
-  'c', 'item', 'search', 'cart', 'receipts', 'receipt', 'terms', 'about', 'legal',
+  'c', 'item', 'search', 'cart', 'prompts', 'receipts', 'receipt', 'terms', 'about', 'legal',
   'catalog', 'brand', 'fonts', 'og.png', '_astro', 'favicon.ico', 'icon-192.png', 'icon-512.png', 'apple-touch-icon', 'manifest.webmanifest',
   'glossary', 'robots.txt', 'sitemap.xml', 'api',
 ] as const;

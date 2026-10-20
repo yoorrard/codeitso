@@ -1,14 +1,16 @@
 // 진열대 읽기 (Node 전용, scripts/catalog/build.ts와 시험이 부른다. 화면 묶음에 들지 않는다).
 // data/catalog/<대분류>/index.json(소분류 순서·이름)과 출처 파일(<출처>.json, {source, items[]})을 한 번 읽어 둔다.
 // 빌드는 네트워크 없이 커밋된 자료만 쓴다 (brief 2절). 계산은 src/lib/catalog/core.ts의 순수 함수로 한다.
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { cardOf, dateOf, filePopularity, relatedIndex, shardOf, sortRanked } from '../../src/lib/catalog/core.ts';
+import { cardOf, dateOf, filePopularity, relatedIndex, shardOf, sortRanked, withKo } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
 
 export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog');
+/** 코드쇼퍼가 쓴 한국어 설명 (v5.1 D122): <이름>.json = { "<상품 id>": "한국어 설명" }. 폴더나 파일이 없어도 된다 */
+export const KO_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-ko');
 /** 스타터 키트 (손으로 고른 진열대 id 묶음) */
 export const KITS_FILE = join(import.meta.dirname, '..', '..', 'data', 'kits.json');
 const DIR = CATALOG_DIR;
@@ -39,7 +41,26 @@ function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, 'utf8')) as T;
 }
 
+/** data/catalog-ko/*.json을 모두 읽어 id → 한국어 설명. 읽지 못한 파일(쓰는 중이거나 깨진 JSON)은 알리고 건너뛴다 */
+export function readKo(dir: string = KO_DIR): Map<string, string> {
+  const out = new Map<string, string>();
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir).filter((n) => n.endsWith('.json')).sort()) {
+    let raw: unknown;
+    try {
+      raw = readJson<unknown>(join(dir, name));
+    } catch {
+      console.warn(`한국어 설명 ${name}을 읽지 못해 건너뛴다`);
+      continue;
+    }
+    if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) continue;
+    for (const [id, v] of Object.entries(raw)) if (typeof v === 'string' && v.trim() !== '') out.set(id, v);
+  }
+  return out;
+}
+
 function load(): Loaded {
+  const koMap = readKo();
   const categories: CategoryMeta[] = [];
   const lists = new Map<string, Ranked[]>();
   const byId = new Map<string, Ranked>();
@@ -54,7 +75,8 @@ function load(): Loaded {
       if (!Array.isArray(file.items)) continue; // 가져오기 보조 파일 (예: github-topics-snapshot.json)
       const pops = filePopularity(file.items);
       sources.push({ category: cat, file: name, name: file.source?.name ?? name, url: file.source?.url ?? '', license: file.source?.license ?? '', count: file.items.length });
-      file.items.forEach((item, i) => {
+      file.items.forEach((raw, i) => {
+        const item = withKo(raw, koMap.get(raw.id));
         if (item.category !== cat || !isCategoryId(item.category)) throw new Error(`${cat}/${name}: ${item.id}의 category가 ${item.category}다`);
         const list = subs.get(item.kind);
         if (!list) throw new Error(`${cat}/${name}: ${item.id}의 소분류 ${item.kind}가 index.json에 없다`);

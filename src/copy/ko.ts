@@ -73,14 +73,14 @@ export const ko = {
     moreOf: '{{title}} 모두 보기',
     rows: {
       aiTools: 'AI 코딩 툴에 바로 붙이는 MCP·스킬',
-      uiLibs: '화면을 빨리 만드는 UI 컴포넌트',
+      uiLibs: '화면을 세련되게 다듬는 UI 컴포넌트',
       aiApis: '내 앱에 AI를 붙이는 API',
       templates: '바로 시작하는 템플릿',
       fontsKo: '한글 폰트',
     },
     rowLeads: {
       aiTools: 'Claude Code·Cursor 같은 AI 코딩 툴에 연결하면 AI가 할 수 있는 일이 늘어나요.',
-      uiLibs: '버튼·입력 칸·표 같은 화면 부품 모음이에요. AI 코딩 툴이 많이 쓰는 shadcn/ui도 여기 있어요.',
+      uiLibs: '잘 다듬어진 버튼·입력 칸·표로 화면 완성도를 높여요. AI 코딩 툴이 즐겨 쓰는 shadcn/ui도 있어요.',
       aiApis: '내 앱이 글을 쓰고 질문에 답하게 하는 AI 언어 모델 API예요.',
       templates: '화면 틀과 설정이 갖춰진 시작 코드예요. 받아서 고쳐 쓰면 돼요.',
       fontsKo: '앱 화면에 쓰기 좋은 한글 폰트예요. 라이선스는 상세에서 확인해요.',

@@ -4,7 +4,7 @@
     "name": "models.dev (AI model providers)",
     "url": "https://models.dev",
     "license": "MIT (models.dev data); each provider has its own terms",
-    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드쇼퍼. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page."
+    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page."
   },
   "fetchedAt": "2026-10-20",
   "count": 231,
@@ -3835,6 +3835,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 510920
+      },
       "tags": [
         "ai",
         "inference",
@@ -3845,6 +3848,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/groq",
         "auth": "apiKey",
+        "downloadsOf": "npm:groq-sdk",
         "env": [
           "GROQ_API_KEY"
         ],
@@ -7180,6 +7184,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 25338213
+      },
       "tags": [
         "ai",
         "llm",
@@ -7191,6 +7198,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/openai",
         "auth": "apiKey",
+        "downloadsOf": "npm:openai",
         "env": [
           "OPENAI_API_KEY"
         ],
@@ -9830,6 +9838,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 50607
+      },
       "tags": [
         "ai",
         "inference",
@@ -9839,6 +9850,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/togetherai",
         "auth": "apiKey",
+        "downloadsOf": "npm:together-ai",
         "env": [
           "TOGETHER_API_KEY"
         ],

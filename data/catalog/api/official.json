@@ -1,9 +1,9 @@
 {
   "source": {
     "id": "official",
-    "name": "공식 문서에서 확인한 API (코드쇼퍼 손 목록)",
+    "name": "공식 문서에서 확인한 API (코드잇소 손 목록)",
     "url": "https://github.com/yoorrard/code-chauffeur/blob/main/scripts/import/api-curated-data.ts",
-    "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드쇼퍼",
+    "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드잇소",
     "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise."
   },
   "fetchedAt": "2026-10-20",
@@ -414,6 +414,9 @@
         "name": "assemblyai.com",
         "url": "https://www.assemblyai.com/docs"
       },
+      "metrics": {
+        "downloads": 273583
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -422,6 +425,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:assemblyai",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "The free tier includes up to 185 hours of pre-recorded transcription and up to 333 hours of streaming transcription.",
         "keyServerSide": true,
@@ -663,9 +667,10 @@
       "name": "Baichuan API",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Baichuan 모델 API (중국)",
+      "summary": "百川大模型系列API，支持搜索增强+企业知识库，实现互联网实时信息+企业完整知识的融合，并能最多支持192k上下文窗口，解决大部分定制化场景。",
+      "summaryKo": "Baichuan 모델 API (중국)",
       "written": "codeshopper",
-      "url": "https://platform.baichuan-ai.com/docs/api",
+      "url": "https://platform.baichuan-ai.com",
       "source": {
         "name": "platform.baichuan-ai.com",
         "url": "https://platform.baichuan-ai.com/docs/api"
@@ -679,7 +684,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "keyServerSide": true
+        "keyServerSide": true,
+        "summarySource": "https://platform.baichuan-ai.com"
       },
       "use": {
         "docs": "https://platform.baichuan-ai.com/docs/api"
@@ -1000,7 +1006,7 @@
       "name": "BytePlus ModelArk",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Build, deploy, and scale AI with BytePlus — cutting-edge models, tools, and infrastructure proven on global platforms.",
+      "summary": "All-in-one AI model service platform, offering top-rated models to empower diverse scenarios",
       "summaryKo": "ByteDance의 Seed 모델(글·이미지·영상)을 쓰는 BytePlus ModelArk",
       "written": "codeshopper",
       "url": "https://www.byteplus.com/en/product/modelark",
@@ -1588,6 +1594,9 @@
         "name": "developers.deepl.com",
         "url": "https://developers.deepl.com/docs"
       },
+      "metrics": {
+        "downloads": 158829
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -1597,6 +1606,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:deepl-node",
         "keyServerSide": true,
         "pricingUrl": "https://www.deepl.com/pro-api",
         "sdk": "deepl-node",
@@ -1901,6 +1911,9 @@
         "name": "firebase.google.com",
         "url": "https://firebase.google.com/docs/cloud-messaging"
       },
+      "metrics": {
+        "downloads": 5892994
+      },
       "tags": [
         "auth-oauth",
         "push",
@@ -1909,6 +1922,7 @@
       "preview": {
         "type": "api",
         "auth": "service account (OAuth)",
+        "downloadsOf": "npm:firebase-admin",
         "keyServerSide": true,
         "sdk": "firebase-admin",
         "summarySource": "https://firebase.google.com/docs/cloud-messaging"
@@ -2639,9 +2653,6 @@
         "name": "dev.hume.ai",
         "url": "https://dev.hume.ai"
       },
-      "metrics": {
-        "downloads": 46954
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -2650,7 +2661,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:hume",
         "keyServerSide": true,
         "pricingUrl": "https://www.hume.ai/pricing",
         "sdk": "hume",
@@ -3110,7 +3120,7 @@
       "category": "api",
       "summary": "국립국어원 한국어기초사전 낱말 검색 API",
       "written": "codeshopper",
-      "url": "https://krdict.korean.go.kr",
+      "url": "https://krdict.korean.go.kr/kor/openApi/openApiInfo",
       "source": {
         "name": "krdict.korean.go.kr",
         "url": "https://krdict.korean.go.kr/kor/openApi/openApiInfo"
@@ -3426,6 +3436,9 @@
         "name": "docs.lumalabs.ai",
         "url": "https://docs.lumalabs.ai"
       },
+      "metrics": {
+        "downloads": 8243
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -3434,6 +3447,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:lumaai",
         "keyServerSide": true,
         "pricingUrl": "https://lumalabs.ai/api/pricing",
         "sdk": "lumaai",
@@ -3493,6 +3507,9 @@
         "name": "documentation.mailgun.com",
         "url": "https://documentation.mailgun.com"
       },
+      "metrics": {
+        "downloads": 585803
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -3501,6 +3518,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:mailgun.js",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Free plans are limited to 1 user per account.",
         "keyServerSide": true,
@@ -4268,6 +4286,9 @@
         "name": "platform.openai.com",
         "url": "https://platform.openai.com/docs/guides/speech-to-text"
       },
+      "metrics": {
+        "downloads": 25338213
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -4276,6 +4297,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:openai",
         "keyServerSide": true,
         "pricingUrl": "https://openai.com/api/pricing/",
         "sdk": "openai",
@@ -4300,6 +4322,9 @@
         "name": "platform.openai.com",
         "url": "https://platform.openai.com/docs/guides/embeddings"
       },
+      "metrics": {
+        "downloads": 25338213
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -4308,6 +4333,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:openai",
         "keyServerSide": true,
         "pricingUrl": "https://openai.com/api/pricing/",
         "sdk": "openai",
@@ -4332,6 +4358,9 @@
         "name": "platform.openai.com",
         "url": "https://platform.openai.com/docs/guides/image-generation"
       },
+      "metrics": {
+        "downloads": 25338213
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -4340,6 +4369,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:openai",
         "keyServerSide": true,
         "pricingUrl": "https://openai.com/api/pricing/",
         "sdk": "openai",
@@ -4364,6 +4394,9 @@
         "name": "platform.openai.com",
         "url": "https://platform.openai.com/docs/guides/video-generation"
       },
+      "metrics": {
+        "downloads": 25338213
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -4372,6 +4405,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:openai",
         "keyServerSide": true,
         "pricingUrl": "https://openai.com/api/pricing/",
         "sdk": "openai",
@@ -4743,6 +4777,9 @@
         "name": "portkey.ai",
         "url": "https://portkey.ai/docs"
       },
+      "metrics": {
+        "downloads": 113960
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -4751,6 +4788,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:portkey-ai",
         "keyServerSide": true,
         "pricingUrl": "https://portkey.ai/pricing",
         "sdk": "portkey-ai",
@@ -4900,13 +4938,16 @@
       "name": "Razorpay API",
       "kind": "payments",
       "category": "api",
-      "summary": "Online Payments India: Start Accepting Payments Instantly with Razorpay",
+      "summary": "Accept online payments in the US with Razorpay using cards, ACH, digital wallets and more. Sell in India, settle in USD and scale with easy integrations.",
       "summaryKo": "인도 결제 API (Razorpay)",
       "written": "codeshopper",
       "url": "https://razorpay.com",
       "source": {
         "name": "razorpay.com",
         "url": "https://razorpay.com/docs/api/"
+      },
+      "metrics": {
+        "downloads": 242133
       },
       "tags": [
         "auth-apikey",
@@ -4915,6 +4956,7 @@
       "preview": {
         "type": "api",
         "auth": "key id / secret",
+        "downloadsOf": "npm:razorpay",
         "keyServerSide": true,
         "sdk": "razorpay",
         "summarySource": "https://razorpay.com"
@@ -5088,9 +5130,6 @@
         "name": "replicate.com",
         "url": "https://replicate.com/docs"
       },
-      "metrics": {
-        "downloads": 390200
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5099,7 +5138,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:replicate",
         "keyServerSide": true,
         "pricingUrl": "https://replicate.com/pricing",
         "sdk": "replicate",
@@ -5154,9 +5192,6 @@
         "name": "resend.com",
         "url": "https://resend.com/docs"
       },
-      "metrics": {
-        "downloads": 8132768
-      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5165,7 +5200,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:resend",
         "keyServerSide": true,
         "pricingUrl": "https://resend.com/pricing",
         "sdk": "resend",
@@ -5190,9 +5224,6 @@
         "name": "docs.retellai.com",
         "url": "https://docs.retellai.com"
       },
-      "metrics": {
-        "downloads": 131074
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5201,7 +5232,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:retell-sdk",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Go live in minutes with $10 in free credits.",
         "keyServerSide": true,
@@ -5228,9 +5258,6 @@
         "name": "docs.rev.ai",
         "url": "https://docs.rev.ai"
       },
-      "metrics": {
-        "downloads": 5355
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5239,7 +5266,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:revai-node-sdk",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Free credits equivalent to 5 hours of Reverb ASR (free credits can be used for all products).",
         "keyServerSide": true,
@@ -5832,6 +5858,9 @@
         "name": "solapi.com",
         "url": "https://solapi.com/developers"
       },
+      "metrics": {
+        "downloads": 18485
+      },
       "tags": [
         "auth-apikey",
         "messaging",
@@ -5841,6 +5870,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey / secret",
+        "downloadsOf": "npm:solapi",
         "keyServerSide": true,
         "sdk": "solapi",
         "summarySource": "https://solapi.com"
@@ -6178,9 +6208,6 @@
         "name": "supabase.com",
         "url": "https://supabase.com/docs/guides/auth"
       },
-      "metrics": {
-        "downloads": 20655219
-      },
       "tags": [
         "auth-apikey",
         "supabase"
@@ -6188,7 +6215,6 @@
       "preview": {
         "type": "api",
         "auth": "anon key (public) / service key",
-        "downloadsOf": "npm:@supabase/supabase-js",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Free projects are paused after 1 week of inactivity.",
         "pricingUrl": "https://supabase.com/pricing",
@@ -6712,9 +6738,6 @@
         "name": "docs.vapi.ai",
         "url": "https://docs.vapi.ai"
       },
-      "metrics": {
-        "downloads": 85508
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -6723,7 +6746,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@vapi-ai/server-sdk",
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "$5 free credits to get you started.",
         "keyServerSide": true,

@@ -1,12 +1,14 @@
 // 뽑은 프롬프트 창 (v5.1 D121): 영수증 대신 바로 붙여 넣을 프롬프트를 조금 사이버한 단말 화면에 보인다.
 // 모달 <dialog>라 Esc·바깥 누르기·[닫기]로 닫히고 연 자리로 초점이 돌아간다. 열리면 큰 [복사]에 초점.
+// 바깥 누르기는 바탕에서 누르고 뗀 때만이다: 프롬프트 글을 끌어 고르다 창 밖에서 놓아도 닫지 않는다 (src/lib/overlay.ts, D127).
 // 새로 뽑았으면 글이 위에서 아래로 펼쳐진다(--dur-reveal, 700ms 안쪽). 누르거나 키를 치면 바로 끝나고, 동작 줄이기면 펼침이 없다.
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import type { NavCategory } from '../lib/catalog/types.ts';
 import { issuedNow } from '../lib/clock.ts';
 import { downloadText } from '../lib/download.ts';
+import { backdropPress } from '../lib/overlay.ts';
 import { namesOf, promptFileName, promptText } from '../lib/prompt.ts';
 import type { PromptEntry } from '../lib/saved.ts';
 import { fill } from '../lib/text.ts';
@@ -34,6 +36,7 @@ export function PromptDialog({ entry, nav, fresh = false, onClose }: Props) {
   const dlg = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
   const [done, setDone] = useState(!fresh);
+  const backdrop = useMemo(() => backdropPress(() => dlg.current?.close()), []);
   const text = promptText(entry, namesOf(nav));
 
   useEffect(() => {
@@ -54,10 +57,11 @@ export function PromptDialog({ entry, nav, fresh = false, onClose }: Props) {
         const back = opener.current;
         if (back?.isConnected) back.focus();
       }}
-      onClick={(e) => {
-        if (e.target === dlg.current) dlg.current?.close();
+      onClick={backdrop.click}
+      onPointerDown={(e) => {
+        setDone(true);
+        backdrop.down(e);
       }}
-      onPointerDown={() => setDone(true)}
       onKeyDown={() => setDone(true)}
     >
       <div class="term" data-done={String(done)} onAnimationEnd={() => setDone(true)}>

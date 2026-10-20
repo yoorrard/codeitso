@@ -5,7 +5,8 @@
 //   이름순·최근 갱신순이면 정렬 순서 파일로 그 정렬의 순위를 얻어, 그 순위가 든 목록 묶음만 받아 카드를 꺼낸다.
 // 받은 파일은 기억해 두어 다시 받지 않는다. 쪽·정렬 링크는 진짜 주소(새 탭·공유)이고, 그냥 누르면 쪽을 다시 읽지 않고 바꾼다(pushState).
 // 거르기 칸은 넓은 화면에서 왼쪽 칸, 좁은 화면에서 [거르기] 단추가 여는 시트(<dialog>)에 같은 모양으로 있다.
-import { useEffect, useRef, useState } from 'preact/hooks';
+// 시트의 바깥 누르기는 바탕에서 누르고 뗀 때만이다 (src/lib/overlay.ts, D127).
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { CARDS_EVENT } from '../lib/cart-ui.ts';
@@ -15,6 +16,7 @@ import { applySelection, decodeOrder, liveCounts, openFacets, rankOf, readSelect
 import type { Card, CategoryId, ListChunk, SortKey } from '../lib/catalog/types.ts';
 import { CHUNK_PAGES, PAGE_SIZE, SORTS } from '../lib/catalog/types.ts';
 import { facetValueLabel } from '../lib/labels.ts';
+import { backdropPress } from '../lib/overlay.ts';
 import { facetDataPath, facetOrderPath, listDataPath, listPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
 import { Icon } from './Icon.tsx';
@@ -111,6 +113,7 @@ export default function Listing({ cat, sub, total, pages, initial, facets }: Pro
   const sheet = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
   const ticket = useRef(0);
+  const backdrop = useMemo(() => backdropPress(() => sheet.current?.close()), []);
 
   async function go(sort: SortKey, page: number, sel: Selection, how: 'push' | 'none', focus: 'head' | 'none'): Promise<void> {
     const my = (ticket.current += 1);
@@ -311,9 +314,8 @@ export default function Listing({ cat, sub, total, pages, initial, facets }: Pro
           ref={sheet}
           aria-labelledby="fsh-title"
           onClose={() => opener.current?.focus()}
-          onClick={(e) => {
-            if (e.target === sheet.current) sheet.current?.close();
-          }}
+          onPointerDown={backdrop.down}
+          onClick={backdrop.click}
         >
           <div class="sheet-inner">
             <div class="facet-head">

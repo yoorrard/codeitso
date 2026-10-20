@@ -1,12 +1,14 @@
 // 머리줄 장바구니 (brief 3절): 담은 개수 배지 + 오른쪽 서랍. 섬이 붙기 전에는 /cart 링크이고, 붙으면 누를 때 서랍을 연다
 // (새 탭·수정 키를 누른 채면 링크 그대로). 서랍은 모달 <dialog>라 바깥은 잠기고(초점 가둠), Esc·바깥 누르기·[닫기]로 닫으면
 // 연 자리로 초점이 돌아간다. 카드 [담음]·키트·상세가 openCart(id)로 열면 그 재료 줄로 초점을 옮긴다 (src/lib/cart-ui.ts).
+// 바깥 누르기는 바탕에서 누르고 뗀 때만이다: 서랍 안 글을 끌어 고르다 바깥에서 놓아도 닫지 않는다 (src/lib/overlay.ts, D127).
 import { useStore } from '@nanostores/preact';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import type { NavCategory } from '../lib/catalog/types.ts';
 import { DRAWER_READY, OPEN_CART_EVENT } from '../lib/cart-ui.ts';
 import type { OpenCartDetail } from '../lib/cart-ui.ts';
+import { backdropPress } from '../lib/overlay.ts';
 import { useHydrated } from '../lib/hydrated.ts';
 import { ROUTES } from '../lib/routes.ts';
 import { $cart, $storageOk } from '../lib/store.ts';
@@ -29,6 +31,8 @@ export default function CartDrawer({ nav }: Props) {
   const opener = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [focusId, setFocusId] = useState<string | undefined>();
+  // 서랍 바깥(어두운 바탕)을 누르면 닫는다
+  const backdrop = useMemo(() => backdropPress(() => dlg.current?.close()), []);
 
   function show(focus?: string): void {
     const d = dlg.current;
@@ -86,10 +90,8 @@ export default function CartDrawer({ nav }: Props) {
           opener.current = null;
           if (back?.isConnected) back.focus();
         }}
-        onClick={(e) => {
-          // 서랍 바깥(어두운 바탕)을 누르면 닫는다
-          if (e.target === dlg.current) dlg.current?.close();
-        }}
+        onPointerDown={backdrop.down}
+        onClick={backdrop.click}
       >
         <div class="drawer-inner" data-cart-root>
           <header class="drawer-head">

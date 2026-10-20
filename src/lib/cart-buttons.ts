@@ -4,10 +4,12 @@
 // v5.1 (D120): [담기]를 누르면 바로 담지 않고 작은 창(어디에 쓸지 메모(선택) + [담기]·[취소])을 띄운다. 창의 [담기]를 눌러야 담긴다.
 // 이미 담긴 재료([담겼어요])를 누르면 같은 창에서 메모를 고치거나([저장]) 뺀다([빼기]). 창은 모달 <dialog>라 Esc·바깥 누르기·[취소]로
 // 닫히고 누른 버튼으로 초점이 돌아간다. 휴대폰(<600)은 아래에서 올라오는 시트, 넓은 화면은 버튼 바로 아래(자리가 없으면 위)에 뜬다.
+// 바깥 누르기는 바탕에서 누르고 뗀 때만이다: 창 안 글을 끌어 고르다 바깥에서 놓아도 닫지 않는다 (overlay.ts, D127).
 import { ko } from '../copy/ko.ts';
 import { announce } from './announce.ts';
 import { CARDS_EVENT, openCart } from './cart-ui.ts';
 import { isKitId } from './kits.ts';
+import { backdropPress } from './overlay.ts';
 import { MEMO_MAX } from './saved.ts';
 import { $cart, addManyToCart, addToCart, removeFromCart, setCartMemo } from './store.ts';
 import { fill } from './text.ts';
@@ -182,12 +184,10 @@ function build(doc: Document): Sheet {
     t.btn.focus();
     openCart(t.id);
   });
-  // 바깥(어두운 바탕) 누르기: 창 네모 밖이면 닫는다
-  dlg.addEventListener('click', (e) => {
-    if (e.target !== dlg) return;
-    const r = dlg.getBoundingClientRect();
-    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
-  });
+  // 바깥(어두운 바탕) 누르기: 창 네모 밖에서 누르고 뗐으면 닫는다
+  const backdrop = backdropPress(close);
+  dlg.addEventListener('pointerdown', backdrop.down);
+  dlg.addEventListener('click', backdrop.click);
   dlg.addEventListener('close', () => {
     window.removeEventListener('scroll', place, true);
     window.removeEventListener('resize', place);

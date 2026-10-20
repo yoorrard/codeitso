@@ -101,6 +101,7 @@ const fetched = site().fetched;
       import { wireAddButtons } from '../lib/cart-buttons.ts';
       import { CARDS_EVENT } from '../lib/cart-ui.ts';
       import { watchFonts } from '../lib/font-preview.ts';
+      import { outsidePress } from '../lib/overlay.ts';
 
       wireAddButtons();
       // 폰트 카드 견본 글꼴: 보일 때 받는다. 섬이 카드를 새로 그리면 다시 훑는다
@@ -113,9 +114,18 @@ const fetched = site().fetched;
           menu.querySelector('summary')?.focus();
         }
       });
-      document.addEventListener('click', (e) => {
-        if (menu?.open && e.target instanceof Node && !menu.contains(e.target)) menu.open = false;
-      });
+      // 바깥 누르기: 메뉴 밖에서 누르고 뗀 때만 닫는다 (메뉴 안에서 끌다 밖에서 놓으면 그대로, src/lib/overlay.ts)
+      if (menu) {
+        const press = outsidePress(
+          (e) => e.target instanceof Node && menu.contains(e.target),
+          () => {
+            if (menu.open) menu.open = false;
+          },
+        );
+        // 거품 단계에서 듣는다: 위 겹(풀이 상자)이 잡기 단계에서 이 누르기를 썼는지(claimPress) 먼저 적은 뒤에 본다
+        document.addEventListener('pointerdown', press.down);
+        document.addEventListener('click', press.click);
+      }
     </script>
   </body>
 </html>

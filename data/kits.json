@@ -2,16 +2,22 @@
   "about": "스타터 키트 (brief 7절 묶음 기획전): 한 번에 담는 재료 묶음. items는 진열대 id(data/catalog/**)이고 손으로 골랐다. 키트 id는 src/lib/kits.ts KIT_IDS와 같아야 한다 (tests/lib/kits.test.ts).",
   "kits": [
     {
+      "id": "ai-chatbot",
+      "nameKo": "AI 챗봇 키트",
+      "descKo": "묻고 답하는 챗봇 재료예요. 언어 모델 API 둘, 챗봇 템플릿, UI, 최신 문서를 읽어 오는 MCP 서버를 묶었어요.",
+      "items": ["models-dev:anthropic", "models-dev:openai", "vercel:chatbot", "design-systems:shadcn-ui", "google-fonts:noto-sans-kr", "iconify:ph", "mcp-aitmpl:mcps-devtools-context7"]
+    },
+    {
       "id": "landing",
       "nameKo": "랜딩 페이지 키트",
       "descKo": "서비스를 한 쪽에 소개하는 홈페이지 재료예요. 한글 폰트·색·아이콘·UI·템플릿·일러스트를 묶었어요.",
       "items": ["korean-fonts:pretendard", "color-systems:tailwind", "iconify:lucide", "github:saadeghi--daisyui", "astro-themes:blackspike-astro-landing-page", "curated:undraw", "skill-anthropic:frontend-design"]
     },
     {
-      "id": "ai-chatbot",
-      "nameKo": "AI 챗봇 키트",
-      "descKo": "묻고 답하는 챗봇 재료예요. 언어 모델 API 둘, 챗봇 템플릿, UI, 최신 문서를 읽어 오는 MCP 서버를 묶었어요.",
-      "items": ["models-dev:anthropic", "models-dev:openai", "vercel:chatbot", "design-systems:shadcn-ui", "google-fonts:noto-sans-kr", "iconify:ph", "mcp-aitmpl:mcps-devtools-context7"]
+      "id": "dashboard",
+      "nameKo": "대시보드 키트",
+      "descKo": "숫자를 차트로 보여 주는 관리 화면 재료예요. 대시보드 템플릿·차트 라이브러리·차트 색·세계 통계 데이터를 묶었어요.",
+      "items": ["github-lists:kiranism--next-shadcn-dashboard-starter", "github:recharts--recharts", "chart-colors:d3-tableau10", "owid:life-expectancy", "owid:co-emissions-per-capita", "korean-fonts:pretendard", "iconify:lucide"]
     },
     {
       "id": "school",
@@ -20,10 +26,10 @@
       "items": ["official:neis", "data-go-kr:15122275", "data-go-kr:15139198", "data-go-kr:15122333", "data-go-kr:15137088", "korean-fonts:pretendard", "iconify:tabler"]
     },
     {
-      "id": "dashboard",
-      "nameKo": "대시보드 키트",
-      "descKo": "숫자를 차트로 보여 주는 관리 화면 재료예요. 대시보드 템플릿·차트 라이브러리·차트 색·세계 통계 데이터를 묶었어요.",
-      "items": ["github-lists:kiranism--next-shadcn-dashboard-starter", "github:recharts--recharts", "chart-colors:d3-tableau10", "owid:life-expectancy", "owid:co-emissions-per-capita", "korean-fonts:pretendard", "iconify:lucide"]
+      "id": "game",
+      "nameKo": "웹 게임 키트",
+      "descKo": "브라우저에서 도는 2D 게임 재료예요. 게임 엔진과 시작 템플릿, 도트 그림·효과음, 도트 한글 폰트를 묶었어요.",
+      "items": ["github-lists:phaserjs--template-vite-ts", "github-lists:phaserjs--phaser", "kenney:pixel-platformer", "kenney:ui-pack", "kenney:interface-sounds", "korean-fonts:galmuri"]
     }
   ]
 }

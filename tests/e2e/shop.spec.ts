@@ -68,7 +68,7 @@ for (const vp of [
 test.describe('PC 1440×900 첫 화면', () => {
   test.use({ viewport: { width: 1440, height: 900 }, isMobile: false, hasTouch: false });
 
-  test('목록 첫 줄 카드(거르기 칸 옆 4열)가 첫 화면 안에 다 보인다 (홈 기획전 첫 줄도)', async ({ page }) => {
+  test('목록 첫 줄 카드(거르기 칸 옆 4열)가 첫 화면 안에 다 보인다 (홈은 검색·세 걸음·키트 다섯 장)', async ({ page }) => {
     await page.goto('/c/design/fonts');
     await islandsReady(page);
     await expect(page.locator('.facet-side')).toBeVisible();
@@ -78,8 +78,12 @@ test.describe('PC 1440×900 첫 화면', () => {
     expect(firstRow.length).toBeGreaterThanOrEqual(4);
     for (const b of firstRow) expect((b?.y ?? 0) + (b?.height ?? 0)).toBeLessThanOrEqual(900);
     await page.goto('/');
-    const row = await page.locator('.row-track > li').first().boundingBox();
-    expect((row?.y ?? 0) + (row?.height ?? 0)).toBeLessThanOrEqual(900);
+    for (const sel of ['#home-q', '.steps', '.kit:nth-child(5) button[data-kit]']) {
+      const box = await page.locator(sel).boundingBox();
+      expect((box?.y ?? 0) + (box?.height ?? 0), sel).toBeLessThanOrEqual(900);
+    }
+    const kits = await page.locator('.kit').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+    expect(new Set(kits).size, '키트 다섯 장이 한 줄').toBe(1);
   });
 });
 

@@ -1,9 +1,12 @@
 ---
-// 홈 '스타터 키트' (brief 7절 묶음 기획전): 키트마다 이름·설명·재료 이름 목록과 [키트 담기] 한 번.
-// 정적 HTML이고, 누름은 src/lib/cart-buttons.ts가 맡는다 (button[data-kit], 재료는 data-items에 [id, 이름, 대분류, 소분류]).
+// 홈 '무엇을 만들고 싶어요?' (brief 7절 묶음 기획전, v5.1 D124): 만들 앱마다 키트 카드 하나 — 아이콘·이름·설명·재료(상세 링크)와 [키트 담기] 한 번.
+// 휴대폰·태블릿은 가로로 넘기고, PC는 다섯 장을 한 줄에 둔다. 정적 HTML이고, 누름은 src/lib/cart-buttons.ts가 맡는다
+// (button[data-kit], 재료는 data-items에 [id, 이름, 대분류, 소분류]).
 import Icon from './Icon.astro';
 import { ko } from '../copy/ko.ts';
 import type { KitData } from '../lib/catalog/types.ts';
+import { kitIconSvg } from '../lib/home-icons.ts';
+import { itemPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
 
 interface Props {
@@ -15,20 +18,23 @@ const { kits } = Astro.props;
 {
   kits.length > 0 && (
     <section class="sec kits" aria-labelledby="kits-title">
-      <div class="sec-head">
+      <div class="sec-head is-stacked">
         <h2 id="kits-title">{ko.kits.title}</h2>
+        <p class="sec-lead">{ko.kits.lead}</p>
       </div>
-      <p class="sec-lead">{ko.kits.lead}</p>
-      <ul class="kit-grid">
+      <ul class="kit-track">
         {kits.map((k) => (
           <li class="kit" data-kit-id={k.id}>
-            <h3 class="kit-name">{k.name}</h3>
+            <div class="kit-head">
+              <span class="kit-icon" aria-hidden="true" set:html={kitIconSvg(k.id)} />
+              <h3 class="kit-name">{k.name}</h3>
+            </div>
             <p class="kit-desc">{k.desc}</p>
             <ul class="kit-items" aria-label={fill(ko.kits.count, { n: k.cards.length })}>
               {k.cards.map((c) => (
                 <li data-cat={c.cat}>
                   <span class="kit-dot" aria-hidden="true" />
-                  {c.name}
+                  <a href={itemPath(c.id)} title={c.name}>{c.name}</a>
                 </li>
               ))}
             </ul>

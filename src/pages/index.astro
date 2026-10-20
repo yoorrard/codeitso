@@ -1,6 +1,8 @@
 ---
-// 홈 (brief 3절·7절): 한 줄 소개 + 검색 → 대분류 타일(상품 수·소분류 몇 개) → 최근 본 재료(있을 때만) → 기획전 첫 줄
-// → 스타터 키트(한 번에 담는 묶음) → 나머지 기획전(가로로 넘기는 카드). PC 첫 화면(1440×900)에 검색·카테고리·기획전 첫 줄이 다 보이게 위를 낮게 둔다.
+// 홈 (brief 3절·7절, v5.1 D124): 처음·중간 바이브코더가 '무엇을 만들지'에서 출발하게 짠다.
+// 검색이 먼저인 첫 칸(큰 검색창 + 많이 찾는 재료 칩) 옆에 쓰는 법 세 걸음(프롬프트 창과 같은 단말 모양) →
+// 무엇을 만들고 싶어요?(키트) → 카테고리 → 최근 본 재료(있을 때만) → 기획전 다섯 줄(AI 코딩 툴 재료가 먼저, 한글 폰트는 끝).
+// PC 첫 화면(1440×900)에 검색·세 걸음·키트 카드가 다 보이게 위를 낮게 둔다.
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import KitShelf from '../components/KitShelf.astro';
@@ -8,9 +10,9 @@ import { ProductCard } from '../components/ProductCard.tsx';
 import RecentRow from '../components/RecentRow.tsx';
 import { ko } from '../copy/ko.ts';
 import { withCommas } from '../lib/catalog/core.ts';
-import { categories, homeKits, homeRows } from '../lib/catalog/site.ts';
+import { categories, homeKits, homeRows, totalItems } from '../lib/catalog/site.ts';
 import { CATEGORY_ICON } from '../lib/icons.ts';
-import { ROUTES, categoryPath, listPath } from '../lib/routes.ts';
+import { ROUTES, categoryPath, listPath, searchPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
 
 const cats = categories();
@@ -22,20 +24,60 @@ const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c
 
 <Base>
   <section class="hero" aria-labelledby="home-title">
-    <h1 id="home-title" class="hero-title">{ko.site.slogan}</h1>
-    <p class="hero-intro">{ko.site.intro}</p>
-    <form class="hero-search" role="search" action={ROUTES.search} method="get">
-      <label class="visually-hidden" for="home-q">{ko.layout.searchLabel}</label>
-      <input id="home-q" name="q" type="search" placeholder={ko.layout.searchPlaceholder} enterkeyhint="search" autocomplete="off" />
-      <button type="submit" class="btn btn-primary">
-        <Icon name="search" size="20px" />
-        <span>{ko.layout.searchButton}</span>
-      </button>
-    </form>
+    <div class="hero-main">
+      <p class="hero-eyebrow">{ko.site.slogan}</p>
+      <h1 id="home-title" class="hero-title">{ko.home.heroTitle}</h1>
+      <p class="hero-intro">{fill(ko.home.heroLead, { n: withCommas(totalItems()) })}</p>
+      <form class="hero-search" role="search" action={ROUTES.search} method="get">
+        <label class="visually-hidden" for="home-q">{ko.layout.searchLabel}</label>
+        <input id="home-q" name="q" type="search" placeholder={ko.layout.searchPlaceholder} enterkeyhint="search" autocomplete="off" />
+        <button type="submit" class="btn btn-primary">
+          <Icon name="search" size="20px" />
+          <span class="hero-search-label">{ko.layout.searchButton}</span>
+        </button>
+      </form>
+      <nav class="hero-chips" aria-label={ko.home.chipsLabel}>
+        <span class="hero-chips-label" aria-hidden="true">{ko.home.chipsLabel}</span>
+        <ul>
+          {
+            ko.home.chips.map((q) => (
+              <li>
+                <a class="chip" href={searchPath(q)}>
+                  {q}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+    <aside class="steps" aria-labelledby="steps-title">
+      <p class="steps-bar" aria-hidden="true">
+        <span class="steps-dots"><span></span><span></span><span></span></span>
+        <span class="steps-file">{ko.home.stepsFile}</span>
+      </p>
+      <h2 id="steps-title" class="steps-title">{ko.home.stepsTitle}</h2>
+      <ol class="steps-list">
+        {
+          ko.home.steps.map((s, i) => (
+            <li>
+              <span class="steps-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span class="steps-name">{s.title}</span>
+              <span class="steps-desc">{s.desc}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="steps-note"><span aria-hidden="true">&gt; </span>{ko.home.stepsNote}</p>
+    </aside>
   </section>
 
+  <KitShelf kits={kits} />
+
   <section class="sec" aria-labelledby="cats-title">
-    <h2 id="cats-title" class="visually-hidden">{ko.home.categoriesTitle}</h2>
+    <div class="sec-head">
+      <h2 id="cats-title">{ko.home.categoriesTitle}</h2>
+    </div>
     <ul class="cat-tiles">
       {
         cats.map((c) => (
@@ -57,12 +99,13 @@ const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c
   <RecentRow client:idle names={names} />
 
   {
-    rows.map((r, ri) => (
-      <Fragment>
-      {ri === 1 && <KitShelf kits={kits} />}
+    rows.map((r) => (
       <section class="sec row" aria-labelledby={`row-${r.id}`}>
         <div class="sec-head">
-          <h2 id={`row-${r.id}`}>{ko.home.rows[r.id]}</h2>
+          <div class="sec-titles">
+            <h2 id={`row-${r.id}`}>{ko.home.rows[r.id]}</h2>
+            <p class="sec-lead">{ko.home.rowLeads[r.id]}</p>
+          </div>
           {r.more && (
             <a class="sec-more" href={listPath(r.more.cat, r.more.sub)} aria-label={fill(ko.home.moreOf, { title: ko.home.rows[r.id] })}>
               {ko.home.more}
@@ -78,7 +121,6 @@ const names: Record<string, string> = Object.fromEntries(cats.flatMap((c) => [[c
           ))}
         </ul>
       </section>
-      </Fragment>
     ))
   }
 </Base>

@@ -52,7 +52,7 @@ function AddBox({ item }: { item: DetailRecord }) {
       </button>
       {line?.memo && <p class="buy-memo">{fill(ko.item.memo, { memo: line.memo })}</p>}
       {on && (
-        <button type="button" class="btn btn-text" onClick={() => openCart(item.id)}>
+        <button type="button" class="btn btn-text buy-go" onClick={() => openCart(item.id)}>
           {ko.item.goCart}
         </button>
       )}

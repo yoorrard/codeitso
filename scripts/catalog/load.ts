@@ -3,7 +3,7 @@
 // 빌드는 네트워크 없이 커밋된 자료만 쓴다 (brief 2절). 계산은 src/lib/catalog/core.ts의 순수 함수로 한다.
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { cardOf, dateOf, filePopularity, relatedIndex, shardOf, sortRanked, withKo } from '../../src/lib/catalog/core.ts';
+import { cardOf, filePopularity, relatedIndex, shardOf, sortRanked, withKo } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
@@ -189,7 +189,7 @@ function take(list: readonly Ranked[], n = ROW_SIZE): Card[] {
   return cards(list.slice(0, n));
 }
 
-/** 홈 기획전 (D106): 인기 폰트, 별 많은 템플릿, MCP 서버, AI API, 인증 없이 쓰는 API, 최근 갱신 */
+/** 홈 기획전 (D106, v5.1 D124): AI 코딩 툴용 MCP·스킬, 키 없이 쓰는 API, AI API, 별 많은 템플릿, 한글 폰트 */
 export function homeRows(): Row[] {
   const { lists } = catalog();
   const get = (key: string): Ranked[] => lists.get(key) ?? [];
@@ -213,17 +213,13 @@ export function homeRows(): Row[] {
     .flatMap(([, l]) => l)
     .filter((r) => r.item.preview['auth'] === 'none' && r.item.preview['https'] === true)
     .sort((a, b) => b.pop - a.pop);
-  const all = [...catalog().byId.values()];
-  const newest = all
-    .filter((r) => dateOf(r.item) !== undefined && (dateOf(r.item) ?? '') <= r.item.fetchedAt.slice(0, 10) && r.pop >= 0.5)
-    .sort((a, b) => ((dateOf(b.item) ?? '') < (dateOf(a.item) ?? '') ? -1 : (dateOf(b.item) ?? '') > (dateOf(a.item) ?? '') ? 1 : b.pop - a.pop));
+  // 홈 줄 순서 (v5.1 D124): AI 코딩 툴 재료 → 키 없이 쓰는 API → AI API → 템플릿 → 한글 폰트. 인기 폰트가 맨 앞에 서지 않게 한다.
   return [
-    { id: 'fonts', cards: cards(interleave(get('design/fonts-ko'), get('design/fonts'), ROW_SIZE)), more: { cat: 'design', sub: 'fonts-ko' } },
-    { id: 'templates', cards: take(templates), more: { cat: 'templates', sub: 'web-starter' } },
-    { id: 'mcp', cards: take(get('ai/mcp')), more: { cat: 'ai', sub: 'mcp' } },
-    { id: 'aiApis', cards: take(get('api/ai-llm')), more: { cat: 'api', sub: 'ai-llm' } },
+    { id: 'aiTools', cards: cards(interleave(get('ai/mcp'), get('ai/skill'), ROW_SIZE)), more: { cat: 'ai', sub: 'mcp' } },
     { id: 'openApis', cards: take(openApis) },
-    { id: 'recent', cards: take(newest) },
+    { id: 'aiApis', cards: take(get('api/ai-llm')), more: { cat: 'api', sub: 'ai-llm' } },
+    { id: 'templates', cards: take(templates), more: { cat: 'templates', sub: 'web-starter' } },
+    { id: 'fontsKo', cards: take(get('design/fonts-ko')), more: { cat: 'design', sub: 'fonts-ko' } },
   ];
 }
 

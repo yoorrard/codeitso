@@ -157,7 +157,7 @@ export interface ListChunk {
 
 /** 기획전 한 줄 (홈): 진열대를 가로지르는 고르기 */
 export interface Row {
-  id: 'fonts' | 'templates' | 'mcp' | 'aiApis' | 'openApis' | 'recent';
+  id: 'aiTools' | 'openApis' | 'aiApis' | 'templates' | 'fontsKo';
   cards: Card[];
   /** '모두 보기' 대상 소분류 */
   more?: { cat: CategoryId; sub: string };

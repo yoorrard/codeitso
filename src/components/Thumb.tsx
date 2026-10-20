@@ -2,8 +2,34 @@
 // 출처 그림(지연 로드, brief 5절), 그 밖에는 대분류 색 위 머리글자. 폰트 견본 글꼴은 보일 때 src/lib/font-preview.ts가 받는다(data-font-*).
 // 색 값은 자료(#RRGGBB)라 인라인 style로 칠한다 (CSP는 style 속성만 허락). SVG 조각은 core.ts safeSvg를 거친 것만 온다.
 import { fnv1a } from '../lib/catalog/core.ts';
+import { SCENE_H, SCENE_W, sceneShapes } from '../lib/catalog/scene.ts';
+import type { SceneId } from '../lib/catalog/scene.ts';
 import type { Thumb as ThumbData } from '../lib/catalog/types.ts';
 import { ko } from '../copy/ko.ts';
+
+/** 만들면 이런 모양인 장면 (그린 예시, src/lib/catalog/scene.ts). 색은 shop.css의 .t-<색> 토큰 */
+function SceneSvg({ scene, label, words }: { scene: SceneId; label: string; words?: string[] | undefined }) {
+  return (
+    <svg class="scene-svg" viewBox={`0 0 ${SCENE_W} ${SCENE_H}`} focusable="false" aria-hidden="true">
+      {sceneShapes(scene, label, words).map((x) => {
+        switch (x.k) {
+          case 'r':
+            return <rect x={x.x} y={x.y} width={x.w} height={x.h} rx={x.r || undefined} class={`f t-${x.c}${x.o ? ` o o-${x.o}` : ''}`} />;
+          case 'c':
+            return <circle cx={x.x} cy={x.y} r={x.r} class={`f t-${x.c}`} />;
+          case 'p':
+            return x.fill ? <path d={x.d} class={`f t-${x.c}`} /> : <path d={x.d} class={`s t-${x.c}`} stroke-width={x.sw} />;
+          default:
+            return (
+              <text x={x.x} y={x.y} font-size={x.z} text-anchor={x.mid ? 'middle' : undefined} class={`f t-${x.c}${x.mono ? ' is-mono' : ''}${x.bold ? ' is-bold' : ''}`}>
+                {x.s}
+              </text>
+            );
+        }
+      })}
+    </svg>
+  );
+}
 
 interface Props {
   thumb: ThumbData;
@@ -35,8 +61,8 @@ export function Thumb({ thumb, uid, large = false }: Props) {
       );
     case 'img':
       return (
-        <div class={`${cls} fit-${thumb.fit}`} aria-hidden="true">
-          <span class="thumb-fallback">{thumb.label}</span>
+        <div class={`${cls} fit-${thumb.fit}${thumb.scene ? ' has-scene' : ''}`} aria-hidden="true">
+          <span class={`thumb-fallback${thumb.scene ? ' is-scene' : ''}`}>{thumb.scene ? <SceneSvg scene={thumb.scene} label={thumb.label} words={thumb.words} /> : thumb.label}</span>
           <picture>
             {thumb.dark && <source media="(prefers-color-scheme: dark)" srcset={thumb.dark} />}
             <img src={thumb.src} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width={large ? 640 : 320} height={large ? 400 : 200} />
@@ -83,6 +109,12 @@ export function Thumb({ thumb, uid, large = false }: Props) {
         </div>
       );
     }
+    case 'scene':
+      return (
+        <div class={`${cls} is-${thumb.scene}`} aria-hidden="true">
+          <SceneSvg scene={thumb.scene} label={thumb.label} words={thumb.words} />
+        </div>
+      );
     case 'emoji':
       return (
         <div class={cls} aria-hidden="true">

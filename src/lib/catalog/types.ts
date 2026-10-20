@@ -1,4 +1,5 @@
 import type { FacetMeta } from './facets.ts';
+import type { SceneId } from './scene.ts';
 
 // 진열대 자료의 모양 (docs/review/v5/brief.md 2절, schemas/catalog-*.json). 가져오기 스크립트(scripts/import/)가 만든
 // data/catalog/<대분류>/<출처>.json의 항목은 모두 이 모양이다. 진열대 빌드(scripts/catalog/build.ts)와 화면(섬)이 함께 쓴다.
@@ -99,14 +100,17 @@ export interface Metric {
 export type Thumb =
   | { t: 'colors'; colors: string[] }
   | { t: 'gradient'; colors: string[]; angle: number }
-  | { t: 'img'; src: string; dark?: string; fit: 'cover' | 'contain'; label: string }
+  /** scene: 그림을 못 받으면 머리글자 대신 보일 장면 (README 그림) */
+  | { t: 'img'; src: string; dark?: string; fit: 'cover' | 'contain'; label: string; scene?: SceneId; words?: string[] }
   | { t: 'icons'; w: number; h: number; bodies: string[] }
   | { t: 'pattern'; w: number; h: number; body: string; stroke: boolean }
   /** css·file: 출처 CDN의 견본 글꼴 (화면에 보일 때 지연 로드, src/lib/font-preview.ts). 둘 다 없으면 일반 모양으로만 */
   | { t: 'font'; family: string; generic: string; ko: boolean; css?: string; file?: string }
   | { t: 'style'; colors: string[] }
   | { t: 'emoji'; emoji: string }
-  | { t: 'mono'; label: string };
+  | { t: 'mono'; label: string }
+  /** 그림이 없는 저장소·템플릿·모델·데이터셋: 만들면 이런 모양인 장면 (scene.ts, 코드쇼퍼가 그린 예시) */
+  | { t: 'scene'; scene: SceneId; label: string; words?: string[] };
 
 /** 카드에 붙는 짧은 사실 (인증·HTTPS·언어·작업…). 이름표 글은 화면(ko.ts)이 붙인다 */
 export interface Fact {

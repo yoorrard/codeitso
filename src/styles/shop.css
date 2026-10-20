@@ -1105,6 +1105,86 @@
   font-size: var(--size-display);
 }
 
+/* 그린 장면 (v5.1 D126): 그림이 없는 저장소·템플릿·모델·데이터셋의 '만들면 이런 모양' 예시. 색은 토큰만 (scene.ts의 색 이름 → 변수) */
+.thumb-scene {
+  padding: var(--space-2);
+}
+.thumb-scene .scene-svg,
+.thumb-fallback.is-scene .scene-svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+.thumb-img.has-scene.fit-contain img {
+  padding: var(--space-2);
+}
+.thumb-fallback.is-scene {
+  padding: var(--space-2);
+  background: var(--surface-sunken);
+}
+.thumb.is-large.thumb-scene {
+  padding: var(--space-4);
+}
+.scene-svg .f {
+  fill: var(--c);
+}
+.scene-svg .s {
+  fill: none;
+  stroke: var(--c);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.scene-svg .o {
+  stroke: var(--o);
+  stroke-width: 1;
+}
+.scene-svg text {
+  font-family: var(--font-body);
+}
+.scene-svg .is-mono {
+  font-family: var(--font-mono);
+}
+.scene-svg .is-bold {
+  font-weight: var(--weight-strong);
+}
+.scene-svg .t-page { --c: var(--surface); }
+.scene-svg .t-chrome { --c: var(--surface-sunken); }
+.scene-svg .t-line { --c: var(--hairline); }
+.scene-svg .t-fill { --c: var(--fill); }
+.scene-svg .t-ink { --c: var(--text); }
+.scene-svg .t-mute { --c: color-mix(in srgb, var(--text-3) 55%, transparent); }
+.scene-svg .t-cat { --c: var(--cat, var(--primary)); }
+.scene-svg .t-soft { --c: var(--cat-soft, var(--primary-soft)); }
+.scene-svg .t-pri { --c: var(--primary); }
+.scene-svg .t-term { --c: var(--term); }
+.scene-svg .t-tink { --c: var(--term-ink); }
+.scene-svg .t-neon { --c: var(--term-neon); }
+.scene-svg .t-cyan { --c: var(--term-cyan); }
+.scene-svg .t-dim { --c: var(--term-dim); }
+.scene-svg .t-ok { --c: var(--ok); }
+.scene-svg .t-hot { --c: var(--badge); }
+.scene-svg .o-line { --o: var(--hairline); }
+.scene-svg .o-pri { --o: var(--primary); }
+.scene-svg .o-dim { --o: var(--term-line); }
+.scene-svg .o-neon { --o: var(--term-neon); }
+/* 상세의 큰 장면은 한 번 떠오른다 (600ms, 동작 줄이기면 없음) */
+.thumb.is-large .scene-svg {
+  animation: scene-in var(--dur-reveal) var(--ease-out) both;
+}
+@keyframes scene-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-2));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thumb.is-large .scene-svg {
+    animation: none;
+  }
+}
+:root[data-motion='reduce'] .thumb.is-large .scene-svg {
+  animation: none;
+}
+
 /* ── 위치(빵 부스러기) ──────────────────────────────────────────────── */
 .crumbs ol {
   display: flex;

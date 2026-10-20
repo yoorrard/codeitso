@@ -136,7 +136,7 @@ describe('카드 미리 보기 판', () => {
 
   it('그림은 https 출처 주소만, 검색 엔진 파비콘 서비스는 부르지 않는다', () => {
     expect(thumbOf(item('t', { preview: { type: 'template', image: 'https://cdn.example.org/a.png' } }))).toEqual({ t: 'img', src: 'https://cdn.example.org/a.png', fit: 'cover', label: 'T' });
-    expect(thumbOf(item('t', { preview: { type: 'template', image: 'http://cdn.example.org/a.png' } })).t).toBe('mono');
+    expect(thumbOf(item('t', { preview: { type: 'template', image: 'http://cdn.example.org/a.png' } })).t).toBe('scene');
     expect(thumbOf(item('m', { preview: { type: 'mcp', icon: 'https://www.google.com/s2/favicons?domain=x' } })).t).toBe('mono');
   });
 

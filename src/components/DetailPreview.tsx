@@ -414,7 +414,8 @@ function Stats({ item }: { item: DetailRecord }) {
 
 export function DetailPreview({ item }: { item: DetailRecord }) {
   const type = item.preview.type;
-  const thumb = thumbOf(item, 8);
+  const thumb = thumbOf(item, 8, true);
+  const fromReadme = thumb.t === 'img' && thumb.src === item.preview['readmeImage'];
   let body;
   switch (type) {
     case 'font':
@@ -467,7 +468,8 @@ export function DetailPreview({ item }: { item: DetailRecord }) {
         {ko.item.preview}
       </h2>
       {body}
-      {thumb.t === 'img' && <p class="field-hint">{ko.item.externalNote}</p>}
+      {thumb.t === 'scene' && <p class="field-hint">{ko.pv.sceneNote}</p>}
+      {thumb.t === 'img' && <p class="field-hint">{fromReadme ? `${ko.pv.readmeNote} ${ko.item.externalNote}` : ko.item.externalNote}</p>}
     </section>
   );
 }

@@ -143,6 +143,22 @@ test.describe('PC 1440', () => {
     await page.goto('/item?id=mcp-registry%3Aagency-kesey-pretrip');
     await islandsReady(page);
     await expect(page.locator('.api-panel')).toContainText('npm: pretrip-mcp');
+    // 그림이 없는 모델은 작업에 맞는 장면을 그리고, 그린 예시라고 알린다 (v5.1 D126)
+    await page.goto('/item?id=hf-models%3A01-ai--yi-1.5-34b-chat');
+    await islandsReady(page);
+    await expect(page.locator('.detail-preview .thumb-scene svg')).toBeVisible();
+    await expect(page.locator('.detail-preview')).toContainText(ko.pv.sceneNote);
+  });
+
+  test('오픈소스 카드는 주인 아바타·소개 카드 대신 README 그림이나 그린 장면, 그림을 못 받으면 장면이 대신 보인다', async ({ page }) => {
+    await page.goto('/c/opensource/cli');
+    await islandsReady(page);
+    const grid = page.locator('.listing-grid');
+    await expect(grid.locator('img[src*="avatars.githubusercontent.com"], img[src*="opengraph.githubassets.com"]')).toHaveCount(0);
+    expect(await grid.locator('.thumb-scene, .thumb-fallback.is-scene').count()).toBeGreaterThan(10);
+    // e2e는 바깥 그림을 막는다: 깨진 README 그림 자리에 장면이 보인다
+    await grid.locator('.thumb-img').first().scrollIntoViewIfNeeded();
+    await expect(grid.locator('.thumb-img.is-broken .thumb-fallback.is-scene').first()).toBeVisible();
   });
 
   test('장바구니 서랍을 여러 번 열고 닫아도 초점이 돌아오고 하나만 열린다', async ({ page }) => {

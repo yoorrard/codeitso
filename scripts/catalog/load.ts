@@ -3,7 +3,7 @@
 // 빌드는 네트워크 없이 커밋된 자료만 쓴다 (brief 2절). 계산은 src/lib/catalog/core.ts의 순수 함수로 한다.
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { cardOf, filePopularity, relatedIndex, shardOf, sortRanked, withKo } from '../../src/lib/catalog/core.ts';
+import { cardOf, filePopularity, relatedIndex, shardOf, sortRanked, withKo, withMedia } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
@@ -11,6 +11,8 @@ import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/type
 export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog');
 /** 코드쇼퍼가 쓴 한국어 설명 (v5.1 D122): <이름>.json = { "<상품 id>": "한국어 설명" }. 폴더나 파일이 없어도 된다 */
 export const KO_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-ko');
+/** 저장소 README 첫 그림 (v5.1 D126, scripts/import/media-readme.ts): { images: id → 주소, stills: id → 멈춘 그림 }. 없어도 된다 */
+export const MEDIA_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-media');
 /** 스타터 키트 (손으로 고른 진열대 id 묶음) */
 export const KITS_FILE = join(import.meta.dirname, '..', '..', 'data', 'kits.json');
 const DIR = CATALOG_DIR;
@@ -59,8 +61,22 @@ export function readKo(dir: string = KO_DIR): Map<string, string> {
   return out;
 }
 
+/** data/catalog-media/readme-images.json → id → [그림, 멈춘 그림] */
+export function readMedia(dir: string = MEDIA_DIR): Map<string, [string, string | undefined]> {
+  const out = new Map<string, [string, string | undefined]>();
+  const file = join(dir, 'readme-images.json');
+  if (!existsSync(file)) return out;
+  const raw = readJson<{ images?: Record<string, unknown>; stills?: Record<string, unknown> }>(file);
+  for (const [id, v] of Object.entries(raw.images ?? {})) {
+    const still = raw.stills?.[id];
+    if (typeof v === 'string') out.set(id, [v, typeof still === 'string' ? still : undefined]);
+  }
+  return out;
+}
+
 function load(): Loaded {
   const koMap = readKo();
+  const media = readMedia();
   const categories: CategoryMeta[] = [];
   const lists = new Map<string, Ranked[]>();
   const byId = new Map<string, Ranked>();
@@ -76,7 +92,8 @@ function load(): Loaded {
       const pops = filePopularity(file.items);
       sources.push({ category: cat, file: name, name: file.source?.name ?? name, url: file.source?.url ?? '', license: file.source?.license ?? '', count: file.items.length });
       file.items.forEach((raw, i) => {
-        const item = withKo(raw, koMap.get(raw.id));
+        const m = media.get(raw.id);
+        const item = withMedia(withKo(raw, koMap.get(raw.id)), m?.[0], m?.[1]);
         if (item.category !== cat || !isCategoryId(item.category)) throw new Error(`${cat}/${name}: ${item.id}의 category가 ${item.category}다`);
         const list = subs.get(item.kind);
         if (!list) throw new Error(`${cat}/${name}: ${item.id}의 소분류 ${item.kind}가 index.json에 없다`);

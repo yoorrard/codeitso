@@ -2,7 +2,8 @@
 // 빌드(load.ts)와 화면(섬)이 함께 쓴다. DOM·Node API·시각·난수를 쓰지 않는다. 정렬에 localeCompare를 쓰지 않는다 (CLAUDE.md 코드 규칙).
 import type { Card, CatalogItem, CategoryId, Fact, Metric, SortKey, Thumb } from './types.ts';
 import { CHUNK_PAGES, PAGE_SIZE, RELATED_MAX, SHARDS } from './types.ts';
-import { FONT_CSS_HOSTS, FONT_FILE_HOSTS, allowedUrl } from './hosts.ts';
+import { FONT_CSS_HOSTS, FONT_FILE_HOSTS, allowedUrl, blockedImage } from './hosts.ts';
+import { sceneLabel, sceneOf, sceneWords } from './scene.ts';
 
 /** 이름 견주기: NFKC + 소문자의 코드 단위 순서 (로캘과 무관해 빌드마다 같다) */
 export function cmpText(a: string, b: string): number {
@@ -115,6 +116,16 @@ export function withKo(item: CatalogItem, ko: string | undefined): CatalogItem {
   return { ...item, summaryKo: t, koBy: 'codeshopper' };
 }
 
+/** README 첫 그림 (v5.1 D126, data/catalog-media): 진열대 빌드가 미리 보기 자료에 readmeImage·readmeStill로 붙인다. 출처 그림이 따로 있으면 그쪽이 먼저다 */
+export function withMedia(item: CatalogItem, image: string | undefined, still?: string): CatalogItem {
+  if (!image) return item;
+  const preview: CatalogItem['preview'] = { ...item.preview, readmeImage: image };
+  if (still) preview['readmeStill'] = still;
+  return { ...item, preview };
+}
+
+const isGif = (u: string): boolean => /\.gif([?#]|$)/i.test(u);
+
 /** 글자(코드 포인트) 수로 자르고 말줄임표를 붙인다 */
 export function truncate(s: string, max: number): string {
   const chars = [...s];
@@ -167,8 +178,7 @@ function httpsUrl(v: unknown): string | null {
 function previewImage(v: unknown): string | null {
   const u = httpsUrl(v);
   if (!u) return null;
-  const host = u.slice(8).split('/')[0] ?? '';
-  return /(^|\.)(google\.com|gstatic\.com|googleusercontent\.com)$/.test(host) ? null : u;
+  return blockedImage(u) ? null : u;
 }
 
 /** 이름 머리글자 두 자 (그림이 없는 카드) */
@@ -181,11 +191,31 @@ export function monogram(name: string): string {
   return label || [...base].slice(0, 2).join('').toUpperCase();
 }
 
-/** 카드 미리 보기 판. iconMax = 아이콘 묶음 견본 수 (카드 4, 상세 8) */
-export function thumbOf(item: CatalogItem, iconMax = 4): Thumb {
+/**
+ * 카드 미리 보기 판. iconMax = 아이콘 묶음 견본 수 (카드 4, 상세 8), detail = 상세(README의 움직이는 GIF를 그대로 쓴다.
+ * 카드는 목록 60장이 한꺼번에 받지 않게 멈춘 그림이 있으면 그것, 없으면 그린 장면).
+ */
+export function thumbOf(item: CatalogItem, iconMax = 4, detail = false): Thumb {
   const p = item.preview;
   const label = monogram(item.name);
   const mono: Thumb = { t: 'mono', label };
+  const scene = sceneOf(item);
+  const drawn: Thumb = scene ? sceneThumb(item, scene) : mono;
+  /** README 첫 그림: 못 받으면 장면이 대신 보인다 */
+  const readme = (): Thumb | null => {
+    const img = previewImage(p['readmeImage']);
+    if (!img) return null;
+    const src = detail || !isGif(img) ? img : previewImage(p['readmeStill']);
+    if (!src) return null;
+    const out: Thumb = { t: 'img', src, fit: 'contain', label };
+    if (drawn.t === 'scene') {
+      // 그림을 못 받으면 장면이 대신 보이므로 이름표도 장면의 것을 쓴다
+      out.label = drawn.label;
+      out.scene = drawn.scene;
+      if (drawn.words) out.words = drawn.words;
+    }
+    return out;
+  };
   switch (p.type) {
     case 'palette': {
       const all = hexes(p['colors']);
@@ -254,14 +284,19 @@ export function thumbOf(item: CatalogItem, iconMax = 4): Thumb {
     case 'site': {
       const emoji = p['emoji'];
       if (typeof emoji === 'string' && emoji.length > 0 && emoji.length <= 8) return { t: 'emoji', emoji };
-      return mono;
+      return drawn;
     }
     case 'template':
     case 'repo': {
-      const img = previewImage(p['image']) ?? previewImage(p['icon']);
-      if (img) return { t: 'img', src: img, fit: p['image'] ? 'cover' : 'contain', label };
-      return mono;
+      // 갤러리의 화면 갈무리 → README 첫 그림 → 아이콘 → 그린 장면. 주인 아바타·저장소 소개 카드는 previewImage가 뺀다
+      const shot = previewImage(p['image']);
+      if (shot) return { t: 'img', src: shot, fit: 'cover', label };
+      const icon = previewImage(p['icon']);
+      return readme() ?? (icon ? { t: 'img', src: icon, fit: 'contain', label } : drawn);
     }
+    case 'model':
+    case 'dataset':
+      return readme() ?? drawn;
     case 'skill': {
       const icon = previewImage(p['icon']);
       return icon ? { t: 'img', src: icon, fit: 'contain', label } : mono;
@@ -273,6 +308,14 @@ export function thumbOf(item: CatalogItem, iconMax = 4): Thumb {
     default:
       return mono;
   }
+}
+
+/** 그린 장면 판: 상품 이름(짧게)과 장면에 넣을 말 */
+function sceneThumb(item: CatalogItem, scene: NonNullable<ReturnType<typeof sceneOf>>): Thumb {
+  const words = sceneWords(item, scene);
+  const out: Thumb = { t: 'scene', scene, label: sceneLabel(item.name) };
+  if (words.length > 0) out.words = words;
+  return out;
 }
 
 const str = (v: unknown): string | undefined => (typeof v === 'string' && v.trim() !== '' && v.length <= 60 ? v.trim() : undefined);

@@ -33,11 +33,12 @@
     "e2e:base": "node scripts/qa/base-build.ts --e2e",
     "words": "node scripts/guard/check-words.ts",
     "logo": "node scripts/brand/make-logo.ts",
-    "import": "node scripts/import/design-all.ts && node scripts/import/ai-import.ts && node scripts/import/api-all.ts && node scripts/import/oss-all.ts",
+    "import": "node scripts/import/design-all.ts && node scripts/import/ai-import.ts && node scripts/import/api-all.ts && node scripts/import/oss-all.ts && node scripts/import/media-readme.ts",
     "import:design": "node scripts/import/design-all.ts",
     "import:ai": "node scripts/import/ai-import.ts",
     "import:api": "node scripts/import/api-all.ts",
-    "import:oss": "node scripts/import/oss-all.ts"
+    "import:oss": "node scripts/import/oss-all.ts",
+    "import:media": "node scripts/import/media-readme.ts"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",

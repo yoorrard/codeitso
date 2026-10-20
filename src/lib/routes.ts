@@ -6,6 +6,7 @@
 import type { Selection } from './catalog/facets.ts';
 import { writeSelection } from './catalog/facets.ts';
 import type { SortKey } from './catalog/types.ts';
+import { BRAND_FILES } from './brand-files.ts';
 import { shareFragment } from './share.ts';
 
 // e2e·Node 스크립트처럼 Vite 밖에서 이 파일을 읽으면 import.meta.env가 없으므로 루트로 본다
@@ -73,16 +74,17 @@ export const ROUTES = based(PATHS);
 
 /** public/ 파일과 빌드가 만드는 끝점 (바탕을 붙인 것) */
 export const FILES = based({
-  favicon: '/favicon.ico',
-  appleTouchIcon: '/apple-touch-icon.png',
-  icon192: '/icon-192.png',
-  icon512: '/icon-512.png',
-  iconMaskable: '/icon-maskable-512.png',
-  og: '/og.png',
-  cart: '/brand/cart.webp',
-  cartNight: '/brand/cart-night.webp',
-  wordmark: '/brand/wordmark.webp',
-  wordmarkNight: '/brand/wordmark-night.webp',
+  // 로고·아이콘·공유 그림은 이름에 내용 해시가 든 파일 (npm run logo, D131)
+  favicon: `/${BRAND_FILES.favicon}`,
+  appleTouchIcon: `/${BRAND_FILES.appleTouchIcon}`,
+  icon192: `/${BRAND_FILES.icon192}`,
+  icon512: `/${BRAND_FILES.icon512}`,
+  iconMaskable: `/${BRAND_FILES.iconMaskable}`,
+  og: `/${BRAND_FILES.og}`,
+  cart: `/${BRAND_FILES.cart}`,
+  cartNight: `/${BRAND_FILES['cart-night']}`,
+  wordmark: `/${BRAND_FILES.wordmark}`,
+  wordmarkNight: `/${BRAND_FILES['wordmark-night']}`,
   manifest: '/manifest.webmanifest',
   glossary: '/glossary.json',
   searchMeta: '/catalog/search/meta.json',

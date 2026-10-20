@@ -457,3 +457,4 @@ T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 �
 
 2026-10-20 하네스 간소화(D130): v4 스킬 둘·에이전트 넷 지움, /next-task 간소화(검토 에이전트 없이 증거로), 멈춤 훅 통과 기억, 세션 알림 v5로, copy.md 말투를 v5.1에 맞춤.
 2026-10-20 K1 스타터 키트 42개·구현안·/kits, 홈 모든 칸 '모두 보기'(D131): data/kits.json 주제 다섯(교육 12·게임 7·업무·행정 8·가게·생활 7·요즘 인기 AI 8)과 outlineKo, KitCard(홈 다섯 장 / /kits 전부), 새 쪽 /kits·/c(전체 카테고리)·/recent, 홈 줄 more를 모든 줄에(AI 코딩 툴 → /c/ai, 키 없는 API → /c/api), e2e kits.spec(390·1440)·a11y 쪽 셋 더함.
+2026-10-20 버그 고침(D131): 이름 바꿈 뒤 로고·파비콘·공유 그림·글꼴이 Cloudflare 가장자리 캐시 때문에 옛것으로 보이던 것. 그림·글꼴 이름에 내용 해시(npm run logo → src/lib/brand-files.ts, npm run fonts → fonts.css), /brand/* 1년 캐시. 검사 620·e2e 88 통과.

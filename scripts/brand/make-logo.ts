@@ -9,7 +9,8 @@
 // 4. 파비콘·앱 아이콘은 장바구니만, 바탕 없이(투명) 둔다(소유자 요청 2026-10-20). 바탕이 꼭 필요한 iOS 홈 화면 아이콘과
 //    가림(maskable) 아이콘만 흰 판 위에 둔다.
 // sharp는 Astro가 함께 설치하는 그림 도구다(새 의존성 아님). 만든 파일은 저장소에 올린다.
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 import type { Sharp } from 'sharp';
@@ -163,10 +164,21 @@ async function crop(r: Raster, box: { left: number; top: number; width: number; 
   return { w: info.width, h: info.height, px: new Uint8ClampedArray(data) };
 }
 
+/** 화면이 쓰는 그림 주소 (public/ 기준). 파일 이름에 내용 해시를 넣는다: Cloudflare 가장자리 캐시는 이름이 같은 그림을
+ *  배포 뒤에도 한동안 옛것으로 준다(이름 바꿈 뒤 옛 로고가 보임, D131). 그래서 바뀌면 이름도 바뀌게 한다 */
+const files: Record<string, string> = {};
+
+/** public/brand/<이름>.<해시 8자>.<확장자>로 쓰고 주소를 files에 적는다 */
+function emit(key: string, name: string, ext: string, data: Buffer): void {
+  const file = `${name}.${createHash('sha256').update(data).digest('hex').slice(0, 8)}.${ext}`;
+  writeFileSync(join(BRAND, file), data);
+  files[key] = `/brand/${file}`;
+}
+
 /** 높이 h로 줄인 WebP */
-async function webp(r: Raster, h: number, file: string): Promise<{ w: number; h: number }> {
+async function webp(r: Raster, h: number, key: string): Promise<{ w: number; h: number }> {
   const out = await image(r).resize({ height: h }).webp({ quality: 92, alphaQuality: 100, effort: 6 }).toBuffer({ resolveWithObject: true });
-  writeFileSync(file, out.data);
+  emit(key, key, 'webp', out.data);
   return { w: out.info.width, h: out.info.height };
 }
 
@@ -206,7 +218,10 @@ function ico(pngs: { size: number; data: Buffer }[]): Buffer {
 }
 
 async function main(): Promise<void> {
+  // 지난번에 만든 그림을 지우고 새로 쓴다 (이름이 해시라 남기면 쌓인다)
+  rmSync(BRAND, { recursive: true, force: true });
   mkdirSync(BRAND, { recursive: true });
+  for (const old of ['og.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png']) rmSync(join(PUBLIC, old), { force: true });
   const src = await load(SRC);
   removeBackground(src);
   const parts = split(src);
@@ -221,10 +236,10 @@ async function main(): Promise<void> {
 
   // 머리줄: 장바구니 40px·글자 22px (2배 그림). 바닥글은 같은 파일을 작게 쓴다
   const sizes: Record<string, { w: number; h: number }> = {};
-  sizes['cart'] = await webp(cart, 96, join(BRAND, 'cart.webp'));
-  sizes['cart-night'] = await webp(cartNight, 96, join(BRAND, 'cart-night.webp'));
-  sizes['wordmark'] = await webp(word, 56, join(BRAND, 'wordmark.webp'));
-  sizes['wordmark-night'] = await webp(wordNight, 56, join(BRAND, 'wordmark-night.webp'));
+  sizes['cart'] = await webp(cart, 96, 'cart');
+  sizes['cart-night'] = await webp(cartNight, 96, 'cart-night');
+  sizes['wordmark'] = await webp(word, 56, 'wordmark');
+  sizes['wordmark-night'] = await webp(wordNight, 56, 'wordmark-night');
   // 세로 묶음(장바구니 + 글자): 원본의 글자 높이·간격 그대로, 가운데 맞춤. 공유 그림과 소유자용 로고 그림
   const gap = oldWordBox.top - (cartBox.top + cartBox.height);
   const wordH = oldWordBox.height;
@@ -250,21 +265,34 @@ async function main(): Promise<void> {
   // 공유 그림 1200×630: 흰 바탕 가운데 세로 묶음
   const og = await sharp(lockup).resize({ height: 500 }).png().toBuffer();
   const ogMeta = await sharp(og).metadata();
-  await sharp({ create: { width: 1200, height: 630, channels: 4, background: '#ffffff' } })
+  const ogPng = await sharp({ create: { width: 1200, height: 630, channels: 4, background: '#ffffff' } })
     .composite([{ input: og, left: Math.round((1200 - (ogMeta.width ?? 0)) / 2), top: 65 }])
     .png({ compressionLevel: 9 })
-    .toFile(join(PUBLIC, 'og.png'));
+    .toBuffer();
+  emit('og', 'og', 'png', ogPng);
 
   // 앱 아이콘·파비콘: 장바구니만. 탭·설명서 아이콘은 투명, iOS 홈 화면(투명이면 검게 칠함)과 가림 아이콘만 흰 판
-  writeFileSync(join(PUBLIC, 'apple-touch-icon.png'), await tile(cart, 180, 0.1, { round: 0 }));
-  writeFileSync(join(PUBLIC, 'icon-192.png'), await tile(cart, 192, 0.04));
-  writeFileSync(join(PUBLIC, 'icon-512.png'), await tile(cart, 512, 0.04));
+  const touch = await tile(cart, 180, 0.1, { round: 0 });
+  emit('appleTouchIcon', 'apple-touch-icon', 'png', touch);
+  emit('icon192', 'icon-192', 'png', await tile(cart, 192, 0.04));
+  emit('icon512', 'icon-512', 'png', await tile(cart, 512, 0.04));
   // 가림 아이콘: 가운데 원(지름 80%) 안에 들게
-  writeFileSync(join(PUBLIC, 'icon-maskable-512.png'), await tile(cart, 512, 0.2, { round: 0 }));
-  const fav = await Promise.all([16, 32, 48].map(async (size) => ({ size, data: await tile(cart, size, 0) })));
-  writeFileSync(join(PUBLIC, 'favicon.ico'), ico(fav));
+  emit('iconMaskable', 'icon-maskable-512', 'png', await tile(cart, 512, 0.2, { round: 0 }));
+  const fav = ico(await Promise.all([16, 32, 48].map(async (size) => ({ size, data: await tile(cart, size, 0) }))));
+  emit('favicon', 'favicon', 'ico', fav);
+  // 이름을 정해 두고 브라우저가 스스로 찾는 두 파일(링크를 읽지 않는 곳)도 같은 내용으로 둔다
+  writeFileSync(join(PUBLIC, 'favicon.ico'), fav);
+  writeFileSync(join(PUBLIC, 'apple-touch-icon.png'), touch);
   writeFileSync(join(ROOT, 'src', 'lib', 'brand-sizes.json'), `${JSON.stringify(sizes, null, 2)}\n`);
-  console.log(`로고 자산: 장바구니 ${cart.w}×${cart.h}, 글자 ${word.w}×${word.h} → public/brand/, public/*.png, favicon.ico, og.png, assets-src/brand/logo-codeitso.png`);
+  const lines = Object.entries(files)
+    .sort(([a], [b]) => (a < b ? -1 : 1))
+    .map(([k, v]) => `  ${JSON.stringify(k)}: ${JSON.stringify(v.slice(1))},`);
+  writeFileSync(
+    join(ROOT, 'src', 'lib', 'brand-files.ts'),
+    `// npm run logo가 만든다. 손으로 고치지 않는다. 그림 이름에 내용 해시가 들어 있다 (D131). 주소 바탕은 routes.ts가 붙인다\nexport const BRAND_FILES = {\n${lines.join('\n')}\n} as const;\n`,
+  );
+  console.log(`로고 자산: 장바구니 ${cart.w}×${cart.h}, 글자 ${word.w}×${word.h} → public/brand/ (이름에 해시, src/lib/brand-files.ts), favicon.ico·apple-touch-icon.png, assets-src/brand/logo-codeitso.png`);
+  console.log(readdirSync(BRAND).join(' '));
   console.log(sizes);
 }
 

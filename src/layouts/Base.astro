@@ -1,4 +1,5 @@
 ---
+import { BRAND_FILES } from '../lib/brand-files.ts';
 // 모든 화면의 기본 틀 (v5, brief 3절): 본문 바로 가기 → 머리줄(로고 · 카테고리 · 검색 · 장바구니) → 본문 → 바닥글.
 // 화면 낭독기 알림 자리(#cc-live)와 어려운 말 풀이 섬(TermPopover)도 여기 있다. 본문 폭은 최대 1440px (--container-max).
 import '../styles/global.css';
@@ -28,7 +29,7 @@ const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko
 // 배포 서버는 끝 빗금을 뗀 주소로 맞춘다 (wrangler.jsonc html_handling, D50). 홈만 바탕 폴더 주소
 const path = Astro.url.pathname.replace(/\/+$/, '');
 const canonical = Astro.site ? new URL(stripBase(path || '/') === '/' ? ROUTES.home : path, Astro.site).href : undefined;
-const ogImage = Astro.site ? absoluteUrl(Astro.site, '/og.png') : undefined;
+const ogImage = Astro.site ? absoluteUrl(Astro.site, `/${BRAND_FILES.og}`) : undefined;
 const nav = navData();
 const fetched = site().fetched;
 ---

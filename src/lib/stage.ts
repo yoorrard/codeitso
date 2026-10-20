@@ -1,11 +1,13 @@
 // 배포 단계 (T21·T22, D53): 미리 보기(preview)는 바닥글에 시험판 안내 한 줄과 noindex를 붙인다.
-// 정식(release)은 빌드 때 PUBLIC_STAGE=release일 때만이고, 배포 작업이 그때 npm run validate:release를 먼저 통과시킨다.
+// 정식(release)은 빌드 변수 PUBLIC_STAGE=release이거나 저장소 설정(src/lib/site-config.ts의 stage)이 release일 때다 (D136).
 // 정식 빌드 지킴(L-04)은 scripts/lib/build-guard.ts가 맡는다 (astro.config.mjs에서 부름).
 import { BASE_PATH, stripBase } from './routes.ts';
+import type { Stage } from './site-config.ts';
+import { resolveStage } from './site-config.ts';
 
-export type Stage = 'preview' | 'release';
+export type { Stage };
 
-export const STAGE: Stage = import.meta.env.PUBLIC_STAGE === 'release' ? 'release' : 'preview';
+export const STAGE: Stage = resolveStage(import.meta.env.PUBLIC_STAGE);
 
 /**
  * 호스트 종류 (설계서 9.4절, D81): cloudflare(기본) = 익명 집계 /api/event와 방문 통계가 있는 곳,

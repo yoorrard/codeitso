@@ -1701,11 +1701,65 @@
 .prose ul {
   padding-inline-start: var(--space-5);
 }
-.review-banner {
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--warn-soft);
-  color: var(--warn-ink);
+/* 법 문서 (D136): 시행일 · 목차 · 표를 바꾼 카드 · 함께 보기 */
+.legal-meta {
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+.legal-toc {
+  padding: var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.legal-toc-title {
+  color: var(--text-2);
+  font-size: var(--size-label);
+  font-weight: var(--weight-strong);
+}
+.prose .legal-toc ul,
+.prose .legal-related ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.legal-toc a,
+.legal-related a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tap);
+}
+.legal-toc a {
+  font-size: var(--size-label);
+}
+.legal section > * + * {
+  margin-block-start: var(--space-2);
+}
+.legal h2 {
+  scroll-margin-block-start: var(--space-5);
+}
+.prose .legal-card > * + * {
+  margin-block-start: var(--space-2);
+}
+.legal-card h3 {
+  font-size: var(--size-title-3);
+  overflow-wrap: anywhere;
+}
+.legal-card dd {
+  overflow-wrap: anywhere;
+}
+.legal-related {
+  margin-block-start: var(--space-7);
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--hairline);
+}
+.prose .legal-related h2 {
+  margin-block-start: 0;
+  font-size: var(--size-title-3);
 }
 .table-wrap {
   overflow-x: auto;
@@ -1769,4 +1823,18 @@
 /* 방문 수: 숫자 폭이 바뀌어도 줄이 흔들리지 않게 */
 .ft-visits {
   font-variant-numeric: tabular-nums;
+}
+/* 개인정보 처리방침은 굵게 (국내 서비스 관례, D136) */
+.ft-links a.ft-strong {
+  color: var(--text);
+  font-weight: var(--weight-strong);
+}
+.ft-operator {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+}
+.ft-operator a {
+  color: var(--text-2);
+  overflow-wrap: anywhere;
 }

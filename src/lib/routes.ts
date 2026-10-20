@@ -65,8 +65,11 @@ export const PATHS = {
   terms: '/terms',
   about: '/about',
   credits: '/about/credits',
+  /** 법 문서 (L, D136): 이용약관 · 개인정보 처리방침 · 이용 안내 · 저작권·게시 중단 요청 */
+  legalTerms: '/legal/terms',
   privacy: '/legal/privacy',
   notice: '/legal/notice',
+  copyright: '/legal/copyright',
 } as const;
 
 /** 화면 주소 (바탕을 붙인 것) */
@@ -86,6 +89,7 @@ export const FILES = based({
   wordmark: `/${BRAND_FILES.wordmark}`,
   wordmarkNight: `/${BRAND_FILES['wordmark-night']}`,
   manifest: '/manifest.webmanifest',
+  sitemap: '/sitemap.xml',
   glossary: '/glossary.json',
   searchMeta: '/catalog/search/meta.json',
   event: '/api/event',

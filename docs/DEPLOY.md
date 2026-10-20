@@ -253,11 +253,11 @@ CREATE TABLE IF NOT EXISTS daily_events (
 **왜 넣나요 (읽지 않아도 돼요):**
 - `NODE_VERSION`: 빌드 도구의 판을 우리가 시험해 본 판(22)으로 맞춰요.
 - `PUBLIC_STAGE`: 바닥글의 '시험판이에요' 줄과 검색 막기를 켜요. 지금은 빼도 결과가 같지만, 정식으로 공개할 때 이 값만 바꾸면 되도록 미리 넣어 둬요.
-- `PUBLIC_SITE_URL`: 페이지마다 적히는 대표 주소예요. 비우면 예시 주소가 들어가요.
+- `PUBLIC_SITE_URL`: 페이지마다 적히는 대표 주소예요. 비우면 저장소 설정(`src/lib/site-config.ts`)의 `https://codeitso.yoorrard.workers.dev`가 들어가요.
 - 나머지 두 줄: 빌드 도구들이 사용 통계를 보내지 않게 해요.
 
 **넣지 않는 것:** 아래 이름들은 지금 넣지 마세요.
-- `PUBLIC_CONTACT_EMAIL`(연락받을 메일): 정식으로 공개할 때 제가 말하면 넣어요.
+- `PUBLIC_CONTACT_EMAIL`(연락받을 메일): 넣지 않아도 돼요. 문의 메일은 저장소 설정(`src/lib/site-config.ts`)에 있어요. 다른 주소로 바꿀 때만 넣어요.
 - `PUBLIC_CF_BEACON_TOKEN`(방문 통계): 10단계에서 넣어요.
 - `PUBLIC_BASE_PATH`, `PUBLIC_HOST`: Cloudflare에서는 쓰지 않아요. 넣으면 사이트 일부가 꺼질 수 있어요.
 
@@ -369,9 +369,10 @@ Web Analytics는 무료예요. 쿠키를 쓰지 않고, 방문자가 누구인�
 
 | 이름 | 값 |
 |---|---|
-| `PUBLIC_STAGE` | `release` |
+| `PUBLIC_STAGE` | `release` (저장소 설정이 이미 `release`면 그대로 둬도 돼요) |
 | `PUBLIC_SITE_URL` | 제가 알려 드리는 최종 주소 |
-| `PUBLIC_CONTACT_EMAIL` | 연락받을 메일 주소 |
+
+`PUBLIC_CONTACT_EMAIL`은 넣지 않아도 돼요(저장소 설정, D136).
 
 3. 제가 작업 브랜치를 `main`에 합치는 PR을 만들어 링크를 보내 드려요. 대화창에 "합쳐 줘"라고 쓰시면 제가 합쳐요. 직접 하시려면 링크를 열고 초록 버튼 **Merge pull request** → **Confirm merge**를 차례로 눌러요. 그 뒤에 나오는 **Delete branch**는 누르지 마세요.
    - PR을 합치면 `main`이 바뀌고, 빌드가 저절로 돌아요.
@@ -385,6 +386,17 @@ Web Analytics는 무료예요. 쿠키를 쓰지 않고, 방문자가 누구인�
    - 도메인을 붙인 뒤에는 Web Analytics의 **Manage site**에서 **Enable with JS Snippet installation**을 꼭 골라요. 그래야 영수증 화면에 통계가 들어가지 않아요.
 
 ---
+
+## 정식 공개 스위치 (에이전트용, 2026-10-20, D136)
+
+소유자의 대시보드 일 없이 저장소 한 줄로 정식 공개를 켠다. 단계는 **빌드 변수 `PUBLIC_STAGE`와 저장소 설정 중 하나라도 `release`면 정식**이라, 대시보드에 `PUBLIC_STAGE=preview`가 남아 있어도 켜진다.
+
+1. **바꿀 한 줄:** `src/lib/site-config.ts`의 `  stage: 'preview',` → `  stage: 'release',`
+2. **확인(푸시 전):** `npm run check` → `npm run build`(정식 빌드 지킴이 함께 돈다: 빈·예시 주소, 빈 문의 메일, '초안'·'검토 중인 초안' 글자가 남으면 멈춤) → `dist/robots.txt`가 `Allow: /`와 `Sitemap: https://codeitso.yoorrard.workers.dev/sitemap.xml`, `dist/index.html`에 `name="robots"`가 없고 canonical·`og:url`이 codeitso 주소인지.
+3. **커밋·푸시:** Workers Builds가 지켜보는 작업 브랜치에 푸시하면 정식으로 배포된다(`main`으로 옮기는 11단계는 나중에 따로).
+4. **바뀌는 것:** 바닥글 '시험판이에요' 줄과 `noindex`가 빠지고, robots.txt가 열리며 사이트맵을 알린다. 대표 주소·문의 메일·운영자는 같은 파일의 `url`·`email`·`operator`(빌드 변수 `PUBLIC_SITE_URL`·`PUBLIC_CONTACT_EMAIL`이 있으면 그것이 먼저).
+5. **확인한 것(2026-10-20):** 공개 화면의 canonical이 이미 `https://codeitso.yoorrard.workers.dev/`라 대시보드의 `PUBLIC_SITE_URL`은 맞거나 비어 있다(H25 ②). 옛 주소 `code-chauffeur.yoorrard.workers.dev`는 404. 로컬 정식 빌드(`PUBLIC_STAGE=release PUBLIC_SITE_URL=https://codeitso.yoorrard.workers.dev npm run build`)와 '대시보드는 preview, 저장소 설정만 release' 빌드(`PUBLIC_STAGE=preview node scripts/deploy/cf-build.ts`) 둘 다 정식으로 통과했다.
+6. **되돌리기:** 같은 줄을 `'preview'`로 돌려 푸시한다.
 
 ## 예비 길: GitHub Actions로 배포
 
@@ -412,7 +424,7 @@ Workers Builds를 쓰지 못할 때만 쓴다. `.github/workflows/deploy.yml`을
 - **3단계 Console:** Console로 실행하면 `d1_migrations`에 기록이 남지 않는다. 표 글이 `IF NOT EXISTS`라 나중에 `migrations apply`로 다시 돌려도 해가 없다. 안내에는 `--` 설명 줄을 뺀 글을 싣는다.
 - **8단계 확인 글자:** 방문 통계는 `data-cf-beacon`으로 찾는다(CSP `<meta>`에 `https://cloudflareinsights.com`이 모든 페이지에 있어 그 낱말로 찾으면 틀린 판정이 난다). manifest는 `"start_url": "/"`(콜론 뒤 빈칸)다. 집계는 v5에서 장바구니 담기·계산·.md 받기 때 쌓인다(D110~D113).
 - **9단계에서 뺀 것:** 초안의 "`Authentication error [code: 10000]`이 D1과 함께 나온다"는 문서·코드 근거가 없어 뺐다. id가 채워져 있으면 wrangler는 D1 API를 직접 부르지 않는다.
-- **11단계 순서:** **Branch control**을 `main`으로 → 변수 고치기 → PR 합치기(소유자가 "합쳐 줘"라고 하면 에이전트가 합친다). PR을 합치는 것이 `main` 빌드를 일으킨다. 순서를 바꾸면 `main`에 푸시될 때 지켜보는 브랜치가 아직 작업 브랜치라서, 미리 보기 빌드가 꺼진 채로는 빌드가 돌지 않는다. `PUBLIC_STAGE=release` 빌드는 `validate:release`(지금 needsReview 46개로 실패)와 정식 빌드 지킴(L-04: 빈 주소·예시 주소·초안 표시)을 통과해야 한다. 실패하면 배포되지 않고 이전 화면이 남는다.
+- **11단계 순서:** **Branch control**을 `main`으로 → 변수 고치기 → PR 합치기(소유자가 "합쳐 줘"라고 하면 에이전트가 합친다). PR을 합치는 것이 `main` 빌드를 일으킨다. 순서를 바꾸면 `main`에 푸시될 때 지켜보는 브랜치가 아직 작업 브랜치라서, 미리 보기 빌드가 꺼진 채로는 빌드가 돌지 않는다. 정식 빌드는 정식 빌드 지킴(L-04: 빈 주소·예시 주소·빈 문의 메일·초안 표시)을 통과해야 한다(옛 `validate:release`는 v5에서 없앴다, D102). 실패하면 배포되지 않고 이전 화면이 남는다.
 - **코드에 남은 옛 번호:** `scripts/lib/build-guard.ts`의 "docs/DEPLOY.md 4단계"(빌드 변수는 이제 7단계), `.github/workflows/deploy.yml`의 "docs/DEPLOY.md 3단계"(database_id는 이제 2~4단계)와 2번째 줄의 '검토 중인 시험판' 띠 주석(지금 화면과 맞지 않음)은 코드라서 2026-10-14 문서 고침에서 건드리지 않았다. 그 파일을 고칠 때 함께 고친다.
 
 ---

@@ -65,7 +65,8 @@ code-chauffeur/
 | `/receipts` | 정적 + 섬 | 지난 영수증(최근 30장): [열기]·[.md 받기]·[지우기] |
 | `/search?q=&cat=&page=` | 정적 + 섬 | 전체 검색(D114): 이름·태그·설명, 한글↔영어 같은 뜻 묶음(`data/search-words.json`). 대분류별 묶음 10장씩 + 맞는 소분류 칩, 대분류를 고르면 60장씩 쪽. 치는 대로 찾고(`replaceState`) 대분류·쪽은 `pushState`. |
 | `/terms` | 정적 | 용어 사전 (`data/glossary.json`) |
-| `/about`, `/about/credits`, `/legal/privacy`, `/legal/notice` | 정적 | 소개, 자료 출처(출처 파일마다 이름·수·이용 조건), 처리방침, 이용 안내 |
+| `/about`, `/about/credits`, `/legal/terms`, `/legal/privacy`, `/legal/notice`, `/legal/copyright` | 정적 | 소개, 자료 출처(출처 파일마다 이름·수·이용 조건), 이용약관, 처리방침, 이용 안내, 저작권·게시 중단 요청 (D136, 틀 `LegalDoc.astro`, 운영자·메일은 `src/lib/site-config.ts`) |
+| `/sitemap.xml`, `/robots.txt` | 정적 | 정적 쪽 사이트맵(상세·검색·장바구니 제외), 정식이면 robots가 열고 사이트맵을 알림 (D136) |
 | `/glossary.json`, `/manifest.webmanifest`, `/robots.txt` | 빌드 끝점 | 풀이 자료, 앱 정보, 검색 로봇 안내 |
 | `/api/event` | Worker | 익명 집계 |
 

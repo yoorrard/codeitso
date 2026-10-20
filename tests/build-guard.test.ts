@@ -36,7 +36,7 @@ describe('정식 빌드의 빌드 변수', () => {
     const problems = envProblems({ PUBLIC_STAGE: 'release', PUBLIC_CONTACT_EMAIL: 'a@b.kr' });
     expect(problems).toHaveLength(1);
     const line = oneLine(problems);
-    expect(line).toMatch(/^빌드를 멈췄어요: 정식 빌드인데 PUBLIC_SITE_URL/);
+    expect(line).toMatch(/^빌드를 멈췄어요: 정식 빌드인데 사이트 주소/);
     expect(line).not.toContain('\n');
   });
 

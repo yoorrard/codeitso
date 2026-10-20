@@ -77,8 +77,8 @@ if (existsSync(manifestFile)) {
 }
 // 정적 호스트의 개인정보 처리방침은 익명 집계 묶음이 '이 주소에서는 세지 않아요'
 const privacy = join(OUT, 'legal', 'privacy', 'index.html');
-if (!existsSync(privacy) || !readFileSync(privacy, 'utf8').includes(ko.legal.privacyStatic.count)) {
-  problems.push('legal/privacy: 정적 호스트용 익명 집계 문장(ko.legal.privacyStatic.count)이 없다');
+if (!existsSync(privacy) || !readFileSync(privacy, 'utf8').includes(ko.legal.privacy.staticHost.count.p[0])) {
+  problems.push('legal/privacy: 정적 호스트용 익명 집계 문장(ko.legal.privacy.staticHost.count)이 없다');
 }
 // 소개도 처리방침과 같은 사실을 말한다: '이 주소에서는 이름 없는 횟수도 보내지 않아요'이고 '서버로는 … 횟수만 보내요'는 없다
 const about = join(OUT, 'about', 'index.html');

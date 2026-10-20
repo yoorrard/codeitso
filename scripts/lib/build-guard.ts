@@ -1,6 +1,6 @@
 // 빌드 지킴 (설계서 8.1 L-04·9.4절, D81): astro.config.mjs의 작은 통합(integration)이 부른다. 그래서 npm run build·build:cf 모두 걸린다.
 //   - 늘: PUBLIC_BASE_PATH 꼴(/로 시작, 끝 빗금 없음, 영문 소문자·숫자·- 마디), PUBLIC_HOST 값(cloudflare | static)
-//   - 정식(PUBLIC_STAGE=release) 빌드만: PUBLIC_SITE_URL이 비었거나 example을 품음, PUBLIC_CONTACT_EMAIL이 빔,
+//   - 정식(PUBLIC_STAGE=release) 빌드만: PUBLIC_SITE_URL이 비었거나 example을 품음, PUBLIC_CONTACT_EMAIL이 빔 (둘 다 빌드 변수가 비면 src/lib/site-config.ts 값, D136),
 //     빌드 결과(dist/)에 예시 주소·초안 표시('codechauffeur.example' · '(초안)' · '검토 중인 초안')가 남음
 // 실패는 한국어 한 줄로 알린다. 판단은 순수 함수이고, 파일을 읽는 것은 scanBuild 하나뿐이다 (시험: tests/build-guard.test.ts).
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -38,9 +38,9 @@ export function releaseEnvProblems(env: BuildEnv): string[] {
   if (env.PUBLIC_STAGE !== 'release') return [];
   const out: string[] = [];
   const site = (env.PUBLIC_SITE_URL ?? '').trim();
-  if (site === '') out.push('정식 빌드인데 PUBLIC_SITE_URL(사이트 주소)이 비어 있어요. 실제 주소를 넣으세요 (docs/DEPLOY.md 7단계)');
+  if (site === '') out.push('정식 빌드인데 사이트 주소가 비어 있어요. src/lib/site-config.ts의 url이나 빌드 변수 PUBLIC_SITE_URL에 실제 주소를 넣으세요');
   else if (site.toLowerCase().includes('example')) out.push(`정식 빌드인데 PUBLIC_SITE_URL이 예시 주소예요 (${site}). 실제 주소를 넣으세요`);
-  if ((env.PUBLIC_CONTACT_EMAIL ?? '').trim() === '') out.push('정식 빌드인데 PUBLIC_CONTACT_EMAIL(연락 메일 주소)이 비어 있어요. 받을 주소를 넣으세요 (HUMAN H22)');
+  if ((env.PUBLIC_CONTACT_EMAIL ?? '').trim() === '') out.push('정식 빌드인데 문의 메일 주소가 비어 있어요. src/lib/site-config.ts의 email이나 빌드 변수 PUBLIC_CONTACT_EMAIL에 받을 주소를 넣으세요');
   return out;
 }
 

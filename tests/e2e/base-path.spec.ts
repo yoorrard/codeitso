@@ -65,11 +65,12 @@ test('하위 주소: 머리줄·바닥글·설명서 링크가 바탕을 품고,
   await page.goto(`${BASE}/about`);
   await expect(page.locator('main')).toContainText(ko.about.storedStatic);
   await expect(page.locator('link[rel="manifest"]')).toHaveAttribute('href', `${BASE}/manifest.webmanifest`);
-  for (const href of await page.locator('.site-footer a, .site-header a').evaluateAll((as) => as.map((a) => a.getAttribute('href') ?? ''))) expect(href.startsWith(`${BASE}/`), href).toBe(true);
+  // 바닥글의 문의 메일(mailto:, D136)은 사이트 안 주소가 아니라서 뺀다
+  for (const href of await page.locator('.site-footer a:not([href^="mailto:"]), .site-header a').evaluateAll((as) => as.map((a) => a.getAttribute('href') ?? ''))) expect(href.startsWith(`${BASE}/`), href).toBe(true);
   const manifest = (await (await request.get(`${BASE}/manifest.webmanifest`)).json()) as { start_url: string; scope: string };
   expect(manifest.start_url).toBe(`${BASE}/`);
   expect(manifest.scope).toBe(`${BASE}/`);
   await page.goto(`${BASE}/legal/privacy`);
-  await expect(page.locator('main')).toContainText(ko.legal.privacyStatic.count);
+  await expect(page.locator('main')).toContainText(ko.legal.privacy.staticHost.count.p[0]);
   expect((await request.get('/cart')).status()).toBe(404);
 });

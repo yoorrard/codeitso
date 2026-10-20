@@ -5,9 +5,11 @@ import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 import { basePathProblem, envProblems, hostProblem, oneLine, scanBuild } from './scripts/lib/build-guard.ts';
 import { FONT_CSS_HOSTS, FONT_FILE_HOSTS } from './src/lib/catalog/hosts.ts';
+import { effectiveEnv } from './src/lib/site-config.ts';
 
-// 빌드 변수: 셸·배포 환경 변수와 .env 파일 (화면의 import.meta.env와 같은 값을 보려고 Vite 규칙대로 읽는다)
-const env = loadEnv(process.env.NODE_ENV === 'development' ? 'development' : 'production', process.cwd(), 'PUBLIC_');
+// 빌드 변수: 셸·배포 환경 변수와 .env 파일 (화면의 import.meta.env와 같은 값을 보려고 Vite 규칙대로 읽는다).
+// 단계·대표 주소·문의 메일은 저장소 설정(src/lib/site-config.ts, D136)으로 채운다: 빌드 변수가 있으면 그것이 먼저, 단계는 하나라도 release면 정식
+const env = effectiveEnv(loadEnv(process.env.NODE_ENV === 'development' ? 'development' : 'production', process.cwd(), 'PUBLIC_'));
 
 /** 한 줄로 알리고 멈춘다 (긴 오류 더미 대신, 설계서 L-04) */
 function stop(/** @type {string} */ line) {
@@ -43,8 +45,8 @@ const analytics = env.PUBLIC_HOST !== 'static';
 // 다른 쪽·정렬과 상세는 빌드가 만든 JSON(/data/list/…, /data/item/<n>.json)을 섬이 받아 그린다. 파일 수는 Cloudflare 한 판 2만 개 아래.
 // 페이지 전환은 Astro ClientRouter 대신 CSS 문서 간 View Transitions로 한다 (D25).
 export default defineConfig({
-  // 저장소 변수가 비어 있어도(빈 글자) 예시 주소로. 정식 빌드는 빌드 지킴이 예시 주소를 막는다
-  site: env.PUBLIC_SITE_URL || 'https://codechauffeur.example',
+  // 빌드 변수 PUBLIC_SITE_URL, 비었으면 저장소 설정의 대표 주소 (정식 빌드는 빌드 지킴이 예시 주소를 막는다)
+  site: env.PUBLIC_SITE_URL,
   // 주소 바탕 (설계서 9.4절): 기본 루트, GitHub Pages 프로젝트 사이트면 /저장소 이름. 화면 주소는 src/lib/routes.ts withBase()가 붙인다
   base: env.PUBLIC_BASE_PATH || '/',
   output: 'static',

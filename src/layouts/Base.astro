@@ -45,6 +45,7 @@ const fetched = site().fetched;
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111a2d" /><!-- floor-guard-ignore: meta theme-color는 CSS 변수를 읽지 못해 머리줄 바탕(--surface 밤) 값을 그대로 쓴다 -->
     {canonical && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={ko.site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />

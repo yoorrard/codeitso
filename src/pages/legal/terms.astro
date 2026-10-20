@@ -1,0 +1,9 @@
+---
+// 이용약관 /legal/terms (L, D136). 문장은 src/copy/ko.ts legal.terms (합니다체), 그리는 틀은 LegalDoc. 최종 문구는 사람이 한 번 더 본다 (docs/HUMAN.md H04).
+import LegalDoc from '../../components/LegalDoc.astro';
+import { ko } from '../../copy/ko.ts';
+
+const L = ko.legal.terms;
+---
+
+<LegalDoc doc="legalTerms" pageTitle={L.pageTitle} title={L.title} lead={L.lead} sections={L.sections} />

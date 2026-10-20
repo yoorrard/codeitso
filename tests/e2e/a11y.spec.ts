@@ -23,7 +23,10 @@ const PAGES = [
   '/terms',
   '/about',
   '/about/credits',
+  '/legal/terms',
   '/legal/privacy',
+  '/legal/notice',
+  '/legal/copyright',
 ];
 
 for (const width of [360, 1440]) {

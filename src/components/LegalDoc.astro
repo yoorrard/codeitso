@@ -1,0 +1,130 @@
+---
+// 법 문서 한 쪽 (L, D136): 제목 · 시행일 · 이끄는 글 · 목차 · 묶음(문단·목록·표, 한 묶음 끝에 단추 하나) · 함께 보기.
+// 문장의 {{name}}·{{email}}·{{site}}·{{fontHosts}}는 운영자 설정(site-config.ts)과 글꼴 호스트(hosts.ts)로 채운다.
+// 표는 휴대폰에서도 읽히게 줄마다 카드(제목 + 정의 목록)로 그린다.
+import Base from '../layouts/Base.astro';
+import { ko } from '../copy/ko.ts';
+import { FONT_CSS_HOSTS, FONT_FILE_HOSTS } from '../lib/catalog/hosts.ts';
+import { CONTACT_EMAIL } from '../lib/feedback.ts';
+import { ROUTES } from '../lib/routes.ts';
+import { SITE_CONFIG } from '../lib/site-config.ts';
+import { fill } from '../lib/text.ts';
+
+export interface LegalTable {
+  cols: readonly string[];
+  rows: readonly (readonly string[])[];
+}
+
+export interface LegalSection {
+  id: string;
+  h: string;
+  p?: readonly string[];
+  list?: readonly string[];
+  table?: LegalTable;
+  after?: readonly string[];
+}
+
+export type LegalDocId = 'legalTerms' | 'privacy' | 'notice' | 'copyright';
+
+/** 한 묶음 끝에 붙는 단추 (예: 게시 중단 요청 메일 쓰기) */
+export interface LegalAction {
+  section: string;
+  href: string;
+  label: string;
+}
+
+interface Props {
+  doc: LegalDocId;
+  pageTitle: string;
+  title: string;
+  lead: string;
+  sections: readonly LegalSection[];
+  action?: LegalAction;
+}
+const { doc, pageTitle, title, lead, sections, action } = Astro.props;
+
+const vars = {
+  name: SITE_CONFIG.operator,
+  email: CONTACT_EMAIL || SITE_CONFIG.email,
+  site: Astro.site ? new URL(ROUTES.home, Astro.site).href.replace(/\/$/, '') : '',
+  fontHosts: [...new Set([...FONT_CSS_HOSTS, ...FONT_FILE_HOSTS])].join(', '),
+};
+const t = (s: string): string => fill(s, vars);
+const L = ko.legal;
+const F = ko.footer;
+const related = [
+  { id: 'legalTerms', href: ROUTES.legalTerms, label: F.legalTerms },
+  { id: 'privacy', href: ROUTES.privacy, label: F.privacy },
+  { id: 'notice', href: ROUTES.notice, label: F.notice },
+  { id: 'copyright', href: ROUTES.copyright, label: F.copyrightLink },
+  { id: 'credits', href: ROUTES.credits, label: F.credits },
+].filter((r) => r.id !== doc);
+---
+
+<Base title={pageTitle} read>
+  <article class="prose legal">
+    <h1>{title}</h1>
+    <p class="legal-meta">{fill(L.effective, { date: L.effectiveDate })}</p>
+    <p class="page-lead">{t(lead)}</p>
+    <nav class="legal-toc" aria-labelledby="legal-toc-title">
+      <p id="legal-toc-title" class="legal-toc-title">{L.toc}</p>
+      <ul>
+        {
+          sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.h}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    {
+      sections.map((s) => (
+        <section aria-labelledby={s.id}>
+          <h2 id={s.id}>{s.h}</h2>
+          {s.p?.map((x) => <p>{t(x)}</p>)}
+          {s.list && (
+            <ul>
+              {s.list.map((x) => (
+                <li>{t(x)}</li>
+              ))}
+            </ul>
+          )}
+          {s.table?.rows.map((row) => (
+            <div class="legal-card">
+              <h3>{t(row[0] ?? '')}</h3>
+              <dl class="info-table">
+                {s.table?.cols.slice(1).map((c, i) => (
+                  <>
+                    <dt>{c}</dt>
+                    <dd>{t(row[i + 1] ?? '')}</dd>
+                  </>
+                ))}
+              </dl>
+            </div>
+          ))}
+          {s.after?.map((x) => <p>{t(x)}</p>)}
+          {action?.section === s.id && (
+            <p>
+              <a class="btn" href={action.href}>
+                {action.label}
+              </a>
+            </p>
+          )}
+        </section>
+      ))
+    }
+    <nav class="legal-related" aria-labelledby="legal-related-title">
+      <h2 id="legal-related-title">{L.related}</h2>
+      <ul>
+        {
+          related.map((r) => (
+            <li>
+              <a href={r.href}>{r.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </article>
+</Base>

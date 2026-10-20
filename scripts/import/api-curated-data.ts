@@ -35,6 +35,40 @@ export interface ProviderOverlay {
 
 const gh = (org: string) => `github.com/${org}`;
 
+// ---------- 사용 한도(rate limit)·사용 등급(usage tier) 공식 문서 (D141) ----------
+// 손으로 열어 그 회사의 한도·등급 안내 쪽인지 확인한 주소와 확인한 날. 가져오기가 날마다 살아 있는지 다시 보고, 죽었으면 싣지 않는다.
+// 한도 숫자는 옮기지 않는다(자주 바뀌고 계정마다 다르다). Mistral·Z.ai·Meta Llama는 2026-10-20에 한도 쪽을 찾지 못해 뺐다.
+export interface LimitsDoc {
+  url: string;
+  checked: string;
+}
+const L = (url: string): LimitsDoc => ({ url, checked: '2026-10-20' });
+export const RATE_LIMIT_DOCS: Record<string, LimitsDoc> = {
+  openai: L('https://developers.openai.com/api/docs/guides/rate-limits'),
+  anthropic: L('https://platform.claude.com/docs/en/api/rate-limits'),
+  google: L('https://ai.google.dev/gemini-api/docs/rate-limits'),
+  'google-vertex': L('https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/quotas'),
+  xai: L('https://docs.x.ai/developers/rate-limits'),
+  deepseek: L('https://api-docs.deepseek.com/quick_start/rate_limit/'),
+  cohere: L('https://docs.cohere.com/docs/rate-limits'),
+  perplexity: L('https://docs.perplexity.ai/docs/admin/rate-limits-usage-tiers'),
+  moonshotai: L('https://platform.kimi.ai/docs/pricing/limits'),
+  alibaba: L('https://www.alibabacloud.com/help/en/model-studio/rate-limit'),
+  minimax: L('https://platform.minimax.io/docs/guides/rate-limits'),
+  upstage: L('https://console.upstage.ai/docs/guides/rate-limits'),
+  ai21: L('https://docs.ai21.com/docs/rate-limits'),
+  groq: L('https://console.groq.com/docs/rate-limits'),
+  togetherai: L('https://docs.together.ai/docs/serverless/rate-limits'),
+  'fireworks-ai': L('https://docs.fireworks.ai/guides/quotas_usage/account-quotas'),
+  cerebras: L('https://inference-docs.cerebras.ai/support/rate-limits'),
+  sambanova: L('https://docs.sambanova.ai/docs/en/models/rate-limits'),
+  deepinfra: L('https://docs.deepinfra.com/account/rate-limits'),
+  openrouter: L('https://openrouter.ai/docs/api_reference/limits'),
+  'amazon-bedrock': L('https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html'),
+  azure: L('https://learn.microsoft.com/en-us/azure/foundry/openai/quotas-limits'),
+  'cloudflare-workers-ai': L('https://developers.cloudflare.com/workers-ai/platform/limits/'),
+};
+
 // 요금 쪽에서 자동으로 따 온 '무료' 문장 가운데 손으로 읽어 보고 뺀 것 (슬러그 또는 models.dev id → 이유).
 export const QUOTE_REJECT: Record<string, string> = {
   alibaba: 'heading fragment, region-only note',

@@ -42,6 +42,7 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 - [ ] H20 AI 설정 파일 실측표(`docs/review/v3/aitools.md` 9.5): Claude Code `/memory`, Gemini CLI `/memory show`, Codex 규칙 요약, 스킬 목록, 웹 빌더 지식 칸 1만 자. 윈도우(Git 없음)에서 `PowerShell(...)` 권한 규칙이 걸리는지(문서로는 확인함, 실기만 남음). **묶음 파일 방법**(묶음 파일을 폴더에 두고 짧은 메시지)이 Claude Code · Codex · Gemini CLI · ChatGPT 앱의 Codex에서 되는지, **전체 메시지(약 3만 자) 붙여 넣기**가 맥 터미널 · 윈도우 터미널 · VS Code 터미널에서 잘리거나 경고가 뜨는지, 알림 훅이 맥·윈도우에서 뜨는지 — 내 컴퓨터·계정 — AI 설정 파일의 '확인함' 표시(T40) — (2026-10-14)
 - [ ] H15 https://vibe-design-one.vercel.app/ 과 lucianlabs.dev를 열어 보고 무엇을 참고하라는 것인지 두세 줄이나 캡처를 남겨 주세요. 이 세션에서는 앞의 것이 `getaddrinfo ENOTFOUND`(허용 목록 밖일 수 있음, H14), 뒤의 것은 검색 0건이었다. 단서: 'VibeDesigner'(페이지 종류 10 × 스타일 18 × 색 조합 106 → Cursor·Bolt·Lovable·v0에 넣을 명세, https://www.hunted.space/product/vibedesigner, 검색 요약)가 같은 곳인지 — 열 수 없었음 — 막지 않음(그동안은 v3 설계서 4절의 느낌 여섯 + 설계도 6번 + DESIGN.md가 맡는다) — (2026-10-14)
 - [ ] H16 Mobbin · Refero · Nicely Done · Lazyweb의 검색 주소 꼴, 무료로 볼 수 있는 범위, 이름 표기·링크를 막는 약관이 없는지 — 약관 판단 — `/looks`의 '다른 앱 둘러보기' 링크를 검색 주소로 바꾸기(T38) — (2026-10-14)
+- [ ] H26 CLAUDE.md '꼭 지킬 것 2'의 "공유 링크에는 재료 id만 싣는다"를 "재료 id와 고른 모델 id만 싣는다(메모는 싣지 않는다)"로 고칠지 — 에이전트는 CLAUDE.md를 고치지 않는다 — D141에서 공유 링크에 AI API의 고른 모델 id(상품 옵션)를 싣기로 했다. 막지 않음
 
 ## 그림 (D56)
 

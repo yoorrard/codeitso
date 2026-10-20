@@ -1,5 +1,6 @@
 import type { FacetMeta } from './facets.ts';
 import type { KitTheme } from '../kits.ts';
+import type { ModelsSummary } from './models.ts';
 import type { SceneId } from './scene.ts';
 
 // 진열대 자료의 모양 (docs/review/v5/brief.md 2절, schemas/catalog-*.json). 가져오기 스크립트(scripts/import/)가 만든
@@ -217,5 +218,7 @@ export interface SiteData {
   sources: SourceFile[];
   /** 같은 id가 두 진열대에 놓인 수 (상세는 처음 것) */
   duplicates: number;
-  files: { list: number; item: number; search: number; facet: number };
+  files: { list: number; item: number; search: number; facet: number; models?: number };
+  /** AI 모델·요금 (D141): 수집 날짜와 비교 쪽 제공자 이름표. 모델 자료가 없으면 없다 */
+  models?: ModelsSummary;
 }

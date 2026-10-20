@@ -241,8 +241,8 @@ describe('자료 약속 (data/glossary.json)', () => {
     expect(validate(glossary), JSON.stringify(validate.errors?.slice(0, 3))).toBe(true);
   });
 
-  it('손으로 쓴 용어는 207개 (v5에서 옛 코드잇소 말 9개를 빼고, O1에서 에이전트 스킬·플러그인·데이터셋을 더했다), id가 겹치지 않고 kind가 있다', () => {
-    expect(glossary.terms).toHaveLength(207);
+  it('손으로 쓴 용어는 216개 (v5에서 옛 코드잇소 말 9개를 빼고, O1에서 에이전트 스킬·플러그인·데이터셋을, D141에서 AI API 요금 말 9개를 더했다), id가 겹치지 않고 kind가 있다', () => {
+    expect(glossary.terms).toHaveLength(216);
     const all = glossary.terms.map((t) => t.id);
     expect(new Set(all).size).toBe(all.length);
     for (const t of glossary.terms) expect(KINDS.has(t.kind), `${t.id}: ${t.kind}`).toBe(true);

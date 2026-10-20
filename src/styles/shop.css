@@ -1895,3 +1895,36 @@
   color: var(--text-2);
   overflow-wrap: anywhere;
 }
+
+/* ── AI 모델 비교로 가는 띠 (D141, ModelsBanner.astro): API 대분류·AI 소분류 쪽 위 ── */
+.models-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--cat-api-soft);
+  color: var(--cat-api-ink);
+  text-decoration: none;
+}
+.models-banner:hover {
+  box-shadow: var(--elev-1);
+}
+.models-banner-icon,
+.models-banner-go {
+  display: inline-flex;
+  flex: none;
+}
+.models-banner-text {
+  display: grid;
+  gap: 2px;
+  min-inline-size: 0;
+  flex: 1;
+  font-size: var(--size-label);
+}
+.models-banner-text strong {
+  font-size: var(--size-body);
+  font-weight: var(--weight-heading);
+}

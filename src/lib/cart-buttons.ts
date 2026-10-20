@@ -5,13 +5,18 @@
 // 이미 담긴 재료([담겼어요])를 누르면 같은 창에서 메모를 고치거나([저장]) 뺀다([빼기]). 창은 모달 <dialog>라 Esc·바깥 누르기·[취소]로
 // 닫히고 누른 버튼으로 초점이 돌아간다. 휴대폰(<600)은 아래에서 올라오는 시트, 넓은 화면은 버튼 바로 아래(자리가 없으면 위)에 뜬다.
 // 바깥 누르기는 바탕에서 누르고 뗀 때만이다: 창 안 글을 끌어 고르다 바깥에서 놓아도 닫지 않는다 (overlay.ts, D127).
+// D141: 모델 자료가 있는 AI API는 창에 '모델 고르기'(옵션 선택, model-picker.ts를 늦게 불러온다)가 붙는다. 모델 표의 줄 [담기](data-model)는
+// 그 모델을 고른 채로 창을 열고, 장바구니 줄의 [모델 고르기·바꾸기](data-line-model)는 같은 창을 고치기로 연다.
 import { ko } from '../copy/ko.ts';
 import { announce } from './announce.ts';
 import { CARDS_EVENT, openCart } from './cart-ui.ts';
+import { modelProviderOf } from './catalog/models.ts';
 import { isKitId } from './kits.ts';
+import type { Picker } from './model-picker.ts';
 import { backdropPress } from './overlay.ts';
+import type { ModelChoice } from './saved.ts';
 import { MEMO_MAX } from './saved.ts';
-import { $cart, addManyToCart, addToCart, removeFromCart, setCartMemo } from './store.ts';
+import { $cart, addManyToCart, addToCart, removeFromCart, setCartMemo, setCartModel } from './store.ts';
 import { fill } from './text.ts';
 import { track, trackAdd } from './track.ts';
 
@@ -27,18 +32,26 @@ function kitItems(b: HTMLElement): KitItem[] {
 }
 
 function sync(root: ParentNode): void {
-  const ids = new Set($cart.get().map((x) => x.id));
+  const lines = new Map($cart.get().map((x) => [x.id, x]));
   for (const b of root.querySelectorAll<HTMLButtonElement>('button[data-add]')) {
-    const on = ids.has(b.dataset['add'] ?? '');
+    const line = lines.get(b.dataset['add'] ?? '');
+    // 모델 표의 줄 [담기]는 그 모델로 담겼을 때만 '담겼어요'
+    const model = b.dataset['model'];
+    const on = line !== undefined && (model === undefined || line.model?.id === model);
     if (b.dataset['in'] === String(on)) continue;
     b.dataset['in'] = String(on);
     const name = b.dataset['name'] ?? '';
-    b.setAttribute('aria-label', fill(on ? ko.card.inCartLabel : ko.card.addLabel, { name }));
+    b.setAttribute(
+      'aria-label',
+      model === undefined
+        ? fill(on ? ko.card.inCartLabel : ko.card.addLabel, { name })
+        : fill(on ? ko.models.inCartLabel : ko.models.addLabel, { name, model: b.dataset['modelName'] ?? model }),
+    );
     const label = b.querySelector('.add-label');
     if (label) label.textContent = on ? ko.card.added : ko.card.add;
   }
   for (const b of root.querySelectorAll<HTMLButtonElement>('button[data-kit]')) {
-    const all = kitItems(b).every(([id]) => ids.has(id));
+    const all = kitItems(b).every(([id]) => lines.has(id));
     b.dataset['in'] = String(all);
   }
 }
@@ -48,6 +61,8 @@ interface Sheet {
   dlg: HTMLDialogElement;
   kicker: HTMLElement;
   name: HTMLElement;
+  /** 모델 고르기 자리 (모델 자료가 있는 AI API만 보인다) */
+  models: HTMLElement;
   input: HTMLInputElement;
   ok: HTMLButtonElement;
   remove: HTMLButtonElement;
@@ -62,10 +77,17 @@ interface Target {
   cat: string;
   sub: string;
   inCart: boolean;
+  /** models.dev 제공자 (모델을 고를 수 있으면) */
+  provider: string | null;
+  /** 창을 열 때의 모델 (누른 줄의 모델, 없으면 장바구니 줄의 모델) */
+  model: ModelChoice | undefined;
 }
 
 let sheet: Sheet | null = null;
 let current: Target | null = null;
+let picker: Picker | null = null;
+/** 늦게 불러온 고르기가 다른 창 열기에 붙지 않게 세는 번호 */
+let opened = 0;
 /** 넓은 화면에서 창과 버튼 사이 (px) */
 const GAP = 8;
 
@@ -111,13 +133,16 @@ function confirm(): void {
   const t = current;
   if (!sheet || !t) return;
   const memo = sheet.input.value;
+  const model = t.provider ? (picker ? picker.value() : t.model) : undefined;
   if (t.inCart) {
     setCartMemo(t.id, memo);
-    announce(fill(ko.sheet.savedLive, { name: t.name }));
+    const before = $cart.get().find((x) => x.id === t.id)?.model?.id;
+    if (t.provider) setCartModel(t.id, model);
+    announce(t.provider && before !== model?.id ? fill(ko.models.pick.savedLive, { model: model?.name ?? ko.models.pick.none }) : fill(ko.sheet.savedLive, { name: t.name }));
     close();
     return;
   }
-  const r = addToCart({ id: t.id, name: t.name, cat: t.cat, sub: t.sub, memo }, Date.now());
+  const r = addToCart({ id: t.id, name: t.name, cat: t.cat, sub: t.sub, memo, ...(model ? { model } : {}) }, Date.now());
   if (r === 'full') {
     announce(ko.card.full);
     return;
@@ -136,6 +161,8 @@ function build(doc: Document): Sheet {
   const name = node(doc, 'p', 'add-sheet-name');
   name.id = 'add-sheet-name';
   head.append(kicker, name);
+  const models = node(doc, 'div', 'add-sheet-models');
+  models.hidden = true;
   const label = node(doc, 'label', 'add-sheet-label', ko.sheet.memoLabel);
   label.htmlFor = 'add-sheet-memo';
   const input = node(doc, 'input', 'add-sheet-input');
@@ -157,7 +184,7 @@ function build(doc: Document): Sheet {
   const x = button(doc, '', 'add-sheet-x');
   x.setAttribute('aria-label', ko.sheet.close);
   x.innerHTML = '<span aria-hidden="true">×</span>'; // floor-guard-ignore: 닫기 표시 글자(곱하기 기호), 문장이 아니다
-  dlg.append(head, label, input, hint, acts, x);
+  dlg.append(head, models, label, input, hint, acts, x);
   doc.body.append(dlg);
 
   ok.addEventListener('click', confirm);
@@ -193,18 +220,42 @@ function build(doc: Document): Sheet {
     window.removeEventListener('resize', place);
     const t = current;
     current = null;
+    picker = null;
+    models.replaceChildren();
+    models.hidden = true;
     if (t?.btn.isConnected) t.btn.focus();
   });
-  return { dlg, kicker, name, input, ok, remove, view, cancel };
+  return { dlg, kicker, name, models, input, ok, remove, view, cancel };
 }
 
-function openSheet(doc: Document, btn: HTMLButtonElement, keyboard: boolean): void {
-  const { add: id, name, cat, sub } = btn.dataset;
+/** 모델 고르기를 늦게 불러와 붙인다 (모델 자료가 있는 AI API만). 장바구니 줄에서 열었으면 목록을 받은 뒤 고른 단추로 초점 */
+function attachPicker(s: Sheet, t: Target, focusPicker: boolean): void {
+  picker = null;
+  s.models.replaceChildren();
+  s.models.hidden = t.provider === null;
+  if (t.provider === null) return;
+  const mine = opened;
+  const provider = t.provider;
+  void import('./model-picker.ts').then((m) => {
+    if (mine !== opened || !s.dlg.open) return;
+    picker = m.mountPicker(s.models, provider, t.model, () => {
+      if (mine !== opened || !s.dlg.open) return;
+      place();
+      if (focusPicker && (s.dlg.ownerDocument.activeElement === s.ok || !s.dlg.contains(s.dlg.ownerDocument.activeElement))) picker?.focus();
+    });
+  });
+}
+
+function openSheet(doc: Document, btn: HTMLButtonElement, keyboard: boolean, focusPicker = false): void {
+  const { name, cat, sub } = btn.dataset;
+  const id = btn.dataset['add'] ?? btn.dataset['lineModel'];
   if (!id || !name || !cat || !sub) return;
   sheet ??= build(doc);
   const s = sheet;
   const line = $cart.get().find((x) => x.id === id);
-  current = { btn, id, name, cat, sub, inCart: line !== undefined };
+  const pick = btn.dataset['model'] ? { id: btn.dataset['model'], name: btn.dataset['modelName'] ?? btn.dataset['model'] } : line?.model;
+  opened += 1;
+  current = { btn, id, name, cat, sub, inCart: line !== undefined, provider: modelProviderOf(id), model: pick };
   s.dlg.dataset['in'] = String(current.inCart);
   s.kicker.textContent = current.inCart ? ko.sheet.kickerIn : ko.sheet.kickerAdd;
   s.name.textContent = name;
@@ -213,12 +264,16 @@ function openSheet(doc: Document, btn: HTMLButtonElement, keyboard: boolean): vo
   s.remove.hidden = !current.inCart;
   s.view.hidden = !current.inCart;
   s.cancel.hidden = current.inCart;
+  // 장바구니 안(서랍·장바구니 쪽)에서 열었으면 [장바구니 보기]는 필요 없다
+  if (btn.closest('[data-cart-root]')) s.view.hidden = true;
   if (!s.dlg.open) s.dlg.showModal();
+  attachPicker(s, current, focusPicker);
   place();
   window.addEventListener('scroll', place, { capture: true, passive: true });
   window.addEventListener('resize', place, { passive: true });
-  // 키보드·마우스면 메모 칸으로 (바로 적거나 Enter로 담기), 손가락이면 자판이 화면을 가리지 않게 [담기]로
-  (keyboard || window.matchMedia('(pointer: fine)').matches ? s.input : s.ok).focus();
+  // 모델 고르기로 열었으면 [담기]에 두었다가 목록이 오면 고른 모델로. 키보드·마우스면 메모 칸으로 (바로 적거나 Enter로 담기),
+  // 손가락이면 자판이 화면을 가리지 않게 [담기]로
+  (!focusPicker && (keyboard || window.matchMedia('(pointer: fine)').matches) ? s.input : s.ok).focus();
 }
 
 export function wireAddButtons(doc: Document = document): void {
@@ -228,6 +283,11 @@ export function wireAddButtons(doc: Document = document): void {
     if (b) {
       // 키보드(Enter·Space)로 누른 click은 detail이 0이다
       openSheet(doc, b, e.detail === 0);
+      return;
+    }
+    const lm = t?.closest<HTMLButtonElement>('button[data-line-model]');
+    if (lm) {
+      openSheet(doc, lm, e.detail === 0, true);
       return;
     }
     const k = t?.closest<HTMLButtonElement>('button[data-kit]');

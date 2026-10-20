@@ -5,9 +5,14 @@
 // 공식 쪽마다: 주소가 살아 있는지 보고, 쪽이 스스로 쓴 한 줄(meta description)을 summary에 그대로 쓴다.
 // 요금 쪽이 있으면 그 쪽에서 '무료'를 말하는 문장 하나를 그대로 따 온다(preview.freeTierQuote). 지어내지 않는다.
 // 공식 SDK 꾸러미는 npm에 있고 저장소가 그 회사 것일 때만 설치 명령으로 싣는다(주간 내려받기 = metrics.downloads).
-import { type CuratedApi, type ProviderOverlay, ALL_CURATED, FIRST_PARTY_PREFIXES, PROVIDER_OVERLAY, QUOTE_REJECT } from './api-curated-data.ts';
+// 3) models.dev 모델마다의 사실(100만 토큰당 가격·컨텍스트·최대 출력·입력 종류·추론·도구 호출·날짜·지원 끝남) → data/catalog-models/models-dev.json (D141)
+//    가격은 자주 바뀌므로 수집 날짜와 함께 싣고, 매일 자료 새로 받기(refresh-all.ts 'api' 줄)가 다시 받는다. 값은 그대로 옮긴다.
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import type { ModelCost, ModelFacts, ModelStatus, ModelsFile } from '../../src/lib/catalog/models.ts';
+import { type CuratedApi, type ProviderOverlay, ALL_CURATED, FIRST_PARTY_PREFIXES, PROVIDER_OVERLAY, QUOTE_REJECT, RATE_LIMIT_DOCS } from './api-curated-data.ts';
 import {
-  type Item, type Kind, type NpmInfo, type SiteMeta, CURATED_AT, cmp, fetchJson, freeSentence, hostOf, main, makeItem, mapLimit,
+  type Item, type Kind, type NpmInfo, type SiteMeta, CURATED_AT, FETCHED_AT, ROOT, cmp, fetchJson, freeSentence, hostOf, main, makeItem, mapLimit,
   npmInfo, readCache, siteMeta, usableDescription, writeCache, writeCatalog,
 } from './api-lib.ts';
 import { cruxList, npmDownloads, siteRankNote, withSiteRank } from './signals.ts';
@@ -35,7 +40,21 @@ const OR_KIND: Record<string, Kind> = {
 const domainOf = (u: string) => hostOf(u).split('.').slice(-2).join('.');
 const today = new Date().toISOString().slice(0, 10);
 
-interface MdModel { id: string; name: string; release_date?: string; last_updated?: string; open_weights?: boolean; modalities?: { input?: string[]; output?: string[] } }
+interface MdModel {
+  id: string;
+  name: string;
+  release_date?: string;
+  last_updated?: string;
+  knowledge?: string;
+  open_weights?: boolean;
+  reasoning?: boolean;
+  tool_call?: boolean;
+  attachment?: boolean;
+  status?: string;
+  modalities?: { input?: string[]; output?: string[] };
+  limit?: { context?: number; input?: number; output?: number };
+  cost?: Record<string, unknown>;
+}
 interface MdProvider { id: string; name: string; doc?: string; api?: string; npm?: string; env?: string[]; models: Record<string, MdModel> }
 
 // ---------- 공식 쪽 읽기 (같은 날은 캐시) ----------
@@ -202,6 +221,9 @@ function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, Npm
   const outputs = [...new Set(models.flatMap((m) => m.modalities?.output ?? []))].sort(cmp);
   const kind = providerKind(p.id, o);
   const plan = /(coding|token|step)-plan/.test(p.id);
+  const limitsDoc = RATE_LIMIT_DOCS[p.id];
+  const limits = limitsDoc && alive(pages[limitsDoc.url]) ? limitsDoc : undefined;
+  if (limitsDoc && !limits) problems.push(`${p.id}: 사용 한도 쪽 ${limitsDoc.url} → ${pages[limitsDoc.url]?.meta.status ?? '?'}`);
   return makeItem({
     id: `models-dev:${p.id}`,
     name: p.name,
@@ -237,6 +259,8 @@ function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, Npm
       pricingUrl: o?.pricing && alive(pricing) ? o.pricing : undefined,
       freeTierQuote: quote,
       freeTierCheckedAt: quote ? today : undefined,
+      limitsUrl: limits?.url,
+      limitsCheckedAt: limits?.checked,
       summarySource: sourceText ? 'official page meta description' : 'models.dev data',
     },
     use: {
@@ -245,6 +269,96 @@ function providerItem(p: MdProvider, pages: PageCache, infos: Record<string, Npm
       docs: docsUrl,
     },
   });
+}
+
+// ---------- models.dev 모델마다의 사실 (D141) ----------
+
+export const MODELS_DIR = join(ROOT, 'data', 'catalog-models');
+
+const STATUSES: readonly ModelStatus[] = ['deprecated', 'beta', 'alpha'];
+const price = (x: unknown): number | undefined => (typeof x === 'number' && Number.isFinite(x) && x >= 0 ? x : undefined);
+const count = (x: unknown): number | undefined => (typeof x === 'number' && Number.isInteger(x) && x > 0 ? x : undefined);
+const day = (x: unknown): string | undefined => (typeof x === 'string' && /^\d{4}-\d{2}(-\d{2})?$/.test(x) ? x : undefined);
+const words = (x: unknown): string[] => (Array.isArray(x) ? [...new Set(x.filter((v): v is string => typeof v === 'string' && /^[a-z]{2,12}$/.test(v)))] : []);
+
+/** 값이 있는 칸만 남긴다 (JSON에 빈 칸을 쓰지 않으려고) */
+function compact<T extends object>(o: T): T {
+  return Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as T;
+}
+
+/** models.dev 모델 하나 → 싣는 사실. 모양이 틀린 값은 버린다 (지어내거나 고치지 않는다) */
+export function modelFacts(m: MdModel): ModelFacts | null {
+  if (typeof m.id !== 'string' || m.id.trim() === '' || m.id.length > 160 || typeof m.name !== 'string' || m.name.trim() === '') return null;
+  const c = m.cost ?? {};
+  const over = typeof c['context_over_200k'] === 'object' && c['context_over_200k'] !== null ? (c['context_over_200k'] as Record<string, unknown>) : {};
+  const big = compact({ input: price(over['input']), output: price(over['output']), cache_read: price(over['cache_read']), cache_write: price(over['cache_write']) });
+  const cost: ModelCost = compact({
+    input: price(c['input']),
+    output: price(c['output']),
+    cache_read: price(c['cache_read']),
+    cache_write: price(c['cache_write']),
+    input_audio: price(c['input_audio']),
+    output_audio: price(c['output_audio']),
+    context_over_200k: Object.keys(big).length > 0 ? big : undefined,
+  });
+  const status = STATUSES.find((s) => s === m.status);
+  return compact({
+    id: m.id,
+    name: m.name.trim(),
+    cost: Object.keys(cost).length > 0 ? cost : undefined,
+    limit: compact({ context: count(m.limit?.context), input: count(m.limit?.input), output: count(m.limit?.output) }),
+    modalities: { input: words(m.modalities?.input), output: words(m.modalities?.output) },
+    reasoning: m.reasoning === true,
+    tool_call: m.tool_call === true,
+    attachment: m.attachment === true,
+    open_weights: m.open_weights === true,
+    knowledge: day(m.knowledge),
+    release_date: day(m.release_date),
+    last_updated: day(m.last_updated),
+    status,
+  });
+}
+
+/** 제공자마다 모델을 id 순으로. 모델이 없는 제공자는 뺀다 */
+export function modelsByProvider(providers: readonly MdProvider[]): Record<string, ModelFacts[]> {
+  const out: Record<string, ModelFacts[]> = {};
+  for (const p of [...providers].sort((a, b) => cmp(a.id, b.id))) {
+    const list = Object.values(p.models)
+      .map(modelFacts)
+      .filter((m): m is ModelFacts => m !== null)
+      .sort((a, b) => cmp(a.id, b.id));
+    if (list.length > 0) out[p.id] = list;
+  }
+  return out;
+}
+
+/** 모델 하나를 한 줄로 쓴다: 날마다 값이 바뀌어도 바뀐 모델 줄만 diff에 보인다 */
+export function modelsFileText(file: ModelsFile): string {
+  const head = JSON.stringify({ source: file.source, fetchedAt: file.fetchedAt, providers: file.providers, count: file.count }, null, 2).replace(/\n}$/, '');
+  const body = Object.entries(file.models)
+    .map(([id, list]) => `    ${JSON.stringify(id)}: [\n${list.map((m) => `      ${JSON.stringify(m)}`).join(',\n')}\n    ]`)
+    .join(',\n');
+  return `${head},\n  "models": {\n${body}\n  }\n}\n`;
+}
+
+function writeModels(providers: readonly MdProvider[]): void {
+  const models = modelsByProvider(providers);
+  const file: ModelsFile = {
+    source: {
+      id: 'models-dev',
+      name: 'models.dev (AI model facts)',
+      url: 'https://models.dev',
+      license: 'MIT (models.dev data)',
+      note: 'Per-model facts copied as-is from https://models.dev/api.json on fetchedAt: cost in USD per 1M tokens (input, output, cache read/write, audio, over-200K-context), context and output limits, input/output modalities, reasoning, tool calling, attachments, open weights, knowledge cutoff, release and update dates, status. Prices change often; the daily refresh collects them again. Actual billing and rate limits follow each provider\'s official pages.',
+    },
+    fetchedAt: FETCHED_AT,
+    providers: Object.keys(models).length,
+    count: Object.values(models).reduce((n, l) => n + l.length, 0),
+    models,
+  };
+  mkdirSync(MODELS_DIR, { recursive: true });
+  writeFileSync(join(MODELS_DIR, 'models-dev.json'), modelsFileText(file));
+  console.log(`  → data/catalog-models/models-dev.json (제공자 ${file.providers}곳, 모델 ${file.count}개)`);
 }
 
 function openRouterHome(p: OrProvider): string | undefined {
@@ -329,6 +443,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         urls.push(o.pricing);
         withFree.add(o.pricing);
       }
+      const limits = RATE_LIMIT_DOCS[p.id];
+      if (limits) urls.push(limits.url);
     }
     const pages = await readPages(urls, withFree);
     const npmNames = [...ALL_CURATED.map((c) => c.npm), ...Object.values(PROVIDER_OVERLAY).map((o) => o.npm)].filter((n): n is string => Boolean(n));
@@ -355,6 +471,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const official = ALL_CURATED.map((c) => withSiteRank(curatedItem(c, pages, infos, problems, generic), crux));
     const fromModelsDev = providers.map((p) => withSiteRank(providerItem(p, pages, infos, problems, aiSdk), crux));
     for (const id of Object.keys(PROVIDER_OVERLAY)) if (!md[id]) problems.push(`덧씌우기 ${id}: models.dev에 없음`);
+    for (const id of Object.keys(RATE_LIMIT_DOCS)) if (!md[id]) problems.push(`사용 한도 문서 ${id}: models.dev에 없음`);
+    writeModels(providers);
 
     writeCatalog(
       {
@@ -362,7 +480,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         name: 'models.dev (AI model providers)',
         url: 'https://models.dev',
         license: 'MIT (models.dev data); each provider has its own terms',
-        note: `Every provider in api.json. summary = the provider page\'s own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page. metrics.downloads = npm weekly downloads of the official SDK or of the provider\'s own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). ${siteRankNote()}`,
+        note: `Every provider in api.json. summary = the provider page\'s own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider\'s own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). ${siteRankNote()}`,
       },
       fromModelsDev,
     );

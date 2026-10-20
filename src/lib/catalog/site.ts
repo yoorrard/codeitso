@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { FacetMeta } from './facets.ts';
+import type { ModelsSummary } from './models.ts';
 import type { Card, CategoryId, CategoryMeta, KitData, NavCategory, Row, SiteData, SourceFile, SubMeta } from './types.ts';
 
 /** 진열대 빌드가 쓰고 Astro가 읽는 요약 파일 (저장소에 올리지 않는다, .cache/는 .gitignore) */
@@ -70,4 +71,9 @@ export function facetsOf(cat: CategoryId, sub: SubMeta['id']): FacetMeta[] {
 
 export function sources(): SourceFile[] {
   return site().sources;
+}
+
+/** AI 모델 비교 쪽의 제공자 이름표와 수집 날짜 (D141). 모델 자료가 없으면 빈 목록 */
+export function modelsSummary(): ModelsSummary {
+  return site().models ?? { fetched: '', providers: [] };
 }

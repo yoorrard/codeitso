@@ -1,0 +1,27 @@
+---
+// AI 모델 비교 /models (D141): 여러 회사의 AI 모델을 가격·컨텍스트·기능으로 견주고 고른 모델로 담는다. 표는 섬(ModelsPage)이
+// 진열대 빌드가 만든 모델 묶음(/catalog/models/…)을 늦게 받아 그린다. 머리말은 제공자 이름표와 수집 날짜만 넘긴다 (site.json).
+import Base from '../layouts/Base.astro';
+import ModelsPage from '../components/ModelsPage.tsx';
+import { ko } from '../copy/ko.ts';
+import { categoryPath, ROUTES } from '../lib/routes.ts';
+import { modelsSummary, navData } from '../lib/catalog/site.ts';
+
+const summary = modelsSummary();
+const api = navData().find((c) => c.id === 'api');
+---
+
+<Base
+  title={ko.models.page.pageTitle}
+  description={ko.models.page.lead}
+  crumbs={[
+    { href: ROUTES.home, label: ko.site.name },
+    { href: categoryPath('api'), label: api?.name ?? 'API' },
+  ]}
+>
+  <header class="list-head" data-cat="api">
+    <h1>{ko.models.page.title}</h1>
+    <p class="page-lead">{ko.models.page.lead}</p>
+  </header>
+  <ModelsPage client:load providers={summary.providers} fetched={summary.fetched} />
+</Base>

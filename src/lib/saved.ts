@@ -19,6 +19,12 @@ export const LEGACY_KEYS = ['cc:trip:v1', 'cc:session:v1', 'cc:study:v1', 'cc:se
 /** v5 영수증 (v5.1에서 지난 프롬프트로 바뀌었다). 지난 프롬프트가 비어 있으면 한 번 옮기고 지운다 (store.ts) */
 export const OLD_RECEIPTS_KEY = 'cc:receipts:v2';
 
+/** 고른 모델 (AI API 상품의 옵션, D141): models.dev 모델 id와 이름. 가격은 담지 않는다(프롬프트를 뽑을 때 그날 자료로 붙인다) */
+export interface ModelChoice {
+  id: string;
+  name: string;
+}
+
 /** 장바구니 한 줄: 재료 id, 담은 때, 이용자 메모(어디에 어떻게 쓸지). 이름·자리는 서랍을 자료 없이 바로 그리려고 같이 둔다 */
 export interface CartLine {
   id: string;
@@ -28,6 +34,8 @@ export interface CartLine {
   /** 소분류 id */
   sub: string;
   memo?: string;
+  /** 고른 모델 (모델 자료가 있는 AI API만, 고르지 않았으면 없다) */
+  model?: ModelChoice;
   /** 담은 때 (ms) */
   addedAt: number;
 }
@@ -45,6 +53,17 @@ export interface PromptLine {
   install?: string;
   /** 쓰려면 필요한 인증: API 키 · OAuth 로그인 */
   auth?: 'key' | 'oauth';
+  /** 고른 모델과 뽑은 날의 가격 (100만 토큰당 달러, at = models.dev 수집 날짜) */
+  model?: PromptModel;
+  /** 모델을 고를 수 있는 AI API인데 아직 고르지 않았다 */
+  modelOpen?: true;
+}
+
+export interface PromptModel extends ModelChoice {
+  in?: number;
+  out?: number;
+  /** 가격 기준 날짜 YYYY-MM-DD */
+  at?: string;
 }
 
 export interface PromptEntry {
@@ -99,6 +118,8 @@ export const RECENT_MAX = 20;
 export const WISH_MAX = 300;
 const ID_MAX = 200;
 const NAME_MAX = 200;
+/** 모델 id 길이 상한 (models.dev에서 가장 긴 id는 60자 남짓) */
+export const MODEL_ID_MAX = 160;
 /** 프롬프트 사본 칸의 길이 상한 (글자): 저장소를 지키고, 넘는 것은 공식 주소가 대신한다 */
 export const PROMPT_FIELD_MAX = { url: 500, install: 300 } as const;
 
@@ -142,6 +163,32 @@ function head(o: Record<string, unknown>): { id: string; name: string; cat: stri
   return { id, name: [...name].slice(0, NAME_MAX).join(''), cat, sub };
 }
 
+/** 고른 모델: id(공백·꺾쇠·따옴표 없음)와 이름이 모양에 맞을 때만. 옛 장바구니에는 없다 */
+export function readModelChoice(raw: unknown): ModelChoice | undefined {
+  const o = obj(raw);
+  const id = o['id'];
+  if (typeof id !== 'string' || id.length === 0 || id.length > MODEL_ID_MAX || /[\s<>"]/.test(id)) return undefined;
+  return { id, name: cleanText(o['name'], NAME_MAX) ?? id };
+}
+
+function price(raw: unknown): number | undefined {
+  return typeof raw === 'number' && Number.isFinite(raw) && raw >= 0 ? raw : undefined;
+}
+
+function readPromptModel(raw: unknown): PromptModel | undefined {
+  const m = readModelChoice(raw);
+  if (!m) return undefined;
+  const o = obj(raw);
+  const out: PromptModel = { ...m };
+  const i = price(o['in']);
+  if (i !== undefined) out.in = i;
+  const x = price(o['out']);
+  if (x !== undefined) out.out = x;
+  const at = o['at'];
+  if (typeof at === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(at)) out.at = at;
+  return out;
+}
+
 /** 장바구니: 모양이 맞는 줄만, 같은 id는 처음 것 하나, CART_MAX줄까지. S1 판의 담은 때(at)도 읽는다 */
 export function readCart(raw: unknown): CartLine[] {
   if (!Array.isArray(raw)) return [];
@@ -154,6 +201,8 @@ export function readCart(raw: unknown): CartLine[] {
     const line: CartLine = { ...h, addedAt: time(o['addedAt'] ?? o['at']) };
     const memo = cleanMemo(o['memo']);
     if (memo) line.memo = memo;
+    const model = readModelChoice(o['model']);
+    if (model) line.model = model;
     seen.add(h.id);
     out.push(line);
     if (out.length === CART_MAX) break;
@@ -177,6 +226,9 @@ function readPromptLine(raw: unknown): PromptLine | null {
   const install = cleanText(o['install'], PROMPT_FIELD_MAX.install);
   if (install) line.install = install;
   if (o['auth'] === 'key' || o['auth'] === 'oauth') line.auth = o['auth'];
+  const model = readPromptModel(o['model']);
+  if (model) line.model = model;
+  else if (o['modelOpen'] === true) line.modelOpen = true;
   return line;
 }
 
@@ -217,9 +269,9 @@ export function readPrompts(raw: unknown): PromptEntry[] {
   return out.sort((a, b) => b.at - a.at).slice(0, PROMPTS_MAX);
 }
 
-/** 같은 재료·메모·만들 앱이면 같은 프롬프트다 (다시 뽑으면 지난 것을 맨 앞으로 옮긴다) */
+/** 같은 재료·메모·모델·만들 앱이면 같은 프롬프트다 (다시 뽑으면 지난 것을 맨 앞으로 옮긴다) */
 export function samePrompt(a: PromptEntry, b: PromptEntry): boolean {
-  const key = (p: PromptEntry): string => JSON.stringify([p.project ?? '', p.lines.map((l) => [l.id, l.memo ?? ''])]);
+  const key = (p: PromptEntry): string => JSON.stringify([p.project ?? '', p.lines.map((l) => [l.id, l.memo ?? '', l.model?.id ?? ''])]);
   return key(a) === key(b);
 }
 

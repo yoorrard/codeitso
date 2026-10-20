@@ -88,6 +88,31 @@ describe('프롬프트 글', () => {
   });
 });
 
+describe('고른 모델 (D141)', () => {
+  const navApi: NavCategory[] = [{ id: 'api', name: 'API', total: 2, subs: [{ id: 'ai-llm', name: 'AI 언어 모델', count: 2 }] }];
+  const ai = (id: string, model?: { id: string; name: string }): CartLine => ({ id, name: id.split(':')[1] ?? id, cat: 'api', sub: 'ai-llm', addedAt: 1, ...(model ? { model } : {}) });
+  const row = { id: 'claude-sonnet-x', name: 'Claude Sonnet X', in: 3, out: 15, mi: ['text'], mo: ['text'] };
+
+  it('모델을 고른 줄은 모델 id·이름과 그날 가격을, 고르지 않은 줄은 아직 안 정함을 적는다', () => {
+    const lines2 = [ai('models-dev:anthropic', { id: 'claude-sonnet-x', name: 'Claude Sonnet X' }), ai('models-dev:openai'), ai('official:reka')];
+    const p = buildPrompt(lines2, new Map(), '', at, '', new Map([['models-dev:anthropic', { row, fetched: '2026-10-20' }]]));
+    expect(p.lines[0]?.model).toEqual({ id: 'claude-sonnet-x', name: 'Claude Sonnet X', in: 3, out: 15, at: '2026-10-20' });
+    expect(p.lines[1]?.modelOpen).toBe(true);
+    expect(p.lines[2]?.model).toBeUndefined();
+    expect(p.lines[2]?.modelOpen).toBeUndefined();
+    const rows2 = promptText(p, namesOf(navApi)).split('\n');
+    expect(rows2[2]).toBe('- [AI 언어 모델] anthropic · 모델: Claude Sonnet X (모델 id: claude-sonnet-x) · 가격: 입력 $3 · 출력 $15 / 100만 토큰 (models.dev 2026-10-20 기준)');
+    expect(rows2[3]).toBe('- [AI 언어 모델] openai · 모델: 아직 안 정했어요');
+    expect(rows2[4]).toBe('- [AI 언어 모델] reka');
+  });
+
+  it('가격을 받지 못했거나 다른 모델이면 모델만 적는다', () => {
+    const l = ai('models-dev:anthropic', { id: 'claude-sonnet-x', name: 'Claude Sonnet X' });
+    expect(promptLineOf(l).model).toEqual({ id: 'claude-sonnet-x', name: 'Claude Sonnet X' });
+    expect(promptLineOf(l, undefined, { row: { ...row, id: 'other' }, fetched: '2026-10-20' }).model).toEqual({ id: 'claude-sonnet-x', name: 'Claude Sonnet X' });
+  });
+});
+
 describe('도우미', () => {
   it('파일 이름은 codeitso-prompt-<yyyymmdd-hhmm>.md', () => {
     expect(promptFileName(at)).toBe('codeitso-prompt-20261014-1530.md');

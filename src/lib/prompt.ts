@@ -3,9 +3,11 @@
 // '- [소분류] 이름 — 내 메모 · 공식 주소 · 설치 명령 또는 API 키 필요' → 라이선스 확인 한 줄. 문장은 ko.prompt.text.
 // 재료 사실(주소·설치 명령·인증)은 출처 자료 그대로만.
 import { ko } from '../copy/ko.ts';
+import type { ModelRow } from './catalog/models.ts';
+import { modelProviderOf, usd } from './catalog/models.ts';
 import { CATEGORY_ORDER } from './catalog/types.ts';
 import type { DetailRecord, NavCategory } from './catalog/types.ts';
-import type { CartLine, PromptEntry, PromptLine } from './saved.ts';
+import type { CartLine, PromptEntry, PromptLine, PromptModel } from './saved.ts';
 import { PROMPT_FIELD_MAX, cleanText, stamp } from './saved.ts';
 import { fill } from './text.ts';
 
@@ -60,10 +62,32 @@ export function installLine(install: string | undefined): string | undefined {
   return cleanText([...all].length <= PROMPT_FIELD_MAX.install ? all : rows[0], PROMPT_FIELD_MAX.install);
 }
 
-/** 상세 자료에서 프롬프트 한 줄 사본을 만든다. 상세를 못 찾았으면 장바구니 줄의 이름·자리만 */
-export function promptLineOf(line: CartLine, d?: DetailRecord): PromptLine {
+/** 고른 모델의 그날 가격 (제공자 모델 파일에서): 모델 줄과 수집 날짜 */
+export interface ModelPrice {
+  row: ModelRow;
+  fetched: string;
+}
+
+/** 모델을 고를 수 있는 줄이면 고른 모델(그날 가격을 붙여) 또는 '아직 안 정함'을 적는다 (D141) */
+function withModel(out: PromptLine, line: CartLine, price?: ModelPrice): void {
+  if (modelProviderOf(line.id) === null) return;
+  if (!line.model) {
+    out.modelOpen = true;
+    return;
+  }
+  const m: PromptModel = { id: line.model.id, name: line.model.name };
+  const row = price?.row.id === line.model.id ? price.row : undefined;
+  if (row?.in !== undefined) m.in = row.in;
+  if (row?.out !== undefined) m.out = row.out;
+  if (row && price && (m.in !== undefined || m.out !== undefined)) m.at = price.fetched;
+  out.model = m;
+}
+
+/** 상세 자료에서 프롬프트 한 줄 사본을 만든다. 상세를 못 찾았으면 장바구니 줄의 이름·자리(와 모델)만 */
+export function promptLineOf(line: CartLine, d?: DetailRecord, price?: ModelPrice): PromptLine {
   const out: PromptLine = { id: line.id, name: line.name, cat: line.cat, sub: line.sub };
   if (line.memo) out.memo = line.memo;
+  withModel(out, line, price);
   if (!d) return out;
   const url = cleanText(d.url, PROMPT_FIELD_MAX.url);
   if (url && /^https?:\/\//.test(url)) out.url = url;
@@ -74,19 +98,39 @@ export function promptLineOf(line: CartLine, d?: DetailRecord): PromptLine {
   return out;
 }
 
-/** 장바구니 → 프롬프트 사본 (때·만들 앱·줄 사본). 상세 자료는 화면이 받아 넘긴다 */
-export function buildPrompt(lines: readonly CartLine[], details: ReadonlyMap<string, DetailRecord>, project: string, now: number, salt = ''): PromptEntry {
-  const p: PromptEntry = { id: `${now.toString(36)}${salt}`, at: now, lines: lines.map((l) => promptLineOf(l, details.get(l.id))) };
+/** 장바구니 → 프롬프트 사본 (때·만들 앱·줄 사본). 상세 자료와 고른 모델의 가격(줄 id → 가격)은 화면이 받아 넘긴다 */
+export function buildPrompt(
+  lines: readonly CartLine[],
+  details: ReadonlyMap<string, DetailRecord>,
+  project: string,
+  now: number,
+  salt = '',
+  prices: ReadonlyMap<string, ModelPrice> = new Map(),
+): PromptEntry {
+  const p: PromptEntry = { id: `${now.toString(36)}${salt}`, at: now, lines: lines.map((l) => promptLineOf(l, details.get(l.id), prices.get(l.id))) };
   const proj = project.trim();
   if (proj) p.project = proj;
   return p;
 }
 
-/** 재료 한 줄: '- [소분류] 이름 — 내 메모 · 주소 · 설치: … | API 키 필요' */
+/** 모델 조각: ' · 모델: 이름 (모델 id: …) · 가격: 입력 $3 · 출력 $15 / 100만 토큰 (models.dev 날짜 기준)' 또는 ' · 모델: 아직 안 정했어요' */
+function modelPart(l: PromptLine): string {
+  const t = ko.models.prompt;
+  if (l.modelOpen) return t.open;
+  const m = l.model;
+  if (!m) return '';
+  let s = fill(t.model, { name: oneLine(m.name), id: m.id });
+  const parts = [m.in !== undefined ? fill(t.in, { v: usd(m.in) }) : '', m.out !== undefined ? fill(t.out, { v: usd(m.out) }) : ''].filter(Boolean);
+  if (parts.length > 0 && m.at) s += fill(t.price, { price: parts.join(' · '), date: m.at });
+  return s;
+}
+
+/** 재료 한 줄: '- [소분류] 이름 — 내 메모 · 모델 · 주소 · 설치: … | API 키 필요' */
 function itemLine(l: PromptLine, names: Names): string {
   const t = ko.prompt.text;
   let s = fill(t.item, { sub: names.sub(l.cat, l.sub), name: oneLine(l.name) });
   if (l.memo) s += fill(t.use, { memo: oneLine(l.memo) });
+  s += modelPart(l);
   if (l.url) s += fill(t.url, { url: l.url });
   if (l.install) s += fill(t.install, { cmd: l.install });
   if (l.auth === 'key') s += t.key;

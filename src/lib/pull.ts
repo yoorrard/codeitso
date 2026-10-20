@@ -4,6 +4,7 @@
 import { shardOf } from './catalog/core.ts';
 import type { DetailRecord, Shard } from './catalog/types.ts';
 import { countBucket } from './event-spec.ts';
+import { modelPrices } from './model-data.ts';
 import { buildPrompt } from './prompt.ts';
 import { itemDataPath } from './routes.ts';
 import type { PromptEntry } from './saved.ts';
@@ -38,8 +39,8 @@ export async function fetchDetails(ids: readonly string[]): Promise<Map<string, 
 /** 지금 장바구니로 프롬프트를 뽑아 지난 프롬프트에 남긴다. 장바구니와 만들 앱 한 줄은 그대로 둔다 */
 export async function pullPrompt(now: number): Promise<PromptEntry> {
   const lines = $cart.get();
-  const details = await fetchDetails(lines.map((l) => l.id));
-  const p = buildPrompt(lines, details, $project.get(), now, Math.floor(Math.random() * 1296).toString(36));
+  const [details, prices] = await Promise.all([fetchDetails(lines.map((l) => l.id)), modelPrices(lines)]);
+  const p = buildPrompt(lines, details, $project.get(), now, Math.floor(Math.random() * 1296).toString(36), prices);
   savePrompt(p);
   // 집계 이벤트 이름은 서버(worker)와 맞춘 그대로 둔다: checkout = 프롬프트 뽑기
   track('checkout', countBucket(p.lines.length));

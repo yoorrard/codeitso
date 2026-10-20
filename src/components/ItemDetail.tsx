@@ -4,6 +4,7 @@
 // N1 (D137): 맨 위 [뒤로]·위치(뒤로의 기본 행선지는 이 상품의 소분류 목록), 담기 옆 찜 하트(wish-buttons.ts가 맡는다),
 // 공유(기기 공유 창 또는 주소 복사), 관련 상품 머리의 [비슷한 재료와 비교](이 상품 + 관련 상품 3개).
 // O1 (D138): 설명 속 어려운 말에 점선 밑줄(누르면 풀이), 설명 아래 '어려운 말 풀이' 안내 (TermHint.tsx).
+// D141: models.dev 모델 자료가 있는 AI API는 위 칸 바로 아래에 '모델·요금' 표(ModelsSection).
 import { useStore } from '@nanostores/preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
@@ -17,6 +18,7 @@ import { fill } from '../lib/text.ts';
 import CopyButton from './CopyButton.tsx';
 import { DetailPreview } from './DetailPreview.tsx';
 import { Icon } from './Icon.tsx';
+import { ModelsSection, hasModels } from './ModelsSection.tsx';
 import { PageTop } from './PageTop.tsx';
 import { ShareButton } from './ShareButton.tsx';
 import { TermHint, TermText, useTermSegments } from './TermHint.tsx';
@@ -148,6 +150,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
           </div>
         </div>
       </div>
+      {hasModels(item) && <ModelsSection item={item} />}
       <section class="detail-sec" aria-labelledby="info-title">
         <h2 id="info-title">{ko.item.info}</h2>
         <dl class="info-table">

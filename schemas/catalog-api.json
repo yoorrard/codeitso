@@ -243,6 +243,14 @@
             "freeTierCheckedAt": {
               "$ref": "#/$defs/date"
             },
+            "limitsUrl": {
+              "type": "string",
+              "pattern": "^https://",
+              "description": "공식 사용 한도(rate limit)·사용 등급 안내 쪽 (손으로 확인한 주소, 가져올 때마다 살아 있는지 본다, D141)"
+            },
+            "limitsCheckedAt": {
+              "$ref": "#/$defs/date"
+            },
             "openapi": {
               "type": "string",
               "pattern": "^https://"

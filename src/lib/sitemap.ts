@@ -7,13 +7,14 @@ interface SitemapCategory {
   subcategories: readonly { id: string }[];
 }
 
-/** 사이트맵에 넣을 쪽 주소 (바탕을 붙인 경로). 홈 → 카테고리 → 대분류 → 소분류 → 키트 → 정보·법 문서 차례 */
+/** 사이트맵에 넣을 쪽 주소 (바탕을 붙인 경로). 홈 → 카테고리 → 대분류 → 소분류 → 키트 → AI 모델 비교 → 정보·법 문서 차례 */
 export function sitemapPaths(categories: readonly SitemapCategory[]): string[] {
   return [
     ROUTES.home,
     ROUTES.categories,
     ...categories.flatMap((c) => [categoryPath(c.id), ...c.subcategories.map((s) => listPath(c.id, s.id))]),
     ROUTES.kits,
+    ROUTES.models,
     ROUTES.terms,
     ROUTES.about,
     ROUTES.credits,

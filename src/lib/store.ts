@@ -3,7 +3,7 @@
 // localStorage를 못 쓰면(사생활 보호 모드, 막힌 저장소) 메모리에만 두고 $storageOk를 false로 둔다.
 import { persistentAtom, setPersistentEngine } from '@nanostores/persistent';
 import { atom, computed } from 'nanostores';
-import type { AddResult, CartLine, Guide, Meta, Prefs, PromptEntry, RecentItem, WishItem } from './saved.ts';
+import type { AddResult, CartLine, Guide, Meta, ModelChoice, Prefs, PromptEntry, RecentItem, WishItem } from './saved.ts';
 import {
   DEFAULT_PREFS,
   EMPTY_GUIDE,
@@ -24,6 +24,7 @@ import {
   readCart,
   readGuide,
   readMeta,
+  readModelChoice,
   readPrefs,
   readProject,
   readPrompts,
@@ -100,6 +101,8 @@ function lineOf(line: NewLine, now: number): CartLine {
   const memo = cleanMemo(line.memo);
   const next: CartLine = { id: line.id, name: line.name, cat: line.cat, sub: line.sub, addedAt: now };
   if (memo) next.memo = memo;
+  const model = readModelChoice(line.model);
+  if (model) next.model = model;
   return next;
 }
 
@@ -136,6 +139,18 @@ export function setCartMemo(id: string, memo: string): void {
       if (x.id !== id) return x;
       const { memo: _old, ...rest } = x;
       return clean ? { ...rest, memo: clean } : rest;
+    }),
+  );
+}
+
+/** 고른 모델을 바꾼다 (D141). 없음(undefined)이면 '아직 안 정했어요'로 되돌린다 */
+export function setCartModel(id: string, model: ModelChoice | undefined): void {
+  const clean = readModelChoice(model);
+  $cart.set(
+    $cart.get().map((x) => {
+      if (x.id !== id) return x;
+      const { model: _old, ...rest } = x;
+      return clean ? { ...rest, model: clean } : rest;
     }),
   );
 }

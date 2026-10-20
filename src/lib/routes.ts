@@ -7,6 +7,7 @@ import type { Selection } from './catalog/facets.ts';
 import { writeSelection } from './catalog/facets.ts';
 import type { SortKey } from './catalog/types.ts';
 import { BRAND_FILES } from './brand-files.ts';
+import type { ShareEntry } from './share.ts';
 import { shareFragment } from './share.ts';
 
 // e2e·Node 스크립트처럼 Vite 밖에서 이 파일을 읽으면 import.meta.env가 없으므로 루트로 본다
@@ -65,6 +66,8 @@ export const PATHS = {
   wishlist: '/wishlist',
   /** 재료 비교 ?ids= (N1) */
   compare: '/compare',
+  /** AI 모델 비교 ?p=&in=&f=&max=&ctx=&old=&q=&sort=&dir= (D141) */
+  models: '/models',
   item: '/item',
   terms: '/terms',
   about: '/about',
@@ -128,14 +131,29 @@ export function itemPath(id: string): string {
   return `${ROUTES.item}?id=${encodeURIComponent(id)}`;
 }
 
-/** 장바구니 공유 링크 (바탕을 붙인 경로 + #s=…, 재료 id만). 바깥에 줄 때는 siteRoot와 합친다 (shareUrl) */
-export function sharePath(ids: readonly string[]): string {
-  return `${ROUTES.cart}#${shareFragment(ids)}`;
+/** 장바구니 공유 링크 (바탕을 붙인 경로 + #s=…, 재료 id와 고른 모델 id만). 바깥에 줄 때는 siteRoot와 합친다 (shareUrl) */
+export function sharePath(entries: readonly ShareEntry[]): string {
+  return `${ROUTES.cart}#${shareFragment(entries)}`;
 }
 
 /** 장바구니 공유 링크 (절대 주소) */
-export function shareUrl(ids: readonly string[], origin?: string): string {
-  return `${siteRoot(origin, '')}${sharePath(ids)}`;
+export function shareUrl(entries: readonly ShareEntry[], origin?: string): string {
+  return `${siteRoot(origin, '')}${sharePath(entries)}`;
+}
+
+/** AI 모델 비교 쪽 (search = writeModelQuery 결과, '?' 없이) */
+export function modelsPath(search = ''): string {
+  return search ? `${ROUTES.models}?${search}` : ROUTES.models;
+}
+
+/** 제공자 하나의 모델 파일 (진열대 빌드가 만드는 JSON, D141) */
+export function modelDataPath(provider: string): string {
+  return withBase(`/catalog/models/p/${encodeURIComponent(provider)}.json`);
+}
+
+/** 비교 쪽 모델 묶음: direct = 자기 모델 회사, hosts = 호스팅·라우터 */
+export function modelsBundlePath(kind: 'direct' | 'hosts'): string {
+  return withBase(`/catalog/models/${kind}.json`);
 }
 
 /** 검색 결과: 대분류 하나만(cat)·쪽 번호는 고른 때만 */

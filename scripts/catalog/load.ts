@@ -5,6 +5,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { cardOf, rankScores, relatedIndex, shardOf, sortRanked, withKo, withMedia } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
+import type { ModelsFile } from '../../src/lib/catalog/models.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
 import { isKitTheme } from '../../src/lib/kits.ts';
@@ -14,6 +15,8 @@ export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalo
 export const KO_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-ko');
 /** 저장소 README 첫 그림 (v5.1 D126, scripts/import/media-readme.ts): { images: id → 주소, stills: id → 멈춘 그림 }. 없어도 된다 */
 export const MEDIA_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-media');
+/** AI 모델 사실 (D141, scripts/import/api-curated.ts): models.dev 모델마다의 가격·한도·입력 종류. 없어도 된다 */
+export const MODELS_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog-models');
 /** 스타터 키트 (손으로 고른 진열대 id 묶음) */
 export const KITS_FILE = join(import.meta.dirname, '..', '..', 'data', 'kits.json');
 const DIR = CATALOG_DIR;
@@ -63,6 +66,12 @@ export function readKo(dir: string = KO_DIR, skip: readonly string[] = []): Map<
     for (const [id, v] of Object.entries(raw)) if (typeof v === 'string' && v.trim() !== '' && !out.has(id)) out.set(id, v);
   }
   return out;
+}
+
+/** data/catalog-models/models-dev.json (없으면 null) */
+export function readModels(dir: string = MODELS_DIR): ModelsFile | null {
+  const file = join(dir, 'models-dev.json');
+  return existsSync(file) ? readJson<ModelsFile>(file) : null;
 }
 
 /** data/catalog-media/readme-images.json → id → [그림, 멈춘 그림] */

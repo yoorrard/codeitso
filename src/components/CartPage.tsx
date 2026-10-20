@@ -10,7 +10,10 @@ import { useHydrated } from '../lib/hydrated.ts';
 import { groupByCategory, installBundle, namesOf } from '../lib/prompt.ts';
 import { ROUTES, shareUrl } from '../lib/routes.ts';
 import { PROJECT_MAX } from '../lib/saved.ts';
-import { readShare } from '../lib/share.ts';
+import { modelProviderOf } from '../lib/catalog/models.ts';
+import { providerModels } from '../lib/model-data.ts';
+import type { ModelChoice } from '../lib/saved.ts';
+import { readShareEntries } from '../lib/share.ts';
 import { $cart, $project, $storageOk, addManyToCart, clearCart, setProject } from '../lib/store.ts';
 import { fill } from '../lib/text.ts';
 import { CartLines } from './CartLines.tsx';
@@ -23,20 +26,38 @@ interface Props {
 
 type Load<T> = { k: 'loading' } | { k: 'failed' } | { k: 'ok'; v: T };
 
-/** 공유받은 목록 (#s=…): 재료 이름을 상세 자료에서 찾아 보여 주고 [모두 담기] */
-function Shared({ ids, nav, onDone }: { ids: string[]; nav: NavCategory[]; onDone: () => void }) {
-  const [got, setGot] = useState<Load<DetailRecord[]>>({ k: 'loading' });
+/** 공유받은 모델 id → 이름 (제공자 모델 파일에서, 못 찾으면 id 그대로) */
+async function sharedModels(entries: readonly { id: string; model?: string }[]): Promise<Map<string, ModelChoice>> {
+  const out = new Map<string, ModelChoice>();
+  await Promise.all(
+    entries.map(async (e) => {
+      const provider = modelProviderOf(e.id);
+      if (!e.model || !provider) return;
+      const row = await providerModels(provider)
+        .then((f) => f.rows.find((r) => r.id === e.model))
+        .catch(() => undefined);
+      out.set(e.id, { id: e.model, name: row?.name ?? e.model });
+    }),
+  );
+  return out;
+}
+
+/** 공유받은 목록 (#s=…): 재료 이름을 상세 자료에서 찾아 보여 주고 [모두 담기]. 고른 모델(D141)도 함께 담는다 */
+function Shared({ entries, nav, onDone }: { entries: { id: string; model?: string }[]; nav: NavCategory[]; onDone: () => void }) {
+  const [got, setGot] = useState<Load<{ items: DetailRecord[]; models: Map<string, ModelChoice> }>>({ k: 'loading' });
   const names = namesOf(nav);
+  const ids = entries.map((e) => e.id);
   useEffect(() => {
     let live = true;
-    fetchDetails(ids)
-      .then((m) => live && setGot({ k: 'ok', v: ids.map((id) => m.get(id)).filter((x): x is DetailRecord => x !== undefined) }))
+    Promise.all([fetchDetails(ids), sharedModels(entries)])
+      .then(([m, models]) => live && setGot({ k: 'ok', v: { items: ids.map((id) => m.get(id)).filter((x): x is DetailRecord => x !== undefined), models } }))
       .catch(() => live && setGot({ k: 'failed' }));
     return () => {
       live = false;
     };
-  }, [ids.join(',')]);
-  const found = got.k === 'ok' ? got.v : [];
+  }, [entries.map((e) => `${e.id}@${e.model ?? ''}`).join(',')]);
+  const found = got.k === 'ok' ? got.v.items : [];
+  const models = got.k === 'ok' ? got.v.models : new Map<string, ModelChoice>();
   const missing = got.k === 'ok' ? ids.length - found.length : 0;
   return (
     <section class="shared" aria-labelledby="shared-title" data-shared>
@@ -52,6 +73,7 @@ function Shared({ ids, nav, onDone }: { ids: string[]; nav: NavCategory[]; onDon
             g.lines.map((d) => (
               <li data-cat={d.category}>
                 <span class="shared-cat">{names.cat(d.category)}</span> {d.name}
+                {models.has(d.id) && <span class="shared-model"> · {fill(ko.models.shared, { model: models.get(d.id)?.name ?? '' })}</span>}
               </li>
             )),
           )}
@@ -66,7 +88,10 @@ function Shared({ ids, nav, onDone }: { ids: string[]; nav: NavCategory[]; onDon
             aria-label={fill(ko.shared.addAllLabel, { n: found.length })}
             onClick={() => {
               const r = addManyToCart(
-                found.map((d) => ({ id: d.id, name: d.name, cat: d.category, sub: d.kind })),
+                found.map((d) => {
+                  const model = models.get(d.id);
+                  return { id: d.id, name: d.name, cat: d.category, sub: d.kind, ...(model ? { model } : {}) };
+                }),
                 Date.now(),
               );
               announce(r.full ? ko.card.full : r.skipped > 0 ? fill(ko.shared.addedSkip, { added: r.added, skipped: r.skipped }) : fill(ko.shared.addedLive, { added: r.added }));
@@ -171,10 +196,10 @@ export default function CartPage({ nav }: Props) {
   const ready = useHydrated();
   const lines = ready ? cart : [];
   const names = namesOf(nav);
-  const [shared, setShared] = useState<string[]>([]);
+  const [shared, setShared] = useState<{ id: string; model?: string }[]>([]);
 
   useEffect(() => {
-    const read = (): void => setShared(readShare(window.location.hash));
+    const read = (): void => setShared(readShareEntries(window.location.hash));
     read();
     window.addEventListener('hashchange', read);
     return () => window.removeEventListener('hashchange', read);
@@ -189,7 +214,7 @@ export default function CartPage({ nav }: Props) {
   const ids = lines.map((l) => l.id);
   return (
     <div class="cart-page" data-cart-root>
-      {shared.length > 0 && <Shared ids={shared} nav={nav} onDone={closeShared} />}
+      {shared.length > 0 && <Shared entries={shared} nav={nav} onDone={closeShared} />}
       {!ok && <p class="notice">{ko.layout.storageOff}</p>}
       <p class="cart-count" role="status" tabIndex={-1} data-cart-top>
         {lines.length > 0 ? fill(ko.cart.count, { n: lines.length }) : ready ? ko.cart.empty : ''}
@@ -214,7 +239,7 @@ export default function CartPage({ nav }: Props) {
               </h2>
               <InstallAll ids={ids} />
               <div class="share-row">
-                <CopyButton text={shareUrl(ids)} label={ko.cart.share} done={ko.cart.shareCopied} />
+                <CopyButton text={shareUrl(lines.map((l) => ({ id: l.id, ...(l.model ? { model: l.model.id } : {}) })))} label={ko.cart.share} done={ko.cart.shareCopied} />
                 <span class="field-hint">{ko.cart.shareNote}</span>
               </div>
               <ClearAll n={lines.length} />

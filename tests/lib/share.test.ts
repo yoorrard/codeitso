@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { sharePath, shareUrl } from '../../src/lib/routes.ts';
 import { CART_MAX } from '../../src/lib/saved.ts';
-import { readShare, shareFragment } from '../../src/lib/share.ts';
+import { readShare, readShareEntries, shareFragment } from '../../src/lib/share.ts';
 
 describe('공유 링크', () => {
   it('id 목록이 조각을 거쳐 그대로 돌아온다', () => {
@@ -23,6 +23,15 @@ describe('공유 링크', () => {
   it(`${CART_MAX}개까지만 읽는다`, () => {
     const many = Array.from({ length: CART_MAX + 10 }, (_, i) => `x:${i}`);
     expect(readShare(shareFragment(many))).toHaveLength(CART_MAX);
+  });
+
+  it('고른 모델 id는 재료 id 뒤 @로 싣고, 모델 없는 옛 링크도 읽는다 (D141)', () => {
+    const frag = shareFragment([{ id: 'models-dev:anthropic', model: 'claude-sonnet-4-5@2025' }, { id: 'models-dev:openai' }, 'x:y']);
+    expect(frag).toBe('s=models-dev%3Aanthropic@claude-sonnet-4-5%402025,models-dev%3Aopenai,x%3Ay');
+    expect(readShareEntries(frag)).toEqual([{ id: 'models-dev:anthropic', model: 'claude-sonnet-4-5@2025' }, { id: 'models-dev:openai' }, { id: 'x:y' }]);
+    expect(readShare(frag)).toEqual(['models-dev:anthropic', 'models-dev:openai', 'x:y']);
+    // 모델만 틀리면 모델만 버린다
+    expect(readShareEntries('#s=a@b%20c,d@,e@f@g')).toEqual([{ id: 'a' }, { id: 'd' }, { id: 'e' }]);
   });
 
   it('주소: 장바구니 쪽 + #s=, 절대 주소는 origin을 붙인다 (메모는 없다)', () => {

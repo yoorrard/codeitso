@@ -16,7 +16,7 @@ describe('사이트맵', () => {
     expect(p).toContain('/c/design/fonts');
     expect(p).toContain('/c/design/icons');
     expect(p).toContain('/c/api/weather');
-    for (const k of ['categories', 'kits', 'terms', 'about', 'credits', 'legalTerms', 'privacy', 'notice', 'copyright'] as const) expect(p).toContain(PATHS[k]);
+    for (const k of ['categories', 'kits', 'models', 'terms', 'about', 'credits', 'legalTerms', 'privacy', 'notice', 'copyright'] as const) expect(p).toContain(PATHS[k]);
     for (const k of ['item', 'search', 'cart', 'prompts', 'recent'] as const) expect(p).not.toContain(PATHS[k]);
   });
 

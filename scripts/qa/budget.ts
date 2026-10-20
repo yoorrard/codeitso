@@ -163,6 +163,7 @@ const bigList = biggestJson(join(DIST, 'catalog', 'list'));
 const bigItem = biggestJson(join(DIST, 'catalog', 'item'));
 const bigShard = biggestJson(join(DIST, 'catalog', 'search')); // 조각(t-)과 블록(b-) 가운데 큰 것
 const bigFacet = biggestJson(join(DIST, 'catalog', 'facet'));
+const bigModel = biggestJson(join(DIST, 'catalog', 'models', 'p'));
 const lazyRows: [string, number, number][] = [
   ['풀이 섬 TermPopover', chunk(/[\\/]TermPopover\.[^\\/]+\.js$/), 6 * KB],
   ['풀이 자료 + 매처 /glossary.json + term-engine', gzSize(join(DIST, 'glossary.json')) + chunk(/[\\/]term-engine\.[^\\/]+\.js$/), 17 * KB],
@@ -174,6 +175,10 @@ const lazyRows: [string, number, number][] = [
   // 묶음 하나는 보통 30KB 안팎이다. 배경 패턴처럼 SVG 조각을 싣는 소분류만 크다 (D103)
   [`가장 큰 목록 묶음 ${relative(DIST, bigList.f)}`, bigList.n, 160 * KB],
   [`가장 큰 상세 조각 ${relative(DIST, bigItem.f)}`, bigItem.n, 100 * KB],
+  // AI 모델·요금 (D141): 상세 표·담기 창은 제공자 파일 하나, /models는 처음에 direct.json, 호스팅·라우터까지 볼 때만 hosts.json
+  [`가장 큰 제공자 모델 파일 ${relative(DIST, bigModel.f)}`, bigModel.n, 40 * KB],
+  ['비교 쪽 처음 묶음 /catalog/models/direct.json', gzSize(join(DIST, 'catalog', 'models', 'direct.json')), 30 * KB],
+  ['비교 쪽 호스팅 묶음 /catalog/models/hosts.json (고를 때만)', gzSize(join(DIST, 'catalog', 'models', 'hosts.json')), 220 * KB],
 ];
 for (const [name, n, limit] of lazyRows) {
   const ok = n > 0 && n <= limit;

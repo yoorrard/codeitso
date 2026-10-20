@@ -5,6 +5,7 @@
 import { useEffect } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { paletteColors, safeSvg, thumbOf } from '../lib/catalog/core.ts';
+import { modelProviderOf } from '../lib/catalog/models.ts';
 import { apiInfo, colorScales, fontInfo, mcpInfo, statsOf, styleSample, wcagGrade } from '../lib/catalog/preview.ts';
 import type { DetailRecord } from '../lib/catalog/types.ts';
 import { contrast, isHex, ratio2 } from '../lib/color.ts';
@@ -214,6 +215,8 @@ function StyleScreen({ item }: { item: DetailRecord }) {
 function ApiPanel({ item }: { item: DetailRecord }) {
   const a = apiInfo(item);
   if (!a) return null;
+  // 모델 자료가 있는 AI API는 무료 문장·요금 안내를 아래 '모델·요금'(ModelsSection)에서 보인다 (D141)
+  const withModels = modelProviderOf(item.id) !== null && (a.modelCount ?? 0) > 0;
   return (
     <div class="api-panel">
       <h3 class="pv-h">{ko.pv.api.title}</h3>
@@ -238,7 +241,7 @@ function ApiPanel({ item }: { item: DetailRecord }) {
         )}
         {a.freeQuote && <li class="badge is-good">{ko.pv.api.freeBadge}</li>}
       </ul>
-      {a.freeQuote && (
+      {a.freeQuote && !withModels && (
         <figure class="free-quote">
           <blockquote lang="en">{a.freeQuote}</blockquote>
           <figcaption>

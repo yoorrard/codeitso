@@ -4,6 +4,7 @@ import {
   CART_MAX,
   DEFAULT_PREFS,
   MEMO_MAX,
+  MODEL_ID_MAX,
   PROJECT_MAX,
   PROMPTS_MAX,
   PROMPT_FIELD_MAX,
@@ -19,6 +20,7 @@ import {
   pushRecent,
   readCart,
   readMeta,
+  readModelChoice,
   readPrefs,
   readProject,
   readPrompt,
@@ -35,6 +37,22 @@ const line = (id: string, extra: Record<string, unknown> = {}) => ({ id, name: `
 describe('장바구니 읽기', () => {
   it('정상 줄은 그대로, 메모는 다듬는다', () => {
     expect(readCart([line('a', { memo: '  제목 글꼴로  ' })])).toEqual([{ id: 'a', name: '이름 a', cat: 'design', sub: 'fonts', addedAt: 1, memo: '제목 글꼴로' }]);
+  });
+
+  it('고른 모델은 모양이 맞을 때만 읽고, 옛 줄(모델 없음)은 그대로다 (D141)', () => {
+    const got = readCart([
+      line('a', { model: { id: 'claude-x', name: ' Claude X ' } }),
+      line('b', { model: { id: 'gpt 5' } }),
+      line('c', { model: 'gpt-5' }),
+      line('d', { model: { id: 'x'.repeat(MODEL_ID_MAX + 1), name: 'X' } }),
+      line('e', { model: { id: 'only-id' } }),
+      line('f'),
+    ]);
+    expect(got.map((x) => x.model)).toEqual([{ id: 'claude-x', name: 'Claude X' }, undefined, undefined, undefined, { id: 'only-id', name: 'only-id' }, undefined]);
+    expect(readModelChoice(null)).toBeUndefined();
+    const p = readPrompt({ id: 'p1', at: 5, lines: [line('a', { model: { id: 'm', name: 'M', in: 3, out: -1, at: '2026-10-20' } }), line('b', { modelOpen: true })] });
+    expect(p?.lines[0]?.model).toEqual({ id: 'm', name: 'M', in: 3, at: '2026-10-20' });
+    expect(p?.lines[1]?.modelOpen).toBe(true);
   });
 
   it('S1 판의 담은 때(at)도 읽는다', () => {

@@ -42,6 +42,18 @@ describe('저장소', () => {
     expect(KEYS.cart in storage).toBe(false);
   });
 
+  it('고른 모델을 담고 바꾸고 지운다 (D141)', () => {
+    store.addToCart({ id: 'models-dev:anthropic', name: 'Anthropic', cat: 'api', sub: 'ai-llm', model: { id: 'claude-x', name: 'Claude X' } }, 5);
+    expect(store.$cart.get()[0]?.model).toEqual({ id: 'claude-x', name: 'Claude X' });
+    store.setCartModel('models-dev:anthropic', { id: 'claude-y', name: 'Claude Y' });
+    expect(JSON.parse(storage[KEYS.cart] ?? '[]')[0].model).toEqual({ id: 'claude-y', name: 'Claude Y' });
+    store.setCartModel('models-dev:anthropic', undefined);
+    expect(store.$cart.get()[0]?.model).toBeUndefined();
+    store.setCartModel('models-dev:anthropic', { id: 'bad id', name: 'X' });
+    expect(store.$cart.get()[0]?.model).toBeUndefined();
+    store.clearCart();
+  });
+
   it('여러 개 담기(키트·공유 링크)는 있는 것을 건너뛰고, 비우기는 모두 뺀다', () => {
     store.addToCart({ id: 'a:1', name: 'A1', cat: 'api', sub: 'weather' }, 1);
     const r = store.addManyToCart(

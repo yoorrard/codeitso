@@ -1,9 +1,11 @@
 // 장바구니 줄 묶음 (서랍과 /cart가 같이 쓴다): 대분류별로 묶고, 줄마다 이름·소분류·메모(고치기)·빼기.
+// D141: 모델을 고를 수 있는 AI API 줄에는 고른 모델(또는 '아직 안 정했어요')과 [모델 고르기·바꾸기](담기 창을 고치기로 연다, cart-buttons.ts).
 // 줄(li)은 data-line=<id>와 tabIndex=-1이라 '이미 담은 재료를 다시 담기'가 그 줄로 초점을 옮길 수 있다.
 // 빼면 다음 줄(없으면 앞 줄, 그것도 없으면 [data-cart-top])로 초점을 옮긴다.
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
+import { modelProviderOf } from '../lib/catalog/models.ts';
 import type { NavCategory } from '../lib/catalog/types.ts';
 import { groupByCategory, namesOf } from '../lib/prompt.ts';
 import { itemPath, listPath } from '../lib/routes.ts';
@@ -111,6 +113,23 @@ function Line({ line, sub, idPrefix }: { line: CartLine; sub: string; idPrefix: 
               {line.memo}
             </p>
           )
+        )}
+        {modelProviderOf(line.id) !== null && (
+          <p class="cart-model" data-open={line.model ? undefined : 'true'}>
+            <span>{line.model ? fill(ko.models.line.chosen, { name: line.model.name }) : ko.models.line.open}</span>
+            {line.model && <code class="cart-model-id">{line.model.id}</code>}
+            <button
+              type="button"
+              class="btn btn-sm btn-text cart-model-btn"
+              data-line-model={line.id}
+              data-name={line.name}
+              data-cat={line.cat}
+              data-sub={line.sub}
+              aria-label={fill(line.model ? ko.models.line.changeLabel : ko.models.line.pickLabel, { name: line.name })}
+            >
+              {line.model ? ko.models.line.change : ko.models.line.pick}
+            </button>
+          </p>
         )}
       </div>
       {!editing && (

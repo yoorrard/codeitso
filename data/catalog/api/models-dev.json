@@ -4,7 +4,7 @@
     "name": "models.dev (AI model providers)",
     "url": "https://models.dev",
     "license": "MIT (models.dev data); each provider has its own terms",
-    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Prices from models.dev are not copied; freeTierQuote is a sentence copied as-is from the official pricing page. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-20",
   "count": 231,
@@ -387,6 +387,8 @@
           "AI21_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.ai21.com/docs/rate-limits",
         "modelCount": 2,
         "models": [
           "Jamba Mini",
@@ -738,6 +740,8 @@
           "DASHSCOPE_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://www.alibabacloud.com/help/en/model-studio/rate-limit",
         "modelCount": 59,
         "models": [
           "Qwen3.8 Omni Flash",
@@ -1079,6 +1083,8 @@
           "AWS_BEARER_TOKEN_BEDROCK"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html",
         "modelCount": 199,
         "models": [
           "Claude Haiku 5.5",
@@ -1236,6 +1242,8 @@
           "ANTHROPIC_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://platform.claude.com/docs/en/api/rate-limits",
         "modelCount": 17,
         "models": [
           "Claude Haiku 5.5",
@@ -1492,6 +1500,8 @@
           "AZURE_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://learn.microsoft.com/en-us/azure/foundry/openai/quotas-limits",
         "modelCount": 97,
         "models": [
           "Claude Haiku 5.5",
@@ -1945,6 +1955,8 @@
           "CEREBRAS_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://inference-docs.cerebras.ai/support/rate-limits",
         "modelCount": 2,
         "models": [
           "Qwen3.8 27B",
@@ -2294,6 +2306,8 @@
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Workers AI is included in both the Free and Paid Workers plans and is priced at $0.011 per 1,000 Neurons.",
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://developers.cloudflare.com/workers-ai/platform/limits/",
         "modelCount": 28,
         "models": [
           "Deepseek V4.1 Flash 1017",
@@ -2352,6 +2366,8 @@
           "COHERE_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.cohere.com/docs/rate-limits",
         "modelCount": 17,
         "models": [
           "North Small Translate",
@@ -2758,6 +2774,8 @@
           "DEEPINFRA_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.deepinfra.com/account/rate-limits",
         "modelCount": 76,
         "models": [
           "DeepSeek V4.1 Flash 1017",
@@ -2817,6 +2835,8 @@
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "These calls are currently free of charge; per-request billing starts at 00:00 Beijing time on November 1, 2026.",
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://api-docs.deepseek.com/quick_start/rate_limit/",
         "modelCount": 4,
         "models": [
           "DeepSeek V4 Flash",
@@ -3365,6 +3385,8 @@
           "FIREWORKS_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.fireworks.ai/guides/quotas_usage/account-quotas",
         "modelCount": 24,
         "models": [
           "DeepSeek V4.1 Flash 1017",
@@ -3738,6 +3760,8 @@
           "GEMINI_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://ai.google.dev/gemini-api/docs/rate-limits",
         "modelCount": 40,
         "models": [
           "Gemini 4 Argon",
@@ -3801,6 +3825,8 @@
           "GOOGLE_APPLICATION_CREDENTIALS"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/quotas",
         "modelCount": 61,
         "models": [
           "Gemini 4 Argon",
@@ -3963,6 +3989,8 @@
           "GROQ_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://console.groq.com/docs/rate-limits",
         "modelCount": 16,
         "models": [
           "Qwen3.8 27B",
@@ -5992,6 +6020,8 @@
           "MINIMAX_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://platform.minimax.io/docs/guides/rate-limits",
         "modelCount": 8,
         "models": [
           "MiniMax-M3.1-Flash",
@@ -6558,6 +6588,8 @@
           "MOONSHOT_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://platform.kimi.ai/docs/pricing/limits",
         "modelCount": 4,
         "models": [
           "Kimi K3",
@@ -7382,6 +7414,8 @@
           "OPENAI_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://developers.openai.com/api/docs/guides/rate-limits",
         "modelCount": 51,
         "models": [
           "GPT-6.1 Sol",
@@ -7595,6 +7629,8 @@
         "freeTierCheckedAt": "2026-10-20",
         "freeTierQuote": "Free models are capped at 20 requests per minute and 50 per day, rising to 1,000 per day once your account has bought at least $10 of credits.",
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://openrouter.ai/docs/api_reference/limits",
         "modelCount": 389,
         "models": [
           "MiniMax M3.1 Flash (free)",
@@ -7899,6 +7935,8 @@
           "PERPLEXITY_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.perplexity.ai/docs/admin/rate-limits-usage-tiers",
         "modelCount": 4,
         "models": [
           "Perplexity Sonar Deep Research",
@@ -8744,6 +8782,8 @@
           "SAMBANOVA_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.sambanova.ai/docs/en/models/rate-limits",
         "modelCount": 6,
         "models": [
           "MiniMax-M3",
@@ -10097,6 +10137,8 @@
           "TOGETHER_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.together.ai/docs/serverless/rate-limits",
         "modelCount": 32,
         "models": [
           "Beam 1.0 501B A23B",
@@ -10449,6 +10491,8 @@
           "UPSTAGE_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://console.upstage.ai/docs/guides/rate-limits",
         "modelCount": 5,
         "models": [
           "Solar Mini 4",
@@ -11111,6 +11155,8 @@
           "XAI_API_KEY"
         ],
         "keyServerSide": true,
+        "limitsCheckedAt": "2026-10-20",
+        "limitsUrl": "https://docs.x.ai/developers/rate-limits",
         "modelCount": 13,
         "models": [
           "Grok Imagine Video 1.5 Lite",

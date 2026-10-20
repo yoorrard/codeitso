@@ -1,0 +1,423 @@
+/* AI 모델·요금 (D141): 상세 '모델·요금' 표와 /models 비교 (ModelTable·ModelsSection·ModelsPage가 불러온다).
+   넓은 화면은 표(칸이 많아 표 칸 안에서만 옆으로 밀린다), 좁은 화면은 모델 카드. 색·크기는 토큰만. */
+
+.models-sec .sec-n {
+  margin-inline-start: var(--space-1);
+  color: var(--text-3);
+  font-size: var(--size-label);
+  font-weight: var(--weight-body);
+}
+
+/* ── 표 (1024px 이상) ── */
+.mt-scroll {
+  margin-block-start: var(--space-3);
+  overflow-x: auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.mt {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+.mt th,
+.mt td {
+  padding: var(--space-2) var(--space-2);
+  border-block-end: 1px solid var(--hairline);
+  text-align: start;
+  vertical-align: top;
+}
+.mt tbody tr:last-child > * {
+  border-block-end: 0;
+}
+.mt thead th {
+  background: var(--surface-sunken);
+  color: var(--text-2);
+  font-weight: var(--weight-strong);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.mt .is-num {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.mt thead th.is-num .mt-sort {
+  justify-content: flex-end;
+}
+.mt tbody th {
+  min-inline-size: 13rem;
+  font-weight: var(--weight-body);
+}
+.mt tbody tr[data-deprecated='true'] {
+  color: var(--text-2);
+}
+.mt-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  inline-size: 100%;
+  min-block-size: var(--tap);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: var(--weight-strong);
+  cursor: pointer;
+}
+.mt-sort:hover {
+  color: var(--link);
+}
+.mt-sort[data-on='true'] {
+  color: var(--text);
+}
+.mt-sort-mark {
+  color: var(--text-3);
+}
+.mt-sort[data-on='true'] .mt-sort-mark {
+  color: var(--link);
+}
+.mt-yes {
+  display: inline-flex;
+  color: var(--ok-ink);
+}
+.mt .add-btn.is-line {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ── 모델 이름·id ── */
+.mt-model {
+  display: grid;
+  gap: 2px;
+  min-inline-size: 0;
+}
+.mt-name {
+  color: var(--text);
+  font-size: var(--size-label);
+  font-weight: var(--weight-heading);
+  overflow-wrap: anywhere;
+}
+.mt-id {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-inline-size: 0;
+}
+.mt-id code {
+  min-inline-size: 0;
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  overflow-wrap: anywhere;
+}
+.mt-copy {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  margin-block: calc(var(--space-2) * -1);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.mt-copy:hover {
+  background: var(--fill);
+  color: var(--text);
+}
+.mt-copy[data-state='done'] {
+  color: var(--ok-ink);
+}
+.mt-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.mt-badge {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.mt-badge.is-deprecated {
+  background: var(--warn-soft);
+  color: var(--warn-ink);
+}
+.mt-badge.is-beta,
+.mt-badge.is-alpha {
+  background: var(--primary-soft);
+  color: var(--on-primary-soft);
+}
+
+/* ── 카드 (1024px 아래): 휴대폰 1열, 600px부터 2열 ── */
+.mt-cards {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 600px) {
+  .mt-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.mt-card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  min-inline-size: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.mt-card[data-deprecated='true'] {
+  background: var(--surface-sunken);
+}
+.mt-provider {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.mt-price {
+  font-size: var(--size-label);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+}
+.mt-line {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-variant-numeric: tabular-nums;
+}
+.mt-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mt-tags li {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--fill);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+}
+.mt-tags li.is-feat {
+  background: var(--cat-api-soft);
+  color: var(--cat-api-ink);
+}
+/* 이름 옆에 [담기] (카드 높이를 줄이려고) */
+.mt-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.mt-card-title {
+  display: grid;
+  gap: 2px;
+  min-inline-size: 0;
+}
+.mt-card .add-btn.is-line {
+  flex: none;
+  margin: 0;
+}
+
+/* ── 표 아래 ── */
+.mt-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block-start: var(--space-3);
+}
+.mt-more .check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  font-size: var(--size-label);
+  cursor: pointer;
+}
+.mt-more .check input,
+.mf-chip input {
+  inline-size: 18px;
+  block-size: 18px;
+  margin: 0;
+  accent-color: var(--primary);
+}
+.mt-source {
+  margin-block-start: var(--space-2);
+}
+.mt-status {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+.mt-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mt-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  font-weight: var(--weight-strong);
+}
+.models-sec .free-quote {
+  margin-block-start: var(--space-2);
+}
+
+/* ── API 요금 읽는 법 ── */
+.mt-explain {
+  margin-block-start: var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
+}
+.mt-explain summary {
+  min-block-size: var(--tap);
+  padding: var(--space-3);
+  font-weight: var(--weight-strong);
+  cursor: pointer;
+}
+.mt-explain ul {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0 var(--space-4) var(--space-3) var(--space-6);
+  color: var(--text-2);
+  font-size: var(--size-label);
+  text-wrap: pretty;
+}
+.term-link {
+  color: var(--link);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+/* ── /models 거르기 ── */
+.models-page {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: var(--space-3);
+}
+.models-page .mt-explain {
+  margin-block-start: 0;
+}
+.mf-find .mf-q {
+  inline-size: 100%;
+  min-block-size: var(--btn-md);
+  padding-inline: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+}
+.mf-box {
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+details.mf-box > summary {
+  min-block-size: var(--tap);
+  padding-block: var(--space-2);
+  font-weight: var(--weight-strong);
+  cursor: pointer;
+}
+.mf-now {
+  margin-inline-start: var(--space-2);
+  color: var(--text-2);
+  font-size: var(--size-label);
+  font-weight: var(--weight-body);
+}
+details.mf-box[open] > summary {
+  margin-block-end: var(--space-2);
+}
+.mf {
+  display: grid;
+  gap: var(--space-3);
+}
+.mf-row {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+.mf-field {
+  display: grid;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+.mf-label {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.mf-field select {
+  inline-size: 100%;
+  min-block-size: var(--btn-md);
+  padding-inline: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+}
+.mf-set {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
+}
+.mf-set legend {
+  float: left;
+  margin-inline-end: var(--space-2);
+  padding: 0;
+}
+.mf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap);
+  padding-inline: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: var(--size-label);
+  cursor: pointer;
+}
+.mf-chip:has(input:checked) {
+  border-color: transparent;
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+.mf-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.mf-count {
+  font-weight: var(--weight-strong);
+}

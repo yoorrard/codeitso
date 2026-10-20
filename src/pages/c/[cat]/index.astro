@@ -2,6 +2,7 @@
 // 대분류 쪽 /c/<대분류>: 이 대분류 안 검색창(N1: /search?q=&cat=로 보낸다) → 소분류 타일(상품 수·출처) → 소분류마다 1등 상품을 모은 인기 상품 줄.
 import Base from '../../../layouts/Base.astro';
 import Icon from '../../../components/Icon.astro';
+import ModelsBanner from '../../../components/ModelsBanner.astro';
 import { ProductCard } from '../../../components/ProductCard.tsx';
 import SubTiles from '../../../components/SubTiles.astro';
 import { ko } from '../../../copy/ko.ts';
@@ -41,6 +42,7 @@ const findLabel = fill(ko.list.findLabel, { name: meta.nameKo });
     </button>
   </form>
 
+  {meta.id === 'api' && <ModelsBanner />}
   <section class="sec" aria-labelledby="subs-title">
     <h2 id="subs-title" class="visually-hidden">{fill(ko.category.subsTitle, { name: meta.nameKo })}</h2>
     <SubTiles meta={meta} />

@@ -35,7 +35,9 @@ export async function receiptChars(): Promise<string> {
   add('·…─—–₩×•↑↓←→✓★%°');
   const { ko } = await import('../../src/copy/ko.ts');
   const copy = ko as unknown as Record<string, unknown>;
-  add(JSON.stringify([copy['cart'], copy['prompt'] ?? null]).replace(/\{\{[a-z]+\}\}/g, ''));
+  // 프롬프트 글의 모델 조각(D141: 모델 이름·id·가격 기준)도 단말 창에 같은 글꼴로 보인다
+  const models = copy['models'] as Record<string, unknown> | undefined;
+  add(JSON.stringify([copy['cart'], copy['prompt'] ?? null, models?.['prompt'] ?? null]).replace(/\{\{[a-z]+\}\}/g, ''));
   return [...set].sort().join('');
 }
 

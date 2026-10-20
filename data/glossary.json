@@ -523,9 +523,11 @@
         "일일 트래픽",
         "사용 한도",
         "이용 한도",
-        "호출 수"
+        "호출 수",
+        "RPM",
+        "TPM"
       ],
-      "plain": "하루나 한 달에 API를 부를 수 있는 횟수다.",
+      "plain": "1분·하루·한 달 동안 API를 부를 수 있는 횟수나 양이다.",
       "kind": "money"
     },
     {
@@ -2240,6 +2242,115 @@
       "plain": "어떤 개인정보를 왜 받고 얼마나 두는지 이용자에게 알리는 글이다.",
       "kind": "law",
       "see": "personal-info"
+    },
+    {
+      "id": "subscription-plan",
+      "term": "구독 요금제",
+      "aliases": [
+        "월 구독",
+        "ChatGPT Plus",
+        "Claude Pro",
+        "Google AI Pro"
+      ],
+      "plain": "매달 돈을 내고 채팅 앱을 쓰는 요금제로, API 요금과 따로 낸다.",
+      "kind": "money",
+      "see": "paid-plan"
+    },
+    {
+      "id": "ai-token",
+      "term": "AI 토큰",
+      "aliases": [
+        "토큰 수",
+        "LLM 토큰"
+      ],
+      "plain": "AI가 글을 잘게 나눠 세는 단위로, 요금과 길이를 이것으로 센다.",
+      "example": "API 가격은 보통 100만 토큰당 얼마로 적는다.",
+      "kind": "ai"
+    },
+    {
+      "id": "io-token",
+      "term": "입력 토큰",
+      "aliases": [
+        "출력 토큰",
+        "input token",
+        "output token"
+      ],
+      "plain": "AI에 보낸 글은 입력 토큰, AI가 돌려준 글은 출력 토큰으로 따로 센다.",
+      "kind": "ai"
+    },
+    {
+      "id": "prompt-caching",
+      "term": "프롬프트 캐싱",
+      "aliases": [
+        "캐시 토큰",
+        "캐시 읽기",
+        "캐시 쓰기",
+        "캐시 가격",
+        "prompt caching"
+      ],
+      "plain": "자주 보내는 앞부분을 저장해 두고 다시 쓸 때 더 싸게 셈하는 방식이다.",
+      "kind": "ai"
+    },
+    {
+      "id": "context-window",
+      "term": "컨텍스트 창",
+      "aliases": [
+        "컨텍스트",
+        "context window",
+        "context length",
+        "컨텍스트 길이"
+      ],
+      "plain": "AI가 한 번에 읽고 기억할 수 있는 글의 양으로, 토큰 수로 센다.",
+      "kind": "ai",
+      "see": "ai-token"
+    },
+    {
+      "id": "max-output",
+      "term": "최대 출력",
+      "aliases": [
+        "최대 출력 토큰",
+        "max output",
+        "max tokens"
+      ],
+      "plain": "AI가 한 번 답할 때 쓸 수 있는 가장 긴 길이다.",
+      "kind": "ai"
+    },
+    {
+      "id": "reasoning-model",
+      "term": "추론 모델",
+      "aliases": [
+        "추론",
+        "reasoning",
+        "reasoning model",
+        "thinking model"
+      ],
+      "plain": "답하기 전에 여러 단계로 생각해 어려운 문제를 더 잘 푸는 AI 모델이다.",
+      "kind": "ai"
+    },
+    {
+      "id": "tool-calling",
+      "term": "도구 호출",
+      "aliases": [
+        "tool calling",
+        "function calling",
+        "함수 호출",
+        "tool use"
+      ],
+      "plain": "AI가 대화 중에 내가 정해 둔 함수나 API를 불러 쓰는 기능이다.",
+      "kind": "ai",
+      "see": "function"
+    },
+    {
+      "id": "usage-tier",
+      "term": "사용 등급",
+      "aliases": [
+        "usage tier",
+        "티어",
+        "rate limit tier"
+      ],
+      "plain": "그동안 낸 돈에 따라 오르는 단계로, 오르면 사용 한도가 커진다.",
+      "kind": "money",
+      "see": "rate-limit"
     }
   ]
 }

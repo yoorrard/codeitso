@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Stop 훅: 코드·자료를 바꾼 채 검사가 실패하는 상태로 멈추지 못하게 붙잡는다.
 # 연달아 최대 3번까지만 붙잡고(무한 반복 방지), 검사가 통과하거나 바꾼 것이 없으면 횟수를 지운다.
+# 같은 변경으로 이미 통과했으면 건너뛴다(간소화 2026-10-20).
 set -u
 input="$(cat)"
 cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" || exit 0
@@ -15,7 +16,16 @@ if [ -z "$changed" ]; then
   exit 0
 fi
 
+# 마지막으로 통과한 뒤 바뀐 것이 없으면 다시 돌리지 않는다 (같은 변경에 검사를 되풀이하지 않게)
+pass_file="node_modules/.cc-check-pass"
+state="$( { git diff HEAD -- src data schemas scripts tests; git ls-files --others --exclude-standard -- src data schemas scripts tests | xargs -r sha1sum; } 2>/dev/null | sha1sum | cut -d' ' -f1)"
+if [ "$state" = "$(cat "$pass_file" 2>/dev/null)" ]; then
+  rm -f "$cnt_file"
+  exit 0
+fi
+
 if out="$(npm run --silent check 2>&1)"; then
+  echo "$state" > "$pass_file"
   rm -f "$cnt_file"
   exit 0
 fi

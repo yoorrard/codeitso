@@ -183,7 +183,7 @@ Do not use the global `* { animation-duration: 0.01ms !important }` kill switch:
 }
 ```
 
-Web Animations API scenes (`src/lib/motion.ts`, see the `game-motion` skill) read the same state and the same tokens:
+Web Animations API motion reads the same state and the same tokens:
 
 ```ts
 const css = () => getComputedStyle(document.documentElement);
@@ -301,4 +301,4 @@ A real screen-reader pass (VoiceOver, TalkBack, NVDA with a Korean voice) can't 
 - [WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)
 - [Deque axe rules](https://dequeuniversity.com/rules/axe/)
 - [references/criteria-and-patterns.md](references/criteria-and-patterns.md): A/AA criteria table and Preact/Astro patterns (visually-hidden, dialog, skip link, interview options, tabs, live region, form errors, dragging, keyboard e2e)
-- `docs/UX.md` §4 (motion M1–M8) and §6 (accessibility checklist), `game-motion` skill
+- `src/styles/tokens.css` motion tokens and the `animate` skill

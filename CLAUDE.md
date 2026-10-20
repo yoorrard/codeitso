@@ -76,9 +76,9 @@ docs/            문서 (아래), docs/archive/v4/ 옛 문서·자료
 
 ## 하네스 지도
 
-- **스킬** (`.claude/skills/`): `/next-task`, `/verify`(모든 검사 보고), `/visual-qa`(화면을 찍어 직접 보기), 그리고 가져와 고친 것: `frontend-design`, `animate`, `web-interface-guidelines`, `accessibility`, `polish`, `test-driven-development`, `systematic-debugging`, `verification-before-completion`. `add-product`·`game-motion`은 v4 것이라 v5에서는 쓰지 않는다. 출처·라이선스는 각 폴더와 `THIRD_PARTY_NOTICES.md`.
-- **전문가 에이전트** (`.claude/agents/`, 검토는 보고만): `a11y-perf-auditor`(접근성·예산), `ko-copy-editor`(문장). `engine-guardian`·`game-ux-designer`·`reader-tester`·`svg-illustrator`는 v4 것이다.
-- **훅** (`.claude/hooks/`): 세션 시작 때 의존성 설치와 진행 상황 알림, 위험한 git·배포 명령 차단, 만들어지는 파일(`public/catalog/`·`dist/`·글꼴·로고 원본) 직접 수정 차단, 고친 파일에 품질 바닥선 즉시 검사, 검사가 실패한 채 멈추지 못하게 한 번 붙잡기.
+- **스킬** (`.claude/skills/`): `/next-task`, `/verify`(모든 검사 보고), `/visual-qa`(화면을 찍어 직접 보기), 그리고 가져와 고친 것: `frontend-design`, `animate`, `web-interface-guidelines`, `accessibility`, `polish`, `test-driven-development`, `systematic-debugging`, `verification-before-completion`. 출처·라이선스는 각 폴더와 `THIRD_PARTY_NOTICES.md`.
+- **전문가 에이전트** (`.claude/agents/`, 검토는 보고만): `a11y-perf-auditor`(접근성·예산), `ko-copy-editor`(문장). 기본 흐름은 검토 에이전트 없이 증거(검사·e2e·스크린샷)로 확인하고, 화면을 크게 바꿨을 때만 부른다.
+- **훅** (`.claude/hooks/`): 세션 시작 때 의존성 설치와 진행 상황 알림, 위험한 git·배포 명령 차단, 만들어지는 파일(`public/catalog/`·`dist/`·글꼴·로고 원본) 직접 수정 차단, 고친 파일에 품질 바닥선 즉시 검사, 검사가 실패한 채 멈추지 못하게 붙잡기(같은 변경으로 이미 통과했으면 다시 돌리지 않음).
 
 ## 작업 규칙
 

@@ -37,7 +37,7 @@ Project rules win over generic craft advice.
 | Values | Colors, fonts, sizes, radii, shadows, durations and easing only as `var(--…)` from `src/styles/tokens.css`. A missing value becomes a token (a color with its measured contrast in a comment), never a literal in a component. |
 | Fonts | Pretendard (UI) and D2Coding (receipt, code) only, self-hosted (D11). No new families, no font CDN, no system display face. |
 | Receipt | The D2Coding monospace receipt on `--receipt` paper is a deliberate brand choice. Never flag it. |
-| Motion | Game-like scenes (M1–M8, `docs/UX.md` §4, `game-motion` skill) are welcome: each motion < 1s, scenes ≤ 3s, always skippable, never blocking input. Reduced motion (OS or `data-motion="reduce"`) removes movement, scale, parallax and flashing and keeps opacity cross-fades ≤ 150ms (`--dur-fade`). |
+| Motion | Motion follows the tokens: each motion < 1s, always skippable, never blocking input. Reduced motion (OS or `data-motion="reduce"`) removes movement, scale, parallax and flashing and keeps opacity cross-fades ≤ 150ms (`--dur-fade`). |
 | Accessibility | WCAG 2.2 AA, tap targets ≥ 44px (`--tap`), focus ring `--focus` / `--focus-on-dark`. Details in the project's `accessibility` skill. |
 | Copy | Fixed UI text in `src/copy/ko.ts`, engine sentences in `data/templates.json`, style per `.claude/rules/copy.md` (해요체, short verb buttons). |
 | Budget | First-screen JS ≤ 100KB gzip, images and animation ≤ 300KB per page (`npm run qa:budget`). No external requests. |

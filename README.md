@@ -15,8 +15,8 @@
 |---|---|---|
 | `CLAUDE.md` | Claude Code가 매번 읽는 규칙 (자율 진행 원칙 포함) | 완성 |
 | `.claude/rules/` | 파일 종류별 규칙 (자료, 엔진, 화면, 문장) | 완성 |
-| `.claude/skills/` | `/next-task`, `/verify`, `/visual-qa`, `/add-product`, `game-motion` + 검증해 가져온 스킬 8개 (출처는 `THIRD_PARTY_NOTICES.md`) | 완성 |
-| `.claude/agents/` | 전문가 에이전트 6명: 엔진 수문장, 접근성·성능 감사, 한국어 편집, 게임 연출, 초심자 읽기 시험, SVG 그림 | 완성 |
+| `.claude/skills/` | `/next-task`, `/verify`, `/visual-qa` + 검증해 가져온 스킬 8개 (출처는 `THIRD_PARTY_NOTICES.md`) | 완성 |
+| `.claude/agents/` | 전문가 에이전트 2명: 접근성·성능 감사, 한국어 편집 (화면을 크게 바꿨을 때만) | 완성 |
 | `.claude/hooks/`, `.claude/settings.json` | 세션 시작 설치·상황 알림, 위험 명령 차단, 고친 파일 즉시 검사, 실패한 채 멈추지 않기 | 완성 |
 | `docs/` | 요구사항, 컨셉 바이블(세계관·용어·그림·화면·장면의 정본), 디자인 의뢰서, 작업 목록, 구조, 엔진 명세, 자료 안내, 화면 설계, 영수증 형식, 결정 기록, 사람 확인 대기열 | 완성 |
 | `src/lib/engine/` | 판단 엔진: 만들 앱 질문 → 기능마다 도구 추천 → 도구끼리 맞춰 보기(막힌 곳) → 영수증·설계도 | 완성, 검사 통과 |

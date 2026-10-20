@@ -17,7 +17,7 @@
 | `accessibility` | addyosmani/web-quality-skills `skills/accessibility` (afa8da942115f2961fdbfa80807ea0b232ff6c00) | MIT (`LICENSE`) | WCAG 2.2·한국어·Preact 예시, 시험 방법을 프로젝트 도구로, 축약 |
 | `polish` | pbakaus/impeccable v4.5.2 `reference/craft-floor.md`, `polish.md`, `audit.md` (919dbeba520df760a157fe635be62faae88d58da) | Apache-2.0 (`LICENSE`, `NOTICE.md`) | 실행 파일·감지기 제거, 프로젝트 규칙에 맞춤 (Apache-2.0 4조 b항 고지는 파일 머리말) |
 
-`next-task`, `verify`, `add-product`, `visual-qa`, `game-motion`과 `.claude/agents/`, `.claude/rules/`, `.claude/hooks/`는 이 저장소에서 쓴 것이다 (MIT).
+`next-task`, `verify`, `visual-qa`와 `.claude/agents/`, `.claude/rules/`, `.claude/hooks/`는 이 저장소에서 쓴 것이다 (MIT).
 
 ## 사이트에 실리는 자료
 

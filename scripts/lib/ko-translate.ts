@@ -107,3 +107,29 @@ export function autoFileName(existing: ReadonlyMap<string, number>): string {
   const lastName = `auto-${last}.json`;
   return (existing.get(lastName) ?? 0) < AUTO_FILE_MAX ? lastName : `auto-${last + 1}.json`;
 }
+
+// ---------- API 열쇠 없이 Claude 세션이 번역하는 길 (D140, scripts/i18n/agent-batch.ts·agent-merge.ts) ----------
+
+/** 먼저 번역할 id(스타터 키트 재료)를 앞으로 당긴다. 나머지는 pickCandidates 순서 그대로 */
+export function preferIds(cands: readonly Candidate[], first: ReadonlySet<string>, limit: number): Candidate[] {
+  const head = cands.filter((c) => first.has(c.id));
+  const tail = cands.filter((c) => !first.has(c.id));
+  return [...head, ...tail].slice(0, Math.max(0, limit));
+}
+
+const oneLine = (s: string): string => s.replace(/[\t\r\n]+/g, ' ').trim();
+
+/** 번역할 묶음 한 줄: 번호<탭>대분류/종류<탭>이름<탭>원문(앞 280자) */
+export function batchLines(cands: readonly Candidate[]): string[] {
+  return cands.map((c, i) => [i + 1, c.kind, oneLine(c.name), oneLine(c.summary).slice(0, SUMMARY_CHARS)].join('\t'));
+}
+
+/** 번역 결과 '번호<탭>한국어' 줄들을 읽는다. 모양이 다른 줄은 건너뛴다 */
+export function parseNumbered(text: string): Map<number, string> {
+  const out = new Map<number, string>();
+  for (const line of text.split('\n')) {
+    const m = /^\s*(\d+)\t(.+)$/.exec(line);
+    if (m) out.set(Number(m[1]), (m[2] ?? '').trim());
+  }
+  return out;
+}

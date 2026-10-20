@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { readKo } from '../../scripts/catalog/load.ts';
 import { KO_MAX, commas, hasBatchim, templateKo } from '../../scripts/lib/ko-template.ts';
-import { AUTO_FILE_MAX, autoFileName, cleanKo, parseReply, pickCandidates, userPrompt } from '../../scripts/lib/ko-translate.ts';
+import { AUTO_FILE_MAX, autoFileName, batchLines, cleanKo, parseNumbered, parseReply, pickCandidates, preferIds, userPrompt } from '../../scripts/lib/ko-translate.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import type { CatalogItem } from '../../src/lib/catalog/types.ts';
 
@@ -120,3 +120,18 @@ describe('매일 번역 도우미', () => {
     expect([...readKo(dir, ['template.json']).keys()]).toEqual(['a', 'b']);
   });
 });
+
+describe('API 열쇠 없이 Claude 세션이 번역하는 묶음 (D140)', () => {
+  const cand = (id: string, summary = 'A tool.') => ({ id, name: `${id}\tname`, kind: 'ai/mcp', summary, rank: 0, templated: false });
+  it('키트 재료를 앞으로 당기고 한도까지 자른다', () => {
+    expect(preferIds([cand('a'), cand('b'), cand('c')], new Set(['c']), 2).map((c) => c.id)).toEqual(['c', 'a']);
+  });
+  it('묶음 줄은 번호·종류·이름·원문을 탭으로, 줄바꿈·탭은 빈칸으로', () => {
+    expect(batchLines([cand('x', 'line one\nline two')])).toEqual(['1\tai/mcp\tx name\tline one line two']);
+  });
+  it('번역 결과는 번호<탭>한국어 줄만 읽는다', () => {
+    const m = parseNumbered('1\tPDF를 읽는 MCP 서버다.\nnoise\n\n12\t  표를 그리는 라이브러리다. \n');
+    expect([...m.entries()]).toEqual([[1, 'PDF를 읽는 MCP 서버다.'], [12, '표를 그리는 라이브러리다.']]);
+  });
+});
+

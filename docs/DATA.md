@@ -11,7 +11,7 @@
 | `data/glossary.json` | 어려운 말 풀이·용어 사전 (204개) |
 | `data/kits.json` | 스타터 키트 (홈에서 한 번에 담는 재료 묶음 4개, 손으로 고른 진열대 id). 키트 id는 `src/lib/kits.ts` `KIT_IDS`(집계 구간)와 같아야 하고, 진열대에 없는 id가 있으면 진열대 빌드가 멈춘다 (`tests/lib/kits.test.ts`). 자료를 다시 받아 재료가 빠지면 여기를 고친다 |
 | `data/catalog-media/readme-images.json` | 저장소 README의 첫 그림 (v5.1 D126): `images`(상품 id → 그림 주소), `stills`(그림이 GIF일 때 카드에 쓸 멈춘 그림), `none`(README에 쓸 그림이 없던 id), `fetchedAt`. `npm run import:media`(`scripts/import/media-readme.ts`, 처음 약 6분, 다음부터는 새 상품만, `--refresh`면 모두)가 쓴다. 진열대 빌드가 미리 보기 자료에 `readmeImage`·`readmeStill`로 붙인다 |
-| `data/catalog-ko/*.json` | 코드잇소가 쓴 한국어 설명 `{ "<상품 id>": "다체 한 줄" }` (D122·D128): `agent.json`(번역 에이전트가 잘 보이는 상품 11,522개), `auto-<n>.json`(매일 번역 `npm run ko:translate`, 파일당 5천 개), `template.json`(모양이 정해진 상품 9,990개를 자료로 만든 한 줄, `npm run ko`). 겹치면 agent → auto → template 순서. 진열대 빌드가 `summaryKo`로 붙이고, 출처가 준 한국어가 있으면 그것이 먼저다 |
+| `data/catalog-ko/*.json` | 코드잇소가 쓴 한국어 설명 `{ "<상품 id>": "다체 한 줄" }` (D122·D128): `agent.json`(Claude가 번역한 것: 처음 11,522개 + 매일 예약 작업이 `node scripts/i18n/agent-batch.ts`로 뽑은 묶음을 번역해 `agent-merge.ts`로 더함, D140), `auto-<n>.json`(매일 번역 `npm run ko:translate`, 파일당 5천 개), `template.json`(모양이 정해진 상품 9,990개를 자료로 만든 한 줄, `npm run ko`). 겹치면 agent → auto → template 순서. 진열대 빌드가 `summaryKo`로 붙이고, 출처가 준 한국어가 있으면 그것이 먼저다 |
 | `schemas/catalog-*.json` | 대분류마다 출처 파일·`index.json` 스키마 |
 
 ## 2. 항목 하나의 모양 (`src/lib/catalog/types.ts`의 `CatalogItem`)

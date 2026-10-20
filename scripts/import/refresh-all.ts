@@ -8,6 +8,8 @@
 // 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록, Iconify 묶음 전체, OWID 차트 목록)는 주간 몫이다.
 // AI 갈래는 줄마다 저장소 복제 폴더를 따로 써서(AI_IMPORT_CACHE) 같은 저장소를 함께 받다 부딪히지 않게 한다.
 // 출처 하나가 실패하면 그 파일은 지난 자료 그대로 남는다. 실패는 경고로 알리고 다음 단계(단위 시험)가 판단한다. 모두 실패했을 때만 1로 끝낸다.
+// 스크립트 하나가 REFRESH_STEP_MINUTES(기본 25분, 주간 몫은 두 배)를 넘기면 멈춘다. 가져오기는 끝에 한 번 쓰므로 멈춘 출처도 지난 자료 그대로다.
+// 시작·끝 줄은 바로 찍어(작업 흐름 기록에서 어디서 오래 걸리는지 보이게) 하고, 스크립트 기록은 끝에 줄마다 묶어 보인다.
 import { spawn } from 'node:child_process';
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -70,11 +72,24 @@ mkdirSync(logDir, { recursive: true });
 const baseEnv = { ...process.env, ...(process.env.HTTPS_PROXY || process.env.https_proxy ? { NODE_USE_ENV_PROXY: '1', NODE_NO_WARNINGS: '1' } : {}) };
 const aiCache = process.env.AI_IMPORT_CACHE ?? join(ROOT, '.cache', 'ai-import');
 
-function runScript(file: string, log: string, env: NodeJS.ProcessEnv): Promise<number> {
+const stepLimitMs = (Number(process.env.REFRESH_STEP_MINUTES) || 25) * 60_000;
+
+function runScript(file: string, log: string, env: NodeJS.ProcessEnv, limitMs: number = stepLimitMs): Promise<number> {
   return new Promise((resolve) => {
-    const cmd = `${JSON.stringify(process.execPath)} ${JSON.stringify(join(ROOT, 'scripts', 'import', file))} >> ${JSON.stringify(log)} 2>&1`;
-    const child = spawn(cmd, { shell: true, env, stdio: 'ignore' });
-    child.on('close', (code) => resolve(code ?? 1));
+    const cmd = `exec ${JSON.stringify(process.execPath)} ${JSON.stringify(join(ROOT, 'scripts', 'import', file))} >> ${JSON.stringify(log)} 2>&1`;
+    const child = spawn(cmd, { shell: true, env, stdio: 'ignore', detached: true });
+    const timer = setTimeout(() => {
+      appendFileSync(log, `\n✗ ${file}: ${Math.round(limitMs / 60_000)}분을 넘겨 멈췄다 (지난 자료 그대로)\n`);
+      try {
+        if (child.pid) process.kill(-child.pid, 'SIGTERM');
+      } catch {
+        // 이미 끝났다
+      }
+    }, limitMs);
+    child.on('close', (code) => {
+      clearTimeout(timer);
+      resolve(code ?? 1);
+    });
   });
 }
 
@@ -87,8 +102,11 @@ async function runLane(name: string, lane: Lane): Promise<StepResult[]> {
     if (step.weekly && !withWeekly) continue;
     const started = Date.now();
     appendFileSync(log, `\n▶ ${step.file}\n`);
-    const code = await runScript(step.file, log, env);
-    out.push({ lane: name, file: step.file, code, seconds: Math.round((Date.now() - started) / 1000) });
+    console.log(`▶ ${name} ${step.file}`);
+    const code = await runScript(step.file, log, env, step.weekly ? stepLimitMs * 2 : stepLimitMs);
+    const seconds = Math.round((Date.now() - started) / 1000);
+    console.log(`${code === 0 ? '✓' : '✗'} ${name} ${step.file} ${seconds}초`);
+    out.push({ lane: name, file: step.file, code, seconds });
   }
   return out;
 }

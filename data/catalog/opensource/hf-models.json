@@ -8,7 +8,7 @@
     "cut": "작업(47개)마다 최근 30일 내려받기 10,000회 이상 + 작업마다 상위 20개 + 좋아요 300개 이상 + 요즘 뜨는 순 상위 500개"
   },
   "fetchedAt": "2026-10-23",
-  "count": 7501,
+  "count": 7508,
   "items": [
     {
       "id": "hf-models:01-ai--yi-1.5-34b-chat",
@@ -400,8 +400,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 61125,
-        "likes": 53,
+        "downloads": 59479,
+        "likes": 59,
         "trend": 8,
         "updatedAt": "2026-09-20"
       },
@@ -417,7 +417,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:0bserverx--rvn-qwen3.8-flash-next-abliterated-uncensored-gguf",
@@ -2425,7 +2425,7 @@
         "downloads": 679273,
         "likes": 92,
         "trend": 4,
-        "updatedAt": "2026-10-10"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "gguf",
@@ -2453,10 +2453,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 35194,
+        "downloads": 35009,
         "likes": 38,
-        "trend": 2,
-        "updatedAt": "2026-10-13"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "gguf",
@@ -2470,7 +2469,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:agentionai--qwen3.8-flash-next-gyro-abliterated-huihui-gguf",
@@ -2516,9 +2515,9 @@
       },
       "metrics": {
         "downloads": 1482,
-        "likes": 29,
-        "trend": 29,
-        "updatedAt": "2026-10-22"
+        "likes": 37,
+        "trend": 37,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "gguf",
@@ -4158,6 +4157,32 @@
         "taskLabel": "Token Classification"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-models:akhaliq--moss-image-edit-hq",
+      "name": "akhaliq/MOSS-Image-Edit-HQ",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "An open effort to build an instruction-based image-editing LoRA for OpenMOSS-Team/MOSS-Image-SFT that beats chinoll/Moss-Image-Edit on quality — with every experiment, checkpoint, and side-by-side published, including the ones that lost.",
+      "url": "https://huggingface.co/akhaliq/MOSS-Image-Edit-HQ",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 13,
+        "trend": 13,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [],
+      "preview": {
+        "type": "model",
+        "author": "akhaliq",
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:akhaliq--moss-image-sft-4-steps",
@@ -6242,6 +6267,39 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-models:allenai--molmo-72b-0924",
+      "name": "allenai/Molmo-72B-0924",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Molmo is a family of open vision-language models developed by the Allen Institute for AI. Molmo models are trained on PixMo, a dataset of 1 million, highly-curated image-text pairs. It has state-of-the-art performance among multimodal models with a similar size while being fully open-source.",
+      "url": "https://huggingface.co/allenai/Molmo-72B-0924",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 8178,
+        "likes": 300,
+        "trend": 2,
+        "updatedAt": "2025-10-09"
+      },
+      "tags": [
+        "en",
+        "image-text-to-text",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "allenai",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:allenai--molmo-7b-d-0924",
       "name": "allenai/Molmo-7B-D-0924",
       "kind": "models",
@@ -7169,6 +7227,35 @@
         "taskLabel": "Image Feature Extraction"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-models:allenai--olmoearth-v1-3-base",
+      "name": "allenai/OlmoEarth-v1_3-Base",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "OlmoEarth-v1_3-Base is a ViT-Base (128M parameters) foundation model for remote sensing tasks over Sentinel-1, Sentinel-2, and Landsat images or image time series.",
+      "url": "https://huggingface.co/allenai/OlmoEarth-v1_3-Base",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 157,
+        "likes": 12,
+        "trend": 12,
+        "updatedAt": "2026-10-13"
+      },
+      "tags": [
+        "image-feature-extraction"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "allenai",
+        "host": "huggingface",
+        "task": "image-feature-extraction",
+        "taskLabel": "Image Feature Extraction"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:allenai--specter",
@@ -9811,37 +9898,6 @@
       "fetchedAt": "2026-10-23"
     },
     {
-      "id": "hf-models:arbazsiddiqui--voxlock",
-      "name": "arbazsiddiqui/voxlock",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "The best performing voice isolator there is. VoxLock is an open-source voice isolation model: it keeps the caller's voice and removes the other voices in the room before speech-to-text hears them.",
-      "url": "https://huggingface.co/arbazsiddiqui/voxlock",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 522,
-        "likes": 25,
-        "trend": 13,
-        "updatedAt": "2026-10-12"
-      },
-      "tags": [
-        "audio-to-audio",
-        "en"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "arbazsiddiqui",
-        "host": "huggingface",
-        "task": "audio-to-audio",
-        "taskLabel": "Audio-to-Audio"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-models:arcee-ai--llama-3-sec-chat-gguf",
       "name": "arcee-ai/Llama-3-SEC-Chat-GGUF",
       "kind": "models",
@@ -11861,9 +11917,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 19953,
+        "downloads": 20248,
         "likes": 5,
-        "updatedAt": "2026-04-19"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "coreml",
@@ -12041,35 +12097,6 @@
         "taskLabel": "Text-to-Speech"
       },
       "fetchedAt": "2026-10-23"
-    },
-    {
-      "id": "hf-models:ausboss--flux-3-image-klein-outpaint-lora",
-      "name": "ausboss/FLUX-3-Image-Klein-Outpaint-LoRA",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Extends a picture on any side, and paints the gray corners of a picture you have turned. Pad the picture with flat gray #808080, give the padded canvas to FLUX 3 Image Klein as the reference, and the LoRA fills the gray with more of the scene while keeping your picture where it is.",
-      "url": "https://huggingface.co/ausboss/FLUX-3-Image-Klein-Outpaint-LoRA",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 0,
-        "likes": 18,
-        "trend": 17,
-        "updatedAt": "2026-10-18"
-      },
-      "tags": [
-        "image-to-image"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "ausboss",
-        "host": "huggingface",
-        "task": "image-to-image",
-        "taskLabel": "Image-to-Image"
-      },
-      "fetchedAt": "2026-10-20"
     },
     {
       "id": "hf-models:ausboss--qwen-image-2.1-outfit-swap-consistency-lora",
@@ -12453,8 +12480,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 22505,
-        "likes": 65,
+        "downloads": 23370,
+        "likes": 72,
         "trend": 0.03,
         "updatedAt": "2026-10-11"
       },
@@ -12472,7 +12499,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:autotrust--jev-27b",
@@ -12652,9 +12679,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 34717,
-        "likes": 11,
-        "trend": 3,
+        "downloads": 36401,
+        "likes": 16,
+        "trend": 2,
         "updatedAt": "2026-10-11"
       },
       "tags": [
@@ -12670,7 +12697,7 @@
         "task": "text-classification",
         "taskLabel": "Text Classification"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:autoweeb--qwen-image-edit-2509-photo-to-anime",
@@ -13709,8 +13736,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 57222901,
-        "likes": 639,
+        "downloads": 54048872,
+        "likes": 650,
+        "trend": 3,
         "updatedAt": "2024-02-22"
       },
       "tags": [
@@ -13726,7 +13754,7 @@
         "task": "feature-extraction",
         "taskLabel": "Feature Extraction"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:baai--bge-small-zh",
@@ -16127,9 +16155,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 38274,
+        "downloads": 41276,
         "likes": 85,
-        "trend": 3,
         "updatedAt": "2026-07-26"
       },
       "tags": [
@@ -16142,7 +16169,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:bartowski--granite-embedding-107m-multilingual-gguf",
@@ -19918,33 +19945,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-models:baruqrodrigues--llm-legislativo",
-      "name": "BaruqRodrigues/llm-legislativo",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Modelo de linguagem experimental, treinado do zero em PyTorch com textos legislativos oficiais brasileiros da Câmara dos Deputados e do Senado Federal. A arquitetura é um Transformer Decoder causal próprio do projeto; este repositório não é compatível diretamente com transformers.AutoModel.",
-      "url": "https://huggingface.co/BaruqRodrigues/llm-legislativo",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 0,
-        "likes": 23,
-        "trend": 22,
-        "updatedAt": "2026-10-13"
-      },
-      "tags": [
-        "pt"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "BaruqRodrigues",
-        "host": "huggingface"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "hf-models:basecompute--qwen3.8-27b-basequant-v1",
       "name": "basecompute/Qwen3.8-27B-BaseQuant-V1",
       "kind": "models",
@@ -19988,8 +19988,8 @@
       "license": "MIT",
       "metrics": {
         "downloads": 295,
-        "likes": 41,
-        "trend": 41,
+        "likes": 48,
+        "trend": 48,
         "updatedAt": "2026-10-22"
       },
       "tags": [
@@ -23477,8 +23477,8 @@
       },
       "metrics": {
         "downloads": 74,
-        "likes": 21,
-        "trend": 21,
+        "likes": 27,
+        "trend": 27,
         "updatedAt": "2026-10-22"
       },
       "tags": [
@@ -24921,8 +24921,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 3433,
-        "likes": 1234,
+        "downloads": 3703,
+        "likes": 1237,
+        "trend": 3,
         "updatedAt": "2026-01-09"
       },
       "tags": [
@@ -24937,7 +24938,7 @@
         "task": "any-to-any",
         "taskLabel": "Any-to-Any"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:bytedance-seed--seed-oss-36b-instruct",
@@ -25786,36 +25787,6 @@
         "taskLabel": "Text-to-Video"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-models:calon-ai--calon-0.6b",
-      "name": "calon-ai/calon-0.6b",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "CalOn is a 0.6B-parameter encoder for zero-shot entity, relation, and event extraction. You give it a text and the types you want, optionally with a short description of each, and it returns character spans with their types and probabilities. It needs no examples from your dataset.",
-      "url": "https://huggingface.co/calon-ai/calon-0.6b",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 55,
-        "likes": 13,
-        "trend": 12,
-        "updatedAt": "2026-10-21"
-      },
-      "tags": [
-        "calon",
-        "en"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "calon-ai",
-        "host": "huggingface",
-        "library": "calon"
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:camb-ai--mars5-tts",
@@ -27177,8 +27148,8 @@
       },
       "metrics": {
         "downloads": 0,
-        "likes": 47,
-        "trend": 47,
+        "likes": 66,
+        "trend": 66,
         "updatedAt": "2026-10-23"
       },
       "tags": [
@@ -29004,9 +28975,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 468,
-        "likes": 52,
-        "trend": 30,
+        "downloads": 511,
+        "likes": 58,
+        "trend": 15,
         "updatedAt": "2026-10-12"
       },
       "tags": [
@@ -29020,7 +28991,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:codefuse-ai--f2llm-v2-0.6b",
@@ -30617,8 +30588,8 @@
       },
       "metrics": {
         "downloads": 0,
-        "likes": 26,
-        "trend": 26,
+        "likes": 48,
+        "trend": 48,
         "updatedAt": "2026-10-22"
       },
       "tags": [
@@ -31153,6 +31124,39 @@
         "downloads": 0,
         "likes": 36,
         "trend": 35,
+        "updatedAt": "2026-10-15"
+      },
+      "tags": [
+        "automatic-speech-recognition",
+        "en",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "ConwayResearch",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "automatic-speech-recognition",
+        "taskLabel": "Automatic Speech Recognition"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:conwayresearch--underdog-bark-3.0-pro",
+      "name": "ConwayResearch/Underdog-Bark-3.0-Pro",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Bark 3.0 Pro is state-of-the-art open speech recognition: a 0.6B English model at full precision (bf16, 1.25 GB). Across the Open ASR Leaderboard's seven English sets it averages 4.29 % word error, the lowest of any open model by the leaderboard's own scoring: 4.286 against 4.291 for Hojo-ASR-V1,…",
+      "url": "https://huggingface.co/ConwayResearch/Underdog-Bark-3.0-Pro",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "CC-BY-4.0",
+      "metrics": {
+        "downloads": 332,
+        "likes": 13,
+        "trend": 12,
         "updatedAt": "2026-10-15"
       },
       "tags": [
@@ -37271,9 +37275,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 556618,
-        "likes": 1138,
-        "trend": 0.5,
+        "downloads": 531130,
+        "likes": 1144,
+        "trend": 4,
         "updatedAt": "2026-02-03"
       },
       "tags": [
@@ -37289,7 +37293,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:deepseek-ai--deepseek-prover-v2-671b",
@@ -41326,39 +41330,6 @@
         "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-models:dmis-lab--ultrabert-150m",
-      "name": "dmis-lab/UltraBERT-150M",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "UltraBERT is a family of English bidirectional encoders with a native 32K context that reach state of the art on both classification and retrieval, two task families on which previous encoders had to choose a side.",
-      "url": "https://huggingface.co/dmis-lab/UltraBERT-150M",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 6172,
-        "likes": 58,
-        "trend": 12,
-        "updatedAt": "2026-10-16"
-      },
-      "tags": [
-        "en",
-        "fill-mask",
-        "transformers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "dmis-lab",
-        "host": "huggingface",
-        "library": "transformers",
-        "task": "fill-mask",
-        "taskLabel": "Fill-Mask"
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:dmis-lab--ultrabert-380m",
@@ -47055,6 +47026,40 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-models:facebook--dinov3-vit7b16-pretrain-lvd1689m",
+      "name": "facebook/dinov3-vit7b16-pretrain-lvd1689m",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Image Feature Extraction model (transformers) by facebook on Hugging Face.",
+      "url": "https://huggingface.co/facebook/dinov3-vit7b16-pretrain-lvd1689m",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 6630,
+        "likes": 300,
+        "trend": 8,
+        "updatedAt": "2025-08-19"
+      },
+      "tags": [
+        "en",
+        "gated",
+        "image-feature-extraction",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "facebook",
+        "gated": true,
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "image-feature-extraction",
+        "taskLabel": "Image Feature Extraction"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:facebook--dinov3-vitb16-pretrain-lvd1689m",
       "name": "facebook/dinov3-vitb16-pretrain-lvd1689m",
       "kind": "models",
@@ -51506,7 +51511,7 @@
       "name": "fastino/GLiDE",
       "kind": "models",
       "category": "opensource",
-      "summary": "Fastino · API documentation · Get an API key",
+      "summary": "GLiDE is a decision model from Fastino. Given a state (text or JSON, optionally with images) and one or more typed questions, it returns a probability for every option of every question. Internal use only.",
       "url": "https://huggingface.co/fastino/GLiDE",
       "source": {
         "name": "Hugging Face",
@@ -51514,8 +51519,8 @@
       },
       "metrics": {
         "downloads": 114,
-        "likes": 32,
-        "trend": 32,
+        "likes": 40,
+        "trend": 40,
         "updatedAt": "2026-10-23"
       },
       "tags": [
@@ -63213,6 +63218,38 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-models:gradium--phonon-voices",
+      "name": "gradium/phonon-voices",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "102 voices for Phonon S (31M): 90 Gradium catalogue voices in 7 locales, plus 12 English character voices. Each voice is a .safetensors embedding that Phonon uses directly, with no cloning (format ba7a5a45@300: one tensor speaker_wavs, 1×512×125, float32).",
+      "url": "https://huggingface.co/gradium/phonon-voices",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 13,
+        "trend": 13,
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "de",
+        "en",
+        "es",
+        "fr",
+        "pt"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "gradium",
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:granddyser--flux-klein-9b-biglove-collection",
       "name": "Granddyser/flux-klein-9b-Biglove-Collection",
       "kind": "models",
@@ -68336,8 +68373,8 @@
       },
       "metrics": {
         "downloads": 0,
-        "likes": 13,
-        "trend": 13,
+        "likes": 32,
+        "trend": 31,
         "updatedAt": "2026-10-23"
       },
       "tags": [
@@ -69668,9 +69705,9 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 193,
-        "likes": 100,
-        "trend": 97,
-        "updatedAt": "2026-10-22"
+        "likes": 124,
+        "trend": 121,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "en",
@@ -73635,9 +73672,9 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 1125,
-        "likes": 42,
-        "trend": 42,
-        "updatedAt": "2026-10-22"
+        "likes": 48,
+        "trend": 48,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "automatic-speech-recognition",
@@ -73700,8 +73737,9 @@
       },
       "license": "CC-BY-NC-SA-4.0",
       "metrics": {
-        "downloads": 32477,
-        "likes": 34,
+        "downloads": 32797,
+        "likes": 37,
+        "trend": 3,
         "updatedAt": "2026-10-02"
       },
       "tags": [
@@ -73717,7 +73755,7 @@
         "task": "automatic-speech-recognition",
         "taskLabel": "Automatic Speech Recognition"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:ibm-granite--granite-switch-4.1-30b",
@@ -75516,8 +75554,8 @@
       "license": "MIT",
       "metrics": {
         "downloads": 146,
-        "likes": 33,
-        "trend": 33,
+        "likes": 41,
+        "trend": 41,
         "updatedAt": "2026-10-22"
       },
       "tags": [
@@ -75830,8 +75868,8 @@
       "license": "MIT",
       "metrics": {
         "downloads": 1767,
-        "likes": 71,
-        "trend": 70,
+        "likes": 83,
+        "trend": 82,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -78027,6 +78065,38 @@
         "downloads": 20332,
         "likes": 44,
         "trend": 44,
+        "updatedAt": "2026-10-22"
+      },
+      "tags": [
+        "gguf",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "InternScience",
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:internscience--sage-a1.5-q8-0-gguf",
+      "name": "InternScience/Sage-A1.5-Q8_0-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Sage‑A1.5 is a 35B Mixture‑of‑Experts agentic model based on Qwen3.6 and Agents-A1 from Shanghai AI Laboratory, built to advance long-horizon scientific problem solving through adaptive capability composition.",
+      "url": "https://huggingface.co/InternScience/Sage-A1.5-Q8_0-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 2557,
+        "likes": 13,
+        "trend": 13,
         "updatedAt": "2026-10-22"
       },
       "tags": [
@@ -82139,9 +82209,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 337934,
-        "likes": 21,
-        "trend": 13,
+        "downloads": 352158,
+        "likes": 26,
+        "trend": 16,
         "updatedAt": "2026-10-01"
       },
       "tags": [
@@ -90647,6 +90717,32 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-models:liconstudio--minimax-h3-vbvr",
+      "name": "LiconStudio/Minimax-H3-VBVR",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Licon VBVR is an image-to-video LoRA for MiniMax-H3, trained on VBVR data rebuilt and reprocessed specifically for H3.",
+      "url": "https://huggingface.co/LiconStudio/Minimax-H3-VBVR",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 23,
+        "trend": 23,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [],
+      "preview": {
+        "type": "model",
+        "author": "LiconStudio",
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:lightonai--colbert-zero",
       "name": "lightonai/ColBERT-Zero",
       "kind": "models",
@@ -90807,39 +90903,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-models:lightonai--lightonocr-3-0.8b",
-      "name": "lightonai/LightOnOCR-3-0.8B",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Paper | Blog | Demo | GitHub | LightOnOCR-2-1B",
-      "url": "https://huggingface.co/lightonai/LightOnOCR-3-0.8B",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 6026,
-        "likes": 78,
-        "trend": 12,
-        "updatedAt": "2026-10-09"
-      },
-      "tags": [
-        "en",
-        "image-text-to-text",
-        "transformers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "lightonai",
-        "host": "huggingface",
-        "library": "transformers",
-        "task": "image-text-to-text",
-        "taskLabel": "Image-Text-to-Text"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-models:lightonai--lightonocr-3-4b",
       "name": "lightonai/LightOnOCR-3-4B",
       "kind": "models",
@@ -90933,6 +90996,39 @@
         "library": "PyLate",
         "task": "sentence-similarity",
         "taskLabel": "Sentence Similarity"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:lightonai--slideon",
+      "name": "lightonai/SlideOn",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Collection | Blogpost | Training and Evaluation",
+      "url": "https://huggingface.co/lightonai/SlideOn",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 150,
+        "likes": 12,
+        "trend": 12,
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "en",
+        "feature-extraction",
+        "sentence-transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "lightonai",
+        "host": "huggingface",
+        "library": "sentence-transformers",
+        "task": "feature-extraction",
+        "taskLabel": "Feature Extraction"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -92146,8 +92242,8 @@
       },
       "metrics": {
         "downloads": 63,
-        "likes": 118,
-        "trend": 117,
+        "likes": 137,
+        "trend": 136,
         "updatedAt": "2026-03-03"
       },
       "tags": [
@@ -92872,10 +92968,10 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 103485,
-        "likes": 843,
-        "trend": 26,
-        "updatedAt": "2026-08-24"
+        "downloads": 96613,
+        "likes": 849,
+        "trend": 11,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "ko",
@@ -92891,7 +92987,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:liquidai--lfm2.5-2.6b-dspark",
@@ -102415,34 +102511,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-models:madebyollin--texture-fix-vae-for-qwen-image-2.1",
-      "name": "madebyollin/texture-fix-vae-for-qwen-image-2.1",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Built with Qwen* (an unofficial finetune of the Qwen-Image-2.1 VAE)",
-      "url": "https://huggingface.co/madebyollin/texture-fix-vae-for-qwen-image-2.1",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 76766,
-        "likes": 192,
-        "trend": 16,
-        "updatedAt": "2026-10-22"
-      },
-      "tags": [
-        "diffusers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "madebyollin",
-        "host": "huggingface",
-        "library": "diffusers"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-models:madhurjindal--autonlp-gibberish-detector-492513457",
       "name": "madhurjindal/autonlp-Gibberish-Detector-492513457",
       "kind": "models",
@@ -103407,38 +103475,6 @@
       "fetchedAt": "2026-10-23"
     },
     {
-      "id": "hf-models:matlowai--moss-image-sft-deband-int8",
-      "name": "MATLOWAI/MOSS-Image-SFT-DeBand-int8",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "MOSS-Image SFT with its vertical color stripes (\"banding\") fixed, as single files you load like any other model: no LoRAs, no custom nodes. Each file is 5.4 GB int8 (the same format as Comfy-Org's int8_convrot files) and loads with the stock Load Diffusion Model node.",
-      "url": "https://huggingface.co/MATLOWAI/MOSS-Image-SFT-DeBand-int8",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 4462,
-        "likes": 12,
-        "trend": 12,
-        "updatedAt": "2026-10-17"
-      },
-      "tags": [
-        "diffusion-single-file",
-        "text-to-image"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "MATLOWAI",
-        "host": "huggingface",
-        "library": "diffusion-single-file",
-        "task": "text-to-image",
-        "taskLabel": "Text-to-Image"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-models:mattmdjaga--segformer-b2-clothes",
       "name": "mattmdjaga/segformer_b2_clothes",
       "kind": "models",
@@ -103572,9 +103608,8 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 15966,
+        "downloads": 16160,
         "likes": 6,
-        "trend": 3,
         "updatedAt": "2026-10-10"
       },
       "tags": [
@@ -103591,7 +103626,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:maximilian228--qwen3.8-flash-next-nvfp4-gptq-strata",
@@ -113197,8 +113232,8 @@
       },
       "metrics": {
         "downloads": 1096,
-        "likes": 161,
-        "trend": 157,
+        "likes": 245,
+        "trend": 239,
         "updatedAt": "2026-10-23"
       },
       "tags": [
@@ -114021,9 +114056,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 124314,
-        "likes": 344,
-        "trend": 0.5,
+        "downloads": 121316,
+        "likes": 348,
+        "trend": 4,
         "updatedAt": "2026-07-15"
       },
       "tags": [
@@ -114037,7 +114072,7 @@
         "host": "huggingface",
         "library": "vllm"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:mistralai--ministral-3-3b-instruct-2512",
@@ -114696,9 +114731,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 37836,
-        "likes": 300,
-        "trend": 1,
+        "downloads": 36861,
+        "likes": 307,
+        "trend": 6,
         "updatedAt": "2026-08-05"
       },
       "tags": [
@@ -114712,7 +114747,7 @@
         "host": "huggingface",
         "library": "vllm"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:mistralai--timestral-123m",
@@ -123293,6 +123328,36 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-models:neoquasar--kronos-base",
+      "name": "NeoQuasar/Kronos-base",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Kronos is the first open-source foundation model for financial candlesticks (K-lines), trained on data from over 45 global exchanges. It is designed to handle the unique, high-noise characteristics of financial data.",
+      "url": "https://huggingface.co/NeoQuasar/Kronos-base",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 685775,
+        "likes": 300,
+        "trend": 12,
+        "updatedAt": "2025-09-09"
+      },
+      "tags": [
+        "time-series-forecasting"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "NeoQuasar",
+        "host": "huggingface",
+        "task": "time-series-forecasting",
+        "taskLabel": "time-series-forecasting"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:nerijs--pixel-art-xl",
       "name": "nerijs/pixel-art-xl",
       "kind": "models",
@@ -124721,8 +124786,8 @@
       },
       "metrics": {
         "downloads": 0,
-        "likes": 18,
-        "trend": 16,
+        "likes": 24,
+        "trend": 22,
         "updatedAt": "2026-10-13"
       },
       "tags": [
@@ -128606,6 +128671,35 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-models:nvidia--egohand-v1",
+      "name": "nvidia/EgoHand-v1",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "_This model is ready for commercial or non-commercial use._",
+      "url": "https://huggingface.co/nvidia/EgoHand-v1",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "openmdw-1.1",
+      "metrics": {
+        "downloads": 0,
+        "likes": 14,
+        "trend": 12,
+        "updatedAt": "2026-10-22"
+      },
+      "tags": [
+        "egohand"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "nvidia",
+        "host": "huggingface",
+        "library": "egohand"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:nvidia--flora-captioner",
       "name": "nvidia/Flora-Captioner",
       "kind": "models",
@@ -130263,8 +130357,8 @@
       },
       "metrics": {
         "downloads": 3897,
-        "likes": 34,
-        "trend": 25,
+        "likes": 41,
+        "trend": 26,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -130362,8 +130456,8 @@
       "license": "openmdw-1.1",
       "metrics": {
         "downloads": 2535,
-        "likes": 84,
-        "trend": 81,
+        "likes": 97,
+        "trend": 94,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -130392,9 +130486,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 1450,
-        "likes": 30,
-        "trend": 23,
+        "downloads": 1592,
+        "likes": 35,
+        "trend": 19,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -131443,6 +131537,72 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-models:nvidia--nvidia-nemotron-3.5-bolt-e4b-4gb",
+      "name": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "NVIDIA-Nemotron-3.5-Bolt-E4B-4GB is a small language model (SLM) further post-trained from Gemma-4-E4B-it by NVIDIA. Nemotron-3.5-Bolt-E4B carries forward Gemma’s strong conversational capabilities and further improves multi-turn tool use, instruction following, and input grounding for fast local…",
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 213,
+        "likes": 52,
+        "trend": 52,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "ko",
+        "multilingual",
+        "text-generation",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "nvidia",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:nvidia--nvidia-nemotron-3.5-bolt-e4b-bf16",
+      "name": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "NVIDIA-Nemotron-3.5-Bolt-E4B-BF16 is a small language model (SLM) further post-trained from Gemma-4-E4B-it by NVIDIA. This is the full-precision (BF16) release.",
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 249,
+        "likes": 14,
+        "trend": 14,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "ko",
+        "multilingual",
+        "text-generation",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "nvidia",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:nvidia--nvidia-nemotron-3.5-lightning-30b-a3b-base-bf16",
       "name": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Base-BF16",
       "kind": "models",
@@ -131585,43 +131745,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-models:nvidia--nvidia-nemotron-3.5-super-vl-120b-a12b-base-bf16",
-      "name": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-Base-BF16",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Model Developer: NVIDIA Corporation",
-      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-Base-BF16",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 1480,
-        "likes": 52,
-        "trend": 15,
-        "updatedAt": "2026-10-22"
-      },
-      "tags": [
-        "de",
-        "en",
-        "es",
-        "fr",
-        "image-text-to-text",
-        "it",
-        "ja",
-        "transformers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "nvidia",
-        "host": "huggingface",
-        "library": "transformers",
-        "task": "image-text-to-text",
-        "taskLabel": "Image-Text-to-Text"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-models:nvidia--nvidia-nemotron-3.5-super-vl-120b-a12b-bf16",
       "name": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
       "kind": "models",
@@ -131670,10 +131793,10 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 13739,
-        "likes": 218,
-        "trend": 114,
-        "updatedAt": "2026-10-16"
+        "downloads": 14539,
+        "likes": 222,
+        "trend": 99,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "de",
@@ -132094,9 +132217,9 @@
       },
       "license": "openmdw-1.1",
       "metrics": {
-        "downloads": 5097,
-        "likes": 545,
-        "trend": 7,
+        "downloads": 5094,
+        "likes": 544,
+        "trend": 1,
         "updatedAt": "2026-09-22"
       },
       "tags": [
@@ -132107,7 +132230,7 @@
         "author": "nvidia",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:nvidia--nvlm-d-72b",
@@ -165255,38 +165378,6 @@
       "fetchedAt": "2026-10-23"
     },
     {
-      "id": "hf-models:prism-ml--ternary-bonsai-2-9b-mlx-2bit",
-      "name": "prism-ml/Ternary-Bonsai-2-9B-mlx-2bit",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "A 9B-class vision-language model with ternary transformer weights, packed for MLX on Apple Silicon.",
-      "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-9B-mlx-2bit",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 5934,
-        "likes": 19,
-        "trend": 13,
-        "updatedAt": "2026-10-14"
-      },
-      "tags": [
-        "image-text-to-text",
-        "mlx"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "prism-ml",
-        "host": "huggingface",
-        "library": "mlx",
-        "task": "image-text-to-text",
-        "taskLabel": "Image-Text-to-Text"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-models:prism-ml--ternary-bonsai-27b-gguf",
       "name": "prism-ml/Ternary-Bonsai-27B-gguf",
       "kind": "models",
@@ -172007,8 +172098,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 252245,
-        "likes": 1017,
+        "downloads": 232348,
+        "likes": 1021,
+        "trend": 3,
         "updatedAt": "2025-01-12"
       },
       "tags": [
@@ -172024,7 +172116,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:qwen--qwen2.5-72b-instruct-awq",
@@ -173273,8 +173365,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 355706,
-        "likes": 74,
+        "downloads": 379786,
+        "likes": 77,
+        "trend": 3,
         "updatedAt": "2025-04-06"
       },
       "tags": [
@@ -173290,7 +173383,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:qwen--qwen2.5-vl-3b-instruct",
@@ -178823,8 +178916,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 1904,
-        "likes": 598,
-        "trend": 587,
+        "likes": 673,
+        "trend": 653,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -178836,6 +178929,38 @@
         "author": "RecursiveSI",
         "host": "huggingface",
         "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:recursivesi--flint-int4",
+      "name": "RecursiveSI/flint-int4",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "MLX-format INT4 weights for Recursive Flint, primarily intended for local inference on Apple Silicon. Projections and experts use group-64 affine INT4; embeddings use INT8. The weights occupy approximately 22.6 GB.",
+      "url": "https://huggingface.co/RecursiveSI/flint-int4",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 1955,
+        "likes": 15,
+        "trend": 14,
+        "updatedAt": "2026-10-21"
+      },
+      "tags": [
+        "mlx",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "RecursiveSI",
+        "host": "huggingface",
+        "library": "mlx",
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
@@ -178857,6 +178982,36 @@
         "downloads": 7245,
         "likes": 18,
         "trend": 18,
+        "updatedAt": "2026-10-21"
+      },
+      "tags": [
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "RecursiveSI",
+        "host": "huggingface",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:recursivesi--flint-nvfp4-gguf",
+      "name": "RecursiveSI/flint-nvfp4-gguf",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "NVFP4 GGUF weights for Recursive Flint, primarily intended for NVIDIA GPUs using llama.cpp with CUDA. The 22.9 GB file includes weights, tokenizer, and chat template.",
+      "url": "https://huggingface.co/RecursiveSI/flint-nvfp4-gguf",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 4669,
+        "likes": 14,
+        "trend": 14,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -180775,9 +180930,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1133772,
-        "likes": 26,
-        "trend": 1,
+        "downloads": 1154196,
+        "likes": 33,
+        "trend": 7,
         "updatedAt": "2026-10-13"
       },
       "tags": [
@@ -180791,7 +180946,7 @@
         "task": "text-to-speech",
         "taskLabel": "Text-to-Speech"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:rentednoodle--qwen3.8-27b-gsq-rco-iq3-xxs-uncensored",
@@ -181020,36 +181175,6 @@
         "taskLabel": "Text-to-Speech"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-models:respanai--span-02",
-      "name": "respanai/span-02",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Span-02 is a frontier decision model. Send it a state (text or JSON, plus up to 4 images) and typed questions; it returns a calibrated probability distribution for each answer. No free text, no parsing.",
-      "url": "https://huggingface.co/respanai/span-02",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 388,
-        "likes": 26,
-        "trend": 17,
-        "updatedAt": "2026-10-16"
-      },
-      "tags": [
-        "image-text-to-text"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "respanai",
-        "host": "huggingface",
-        "task": "image-text-to-text",
-        "taskLabel": "Image-Text-to-Text"
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:restor--tcd-segformer-mit-b0",
@@ -181727,6 +181852,37 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-models:rockmatrix-ai--edgerock",
+      "name": "rockmatrix-ai/EdgeRock",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Strong reasoning without a growing KV cache. EdgeRock is Rock Matrix's fixed-memory model family. EdgeRock-4B, the first open-source release, understands text and images and generates text for reasoning, coding, and agent workflows.",
+      "url": "https://huggingface.co/rockmatrix-ai/EdgeRock",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 2172,
+        "likes": 34,
+        "trend": 12,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "rockmatrix-ai",
+        "host": "huggingface",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:rodrigomt--s2-pro-gguf",
       "name": "rodrigomt/s2-pro-gguf",
       "kind": "models",
@@ -182252,32 +182408,6 @@
         "taskLabel": "Video-to-Video"
       },
       "fetchedAt": "2026-10-23"
-    },
-    {
-      "id": "hf-models:rudysen--krea2-realism-checkpoint",
-      "name": "RudySen/Krea2-Realism-Checkpoint",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "a coffee is appreciated: Support me on Ko-fi.",
-      "url": "https://huggingface.co/RudySen/Krea2-Realism-Checkpoint",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 0,
-        "likes": 20,
-        "trend": 20,
-        "updatedAt": "2026-10-16"
-      },
-      "tags": [],
-      "preview": {
-        "type": "model",
-        "author": "RudySen",
-        "host": "huggingface"
-      },
-      "fetchedAt": "2026-10-20"
     },
     {
       "id": "hf-models:rudysen--krea2-realism-v2",
@@ -182879,38 +183009,6 @@
         "taskLabel": "Automatic Speech Recognition"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-models:sabicap--sabi-noema",
-      "name": "sabicap/sabi-noema",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Sabi-Noema is an agentic model built on top of Qwen3.8-27B using exclusively open-source RL environments.",
-      "url": "https://huggingface.co/sabicap/sabi-noema",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 947,
-        "likes": 33,
-        "trend": 14,
-        "updatedAt": "2026-10-19"
-      },
-      "tags": [
-        "text-generation",
-        "transformers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "sabicap",
-        "host": "huggingface",
-        "library": "transformers",
-        "task": "text-generation",
-        "taskLabel": "Text Generation"
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:sagorsarker--bangla-bert-base",
@@ -185047,39 +185145,6 @@
         "host": "huggingface",
         "task": "audio-text-to-text",
         "taskLabel": "Audio-Text-to-Text"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
-      "id": "hf-models:scratchyone--anon-1b",
-      "name": "scratchyone/anon-1b",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "\\>be me \\>1B parameter model \\>read 157k greentexts \\>mfw",
-      "url": "https://huggingface.co/scratchyone/anon-1b",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Gemma Terms of Use",
-      "metrics": {
-        "downloads": 1906,
-        "likes": 40,
-        "trend": 23,
-        "updatedAt": "2026-10-15"
-      },
-      "tags": [
-        "en",
-        "text-generation",
-        "transformers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "scratchyone",
-        "host": "huggingface",
-        "library": "transformers",
-        "task": "text-generation",
-        "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -191521,9 +191586,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1524,
-        "likes": 318,
-        "trend": 93,
+        "downloads": 1591,
+        "likes": 328,
+        "trend": 26,
         "updatedAt": "2026-10-12"
       },
       "tags": [
@@ -191538,7 +191603,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:sphiratrioth666--sillytavern-presets-sphiratrioth",
@@ -193755,34 +193820,6 @@
         "taskLabel": "Image-to-Image"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-models:startlux-models--startlux-decision-v1.1-27b-instant",
-      "name": "startlux-models/StartLux-Decision-v1.1-27B-Instant",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "StartLux-Decision-v1.1-27B-Instant is a 27B decision model. You give it a state (text or JSON, with up to 8 images) and typed questions about it: pick one of several options (choice), yes or no (noul), or a level on a scale of 2 to 10 (score).",
-      "url": "https://huggingface.co/startlux-models/StartLux-Decision-v1.1-27B-Instant",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "CC-BY-NC-4.0",
-      "metrics": {
-        "downloads": 4219,
-        "likes": 12,
-        "trend": 12,
-        "updatedAt": "2026-10-14"
-      },
-      "tags": [
-        "en"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "startlux-models",
-        "host": "huggingface"
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:starvector--starvector-8b-im2svg",
@@ -198043,9 +198080,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 42247,
-        "likes": 1054,
-        "trend": 1,
+        "downloads": 40907,
+        "likes": 1060,
+        "trend": 6,
         "updatedAt": "2026-02-03"
       },
       "tags": [
@@ -198058,7 +198095,7 @@
         "task": "image-to-image",
         "taskLabel": "Image-to-Image"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:tencent--hunyuanocr",
@@ -198710,6 +198747,38 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-models:tencent--hy-nomas",
+      "name": "tencent/Hy-Nomas",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Hy-Nomas is a video world generation model that supports free-form, multi-turn interaction through text instructions and camera control. It generates a world one video segment at a time, allowing users to introduce objects, change styles and scenes, describe actions, or control the camera as…",
+      "url": "https://huggingface.co/tencent/Hy-Nomas",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 34,
+        "trend": 33,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "diffusers",
+        "text-to-video"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "tencent",
+        "host": "huggingface",
+        "library": "diffusers",
+        "task": "text-to-video",
+        "taskLabel": "Text-to-Video"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:tencent--hy-world-2.0",
       "name": "tencent/HY-World-2.0",
       "kind": "models",
@@ -199116,6 +199185,70 @@
         "taskLabel": "Feature Extraction"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-models:tencent--wevisone-vl-2b",
+      "name": "tencent/WeVisOne-VL-2B",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "WeVisOne-VL (WeChat Vision All-in-One) is a unified vision-language model developed by WeChat Vision, Tencent Inc. Built upon Qwen3-VL, it unifies object-level perception (open-vocabulary object detection, referring localization, object counting, object pointing, and OCR) and pixel-level…",
+      "url": "https://huggingface.co/tencent/WeVisOne-VL-2B",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 22,
+        "trend": 21,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "image-text-to-text",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "tencent",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:tencent--wevisone-vl-4b",
+      "name": "tencent/WeVisOne-VL-4B",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "WeVisOne-VL (WeChat Vision All-in-One) is a unified vision-language model developed by WeChat Vision, Tencent Inc. Built upon Qwen3-VL, it unifies object-level perception (open-vocabulary object detection, referring localization, object counting, object pointing, and OCR) and pixel-level…",
+      "url": "https://huggingface.co/tencent/WeVisOne-VL-4B",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 16,
+        "trend": 15,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "image-text-to-text",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "tencent",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:tencent--youtu-llm-2b",
@@ -201104,8 +201237,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 79,
-        "likes": 37,
-        "trend": 29,
+        "likes": 44,
+        "trend": 35,
         "updatedAt": "2026-10-22"
       },
       "tags": [
@@ -209841,6 +209974,37 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-models:togethercomputer--hybridagent-14b-agentic",
+      "name": "togethercomputer/HybridAgent-14B-Agentic",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "HybridAgent is an LLM agent that dynamically navigates between latent reasoning and text-based interaction within a single generation process. It thinks in continuous latent space through a lightweight HybridLink and acts through text, calling a Python interpreter and a web search tool across…",
+      "url": "https://huggingface.co/togethercomputer/HybridAgent-14B-Agentic",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 1197,
+        "likes": 17,
+        "trend": 13,
+        "updatedAt": "2026-10-14"
+      },
+      "tags": [
+        "en",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "togethercomputer",
+        "host": "huggingface",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:togethercomputer--llama-2-7b-32k",
       "name": "togethercomputer/LLaMA-2-7B-32K",
       "kind": "models",
@@ -213438,6 +213602,37 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-models:ukisai--swift1.5-qwen3.8-flash-next",
+      "name": "ukisai/Swift1.5-Qwen3.8-Flash-Next",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Swift 1.5 Qwen3.8-Flash-Next is UkisAI's reasoning-efficient derivative of Qwen3.8-Flash-Next. It uses 63.4% fewer thinking tokens, with a 1.8x speed up while keeping the accuracy loss <1% vs base on xhigh.",
+      "url": "https://huggingface.co/ukisai/Swift1.5-Qwen3.8-Flash-Next",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 2770,
+        "likes": 98,
+        "trend": 12,
+        "updatedAt": "2026-09-24"
+      },
+      "tags": [
+        "image-text-to-text",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "ukisai",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:ultralytics--yolo11",
       "name": "Ultralytics/YOLO11",
       "kind": "models",
@@ -213687,37 +213882,6 @@
         "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-models:unsloth--beam-1.0-501b-a23b-gguf",
-      "name": "unsloth/Beam-1.0-501B-A23B-GGUF",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Beam is an open model built by Reflection. Beam takes text as input and generates text as output. This release includes the instruction-tuned model in BF16, FP8, and NVFP4 numerics. Beam uses a sparse mixture-of-experts (MoE) architecture with 501B total parameters and 23B active parameters.",
-      "url": "https://huggingface.co/unsloth/Beam-1.0-501B-A23B-GGUF",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 2335,
-        "likes": 15,
-        "trend": 15,
-        "updatedAt": "2026-10-16"
-      },
-      "tags": [
-        "en",
-        "text-generation"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "unsloth",
-        "host": "huggingface",
-        "task": "text-generation",
-        "taskLabel": "Text Generation"
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-models:unsloth--bge-small-en-v1.5",
@@ -214266,8 +214430,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 33277,
-        "likes": 165,
-        "trend": 163,
+        "likes": 186,
+        "trend": 182,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -218262,6 +218426,35 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-models:unsloth--minimax-m3.1-flash-gguf",
+      "name": "unsloth/MiniMax-M3.1-Flash-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "MiniMax-M3.1-Flash is a native multimodal mixture-of-experts model for coding, agentic workflows, computer use, and cybersecurity. It supports text, image, and video inputs with a context window of up to 1M tokens.",
+      "url": "https://huggingface.co/unsloth/MiniMax-M3.1-Flash-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 0,
+        "likes": 15,
+        "trend": 15,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "image-text-to-text"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "unsloth",
+        "host": "huggingface",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-models:unsloth--mistral-7b-instruct-v0.3-bnb-4bit",
       "name": "unsloth/mistral-7b-instruct-v0.3-bnb-4bit",
       "kind": "models",
@@ -218552,6 +218745,37 @@
         "host": "huggingface",
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-models:unsloth--nvidia-nemotron-3.5-bolt-e4b-gguf",
+      "name": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "NVIDIA-Nemotron-3.5-Bolt-E4B-4GB is a small language model (SLM) further post-trained from Gemma-4-E4B-it by NVIDIA. Nemotron-3.5-Bolt-E4B carries forward Gemma’s strong conversational capabilities and further improves multi-turn tool use, instruction following, and input grounding for fast local…",
+      "url": "https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 0,
+        "likes": 31,
+        "trend": 31,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "ko",
+        "multilingual",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "unsloth",
+        "host": "huggingface",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -231274,8 +231498,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 9824,
-        "likes": 90,
-        "trend": 88,
+        "likes": 99,
+        "trend": 95,
         "updatedAt": "2026-10-21"
       },
       "tags": [

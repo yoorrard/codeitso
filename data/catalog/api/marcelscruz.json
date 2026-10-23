@@ -7,7 +7,7 @@
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-23",
-  "count": 692,
+  "count": 697,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -3874,6 +3874,30 @@
         "listCategory": "Government"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:deed",
+      "name": "Deed",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Publish HTML or a static folder to a permanent HTTPS subdomain with one PUT and no signup; also served as a remote MCP server",
+      "url": "https://deed.page",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "marcelscruz:defend-network",
@@ -7811,6 +7835,30 @@
       }
     },
     {
+      "id": "marcelscruz:kiwi-news",
+      "name": "Kiwi News",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Community-curated crypto and Ethereum news: hot, new and best feeds, stories with comments",
+      "url": "https://news.kiwistand.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "news"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "News"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "marcelscruz:klarna",
       "name": "Klarna",
       "kind": "finance",
@@ -7886,6 +7934,29 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "marcelscruz:kunstlerfinanzen",
+      "name": "Künstlerfinanzen",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Contribution rates of the German artists' social insurance (Künstlersozialkasse) per year and branch, each value with its source",
+      "url": "https://kuenstlerfinanzen.de/entwickler.html",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "marcelscruz:kurtaxe",
@@ -14936,6 +15007,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:tweetapi",
+      "name": "TweetAPI",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Twitter data API: search, profiles, followers, timelines, lists, communities, posting and DMs",
+      "url": "https://tweetapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "marcelscruz:tyk",
       "name": "Tyk",
       "kind": "dev",
@@ -15007,6 +15101,30 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:unicum",
+      "name": "Unicum",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "World of Tanks player, clan and tank stats, ratings, leaderboards and server population for EU, NA and Asia",
+      "url": "https://unicum.gg",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "marcelscruz:unidb",

@@ -8,7 +8,7 @@
     "cut": "최근 30일 내려받기 10,000회 이상 또는 좋아요 100개 이상 또는 요즘 뜨는 순 상위 300개. 카드 설명이 없으면 좋아요 20개 이상만"
   },
   "fetchedAt": "2026-10-23",
-  "count": 2467,
+  "count": 2474,
   "items": [
     {
       "id": "hf-datasets:0xding--wikipedia-cn-20230720-filtered",
@@ -1255,24 +1255,15 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 18860,
+        "downloads": 18894,
         "likes": 20,
         "updatedAt": "2026-10-23"
       },
-      "tags": [
-        "text"
-      ],
+      "tags": [],
       "preview": {
         "type": "dataset",
         "author": "agents-course",
-        "formats": [
-          "parquet"
-        ],
-        "host": "huggingface",
-        "modalities": [
-          "text"
-        ],
-        "size": "10K<n<100K"
+        "host": "huggingface"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -3518,41 +3509,6 @@
         "formats": [
           "parquet",
           "optimized-parquet"
-        ],
-        "host": "huggingface",
-        "modalities": [
-          "text"
-        ],
-        "size": "1K<n<10K"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
-      "id": "hf-datasets:allenai--dolci-think-sft-olmo-hybrid-tool-use-sa",
-      "name": "allenai/Dolci-Think-SFT-Olmo-Hybrid-Tool-Use-SA",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "Dolci Think SFT Olmo Hybrid Tool Use SA is licensed under the Open Data Commons Attribution License v1.0 (ODC-By). It is intended for research and educational use. For more information, please see our Responsible Use Guidelines.",
-      "url": "https://huggingface.co/datasets/allenai/Dolci-Think-SFT-Olmo-Hybrid-Tool-Use-SA",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "CC-BY-SA-4.0",
-      "metrics": {
-        "downloads": 263,
-        "likes": 26,
-        "trend": 4,
-        "updatedAt": "2026-10-22"
-      },
-      "tags": [
-        "text"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "allenai",
-        "formats": [
-          "parquet"
         ],
         "host": "huggingface",
         "modalities": [
@@ -6754,9 +6710,7 @@
       "tags": [
         "en",
         "image",
-        "tabular",
         "text",
-        "timeseries",
         "video"
       ],
       "preview": {
@@ -6771,9 +6725,7 @@
         ],
         "modalities": [
           "image",
-          "tabular",
           "text",
-          "timeseries",
           "video"
         ],
         "size": "1M<n<10M"
@@ -9097,6 +9049,49 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-datasets:auroraai-research--nanostories",
+      "name": "AuroraAI-Research/NanoStories",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "NanoStories is a dataset of 50 million short, simple children's stories in English. It is intended for training and evaluating small language models. Every story is produced by a rule-based generator, not by a neural model.",
+      "url": "https://huggingface.co/datasets/AuroraAI-Research/NanoStories",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 6,
+        "trend": 6,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "en",
+        "text",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "AuroraAI-Research",
+        "formats": [
+          "parquet"
+        ],
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "modalities": [
+          "text"
+        ],
+        "size": "10M<n<100M",
+        "tasks": [
+          "text-generation"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:austin-starks--congressional-stock-trades",
       "name": "austin-starks/congressional-stock-trades",
       "kind": "ai-training",
@@ -9503,7 +9498,7 @@
       "name": "AYUSHKHAIRE/all-stock-market-data-daily-updates",
       "kind": "ai-training",
       "category": "datasets",
-      "summary": "17030 Stocks | 43.93 Million+ rows | 3.56 GB+ Data | ( Daily updates )",
+      "summary": "17368 Stocks | 45.08 Million+ rows | 3.65 GB+ Data | ( Daily updates )",
       "url": "https://huggingface.co/datasets/AYUSHKHAIRE/all-stock-market-data-daily-updates",
       "source": {
         "name": "Hugging Face Datasets",
@@ -9511,9 +9506,9 @@
       },
       "license": "CC0-1.0",
       "metrics": {
-        "downloads": 16826,
+        "downloads": 16844,
         "likes": 1,
-        "updatedAt": "2026-10-22"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "en",
@@ -10265,9 +10260,9 @@
       },
       "license": "CC-BY-SA-4.0",
       "metrics": {
-        "downloads": 3094,
-        "likes": 99,
-        "trend": 18,
+        "downloads": 3213,
+        "likes": 110,
+        "trend": 9,
         "updatedAt": "2026-09-23"
       },
       "tags": [
@@ -10299,7 +10294,7 @@
           "question-answering"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:bangumibase--onepiece",
@@ -10413,6 +10408,49 @@
         "host": "huggingface"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-datasets:basis-ai--basis-global-emotions",
+      "name": "basis-ai/basis-global-emotions",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "525.17 hours · 137,696 recordings · 54,575 series · 10,420 speakers · 108 locales",
+      "url": "https://huggingface.co/datasets/basis-ai/basis-global-emotions",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "metrics": {
+        "downloads": 1651,
+        "likes": 20,
+        "trend": 5,
+        "updatedAt": "2026-10-12"
+      },
+      "tags": [
+        "audio",
+        "audio-classification",
+        "gated",
+        "multilingual",
+        "text-to-speech"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "basis-ai",
+        "gated": true,
+        "host": "huggingface",
+        "languages": [
+          "multilingual"
+        ],
+        "modalities": [
+          "audio"
+        ],
+        "size": "100K<n<1M",
+        "tasks": [
+          "text-to-speech",
+          "audio-classification"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:bastao--veracruz-pt-br",
@@ -11628,6 +11666,44 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-datasets:bicolino34--uk-wikisource-ocr-full",
+      "name": "bicolino34/uk-wikisource-OCR-full",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Ukrainian Wikisource Page Transcriptions",
+      "url": "https://huggingface.co/datasets/bicolino34/uk-wikisource-OCR-full",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "CC-BY-SA-4.0",
+      "metrics": {
+        "downloads": 106,
+        "likes": 5,
+        "trend": 5,
+        "updatedAt": "2026-10-22"
+      },
+      "tags": [
+        "image-text-to-text",
+        "image-to-text",
+        "multilingual"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "bicolino34",
+        "host": "huggingface",
+        "languages": [
+          "multilingual"
+        ],
+        "size": "100K<n<1M",
+        "tasks": [
+          "image-to-text",
+          "image-text-to-text"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:bigai--tongsim-asset",
       "name": "bigai/TongSIM-Asset",
       "kind": "ai-training",
@@ -11699,8 +11775,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 13365,
-        "likes": 161,
+        "downloads": 13692,
+        "likes": 165,
+        "trend": 3,
         "updatedAt": "2026-09-04"
       },
       "tags": [
@@ -11724,7 +11801,7 @@
         ],
         "size": "100K<n<1M"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:bigcode--bigcodebench",
@@ -13455,6 +13532,47 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-datasets:brunohays--darija-speech-to-text",
+      "name": "BrunoHays/darija-speech-to-text",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Reupload of adiren7/darija_speech_to_text",
+      "url": "https://huggingface.co/datasets/BrunoHays/darija-speech-to-text",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 213,
+        "likes": 12,
+        "trend": 4,
+        "updatedAt": "2024-12-19"
+      },
+      "tags": [
+        "audio",
+        "automatic-speech-recognition",
+        "text"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "BrunoHays",
+        "formats": [
+          "parquet"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "audio",
+          "text"
+        ],
+        "size": "1K<n<10K",
+        "tasks": [
+          "automatic-speech-recognition"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:bshada--open-schematics",
       "name": "bshada/open-schematics",
       "kind": "ai-training",
@@ -14639,45 +14757,6 @@
         "host": "huggingface"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-datasets:cath1y--embodied-ai-literature-metadata",
-      "name": "Cath1y/embodied-ai-literature-metadata",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "This dataset contains normalized paper metadata collected for an Embodied AI /",
-      "url": "https://huggingface.co/datasets/Cath1y/embodied-ai-literature-metadata",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "MIT",
-      "metrics": {
-        "downloads": 216,
-        "likes": 13,
-        "trend": 5,
-        "updatedAt": "2026-07-05"
-      },
-      "tags": [
-        "en",
-        "question-answering",
-        "text-retrieval",
-        "zh"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "Cath1y",
-        "host": "huggingface",
-        "languages": [
-          "en",
-          "zh"
-        ],
-        "tasks": [
-          "text-retrieval",
-          "question-answering"
-        ]
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:causallm--refined-anime-text",
@@ -17425,6 +17504,48 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-datasets:countvideobench--countvideobench",
+      "name": "countvideobench/CountVideoBench",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "A benchmark to evaluate prediction biases on the object counting task by video-language models.",
+      "url": "https://huggingface.co/datasets/countvideobench/CountVideoBench",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "CC-BY-4.0",
+      "metrics": {
+        "downloads": 510,
+        "likes": 7,
+        "trend": 6,
+        "updatedAt": "2026-10-22"
+      },
+      "tags": [
+        "en",
+        "video",
+        "video-text-to-text",
+        "visual-question-answering"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "countvideobench",
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "modalities": [
+          "video"
+        ],
+        "size": "1K<n<10K",
+        "tasks": [
+          "video-text-to-text",
+          "visual-question-answering"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:craigwu--vstar-bench",
       "name": "craigwu/vstar_bench",
       "kind": "ai-training",
@@ -18030,20 +18151,11 @@
         "likes": 1,
         "updatedAt": "2026-10-23"
       },
-      "tags": [
-        "text"
-      ],
+      "tags": [],
       "preview": {
         "type": "dataset",
         "author": "csoai",
-        "formats": [
-          "json"
-        ],
-        "host": "huggingface",
-        "modalities": [
-          "text"
-        ],
-        "size": "n<1K"
+        "host": "huggingface"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -18629,8 +18741,8 @@
       },
       "license": "CC-BY-NC-SA-4.0",
       "metrics": {
-        "downloads": 14918,
-        "likes": 52,
+        "downloads": 16324,
+        "likes": 76,
         "trend": 2.5,
         "updatedAt": "2026-10-23"
       },
@@ -20553,31 +20665,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-datasets:dhbloo--tusimple",
-      "name": "dhbloo/TuSimple",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "Dataset from: https://github.com/TuSimple/tusimple-benchmark",
-      "url": "https://huggingface.co/datasets/dhbloo/TuSimple",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 22824,
-        "likes": 0,
-        "updatedAt": "2023-07-09"
-      },
-      "tags": [],
-      "preview": {
-        "type": "dataset",
-        "author": "dhbloo",
-        "host": "huggingface"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "hf-datasets:di-zhang-fdu--aime-1983-2024",
       "name": "di-zhang-fdu/AIME_1983_2024",
       "kind": "ai-training",
@@ -21421,6 +21508,36 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-datasets:dotblue--tusimple",
+      "name": "dotblue/TuSimple",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Dataset from: https://github.com/TuSimple/tusimple-benchmark",
+      "url": "https://huggingface.co/datasets/dotblue/TuSimple",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 24225,
+        "likes": 0,
+        "updatedAt": "2023-07-09"
+      },
+      "tags": [
+        "image"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "dotblue",
+        "host": "huggingface",
+        "modalities": [
+          "image"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:dreammr--hr-bench",
       "name": "DreamMr/HR-Bench",
       "kind": "ai-training",
@@ -21893,11 +22010,22 @@
         "likes": 1,
         "updatedAt": "2026-10-23"
       },
-      "tags": [],
+      "tags": [
+        "tabular",
+        "text"
+      ],
       "preview": {
         "type": "dataset",
         "author": "dtunkelang",
-        "host": "huggingface"
+        "formats": [
+          "json"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "tabular",
+          "text"
+        ],
+        "size": "n<1K"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -22395,38 +22523,29 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 20770,
-        "likes": 9,
-        "updatedAt": "2026-10-19"
+        "downloads": 20168,
+        "likes": 10,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "en",
-        "tabular",
-        "text",
         "text-classification",
         "text-retrieval"
       ],
       "preview": {
         "type": "dataset",
         "author": "edwarddgao",
-        "formats": [
-          "parquet"
-        ],
         "host": "huggingface",
         "languages": [
           "en"
         ],
-        "modalities": [
-          "tabular",
-          "text"
-        ],
-        "size": "10M<n<100M",
+        "size": "1M<n<10M",
         "tasks": [
           "text-classification",
           "text-retrieval"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:egosteer--egosteer-realworld",
@@ -23108,49 +23227,6 @@
         ]
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-datasets:embodied-ai-6--dataset",
-      "name": "Embodied-AI-6/dataset",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "\"data_path\": \"data/chunk-{chunk_index:03d}/file-{file_index:03d}.parquet\",",
-      "url": "https://huggingface.co/datasets/Embodied-AI-6/dataset",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 5479,
-        "likes": 10,
-        "trend": 4,
-        "updatedAt": "2026-01-29"
-      },
-      "tags": [
-        "robotics",
-        "tabular",
-        "timeseries",
-        "video"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "Embodied-AI-6",
-        "formats": [
-          "parquet"
-        ],
-        "host": "huggingface",
-        "modalities": [
-          "tabular",
-          "timeseries",
-          "video"
-        ],
-        "size": "10K<n<100K",
-        "tasks": [
-          "robotics"
-        ]
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:emgena--speculative-decoding-draft-guard-teaser",
@@ -24925,6 +25001,50 @@
         "size": "10K<n<100K"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-datasets:facebook--sam-3d-body-dataset",
+      "name": "facebook/sam-3d-body-dataset",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "This repository provides the annotations used in SAM 3D Body.",
+      "url": "https://huggingface.co/datasets/facebook/sam-3d-body-dataset",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "metrics": {
+        "downloads": 907,
+        "likes": 94,
+        "trend": 4,
+        "updatedAt": "2025-11-19"
+      },
+      "tags": [
+        "en",
+        "gated",
+        "tabular",
+        "text",
+        "timeseries"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "facebook",
+        "formats": [
+          "parquet"
+        ],
+        "gated": true,
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "modalities": [
+          "tabular",
+          "text",
+          "timeseries"
+        ],
+        "size": "1M<n<10M"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:facebook--seamless-interaction",
@@ -31483,43 +31603,6 @@
       "fetchedAt": "2026-10-23"
     },
     {
-      "id": "hf-datasets:harvardmadsys--freeinference-agentic-trace",
-      "name": "harvardMadsys/freeinference_agentic_trace",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "New: Interactive Session Explorer! We've launched an interactive session explorer to help you explore the dataset interactively. Try it out here!",
-      "url": "https://huggingface.co/datasets/harvardMadsys/freeinference_agentic_trace",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "CC-BY-4.0",
-      "metrics": {
-        "downloads": 3769,
-        "likes": 56,
-        "trend": 5,
-        "updatedAt": "2026-10-14"
-      },
-      "tags": [
-        "tabular",
-        "text"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "harvardMadsys",
-        "formats": [
-          "parquet"
-        ],
-        "host": "huggingface",
-        "modalities": [
-          "tabular",
-          "text"
-        ],
-        "size": "1M<n<10M"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-datasets:hcompany--trajectories",
       "name": "Hcompany/trajectories",
       "kind": "ai-training",
@@ -31612,10 +31695,10 @@
       },
       "license": "CC-BY-4.0",
       "metrics": {
-        "downloads": 2203,
+        "downloads": 2217,
         "likes": 41,
-        "trend": 9,
-        "updatedAt": "2026-10-14"
+        "trend": 8,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "en",
@@ -33238,34 +33321,24 @@
       },
       "license": "CC-BY-4.0",
       "metrics": {
-        "downloads": 15889,
+        "downloads": 15586,
         "likes": 1,
         "updatedAt": "2026-10-23"
       },
       "tags": [
         "3d",
-        "en",
-        "image",
-        "tabular",
-        "text"
+        "en"
       ],
       "preview": {
         "type": "dataset",
         "author": "HuggingAI4Engineering",
-        "formats": [
-          "json"
-        ],
         "host": "huggingface",
         "languages": [
           "en"
         ],
         "modalities": [
-          "image",
-          "tabular",
-          "text",
           "3d"
-        ],
-        "size": "n<1K"
+        ]
       },
       "fetchedAt": "2026-10-23"
     },
@@ -34912,8 +34985,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1707,
-        "likes": 141,
+        "downloads": 1713,
+        "likes": 144,
+        "trend": 3,
         "updatedAt": "2025-01-29"
       },
       "tags": [
@@ -34935,7 +35009,7 @@
         ],
         "size": "1K<n<10K"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:huggingfacetb--finemath",
@@ -35742,8 +35816,9 @@
       },
       "license": "CC-BY-4.0",
       "metrics": {
-        "downloads": 127,
-        "likes": 537,
+        "downloads": 128,
+        "likes": 540,
+        "trend": 3,
         "updatedAt": "2025-08-14"
       },
       "tags": [
@@ -35769,7 +35844,7 @@
           "audio-classification"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:humynlabs--medical-prescription-english-audio",
@@ -41371,19 +41446,21 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 10351,
+        "downloads": 11051,
         "likes": 0,
-        "updatedAt": "2026-10-22"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
-        "3d"
+        "3d",
+        "text"
       ],
       "preview": {
         "type": "dataset",
         "author": "joshuasundance",
         "host": "huggingface",
         "modalities": [
-          "3d"
+          "3d",
+          "text"
         ],
         "size": "n<1K"
       },
@@ -42246,7 +42323,7 @@
       "name": "kalpesh77/vedic-neural-geometry",
       "kind": "ai-training",
       "category": "datasets",
-      "summary": "वैदिक न्यूरल जिओमेट्री (Vedic Neural Geometry)",
+      "summary": "vedic-neural-geometry",
       "url": "https://huggingface.co/datasets/kalpesh77/vedic-neural-geometry",
       "source": {
         "name": "Hugging Face Datasets",
@@ -43134,14 +43211,21 @@
       },
       "tags": [
         "en",
+        "text",
         "text-generation"
       ],
       "preview": {
         "type": "dataset",
         "author": "KokunoYumeto",
+        "formats": [
+          "json"
+        ],
         "host": "huggingface",
         "languages": [
           "en"
+        ],
+        "modalities": [
+          "text"
         ],
         "size": "1K<n<10K",
         "tasks": [
@@ -44345,9 +44429,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 99,
-        "likes": 8,
-        "trend": 4,
+        "downloads": 108,
+        "likes": 13,
+        "trend": 7,
         "updatedAt": "2026-04-13"
       },
       "tags": [
@@ -44368,7 +44452,7 @@
         ],
         "size": "n<1K"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:latkes--self-consistency-correction-exp5-diagnostic",
@@ -45960,6 +46044,43 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-datasets:lichess--chess-position-evaluations",
+      "name": "Lichess/chess-position-evaluations",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Dataset Card for the Lichess Evaluations dataset",
+      "url": "https://huggingface.co/datasets/Lichess/chess-position-evaluations",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "CC0-1.0",
+      "metrics": {
+        "downloads": 3951,
+        "likes": 38,
+        "trend": 4,
+        "updatedAt": "2026-10-07"
+      },
+      "tags": [
+        "tabular",
+        "text"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "Lichess",
+        "formats": [
+          "parquet"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "tabular",
+          "text"
+        ],
+        "size": "1B<n<10B"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:lichess--standard-chess-games",
       "name": "Lichess/standard-chess-games",
       "kind": "ai-training",
@@ -46276,9 +46397,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 28690,
-        "likes": 208,
-        "trend": 2,
+        "downloads": 28633,
+        "likes": 247,
+        "trend": 7,
         "updatedAt": "2026-10-10"
       },
       "tags": [
@@ -46317,9 +46438,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 675,
-        "likes": 216,
-        "trend": 8.5,
+        "downloads": 681,
+        "likes": 256,
+        "trend": 1.5,
         "updatedAt": "2026-10-10"
       },
       "tags": [
@@ -46358,8 +46479,8 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 10605,
-        "likes": 196,
+        "downloads": 10621,
+        "likes": 222,
         "trend": 11,
         "updatedAt": "2026-10-14"
       },
@@ -47073,8 +47194,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 909,
-        "likes": 186,
+        "downloads": 916,
+        "likes": 189,
+        "trend": 3,
         "updatedAt": "2023-07-06"
       },
       "tags": [
@@ -47092,7 +47214,7 @@
           "image"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:liuhaotian--llava-instruct-150k",
@@ -52135,7 +52257,7 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 76154,
+        "downloads": 76828,
         "likes": 11,
         "trend": 2,
         "updatedAt": "2026-10-23"
@@ -52145,16 +52267,12 @@
         "id",
         "ja",
         "ko",
-        "text",
         "text-generation",
         "zh"
       ],
       "preview": {
         "type": "dataset",
         "author": "meaecosystem",
-        "formats": [
-          "text"
-        ],
         "host": "huggingface",
         "languages": [
           "id",
@@ -52163,10 +52281,7 @@
           "zh",
           "ko"
         ],
-        "modalities": [
-          "text"
-        ],
-        "size": "1B<n<10B",
+        "size": "10M<n<100M",
         "tasks": [
           "text-generation"
         ]
@@ -52870,9 +52985,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 12021,
+        "downloads": 11617,
         "likes": 0,
-        "updatedAt": "2026-10-14"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "document",
@@ -52894,7 +53009,7 @@
         ],
         "size": "n<1K"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:meteoswiss--peakweather",
@@ -59907,6 +60022,53 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "hf-datasets:nu-world-model-embodied-ai--phyground",
+      "name": "NU-World-Model-Embodied-AI/phyground",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "PhyGround: Benchmarking Physical Reasoning in Generative World Models",
+      "url": "https://huggingface.co/datasets/NU-World-Model-Embodied-AI/phyground",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "CC-BY-4.0",
+      "metrics": {
+        "downloads": 1316,
+        "likes": 18,
+        "trend": 6,
+        "updatedAt": "2026-08-07"
+      },
+      "tags": [
+        "en",
+        "image-to-video",
+        "text",
+        "text-to-video",
+        "video"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "NU-World-Model-Embodied-AI",
+        "formats": [
+          "json"
+        ],
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "modalities": [
+          "text",
+          "video"
+        ],
+        "size": "n<1K",
+        "tasks": [
+          "text-to-video",
+          "image-to-video"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:nunchaku-ai--cdn",
       "name": "nunchaku-ai/cdn",
       "kind": "ai-training",
@@ -61038,8 +61200,8 @@
       "license": "CC-BY-4.0",
       "metrics": {
         "downloads": 810,
-        "likes": 37,
-        "trend": 34,
+        "likes": 43,
+        "trend": 39,
         "updatedAt": "2026-10-20"
       },
       "tags": [
@@ -61173,8 +61335,8 @@
       "license": "CC-BY-4.0",
       "metrics": {
         "downloads": 496,
-        "likes": 18,
-        "trend": 15,
+        "likes": 25,
+        "trend": 21,
         "updatedAt": "2026-10-20"
       },
       "tags": [
@@ -61698,42 +61860,6 @@
       "fetchedAt": "2026-10-23"
     },
     {
-      "id": "hf-datasets:nvidia--nemotron-sft-opencode-v1",
-      "name": "nvidia/Nemotron-SFT-OpenCode-v1",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "Nemotron-SFT-OpenCode-v1 is an agentic instruction tuning dataset that enhances the ability of Large Language Models (LLMs) to operate within the OpenCode Command Line Interface (CLI) framework and instills simple capabilities such as tool calling and agent skills.",
-      "url": "https://huggingface.co/datasets/nvidia/Nemotron-SFT-OpenCode-v1",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "CC-BY-4.0",
-      "metrics": {
-        "downloads": 2313,
-        "likes": 71,
-        "trend": 5,
-        "updatedAt": "2026-03-23"
-      },
-      "tags": [
-        "en",
-        "text-generation"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "nvidia",
-        "host": "huggingface",
-        "languages": [
-          "en"
-        ],
-        "size": "100K<n<1M",
-        "tasks": [
-          "text-generation"
-        ]
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-datasets:nvidia--nemotron-sft-science-v2",
       "name": "nvidia/Nemotron-SFT-Science-v2",
       "kind": "ai-training",
@@ -62082,9 +62208,9 @@
       },
       "license": "CC-BY-4.0",
       "metrics": {
-        "downloads": 101096,
-        "likes": 264,
-        "trend": 1,
+        "downloads": 103545,
+        "likes": 269,
+        "trend": 6,
         "updatedAt": "2024-11-25"
       },
       "tags": [
@@ -62112,7 +62238,7 @@
           "text-generation"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:nvidia--openmathreasoning",
@@ -62279,6 +62405,34 @@
         "likes": 1156,
         "trend": 10,
         "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "gated"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "nvidia",
+        "gated": true,
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-datasets:nvidia--physicalai-autonomous-vehicles-foundation4d",
+      "name": "nvidia/PhysicalAI-Autonomous-Vehicles-Foundation4D",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "PhysicalAI Autonomous Vehicles - Foundation4D",
+      "url": "https://huggingface.co/datasets/nvidia/PhysicalAI-Autonomous-Vehicles-Foundation4D",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "metrics": {
+        "downloads": 58,
+        "likes": 5,
+        "trend": 5,
+        "updatedAt": "2026-10-21"
       },
       "tags": [
         "gated"
@@ -62881,9 +63035,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 210209,
-        "likes": 41,
-        "trend": 23,
+        "downloads": 215679,
+        "likes": 53,
+        "trend": 33,
         "updatedAt": "2026-10-20"
       },
       "tags": [
@@ -64040,10 +64194,12 @@
       "metrics": {
         "downloads": 25653,
         "likes": 14,
-        "updatedAt": "2026-10-22"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "question-answering",
+        "tabular",
+        "text",
         "text-generation",
         "text-retrieval",
         "th"
@@ -64051,9 +64207,16 @@
       "preview": {
         "type": "dataset",
         "author": "open-law-data-thailand",
+        "formats": [
+          "json"
+        ],
         "host": "huggingface",
         "languages": [
           "th"
+        ],
+        "modalities": [
+          "tabular",
+          "text"
         ],
         "size": "1M<n<10M",
         "tasks": [
@@ -64139,6 +64302,31 @@
         "likes": 9,
         "trend": 7,
         "updatedAt": "2024-01-04"
+      },
+      "tags": [],
+      "preview": {
+        "type": "dataset",
+        "author": "open-llm-leaderboard-old",
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-datasets:open-llm-leaderboard-old--details-llm-agents-tora-code-7b-v1.0",
+      "name": "open-llm-leaderboard-old/details_llm-agents__tora-code-7b-v1.0",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Dataset Card for Evaluation run of llm-agents/tora-code-7b-v1.0",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_llm-agents__tora-code-7b-v1.0",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "metrics": {
+        "downloads": 1272,
+        "likes": 15,
+        "trend": 4,
+        "updatedAt": "2023-10-28"
       },
       "tags": [],
       "preview": {
@@ -66729,8 +66917,9 @@
       },
       "license": "CC-BY-4.0",
       "metrics": {
-        "downloads": 217,
-        "likes": 101,
+        "downloads": 206,
+        "likes": 104,
+        "trend": 3,
         "updatedAt": "2026-07-26"
       },
       "tags": [
@@ -66760,7 +66949,51 @@
           "text-to-image"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "hf-datasets:openface-cqupt--humancaption-10m",
+      "name": "OpenFace-CQUPT/HumanCaption-10M",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "You need to first download the data from here and then apply for access to the original Laion-face dataset by completing the required agreement (github). Once approved, refer to the information available on HuggingFace to obtain the corresponding image-text pairs.",
+      "url": "https://huggingface.co/datasets/OpenFace-CQUPT/HumanCaption-10M",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "CC-BY-4.0",
+      "metrics": {
+        "downloads": 103,
+        "likes": 48,
+        "trend": 5,
+        "updatedAt": "2026-07-26"
+      },
+      "tags": [
+        "en",
+        "image",
+        "image-to-text",
+        "text",
+        "text-to-image"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "OpenFace-CQUPT",
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "modalities": [
+          "image",
+          "text"
+        ],
+        "size": "10M<n<100M",
+        "tasks": [
+          "image-to-text",
+          "text-to-image"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:openfoodfacts--product-database",
@@ -68721,8 +68954,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 19857,
-        "likes": 71,
+        "downloads": 18852,
+        "likes": 75,
+        "trend": 3,
         "updatedAt": "2026-10-18"
       },
       "tags": [
@@ -68754,7 +68988,7 @@
           "tabular-regression"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:parrotzone--sdxl-1.0",
@@ -69152,47 +69386,6 @@
       "fetchedAt": "2026-10-23"
     },
     {
-      "id": "hf-datasets:perturbai--wholebrain-crispr-atlas",
-      "name": "perturbai/wholebrain_crispr_atlas",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "PerturbAI Brain-Wide In Vivo CRISPR Atlas",
-      "url": "https://huggingface.co/datasets/perturbai/wholebrain_crispr_atlas",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "CC-BY-4.0",
-      "metrics": {
-        "downloads": 8144,
-        "likes": 22,
-        "trend": 4,
-        "updatedAt": "2026-03-20"
-      },
-      "tags": [
-        "en",
-        "tabular",
-        "text"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "perturbai",
-        "formats": [
-          "parquet"
-        ],
-        "host": "huggingface",
-        "languages": [
-          "en"
-        ],
-        "modalities": [
-          "tabular",
-          "text"
-        ],
-        "size": "1M<n<10M"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "hf-datasets:peteromallet--dataclaw-peteromallet",
       "name": "peteromallet/dataclaw-peteromallet",
       "kind": "ai-training",
@@ -69313,7 +69506,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 15566,
+        "downloads": 15849,
         "likes": 5,
         "updatedAt": "2026-10-23"
       },
@@ -69332,7 +69525,7 @@
         "modalities": [
           "text"
         ],
-        "size": "1M<n<10M",
+        "size": "100K<n<1M",
         "tasks": [
           "text-classification"
         ]
@@ -72778,6 +72971,42 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-datasets:rajpurkarlab--rexgradient-160k",
+      "name": "rajpurkarlab/ReXGradient-160K",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "ReXGradient-160K is the largest publicly available multi-site chest X-ray dataset, containing 273,004 unique chest X-ray images from 160,000 radiological studies, collected from 109,487 unique patients across 3 U.S. health systems (79 medical sites).",
+      "url": "https://huggingface.co/datasets/rajpurkarlab/ReXGradient-160K",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "metrics": {
+        "downloads": 4299,
+        "likes": 101,
+        "trend": 3,
+        "updatedAt": "2025-12-08"
+      },
+      "tags": [
+        "gated",
+        "text"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "rajpurkarlab",
+        "formats": [
+          "csv"
+        ],
+        "gated": true,
+        "host": "huggingface",
+        "modalities": [
+          "text"
+        ],
+        "size": "100K<n<1M"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:ran0--jiezi",
       "name": "Ran0/JieZi",
       "kind": "ai-training",
@@ -75657,6 +75886,55 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-datasets:savsnet--peteval",
+      "name": "SAVSNET/PetEVAL",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "We introduce PetEVAL, the first benchmark dataset derived from real-world, free-text veterinary electronic health records (EHRs). PetEVAL comprises 17,600 professionally annotated EHRs from first-opinion veterinary practices across the UK, partitioned into training (11,000), evaluation (1,600),…",
+      "url": "https://huggingface.co/datasets/SAVSNET/PetEVAL",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 122,
+        "likes": 32,
+        "trend": 4,
+        "updatedAt": "2025-09-17"
+      },
+      "tags": [
+        "document",
+        "en",
+        "gated",
+        "text",
+        "text-classification",
+        "token-classification"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "SAVSNET",
+        "formats": [
+          "parquet"
+        ],
+        "gated": true,
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "modalities": [
+          "document",
+          "text"
+        ],
+        "size": "1K<n<10K",
+        "tasks": [
+          "token-classification",
+          "text-classification"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:sayakpaul--shapenet-55",
       "name": "sayakpaul/ShapeNet-55",
       "kind": "ai-training",
@@ -75891,8 +76169,8 @@
       "license": "CC-BY-4.0",
       "metrics": {
         "downloads": 693,
-        "likes": 8,
-        "trend": 8,
+        "likes": 56,
+        "trend": 55,
         "updatedAt": "2026-10-19"
       },
       "tags": [
@@ -79926,6 +80204,49 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-datasets:stapesai--ssi-speech-emotion-recognition",
+      "name": "stapesai/ssi-speech-emotion-recognition",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Dataset Card for SSI: Speech Emotion Recognition - Stapes AI",
+      "url": "https://huggingface.co/datasets/stapesai/ssi-speech-emotion-recognition",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 240,
+        "likes": 24,
+        "trend": 5,
+        "updatedAt": "2024-10-14"
+      },
+      "tags": [
+        "audio",
+        "en",
+        "hi",
+        "text"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "stapesai",
+        "formats": [
+          "parquet"
+        ],
+        "host": "huggingface",
+        "languages": [
+          "en",
+          "hi"
+        ],
+        "modalities": [
+          "audio",
+          "text"
+        ],
+        "size": "10K<n<100K"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:starmpcc--asclepius-synthetic-clinical-notes",
       "name": "starmpcc/Asclepius-Synthetic-Clinical-Notes",
       "kind": "ai-training",
@@ -83735,15 +84056,26 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 13164,
+        "downloads": 12996,
         "likes": 0,
         "updatedAt": "2026-10-23"
       },
-      "tags": [],
+      "tags": [
+        "tabular",
+        "text"
+      ],
       "preview": {
         "type": "dataset",
         "author": "THEORACLEEEE",
-        "host": "huggingface"
+        "formats": [
+          "json"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "tabular",
+          "text"
+        ],
+        "size": "n<1K"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -84736,8 +85068,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 10004,
-        "likes": 182,
+        "downloads": 10115,
+        "likes": 185,
+        "trend": 3,
         "updatedAt": "2026-02-26"
       },
       "tags": [
@@ -84756,7 +85089,7 @@
         ],
         "size": "100K<n<1M"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:togethercomputer--redpajama-data-1t",
@@ -86330,6 +86663,44 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-datasets:undi95--filtered-tree-of-thoughts-base-24k",
+      "name": "Undi95/Filtered_Tree_Of_Thoughts_BASE_24k",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Original dataset : https://huggingface.co/datasets/terrycraddock/Tree_Of_Thoughts_BASE_24k",
+      "url": "https://huggingface.co/datasets/Undi95/Filtered_Tree_Of_Thoughts_BASE_24k",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "metrics": {
+        "downloads": 93,
+        "likes": 18,
+        "trend": 4,
+        "updatedAt": "2025-01-08"
+      },
+      "tags": [
+        "en",
+        "text"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "Undi95",
+        "formats": [
+          "json"
+        ],
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "modalities": [
+          "text"
+        ],
+        "size": "10K<n<100K"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "hf-datasets:unimelb-nlp--wikiann",
       "name": "unimelb-nlp/wikiann",
       "kind": "ai-training",
@@ -86840,9 +87211,10 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 5318,
-        "likes": 166,
-        "updatedAt": "2026-09-30"
+        "downloads": 4799,
+        "likes": 168,
+        "trend": 1,
+        "updatedAt": "2026-10-23"
       },
       "tags": [],
       "preview": {
@@ -86850,7 +87222,7 @@
         "author": "uv-scripts",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:vapaau--autofish",
@@ -87447,44 +87819,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-datasets:vnpt-ai--thyroidxl",
-      "name": "VNPT-AI/ThyroidXL",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "If you use this dataset in your research, please cite:",
-      "url": "https://huggingface.co/datasets/VNPT-AI/ThyroidXL",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "metrics": {
-        "downloads": 854,
-        "likes": 72,
-        "trend": 5,
-        "updatedAt": "2026-02-13"
-      },
-      "tags": [
-        "gated",
-        "image",
-        "text"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "VNPT-AI",
-        "formats": [
-          "imagefolder"
-        ],
-        "gated": true,
-        "host": "huggingface",
-        "modalities": [
-          "image",
-          "text"
-        ],
-        "size": "10K<n<100K"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "hf-datasets:voiceofml--mlmrl-hub",
       "name": "VoiceOfML/MLMRL-Hub",
       "kind": "ai-training",
@@ -87989,9 +88323,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 3818,
-        "likes": 263,
-        "trend": 77,
+        "downloads": 3931,
+        "likes": 290,
+        "trend": 97,
         "updatedAt": "2026-08-31"
       },
       "tags": [
@@ -88729,44 +89063,6 @@
           "text"
         ],
         "size": "1K<n<10K"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-datasets:witfoo--precinct6-cybersecurity",
-      "name": "witfoo/precinct6-cybersecurity",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "Version 2.1.0 (built 2026-09-22). Regenerated to address feedback from the University of Canterbury",
-      "url": "https://huggingface.co/datasets/witfoo/precinct6-cybersecurity",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 4276,
-        "likes": 71,
-        "trend": 10,
-        "updatedAt": "2026-09-22"
-      },
-      "tags": [
-        "en",
-        "graph-ml",
-        "text-classification"
-      ],
-      "preview": {
-        "type": "dataset",
-        "author": "witfoo",
-        "host": "huggingface",
-        "languages": [
-          "en"
-        ],
-        "size": "1M<n<10M",
-        "tasks": [
-          "text-classification",
-          "graph-ml"
-        ]
       },
       "fetchedAt": "2026-10-20"
     },
@@ -93142,8 +93438,9 @@
       },
       "license": "ODC-By-1.0",
       "metrics": {
-        "downloads": 30852,
-        "likes": 101,
+        "downloads": 33209,
+        "likes": 105,
+        "trend": 4,
         "updatedAt": "2025-08-06"
       },
       "tags": [
@@ -93162,7 +93459,7 @@
           "text-generation"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:zzliang--grit",

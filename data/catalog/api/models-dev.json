@@ -723,6 +723,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 168589
+      },
       "tags": [
         "ai",
         "llm",
@@ -735,6 +738,7 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/alibaba",
         "env": [
           "DASHSCOPE_API_KEY"
         ],
@@ -765,10 +769,7 @@
         "snippet": "DASHSCOPE_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/"
       },
-      "fetchedAt": "2026-10-23",
-      "metrics": {
-        "siteRank": 100000
-      }
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "models-dev:alibaba-cn",
@@ -3131,18 +3132,18 @@
           "EDENAI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 361,
+        "modelCount": 372,
         "models": [
+          "Kimi K3.1 Pro",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017 (Alibaba)",
           "DeepSeek V4.1 Flash 1017 (Cloudflare)",
           "DeepSeek V4.1 Flash 1017 (Deep Infra)",
           "DeepSeek V4.1 Flash 1017 (FlexAI)",
           "DeepSeek V4.1 Flash 1017 (Nebius)",
-          "DeepSeek V4.1 Flash 1017 (Sference)",
-          "DeepSeek V4.1 Flash 1017 (TensorX)"
+          "DeepSeek V4.1 Flash 1017 (Sference)"
         ],
-        "openWeightModels": 202,
+        "openWeightModels": 212,
         "outputs": [
           "image",
           "text"
@@ -4948,16 +4949,16 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 397,
+        "modelCount": 398,
         "models": [
+          "MoonshotAI: Kimi K3.1 Pro",
           "Recursive: Flint (free)",
           "MiniMax: MiniMax M3.1 Flash",
           "DeepSeek V4.1 Flash 1017",
           "Elorian: Glimpse",
           "Inception: Mercury 3",
           "Reflection: Beam 1.0 501B A23B",
-          "XingChen: Xing4.0 29B A4B (free)",
-          "Moondream: Moondream 3 Preview"
+          "XingChen: Xing4.0 29B A4B (free)"
         ],
         "openWeightModels": 151,
         "outputs": [
@@ -4982,7 +4983,7 @@
       "name": "Kimi For Coding (kimi.com)",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Kimi For Coding (kimi.com): 4 models listed on models.dev (newest: Kimi K2.8 Preview, Kimi K3, Kimi K3-256K).",
+      "summary": "Kimi For Coding (kimi.com): 6 models listed on models.dev (newest: Kimi K3.1 Pro, Kimi K3.1 Pro Highspeed, Kimi K2.8 Preview).",
       "url": "https://www.kimi.com/code/docs/en/kimi-code/models.html",
       "source": {
         "name": "models.dev",
@@ -5003,8 +5004,10 @@
           "KIMI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 4,
+        "modelCount": 6,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro Highspeed",
           "Kimi K2.8 Preview",
           "Kimi K3",
           "Kimi K3-256K",
@@ -5031,7 +5034,7 @@
       "name": "Kimi For Coding (kimi.ai)",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Try Kimi K3 to build playable multiplayer and 3D games, create consulting grade slides, and run parallel tasks with Swarm and Goal to get more work done.",
+      "summary": "Try Kimi K3.1 Pro to tackle complex coding projects, build 3D models, conduct financial research, and take on more with advanced agentic capabilities.",
       "url": "https://www.kimi.ai/code/docs/en/kimi-code/models.html",
       "source": {
         "name": "models.dev",
@@ -5052,8 +5055,10 @@
           "KIMI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 4,
+        "modelCount": 6,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro Highspeed",
           "kimi-for-coding",
           "Kimi K3",
           "Kimi K3-256K",
@@ -5070,7 +5075,7 @@
         "snippet": "KIMI_API_KEY=",
         "docs": "https://www.kimi.ai/code/docs/en/kimi-code/models.html"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-10-23",
       "metrics": {
         "siteRank": 50000
       }
@@ -5320,16 +5325,16 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 205,
+        "modelCount": 207,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro Highspeed",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Gemini 4 Argon",
           "Muse Wonder",
           "Reka Edge 2603",
-          "Claude Haiku 5.5",
-          "Mistral Large 4",
-          "GPT-6.1 Sol"
+          "Claude Haiku 5.5"
         ],
         "openWeightModels": 90,
         "outputs": [
@@ -5370,18 +5375,18 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 423,
+        "modelCount": 426,
         "models": [
+          "Kimi K3.1 Pro (Moonshot AI)",
+          "Kimi K3.1 Pro Highspeed (Moonshot AI)",
           "MiniMax M3.1 Flash (MiniMax)",
           "DeepSeek V4.1 Flash 1017 (Alibaba Cloud)",
           "DeepSeek V4.1 Flash 1017 (DeepInfra)",
           "DeepSeek V4.1 Flash 1017 (DeepSeek)",
           "DeepSeek V4.1 Flash 1017 (Inference.net)",
-          "DeepSeek V4.1 Flash 1017 (NovitaAI)",
-          "DeepSeek V4.1 Flash 1017 (Together AI)",
-          "DeepSeek V4.1 Flash 1017 (reka-ai)"
+          "DeepSeek V4.1 Flash 1017 (NovitaAI)"
         ],
-        "openWeightModels": 224,
+        "openWeightModels": 225,
         "outputs": [
           "text"
         ],
@@ -5852,16 +5857,16 @@
           "MERGE_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 200,
+        "modelCount": 201,
         "models": [
+          "Kimi K3.1 Pro",
           "MiniMax M3.1 Flash",
           "DeepSeek V4.1 Flash 1017",
           "Muse Spark Open",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
-          "Claude Sonnet 5.5",
-          "Claude Opus 5.5"
+          "Claude Sonnet 5.5"
         ],
         "openWeightModels": 87,
         "outputs": [
@@ -6510,6 +6515,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 73481
+      },
       "tags": [
         "ai",
         "llm",
@@ -6521,14 +6529,17 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://api.moonshot.ai/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/moonshotai",
         "env": [
           "MOONSHOT_API_KEY"
         ],
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://platform.kimi.ai/docs/pricing/limits",
-        "modelCount": 4,
+        "modelCount": 6,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro Highspeed",
           "Kimi K3",
           "Kimi K2.7 Code",
           "Kimi K2.7 Code HighSpeed",
@@ -6545,10 +6556,7 @@
         "snippet": "MOONSHOT_API_KEY=",
         "docs": "https://platform.moonshot.ai/docs"
       },
-      "fetchedAt": "2026-10-23",
-      "metrics": {
-        "siteRank": 500000
-      }
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "models-dev:moonshotai-cn",
@@ -6577,8 +6585,10 @@
           "MOONSHOT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 4,
+        "modelCount": 6,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro Highspeed",
           "Kimi K3",
           "Kimi K2.7 Code",
           "Kimi K2.7 Code HighSpeed",
@@ -6595,7 +6605,7 @@
         "snippet": "MOONSHOT_API_KEY=",
         "docs": "https://platform.moonshot.cn/docs/api/chat"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "models-dev:morph",
@@ -6722,13 +6732,13 @@
         "modelCount": 625,
         "models": [
           "Abliterated Large Flash",
+          "Ternary Bonsai2 9B",
           "Mercury 3",
           "Ornith 1.5 122B",
           "MiniMax M3.1 Flash",
           "DeepSeek V4.1 Flash 1017",
           "DeepSeek V4.1 Flash 1017 Thinking",
-          "Elorian Glimpse",
-          "Beam 1.0 501B A23B"
+          "Elorian Glimpse"
         ],
         "openWeightModels": 359,
         "outputs": [
@@ -7334,7 +7344,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 9228393
+        "downloads": 25338213
       },
       "tags": [
         "ai",
@@ -7347,7 +7357,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/openai",
         "auth": "apiKey",
-        "downloadsOf": "npm:@ai-sdk/openai",
+        "downloadsOf": "npm:openai",
         "env": [
           "OPENAI_API_KEY"
         ],
@@ -7460,16 +7470,16 @@
           "OPENCODE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 34,
+        "modelCount": 35,
         "models": [
+          "Kimi K3.1 Pro",
           "MiniMax M3.1 Flash",
           "MiniMax M3.1 Flash Free",
           "Beam Free",
           "Gemini 4 Argon Contributor",
           "Cat Jam Free",
           "Claude Haiku 5.5",
-          "LongCat 2.5 Preview Free",
-          "Space Bunny"
+          "LongCat 2.5 Preview Free"
         ],
         "openWeightModels": 19,
         "outputs": [
@@ -7569,16 +7579,16 @@
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://openrouter.ai/docs/api_reference/limits",
-        "modelCount": 390,
+        "modelCount": 391,
         "models": [
+          "Kimi K3.1 Pro",
           "Flint (free)",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Glimpse",
           "Beam 1.0 501B A23B",
           "Mercury 3",
-          "Xing4.0 29B A4B (free)",
-          "Moondream 3 Preview"
+          "Xing4.0 29B A4B (free)"
         ],
         "openWeightModels": 176,
         "outputs": [
@@ -10255,7 +10265,7 @@
       "name": "Umans AI",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Set up the code by Umans endpoint with Claude Code, OpenCode, omp, Cursor, Zed, Crush, or Pi in under two minutes. Run on top open-source coding models (Kimi K3, GLM 5.3, GLM 5.3 Flash, DeepSeek V4 Flash), billed per token, and see benchmarks against GPT-5.5, Claude Opus 4.8, and Claude Fable 5.",
+      "summary": "Set up the code by Umans endpoint with Claude Code, OpenCode, omp, Cursor, Zed, Crush, or Pi in under two minutes. Run on top open-source coding models (Kimi K3, GLM 5.3, DeepSeek V4.1 Flash), billed per token, and see benchmarks against GPT-5.5, Claude Opus 4.8, and Claude Fable 5.",
       "url": "https://app.umans.ai/offers/code/docs/orgs",
       "source": {
         "name": "models.dev",
@@ -10305,7 +10315,7 @@
       "name": "Umans AI Coding Plan",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Set up the code by Umans endpoint with Claude Code, OpenCode, omp, Cursor, Zed, Crush, or Pi in under two minutes. Run on top open-source coding models (Kimi K3, GLM 5.3, GLM 5.3 Flash, DeepSeek V4 Flash), billed per token, and see benchmarks against GPT-5.5, Claude Opus 4.8, and Claude Fable 5.",
+      "summary": "Set up the code by Umans endpoint with Claude Code, OpenCode, omp, Cursor, Zed, Crush, or Pi in under two minutes. Run on top open-source coding models (Kimi K3, GLM 5.3, DeepSeek V4.1 Flash), billed per token, and see benchmarks against GPT-5.5, Claude Opus 4.8, and Claude Fable 5.",
       "url": "https://app.umans.ai/offers/code/docs",
       "source": {
         "name": "models.dev",
@@ -10534,18 +10544,18 @@
           "VENICE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 124,
+        "modelCount": 126,
         "models": [
+          "Abliterated Large Flash",
+          "DeepSeek V4.1 Flash Uncensored",
           "Mercury 3",
           "MiniMax M3.1 Flash",
           "DeepSeek v4.1 Flash (1017)",
           "Muse Spark Open",
           "Muse Wonder",
-          "NVIDIA Nemotron 3.5 Super VL 120B",
-          "Gemini 4 Argon",
-          "Claude Haiku 5.5"
+          "NVIDIA Nemotron 3.5 Super VL 120B"
         ],
-        "openWeightModels": 54,
+        "openWeightModels": 55,
         "outputs": [
           "text"
         ],
@@ -10591,16 +10601,16 @@
           "AI_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 414,
+        "modelCount": 416,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro Highspeed",
           "Cohere Rerank 5 Fast",
           "Cohere Rerank 5 Pro",
           "Extract-1",
           "Summarize-1",
           "Voxtral Mini Transcribe 3",
-          "Voxtral Small Transcribe 3",
-          "Voxtral TTS 3",
-          "Mercury 3"
+          "Voxtral Small Transcribe 3"
         ],
         "openWeightModels": 108,
         "outputs": [
@@ -11070,7 +11080,7 @@
       "name": "xAI",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Official SpaceXSI API documentation. Build with Grok: chat, image and video generation, voice, tool calling, and structured outputs. Quickstarts, guides, and API reference.",
+      "summary": "Official Grok API documentation from SpaceXSI. Build with Grok: chat, image and video generation, voice, tool calling, and structured outputs. Quickstarts, guides, and API reference.",
       "summaryKo": "Grok 모델을 부르는 xAI API",
       "written": "codeshopper",
       "url": "https://x.ai/api",
@@ -11122,7 +11132,7 @@
         "snippet": "XAI_API_KEY=",
         "docs": "https://docs.x.ai"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "models-dev:xiaomi",

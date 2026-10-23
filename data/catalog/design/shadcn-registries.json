@@ -4,10 +4,10 @@
     "name": "shadcn/ui registry directory",
     "url": "https://ui.shadcn.com/docs/directory",
     "license": "Directory data from ui.shadcn.com/r/registries.json (shadcn/ui, MIT). Each registry's components keep their own license — check the registry site.",
-    "note": "493 registries listed; 42 marked unavailable by the directory's health check were skipped. Individual components of community registries (114180 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "498 registries listed; 42 marked unavailable by the directory's health check were skipped. Individual components of community registries (114369 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-10-23",
-  "count": 451,
+  "count": 456,
   "items": [
     {
       "id": "shadcn-registry:000h-cojeev",
@@ -771,7 +771,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -781,9 +780,9 @@
         "url": "https://alexandrejoly.me",
         "registryUrl": "https://alexandrejoly.me/r/{name}.json",
         "itemCount": 6,
-        "healthScore": 93.081,
-        "rankingScore": 80.725,
-        "health": "observing"
+        "healthScore": 94.077,
+        "rankingScore": 81.522,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @alexandrejoly/<component>",
@@ -1181,7 +1180,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -1191,9 +1189,9 @@
         "url": "https://astryx.atmeta.com",
         "registryUrl": "https://astryx.atmeta.com/shadcn/{name}.json",
         "itemCount": 921,
-        "healthScore": 94.867,
-        "rankingScore": 95.894,
-        "health": "observing"
+        "healthScore": 95.937,
+        "rankingScore": 96.75,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @astryx/<component>",
@@ -2110,16 +2108,16 @@
         "type": "site",
         "url": "https://ui.bklit.com",
         "registryUrl": "https://ui.bklit.com/r/{name}.json",
-        "itemCount": 58,
-        "healthScore": 96.066,
-        "rankingScore": 89.971,
+        "itemCount": 64,
+        "healthScore": 96.165,
+        "rankingScore": 90.362,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @bklit/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-10-23",
       "metrics": {
         "siteRank": 500000
       }
@@ -3351,6 +3349,41 @@
       }
     },
     {
+      "id": "shadcn-registry:creative-ui",
+      "name": "@creative-ui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Creative components and Claude Code skills by Krutik Raut. Install UI blocks or drop a full design skill into .claude/skills with one shadcn command.",
+      "url": "https://ui.krutikraut.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://ui.krutikraut.com",
+        "registryUrl": "https://ui.krutikraut.com/r/{name}.json",
+        "itemCount": 9,
+        "healthScore": 91.614,
+        "rankingScore": 80.699,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @creative-ui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-10-23",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:crucible",
       "name": "@crucible",
       "kind": "ui-registries",
@@ -4017,9 +4050,9 @@
         "type": "site",
         "url": "https://eased.dev",
         "registryUrl": "https://eased.dev/r/{name}.json",
-        "itemCount": 161,
-        "healthScore": 97.034,
-        "rankingScore": 93.995,
+        "itemCount": 190,
+        "healthScore": 97.278,
+        "rankingScore": 94.72,
         "health": "healthy"
       },
       "use": {
@@ -4266,6 +4299,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:emend",
+      "name": "@emend",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "AI editing components for Tiptap. Add reviewable AI edits to an existing editor or start with a full editor.",
+      "url": "https://getemend.vercel.app",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://getemend.vercel.app",
+        "registryUrl": "https://getemend.vercel.app/r/{name}.json",
+        "itemCount": 9,
+        "healthScore": 91.614,
+        "rankingScore": 80.699,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @emend/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-10-23",
       "metrics": {
         "siteRank": 500000
       }
@@ -4588,7 +4656,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -4598,12 +4665,47 @@
         "url": "https://fancy-ui.rama.app",
         "registryUrl": "https://fancy-ui.rama.app/r/{name}.json",
         "itemCount": 157,
-        "healthScore": 93.844,
-        "rankingScore": 91.363,
-        "health": "observing"
+        "healthScore": 95.091,
+        "rankingScore": 92.36,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @fancy-ui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-10-23",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:fewtone",
+      "name": "@fewtone",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Accessible, customizable React components for Next.js and Tailwind CSS, built on Radix with smooth motion.",
+      "url": "https://ui.fewtone.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://ui.fewtone.com",
+        "registryUrl": "https://ui.fewtone.com/r/{name}.json",
+        "itemCount": 48,
+        "healthScore": 91.614,
+        "rankingScore": 85.812,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @fewtone/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-23",
@@ -5271,7 +5373,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -5281,9 +5382,9 @@
         "url": "https://github.com/getitdone-gmbh/kette-design",
         "registryUrl": "https://zero-design.itdone.de/r/{name}.json",
         "itemCount": 149,
-        "healthScore": 93.732,
-        "rankingScore": 91.106,
-        "health": "observing"
+        "healthScore": 94.97,
+        "rankingScore": 92.096,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @getitdone/<component>",
@@ -5306,7 +5407,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -5316,9 +5416,9 @@
         "url": "https://geturui.com",
         "registryUrl": "https://geturui.com/r/{name}.json",
         "itemCount": 119,
-        "healthScore": 93.604,
-        "rankingScore": 90.285,
-        "health": "observing"
+        "healthScore": 92.816,
+        "rankingScore": 89.655,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @geturui/<component>",
@@ -5409,7 +5509,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -5419,9 +5518,9 @@
         "url": "https://glassyui.com",
         "registryUrl": "https://glassyui.com/r/{name}.json",
         "itemCount": 41,
-        "healthScore": 93.284,
-        "rankingScore": 86.652,
-        "health": "observing"
+        "healthScore": 94.396,
+        "rankingScore": 87.542,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @glassyui/<component>",
@@ -5444,7 +5543,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -5454,9 +5552,9 @@
         "url": "https://glassyui.com/mobile",
         "registryUrl": "https://glassyui.com/r/native/{name}.json",
         "itemCount": 29,
-        "healthScore": 93.081,
-        "rankingScore": 85.407,
-        "health": "observing"
+        "healthScore": 94.077,
+        "rankingScore": 86.204,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @glassyui-native/<component>",
@@ -7453,7 +7551,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -7462,10 +7559,10 @@
         "type": "site",
         "url": "https://littmd.vercel.app",
         "registryUrl": "https://littmd.vercel.app/r/{name}.json",
-        "itemCount": 156,
-        "healthScore": 93.844,
-        "rankingScore": 91.342,
-        "health": "observing"
+        "itemCount": 158,
+        "healthScore": 95.091,
+        "rankingScore": 92.38,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @litt/<component>",
@@ -8373,7 +8470,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -8383,9 +8479,9 @@
         "url": "https://movin.design/components/",
         "registryUrl": "https://movin.design/r/{name}.json",
         "itemCount": 288,
-        "healthScore": 94.179,
-        "rankingScore": 93.573,
-        "health": "observing"
+        "healthScore": 95.416,
+        "rankingScore": 94.563,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @movin/<component>",
@@ -9193,6 +9289,7 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
+        "degraded",
         "react",
         "registry",
         "shadcn"
@@ -9202,15 +9299,15 @@
         "url": "https://www.openmirai.dev",
         "registryUrl": "https://www.openmirai.dev/r/{name}.json",
         "itemCount": 1,
-        "healthScore": 98.311,
-        "rankingScore": 80.879,
-        "health": "healthy"
+        "healthScore": 97.523,
+        "rankingScore": 80.248,
+        "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @openmirai/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-10-23",
       "metrics": {
         "siteRank": 500000
       }
@@ -12366,7 +12463,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -12376,9 +12472,9 @@
         "url": "https://sortui.dev",
         "registryUrl": "https://sortui.dev/r/{name}.json",
         "itemCount": 76,
-        "healthScore": 93.456,
-        "rankingScore": 88.74,
-        "health": "observing"
+        "healthScore": 94.635,
+        "rankingScore": 89.683,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @sortui/<component>",
@@ -12759,6 +12855,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:studio-blocks",
+      "name": "@studio-blocks",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "A collection of minimal, reusable UI blocks built with React, Tailwind CSS, and shadcn/ui.",
+      "url": "https://studio-blocks.arhamkhnz.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://studio-blocks.arhamkhnz.com",
+        "registryUrl": "https://studio-blocks.arhamkhnz.com/r/{name}.json",
+        "itemCount": 9,
+        "healthScore": 91.614,
+        "rankingScore": 80.699,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @studio-blocks/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-10-23",
       "metrics": {
         "siteRank": 500000
       }
@@ -13890,6 +14021,41 @@
       }
     },
     {
+      "id": "shadcn-registry:twelfth",
+      "name": "@twelfth",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Components for category managers and retail buying teams: price position, sales vs forecast with P10–P90 bands, weeks of cover, pricing scoreboards and micro charts. Built by Twelfth.",
+      "url": "https://ui.twelfth.ai",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://ui.twelfth.ai",
+        "registryUrl": "https://ui.twelfth.ai/r/{name}.json",
+        "itemCount": 9,
+        "healthScore": 91.614,
+        "rankingScore": 80.699,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @twelfth/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-10-23",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:typedora-ui",
       "name": "@typedora-ui",
       "kind": "ui-registries",
@@ -14479,7 +14645,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -14489,9 +14654,9 @@
         "url": "https://vadivam.praveenjuge.com",
         "registryUrl": "https://vadivam.praveenjuge.com/r/{name}.json",
         "itemCount": 1904,
-        "healthScore": 95.159,
-        "rankingScore": 96.127,
-        "health": "observing"
+        "healthScore": 96.115,
+        "rankingScore": 96.892,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @vadivam/<component>",
@@ -14719,7 +14884,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -14729,9 +14893,9 @@
         "url": "https://videojs.org/docs/guides/installation/shadcn",
         "registryUrl": "https://shadcn.videojs.org/r/react/{name}.json",
         "itemCount": 41,
-        "healthScore": 93.284,
-        "rankingScore": 86.652,
-        "health": "observing"
+        "healthScore": 94.396,
+        "rankingScore": 87.542,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @videojs/<component>",
@@ -14754,7 +14918,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -14764,9 +14927,9 @@
         "url": "https://ui.visantlabs.com",
         "registryUrl": "https://ui.visantlabs.com/r/{name}.json",
         "itemCount": 147,
-        "healthScore": 93.732,
-        "rankingScore": 91.063,
-        "health": "observing"
+        "healthScore": 94.97,
+        "rankingScore": 92.053,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @visant/<component>",
@@ -15164,7 +15327,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "observing",
         "react",
         "registry",
         "shadcn"
@@ -15174,9 +15336,9 @@
         "url": "https://wick-charts.eeff.io/integrations/shadcn/",
         "registryUrl": "https://wick-charts.eeff.io/r/{name}.json",
         "itemCount": 13,
-        "healthScore": 93.081,
-        "rankingScore": 82.955,
-        "health": "observing"
+        "healthScore": 94.077,
+        "rankingScore": 83.752,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @wick-charts/<component>",

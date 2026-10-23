@@ -356,7 +356,8 @@ export const ko = {
     empty: '장바구니가 비어 있어요.',
     browse: '재료 둘러보기',
     total: '합계',
-    toCart: '장바구니 쪽에서 보기',
+    /** 서랍 → /cart 화면 (D153): 서랍을 여는 '장바구니 보기'와 갈리게 '가기' */
+    toCart: '장바구니로 가기',
   },
   cart: {
     pageTitle: '장바구니',
@@ -507,7 +508,6 @@ export const ko = {
   allCategories: {
     pageTitle: '전체 카테고리',
     lead: '대분류 {{c}}개, 소분류 {{s}}개에 재료 {{n}}개가 있어요.',
-    open: '{{name}} 쪽 열기',
   },
   search: {
     pageTitle: '검색',

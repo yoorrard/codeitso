@@ -3,7 +3,7 @@
 // 빌드는 네트워크 없이 커밋된 자료만 쓴다 (brief 2절). 계산은 src/lib/catalog/core.ts의 순수 함수로 한다.
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { cardOf, rankScores, relatedIndex, shardOf, sortRanked, withKo, withMedia } from '../../src/lib/catalog/core.ts';
+import { cardOf, rankScores, relatedIndex, shardOf, sortAvailability, sortRanked, withKo, withMedia } from '../../src/lib/catalog/core.ts';
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import type { ModelsFile } from '../../src/lib/catalog/models.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
@@ -162,7 +162,8 @@ function load(): Loaded {
         if (item.category !== cat || !isCategoryId(item.category)) throw new Error(`${cat}/${name}: ${item.id}의 category가 ${item.category}다`);
         const list = subs.get(item.kind);
         if (!list) throw new Error(`${cat}/${name}: ${item.id}의 소분류 ${item.kind}가 index.json에 없다`);
-        const r: Ranked = { item, pop: 0 };
+        // ord: 소분류 안 출처 차례 (지표가 없는 상품끼리의 기본순, D152)
+        const r: Ranked = { item, pop: 0, ord: list.length };
         entries.push({ raw, r });
         list.push(r);
         if (byId.has(item.id)) duplicates += 1;
@@ -177,7 +178,7 @@ function load(): Loaded {
       if (list.length === 0) continue;
       lists.set(`${cat}/${s.id}`, list);
       total += list.length;
-      const meta: SubMeta = { id: s.id, nameKo: s.nameKo, count: list.length, sources: s.sources };
+      const meta: SubMeta = { id: s.id, nameKo: s.nameKo, count: list.length, sources: s.sources, ...sortAvailability(list.map((r) => r.item)) };
       if (s.descKo) meta.descKo = s.descKo;
       subcategories.push(meta);
     }

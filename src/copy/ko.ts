@@ -103,6 +103,8 @@ export const ko = {
     total: '상품 {{n}}개',
     sortLabel: '정렬',
     sorts: { popular: '인기순', name: '이름순', recent: '최근 갱신순', match: '관련도순' },
+    /** 인기 지표가 없는 소분류의 기본 정렬 이름 (출처가 정한 차례, D152) */
+    sortBase: '기본순',
     pages: '페이지',
     prev: '이전',
     next: '다음',

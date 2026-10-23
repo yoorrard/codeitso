@@ -91,6 +91,10 @@ export interface SubMeta {
   count: number;
   descKo?: string;
   sources: SourceMeta[];
+  /** 인기 지표가 있는 상품이 하나라도 있나. 없으면 인기순 대신 '기본순'(출처 차례)이라 부른다 (D152) */
+  measured: boolean;
+  /** 갱신일이 있는 상품이 하나라도 있나. 없으면 '최근 갱신순'을 보이지 않는다 (D152) */
+  dated: boolean;
 }
 
 export interface CategoryMeta {

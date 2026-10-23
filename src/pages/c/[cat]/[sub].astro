@@ -54,5 +54,5 @@ const pages = pageCount(sub.count);
     </ul>
   </nav>
   {sub.sources.some((x) => x.id === 'models-dev') && <ModelsBanner />}
-  <Listing client:load cat={meta.id} catName={meta.nameKo} sub={sub.id} subName={sub.nameKo} total={sub.count} pages={pages} initial={initial} facets={facetsOf(meta.id, sub.id)} />
+  <Listing client:load cat={meta.id} catName={meta.nameKo} sub={sub.id} subName={sub.nameKo} total={sub.count} pages={pages} initial={initial} facets={facetsOf(meta.id, sub.id)} measured={sub.measured} dated={sub.dated} />
 </Base>

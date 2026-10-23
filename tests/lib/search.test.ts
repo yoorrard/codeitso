@@ -179,15 +179,15 @@ describe('색인 만들기 (빌드)', () => {
   ];
   const ranked: Ranked[] = items.map((it, i) => ({ item: it, pop: 1 - i * 0.1 }));
   const cats: CategoryMeta[] = [
-    { id: 'design', nameKo: '디자인', total: 1, fetchedAt: '2026-10-14', subcategories: [{ id: 'fonts', nameKo: '폰트', count: 1, sources: [] }] },
+    { id: 'design', nameKo: '디자인', total: 1, fetchedAt: '2026-10-14', subcategories: [{ id: 'fonts', nameKo: '폰트', count: 1, sources: [], measured: true, dated: true }] },
     {
       id: 'api',
       nameKo: 'API',
       total: 2,
       fetchedAt: '2026-10-14',
       subcategories: [
-        { id: 'weather', nameKo: '날씨·환경', count: 1, sources: [] },
-        { id: 'maps', nameKo: '지도', count: 1, sources: [] },
+        { id: 'weather', nameKo: '날씨·환경', count: 1, sources: [], measured: true, dated: true },
+        { id: 'maps', nameKo: '지도', count: 1, sources: [], measured: true, dated: true },
       ],
     },
   ];

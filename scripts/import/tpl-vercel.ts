@@ -85,7 +85,7 @@ export function kindFor(t: Pick<VercelTemplate, 'useCases' | 'stack' | 'name' | 
 }
 
 main(async () => {
-  const sitemap = await fetchText(`${BASE}/sitemap.xml`, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeshopper-catalog-import/1.0)' } });
+  const sitemap = await fetchText(`${BASE}/sitemap.xml`, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeitso-catalog-import/1.0)' } });
   const urls = [...new Set([...sitemap.matchAll(/<loc>(https:\/\/vercel\.com\/templates\/[^<]+)<\/loc>/g)].map((m) => m[1] as string))]
     .filter((u) => u.replace(`${BASE}/templates/`, '').split('/').length === 2 && !u.includes('/templates/page/'))
     .sort();
@@ -95,7 +95,7 @@ main(async () => {
     const out = await mapLimit(urls, 4, async (u) => {
       const path = u.replace(`${BASE}/templates/`, '');
       try {
-        const html = await fetchText(u, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeshopper-catalog-import/1.0)' }, retries: 3 });
+        const html = await fetchText(u, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeitso-catalog-import/1.0)' }, retries: 3 });
         return parseTemplatePage(html, u, path) ?? null;
       } catch (err) {
         console.warn(`  실패 ${u}: ${err instanceof Error ? err.message : err}`);

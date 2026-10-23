@@ -8,7 +8,7 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 ## 지금 할 일
 
-- [ ] **H27 저장소를 공개로 바꾸기 (2분, D145)** — 코드는 MIT로 열기로 했다. ① GitHub 저장소 → **Settings** → **General** 맨 아래 **Danger Zone** → **Change repository visibility** → **Make public** → 저장소 이름을 쳐서 확인. ② (선택) 같은 쪽 위 **Repository name**을 `codeitso`로 바꾸기 — 옛 주소는 GitHub가 새 주소로 넘겨 준다. ③ (선택) 저장소 첫 화면 오른쪽 **About**의 톱니 → Website에 `https://codeitso.yoorrard.workers.dev`, Topics에 `vibe-coding` `korean` `astro` `cloudflare-workers`. 공개 저장소는 GitHub Actions 시간이 무료라 매일 자료 새로 받기의 시간 걱정이 없어진다. 공개 전 git 기록의 비밀 값 검사는 통과했다(2026-10-23) — 계정 — 오픈소스 — (2026-10-23)
+- [x] **H27 저장소를 공개로 바꾸기 (끝, 2026-10-23)** — 공개(`visibility: public`)와 이름 바꾸기(`yoorrard/code-chauffeur` → `yoorrard/codeitso`, 옛 주소는 GitHub가 넘겨 준다)를 확인했다. 남은 선택 하나: 저장소 첫 화면 오른쪽 **About**의 톱니 → Website에 `https://codeitso.yoorrard.workers.dev`, Topics에 `vibe-coding` `korean` `astro` `cloudflare-workers` (지금은 비어 있다). 라이선스는 `LICENSE`(MIT 원문)와 `NOTICE.md`(적용 범위)로 나눠 GitHub가 MIT로 알아보게 했다 — 계정 — 오픈소스 — (2026-10-23)
 - [ ] H04 법 문서 최종 검토와 겸직 신고 — 이용약관·개인정보 처리방침·이용 안내·저작권·게시 중단 요청은 구현해 정식으로 열었다(D136·D145·D149, 문장은 `src/copy/ko.ts` legal 묶음, 운영자 유영재·문의 메일은 `src/lib/site-config.ts`). 사람이 볼 것: ① **교원 겸직 신고** — 소유자가 교원이면 무료·비영리라도 계속 운영하는 웹 서비스가 소속 기관의 겸직 허가·신고 대상인지 확인, ② 처리방침의 약속 — 문의 메일을 답변 뒤 1년 보관하고 지우기, Gmail(Google LLC) 위탁·국외 이전 표기, ③ 약관의 '계속 이용하면 바뀐 약관에 동의' 문구와 책임 제한(고의·중과실 제외) 문구, ④ 저작권·게시 중단 절차(받으면 내리고 가져오기에서 빼기), ⑤ `LICENSE`의 MIT·CC BY 4.0 적용 범위(코드 MIT, 운영자 글 CC BY 4.0, 진열대 자료는 출처 조건, 이름·로고 제외)와 약관 제9·11조가 뜻대로인지. 고칠 곳이 있으면 문장을 알려 주세요 — 법 — (2026-10-14, 고침 2026-10-23)
 
 ## 선택 (막지 않음)

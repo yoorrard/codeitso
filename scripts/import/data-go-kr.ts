@@ -64,7 +64,7 @@ export function parseFileListPage(html: string): { total?: number; items: Portal
 
 async function fetchPage(page: number): Promise<string> {
   return fetchText(`${BASE}/tcs/dss/selectDataSetList.do?dType=FILE&currentPage=${page}&perPage=${PER_PAGE}&sort=use`, {
-    headers: { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) codeshopper-catalog-import/1.0', accept: 'text/html' },
+    headers: { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) codeitso-catalog-import/1.0', accept: 'text/html' },
     retries: 8,
     timeoutMs: 90_000,
   });

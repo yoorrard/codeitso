@@ -373,7 +373,7 @@ await main('design-styles', async () => {
       summaryKo: s.summaryKo,
       written: 'codeshopper',
       url: `https://dribbble.com/search/${encodeURIComponent(s.keywords[0] as string)}`,
-      source: { name: '코드잇소 (직접 정의)', url: 'https://github.com/yoorrard/code-chauffeur' },
+      source: { name: '코드잇소 (직접 정의)', url: 'https://github.com/yoorrard/codeitso' },
       tags: ['style', ...s.tags],
       preview: { type: 'style', tokens: { ...s.tokens, fontStack: FONT_STACK[s.tokens.font] }, keywords: s.keywords, goodFor: s.goodFor },
       use: {
@@ -387,7 +387,7 @@ await main('design-styles', async () => {
     {
       id: 'styles',
       name: 'Design styles (tone presets written by 코드잇소)',
-      url: 'https://github.com/yoorrard/code-chauffeur',
+      url: 'https://github.com/yoorrard/codeitso',
       license: 'Written by 코드잇소 for this catalog. Token values are our own presets for local previews, not taken from any design system. url points to a Dribbble search for real-world examples.',
     },
     items,

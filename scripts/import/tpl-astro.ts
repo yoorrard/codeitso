@@ -30,7 +30,7 @@ export function parseThemeLinks(html: string): Links {
   return out;
 }
 
-const UA = { 'user-agent': 'Mozilla/5.0 (compatible; codeshopper-catalog-import/1.0)' };
+const UA = { 'user-agent': 'Mozilla/5.0 (compatible; codeitso-catalog-import/1.0)' };
 
 main(async () => {
   const all = await cached('astro-themes', () => fetchJson<PortalTheme[]>('https://portal.astro.build/api/themes'));

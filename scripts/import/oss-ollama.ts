@@ -42,7 +42,7 @@ export function parseLibrary(html: string): OllamaModel[] {
 }
 
 main(async () => {
-  const html = await fetchText('https://ollama.com/library?sort=popular', { headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeshopper-catalog-import/1.0)' } });
+  const html = await fetchText('https://ollama.com/library?sort=popular', { headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeitso-catalog-import/1.0)' } });
   const models = parseLibrary(html);
   console.log(`  모델 ${models.length}`);
   const items: Item[] = models.map((m) => {

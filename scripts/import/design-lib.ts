@@ -12,7 +12,7 @@ export const OUT_DIR = join(ROOT, 'data', 'catalog', 'design');
 export const CATEGORY = 'design';
 // 같은 날 다시 돌리면 같은 결과가 나오게 날짜만 쓴다. IMPORT_DATE로 고정할 수 있다.
 export const FETCHED_AT = process.env.IMPORT_DATE ?? new Date().toISOString().slice(0, 10);
-export const USER_AGENT = 'codeshopper-catalog-import/1.0 (design shelf; https://github.com/yoorrard/code-chauffeur)';
+export const USER_AGENT = 'codeitso-catalog-import/1.0 (design shelf; https://github.com/yoorrard/codeitso)';
 
 export type PreviewType =
   | 'font' | 'palette' | 'icons' | 'style' | 'repo' | 'model' | 'dataset' | 'api'
@@ -468,7 +468,7 @@ function metaContent(html: string, key: string): string | undefined {
 export async function siteMeta(url: string): Promise<SiteMeta> {
   try {
     const res = await fetchRaw(url, {
-      headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeshopper-catalog-import/1.0)', accept: 'text/html,application/xhtml+xml' },
+      headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeitso-catalog-import/1.0)', accept: 'text/html,application/xhtml+xml' },
       allowStatus: [401, 403, 404, 410, 429, 451, 503],
       retries: 2,
       timeoutMs: 30_000,

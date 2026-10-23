@@ -255,7 +255,7 @@ async function importExtra(): Promise<void> {
     {
       id: 'icons-extra',
       name: 'Icon sources outside Iconify (hand-picked)',
-      url: 'https://github.com/yoorrard/code-chauffeur',
+      url: 'https://github.com/yoorrard/codeitso',
       license: 'Hand-written listing of public sites (names, links, the site\'s own one-line description). Licenses summarised from each site\'s license page; check the page before use.',
       note: `metrics.downloads = npm downloads last month of the install package (preview.downloadsOf); metrics.stars = repository stars. ${siteRankNote()}`,
     },

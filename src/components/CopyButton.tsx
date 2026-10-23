@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { copyText } from '../lib/clipboard.ts';
+import { pop } from '../lib/motion.ts';
 import { fill } from '../lib/text.ts';
 import { Icon } from './Icon.tsx';
 
@@ -25,7 +26,12 @@ const DONE_MS = 2000;
 export default function CopyButton({ text, srLabel, label, done, onCopied, primary = false }: Props) {
   const [state, setState] = useState<'idle' | 'done' | 'fail'>('idle');
   const timer = useRef(0);
+  const btn = useRef<HTMLButtonElement>(null);
   useEffect(() => () => window.clearTimeout(timer.current), []);
+  // 체크 아이콘이 작게 커지며 자리 잡는다 (U, D148)
+  useEffect(() => {
+    if (state === 'done') pop(btn.current?.querySelector('.icon-wrap'));
+  }, [state]);
 
   async function copy(): Promise<void> {
     const ok = await copyText(text);
@@ -42,6 +48,7 @@ export default function CopyButton({ text, srLabel, label, done, onCopied, prima
     <span class="copy-wrap">
       <button
         type="button"
+        ref={btn}
         class={primary ? 'btn btn-primary copy-btn' : 'btn copy-btn'}
         data-state={state}
         onClick={() => void copy()}

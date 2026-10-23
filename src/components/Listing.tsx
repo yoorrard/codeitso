@@ -24,6 +24,7 @@ import type { ListSort } from '../lib/routes.ts';
 import { facetDataPath, facetOrderPath, listDataPath, listPath, searchPath } from '../lib/routes.ts';
 import { findInSub } from '../lib/sub-search.ts';
 import { fill } from '../lib/text.ts';
+import { useHeld } from '../lib/wait.ts';
 import { Icon } from './Icon.tsx';
 import { Pager } from './Pager.tsx';
 import { ProductCard } from './ProductCard.tsx';
@@ -143,6 +144,9 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
   const timer = useRef<number | undefined>(undefined);
   const backdrop = useMemo(() => backdropPress(() => sheet.current?.close()), []);
   const hasFacets = facets.length > 0;
+  // 받는 동안 카드 위에 뼈대 덮개 (U, D148): 늦게 드러나고, 보였으면 잠깐은 붙잡는다 (src/lib/wait.ts)
+  const busy = useHeld(status === 'loading');
+  const wasBusy = useRef(false);
 
   async function go(w: Want, how: 'push' | 'replace' | 'none', focus: 'head' | 'none'): Promise<void> {
     const my = (ticket.current += 1);
@@ -194,17 +198,13 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
         cards = await cardsAt(cat, sub, sort === 'match' ? 'popular' : sort, range);
       }
     } catch {
-      if (my === ticket.current) {
-        setStatus('error');
-        document.documentElement.removeAttribute(PENDING_ATTR);
-      }
+      if (my === ticket.current) setStatus('error');
       return;
     }
     if (my !== ticket.current) return;
     setView({ sort, page: at, sel, q, total: found, cards, loose });
     setCounts(live);
     setStatus('ready');
-    document.documentElement.removeAttribute(PENDING_ATTR);
     const url = listPath(cat, sub, sort, at, sel, q);
     if (how === 'push') window.history.pushState(null, '', url);
     else if (how === 'replace') window.history.replaceState(null, '', url);
@@ -233,6 +233,15 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
       window.clearTimeout(timer.current);
     };
   }, []);
+
+  // 첫 그림의 다른 쪽 주소: 덮개를 걷을 때(받기를 마치고 붙잡기도 끝났을 때) 빌드 때 그린 카드 가림도 푼다
+  useEffect(() => {
+    if (busy) wasBusy.current = true;
+    else if (wasBusy.current) {
+      wasBusy.current = false;
+      document.documentElement.removeAttribute(PENDING_ATTR);
+    }
+  }, [busy]);
 
   // 새로 그린 카드의 [담기]·찜 상태·폰트 견본을 맞춘다 (src/lib/cart-buttons.ts, wish-buttons.ts, font-preview.ts)
   useEffect(() => {
@@ -297,6 +306,8 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
   const chosen = facets.flatMap((f) => (view.sel[f.k] ?? []).map((v) => ({ k: f.k, v })));
   const sorts: ListSort[] = view.q ? ['match', ...SORTS] : [...SORTS];
   const findLabel = fill(ko.list.findLabel, { name: subName });
+  // 누른 정렬·쪽은 받기를 기다리지 않고 바로 고른 것으로 보인다 (0.1초 안의 응답, U D148). 못 받으면 원래대로
+  const pressed = status === 'loading' && want ? want : view;
 
   // 고르는 동안(거르기 파일을 받는 중)에도 고른 칸이 바로 켜져 보이게, 바라는 고름을 먼저 보인다
   const panel = (id: string) => <FacetPanel id={id} facets={facets} sel={want?.sel ?? view.sel} counts={counts} onToggle={toggle} />;
@@ -368,7 +379,7 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
               <ul>
                 {sorts.map((s) => (
                   <li>
-                    <a class="chip" {...sortLink(s)} aria-current={s === view.sort ? 'true' : undefined}>
+                    <a class="chip" {...sortLink(s)} aria-current={s === pressed.sort ? 'true' : undefined}>
                       {ko.list.sorts[s]}
                     </a>
                   </li>
@@ -396,7 +407,7 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
             </button>
           </div>
         )}
-        <ul class="grid listing-grid" aria-busy={status === 'loading' ? 'true' : undefined}>
+        <ul class={busy ? 'grid listing-grid is-wait' : 'grid listing-grid'} aria-busy={busy ? 'true' : undefined}>
           {view.cards.map((c, i) => (
             <li key={c.id}>
               <ProductCard card={c} slot={`p${view.page}-${i}`} />
@@ -433,7 +444,7 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
           </div>
         )}
         {status === 'loading' && (
-          <p class="list-status" role="status">
+          <p class="visually-hidden" role="status">
             {want?.q ? ko.list.finding : picked > 0 ? ko.facets.loading : ko.list.loading}
           </p>
         )}
@@ -446,7 +457,7 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
           </p>
         )}
         <Pager
-          page={view.page}
+          page={Math.min(pressed.page, pageCount(n))}
           pages={pageCount(n)}
           href={(p) => listPath(cat, sub, view.sort, p, view.sel, view.q)}
           onGo={(p) => void go({ sort: view.sort, page: p, sel: view.sel, q: view.q }, 'push', 'head')}

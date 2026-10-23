@@ -14,9 +14,11 @@ import type { Card, NavCategory } from '../lib/catalog/types.ts';
 import { CATEGORY_ICON } from '../lib/icons.ts';
 import { FILES, ROUTES, listPath, searchBlockPath, searchPath, searchShardPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
+import { useHeld } from '../lib/wait.ts';
 import { Icon } from './Icon.tsx';
 import { Pager } from './Pager.tsx';
 import { ProductCard } from './ProductCard.tsx';
+import { Sk, SkCards, SkLine, SkSet } from './Skeleton.tsx';
 
 interface Props {
   nav: NavCategory[];
@@ -106,6 +108,12 @@ export default function SearchPage({ nav }: Props) {
   const timer = useRef<number | undefined>(undefined);
   const catOrder = useMemo(() => nav.map((c) => c.id), [nav]);
   const catName = (id: string): string => nav.find((c) => c.id === id)?.name ?? id;
+  // 받는 동안: 첫 결과 전에는 결과 모양의 뼈대, 고쳐 찾을 때는 지금 카드 위에 뼈대 덮개 (U, D148)
+  const busy = useHeld(status === 'loading');
+  // 첫 결과 뼈대도 보였으면 잠깐 붙잡는다
+  const shownOnce = useRef(false);
+  const firstWait = useHeld(status === 'loading' && !shownOnce.current);
+  if (shown && !firstWait) shownOnce.current = true;
   /** 고쳐 칠 때 지킬 대분류: 지금 보고 있는(또는 바라는) 대분류 */
   const scope = (): string | null => (shown ? shown.want.cat : (want?.cat ?? null));
 
@@ -164,6 +172,8 @@ export default function SearchPage({ nav }: Props) {
     const w = readUrl();
     setInput(w.q);
     void run(w, 'none', false);
+    // 검색어가 있는 주소의 첫 그림은 Base가 예시 칩을 가려 두었다 (이제 섬이 뼈대·결과를 그린다)
+    document.documentElement.removeAttribute('data-list-pending');
     const onPop = (): void => {
       const n = readUrl();
       setInput(n.q);
@@ -179,7 +189,7 @@ export default function SearchPage({ nav }: Props) {
   // 새로 그린 카드의 [담기] 상태·폰트 견본을 맞춘다 (src/lib/cart-buttons.ts, font-preview.ts)
   useEffect(() => {
     document.dispatchEvent(new CustomEvent(CARDS_EVENT));
-  }, [shown]);
+  }, [shown, firstWait]);
 
   const onInput = (e: Event): void => {
     const v = (e.target as HTMLInputElement).value;
@@ -228,9 +238,30 @@ export default function SearchPage({ nav }: Props) {
           </button>
         </p>
       )}
-      {!shown && status !== 'error' && (want?.q ? <p class="list-status">{ko.search.loading}</p> : <Examples />)}
-      {shown && <Results shown={shown} busy={status === 'loading'} head={head} catName={catName} move={move} />}
+      {(!shown || firstWait) && status !== 'error' && (want?.q ? <ResultsSkeleton /> : <Examples />)}
+      {shown && !firstWait && <Results shown={shown} busy={busy} now={status === 'loading' && want ? want.cat : shown.want.cat} head={head} catName={catName} move={move} />}
     </div>
+  );
+}
+
+/** 첫 결과 뼈대: 결과 수 · 대분류 칩 · 카드 10장 (대분류 묶음 하나) */
+function ResultsSkeleton() {
+  return (
+    <SkSet label={ko.search.loading} class="search-results">
+      <h2 class="search-sum" aria-hidden="true">
+        <SkLine w="14rem" />
+      </h2>
+      <div class="search-cats sub-strip" aria-hidden="true">
+        <ul>
+          {[5, 4.5, 6, 5.5].map((w) => (
+            <li>
+              <Sk w={`${w}rem`} h="var(--btn-sm)" pill />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <SkCards n={GROUP_SHOW} />
+    </SkSet>
   );
 }
 
@@ -257,12 +288,14 @@ function Examples() {
 interface ResultsProps {
   shown: Shown;
   busy: boolean;
+  /** 고른 것으로 보일 대분류: 누르면 받기를 기다리지 않고 바로 (U, D148) */
+  now: string | null;
   head: { current: HTMLHeadingElement | null };
   catName: (id: string) => string;
   move: (cat: string | null, page?: number) => void;
 }
 
-function Results({ shown, busy, head, catName, move }: ResultsProps) {
+function Results({ shown, busy, now, head, catName, move }: ResultsProps) {
   const go = (c: string | null) => (e: MouseEvent) => {
     if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
@@ -273,7 +306,7 @@ function Results({ shown, busy, head, catName, move }: ResultsProps) {
   const inCat = cat ? (groups.find((g) => g.cat === cat)?.hits.length ?? 0) : total;
   const pages = pageCount(inCat, SEARCH_PAGE);
   return (
-    <div class="search-results" aria-busy={busy ? 'true' : undefined}>
+    <div class={busy ? 'search-results is-wait' : 'search-results'} aria-busy={busy ? 'true' : undefined}>
       <h2 class="search-sum" tabIndex={-1} ref={head}>
         {cat ? fill(ko.search.resultsIn, { q: want.q, cat: catName(cat), n: withCommas(inCat) }) : fill(ko.search.results, { q: want.q, n: withCommas(total) })}
       </h2>
@@ -282,13 +315,13 @@ function Results({ shown, busy, head, catName, move }: ResultsProps) {
         <nav class="search-cats sub-strip" aria-label={ko.search.catsLabel}>
           <ul>
             <li>
-              <a class="chip" href={searchPath(want.q)} aria-current={cat === null ? 'page' : undefined} onClick={go(null)}>
+              <a class="chip" href={searchPath(want.q)} aria-current={now === null ? 'page' : undefined} onClick={go(null)}>
                 {ko.search.all} <span class="chip-n">{withCommas(total)}</span>
               </a>
             </li>
             {groups.map((g) => (
               <li>
-                <a class="chip" href={searchPath(want.q, g.cat)} aria-current={cat === g.cat ? 'page' : undefined} onClick={go(g.cat)} data-cat={g.cat}>
+                <a class="chip" href={searchPath(want.q, g.cat)} aria-current={now === g.cat ? 'page' : undefined} onClick={go(g.cat)} data-cat={g.cat}>
                   {catName(g.cat)} <span class="chip-n">{withCommas(g.hits.length)}</span>
                 </a>
               </li>

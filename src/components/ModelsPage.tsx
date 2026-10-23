@@ -27,8 +27,10 @@ import {
 import { modelsBundle, providerModels } from '../lib/model-data.ts';
 import { modelsPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
-import { ModelTable, useWide } from './ModelTable.tsx';
+import { useHeld } from '../lib/wait.ts';
+import { ModelTable, ModelTableSkeleton, useWide } from './ModelTable.tsx';
 import { PricingExplainer } from './ModelsSection.tsx';
+import { SkLine, SkSet } from './Skeleton.tsx';
 
 interface Props {
   providers: ModelProvider[];
@@ -240,7 +242,9 @@ export default function ModelsPage({ providers, fetched }: Props) {
     return sortRows(filterRows(pool, filterOf(q, providers)), q.sort, q.dir);
   }, [direct, hosts, one, single, wantHosts, q, providers]);
   const shown = found.slice(0, limit);
-  const done = load === 'ok' && (single !== null ? one.has(single) : direct !== null && (!wantHosts || hosts !== null));
+  // 받는 동안 표 모양 뼈대 (U, D148). 뼈대가 보였으면 잠깐 붙잡는다
+  const waiting = useHeld(load === 'loading');
+  const done = !waiting && load === 'ok' && (single !== null ? one.has(single) : direct !== null && (!wantHosts || hosts !== null));
 
   // 결과 수를 알린다 (치는 동안은 잠깐 멈춘 뒤)
   useEffect(() => {
@@ -296,17 +300,22 @@ export default function ModelsPage({ providers, fetched }: Props) {
         </details>
       )}
       <div class="mf-status">
-        <p class="mf-count">{done ? fill(p.found, { n: withCommas(found.length) }) : ''}</p>
+        <p class="mf-count">{done ? fill(p.found, { n: withCommas(found.length) }) : load !== 'failed' && (
+            <span class="sk-set">
+              <SkLine w="5rem" />
+            </span>
+          )}
+        </p>
         {changed && (
           <button type="button" class="btn btn-text btn-sm" onClick={() => set({ ...DEFAULT_QUERY, q: q.q })}>
             {p.reset}
           </button>
         )}
       </div>
-      {load === 'loading' && (
-        <p role="status" class="mt-status">
-          {wantHosts && direct ? p.loadingHosts : p.loading}
-        </p>
+      {(load === 'loading' || waiting) && (
+        <SkSet label={wantHosts && direct ? p.loadingHosts : p.loading}>
+          <ModelTableSkeleton n={8} />
+        </SkSet>
       )}
       {load === 'failed' && (
         <div role="alert" class="mt-status">

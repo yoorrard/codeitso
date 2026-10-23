@@ -13,6 +13,7 @@ import { CARDS_EVENT, openCart } from './cart-ui.ts';
 import { modelProviderOf } from './catalog/models.ts';
 import { isKitId } from './kits.ts';
 import type { Picker } from './model-picker.ts';
+import { pop } from './motion.ts';
 import { backdropPress } from './overlay.ts';
 import type { ModelChoice } from './saved.ts';
 import { MEMO_MAX } from './saved.ts';
@@ -38,6 +39,10 @@ function sync(root: ParentNode): void {
     // 모델 표의 줄 [담기]는 그 모델로 담겼을 때만 '담겼어요'
     const model = b.dataset['model'];
     const on = line !== undefined && (model === undefined || line.model?.id === model);
+    // 글은 늘 맞춘다: 섬이 깨어나며(Preact 붙이기) 카드 글을 빌드 때의 '담기'로 되돌리고 data-in은 그대로 두기 때문 (U, D148에서 찾은 버그)
+    const label = b.querySelector('.add-label');
+    const text = on ? ko.card.added : ko.card.add;
+    if (label && label.textContent !== text) label.textContent = text;
     if (b.dataset['in'] === String(on)) continue;
     b.dataset['in'] = String(on);
     const name = b.dataset['name'] ?? '';
@@ -47,13 +52,22 @@ function sync(root: ParentNode): void {
         ? fill(on ? ko.card.inCartLabel : ko.card.addLabel, { name })
         : fill(on ? ko.models.inCartLabel : ko.models.addLabel, { name, model: b.dataset['modelName'] ?? model }),
     );
-    const label = b.querySelector('.add-label');
-    if (label) label.textContent = on ? ko.card.added : ko.card.add;
   }
   for (const b of root.querySelectorAll<HTMLButtonElement>('button[data-kit]')) {
     const all = kitItems(b).every(([id]) => lines.has(id));
+    if (b.dataset['in'] === String(all)) continue;
     b.dataset['in'] = String(all);
+    // 모두 담긴 키트는 [모두 담겼어요]로 (누르면 장바구니가 열린다, U D148)
+    const name = b.dataset['name'] ?? '';
+    const label = b.querySelector('.kit-add-label');
+    if (label) label.textContent = all ? ko.kits.added : ko.kits.add;
+    b.setAttribute('aria-label', all ? fill(ko.kits.inCartLabel, { name }) : fill(ko.kits.addLabel, { name, n: kitItems(b).length }));
   }
+}
+
+/** 담은 뒤 버튼의 체크 아이콘이 작게 커지며 자리 잡는다 (상세 [담기]는 섬이 다시 그린 뒤라 한 박자 늦게) */
+function confirmPop(btn: HTMLElement): void {
+  requestAnimationFrame(() => pop(btn.querySelector('.add-on .icon-wrap') ?? btn.querySelector('.icon-wrap')));
 }
 
 // ── 담기 창 ─────────────────────────────────────────────────────────
@@ -150,6 +164,7 @@ function confirm(): void {
   if (r === 'added') trackAdd(t.cat);
   announce(fill(ko.card.addedLive, { name: t.name }));
   close();
+  confirmPop(t.btn);
 }
 
 function build(doc: Document): Sheet {
@@ -309,6 +324,7 @@ export function wireAddButtons(doc: Document = document): void {
         return;
       }
       if (isKitId(kit)) track('bundle_add', kit);
+      pop(k.querySelector('.icon-wrap'));
       announce(r.skipped > 0 ? fill(ko.kits.addedSkip, { name, added: r.added, skipped: r.skipped }) : fill(ko.kits.addedLive, { name, added: r.added }));
     }
   });

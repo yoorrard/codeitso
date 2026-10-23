@@ -2,17 +2,19 @@
 // 넓은 화면(1024px 이상)은 진짜 표(<table>, 비교 쪽은 머리 칸 정렬 단추와 aria-sort), 좁은 화면은 모델마다 카드 목록(<ul>)이라
 // 쪽이 옆으로 밀리지 않는다. 줄마다 모델 id 복사와 [담기](그 모델을 고른 채로 담기 창, data-model → src/lib/cart-buttons.ts).
 import type { ComponentChildren } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { CARDS_EVENT } from '../lib/cart-ui.ts';
 import type { ModelProvider, ModelRow, ModelSort, SortDir } from '../lib/catalog/models.ts';
 import { MODALITIES, tokens, usd } from '../lib/catalog/models.ts';
 import { copyText } from '../lib/clipboard.ts';
+import { pop } from '../lib/motion.ts';
 import { itemPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
 import { Icon } from './Icon.tsx';
-import '../styles/models.css';
+import { Sk, SkLine, SkRows } from './Skeleton.tsx';
+import modelsCss from '../styles/models.css?url';
 
 /** 담기 버튼이 담는 상품 (제공자) */
 export interface ModelItem {
@@ -38,6 +40,20 @@ interface Props {
 }
 
 const WIDE = '(min-width: 1024px)';
+
+/** 표 스타일(models.css)을 한 번만 붙이고 받을 때까지 기다린다. /models는 쪽 머리에 이미 있고(models.astro),
+ *  상세는 '모델·요금'이 있는 AI API에서만 늦게 붙인다 (U, D148: 상세 첫 CSS를 줄인다). 못 받아도 그린다 */
+export function loadModelsStyle(): Promise<void> {
+  if ([...document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')].some((l) => l.getAttribute('href') === modelsCss)) return Promise.resolve();
+  return new Promise((ok) => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = modelsCss;
+    link.onload = () => ok();
+    link.onerror = () => ok();
+    document.head.append(link);
+  });
+}
 
 /** 넓은 화면인가 (표 ↔ 카드). 서버 그림(섬 밖)은 카드(휴대폰 먼저), 브라우저는 처음부터 화면 폭대로 */
 export function useWide(): boolean {
@@ -92,9 +108,14 @@ function inputsOf(r: Row): string {
 /** 모델 id 복사 (작은 단추, 누르는 곳은 44px) */
 function CopyId({ id }: { id: string }) {
   const [done, setDone] = useState(false);
+  const btn = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (done) pop(btn.current?.querySelector('.icon-wrap'));
+  }, [done]);
   return (
     <button
       type="button"
+      ref={btn}
       class="mt-copy"
       aria-label={fill(t.copyIdLabel, { id })}
       data-state={done ? 'done' : 'idle'}
@@ -316,6 +337,29 @@ function Cards({ rows, caption, item, providers, knowledge }: Props) {
           </li>
         );
       })}
+    </ul>
+  );
+}
+
+/** 받는 동안의 모양 (U, D148): 넓은 화면은 표 줄, 좁은 화면은 모델 카드와 같은 칸·크기 */
+export function ModelTableSkeleton({ n }: { n: number }) {
+  if (useWide()) return <SkRows n={n} />;
+  return (
+    <ul class="mt-cards" aria-hidden="true">
+      {Array.from({ length: n }, (_, i) => (
+        <li class="mt-card">
+          <div class="mt-card-head">
+            <span class="sk-row-main">
+              <SkLine w="32%" />
+              <SkLine w={`${[64, 52, 70][i % 3]}%`} />
+            </span>
+            <Sk w="4.5rem" h="var(--btn-md)" />
+          </div>
+          <SkLine w="58%" />
+          <SkLine w="84%" />
+          <SkLine w="46%" />
+        </li>
+      ))}
     </ul>
   );
 }

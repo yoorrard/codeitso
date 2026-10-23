@@ -71,6 +71,17 @@ export function play(el: Element, keyframes: Keyframe[], opts: PlayOptions): Ani
   });
 }
 
+/** 결과 알림 튀기기 (U, D148): 'in'은 담기·찜·복사가 끝나 바뀐 아이콘이 작게 커지며 자리 잡기, 'bump'는 머리줄 배지 숫자가 바뀔 때
+ *  한 번 살짝 부풀기. 둘 다 --dur-ui(200ms) 안쪽이고 동작 줄이기면 아무것도 하지 않는다. 글·aria-live 알림이 따로 있어 장식이다 */
+export function pop(el: Element | null | undefined, kind: 'in' | 'bump' = 'in'): void {
+  if (!el || reduced() || typeof (el as HTMLElement).animate !== 'function') return;
+  const frames: Keyframe[] =
+    kind === 'in'
+      ? [{ transform: 'scale(0.6)', opacity: 0.4 }, { transform: 'scale(1.12)', opacity: 1, offset: 0.6 }, { transform: 'scale(1)', opacity: 1 }]
+      : [{ transform: 'scale(1)' }, { transform: 'scale(1.25)', offset: 0.45 }, { transform: 'scale(1)' }];
+  play(el, frames, { dur: '--dur-ui', ease: '--ease-out' });
+}
+
 /** scope 안에서 돌고 있는 애니메이션을 모두 끝 상태로 (누르기·Esc·건너뛰기 버튼). 끝이 없는 반복은 멈춘다 */
 export function skipAll(scope?: Element | Document): number {
   const target = scope ?? (typeof document === 'undefined' ? undefined : document);

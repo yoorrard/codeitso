@@ -11,8 +11,11 @@ import type { DetailRecord } from '../lib/catalog/types.ts';
 import { providerModels } from '../lib/model-data.ts';
 import { modelsPath, termPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
+import { useHeld } from '../lib/wait.ts';
 import { Icon } from './Icon.tsx';
-import { ModelTable, useWide } from './ModelTable.tsx';
+import { ModelTable, ModelTableSkeleton, useWide } from './ModelTable.tsx';
+export { loadModelsStyle } from './ModelTable.tsx';
+import { SkSet } from './Skeleton.tsx';
 
 /** 처음 보이는 모델 수: 넓은 화면(표) · 좁은 화면(카드) */
 const FIRST = { wide: 20, narrow: 6 } as const;
@@ -54,12 +57,6 @@ export function PricingExplainer({ open = false }: { open?: boolean }) {
   );
 }
 
-/** 상세에 '모델·요금'을 그릴 상품인가: models.dev 제공자이고 모델이 있다 */
-export function hasModels(item: DetailRecord): boolean {
-  const a = apiInfo(item);
-  return modelProviderOf(item.id) !== null && (a?.modelCount ?? 0) > 0;
-}
-
 export function ModelsSection({ item }: { item: DetailRecord }) {
   const provider = modelProviderOf(item.id) ?? '';
   const [state, setState] = useState<State>({ k: 'loading' });
@@ -71,7 +68,10 @@ export function ModelsSection({ item }: { item: DetailRecord }) {
   const limitsUrl = typeof p['limitsUrl'] === 'string' && p['limitsUrl'].startsWith('https://') ? p['limitsUrl'] : undefined;
   const limitsAt = typeof p['limitsCheckedAt'] === 'string' ? p['limitsCheckedAt'] : undefined;
   const plan = item.tags.includes('subscription-plan');
-  const first = useWide() ? FIRST.wide : FIRST.narrow;
+  const wide = useWide();
+  const first = wide ? FIRST.wide : FIRST.narrow;
+  // 받는 동안 표 모양 뼈대 (U, D148): 줄 수는 미리 아는 모델 수만큼(처음 보이는 수까지)
+  const waiting = useHeld(state.k === 'loading');
   // 비교 쪽: 주요 회사면 처음 보이는 그대로, 모델을 직접 만드는 회사면 그 회사들끼리, 호스팅·라우터면 모든 곳
   const scope: ProviderScope = (MAJOR_PROVIDERS as readonly string[]).includes(provider) ? 'major' : item.kind === 'ai-llm' ? 'direct' : 'all';
 
@@ -106,7 +106,11 @@ export function ModelsSection({ item }: { item: DetailRecord }) {
       </div>
       <p class="muted">{ko.models.lead}</p>
       {plan && <p class="notice">{ko.models.planNote}</p>}
-      {state.k === 'loading' && <p role="status">{ko.models.loading}</p>}
+      {waiting && (
+        <SkSet label={ko.models.loading}>
+          <ModelTableSkeleton n={Math.min(first, a?.modelCount ?? first)} />
+        </SkSet>
+      )}
       {state.k === 'failed' && (
         <div role="alert" class="mt-status">
           <p>{ko.models.failed}</p>
@@ -115,7 +119,7 @@ export function ModelsSection({ item }: { item: DetailRecord }) {
           </button>
         </div>
       )}
-      {state.k === 'ok' && (
+      {state.k === 'ok' && !waiting && (
         <>
           {shown.length > 0 ? <ModelTable rows={shown} caption={fill(ko.models.tableLabel, { name: item.name })} item={target} knowledge /> : <p>{ko.models.empty}</p>}
           <div class="mt-more">

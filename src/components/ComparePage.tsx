@@ -12,7 +12,9 @@ import type { DetailRecord, NavCategory, Shard } from '../lib/catalog/types.ts';
 import { factLabel } from '../lib/labels.ts';
 import { comparePath, itemDataPath, itemPath, listPath } from '../lib/routes.ts';
 import { fill } from '../lib/text.ts';
+import { useHeld } from '../lib/wait.ts';
 import { Icon } from './Icon.tsx';
+import { SkRows, SkSet } from './Skeleton.tsx';
 
 interface Props {
   nav: NavCategory[];
@@ -20,6 +22,8 @@ interface Props {
 
 /** 한 번에 비교하는 재료 수 */
 const MAX = 4;
+/** 비교 표의 줄 수 (머리 줄 + 아래 rows): 뼈대가 같은 높이로 자리를 잡는다 */
+const COMPARE_ROWS = 10;
 
 type State = { k: 'loading' } | { k: 'noIds' } | { k: 'failed' } | { k: 'ok'; items: DetailRecord[]; missing: number };
 
@@ -45,6 +49,8 @@ async function load(ids: readonly string[]): Promise<{ items: DetailRecord[]; mi
 export default function ComparePage({ nav }: Props) {
   const [state, setState] = useState<State>({ k: 'loading' });
   const [tries, setTries] = useState(0);
+  // 받는 동안 표 모양 뼈대 (U, D148): 비교 표의 줄 수만큼
+  const waiting = useHeld(state.k === 'loading');
 
   useEffect(() => {
     const ids = readIds();
@@ -64,13 +70,19 @@ export default function ComparePage({ nav }: Props) {
 
   // 표의 [담기] 버튼 상태를 맞춘다 (src/lib/cart-buttons.ts)
   useEffect(() => {
-    if (state.k === 'ok') document.dispatchEvent(new CustomEvent(CARDS_EVENT));
-  }, [state]);
+    if (state.k === 'ok' && !waiting) document.dispatchEvent(new CustomEvent(CARDS_EVENT));
+  }, [state, waiting]);
 
-  if (state.k !== 'ok') {
-    const text = state.k === 'loading' ? ko.compare.loading : state.k === 'noIds' ? ko.compare.noIds : ko.compare.failed;
+  if (waiting || state.k === 'loading')
     return (
-      <div class="cmp-status" role={state.k === 'loading' ? 'status' : 'alert'}>
+      <SkSet label={ko.compare.loading}>
+        <SkRows n={COMPARE_ROWS} />
+      </SkSet>
+    );
+  if (state.k !== 'ok') {
+    const text = state.k === 'noIds' ? ko.compare.noIds : ko.compare.failed;
+    return (
+      <div class="cmp-status" role="alert">
         <p>{text}</p>
         {state.k === 'failed' && (
           <button type="button" class="btn" onClick={() => setTries((n) => n + 1)}>

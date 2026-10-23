@@ -213,12 +213,6 @@
   }
 }
 
-/* 처음 한 번 기사 메시지: 본문 흐름 안, H1 아래 한 줄 다음의 알림 칸(.term-hint-slot, role="status")에 그린다.
-   떠 있지 않아 초점 받은 것을 가리지 않고, 닫기가 Tab 순서 앞쪽에 온다 (D69 검토 반영) */
-.stage .term-hint-slot:not(:empty) {
-  margin-block: var(--space-4);
-}
-
 /* 동작 줄이기 (기기·사이트): 움직이지 않고 투명도만 */
 @media (prefers-reduced-motion: reduce) {
   .term-pop,

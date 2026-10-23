@@ -16,9 +16,11 @@ import type { ModelChoice } from '../lib/saved.ts';
 import { readShareEntries } from '../lib/share.ts';
 import { $cart, $project, $storageOk, addManyToCart, clearCart, setProject } from '../lib/store.ts';
 import { fill } from '../lib/text.ts';
+import { useHeld } from '../lib/wait.ts';
 import { CartLines } from './CartLines.tsx';
 import CopyButton from './CopyButton.tsx';
 import { PromptButton } from './PromptButton.tsx';
+import { Sk, SkRows, SkSet } from './Skeleton.tsx';
 
 interface Props {
   nav: NavCategory[];
@@ -45,28 +47,42 @@ async function sharedModels(entries: readonly { id: string; model?: string }[]):
 /** 공유받은 목록 (#s=…): 재료 이름을 상세 자료에서 찾아 보여 주고 [모두 담기]. 고른 모델(D141)도 함께 담는다 */
 function Shared({ entries, nav, onDone }: { entries: { id: string; model?: string }[]; nav: NavCategory[]; onDone: () => void }) {
   const [got, setGot] = useState<Load<{ items: DetailRecord[]; models: Map<string, ModelChoice> }>>({ k: 'loading' });
+  const [tries, setTries] = useState(0);
+  const waiting = useHeld(got.k === 'loading');
   const names = namesOf(nav);
   const ids = entries.map((e) => e.id);
   useEffect(() => {
     let live = true;
+    setGot({ k: 'loading' });
     Promise.all([fetchDetails(ids), sharedModels(entries)])
       .then(([m, models]) => live && setGot({ k: 'ok', v: { items: ids.map((id) => m.get(id)).filter((x): x is DetailRecord => x !== undefined), models } }))
       .catch(() => live && setGot({ k: 'failed' }));
     return () => {
       live = false;
     };
-  }, [entries.map((e) => `${e.id}@${e.model ?? ''}`).join(',')]);
-  const found = got.k === 'ok' ? got.v.items : [];
+  }, [entries.map((e) => `${e.id}@${e.model ?? ''}`).join(','), tries]);
+  const found = got.k === 'ok' && !waiting ? got.v.items : [];
   const models = got.k === 'ok' ? got.v.models : new Map<string, ModelChoice>();
-  const missing = got.k === 'ok' ? ids.length - found.length : 0;
+  const missing = got.k === 'ok' && !waiting ? ids.length - found.length : 0;
   return (
     <section class="shared" aria-labelledby="shared-title" data-shared>
       <h2 id="shared-title" tabIndex={-1}>
         {fill(ko.shared.title, { n: ids.length })}
       </h2>
       <p class="muted">{ko.shared.lead}</p>
-      {got.k === 'loading' && <p role="status">{ko.shared.loading}</p>}
-      {got.k === 'failed' && <p role="alert">{ko.shared.failed}</p>}
+      {waiting && (
+        <SkSet label={ko.shared.loading}>
+          <SkRows n={Math.min(ids.length, 6)} />
+        </SkSet>
+      )}
+      {got.k === 'failed' && (
+        <p role="alert">
+          {ko.shared.failed}{' '}
+          <button type="button" class="btn btn-sm" onClick={() => setTries((n) => n + 1)}>
+            {ko.shared.retry}
+          </button>
+        </p>
+      )}
       {found.length > 0 && (
         <ul class="shared-list">
           {groupByCategory(found.map((d) => ({ ...d, cat: d.category }))).flatMap((g) =>
@@ -113,6 +129,8 @@ function Shared({ entries, nav, onDone }: { entries: { id: string; model?: strin
 function InstallAll({ ids }: { ids: string[] }) {
   const cart = useStore($cart);
   const [got, setGot] = useState<Load<Map<string, DetailRecord>>>({ k: 'loading' });
+  const [tries, setTries] = useState(0);
+  const waiting = useHeld(got.k === 'loading');
   const key = ids.join(',');
   useEffect(() => {
     let live = true;
@@ -123,9 +141,24 @@ function InstallAll({ ids }: { ids: string[] }) {
     return () => {
       live = false;
     };
-  }, [key]);
-  if (got.k === 'loading') return <p class="field-hint">{ko.cart.installLoading}</p>;
-  if (got.k === 'failed') return <p class="field-hint">{ko.cart.installFailed}</p>;
+  }, [key, tries]);
+  // 모으는 동안 [설치 명령 한꺼번에 복사] 단추 자리에 같은 크기의 판 (U, D148)
+  if (waiting)
+    return (
+      <SkSet label={ko.cart.installLoading} class="install-all">
+        <Sk w="15rem" h="var(--btn-md)" />
+      </SkSet>
+    );
+  if (got.k === 'failed')
+    return (
+      <p class="field-hint" role="alert">
+        {ko.cart.installFailed}{' '}
+        <button type="button" class="btn btn-text btn-sm" onClick={() => setTries((n) => n + 1)}>
+          {ko.cart.installRetry}
+        </button>
+      </p>
+    );
+  if (got.k !== 'ok') return null;
   const bundle = installBundle(cart.map((l) => ({ name: l.name, install: got.v.get(l.id)?.use?.install })));
   if (bundle.count === 0) return <p class="field-hint">{ko.cart.installNone}</p>;
   return (
@@ -219,7 +252,8 @@ export default function CartPage({ nav }: Props) {
       <p class="cart-count" role="status" tabIndex={-1} data-cart-top>
         {lines.length > 0 ? fill(ko.cart.count, { n: lines.length }) : ready ? ko.cart.empty : ''}
       </p>
-      {lines.length === 0 ? (
+      {/* 깨어나기 전에는 저장된 장바구니를 몰라 빈 안내를 그리지 않는다 (담은 사람에게 '비었어요'가 번쩍이지 않게, U D148) */}
+      {!ready ? null : lines.length === 0 ? (
         <div class="cart-empty">
           <a class="btn btn-primary" href={ROUTES.home}>
             {ko.cart.browse}

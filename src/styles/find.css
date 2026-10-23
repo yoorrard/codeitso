@@ -230,11 +230,7 @@
 .facet-sheet::backdrop {
   background: var(--scrim);
 }
-@keyframes sheet-up {
-  from {
-    translate: 0 100%;
-  }
-}
+/* sheet-up·drawer-in 모양은 cart.css (담기 창·서랍과 같다) */
 @media (min-width: 600px) {
   .facet-sheet {
     inset: 0 0 0 auto;
@@ -278,10 +274,6 @@
   font-size: var(--size-title-3);
   scroll-margin-block-start: calc(var(--header-h) + var(--space-4));
 }
-.search-results[aria-busy='true'] .grid {
-  opacity: 0.5;
-  transition: opacity var(--dur-fade) var(--ease-out);
-}
 .search-cats {
   margin-block: var(--space-3) var(--space-2);
 }
@@ -297,6 +289,9 @@
 .search-subs,
 .search-examples {
   margin-block: var(--space-3) var(--space-5);
+}
+:root[data-list-pending] .search-examples {
+  visibility: hidden;
 }
 .search-subs .field-label,
 .search-examples .field-label {

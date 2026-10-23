@@ -60,9 +60,18 @@ export function mountPicker(host: HTMLElement, provider: string, initial: ModelC
   host.replaceChildren();
   const box = el(doc, 'fieldset', 'mp');
   const legend = el(doc, 'legend', 'add-sheet-label', t.legend);
-  const status = el(doc, 'p', 'mp-status', t.loading);
+  const status = el(doc, 'p', 'visually-hidden', t.loading);
   status.setAttribute('role', 'status');
-  box.append(legend, status);
+  // 받는 동안 목록 칸 모양의 뼈대 (U, D148): 늦게 드러나고(.sk-set), 목록이 오면 바로 바뀐다
+  const wait = el(doc, 'div', 'mp-list sk-set');
+  wait.setAttribute('aria-hidden', 'true');
+  for (const w of ['46%', '72%', '64%']) {
+    const row = el(doc, 'span', 'sk sk-l');
+    row.style.inlineSize = w;
+    row.style.margin = 'var(--space-2)';
+    wait.append(row);
+  }
+  box.append(legend, status, wait);
   host.append(box);
 
   let rows: ModelRow[] | null = null;
@@ -95,6 +104,7 @@ export function mountPicker(host: HTMLElement, provider: string, initial: ModelC
       const empty = el(doc, 'p', 'mp-empty', t.noMatch);
       empty.hidden = true;
       status.remove();
+      wait.remove();
       if (rows.length > FIND_FROM) {
         const findId = `${name}-find`;
         const label = el(doc, 'label', 'visually-hidden', t.find);
@@ -129,7 +139,9 @@ export function mountPicker(host: HTMLElement, provider: string, initial: ModelC
     })
     .catch(() => {
       if (!box.isConnected) return;
+      wait.remove();
       status.textContent = t.failed;
+      status.className = 'mp-status';
       status.setAttribute('role', 'alert');
       onReady();
     });

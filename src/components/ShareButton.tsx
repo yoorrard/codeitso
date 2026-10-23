@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { copyText } from '../lib/clipboard.ts';
+import { pop } from '../lib/motion.ts';
 import { Icon } from './Icon.tsx';
 
 interface Props {
@@ -15,7 +16,11 @@ const DONE_MS = 2000;
 export function ShareButton({ title }: Props) {
   const [done, setDone] = useState(false);
   const timer = useRef(0);
+  const btn = useRef<HTMLButtonElement>(null);
   useEffect(() => () => window.clearTimeout(timer.current), []);
+  useEffect(() => {
+    if (done) pop(btn.current?.querySelector('.icon-wrap'));
+  }, [done]);
 
   async function share(): Promise<void> {
     const url = window.location.href;
@@ -37,7 +42,7 @@ export function ShareButton({ title }: Props) {
   }
 
   return (
-    <button type="button" class="btn btn-text detail-share" onClick={() => void share()} aria-label={ko.item.shareLabel}>
+    <button type="button" ref={btn} class="btn btn-text detail-share" onClick={() => void share()} aria-label={ko.item.shareLabel}>
       <Icon name={done ? 'check' : 'share'} size="18px" />
       <span aria-hidden="true">{done ? ko.common.copied : ko.item.share}</span>
     </button>

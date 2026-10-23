@@ -6,6 +6,8 @@ import ModelsPage from '../components/ModelsPage.tsx';
 import { ko } from '../copy/ko.ts';
 import { categoryPath, ROUTES } from '../lib/routes.ts';
 import { modelsSummary, navData } from '../lib/catalog/site.ts';
+// 표 스타일은 쪽 머리에 싣는다. 같은 파일을 상세가 늦게 붙이므로(ModelTable loadModelsStyle) 둘 다 ?url 주소 하나를 쓴다 (U, D148)
+import modelsCss from '../styles/models.css?url';
 
 const summary = modelsSummary();
 const api = navData().find((c) => c.id === 'api');
@@ -18,6 +20,7 @@ const api = navData().find((c) => c.id === 'api');
     { href: ROUTES.home, label: ko.site.name },
     { href: categoryPath('api'), label: api?.name ?? 'API' },
   ]}
+  styles={[modelsCss]}
 >
   <header class="list-head" data-cat="api">
     <h1>{ko.models.page.title}</h1>

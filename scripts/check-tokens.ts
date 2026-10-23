@@ -3,7 +3,7 @@
 //     낮 지도(:root)와 밤 지도(@media (prefers-color-scheme: dark)의 :root가 덮어쓴 값) 두 모드 모두에서 본다 (D56).
 //  2. 느낌 팔레트([data-palette]) 낮·밤 덩어리가 바꾼 땅색으로 지도 그림의 대비 쌍을 다시 잰다 (D68).
 //  3. '동작 줄이기' 두 곳(기기 설정, html[data-motion=reduce])이 이동 길이를 모두 0으로, 손맛을 없애고,
-//     --dur-fade는 남기는지 확인한다 (D30).
+//     --dur-fade와 --dur-wait는 남기는지 확인한다 (D30; --dur-wait는 움직임이 아니라 뼈대를 보이기 전 기다림이다, U D148).
 //   node scripts/check-tokens.ts
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -142,8 +142,8 @@ for (const [where, block] of reduceBlocks) {
   }
   for (const d of durations) {
     const set = block.match(new RegExp(`${d}\\s*:\\s*([^;]+);`))?.[1]?.trim();
-    if (d === '--dur-fade') {
-      if (set !== undefined) errors.push(`${where}: --dur-fade는 동작 줄이기에서도 남긴다 (D30)`);
+    if (d === '--dur-fade' || d === '--dur-wait') {
+      if (set !== undefined) errors.push(`${where}: ${d}는 동작 줄이기에서도 남긴다 (D30·D148: 움직임이 아니다)`);
     } else if (set !== '0ms') {
       errors.push(`${where}: ${d}를 0ms로 둔다`);
     }

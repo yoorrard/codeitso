@@ -47,8 +47,10 @@
   margin-inline: auto;
 }
 
+/* 본문은 적어도 첫 화면 높이: 섬이 늦게 그리는 내용(상세·검색·장바구니…)이 들어와도 바닥글이 첫 화면에서 밀려 내려가지 않는다 (U, D148) */
 .page {
   flex: 1;
+  min-block-size: calc(100svh - var(--header-h));
   padding-block: var(--space-5) var(--space-8);
 }
 
@@ -161,7 +163,9 @@
 .btn:hover {
   background: var(--fill-press);
 }
-.btn:active {
+.btn:active,
+.chip:active,
+.pager-num:active {
   scale: var(--juice-press-scale);
 }
 .btn-primary {
@@ -1236,7 +1240,7 @@
 .scene-svg .o-pri { --o: var(--primary); }
 .scene-svg .o-dim { --o: var(--term-line); }
 .scene-svg .o-neon { --o: var(--term-neon); }
-/* 상세의 큰 장면은 한 번 떠오른다 (600ms, 동작 줄이기면 없음) */
+/* 상세의 큰 장면은 한 번 떠오른다 (600ms, 동작 줄이기면 --dur-reveal이 0이라 바로 선다) */
 .thumb.is-large .scene-svg {
   animation: scene-in var(--dur-reveal) var(--ease-out) both;
 }
@@ -1245,14 +1249,6 @@
     opacity: 0;
     transform: translateY(var(--space-2));
   }
-}
-@media (prefers-reduced-motion: reduce) {
-  .thumb.is-large .scene-svg {
-    animation: none;
-  }
-}
-:root[data-motion='reduce'] .thumb.is-large .scene-svg {
-  animation: none;
 }
 
 /* ── 위치(빵 부스러기) ──────────────────────────────────────────────── */
@@ -1372,16 +1368,9 @@
   padding: 0;
   list-style: none;
 }
-:root[data-list-pending] .listing-grid {
-  visibility: hidden;
-}
 .list-status {
   margin-block-start: var(--space-4);
   color: var(--text-2);
-}
-.listing-grid[aria-busy='true'] {
-  opacity: 0.5;
-  transition: opacity var(--dur-fade) var(--ease-out);
 }
 
 .pager {
@@ -1694,11 +1683,15 @@
   font-weight: var(--weight-strong);
   overflow-wrap: anywhere;
 }
-.detail-empty {
+.detail-empty,
+.lost {
   display: grid;
   justify-items: start;
   gap: var(--space-3);
   padding-block: var(--space-7);
+}
+.lost .hero-search {
+  justify-self: stretch;
 }
 
 /* ── 검색 결과 ───────────────────────────────────────────────────────── */
@@ -1827,12 +1820,6 @@
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.lost {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-3);
-  padding-block: var(--space-7);
-}
 
 /* ── 바닥글 ─────────────────────────────────────────────────────────── */
 .site-footer {
@@ -1925,4 +1912,105 @@
   color: var(--text);
   font-size: var(--size-body);
   font-weight: var(--weight-heading);
+}
+
+/* ── 기다림 표시 (U, D148, src/lib/wait.ts · Skeleton.tsx) ──────────────
+   뼈대 묶음은 --dur-wait 뒤에 드러나고(빨리 오면 안 보인다), 판은 --dur-pulse로 숨 쉰다(동작 줄이기면 0 = 멈춤).
+   자리는 처음부터 잡혀 있어 내용이 들어와도 아래가 밀리지 않는다. */
+.sk-set {
+  animation: fade-in var(--dur-fade) var(--dur-wait) both;
+}
+.sk {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: var(--skeleton);
+  animation: sk-pulse var(--dur-pulse) var(--ease-in-out) infinite alternate;
+}
+/* 글줄: 한 줄 높이(1lh)를 차지하고 가운데에 글자 키만 한 막대 */
+.sk-l {
+  block-size: 1lh;
+  border-block: calc(0.5lh - 0.4em) solid transparent;
+  border-radius: var(--radius-pill);
+  background-clip: padding-box;
+}
+@keyframes sk-pulse {
+  to {
+    opacity: 0.5;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+/* 줄 목록 뼈대 (모델 표·비교·공유받은 목록) */
+.sk-rows {
+  margin-block-start: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.sk-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-block-size: 3.5rem;
+  padding: var(--space-2) var(--space-3);
+}
+.sk-row + .sk-row {
+  border-block-start: 1px solid var(--hairline);
+}
+.sk-row-main {
+  flex: 1;
+}
+/* 카드 덮개: 목록·검색이 다른 쪽·정렬·필터를 받는 동안(.is-wait)과 첫 그림의 다른 쪽 주소(data-list-pending)는
+   낡은 카드 위에 같은 크기의 카드 뼈대(그림 판 · 이름 · 설명 두 줄 · 담기 단추)를 덮는다. 덮개가 위층이라 낡은 카드는 눌리지 않는다.
+   첫 그림의 다른 쪽 주소는 낡은 카드를 바로 가리고(::before), 뼈대만 늦게 드러난다 */
+:is(.is-wait, :root[data-list-pending] .listing-grid) .card::before,
+:is(.is-wait, :root[data-list-pending] .listing-grid) .card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--surface);
+  animation: fade-in var(--dur-fade) var(--dur-wait) both;
+}
+:is(.is-wait, :root[data-list-pending] .listing-grid) .card::after {
+  --b: linear-gradient(var(--skeleton) 0 0);
+  --y: calc(var(--thumb-h) + var(--space-3));
+  background:
+    var(--b) 0 0 / 100% var(--thumb-h),
+    var(--b) var(--space-3) var(--y) / 72% 1em,
+    var(--b) var(--space-3) calc(var(--y) + 1.75em) / 88% 0.75em,
+    var(--b) var(--space-3) calc(var(--y) + 2.75em) / 56% 0.75em,
+    var(--b) var(--space-3) calc(100% - var(--space-3)) / calc(100% - 2 * var(--space-3)) var(--tap);
+  background-repeat: no-repeat;
+  animation:
+    fade-in var(--dur-fade) var(--dur-wait) both,
+    sk-pulse var(--dur-pulse) var(--ease-in-out) var(--dur-wait) infinite alternate;
+}
+:root[data-list-pending] .listing-grid .card::before {
+  animation: none;
+}
+/* 첫 그림의 '1–60번째'는 빌드 때 1쪽 것이라 받을 때까지 막대로 */
+:root[data-list-pending] .list-range {
+  inline-size: fit-content;
+  border-radius: var(--radius-pill);
+  background: var(--skeleton);
+  color: transparent;
+}
+.is-wait .card:empty {
+  min-block-size: calc(var(--thumb-h) + 9.5rem);
+}
+/* 출처 그림: 판(자리)은 먼저, 그림은 다 받으면 살며시 (Base.astro가 is-loaded를 붙인다) */
+.thumb-img img {
+  opacity: 0;
+  transition: opacity var(--dur-ui) var(--ease-out);
+}
+.thumb-img.is-loaded img {
+  opacity: 1;
+}
+/* 폰트 견본: 받은 글꼴로 바뀔 때 살며시 */
+[data-font-state='ok'] {
+  animation: fade-in var(--dur-ui) var(--ease-out);
 }

@@ -11,6 +11,7 @@ import { ko } from '../copy/ko.ts';
 import type { CategoryId } from '../lib/catalog/types.ts';
 import type { GlossaryEntry } from '../lib/glossary.ts';
 import { TOUR_STEPS, TOUR_TERMS, clampStep } from '../lib/guide.ts';
+import { SkLine, SkSet } from './Skeleton.tsx';
 import type { TourStep } from '../lib/guide.ts';
 import { CATEGORY_ICON } from '../lib/icons.ts';
 import type { IconName } from '../lib/icons.ts';
@@ -101,9 +102,16 @@ function Words({ terms }: { terms: GlossaryEntry[] | null | 'failed' }) {
       <p class="tour-lead">{S.words.body}</p>
       {terms === 'failed' && <p class="tour-note">{S.words.failed}</p>}
       {terms === null && (
-        <p class="tour-note" role="status">
-          {S.words.loading}
-        </p>
+        <SkSet label={S.words.loading}>
+          <div class="tour-words" aria-hidden="true">
+            {TOUR_TERMS.map((_, i) => (
+              <div class="tour-word">
+                <SkLine w={`${[30, 22, 36, 26][i % 4]}%`} />
+                <SkLine w="88%" />
+              </div>
+            ))}
+          </div>
+        </SkSet>
       )}
       {Array.isArray(terms) && (
         <dl class="tour-words">

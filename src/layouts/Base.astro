@@ -34,8 +34,10 @@ interface Props {
   crumbs?: Crumb[];
   /** [뒤로]가 이전 화면이 없을 때 갈 곳. 없으면 위치의 마지막 단계 → 처음 화면. false면 쪽이 직접 그린다(상세 섬) */
   back?: string | false;
+  /** 이 쪽만 머리에 싣는 스타일 주소 (?url, 다른 쪽에서는 늦게 붙이는 것: /models의 표 스타일) */
+  styles?: string[];
 }
-const { title, description = ko.site.description, query, read = false, crumbs = [], back } = Astro.props;
+const { title, description = ko.site.description, query, read = false, crumbs = [], back, styles = [] } = Astro.props;
 const fullTitle = title ? `${title} · ${ko.site.name}` : `${ko.site.name}: ${ko.site.slogan}`;
 // 배포 서버는 끝 빗금을 뗀 주소로 맞춘다 (wrangler.jsonc html_handling, D50). 홈만 바탕 폴더 주소
 const path = Astro.url.pathname.replace(/\/+$/, '');
@@ -69,31 +71,61 @@ const tourCats = JSON.stringify(nav.map((c) => ({ id: c.id, name: c.name, total:
     <link rel="icon" href={FILES.icon192} type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href={FILES.appleTouchIcon} />
     <link rel="manifest" href={FILES.manifest} />
+    {styles.map((href) => <link rel="stylesheet" href={href} />)}
     {STAGE === 'preview' && <meta name="robots" content="noindex, nofollow" />}
     <script is:inline>
-      // 첫 그림 전에: 사이트 설정의 '동작 줄이기', 목록 쪽 주소가 인기순 1쪽이 아니면 빌드 때 그린 카드를 감춘다(목록 섬이 바꿔 그린 뒤 푼다,
+      // 첫 그림 전에: 사이트 설정의 '동작 줄이기', 목록 쪽 주소가 인기순 1쪽이 아니면 빌드 때 그린 카드를 뼈대로 덮는다(목록 섬이 바꿔 그린 뒤 푼다,
       // 섬이 4초 안에 깨어나지 못하면 그냥 푼다). 읽기만 한다 (저장은 src/lib/store.ts).
       try {
         var p = JSON.parse(localStorage.getItem('cc:prefs:v1') || '{}') || {};
         if (p.motion === 'reduce') document.documentElement.setAttribute('data-motion', 'reduce');
       } catch (e) {}
-      // 출처 그림을 못 받으면(막힘·없어짐) 깨진 그림 대신 머리글자를 보인다 (그림 오류는 거품이 일지 않아 잡기 단계에서 듣는다)
-      document.addEventListener(
-        'error',
-        function (e) {
-          var t = e.target;
-          if (t && t.tagName === 'IMG' && t.closest) {
-            var box = t.closest('.thumb-img');
-            if (box) box.classList.add('is-broken');
-          }
-        },
-        true,
-      );
-      // 소분류 목록 쪽 주소에 인기순 1쪽 말고 다른 것(정렬·쪽·거르기)이 있으면
-      if (/\/c\/[^/]+\/[^/]+\/?$/.test(location.pathname) && location.search.replace(/[?&](sort=popular|page=1)(?=&|$)/g, '').length > 1) {
+      // 출처 그림을 못 받으면(막힘·없어짐) 깨진 그림 대신 머리글자를 보이고, 받으면 살며시 드러낸다(U, D148: 판은 먼저, 그림은 다 받은 뒤).
+      // 그림의 load·error는 거품이 일지 않아 잡기 단계에서 듣는다. 이 스크립트보다 먼저 받은 그림은 없지만, 혹시 몰라 문서를 다 읽으면 한 번 훑는다
+      function ccThumb(t, cls) {
+        var box = t && t.tagName === 'IMG' && t.closest ? t.closest('.thumb-img') : null;
+        if (box) box.classList.add(cls);
+      }
+      document.addEventListener('error', function (e) { ccThumb(e.target, 'is-broken'); }, true);
+      document.addEventListener('load', function (e) { ccThumb(e.target, 'is-loaded'); }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.thumb-img img').forEach(function (i) {
+          if (i.complete) ccThumb(i, i.naturalWidth ? 'is-loaded' : 'is-broken');
+        });
+      });
+      // 머리줄 장바구니·찜 배지를 저장된 개수로 첫 그림 전에 (U, D148): 그림 직전마다 부르는 requestAnimationFrame에서 머리줄이 읽혔는지 보고 채운다.
+      // 섬·wish-buttons.ts가 깨어나면 같은 값으로 맞춘다 (배지가 늦게 나타나 머리줄이 밀리지 않게)
+      (function badges() {
+        var cart = document.querySelector('[data-cart-link]');
+        if (!cart) {
+          if (document.readyState === 'loading') requestAnimationFrame(badges);
+          return;
+        }
+        [
+          ['cc:cart:v1', cart, '.hd-badge'],
+          ['cc:wish:v1', document.querySelector('[data-wish-link]'), '.hd-wish-n'],
+        ].forEach(function (x) {
+          try {
+            var list = JSON.parse(localStorage.getItem(x[0]) || '[]');
+            var n = Array.isArray(list) ? list.length : 0;
+            var b = x[1] && x[1].querySelector(x[2]);
+            if (!b || n === 0) return;
+            b.setAttribute('data-n', String(n));
+            b.textContent = n > 99 ? '99+' : String(n);
+            x[1].setAttribute('aria-label', (x[1].getAttribute('data-label') || '').replace('{{n}}', String(n)));
+          } catch (e) {}
+        });
+      })();
+      // 소분류 목록 쪽 주소에 인기순 1쪽 말고 다른 것(정렬·쪽·거르기)이 있으면 빌드 때 그린 카드를 뼈대로 덮고,
+      // 검색어가 있는 검색 쪽이면 섬이 뼈대·결과를 그릴 때까지 예시 칩을 가린다 (U, D148)
+      if (
+        (/\/c\/[^/]+\/[^/]+\/?$/.test(location.pathname) && location.search.replace(/[?&](sort=popular|page=1)(?=&|$)/g, '').length > 1) ||
+        (/\/search\/?$/.test(location.pathname) && /[?&]q=[^&]/.test(location.search))
+      ) {
         document.documentElement.setAttribute('data-list-pending', '');
         setTimeout(function () {
-          document.documentElement.removeAttribute('data-list-pending');
+          // 섬이 깨어나 뼈대를 그리고 있으면 섬이 푼다
+          if (!document.querySelector('.is-wait, .sk-set')) document.documentElement.removeAttribute('data-list-pending');
         }, 4000);
       }
     </script>

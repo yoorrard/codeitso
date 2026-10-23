@@ -46,6 +46,7 @@
   --fill-press: var(--gray-3);
   --selected: var(--blue-2); /* 고른 칩·지금 쪽 번호의 옅은 면 */
   --hairline: var(--gray-4); /* 카드 테두리, 나눔 선 */
+  --skeleton: var(--gray-4); /* 기다리는 동안의 뼈대 판 (U, D148). 바탕·카드 위 모두 보이게 눌린 면보다 한 단 진하다 (밤에도 같은 단) */
   --border: var(--gray-7); /* 입력 칸 테두리. 대비: --surface 3, --bg 3 */
   --scrim: rgb(8 16 32 / 0.45);
 
@@ -185,6 +186,8 @@
   --dur-sheet: 280ms;
   --dur-reveal: 600ms; /* 프롬프트 판이 펼쳐지는 길이 (700ms 안쪽, 누르면 끝) */
   --dur-fade: 150ms; /* 동작 줄이기에서도 남긴다 (D30) */
+  --dur-wait: 200ms; /* 뼈대를 보이기 전에 기다리는 시간: 빨리 오면 깜박이지 않게 (U, D148, src/lib/wait.ts의 WAIT_MS와 같게) */
+  --dur-pulse: 900ms; /* 뼈대가 옅어졌다 돌아오는 반 바퀴 (동작 줄이기면 0 = 멈춘 판) */
 
   /* 곡선 */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -272,6 +275,7 @@
     --dur-exit: 0ms;
     --dur-sheet: 0ms;
     --dur-reveal: 0ms;
+    --dur-pulse: 0ms;
     --juice-press-scale: 1;
   }
 }
@@ -282,5 +286,6 @@
   --dur-exit: 0ms;
   --dur-sheet: 0ms;
   --dur-reveal: 0ms;
+  --dur-pulse: 0ms;
   --juice-press-scale: 1;
 }

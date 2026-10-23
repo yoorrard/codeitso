@@ -4,23 +4,28 @@
 // N1 (D137): 맨 위 [뒤로]·위치(뒤로의 기본 행선지는 이 상품의 소분류 목록), 담기 옆 찜 하트(wish-buttons.ts가 맡는다),
 // 공유(기기 공유 창 또는 주소 복사), 관련 상품 머리의 [비슷한 재료와 비교](이 상품 + 관련 상품 3개).
 // O1 (D138): 설명 속 어려운 말에 점선 밑줄(누르면 풀이), 설명 아래 '어려운 말 풀이' 안내 (TermHint.tsx).
-// D141: models.dev 모델 자료가 있는 AI API는 위 칸 바로 아래에 '모델·요금' 표(ModelsSection).
+// D141: models.dev 모델 자료가 있는 AI API는 위 칸 바로 아래에 '모델·요금' 표(ModelsSection). 그 묶음(표 섬·models.css)은 그런 상품에서만
+// 늦게 받는다 (U, D148: 13만 상품 대부분의 상세 첫 CSS·JS를 줄인다). 받는 동안은 같은 자리에 표 뼈대.
 import { useStore } from '@nanostores/preact';
+import type { ComponentType } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
 import { dateOf, formatCount, pickSummary, shardOf } from '../lib/catalog/core.ts';
+import { modelProviderOf } from '../lib/catalog/models.ts';
+import { apiInfo } from '../lib/catalog/preview.ts';
 import type { DetailRecord, NavCategory, Shard } from '../lib/catalog/types.ts';
 import { METRIC_ICON } from '../lib/labels.ts';
 import { openCart } from '../lib/cart-ui.ts';
 import { ROUTES, categoryPath, comparePath, itemDataPath, itemPath, listPath } from '../lib/routes.ts';
 import { $cart, $wish, markViewed } from '../lib/store.ts';
 import { fill } from '../lib/text.ts';
+import { useHeld } from '../lib/wait.ts';
 import CopyButton from './CopyButton.tsx';
 import { DetailPreview } from './DetailPreview.tsx';
 import { Icon } from './Icon.tsx';
-import { ModelsSection, hasModels } from './ModelsSection.tsx';
 import { PageTop } from './PageTop.tsx';
 import { ShareButton } from './ShareButton.tsx';
+import { Sk, SkLine, SkRows, SkSet } from './Skeleton.tsx';
 import { TermHint, TermText, useTermSegments } from './TermHint.tsx';
 
 interface Props {
@@ -39,6 +44,49 @@ function names(nav: NavCategory[], cat: string, sub: string): { cat: string; sub
     cat: c?.name ?? cat,
     sub: c?.subs.find((s) => s.id === sub)?.name ?? sub,
   };
+}
+
+/** '모델·요금'을 그릴 상품인가: models.dev 제공자이고 모델이 있다 (D141) */
+function hasModels(item: DetailRecord): boolean {
+  return modelProviderOf(item.id) !== null && (apiInfo(item)?.modelCount ?? 0) > 0;
+}
+
+/** '모델·요금'은 그 묶음을 받은 뒤 그린다. 받는 동안은 같은 자리·크기의 표 뼈대 */
+function LazyModels({ item }: { item: DetailRecord }) {
+  const [Section, setSection] = useState<ComponentType<{ item: DetailRecord }> | null>(null);
+  const [tries, setTries] = useState(0);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    let live = true;
+    setFailed(false);
+    import('./ModelsSection.tsx')
+      .then(async (m) => {
+        await m.loadModelsStyle();
+        if (live) setSection(() => m.ModelsSection);
+      })
+      .catch(() => live && setFailed(true));
+    return () => {
+      live = false;
+    };
+  }, [tries]);
+  if (Section) return <Section item={item} />;
+  return (
+    <section class="detail-sec models-sec" aria-labelledby="models-title">
+      <h2 id="models-title">{ko.models.title}</h2>
+      {failed ? (
+        <div role="alert" class="mt-status">
+          <p>{ko.models.failed}</p>
+          <button type="button" class="btn" onClick={() => setTries((n) => n + 1)}>
+            {ko.models.retry}
+          </button>
+        </div>
+      ) : (
+        <SkSet label={ko.models.loading}>
+          <SkRows n={6} />
+        </SkSet>
+      )}
+    </section>
+  );
 }
 
 /** 담기 칸: [장바구니에 담기]를 누르면 담기 창(메모 선택 → [담기])이 뜬다 (src/lib/cart-buttons.ts, data-add). 담긴 뒤에는 [담겼어요]로 메모 고치기·빼기 */
@@ -165,7 +213,7 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
           </div>
         </div>
       </div>
-      {hasModels(item) && <ModelsSection item={item} />}
+      {hasModels(item) && <LazyModels item={item} />}
       <section class="detail-sec" aria-labelledby="info-title">
         <h2 id="info-title">{ko.item.info}</h2>
         <dl class="info-table">
@@ -269,9 +317,63 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
   );
 }
 
+/** 상세 뼈대 (U, D148): 위치 · 큰 미리 보기 | 소분류·이름·설명·담기 칸 · 상품 정보 표를 같은 칸에 같은 크기로 */
+function DetailSkeleton() {
+  return (
+    <>
+      <div class="page-top">
+        <a class="back-link" href={ROUTES.home} data-back>
+          <Icon name="back" size="18px" />
+          <span>{ko.layout.back}</span>
+        </a>
+        <span class="sk-set">
+          <Sk w="11rem" h="0.75rem" />
+        </span>
+      </div>
+      <SkSet label={ko.item.loading}>
+        <h1 class="visually-hidden">{ko.item.pageTitle}</h1>
+        <div class="detail-top">
+          <Sk class="thumb is-large" />
+          <div class="detail-buy">
+            <p class="detail-cat">
+              <SkLine w="8rem" />
+            </p>
+            <h1 class="detail-name" aria-hidden="true">
+              <SkLine w="55%" />
+            </h1>
+            <p class="detail-sum">
+              <SkLine />
+              <SkLine w="70%" />
+            </p>
+            <div class="buy-box">
+              <Sk w="var(--btn-lg)" h="var(--btn-lg)" style={{ flex: 'none', gridColumn: 'auto' }} />
+              <Sk h="var(--btn-lg)" style={{ flex: '1', gridColumn: 'auto' }} />
+            </div>
+          </div>
+        </div>
+        <div class="detail-sec">
+          <h2 aria-hidden="true">
+            <SkLine w="7rem" />
+          </h2>
+          <div class="info-table">
+            {[40, 28, 22, 50].map((w) => (
+              <>
+                <SkLine w="4rem" />
+                <SkLine w={`${w}%`} />
+              </>
+            ))}
+          </div>
+        </div>
+      </SkSet>
+    </>
+  );
+}
+
 export default function ItemDetail({ nav }: Props) {
   const [state, setState] = useState<State>({ k: 'loading' });
   const [tries, setTries] = useState(0);
+  // 뼈대가 보였으면 잠깐은 붙잡아 깜박이지 않게 (src/lib/wait.ts)
+  const waiting = useHeld(state.k === 'loading');
 
   useEffect(() => {
     const id = readId();
@@ -303,12 +405,13 @@ export default function ItemDetail({ nav }: Props) {
     };
   }, [tries]);
 
+  if (waiting || state.k === 'loading') return <DetailSkeleton />;
   if (state.k === 'ok') return <Detail item={state.item} nav={nav} />;
-  const text = state.k === 'loading' ? ko.item.loading : state.k === 'noId' ? ko.item.noId : state.k === 'missing' ? ko.item.notFound : ko.item.failed;
+  const text = state.k === 'noId' ? ko.item.noId : state.k === 'missing' ? ko.item.notFound : ko.item.failed;
   return (
     <>
       <PageTop back={ROUTES.home} crumbs={[]} />
-      <div class="detail-empty" role={state.k === 'loading' ? 'status' : 'alert'}>
+      <div class="detail-empty" role="alert">
         <h1>{ko.item.pageTitle}</h1>
         <p>{text}</p>
         {state.k === 'failed' && (
@@ -316,11 +419,9 @@ export default function ItemDetail({ nav }: Props) {
             {ko.item.retry}
           </button>
         )}
-        {state.k !== 'loading' && (
-          <a class="btn btn-text" href={ROUTES.home}>
-            {ko.item.toHome}
-          </a>
-        )}
+        <a class="btn btn-text" href={ROUTES.home}>
+          {ko.item.toHome}
+        </a>
       </div>
     </>
   );

@@ -4,8 +4,12 @@
 import { ko } from '../copy/ko.ts';
 import { announce } from './announce.ts';
 import { CARDS_EVENT } from './cart-ui.ts';
+import { pop } from './motion.ts';
 import { $wish, toggleWish } from './store.ts';
 import { fill } from './text.ts';
+
+/** 머리줄 배지에 마지막으로 보인 개수 (처음 맞출 때는 부풀리지 않는다, U D148) */
+let shown: number | null = null;
 
 function sync(root: ParentNode): void {
   const list = $wish.get();
@@ -21,8 +25,10 @@ function sync(root: ParentNode): void {
     if (badge) {
       badge.dataset['n'] = String(n);
       badge.textContent = n > 99 ? '99+' : String(n);
+      if (shown !== null && shown !== n && n > 0) pop(badge, 'bump');
     }
   }
+  shown = n;
 }
 
 export function wireWishButtons(): void {
@@ -33,6 +39,8 @@ export function wireWishButtons(): void {
     if (!id) return;
     const r = toggleWish({ id, name, cat, sub }, Date.now());
     announce(r === 'full' ? ko.wish.full : fill(r === 'on' ? ko.wish.addedLive : ko.wish.removedLive, { name }));
+    // 채운 하트가 작게 커지며 자리 잡는다 (상세의 하트는 섬이 다시 그린 뒤라 한 박자 늦게)
+    if (r === 'on') requestAnimationFrame(() => pop(b.querySelector('.wish-on .icon-wrap')));
   });
   $wish.subscribe(() => sync(document));
   document.addEventListener(CARDS_EVENT, () => sync(document));

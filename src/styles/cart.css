@@ -370,7 +370,8 @@
   color: var(--cat-ink);
   font-weight: var(--weight-strong);
 }
-.shared-acts {
+.shared-acts,
+.lost-acts {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
@@ -418,18 +419,11 @@
     background: var(--scrim);
   }
 }
+/* 동작 줄이기면 길이 토큰이 0이라 바로 뜬다 (따로 끄지 않는다) */
 @keyframes sheet-up {
   from {
     translate: 0 100%;
   }
-}
-@media (prefers-reduced-motion: reduce) {
-  .add-sheet[open] {
-    animation: none;
-  }
-}
-:root[data-motion='reduce'] .add-sheet[open] {
-  animation: none;
 }
 .add-sheet-head {
   display: grid;
@@ -767,23 +761,7 @@
     opacity: 0;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .term .term-text code,
-  .term .term-text::after {
-    animation: none;
-  }
-  .term .term-text::after {
-    display: none;
-  }
-}
-:root[data-motion='reduce'] .term .term-text code,
-:root[data-motion='reduce'] .term .term-text::after {
-  animation: none;
-  display: none;
-}
-:root[data-motion='reduce'] .term .term-text code {
-  display: block;
-}
+/* 동작 줄이기면 --dur-reveal이 0이라 끝 모양(글 모두 보임, 네온 줄 사라짐)으로 바로 선다 */
 .term-acts {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -842,10 +820,10 @@
   min-inline-size: 0;
 }
 .rc-no {
+  font-family: var(--font-mono); /* 지난 프롬프트의 때는 고정폭 글꼴 (CC Receipt, 글자는 ko.cart·ko.prompt에서 뽑아 만든다: npm run fonts) */
   font-weight: var(--weight-heading);
   font-variant-numeric: tabular-nums;
 }
-.rc-date,
 .rc-sum {
   color: var(--text-3);
   font-size: var(--size-caption);
@@ -1132,7 +1110,3 @@
   overflow: hidden;
 }
 
-/* 지난 프롬프트의 때는 고정폭 글꼴 (CC Receipt, 글자는 ko.cart·ko.prompt에서 뽑아 만든다: npm run fonts) */
-.rc-no {
-  font-family: var(--font-mono);
-}

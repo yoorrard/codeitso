@@ -5,8 +5,8 @@ import { ko } from '../copy/ko.ts';
 import { ROUTES } from '../lib/routes.ts';
 ---
 
-<a class="models-banner" href={ROUTES.models}>
-  <span class="models-banner-icon" aria-hidden="true"><Icon name="columns" size="22px" /></span>
+<a class="models-banner" href={ROUTES.models} data-cat="api">
+  <span class="cat-dot" aria-hidden="true"><Icon name="columns" size="20px" /></span>
   <span class="models-banner-text">
     <strong>{ko.models.banner.title}</strong>
     <span>{ko.models.banner.text}</span>

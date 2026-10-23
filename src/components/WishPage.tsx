@@ -8,6 +8,7 @@ import { announce } from '../lib/announce.ts';
 import { CARDS_EVENT } from '../lib/cart-ui.ts';
 import { withCommas } from '../lib/catalog/core.ts';
 import { useHydrated } from '../lib/hydrated.ts';
+import { CATEGORY_ICON } from '../lib/icons.ts';
 import { ROUTES, comparePath, itemPath } from '../lib/routes.ts';
 import type { WishItem } from '../lib/saved.ts';
 import { $wish, addManyToCart, clearWish, removeWish, restoreWish } from '../lib/store.ts';
@@ -146,6 +147,9 @@ export default function WishPage({ names }: Props) {
           <section class="wish-group" data-cat={g.cat} aria-labelledby={`wg-${g.key}`}>
             <div class="sec-head">
               <h2 id={`wg-${g.key}`}>
+                <span class="cat-dot" aria-hidden="true">
+                  <Icon name={CATEGORY_ICON[g.cat as keyof typeof CATEGORY_ICON] ?? 'tag'} size="18px" />
+                </span>
                 {title} <span class="wish-group-n">{fill(ko.wish.groupCount, { n: g.items.length })}</span>
               </h2>
             </div>

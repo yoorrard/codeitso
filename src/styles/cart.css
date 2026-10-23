@@ -135,7 +135,8 @@
 .cart-page .cart-group-title {
   font-size: var(--size-title-3);
 }
-.cart-lines {
+.cart-lines,
+.wish-list {
   margin: var(--space-2) 0 0;
   padding: 0;
   list-style: none;
@@ -157,7 +158,8 @@
   outline-offset: -2px;
   background: var(--selected);
 }
-.cart-line + .cart-line {
+.cart-line + .cart-line,
+.wish-line + .wish-line {
   border-block-start: 1px solid var(--hairline);
 }
 .cart-line-text {
@@ -183,8 +185,8 @@
   margin-block-start: var(--space-1);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
-  background: var(--cat-soft);
-  color: var(--cat-ink);
+  background: var(--fill);
+  color: var(--text-2);
   font-size: var(--size-caption);
   line-height: var(--leading-caption);
   white-space: pre-wrap;
@@ -643,10 +645,7 @@
   padding: 0 var(--space-4) var(--space-4);
   border: 1px solid var(--term-line);
   border-radius: inherit;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--term-neon) 6%, transparent), transparent 40%),
-    var(--term);
-  box-shadow: var(--term-glow);
+  background: var(--term);
   font-family: var(--font-mono);
 }
 .term :focus-visible {
@@ -748,7 +747,6 @@
   inset-block-start: 0;
   block-size: 2px;
   background: var(--term-neon);
-  box-shadow: 0 0 12px var(--term-neon);
   animation: term-scan var(--dur-reveal) linear both;
 }
 @keyframes term-print {
@@ -802,7 +800,6 @@
   background: var(--term-neon);
   color: var(--on-term-neon);
   font-weight: var(--weight-heading);
-  box-shadow: 0 0 18px -4px var(--term-neon);
 }
 .term-acts .copy-btn:hover {
   background: var(--term-cyan);
@@ -896,6 +893,7 @@
     overflow: visible;
   }
 }
+/* 키트 판은 통째로 누르는 곳이 아니라 올림·색 테두리가 없다 (D144) */
 .kit {
   display: flex;
   flex-direction: column;
@@ -905,11 +903,6 @@
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
   background: var(--surface);
-  transition: box-shadow var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
-}
-.kit:hover {
-  border-color: var(--primary);
-  box-shadow: var(--elev-2);
 }
 .kit-head {
   display: flex;
@@ -923,8 +916,8 @@
   inline-size: 40px;
   block-size: 40px;
   border-radius: var(--radius-md);
-  background: var(--primary-soft);
-  color: var(--on-primary-soft);
+  background: var(--fill);
+  color: var(--text);
 }
 .kit-name {
   font-size: var(--size-title-3);
@@ -1064,13 +1057,13 @@
   line-height: var(--leading-caption);
 }
 .kit-outline li::marker {
-  color: var(--primary);
+  color: var(--text-3);
   font-weight: var(--weight-strong);
 }
 
 /* ── 홈: 최근 본 재료 ────────────────────────────────────────────────── */
 .recent-track {
-  grid-auto-columns: minmax(10rem, 40%);
+  grid-auto-columns: minmax(13rem, 66%);
 }
 @media (min-width: 600px) {
   .recent-track {
@@ -1090,7 +1083,7 @@
 }
 .recent-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
   gap: var(--space-3);
   margin: 0;
   padding: 0;
@@ -1103,19 +1096,27 @@
   margin-block-start: var(--space-5);
   color: var(--text-2);
 }
+/* 한 칸 (D144): 대분류 아이콘 + 소분류(작게) + 이름(굵게). 색 띠 없이 카테고리 타일과 같은 가는 테두리 */
 .recent-tile {
   display: grid;
-  gap: 2px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: center;
+  gap: 0 var(--space-3);
   block-size: 100%;
   padding: var(--space-3);
   border: 1px solid var(--hairline);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background: var(--surface);
-  box-shadow: inset 4px 0 0 var(--cat);
   text-decoration: none;
+  transition: box-shadow var(--dur-ui) var(--ease-out);
 }
-.recent-tile:hover {
-  border-color: var(--cat);
+.recent-tile .cat-dot {
+  grid-row: span 2;
+  align-self: center;
+}
+/* 홈 한 줄은 옆으로 넘기는 칸이라 바깥 고리 위아래가 잘린다: 카드처럼 안쪽 고리 */
+.recent-tile:focus-visible {
+  outline-offset: -2px;
 }
 .recent-cat {
   color: var(--text-3);

@@ -4,6 +4,7 @@ import { useStore } from '@nanostores/preact';
 import { ko } from '../copy/ko.ts';
 import { announce } from '../lib/announce.ts';
 import { useHydrated } from '../lib/hydrated.ts';
+import { CATEGORY_ICON } from '../lib/icons.ts';
 import { ROUTES, itemPath } from '../lib/routes.ts';
 import { $recent, clearRecent } from '../lib/store.ts';
 import { fill } from '../lib/text.ts';
@@ -45,9 +46,13 @@ export default function RecentRow({ names, page = false }: Props) {
       {ko.recent.clear}
     </button>
   );
+  // 줄 맨 앞은 대분류 아이콘 (카테고리 타일·메뉴와 같은 표, 색 띠 대신 D144)
   const tiles = list.map((x) => (
     <li data-cat={x.cat}>
       <a class="recent-tile" href={itemPath(x.id)}>
+        <span class="cat-dot" aria-hidden="true">
+          <Icon name={CATEGORY_ICON[x.cat as keyof typeof CATEGORY_ICON] ?? 'tag'} size="18px" />
+        </span>
         <span class="recent-cat">{names[`${x.cat}/${x.sub}`] ?? names[x.cat] ?? x.sub}</span>
         <span class="recent-name">{x.name}</span>
       </a>

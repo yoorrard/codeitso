@@ -261,23 +261,13 @@
   font-size: var(--size-caption);
   font-weight: var(--weight-body);
 }
-.wish-list {
-  display: grid;
-  gap: var(--space-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+/* 찜 줄 (D144): 장바구니 줄처럼 한 판 안에 나눔 선으로 (줄마다 상자·색 띠 없이). 판은 cart.css .cart-lines와 같이 쓴다 */
 .wish-line {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-1) var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: inset 4px 0 0 var(--cat);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
 }
 .wish-pick {
   display: grid;
@@ -292,7 +282,7 @@
   accent-color: var(--primary);
 }
 .wish-name {
-  flex: 1 1 6rem;
+  flex: 1 1 12rem;
   min-inline-size: 0;
   color: var(--text);
   font-weight: var(--weight-strong);
@@ -344,9 +334,6 @@
 .cmp thead th,
 .cmp td {
   min-inline-size: 13rem;
-}
-.cmp thead th {
-  box-shadow: inset 0 3px 0 var(--cat);
 }
 .cmp tbody th,
 .cmp-corner {

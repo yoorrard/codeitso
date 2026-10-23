@@ -579,7 +579,7 @@
   min-inline-size: 0;
 }
 .hero-eyebrow {
-  color: var(--primary);
+  color: var(--text-2);
   font-size: var(--size-label);
   font-weight: var(--weight-heading);
 }
@@ -671,9 +671,9 @@
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5) var(--space-5);
   border-radius: var(--radius-lg);
+  border: 1px solid var(--term-line);
   background: var(--term);
   color: var(--term-ink);
-  box-shadow: var(--term-glow);
   min-inline-size: 0;
 }
 .steps-bar {
@@ -777,11 +777,7 @@
   background: var(--surface);
   color: var(--text);
   text-decoration: none;
-  transition: box-shadow var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
-}
-.cat-tile-link:hover {
-  border-color: var(--cat);
-  box-shadow: var(--elev-2);
+  transition: box-shadow var(--dur-ui) var(--ease-out);
 }
 .cat-tile .cat-dot {
   grid-area: dot;
@@ -794,9 +790,8 @@
 }
 .cat-tile-n {
   grid-area: n;
-  color: var(--cat-ink);
+  color: var(--text-3);
   font-size: var(--size-caption);
-  font-weight: var(--weight-strong);
   font-variant-numeric: tabular-nums;
 }
 .cat-tile-desc {
@@ -887,10 +882,15 @@
   border-radius: var(--radius-lg);
   background: var(--surface);
   overflow: hidden;
-  transition: box-shadow var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+  transition: box-shadow var(--dur-ui) var(--ease-out);
 }
-.card:hover {
-  border-color: var(--cat);
+/* 누르는 판의 올림 (D144): 테두리는 늘 가는 회색, 올리면 그림자만 (대분류 색 테두리로 바꾸지 않는다) */
+.card:hover,
+.cat-tile-link:hover,
+.sub-tile:hover,
+.recent-tile:hover,
+.rel-list a:hover,
+.models-banner:hover {
   box-shadow: var(--elev-2);
 }
 .card-body {
@@ -1077,10 +1077,10 @@
   inset: 0;
   display: grid;
   place-items: center;
-  background: var(--cat-soft);
-  color: var(--cat-ink);
+  background: var(--surface-sunken);
+  color: var(--text-2);
   font-size: var(--size-title-1);
-  font-weight: var(--weight-brand);
+  font-weight: var(--weight-heading);
   visibility: hidden;
 }
 .thumb-img.is-broken .thumb-fallback {
@@ -1156,15 +1156,13 @@
 .thumb-mono {
   block-size: var(--thumb-h-sm);
 }
+/* 그림 없는 카드의 머리글자·이모지 (D144): 대분류 색 옅은 판 대신 그림 판과 같은 회색 판 + 보조 글자색 */
 .thumb-emoji {
-  background: var(--cat-soft);
   font-size: var(--size-display);
 }
 .thumb-mono {
-  background: var(--cat-soft);
-  color: var(--cat-ink);
   font-size: var(--size-title-1);
-  font-weight: var(--weight-brand);
+  font-weight: var(--weight-heading);
   letter-spacing: var(--tracking-display);
 }
 .thumb.is-large.thumb-mono,
@@ -1325,20 +1323,12 @@
   background: var(--surface);
   color: var(--text);
   text-decoration: none;
-}
-.sub-tile:hover {
-  border-color: var(--cat);
-  box-shadow: var(--elev-2);
+  transition: box-shadow var(--dur-ui) var(--ease-out);
 }
 .sub-tile-name {
   font-weight: var(--weight-heading);
 }
-.sub-tile-n {
-  color: var(--cat-ink);
-  font-size: var(--size-caption);
-  font-weight: var(--weight-strong);
-  font-variant-numeric: tabular-nums;
-}
+.sub-tile-n,
 .sub-tile-desc,
 .sub-tile-src {
   color: var(--text-3);
@@ -1686,9 +1676,6 @@
   background: var(--surface);
   text-decoration: none;
 }
-.rel-list a:hover {
-  border-color: var(--primary);
-}
 .rel-name {
   color: var(--text);
   font-weight: var(--weight-strong);
@@ -1896,7 +1883,8 @@
   overflow-wrap: anywhere;
 }
 
-/* ── AI 모델 비교로 가는 띠 (D141, ModelsBanner.astro): API 대분류·AI 소분류 쪽 위 ── */
+/* ── AI 모델 비교로 가는 띠 (D141, ModelsBanner.astro): API 대분류·AI 소분류 쪽 위 ──
+   흰 판 + 가는 테두리 + 대분류 아이콘 (보라 옅은 판 대신, D144) */
 .models-banner {
   display: flex;
   align-items: center;
@@ -1905,17 +1893,13 @@
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
-  background: var(--cat-api-soft);
-  color: var(--cat-api-ink);
+  background: var(--surface);
+  color: var(--text-2);
   text-decoration: none;
+  transition: box-shadow var(--dur-ui) var(--ease-out);
 }
-.models-banner:hover {
-  box-shadow: var(--elev-1);
-}
-.models-banner-icon,
 .models-banner-go {
   display: inline-flex;
-  flex: none;
 }
 .models-banner-text {
   display: grid;
@@ -1925,6 +1909,7 @@
   font-size: var(--size-label);
 }
 .models-banner-text strong {
+  color: var(--text);
   font-size: var(--size-body);
   font-weight: var(--weight-heading);
 }

@@ -310,7 +310,8 @@
 .search-group {
   margin-block-start: var(--space-5);
 }
-.search-group .sec-head h2 {
+.search-group .sec-head h2,
+.wish-group h2 {
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -557,16 +558,14 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-block-size: 36px;
+  min-block-size: 32px;
   padding-inline: var(--space-3);
-  border: 1px solid var(--hairline);
   border-radius: var(--radius-pill);
   background: var(--surface-sunken);
   font-size: var(--size-label);
   font-weight: var(--weight-strong);
 }
 .badge.is-good {
-  border-color: transparent;
   background: var(--ok-soft);
   color: var(--ok-ink);
 }
@@ -577,16 +576,17 @@
 .badge.is-good .badge-k {
   color: var(--ok-ink);
 }
-.free-quote {
+/* 출처 문장 옮김 (D144): 색 띠·색 판 없이 가라앉은 회색 판 하나, 출처·날짜는 아래 작은 글 */
+.free-quote,
+.prompt-quote {
   margin: 0;
   padding: var(--space-3) var(--space-4);
-  border-inline-start: 3px solid var(--ok-ink);
-  background: var(--ok-soft);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  font-size: var(--size-label);
 }
 .free-quote blockquote {
   margin: 0;
-  font-size: var(--size-label);
 }
 .free-quote figcaption {
   margin-block-start: var(--space-1);
@@ -594,13 +594,7 @@
   font-size: var(--size-caption);
 }
 .prompt-quote {
-  margin: 0;
-  padding: var(--space-3) var(--space-4);
-  border-inline-start: 3px solid var(--cat);
-  background: var(--surface-sunken);
-  border-radius: var(--radius-sm);
   white-space: pre-wrap;
-  font-size: var(--size-label);
 }
 
 /* 저장소·모델·데이터셋 한눈에 칸 */

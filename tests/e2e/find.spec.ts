@@ -136,7 +136,8 @@ test.describe('PC 1440', () => {
     await expect(page.getByRole('img', { name: ko.pv.style.label })).toBeVisible();
     await page.goto('/item?id=iconify%3Atabler');
     await islandsReady(page);
-    expect(await page.locator('.icon-sheet li').count()).toBeGreaterThan(3);
+    // 견본은 상세 조각을 받은 뒤 그려진다: 한 번 세지 않고 네 번째 칸이 보일 때까지 기다린다 (부하가 큰 전체 실행에서 먼저 세어 실패했다)
+    await expect(page.locator('.icon-sheet li').nth(3)).toBeVisible();
     await page.goto('/item?id=themes%3Acatppuccin-frappe');
     await islandsReady(page);
     await expect(page.locator('.swatches .grade').first()).toBeVisible();

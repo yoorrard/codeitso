@@ -1263,17 +1263,26 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 14144,
+        "downloads": 13834,
         "likes": 100,
-        "updatedAt": "2026-10-20"
+        "updatedAt": "2026-10-23"
       },
-      "tags": [],
+      "tags": [
+        "image"
+      ],
       "preview": {
         "type": "dataset",
         "author": "agents-course",
-        "host": "huggingface"
+        "formats": [
+          "imagefolder"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "image"
+        ],
+        "size": "n<1K"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:agents-course--course-images",
@@ -3039,23 +3048,14 @@
       "tags": [
         "el",
         "fill-mask",
-        "tabular",
-        "text",
         "text-generation"
       ],
       "preview": {
         "type": "dataset",
         "author": "alexliap",
-        "formats": [
-          "parquet"
-        ],
         "host": "huggingface",
         "languages": [
           "el"
-        ],
-        "modalities": [
-          "tabular",
-          "text"
         ],
         "size": "100M<n<1B",
         "tasks": [
@@ -6798,38 +6798,22 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 14166,
+        "downloads": 15518,
         "likes": 2,
-        "updatedAt": "2026-10-20"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
-        "en",
-        "image",
-        "tabular",
-        "text",
-        "timeseries",
-        "video"
+        "en"
       ],
       "preview": {
         "type": "dataset",
         "author": "andlyu",
-        "formats": [
-          "parquet"
-        ],
         "host": "huggingface",
         "languages": [
           "en"
-        ],
-        "modalities": [
-          "image",
-          "tabular",
-          "text",
-          "timeseries",
-          "video"
-        ],
-        "size": "1M<n<10M"
+        ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:andrewcropper--ilp-datasets",
@@ -15865,22 +15849,11 @@
         "likes": 7,
         "updatedAt": "2026-10-23"
       },
-      "tags": [
-        "tabular",
-        "text"
-      ],
+      "tags": [],
       "preview": {
         "type": "dataset",
         "author": "Ciroc0",
-        "formats": [
-          "parquet"
-        ],
-        "host": "huggingface",
-        "modalities": [
-          "tabular",
-          "text"
-        ],
-        "size": "1K<n<10K"
+        "host": "huggingface"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -19249,7 +19222,7 @@
         "downloads": 28621,
         "likes": 411,
         "trend": 75,
-        "updatedAt": "2026-10-07"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "tabular",
@@ -21846,11 +21819,22 @@
         "likes": 1,
         "updatedAt": "2026-10-23"
       },
-      "tags": [],
+      "tags": [
+        "tabular",
+        "text"
+      ],
       "preview": {
         "type": "dataset",
         "author": "dtunkelang",
-        "host": "huggingface"
+        "formats": [
+          "json"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "tabular",
+          "text"
+        ],
+        "size": "n<1K"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -24082,13 +24066,17 @@
         "updatedAt": "2026-10-23"
       },
       "tags": [
-        "other"
+        "other",
+        "text"
       ],
       "preview": {
         "type": "dataset",
         "author": "evaleval",
         "host": "huggingface",
-        "size": "10K<n<100K",
+        "modalities": [
+          "text"
+        ],
+        "size": "1K<n<10K",
         "tasks": [
           "other"
         ]
@@ -28427,6 +28415,42 @@
         ]
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-datasets:genrobot2025--gen-humanwholebody",
+      "name": "genrobot2025/Gen-HumanWholeBody",
+      "kind": "ai-training",
+      "category": "datasets",
+      "summary": "Gen-HumanWholeBody is a high-precision whole-body manipulation dataset captured from DAS-Ego, released by GenRobot.AI. It contains 600 hours of continuous whole-body human manipulation data reconstructed via GenRobot's proprietary Data Foundation Model (DFM), with an average joint position error…",
+      "url": "https://huggingface.co/datasets/genrobot2025/Gen-HumanWholeBody",
+      "source": {
+        "name": "Hugging Face Datasets",
+        "url": "https://huggingface.co/datasets"
+      },
+      "license": "CC-BY-SA-4.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 7,
+        "trend": 6,
+        "updatedAt": "2026-10-23"
+      },
+      "tags": [
+        "en",
+        "robotics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "author": "genrobot2025",
+        "host": "huggingface",
+        "languages": [
+          "en"
+        ],
+        "size": "n>1T",
+        "tasks": [
+          "robotics"
+        ]
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:get2rot--wildgui",
@@ -46194,9 +46218,9 @@
         "url": "https://huggingface.co/datasets"
       },
       "metrics": {
-        "downloads": 10589,
-        "likes": 175,
-        "trend": 18,
+        "downloads": 10605,
+        "likes": 196,
+        "trend": 11,
         "updatedAt": "2026-10-14"
       },
       "tags": [
@@ -46221,7 +46245,7 @@
           "video-classification"
         ]
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "hf-datasets:likaixin--instructcoder",
@@ -55041,11 +55065,17 @@
         "likes": 0,
         "updatedAt": "2026-10-23"
       },
-      "tags": [],
+      "tags": [
+        "image"
+      ],
       "preview": {
         "type": "dataset",
         "author": "MLL-Lab",
-        "host": "huggingface"
+        "host": "huggingface",
+        "modalities": [
+          "image"
+        ],
+        "size": "100K<n<1M"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -55213,31 +55243,6 @@
           "image-to-text",
           "image-classification"
         ]
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
-      "id": "hf-datasets:mminstruction--redteamingvlm",
-      "name": "MMInstruction/RedTeamingVLM",
-      "kind": "ai-training",
-      "category": "datasets",
-      "summary": "Red Teaming Viusal Language Models",
-      "url": "https://huggingface.co/datasets/MMInstruction/RedTeamingVLM",
-      "source": {
-        "name": "Hugging Face Datasets",
-        "url": "https://huggingface.co/datasets"
-      },
-      "metrics": {
-        "downloads": 333,
-        "likes": 21,
-        "trend": 4,
-        "updatedAt": "2024-10-25"
-      },
-      "tags": [],
-      "preview": {
-        "type": "dataset",
-        "author": "MMInstruction",
-        "host": "huggingface"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -74063,11 +74068,20 @@
         "likes": 1,
         "updatedAt": "2026-10-23"
       },
-      "tags": [],
+      "tags": [
+        "text"
+      ],
       "preview": {
         "type": "dataset",
         "author": "RooseveltHonaker",
-        "host": "huggingface"
+        "formats": [
+          "json"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "text"
+        ],
+        "size": "100K<n<1M"
       },
       "fetchedAt": "2026-10-23"
     },
@@ -87191,11 +87205,20 @@
         "trend": 2,
         "updatedAt": "2026-10-23"
       },
-      "tags": [],
+      "tags": [
+        "image"
+      ],
       "preview": {
         "type": "dataset",
         "author": "vincewin",
-        "host": "huggingface"
+        "formats": [
+          "imagefolder"
+        ],
+        "host": "huggingface",
+        "modalities": [
+          "image"
+        ],
+        "size": "1K<n<10K"
       },
       "fetchedAt": "2026-10-23"
     },

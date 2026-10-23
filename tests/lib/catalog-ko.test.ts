@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { readKo } from '../../scripts/catalog/load.ts';
-import { cardOf, pickSummary, withKo } from '../../src/lib/catalog/core.ts';
+import { cardOf, headSentence, pickSummary, withKo } from '../../src/lib/catalog/core.ts';
 import type { CatalogItem } from '../../src/lib/catalog/types.ts';
 
 const item: CatalogItem = {
@@ -35,6 +35,22 @@ describe('한국어 설명 붙이기', () => {
     expect(withKo(own, '다른 설명')).toBe(own);
     expect(withKo(item, ' ')).toBe(item);
     expect(withKo(item, undefined)).toBe(item);
+  });
+
+  it('자료로 만든 한 줄(rule)은 카드에 첫 문장을 먼저, 이어서 영어 원문을 보인다 (D143)', () => {
+    const got = withKo(item, '오픈소스 앱이다. 주로 TypeScript로 작성됐다.', 'rule');
+    expect(got.koBy).toBe('rule');
+    expect(pickSummary(got)).toBe('오픈소스 앱이다. 주로 TypeScript로 작성됐다.');
+    const card = cardOf(got);
+    expect(card.summary).toBe('오픈소스 앱이다.');
+    expect(card.orig).toBe('A fast tool for building apps.');
+    // 번역한 한 줄은 원문을 카드에 싣지 않는다
+    expect(cardOf(withKo(item, '앱을 빠르게 만드는 도구다.')).orig).toBeUndefined();
+  });
+
+  it('headSentence는 다체 첫 문장을 자른다', () => {
+    expect(headSentence('MCP 서버다. 설치 없이 원격 주소로 붙여 쓴다.')).toBe('MCP 서버다.');
+    expect(headSentence('한 문장뿐이다.')).toBe('한 문장뿐이다.');
   });
 
   it('폴더가 없으면 빈 목록, 깨진 파일·문자열 아닌 값은 건너뛴다', () => {

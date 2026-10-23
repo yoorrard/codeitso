@@ -7,7 +7,7 @@
 // 공식 SDK 꾸러미는 npm에 있고 저장소가 그 회사 것일 때만 설치 명령으로 싣는다(주간 내려받기 = metrics.downloads).
 // 3) models.dev 모델마다의 사실(100만 토큰당 가격·컨텍스트·최대 출력·입력 종류·추론·도구 호출·날짜·지원 끝남) → data/catalog-models/models-dev.json (D141)
 //    가격은 자주 바뀌므로 수집 날짜와 함께 싣고, 매일 자료 새로 받기(refresh-all.ts 'api' 줄)가 다시 받는다. 값은 그대로 옮긴다.
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { ModelCost, ModelFacts, ModelStatus, ModelsFile } from '../../src/lib/catalog/models.ts';
 import { type CuratedApi, type ProviderOverlay, ALL_CURATED, FIRST_PARTY_PREFIXES, PROVIDER_OVERLAY, QUOTE_REJECT, RATE_LIMIT_DOCS } from './api-curated-data.ts';
@@ -357,7 +357,13 @@ function writeModels(providers: readonly MdProvider[]): void {
     models,
   };
   mkdirSync(MODELS_DIR, { recursive: true });
-  writeFileSync(join(MODELS_DIR, 'models-dev.json'), modelsFileText(file));
+  // 모델 사실이 그대로면 받은 날도 그대로 둔다 (날짜만 바뀐 파일을 날마다 올리지 않게, D143). 가격은 사실이라 문턱 없이 바뀌면 바로 쓴다
+  const path = join(MODELS_DIR, 'models-dev.json');
+  if (existsSync(path)) {
+    const prev = JSON.parse(readFileSync(path, 'utf8')) as ModelsFile;
+    if (JSON.stringify({ ...prev, fetchedAt: '' }) === JSON.stringify({ ...file, fetchedAt: '' })) file.fetchedAt = prev.fetchedAt;
+  }
+  writeFileSync(path, modelsFileText(file));
   console.log(`  → data/catalog-models/models-dev.json (제공자 ${file.providers}곳, 모델 ${file.count}개)`);
 }
 

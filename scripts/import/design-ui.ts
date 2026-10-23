@@ -137,6 +137,7 @@ async function importRepos(): Promise<void> {
     ? (JSON.parse(readFileSync(TOPIC_SNAPSHOT, 'utf8')) as { takenAt?: string; topics: Record<string, string[]> })
     : { topics: {} };
   let live = 0;
+  const before = JSON.stringify(snapshot.topics);
   for (const [topic, def] of Object.entries(TOPICS)) {
     const res = await searchTopic(topic, MIN_STARS_TOPIC);
     const names = res.available ? res.names.slice(0, 100) : (snapshot.topics[topic] ?? []);
@@ -146,7 +147,8 @@ async function importRepos(): Promise<void> {
     }
     for (const r of names) addCandidate(cands, r, def.kind, def.tags, `topic:${topic}`);
   }
-  if (live) {
+  // 주제 목록이 그대로면 스냅숏 파일(찍은 날 포함)을 다시 쓰지 않는다 (D143)
+  if (live && JSON.stringify(snapshot.topics) !== before) {
     snapshot.takenAt = new Date().toISOString().slice(0, 10);
     writeFileSync(TOPIC_SNAPSHOT, `${JSON.stringify({ takenAt: snapshot.takenAt, topics: Object.fromEntries(Object.entries(snapshot.topics).sort(([a], [b]) => cmp(a, b))) }, null, 2)}\n`);
   }

@@ -170,8 +170,9 @@ const lazyRows: [string, number, number][] = [
   // 전체 검색 (D114): 메타는 검색 쪽마다, 낱말 조각·결과 블록은 질의마다 몇 개씩 받는다
   ['검색 메타 /catalog/search/meta.json', gzSize(join(DIST, 'catalog', 'search', 'meta.json')), 10 * KB],
   [`가장 큰 검색 조각·블록 ${relative(DIST, bigShard.f)}`, bigShard.n, 80 * KB],
-  // 거르기 (D115): 거르기를 켤 때만 받는다. MCP 서버(4.6만 개)가 가장 크다
-  [`가장 큰 거르기 파일 ${relative(DIST, bigFacet.f)}`, bigFacet.n, 120 * KB],
+  // 거르기 (D115): 거르기를 켤 때만 받는다. MCP 서버(5만 개)가 가장 크다. 정렬 순서 파일은 상품 수만큼의 순열이라
+  // (5만 개 117KB, 이론 바닥 약 88KB) MCP가 날마다 늘면 같이 큰다 → 200KB (D143). 약 8만 개(이 크기로 200KB)에 닿기 전에 순서 파일을 다시 짠다
+  [`가장 큰 거르기 파일 ${relative(DIST, bigFacet.f)}`, bigFacet.n, 200 * KB],
   // 묶음 하나는 보통 30KB 안팎이다. 배경 패턴처럼 SVG 조각을 싣는 소분류만 크다 (D103)
   [`가장 큰 목록 묶음 ${relative(DIST, bigList.f)}`, bigList.n, 160 * KB],
   [`가장 큰 상세 조각 ${relative(DIST, bigItem.f)}`, bigItem.n, 100 * KB],

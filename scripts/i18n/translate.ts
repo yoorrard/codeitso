@@ -12,6 +12,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { join } from 'node:path';
 import { cmpText } from '../../src/lib/catalog/core.ts';
 import { KO_DIR, rawItems, readKo } from '../catalog/load.ts';
+import { koLineFor } from '../lib/ko-rule.ts';
 import { SYSTEM_PROMPT, autoFileName, cleanKo, parseReply, pickCandidates, userPrompt } from '../lib/ko-translate.ts';
 import type { Candidate } from '../lib/ko-translate.ts';
 
@@ -104,10 +105,11 @@ function save(found: Map<string, string>): void {
   found.clear();
 }
 
-const have = readKo(KO_DIR, ['template.json']);
-const templated = new Set(readKo(KO_DIR).keys());
-for (const id of have.keys()) templated.delete(id);
-const candidates = pickCandidates(rawItems(), new Set(have.keys()), templated, budget);
+const have = readKo(KO_DIR);
+const items = rawItems();
+// 모양이 정해진 상품(글꼴·색…)은 자료로 만든 자세한 한 줄이 이미 있어 뒤로 미룬다 (D143: 빌드 때 만든다)
+const templated = new Set(items.filter((r) => !have.has(r.item.id) && koLineFor(r.item)?.by === 'codeshopper').map((r) => r.item.id));
+const candidates = pickCandidates(items, new Set(have.keys()), templated, budget);
 console.log(`번역할 상품 ${candidates.length}개 (한 번에 ${batchSize}개, 분당 ${rpm}번, 모델 ${model})`);
 
 const found = new Map<string, string>();

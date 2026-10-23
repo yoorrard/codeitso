@@ -1,78 +1,41 @@
-// 매일 자료 새로 받기 (v5.1 P4, D128, .github/workflows/daily-refresh.yml): 가져오기 스크립트를 여러 줄(레인)로 나눠 함께 돌리고,
+// 매일 자료 새로 받기 (v5.1 P4, D128, D143, .github/workflows/daily-refresh.yml): 가져오기 스크립트를 여러 줄(레인)로 나눠 함께 돌리고,
 // 모두 끝나면 대분류 목차(index.json)를 다시 만든다.
-//   node scripts/import/refresh-all.ts               매일 몫 (주간 몫은 월요일(KST)에만)
-//   node scripts/import/refresh-all.ts design api    이름을 준 갈래만 (design·ai·api·oss)
-//   REFRESH_ALL=1 node scripts/import/refresh-all.ts 주간 몫까지 모두
-// 왜 이렇게: 차례로 돌리면 이 작업 환경에서 갈래마다 23~40분이 걸렸다(2026-10-20 측정). 출처 파일은 서로 다르므로
-// 같은 대분류 안에서 겹침을 빼는 차례(손 목록 → 넓은 목록, 다른 출처 → oss-github·tpl-github)만 한 줄 안에 지키고 나머지는 함께 돈다.
-// 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록, Iconify 묶음 전체, OWID 차트 목록, MCP 등록소 전체)는 주간 몫이다.
+//   node scripts/import/refresh-all.ts               오늘(한국 시각 요일) 차례인 단계만
+//   node scripts/import/refresh-all.ts design api    이름을 준 갈래(design·ai·api·oss)나 줄(oss-hf …)만
+//   REFRESH_ALL=1 node scripts/import/refresh-all.ts 요일과 상관없이 모두 (MCP 등록소는 전체)
+//   REFRESH_DAY=3 node scripts/import/refresh-all.ts 그 요일(0=일 … 6=토)인 것처럼
+// 줄과 받는 날은 scripts/lib/refresh-plan.ts (잰 변화량으로 정했다, D143). 출처 파일 쓰기는 '뜻 있게 바뀌었을 때만'(stable-write.ts).
+// 왜 줄로 나누나: 차례로 돌리면 이 작업 환경에서 갈래마다 23~40분이 걸렸다(2026-10-20 측정). 출처 파일은 서로 다르므로
+// 같은 대분류 안에서 겹침을 빼는 차례만 한 줄 안에 지키고 나머지는 함께 돈다.
 // AI 갈래는 줄마다 저장소 복제 폴더를 따로 써서(AI_IMPORT_CACHE) 같은 저장소를 함께 받다 부딪히지 않게 한다.
 // 출처 하나가 실패하면 그 파일은 지난 자료 그대로 남는다. 실패는 경고로 알리고 다음 단계(단위 시험)가 판단한다. 모두 실패했을 때만 1로 끝낸다.
-// 스크립트 하나가 REFRESH_STEP_MINUTES(기본 25분, 주간 몫은 두 배)를 넘기면 멈춘다. 가져오기는 끝에 한 번 쓰므로 멈춘 출처도 지난 자료 그대로다.
-// 시작·끝 줄은 바로 찍어(작업 흐름 기록에서 어디서 오래 걸리는지 보이게) 하고, 스크립트 기록은 끝에 줄마다 묶어 보인다.
+// 스크립트 하나가 REFRESH_STEP_MINUTES(기본 25분, 긴 단계는 두 배)를 넘기면 멈춘다. 가져오기는 끝에 한 번 쓰므로 멈춘 출처도 지난 자료 그대로다.
+// 끝나면 .cache/refresh/results.json에 단계마다 결과를 남긴다 (refresh-summary.ts가 요약에 쓴다).
 import { spawn } from 'node:child_process';
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { INDEX, LANES, kstDay, planLane, type Group, type Lane, type Step } from '../lib/refresh-plan.ts';
 import { ROOT } from './oss-lib.ts';
-
-type Group = 'design' | 'ai' | 'api' | 'oss';
-interface Step {
-  file: string;
-  weekly?: boolean;
-}
-interface Lane {
-  group: Group;
-  steps: Step[];
-  /** GitHub 토큰을 넘길 줄 (주제 검색을 하는 oss-github·tpl-github). 나머지 줄은 토큰 없이 거울 서버(ecosyste.ms)로 받는다 */
-  token?: boolean;
-}
-
-const s = (...files: string[]): Step[] => files.map((file) => ({ file }));
-const weekly = (file: string): Step => ({ file, weekly: true });
-
-export const LANES: Record<string, Lane> = {
-  'design-type': { group: 'design', steps: s('design-fonts.ts', 'design-colors.ts', 'design-gradients.ts', 'design-styles.ts', 'design-assets.ts') },
-  'design-icons': { group: 'design', steps: [weekly('design-icons.ts')] },
-  'design-ui': { group: 'design', steps: s('design-ui.ts', 'design-curated.ts') },
-  // 공식 MCP 등록소(4만 6천 개)는 Actions에서 쪽 넘기기가 느려 25분을 넘긴다 → 주간 몫
-  'ai-mcp': { group: 'ai', steps: [weekly('ai-mcp.ts')] },
-  'ai-skills': { group: 'ai', steps: s('ai-skills.ts') },
-  'ai-plugins': { group: 'ai', steps: s('ai-plugins.ts', 'ai-prompts.ts', 'ai-hooks.ts') },
-  'ai-agents': { group: 'ai', steps: s('ai-agents.ts', 'ai-frameworks.ts') },
-  'ai-rules': { group: 'ai', steps: s('ai-rules.ts', 'ai-workflows.ts') },
-  api: { group: 'api', steps: s('api-curated.ts', 'api-public-apis.ts', 'api-kr-4kr.ts', 'api-apis-guru.ts') },
-  'api-kr': { group: 'api', steps: [weekly('api-data-go-kr.ts')] },
-  // oss-github은 같은 대분류의 다른 출처 파일로 겹침을 뺀다. HF·꾸러미 목록은 GitHub 저장소와 거의 겹치지 않아(겹쳐도 하루 늦게 빠짐) 따로 돈다
-  'oss-hf': { group: 'oss', steps: s('oss-hf.ts') },
-  'oss-pkg': { group: 'oss', steps: s('oss-packages.ts') },
-  oss: { group: 'oss', token: true, steps: s('oss-ollama.ts', 'oss-selfhosted.ts', 'oss-awesome.ts', 'oss-forges.ts', 'oss-github.ts') },
-  data: { group: 'oss', steps: [...s('data-hf.ts', 'data-kaggle.ts', 'data-worldbank.ts'), weekly('data-go-kr.ts'), ...s('data-collections.ts')] },
-  'data-owid': { group: 'oss', steps: [weekly('data-owid.ts')] },
-  tpl: { group: 'oss', token: true, steps: s('tpl-vercel.ts', 'tpl-official.ts', 'tpl-astro.ts', 'tpl-galleries.ts', 'tpl-github.ts') },
-};
-
-const INDEX: Record<Group, string> = { design: 'design-index.ts', ai: 'ai-index.ts', api: 'api-index.ts', oss: 'oss-index.ts' };
-
-/** 주간 몫을 도는 날: 한국 시각 월요일 */
-export function isWeeklyDay(now: Date): boolean {
-  return new Date(now.getTime() + 9 * 3_600_000).getUTCDay() === 1;
-}
 
 interface StepResult {
   lane: string;
   file: string;
+  args?: readonly string[];
   code: number;
   seconds: number;
 }
 
 const groups = process.argv.slice(2);
-const unknown = groups.filter((g) => !(g in INDEX));
+const unknown = groups.filter((g) => !(g in INDEX) && !(g in LANES));
 if (unknown.length) {
-  console.error(`모르는 갈래: ${unknown.join(', ')}. 쓸 수 있는 이름: ${Object.keys(INDEX).join(' ')}`);
+  console.error(`모르는 갈래·줄: ${unknown.join(', ')}. 쓸 수 있는 이름: ${[...Object.keys(INDEX), ...Object.keys(LANES)].join(' ')}`);
   process.exit(1);
 }
-const wantGroup = (g: Group) => groups.length === 0 || groups.includes(g);
-const withWeekly = process.env.REFRESH_ALL === '1' || isWeeklyDay(new Date());
+const wantLane = (name: string, lane: Lane) => groups.length === 0 || groups.includes(lane.group) || groups.includes(name);
+const wantGroup = (g: Group) => Object.entries(LANES).some(([n, l]) => l.group === g && wantLane(n, l));
+const all = process.env.REFRESH_ALL === '1';
+const forcedDay = process.env.REFRESH_DAY;
+const day = forcedDay !== undefined && /^[0-6]$/.test(forcedDay) ? Number(forcedDay) : kstDay(new Date());
 const logDir = join(ROOT, '.cache', 'refresh');
 mkdirSync(logDir, { recursive: true });
 const baseEnv = { ...process.env, ...(process.env.HTTPS_PROXY || process.env.https_proxy ? { NODE_USE_ENV_PROXY: '1', NODE_NO_WARNINGS: '1' } : {}) };
@@ -84,13 +47,15 @@ delete noTokenEnv.GH_TOKEN;
 const aiCache = process.env.AI_IMPORT_CACHE ?? join(ROOT, '.cache', 'ai-import');
 
 const stepLimitMs = (Number(process.env.REFRESH_STEP_MINUTES) || 25) * 60_000;
+const label = (s: Step): string => [s.file, ...(s.args ?? [])].join(' ');
 
-function runScript(file: string, log: string, env: NodeJS.ProcessEnv, limitMs: number = stepLimitMs): Promise<number> {
+function runScript(step: Step, log: string, env: NodeJS.ProcessEnv, limitMs: number = stepLimitMs): Promise<number> {
   return new Promise((resolve) => {
-    const cmd = `exec ${JSON.stringify(process.execPath)} ${JSON.stringify(join(ROOT, 'scripts', 'import', file))} >> ${JSON.stringify(log)} 2>&1`;
+    const argv = [process.execPath, join(ROOT, 'scripts', 'import', step.file), ...(step.args ?? [])].map((a) => JSON.stringify(a)).join(' ');
+    const cmd = `exec ${argv} >> ${JSON.stringify(log)} 2>&1`;
     const child = spawn(cmd, { shell: true, env, stdio: 'ignore', detached: true });
     const timer = setTimeout(() => {
-      appendFileSync(log, `\n✗ ${file}: ${Math.round(limitMs / 60_000)}분을 넘겨 멈췄다 (지난 자료 그대로)\n`);
+      appendFileSync(log, `\n✗ ${label(step)}: ${Math.round(limitMs / 60_000)}분을 넘겨 멈췄다 (지난 자료 그대로)\n`);
       try {
         if (child.pid) process.kill(-child.pid, 'SIGTERM');
       } catch {
@@ -104,48 +69,55 @@ function runScript(file: string, log: string, env: NodeJS.ProcessEnv, limitMs: n
   });
 }
 
-async function runLane(name: string, lane: Lane): Promise<StepResult[]> {
+async function runLane(name: string, lane: Lane, steps: readonly Step[]): Promise<StepResult[]> {
   const log = join(logDir, `${name}.log`);
   writeFileSync(log, '');
   const own = lane.token ? baseEnv : noTokenEnv;
   const env = lane.group === 'ai' ? { ...own, AI_IMPORT_CACHE: join(aiCache, name) } : own;
   const out: StepResult[] = [];
-  for (const step of lane.steps) {
-    if (step.weekly && !withWeekly) continue;
+  for (const step of steps) {
     const started = Date.now();
-    appendFileSync(log, `\n▶ ${step.file}\n`);
-    console.log(`▶ ${name} ${step.file}`);
-    const code = await runScript(step.file, log, env, step.weekly ? stepLimitMs * 2 : stepLimitMs);
+    appendFileSync(log, `\n▶ ${label(step)}\n`);
+    console.log(`▶ ${name} ${label(step)}`);
+    const code = await runScript(step, log, env, step.long ? stepLimitMs * 2 : stepLimitMs);
     const seconds = Math.round((Date.now() - started) / 1000);
-    console.log(`${code === 0 ? '✓' : '✗'} ${name} ${step.file} ${seconds}초`);
-    out.push({ lane: name, file: step.file, code, seconds });
+    console.log(`${code === 0 ? '✓' : '✗'} ${name} ${label(step)} ${seconds}초`);
+    out.push({ lane: name, file: step.file, ...(step.args ? { args: step.args } : {}), code, seconds });
   }
   return out;
 }
 
 const started = Date.now();
-const lanes = Object.entries(LANES).filter(([, l]) => wantGroup(l.group));
-console.log(`줄 ${lanes.length}개를 함께 돈다${withWeekly ? ' (주간 몫 포함)' : ' (주간 몫은 월요일에)'}.`);
-const results = (await Promise.all(lanes.map(([n, l]) => runLane(n, l)))).flat();
+const plans = Object.entries(LANES)
+  .filter(([n, l]) => wantLane(n, l))
+  .map(([name, lane]) => ({ name, lane, ...planLane(lane, day, all) }));
+const lanes = plans.filter((p) => p.run.length > 0);
+const resting = plans.flatMap((p) => p.rest.map((s) => ({ lane: p.name, file: s.file, ...(s.args ? { args: s.args } : {}), days: [...(s.days ?? [])] })));
+console.log(`줄 ${lanes.length}개를 함께 돈다 (한국 시각 ${'일월화수목금토'[day]}요일${all ? ', 모두' : ''}). 오늘 쉬는 단계 ${resting.length}개.`);
+const results = (await Promise.all(lanes.map((p) => runLane(p.name, p.lane, p.run)))).flat();
 const indexLog = join(logDir, 'index.log');
 writeFileSync(indexLog, '');
 for (const g of Object.keys(INDEX) as Group[]) {
   if (!wantGroup(g)) continue;
   const t = Date.now();
-  const code = await runScript(INDEX[g], indexLog, baseEnv);
-  results.push({ lane: 'index', file: INDEX[g], code, seconds: Math.round((Date.now() - t) / 1000) });
+  const step: Step = { file: INDEX[g] };
+  const code = await runScript(step, indexLog, baseEnv);
+  results.push({ lane: 'index', file: step.file, code, seconds: Math.round((Date.now() - t) / 1000) });
 }
 
 const inActions = process.env.GITHUB_ACTIONS === 'true';
-for (const [name] of [...lanes, ['index']]) {
+for (const name of [...lanes.map((p) => p.name), 'index']) {
   const text = readFileSync(join(logDir, `${name}.log`), 'utf8');
   if (inActions) console.log(`::group::${name}`);
   else console.log(`\n=== ${name} ===`);
-  console.log(text.split('\n').slice(-40).join('\n'));
+  console.log(text.split('\n').slice(-60).join('\n'));
   if (inActions) console.log('::endgroup::');
 }
-for (const r of results) console.log(`${r.code === 0 ? '✓' : '✗'} ${r.lane.padEnd(12)} ${r.file.padEnd(22)} ${String(r.seconds).padStart(5)}초`);
+const show = (r: StepResult) => [r.file, ...(r.args ?? [])].join(' ');
+for (const r of results) console.log(`${r.code === 0 ? '✓' : '✗'} ${r.lane.padEnd(12)} ${show(r).padEnd(44)} ${String(r.seconds).padStart(5)}초`);
 const failed = results.filter((r) => r.code !== 0);
-for (const r of failed) console.log(`${inActions ? '::warning::' : ''}${r.file} 실패 (코드 ${r.code}). 그 출처는 지난 자료 그대로다 (.cache/refresh/${r.lane}.log).`);
-console.log(`모두 ${Math.round((Date.now() - started) / 1000)}초`);
+for (const r of failed) console.log(`${inActions ? '::warning::' : ''}${show(r)} 실패 (코드 ${r.code}). 그 출처는 지난 자료 그대로다 (.cache/refresh/${r.lane}.log).`);
+const seconds = Math.round((Date.now() - started) / 1000);
+console.log(`모두 ${seconds}초`);
+writeFileSync(join(logDir, 'results.json'), `${JSON.stringify({ seconds, kstDay: day, steps: results, resting }, null, 2)}\n`);
 process.exit(results.length > 0 && failed.length === results.length ? 1 : 0);

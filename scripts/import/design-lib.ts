@@ -2,9 +2,10 @@
 // 네트워크 요청(다시 시도·쉬어 가기), 동시 실행 묶음, GitHub 저장소 정보, 상품 모양 맞추기, 정렬된 JSON 쓰기.
 // 프록시 뒤에서 돌릴 때: NODE_USE_ENV_PROXY=1 node scripts/import/design-fonts.ts
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readPrevious, stabilizeFile, stableLine, writeIfChanged } from './stable-write.ts';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const OUT_DIR = join(ROOT, 'data', 'catalog', 'design');
@@ -411,19 +412,22 @@ function cleanUse(u: NonNullable<Item['use']>): NonNullable<Item['use']> {
 
 // ---------- 쓰기 ----------
 
+// 뜻 있게 바뀌었을 때만 쓴다 (D143, stable-write.ts): 지표·날짜 흔들림은 지난 스냅숏을 두고, 그대로면 파일도 받은 날도 그대로.
 export function writeCatalog(source: SourceInfo, items: Item[]): CatalogFile {
   const seen = new Set<string>();
   for (const it of items) {
     if (seen.has(it.id)) throw new Error(`id 겹침: ${it.id}`);
     seen.add(it.id);
   }
-  const sorted = [...items].sort((a, b) => cmp(a.id, b.id));
-  const file: CatalogFile = { source, fetchedAt: FETCHED_AT, count: sorted.length, items: sorted };
-  mkdirSync(OUT_DIR, { recursive: true });
   const path = join(OUT_DIR, `${source.id}.json`);
-  writeFileSync(path, `${JSON.stringify(file, null, 2)}\n`);
-  console.log(`  → data/catalog/design/${source.id}.json (${sorted.length})`);
-  return file;
+  const prev = readPrevious<CatalogFile>(path);
+  const sorted = keepReadSummaries(prev?.items, [...items].sort((a, b) => cmp(a.id, b.id)));
+  const next: CatalogFile = { source, fetchedAt: FETCHED_AT, count: sorted.length, items: sorted };
+  const s = stabilizeFile(path, next, FETCHED_AT, prev);
+  const wrote = writeIfChanged(path, `${JSON.stringify(s.file, null, 2)}\n`);
+  console.log(`  → data/catalog/design/${source.id}.json (${s.file.items.length})`);
+  console.log(stableLine(s, wrote));
+  return s.file;
 }
 
 export function readCatalog(id: string): CatalogFile | undefined {
@@ -484,13 +488,33 @@ export async function siteMeta(url: string): Promise<SiteMeta> {
   }
 }
 
+/** 이번 실행에서 사이트 소개를 못 읽어 '이름 (호스트)'로 채운 글. writeCatalog가 지난 자료의 소개를 지키는 데 쓴다 (D143) */
+export const FALLBACK_SUMMARIES = new Set<string>();
+
 export function siteSummary(name: string, url: string, meta: SiteMeta): string {
   const host = (() => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; } })();
   const looksBlocked = (s?: string) =>
     !s || /just a moment|attention required|access denied|captcha|403|forbidden|cloudflare|security (filter|checkpoint)|request didn.t go through|verify you are (a )?human|checking your browser|enable javascript|are you a robot|ddos|too many requests|^loading/i.test(s);
   if (!looksBlocked(meta.description)) return meta.description as string;
   if (!looksBlocked(meta.title)) return meta.title as string;
-  return `${name} (${host})`;
+  const fallback = `${name} (${host})`;
+  FALLBACK_SUMMARIES.add(fallback);
+  return fallback;
+}
+
+/**
+ * 사이트를 못 읽어 소개가 '이름 (호스트)'로 바뀐 상품은 지난 자료의 소개를 그대로 쓴다 (사이트가 봇을 막는 날마다 글이 오가지 않게, D143).
+ * 지난 소개도 같은 꼴이면 그대로 둔다.
+ */
+export function keepReadSummaries(prev: readonly Item[] | undefined, next: Item[]): Item[] {
+  if (!prev || FALLBACK_SUMMARIES.size === 0) return next;
+  const old = new Map(prev.map((it) => [it.id, it]));
+  const hasFallback = (s: string) => [...FALLBACK_SUMMARIES].some((f) => s.includes(f));
+  return next.map((it) => {
+    const p = old.get(it.id);
+    if (!p || !hasFallback(it.summary) || hasFallback(p.summary)) return it;
+    return { ...it, summary: p.summary };
+  });
 }
 
 // ---------- npm 꾸러미 ----------

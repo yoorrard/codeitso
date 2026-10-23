@@ -63,8 +63,11 @@ export interface CatalogItem {
   /** 한국어 한 줄 (출처가 주었거나 코드잇소가 쓴 것: written) */
   summaryKo?: string;
   written?: string;
-  /** summaryKo가 data/catalog-ko에서 붙인 코드잇소의 한국어 설명이면 'codeshopper' (v5.1 D122, 진열대 빌드가 붙인다) */
-  koBy?: 'codeshopper';
+  /**
+   * summaryKo를 진열대 빌드가 붙였을 때: 'codeshopper' = 코드잇소의 한국어 설명(번역·모양이 정해진 상품의 자료 문장, v5.1 D122),
+   * 'rule' = 정해진 자료 칸만으로 만든 '무엇인지' 한 줄(D143). rule은 원문을 옮긴 것이 아니라 카드·상세가 원문을 함께 보인다
+   */
+  koBy?: 'codeshopper' | 'rule';
   url: string;
   source: { name: string; url: string };
   license?: string;
@@ -133,6 +136,8 @@ export interface Card {
   cat: CategoryId;
   sub: string;
   summary: string;
+  /** 자료로 만든 한국어 한 줄(koBy rule)일 때 이어서 보이는 출처 원문 (영어, lang="en") */
+  orig?: string;
   source: string;
   license?: string;
   metric?: Metric;

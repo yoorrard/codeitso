@@ -6,6 +6,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { stabilizeFile, stableLine, writeIfChanged } from './stable-write.ts';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const CATALOG_DIR = join(ROOT, 'data', 'catalog');
@@ -549,19 +550,21 @@ export function writeCatalog(category: CategoryId, source: SourceInfo, items: It
     if (!kinds.has(it.kind)) throw new Error(`${it.id}: unknown kind ${it.kind}`);
   }
   const sorted = dedupe(items);
-  const file: CatalogFile = {
+  const next: CatalogFile = {
     source: sortKeys(source, ['id', 'name', 'url', 'license', 'note', 'total', 'cut']) as unknown as SourceInfo,
     fetchedAt: FETCHED_AT,
     count: sorted.length,
     items: sorted,
   };
+  // 뜻 있게 바뀌었을 때만 쓴다 (D143, stable-write.ts): 지표·날짜 흔들림은 지난 스냅숏을 두고, 그대로면 파일도 받은 날도 그대로.
   const p = catalogPath(category, source.id);
-  mkdirSync(dirname(p), { recursive: true });
-  writeFileSync(p, `${JSON.stringify(file, null, 2)}\n`);
+  const s = stabilizeFile(p, next, FETCHED_AT);
+  const wrote = writeIfChanged(p, `${JSON.stringify(s.file, null, 2)}\n`);
   const byKind = new Map<string, number>();
-  for (const it of sorted) byKind.set(it.kind, (byKind.get(it.kind) ?? 0) + 1);
-  console.log(`✔ ${category}/${source.id}.json ${sorted.length}개 (${[...byKind].map(([k, n]) => `${k} ${n}`).join(', ')})`);
-  return file;
+  for (const it of s.file.items) byKind.set(it.kind, (byKind.get(it.kind) ?? 0) + 1);
+  console.log(`✔ ${category}/${source.id}.json ${s.file.items.length}개 (${[...byKind].map(([k, n]) => `${k} ${n}`).join(', ')})`);
+  console.log(stableLine(s, wrote));
+  return s.file;
 }
 
 export function readCatalog(category: CategoryId, sourceId: string): CatalogFile | undefined {

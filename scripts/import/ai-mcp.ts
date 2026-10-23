@@ -2,10 +2,11 @@
 // 우선순위(앞이 이긴다): 공식 참조 서버 → GitHub MCP 등록소 → Docker MCP 카탈로그 → ToolHive → 공식 MCP 등록소
 //                      → mcpm.sh → Smithery → 원격 서버 목록 → awesome-mcp-servers(punkpeye) → mcpservers.org(wong2) → Claude Code Templates
 // Cline MCP 마켓은 이용 약관이 자동 수집·복제를 막아서 쓰지 않는다.
-// 실행: node scripts/import/ai-mcp.ts
+// 실행: node scripts/import/ai-mcp.ts          모든 출처를 끝까지 (월요일, 약 25분)
+//       node scripts/import/ai-mcp.ts --since  공식 등록소에서 바뀐 서버만 받아 mcp-registry.json을 고친다 (다른 날, 약 1분, D143)
 import {
   type Item, type Preview, type CatalogFile, CATEGORY, checkout, cloneRepo, dedupeAcross, dedupeKey, ensureProxy, fetchJson,
-  githubSlug, isMain, isoDate, log, makeItem, mapLimit, parseYaml, readRepoFile, repoMeta, repoTreeUrl, str, strList, textKey, writeCatalog, type Yaml,
+  FETCHED_AT, githubSlug, isMain, isoDate, log, makeItem, mapLimit, parseYaml, readCatalog, readRepoFile, repoMeta, repoTreeUrl, slugify, str, strList, textKey, writeCatalog, type Yaml,
 } from './ai-lib.ts';
 import { AITMPL_LICENSE, aitmplItems } from './ai-aitmpl.ts';
 import { npmDownloads, pypiWeekly } from './signals.ts';
@@ -201,6 +202,78 @@ export async function fromOfficialRegistry(): Promise<{ items: Item[]; available
     if (++pages % 20 === 0) log(`  ${available}개…`);
   } while (cursor);
   return { items, available, keys };
+}
+
+const REGISTRY_SOURCE: CatalogFile['source'] = {
+  id: 'mcp-registry', name: 'Official MCP Registry', url: 'https://registry.modelcontextprotocol.io', kind: KIND,
+  license: '공개 등록소 API (게시자가 올린 server.json 메타데이터, 재배포를 위한 공개 API)', note: 'version=latest, status=active만 싣는다',
+};
+const REGISTRY_CUT = '활성(active) 최신판만';
+
+// 공식 등록소에서 since(ISO 시각) 뒤에 바뀐 서버 (상태가 바뀐 것 포함). 등록소 API의 updated_since를 쓴다.
+export async function officialSince(since: string): Promise<RegServer[]> {
+  const out: RegServer[] = [];
+  let cursor: string | undefined;
+  let pages = 0;
+  do {
+    const url = `https://registry.modelcontextprotocol.io/v0.1/servers?limit=100&version=latest&updated_since=${encodeURIComponent(since)}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ''}`;
+    const d = await fetchJson<{ servers: RegServer[]; metadata: { nextCursor?: string } }>(url);
+    out.push(...d.servers);
+    cursor = d.metadata.nextCursor;
+    if (++pages > 2000) throw new Error('updated_since 쪽이 너무 많다');
+  } while (cursor);
+  return out;
+}
+
+/**
+ * 바뀐 것만 받기 (D143, 월요일 밖의 날): 지난 mcp-registry.json의 받은 날 하루 전부터 바뀐 서버만 받아
+ * 활성이면 더하거나 고치고, 활성이 아니면(지움·폐기) 뺀다. 새 서버가 앞 출처(참조·GitHub·Docker·ToolHive)와 같은 저장소면 싣지 않는다.
+ * 뒤 출처(mcpm·Smithery…)와의 겹침과 출처의 전체 개수(available)는 월요일 전체 받기가 맞춘다.
+ */
+export async function mainSince(): Promise<void> {
+  const prev = readCatalog('mcp-registry');
+  if (!prev) {
+    log('지난 mcp-registry.json이 없어 전체를 받는다');
+    await main();
+    return;
+  }
+  const since = new Date(Date.parse(`${prev.fetchedAt}T00:00:00Z`) - 86_400_000).toISOString();
+  log(`· 공식 MCP 등록소: ${since} 뒤에 바뀐 서버만 (지난 파일 ${prev.items.length}개)`);
+  const servers = await officialSince(since);
+  const keyOf = (it: Item): string[] => [dedupeKey(
+    it.url.includes('github.com') ? it.url : (it.preview?.repo as string | undefined) ?? it.url,
+    /github\.com\/[^/]+\/[^/]+\/tree\/[^/]+\/(.+)$/.exec(it.url)?.[1],
+  ), textKey(it)].filter((k): k is string => !!k);
+  const ahead = new Set(['mcp-reference', 'mcp-github', 'mcp-docker', 'mcp-toolhive'].flatMap((id) => (readCatalog(id)?.items ?? []).flatMap(keyOf)));
+  const items = new Map(prev.items.map((it) => [it.id, it]));
+  let added = 0;
+  let updated = 0;
+  let removed = 0;
+  let skipped = 0;
+  for (const s of servers) {
+    const id = `mcp-registry:${slugify(s.server.name)}`;
+    const it = officialItem(s);
+    if (!it) {
+      if (items.delete(id)) removed++;
+      continue;
+    }
+    it.category = CATEGORY;
+    if (items.has(id)) {
+      items.set(id, it);
+      updated++;
+      continue;
+    }
+    const k = dedupeKey(s.server.repository?.url, s.server.repository?.subfolder);
+    if ((k && ahead.has(k)) || keyOf(it).some((x) => ahead.has(x))) {
+      skipped++;
+      continue;
+    }
+    items.set(id, it);
+    added++;
+  }
+  log(`  바뀐 서버 ${servers.length}개: 새 ${added} · 고침 ${updated} · 뺌 ${removed} · 앞 출처와 겹쳐 건너뜀 ${skipped}`);
+  writeCatalog({ source: REGISTRY_SOURCE, available: prev.available, cut: prev.cut ?? REGISTRY_CUT, items: [...items.values()] });
+  log(`(받은 날 ${FETCHED_AT})`);
 }
 
 // ---------- 3. GitHub MCP 등록소 (api.mcp.github.com) ----------
@@ -586,7 +659,7 @@ export async function main(): Promise<void> {
 
   const files: Omit<CatalogFile, 'count' | 'fetchedAt'>[] = [
     { source: { id: 'mcp-reference', name: 'MCP Reference Servers', url: 'https://github.com/modelcontextprotocol/servers', kind: KIND, license: 'MIT (저장소 README·패키지 정보)', note: 'metrics.stars = 저장소(모노레포) 스타, metrics.downloads = 서버 꾸러미의 지난 한 주 내려받기(npm 또는 pypistats.org, preview.downloadsOf)' }, available: ref.available, items: r1 ?? [] },
-    { source: { id: 'mcp-registry', name: 'Official MCP Registry', url: 'https://registry.modelcontextprotocol.io', kind: KIND, license: '공개 등록소 API (게시자가 올린 server.json 메타데이터, 재배포를 위한 공개 API)', note: 'version=latest, status=active만 싣는다' }, available: off.available, cut: '활성(active) 최신판만', items: r2 ?? [] },
+    { source: REGISTRY_SOURCE, available: off.available, cut: REGISTRY_CUT, items: r2 ?? [] },
     { source: { id: 'mcp-github', name: 'GitHub MCP Registry', url: 'https://github.com/mcp', kind: KIND, license: '공개 API (api.mcp.github.com) 메타데이터, 원문은 각 저장소 라이선스' }, available: ghr.available, items: r3 ?? [] },
     { source: { id: 'mcp-docker', name: 'Docker MCP Catalog', url: 'https://github.com/docker/mcp-registry', kind: KIND, license: 'MIT (docker/mcp-registry)' }, available: dock.available, cut: '보관(Archived) 표시 서버 제외', items: r4 ?? [] },
     { source: { id: 'mcp-toolhive', name: 'ToolHive Registry', url: 'https://github.com/stacklok/toolhive-registry', kind: KIND, license: 'Apache-2.0' }, available: tool.available, items: r5 ?? [] },
@@ -608,6 +681,7 @@ export async function main(): Promise<void> {
 
 if (isMain(import.meta.url)) {
   ensureProxy();
-  await main();
+  if (process.argv.includes('--since')) await mainSince();
+  else await main();
 }
 

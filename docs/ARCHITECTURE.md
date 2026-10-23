@@ -31,7 +31,7 @@ code-chauffeur/
 ├─ schemas/                  자료 스키마 (catalog-*.json, glossary)
 ├─ scripts/
 │  ├─ import/                가져오기 (design-*, ai-*, api-*, oss-*·data-*·tpl-*, 네 갈래 함께 refresh-all.ts)
-│  ├─ i18n/                  한국어 설명: 자료로 만들기(template-ko.ts)·번역(translate.ts) → data/catalog-ko/ (D128)
+│  ├─ i18n/                  한국어 설명: 번역(translate.ts, 열쇠가 있을 때만)·Claude 세션 묶음(agent-batch·merge)·상태 세기(ko-coverage.ts) → data/catalog-ko/ (D128·D140). 자료 한 줄은 빌드 때 lib/ko-rule.ts (D143)
 │  ├─ catalog/               진열대 읽기(load.ts)와 빌드(build.ts)
 │  ├─ brand/                 로고 크기별 만들기
 │  ├─ guard/ · lib/ · qa/    품질 바닥선·쓰지 않는 말·하네스 / 도우미 / 시각 점검·예산·정적 서버
@@ -86,8 +86,9 @@ code-chauffeur/
 ## 4. 진열대 자료 흐름 (D103)
 
 ```text
-data/catalog/**  ──npm run import(네트워크)──  출처 API·목록   (매일: daily-refresh.yml, D128)
-data/catalog-ko/*.json · data/catalog-media/  ── 한국어 설명·README 그림 (빌드가 붙인다)
+data/catalog/**  ──npm run import(네트워크)──  출처 API·목록   (매일: daily-refresh.yml, 바뀐 것만 쓴다 D143)
+data/catalog-ko/*.json · data/catalog-media/  ── 번역한 한국어 설명·README 그림 (빌드가 붙인다)
+                                                 + 그 밖의 상품은 빌드가 자료로 한국어 한 줄을 만든다 (scripts/lib/ko-rule.ts, D143)
       │
       ▼ scripts/catalog/build.ts  (약 13초, 네트워크 없음, --if-stale면 자료·코드가 그대로일 때 건너뜀)
 public/catalog/list/<대분류>/<소분류>/<정렬>-<묶음>.json   카드 480장(8쪽)씩, 정렬 셋(popular·name·recent)  ≈1,020개
@@ -169,4 +170,4 @@ Cloudflare Workers Builds가 푸시마다 `npm run build:cf`(= `npm run build`: 
 - 단위: `tests/lib/`(진열대 계산·실제 자료 개수·파일 수, 주소, 저장, 풀이), `tests/import/`(가져온 자료의 스키마·id·개수), `tests/*.test.ts`(품질 바닥선·빌드 지킴·쓰지 않는 말).
 - e2e(`tests/e2e/`, 먼저 `npm run build`): 홈 → 카테고리 → 소분류 2쪽 → 상세 → 메모와 담기 → 장바구니(390·1440), PC 첫 화면에 목록 첫 줄, 정렬 주소와 뒤로 가기, 카드 [담기], 카테고리 메뉴, 검색, 용어 풀이, 장바구니·영수증·.md, 전체 검색(대분류·쪽·뒤로 가기·치는 대로), 거르기(왼쪽 칸·시트·주소·정렬과 함께·쪽 끝), 폰트 견본 지연 로드, 종류별 미리 보기, 서랍 여러 번, CSP, axe(360·1440), 주소 바탕(`npm run e2e:base`).
 - CI(`.github/workflows/check.yml`): 작업 브랜치 푸시는 빠른 검사(check·build·예산), `main` 푸시·PR·수동 실행은 e2e까지.
-- 매일(`.github/workflows/daily-refresh.yml`, D128): 자료 다시 받기 → README 그림 → 한국어 설명 → `npm test` → `npm run catalog` → 바뀐 `data/`를 배포 가지에 커밋·푸시(그 푸시가 배포된다). 코드가 바뀌지 않으므로 타입 검사·e2e는 돌리지 않는다.
+- 매일(`.github/workflows/daily-refresh.yml`, D128 → D143): 예약 실행 다시 켜기(60일 규칙) → 오늘 차례인 출처 받기(`scripts/lib/refresh-plan.ts`, 뜻 있게 바뀐 상품만 쓴다: `scripts/lib/catalog-stable.ts`) → README 그림 → 번역(열쇠가 있을 때만, 기본 꺼짐) → 요약(`refresh-summary.ts`, 작업 흐름 요약 표) → 바뀐 자료가 있을 때만 `npm test` → `npm run catalog` → 배포 가지에 커밋·푸시(그 푸시가 배포된다). 지표만 흔들린 날은 커밋·배포가 없다. 코드가 바뀌지 않으므로 타입 검사·e2e는 돌리지 않는다. AI를 부르지 않는다.

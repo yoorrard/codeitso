@@ -47,7 +47,8 @@ function signature(): string {
   if (existsSync(KO_DIR)) walk(KO_DIR);
   if (existsSync(MEDIA_DIR)) walk(MEDIA_DIR);
   if (existsSync(MODELS_DIR)) walk(MODELS_DIR);
-  for (const f of [KITS_FILE, WORDS_FILE]) {
+  // 한국어 한 줄은 빌드 때 만든다 (D143): 그 규칙 파일이 바뀌어도 다시 만든다
+  for (const f of [KITS_FILE, WORDS_FILE, join(ROOT, 'scripts', 'lib', 'ko-rule.ts'), join(ROOT, 'scripts', 'lib', 'ko-template.ts'), join(ROOT, 'scripts', 'lib', 'text-repair.ts')]) {
     const st = statSync(f);
     h.update(`${relative(ROOT, f)}:${st.size}:${st.mtimeMs}\n`);
   }

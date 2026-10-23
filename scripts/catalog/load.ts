@@ -9,6 +9,7 @@ import type { ModelsFile } from '../../src/lib/catalog/models.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
 import { isKitTheme } from '../../src/lib/kits.ts';
+import { koLineFor } from '../lib/ko-rule.ts';
 import { isGarbled, repairMojibake } from '../lib/text-repair.ts';
 
 export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog');
@@ -50,7 +51,8 @@ function readJson<T>(path: string): T {
 
 /**
  * data/catalog-ko/*.json을 모두 읽어 id → 한국어 설명. 읽지 못한 파일(쓰는 중이거나 깨진 JSON)은 알리고 건너뛴다.
- * 같은 id가 여러 파일에 있으면 이름 순으로 먼저 읽은 것이 이긴다: agent(사람이 살핀 번역) → auto-<n>(매일 번역) → template(자료로 만든 문장) (D128).
+ * 같은 id가 여러 파일에 있으면 이름 순으로 먼저 읽은 것이 이긴다: agent(사람이 살핀 번역) → auto-<n>(매일 번역) (D128).
+ * 여기 없는 상품은 진열대 빌드가 자료로 한 줄을 만든다 (scripts/lib/ko-rule.ts koLineFor, D143).
  */
 export function readKo(dir: string = KO_DIR, skip: readonly string[] = []): Map<string, string> {
   const out = new Map<string, string>();
@@ -152,7 +154,11 @@ function load(): Loaded {
       sources.push({ category: cat, file: name, name: file.source?.name ?? name, url: file.source?.url ?? '', license: file.source?.license ?? '', count: file.items.length });
       file.items.forEach((raw) => {
         const m = media.get(raw.id);
-        const item = withMedia(withKo(repaired(raw), koMap.get(raw.id)), m?.[0], m?.[1]);
+        // 한국어: 출처 → 번역(data/catalog-ko) → 자료로 만든 한 줄(D143, 빌드 때 만든다. 저장소에 쌓지 않는다)
+        const fixed = repaired(raw);
+        const named = withKo(fixed, koMap.get(raw.id));
+        const line = named.summaryKo ? undefined : koLineFor(fixed);
+        const item = withMedia(line ? withKo(named, line.text, line.by) : named, m?.[0], m?.[1]);
         if (item.category !== cat || !isCategoryId(item.category)) throw new Error(`${cat}/${name}: ${item.id}의 category가 ${item.category}다`);
         const list = subs.get(item.kind);
         if (!list) throw new Error(`${cat}/${name}: ${item.id}의 소분류 ${item.kind}가 index.json에 없다`);

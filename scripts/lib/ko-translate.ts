@@ -16,7 +16,7 @@ export interface Candidate {
   summary: string;
   /** 소분류 안 인기 순위 (0부터) */
   rank: number;
-  /** template.json에 자료로 만든 한 줄이 이미 있는지 (있으면 뒤로 미룬다) */
+  /** 모양이 정해진 상품이라 자료로 만든 자세한 한 줄(ko-template)이 있는지 (있으면 뒤로 미룬다) */
   templated: boolean;
 }
 

@@ -109,11 +109,17 @@ export function pickSummary(item: Pick<CatalogItem, 'summary' | 'summaryKo'>): s
 /**
  * 코드잇소가 쓴 한국어 설명(data/catalog-ko, id → 한국어)을 붙인다 (v5.1 D122). 출처가 준 한국어 한 줄이 있으면 그것을 둔다.
  * 원문(summary)은 그대로라 상세의 '원문'에서 볼 수 있다. 빈 글이면 붙이지 않는다.
+ * by = 'rule': 정해진 자료 칸으로 만든 '무엇인지' 한 줄 (D143, scripts/lib/ko-rule.ts). 카드는 그 첫 문장 뒤에 원문을 잇는다.
  */
-export function withKo(item: CatalogItem, ko: string | undefined): CatalogItem {
+export function withKo(item: CatalogItem, ko: string | undefined, by: 'codeshopper' | 'rule' = 'codeshopper'): CatalogItem {
   const t = ko?.replace(/\s+/g, ' ').trim();
   if (!t || item.summaryKo?.trim()) return item;
-  return { ...item, summaryKo: t, koBy: 'codeshopper' };
+  return { ...item, summaryKo: t, koBy: by };
+}
+
+/** 다체 글의 첫 문장 ('…다.'까지). 문장이 하나면 그대로 */
+export function headSentence(s: string): string {
+  return s.split(/(?<=다\.)\s+/)[0] ?? s;
 }
 
 /** README 첫 그림 (v5.1 D126, data/catalog-media): 진열대 빌드가 미리 보기 자료에 readmeImage·readmeStill로 붙인다. 출처 그림이 따로 있으면 그쪽이 먼저다 */
@@ -387,18 +393,24 @@ export function factsOf(item: CatalogItem): Fact[] {
 }
 
 export const CARD_SUMMARY_MAX = 110;
+/** 자료로 만든 한 줄 뒤에 잇는 원문의 길이 (카드는 두 줄에서 잘린다) */
+export const CARD_ORIG_MAX = 100;
 
 export function cardOf(item: CatalogItem): Card {
+  // 자료로 만든 한 줄(D143)은 '무엇인지'만 말하므로 카드에는 첫 문장을 먼저 두고 출처 원문을 잇는다 (한국어 먼저, 원문도 보이게)
+  const rule = item.koBy === 'rule' && !!item.summaryKo?.trim();
   const card: Card = {
     id: item.id,
     name: item.name,
     cat: item.category as CategoryId,
     sub: item.kind,
-    summary: truncate(pickSummary(item).replace(/\s+/g, ' '), CARD_SUMMARY_MAX),
+    summary: truncate((rule ? headSentence(item.summaryKo ?? '') : pickSummary(item)).replace(/\s+/g, ' '), CARD_SUMMARY_MAX),
     source: item.source.name,
     thumb: thumbOf(item),
     facts: factsOf(item),
   };
+  const orig = item.summary.replace(/\s+/g, ' ').trim();
+  if (rule && orig) card.orig = truncate(orig, CARD_ORIG_MAX);
   if (item.license) card.license = item.license;
   const metric = metricOf(item);
   if (metric) card.metric = metric;

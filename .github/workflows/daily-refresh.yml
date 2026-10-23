@@ -1,11 +1,15 @@
-# 매일 자료 새로 받기 (v5.1 P4, 소유자 요청 8, D128): 모든 출처를 다시 받고, 새 상품의 README 그림과 한국어 설명을 더한 뒤
-# 단위 시험(자료 개수·스키마 포함)과 진열대 빌드가 통과하면 배포 가지에 올린다. 그 푸시를 Cloudflare Workers Builds가 배포한다.
+# 매일 자료 새로 받기 (v5.1 P4, 소유자 요청 8, D128 → D143): 오늘 차례인 출처를 다시 받고, 뜻 있게 바뀐 것만 자료에 올린다.
+# 바뀐 자료가 있을 때만 단위 시험(자료 개수·스키마 포함)과 진열대 빌드를 돌려 배포 가지에 올린다. 그 푸시를 Cloudflare Workers Builds가 배포한다.
 # - 시각: 매일 03:17 KST(18:17 UTC). GitHub 예약 실행은 기본 가지(main)에 있는 이 파일로만 돈다 (docs/HUMAN.md H24).
 # - 배포 가지: 저장소 변수 DEPLOY_BRANCH (없으면 claude/focused-bell-a92t1m).
-# - 번역: OpenAI 호환 주소를 저장소 변수 TRANSLATE_API_URL·TRANSLATE_MODEL, 비밀 값 TRANSLATE_API_KEY로 주면 돈다. 없으면 건너뛴다.
-#   (GitHub Models는 2026-07-30에 닫혀 쓸 수 없다.) 한 번에 번역할 수는 TRANSLATE_BUDGET(기본 200).
-# - 시간: 가져오기를 16줄로 나눠 함께 돌린다(scripts/import/refresh-all.ts). 느리고 잘 바뀌지 않는 출처(공공데이터포털 두 목록·Iconify 묶음 전체·OWID·MCP 등록소)는
-#   월요일(KST)에만 받는다. 비공개 저장소의 Actions 무료 시간(월 2,000분) 안에 들도록 매일 약 18분, 월요일 약 60분을 어림한다.
+# - 받는 날: scripts/lib/refresh-plan.ts. 새 인기 상품이 날마다 생기는 출처(HF·Kaggle·AI 확장·MCP 등록소의 바뀐 것·GitHub 목록)는 매일,
+#   잘 바뀌지 않는 출처는 요일을 나눠 한 주에 한 번, 크고 느린 출처 전체(MCP 등록소 전체·Iconify·공공데이터포털·OWID)는 월요일.
+# - 바뀐 것만: 지표는 10%(작은 수는 바닥값 기준)·갱신일은 7일 넘게 바뀔 때만 올리고, 그대로인 파일은 받은 날도 그대로 둔다
+#   (scripts/lib/catalog-stable.ts). 그래서 지표만 흔들린 날은 커밋도 배포도 없다.
+# - 한국어 설명: AI 없이 진열대 빌드가 자료로 만든다(D143). 아래 번역 단계는 OpenAI 호환 주소·열쇠를 줄 때만 도는 선택 사항이고 기본은 꺼져 있다.
+# - 예약이 60일 넘게 멈추지 않게: 공개 저장소는 60일 동안 활동이 없으면 예약 실행이 꺼진다. 예약 실행마다 이 작업 흐름을 '켜기' API로
+#   다시 켠다(gautamkrishnar/keepalive-workflow의 API 방식과 같다. 빈 커밋을 만들지 않는다).
+# - 시간: 매일 약 12~14분, 월요일 약 50분 (비공개 저장소의 Actions 무료 시간 월 2,000분 안, 공개하면 무료).
 # - GITHUB_TOKEN으로 한 푸시는 다른 작업 흐름(check)을 다시 띄우지 않는다.
 name: daily-refresh
 
@@ -14,18 +18,22 @@ on:
     - cron: '17 18 * * *'
   workflow_dispatch:
     inputs:
-      translate_budget:
-        description: 이번에 번역할 최대 상품 수 (0이면 번역하지 않음)
-        required: false
-        default: '200'
       groups:
-        description: 받을 갈래 (비우면 모두. 예 design api)
+        description: 받을 갈래나 줄 (비우면 오늘 차례 모두. 예 design api oss-hf)
         required: false
         default: ''
       all:
-        description: 주간 몫(공공데이터포털·Iconify·OWID·MCP 등록소)까지 받기
+        description: 요일과 상관없이 모든 출처를 받기 (MCP 등록소는 전체)
         type: boolean
         default: false
+      day:
+        description: 이 요일인 것처럼 받기 (0=일 … 6=토, 비우면 오늘)
+        required: false
+        default: ''
+      translate_budget:
+        description: 이번에 번역할 최대 상품 수 (번역 열쇠가 있을 때만, 0이면 번역하지 않음)
+        required: false
+        default: '200'
   # 이 파일을 고쳐 올리면 한 번 돌려 본다
   push:
     paths:
@@ -33,6 +41,8 @@ on:
 
 permissions:
   contents: write
+  # 예약 실행이 꺼지지 않게 이 작업 흐름을 다시 켜는 데만 쓴다
+  actions: write
 
 # 새 실행이 앞 실행을 멈춘다 (앞 실행은 아직 아무것도 올리지 않았거나, 올렸다면 새 실행이 그 위에서 다시 받는다)
 concurrency:
@@ -49,6 +59,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 75
     steps:
+      - name: 예약 실행 계속 켜 두기 (60일 규칙)
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/daily-refresh.yml/enable"
+        env:
+          GH_TOKEN: ${{ github.token }}
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.DEPLOY_BRANCH }}
@@ -57,20 +73,20 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: 자료 다시 받기 (디자인·AI·API·오픈소스, 16줄을 함께)
+      - name: 자료 다시 받기 (오늘 차례인 출처, 줄을 나눠 함께)
         run: node scripts/import/refresh-all.ts $GROUPS
         env:
           GROUPS: ${{ github.event.inputs.groups }}
           REFRESH_ALL: ${{ github.event.inputs.all == 'true' && '1' || '' }}
+          REFRESH_DAY: ${{ github.event.inputs.day }}
           # 토큰은 주제 검색 줄(oss·tpl)에만 넘긴다 (refresh-all.ts). 주제마다 별 많은 순 500개까지
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOPIC_PAGES: '5'
       - name: 새 상품의 README 첫 그림
         continue-on-error: true
         run: node scripts/import/media-readme.ts
-      - name: 한국어 설명 (자료로 만드는 한 줄)
-        run: node scripts/i18n/template-ko.ts
-      - name: 한국어 설명 (번역, 열쇠가 있을 때만)
+      - name: 한국어 번역 (선택 사항, 번역 주소를 준 저장소에서만)
+        if: vars.TRANSLATE_API_URL != ''
         continue-on-error: true
         run: node scripts/i18n/translate.ts
         env:
@@ -79,11 +95,17 @@ jobs:
           TRANSLATE_API_KEY: ${{ secrets.TRANSLATE_API_KEY }}
           TRANSLATE_BUDGET: ${{ github.event.inputs.translate_budget || vars.TRANSLATE_BUDGET || '200' }}
           TRANSLATE_RPM: ${{ vars.TRANSLATE_RPM || '10' }}
+      - name: 무엇이 바뀌었나 (요약)
+        id: summary
+        run: node scripts/import/refresh-summary.ts
       - name: 단위 시험 (자료 개수·스키마·진열대 계산)
+        if: steps.summary.outputs.changed == 'true'
         run: npm test
       - name: 진열대 빌드 확인
+        if: steps.summary.outputs.changed == 'true'
         run: npm run catalog
       - name: 바뀐 자료 올리기
+        if: steps.summary.outputs.changed == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -93,7 +115,7 @@ jobs:
             exit 0
           fi
           stat=$(git diff --cached --shortstat)
-          git commit -q -m "자료 매일 새로 받기 $(TZ=Asia/Seoul date +%F)" -m "$stat"
+          git commit -q -m "자료 매일 새로 받기 $(TZ=Asia/Seoul date +%F)" -m "$(cat .cache/refresh/commit-body.txt)" -m "$stat"
           for i in 1 2 3; do
             if git pull -q --rebase origin "$DEPLOY_BRANCH" && git push -q origin "HEAD:$DEPLOY_BRANCH"; then
               echo "올렸다: $stat"

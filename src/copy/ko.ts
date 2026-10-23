@@ -191,6 +191,7 @@ export const ko = {
     },
     licenseNone: '출처에 라이선스가 적혀 있지 않아요. 쓰기 전에 공식 주소에서 확인해 주세요.',
     summaryWritten: '코드잇소가 쓴 한국어 설명이에요.',
+    summaryRule: '출처 자료로 만든 한국어 소개예요. 자세한 설명은 아래 원문에 있어요.',
     summarySource: '원문',
     use: '쓰는 법',
     install: '설치',

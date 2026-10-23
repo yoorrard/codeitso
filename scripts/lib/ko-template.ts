@@ -1,6 +1,6 @@
 // 자료로 만드는 한국어 설명 (v5.1 P4, D128). 글꼴·색·그라디언트·패턴·아이콘·로고·3D·게임 에셋·차트 색처럼
 // 모양이 정해진 상품은 출처 자료(preview·tags·metrics·summary 속 숫자)만으로 한 줄을 만든다. 지어내지 않는다:
-// 자료에 없는 칸은 문장에서 뺀다. 부작용 없는 순수 함수라 시험이 그대로 부른다 (scripts/i18n/template-ko.ts가 쓴다).
+// 자료에 없는 칸은 문장에서 뺀다. 부작용 없는 순수 함수라 시험이 그대로 부른다 (진열대 빌드가 ko-rule.ts koLineFor로 부른다, D143).
 import type { CatalogItem } from '../../src/lib/catalog/types.ts';
 
 /** 이 스크립트가 맡는 소분류 */
@@ -157,7 +157,7 @@ function chartKo(item: CatalogItem, p: Preview): string | undefined {
     first,
     steps,
     item.tags.includes('colorblind-friendly') ? '색각 이상이 있어도 구분하기 쉽게 고른 색이다.' : undefined,
-    pkg ? `${pkg} 꾸러미로 불러 쓴다.` : undefined,
+    pkg ? `${pkg} 패키지로 불러 쓴다.` : undefined,
   );
 }
 

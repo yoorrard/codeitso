@@ -5,6 +5,7 @@
 // 묶음.tsv 줄: 번호<탭>대분류/종류<탭>이름<탭>원문, 같은 순서의 id는 <묶음.tsv>.ids에.
 import { writeFileSync } from 'node:fs';
 import { KO_DIR, kitsFile, rawItems, readKo } from '../catalog/load.ts';
+import { koLineFor } from '../lib/ko-rule.ts';
 import { batchLines, pickCandidates, preferIds } from '../lib/ko-translate.ts';
 
 const out = process.argv[2];
@@ -14,10 +15,11 @@ if (!out) {
 }
 const limit = Number(process.argv[3]) > 0 ? Math.floor(Number(process.argv[3])) : 1000;
 
-const have = readKo(KO_DIR, ['template.json']);
-const templated = new Set(readKo(KO_DIR).keys());
-for (const id of have.keys()) templated.delete(id);
-const all = pickCandidates(rawItems(), new Set(have.keys()), templated, Number.POSITIVE_INFINITY);
+const have = readKo(KO_DIR);
+const items = rawItems();
+// 모양이 정해진 상품(글꼴·색…)은 자료로 만든 자세한 한 줄이 이미 있어 뒤로 미룬다 (D143: 빌드 때 만든다)
+const templated = new Set(items.filter((r) => !have.has(r.item.id) && koLineFor(r.item)?.by === 'codeshopper').map((r) => r.item.id));
+const all = pickCandidates(items, new Set(have.keys()), templated, Number.POSITIVE_INFINITY);
 const kitIds = new Set(kitsFile().kits.flatMap((k) => k.items));
 const batch = preferIds(all, kitIds, limit);
 

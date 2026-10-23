@@ -122,12 +122,27 @@ function Detail({ item, nav }: { item: DetailRecord; nav: NavCategory[] }) {
           <p class="detail-sum">
             <TermText text={summary} segs={segs} />
           </p>
-          {(item.written || item.koBy) && <p class="field-hint">{ko.item.summaryWritten}</p>}
-          {original && (
-            <details class="detail-orig">
-              <summary>{ko.item.summarySource}</summary>
-              <p lang="en">{original}</p>
-            </details>
+          {item.koBy === 'rule' ? (
+            // 자료로 만든 한 줄(D143)은 '무엇인지'만 말한다: 출처 원문을 접지 않고 바로 아래에 보인다
+            <>
+              <p class="field-hint">{ko.item.summaryRule}</p>
+              {original && (
+                <div class="detail-orig detail-orig-open">
+                  <p class="detail-orig-label">{ko.item.summarySource}</p>
+                  <p lang="en">{original}</p>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {(item.written || item.koBy) && <p class="field-hint">{ko.item.summaryWritten}</p>}
+              {original && (
+                <details class="detail-orig">
+                  <summary>{ko.item.summarySource}</summary>
+                  <p lang="en">{original}</p>
+                </details>
+              )}
+            </>
           )}
           <TermHint marked={!!segs?.some((x) => typeof x !== 'string')} />
           {metrics.length > 0 && (

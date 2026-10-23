@@ -190,6 +190,19 @@ test('용어 사전: 풀이 속 용어를 고르면 풀이 상자가 뜨고 Esc�
   await expect(page.locator('#term-pop')).toBeHidden();
 });
 
+test('자료로 만든 한국어 한 줄 (D143): 카드는 한국어 첫 문장 뒤에 원문을 잇고, 상세는 원문을 펼쳐 보인다', async ({ page }) => {
+  await page.goto('/c/ai/mcp?page=40');
+  await islandsReady(page);
+  const card = page.locator('.card').filter({ has: page.locator('.card-orig') }).first();
+  await expect(card.locator('.card-orig')).toHaveAttribute('lang', 'en');
+  await expect(card.locator('.card-sum')).toContainText('MCP 서버');
+  await card.locator('.card-link').click();
+  await islandsReady(page);
+  await expect(page.locator('.detail-sum')).toContainText('MCP 서버');
+  await expect(page.locator('.detail-buy .field-hint')).toHaveText(ko.item.summaryRule);
+  await expect(page.locator('.detail-orig-open p[lang="en"]')).toBeVisible();
+});
+
 test('상세: 없는 id·빈 id는 안내와 처음 화면 링크', async ({ page }) => {
   await page.goto('/item?id=no-such%3Aitem');
   await islandsReady(page);

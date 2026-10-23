@@ -6,6 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { stabilizeFile, stableLine, writeIfChanged } from './stable-write.ts';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const OUT_DIR = join(ROOT, 'data', 'catalog', 'api');
@@ -668,6 +669,7 @@ function cleanPreview(p: Preview): Preview {
 
 // ---------- 쓰기 ----------
 
+// 뜻 있게 바뀌었을 때만 쓴다 (D143, stable-write.ts): 지표·날짜 흔들림은 지난 스냅숏을 두고, 그대로면 파일도 받은 날도 그대로.
 export function writeCatalog(source: SourceInfo, items: Item[]): CatalogFile {
   const seen = new Set<string>();
   for (const it of items) {
@@ -675,11 +677,13 @@ export function writeCatalog(source: SourceInfo, items: Item[]): CatalogFile {
     seen.add(it.id);
   }
   const sorted = [...items].sort((a, b) => cmp(a.id, b.id));
-  const file: CatalogFile = { source, fetchedAt: FETCHED_AT, count: sorted.length, items: sorted };
-  mkdirSync(OUT_DIR, { recursive: true });
-  writeFileSync(join(OUT_DIR, `${source.id}.json`), `${JSON.stringify(file, null, 2)}\n`);
-  console.log(`  → data/catalog/api/${source.id}.json (${sorted.length})`);
-  return file;
+  const next: CatalogFile = { source, fetchedAt: FETCHED_AT, count: sorted.length, items: sorted };
+  const path = join(OUT_DIR, `${source.id}.json`);
+  const s = stabilizeFile(path, next, FETCHED_AT);
+  const wrote = writeIfChanged(path, `${JSON.stringify(s.file, null, 2)}\n`);
+  console.log(`  → data/catalog/api/${source.id}.json (${s.file.items.length})`);
+  console.log(stableLine(s, wrote));
+  return s.file;
 }
 
 export function readCatalog(id: string): CatalogFile | undefined {

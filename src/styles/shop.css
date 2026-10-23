@@ -940,6 +940,10 @@
   line-clamp: 2;
   overflow: hidden;
 }
+/* 자료로 만든 한국어 첫 문장 뒤에 잇는 출처 원문 (D143): 같은 두 줄 안에서 한 단계 옅게 */
+.card-orig {
+  color: var(--text-3);
+}
 .card-facts {
   display: flex;
   flex-wrap: wrap;
@@ -1488,6 +1492,15 @@
 }
 .detail-orig p {
   color: var(--text-2);
+}
+/* 자료로 만든 한 줄 아래 펼친 원문 (D143) */
+.detail-orig-open {
+  display: grid;
+  gap: var(--space-1);
+}
+.detail-orig-open .detail-orig-label {
+  color: var(--text-3);
+  font-size: var(--size-label);
 }
 .detail-metrics {
   display: flex;

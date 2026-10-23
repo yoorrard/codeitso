@@ -30,7 +30,17 @@ export function ProductCard({ card, slot = '', level = 'h3' }: Props) {
             {card.name}
           </a>
         </H>
-        <p class="card-sum">{card.summary}</p>
+        <p class="card-sum">
+          {card.summary}
+          {card.orig && (
+            <>
+              {' '}
+              <span class="card-orig" lang="en">
+                {card.orig}
+              </span>
+            </>
+          )}
+        </p>
         {card.facts.length > 0 && (
           <ul class="card-facts">
             {card.facts.map((f) => (

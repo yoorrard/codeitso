@@ -7,6 +7,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, wri
 import { tmpdir } from 'node:os';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { stabilizeFile, stableLine, writeIfChanged } from './stable-write.ts';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const OUT_DIR = join(ROOT, 'data', 'catalog', 'ai');
@@ -824,16 +825,20 @@ export function sortKeys(v: unknown): unknown {
 }
 
 // 한 상품을 한 줄에 쓴다. 같은 입력이면 같은 파일이 나온다.
+// 뜻 있게 바뀌었을 때만 쓴다 (D143, stable-write.ts): 지표·날짜 흔들림은 지난 스냅숏을 두고, 그대로면 파일도 받은 날도 그대로.
 export function writeCatalog(file: Omit<CatalogFile, 'count' | 'fetchedAt'>): string {
-  mkdirSync(OUT_DIR, { recursive: true });
-  const items = uniqueIds([...file.items].sort((a, b) => cmpStr(a.id, b.id))).sort((a, b) => cmpStr(a.id, b.id));
-  const head = sortKeys({ source: file.source, fetchedAt: FETCHED_AT, count: items.length, available: file.available, ...(file.cut ? { cut: file.cut } : {}) }) as Record<string, unknown>;
-  const lines = Object.entries(head).map(([k, v]) => `  ${JSON.stringify(k)}: ${JSON.stringify(v)},`);
-  const body = items.map((it) => `    ${JSON.stringify(sortKeys(it))}`).join(',\n');
-  const text = `{\n${lines.join('\n')}\n  "items": [\n${body}\n  ]\n}\n`;
+  const items = uniqueIds([...file.items].sort((a, b) => cmpStr(a.id, b.id))).sort((a, b) => cmpStr(a.id, b.id)).map((it) => sortKeys(it) as Item);
   const path = join(OUT_DIR, `${file.source.id}.json`);
-  writeFileSync(path, text);
-  log(`  → ${relative(ROOT, path)} (${items.length}/${file.available})`);
+  const next: CatalogFile = { ...file, fetchedAt: FETCHED_AT, count: items.length, items };
+  const s = stabilizeFile(path, next, FETCHED_AT);
+  const f = s.file;
+  const head = sortKeys({ source: f.source, fetchedAt: f.fetchedAt, count: f.items.length, available: f.available, ...(f.cut ? { cut: f.cut } : {}) }) as Record<string, unknown>;
+  const lines = Object.entries(head).map(([k, v]) => `  ${JSON.stringify(k)}: ${JSON.stringify(v)},`);
+  const body = f.items.map((it) => `    ${JSON.stringify(sortKeys(it))}`).join(',\n');
+  const text = `{\n${lines.join('\n')}\n  "items": [\n${body}\n  ]\n}\n`;
+  const wrote = writeIfChanged(path, text);
+  log(`  → ${relative(ROOT, path)} (${f.items.length}/${f.available})`);
+  log(stableLine(s, wrote));
   return path;
 }
 

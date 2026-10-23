@@ -297,6 +297,12 @@ main(async () => {
     stills: sortObj(stills),
     none: [...none].sort(),
   };
+  // 그림이 그대로면 받은 날도 그대로 둔다 (매일 날짜만 바뀐 파일을 올리지 않게, D143)
+  const body = (m: MediaFile): string => JSON.stringify({ ...m, fetchedAt: '' });
+  if (existsSync(MEDIA_FILE)) {
+    const prev = JSON.parse(readFileSync(MEDIA_FILE, 'utf8')) as MediaFile;
+    if (body(prev) === body(out)) out.fetchedAt = prev.fetchedAt;
+  }
   mkdirSync(dirname(MEDIA_FILE), { recursive: true });
   writeFileSync(MEDIA_FILE, `${JSON.stringify(out, null, 1)}\n`);
   console.log(`그림 ${Object.keys(images).length}개 · 멈춘 그림 ${Object.keys(stills).length}개 · 그림 없음 ${none.size}개 · 받기 실패 ${failed}개 → ${MEDIA_FILE}`);

@@ -211,3 +211,22 @@ test('상세: 없는 id·빈 id는 안내와 처음 화면 링크', async ({ pag
   await islandsReady(page);
   await expect(page.locator('.detail-empty')).toContainText(ko.item.noId);
 });
+
+test('정렬 이름표(D152): 인기 지표가 없는 소분류는 기본순, 갱신일이 없으면 최근 갱신순을 숨기고, 이름순은 앞쪽 기호를 빼고 줄 세운다', async ({ page }) => {
+  // 그라디언트: 출처가 인기 지표·갱신일을 주지 않는다
+  await page.goto('/c/design/gradients');
+  await islandsReady(page);
+  const nav = page.locator('.sort-nav');
+  await expect(nav.getByRole('link', { name: ko.list.sortBase, exact: true })).toBeVisible();
+  await expect(nav.getByRole('link', { name: ko.list.sorts.popular, exact: true })).toHaveCount(0);
+  await expect(nav.getByRole('link', { name: ko.list.sorts.recent, exact: true })).toHaveCount(0);
+  // 최근 갱신순 주소로 와도 기본 정렬로 보인다
+  await page.goto('/c/design/gradients?sort=recent');
+  await islandsReady(page);
+  await expect(page.locator('.sort-nav [aria-current="true"]')).toHaveText(ko.list.sortBase);
+  // MCP 서버: 인기 지표·갱신일이 있다. 이름순 첫 카드는 '$'·'(' 같은 기호로 시작하지 않는다
+  await page.goto('/c/ai/mcp?sort=name');
+  await islandsReady(page);
+  await expect(page.locator('.sort-nav').getByRole('link', { name: ko.list.sorts.recent, exact: true })).toBeVisible();
+  await expect(cardName(page)).toHaveText(/^[\p{L}\p{N}]/u);
+});

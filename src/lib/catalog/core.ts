@@ -13,6 +13,38 @@ export function cmpText(a: string, b: string): number {
   return a === b ? 0 : a < b ? -1 : 1;
 }
 
+/** 이름순의 견줄 글: 앞쪽 기호(@ $ ( - … 따옴표·이모지)를 뺀다. 기호만 있으면 그대로 */
+function nameKey(s: string): string {
+  const t = s.normalize('NFKC').replace(/^[^\p{L}\p{N}]+/u, '');
+  return t === '' ? s : t;
+}
+
+/** 숫자 토막은 크기대로, 글 토막은 cmpText로 (2 → 10). 0으로 시작하는 긴 숫자도 값으로 견준다 */
+function cmpNatural(a: string, b: string): number {
+  const x = a.split(/(\d+)/);
+  const y = b.split(/(\d+)/);
+  for (let i = 0; i < Math.min(x.length, y.length); i += 1) {
+    const p = x[i] ?? '';
+    const q = y[i] ?? '';
+    if (p === q) continue;
+    if (i % 2 === 1) {
+      const u = p.replace(/^0+(?=\d)/, '');
+      const v = q.replace(/^0+(?=\d)/, '');
+      if (u.length !== v.length) return u.length - v.length;
+      if (u !== v) return u < v ? -1 : 1;
+      continue;
+    }
+    const c = cmpText(p, q);
+    if (c !== 0) return c;
+  }
+  return x.length - y.length;
+}
+
+/** 이름순 (D152): 앞쪽 기호를 빼고, 숫자는 크기대로 견준다. 같으면 원래 글로 갈라 빌드마다 같은 차례 */
+export function cmpName(a: string, b: string): number {
+  return cmpNatural(nameKey(a), nameKey(b)) || cmpText(a, b);
+}
+
 /** FNV-1a 32비트 (UTF-16 코드 단위). 상세 조각 번호를 빌드와 브라우저가 같게 셈한다 */
 export function fnv1a(s: string): number {
   let h = 0x811c9dc5;
@@ -583,21 +615,35 @@ export function rankScores(items: readonly CatalogItem[]): number[] {
 export interface Ranked {
   item: CatalogItem;
   pop: number;
+  /** 소분류 안에서 출처 자료에 놓인 차례 (출처 파일 이름순 → 파일 안 차례). 지표가 없는 상품끼리의 인기순(기본순)에 쓴다 */
+  ord?: number;
 }
 
-/** 목록 정렬. popular = 점수 → 지표 값 → 이름, name = 이름, recent = 갱신일(없으면 뒤) → 점수 */
+/** 소분류에서 정렬이 뜻을 가지는가 (D152): 인기 지표(내려받기·스타·좋아요·조회·사이트 순위)가 있는 상품, 갱신일이 있는 상품이 하나라도 있는지 */
+export function sortAvailability(items: readonly CatalogItem[]): { measured: boolean; dated: boolean } {
+  return {
+    measured: items.some((it) => POP_KINDS.some((k) => popMagnitude(it, k) !== undefined)),
+    dated: items.some((it) => dateOf(it) !== undefined),
+  };
+}
+
+/**
+ * 목록 정렬. popular = 점수 → 지표 값 → 출처 순서 → 이름 (지표가 없는 상품끼리는 출처가 정한 차례, D152),
+ * name = 이름(앞쪽 기호를 빼고 숫자는 크기대로, cmpName), recent = 갱신일(없으면 뒤) → 점수
+ */
 export function sortRanked(list: readonly Ranked[], sort: SortKey): Ranked[] {
   const out = [...list];
   const metricValue = (r: Ranked): number => metricOf(r.item)?.value ?? -1;
-  if (sort === 'name') out.sort((a, b) => cmpText(a.item.name, b.item.name) || cmpText(a.item.id, b.item.id));
+  const ord = (r: Ranked): number => r.ord ?? 0;
+  if (sort === 'name') out.sort((a, b) => cmpName(a.item.name, b.item.name) || cmpText(a.item.id, b.item.id));
   else if (sort === 'recent') {
     out.sort((a, b) => {
       const x = dateOf(a.item) ?? '';
       const y = dateOf(b.item) ?? '';
       if (x !== y) return x < y ? 1 : -1;
-      return b.pop - a.pop || cmpText(a.item.name, b.item.name);
+      return b.pop - a.pop || ord(a) - ord(b) || cmpName(a.item.name, b.item.name);
     });
-  } else out.sort((a, b) => b.pop - a.pop || metricValue(b) - metricValue(a) || cmpText(a.item.name, b.item.name) || cmpText(a.item.id, b.item.id));
+  } else out.sort((a, b) => b.pop - a.pop || metricValue(b) - metricValue(a) || ord(a) - ord(b) || cmpName(a.item.name, b.item.name) || cmpText(a.item.id, b.item.id));
   return out;
 }
 

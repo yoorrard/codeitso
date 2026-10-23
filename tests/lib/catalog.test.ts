@@ -2,6 +2,8 @@
 // 실제 자료로 개수와 배포 파일 수 (D103).
 import { describe, expect, it } from 'vitest';
 import {
+  cmpName,
+  sortAvailability,
   cardOf,
   chunkCount,
   chunkOf,
@@ -38,6 +40,16 @@ describe('견주기·해시', () => {
   it('이름은 대소문자·전각을 무시하고 코드 단위 순서로', () => {
     const names = ['banana', 'Apple', '가나', 'ＡＢ', 'apple'];
     expect([...names].sort(cmpText)).toEqual(['ＡＢ', 'Apple', 'apple', 'banana', '가나']);
+  });
+
+  it('이름순(D152): 앞쪽 기호는 빼고 견주고, 숫자는 크기대로', () => {
+    const names = ['(주)에스알_SRT', '$199 Domains', '@alloc/quick-lru', 'Apple', 'b10', 'b2', '가나', '-21risk', '… but so is'];
+    expect([...names].sort(cmpName)).toEqual(['-21risk', '$199 Domains', '@alloc/quick-lru', 'Apple', 'b2', 'b10', '… but so is', '가나', '(주)에스알_SRT']);
+    // 기호를 빼면 같은 이름은 원래 글로 갈라 늘 같은 차례
+    expect(['@x', 'x'].sort(cmpName)).toEqual(['@x', 'x']);
+    expect(['x', '@x'].sort(cmpName)).toEqual(['@x', 'x']);
+    // 기호만 있는 이름도 버리지 않는다
+    expect(['***', 'a'].sort(cmpName)).toEqual(['***', 'a']);
   });
 
   it('FNV-1a는 알려진 값과 같고, 조각 번호는 늘 같은 범위', () => {
@@ -287,6 +299,24 @@ describe('인기 점수와 정렬', () => {
     expect(sortRanked(r, 'popular').map((x) => x.item.id)).toEqual(['c', 'a', 'b']);
     expect(sortRanked(r, 'name').map((x) => x.item.id)).toEqual(['a', 'b', 'c']);
     expect(sortRanked(r, 'recent').map((x) => x.item.id)).toEqual(['c', 'b', 'a']);
+  });
+
+  it('인기순(D152): 지표가 없는 상품끼리는 이름이 아니라 출처 순서(ord)를 지킨다, 이름순은 기호를 빼고', () => {
+    const r = [
+      { item: item('zeta'), pop: 0, ord: 0 },
+      { item: item('@alpha'), pop: 0, ord: 1 },
+      { item: item('mid', { metrics: { stars: 3 } }), pop: 0.4, ord: 2 },
+    ];
+    expect(sortRanked(r, 'popular').map((x) => x.item.id)).toEqual(['mid', 'zeta', '@alpha']);
+    expect(sortRanked(r, 'name').map((x) => x.item.id)).toEqual(['@alpha', 'mid', 'zeta']);
+  });
+
+  it('정렬 고르기(D152): 인기 지표·날짜가 하나라도 있는 소분류만 인기순·최근 갱신순이 뜻이 있다', () => {
+    expect(sortAvailability([item('a'), item('b')])).toEqual({ measured: false, dated: false });
+    expect(sortAvailability([item('a'), item('b', { metrics: { downloads: 10 } })])).toEqual({ measured: true, dated: false });
+    expect(sortAvailability([item('a', { metrics: { updatedAt: '2026-01-01' } })])).toEqual({ measured: false, dated: true });
+    // 뜨는 정도(trend)나 갱신일만으로는 인기 지표가 아니다
+    expect(sortAvailability([item('a', { metrics: { trend: 3 } })]).measured).toBe(false);
   });
 
   it('관련 상품: 태그를 많이 함께 가진 것 → 모자라면 순위가 가까운 것, 자기는 빼고', () => {

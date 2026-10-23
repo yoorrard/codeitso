@@ -38,6 +38,10 @@ interface Props {
   pages: number;
   initial: Card[];
   facets: FacetMeta[];
+  /** 인기 지표가 있는 소분류인가. 아니면 인기순을 '기본순'(출처 차례)이라 부른다 (D152) */
+  measured: boolean;
+  /** 갱신일이 있는 소분류인가. 아니면 '최근 갱신순'을 보이지 않는다 (D152) */
+  dated: boolean;
 }
 
 interface Want {
@@ -72,12 +76,14 @@ function sortFor(sort: ListSort, q: string): ListSort {
   return q === '' && sort === 'match' ? 'popular' : sort;
 }
 
-function readUrl(facets: readonly FacetMeta[]): Want {
+function readUrl(facets: readonly FacetMeta[], dated: boolean): Want {
   const p = new URLSearchParams(window.location.search);
   const s = p.get('sort');
   const n = Math.floor(Number(p.get('page') ?? '1'));
   const q = (p.get('q') ?? '').trim();
-  return { sort: isSort(s) ? s : q ? 'match' : 'popular', page: Number.isFinite(n) && n >= 1 ? n : 1, sel: readSelection(p, facets), q };
+  // 갱신일이 없는 소분류의 최근 갱신순 주소는 기본 정렬로 (D152)
+  const sort = isSort(s) && !(s === 'recent' && !dated) ? s : q ? 'match' : 'popular';
+  return { sort, page: Number.isFinite(n) && n >= 1 ? n : 1, sel: readSelection(p, facets), q };
 }
 
 function cached<T>(map: Map<string, Promise<T>>, url: string): Promise<T> {
@@ -130,7 +136,7 @@ function plain(e: MouseEvent): boolean {
   return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 }
 
-export default function Listing({ cat, catName, sub, subName, total, pages, initial, facets }: Props) {
+export default function Listing({ cat, catName, sub, subName, total, pages, initial, facets, measured, dated }: Props) {
   const [view, setView] = useState<View>({ sort: 'popular', page: 1, sel: {}, q: '', total, cards: initial, loose: false });
   const [counts, setCounts] = useState<Partial<Record<FacetKey, number[]>> | null>(null);
   const [status, setStatus] = useState<'ready' | 'loading' | 'error'>('ready');
@@ -217,13 +223,13 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
   }
 
   useEffect(() => {
-    const u = readUrl(facets);
+    const u = readUrl(facets, dated);
     setText(u.q);
     if (u.q !== '' || u.sort !== 'popular' || u.page !== 1 || selectionSize(u.sel) > 0) void go(u, 'none', 'none');
     else document.documentElement.removeAttribute(PENDING_ATTR);
     const onPop = (): void => {
       window.clearTimeout(timer.current);
-      const n = readUrl(facets);
+      const n = readUrl(facets, dated);
       setText(n.q);
       void go(n, 'none', 'head');
     };
@@ -304,7 +310,8 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
   const to = Math.min(n, view.page * PAGE_SIZE);
   const picked = selectionSize(view.sel);
   const chosen = facets.flatMap((f) => (view.sel[f.k] ?? []).map((v) => ({ k: f.k, v })));
-  const sorts: ListSort[] = view.q ? ['match', ...SORTS] : [...SORTS];
+  const shown = SORTS.filter((k) => k !== 'recent' || dated);
+  const sorts: ListSort[] = view.q ? ['match', ...shown] : [...shown];
   const findLabel = fill(ko.list.findLabel, { name: subName });
   // 누른 정렬·쪽은 받기를 기다리지 않고 바로 고른 것으로 보인다 (0.1초 안의 응답, U D148). 못 받으면 원래대로
   const pressed = status === 'loading' && want ? want : view;
@@ -380,7 +387,7 @@ export default function Listing({ cat, catName, sub, subName, total, pages, init
                 {sorts.map((s) => (
                   <li>
                     <a class="chip" {...sortLink(s)} aria-current={s === pressed.sort ? 'true' : undefined}>
-                      {ko.list.sorts[s]}
+                      {s === 'popular' && !measured ? ko.list.sortBase : ko.list.sorts[s]}
                     </a>
                   </li>
                 ))}

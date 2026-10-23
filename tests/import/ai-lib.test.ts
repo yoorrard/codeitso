@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   clip, dedupeAcross, dedupeKey, githubSlug, makeItem, normalizeLicense, parseCsv, parseYaml, splitFrontMatter, textKey, uniqTags, uniqueIds,
 } from '../../scripts/import/ai-lib.ts';
-import { dockerItem, installFor, officialItem, parseAwesomeMcp, snippetFor } from '../../scripts/import/ai-mcp.ts';
+import { dockerItem, installFor, officialItem, parseAwesomeMcp, sinceAvailable, snippetFor } from '../../scripts/import/ai-mcp.ts';
 import { licenseFromText, parseAwesomeSkills } from '../../scripts/import/ai-skills.ts';
 import { cursorrulesNames, FORMATS } from '../../scripts/import/ai-rules.ts';
 import { pluginUrl } from '../../scripts/import/ai-plugins.ts';
@@ -226,5 +226,13 @@ describe('색인', () => {
     const mcp = idx.subcategories.find((s) => s.id === 'mcp');
     expect(mcp?.count).toBe(5);
     expect(mcp?.sources.map((s) => s.id)).toEqual(['mcp-b', 'mcp-a']);
+  });
+});
+
+describe('MCP 등록소 바뀐 것만 받기 (D143)', () => {
+  it('출처 전체 개수(available)는 새로 실은 수만큼 늘리고, 실은 개수보다 작아지지 않는다', () => {
+    expect(sinceAvailable(46858, 1848, 47512)).toBe(48706);
+    expect(sinceAvailable(100, 0, 120)).toBe(120);
+    expect(sinceAvailable(100, 0, 90)).toBe(100);
   });
 });

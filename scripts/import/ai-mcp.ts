@@ -226,6 +226,14 @@ export async function officialSince(since: string): Promise<RegServer[]> {
 }
 
 /**
+ * 바뀐 것만 받는 날의 '출처 전체 개수'(available) 어림: 새로 실은 수만큼 늘리고, 실은 개수보다 작게 두지 않는다.
+ * 정확한 수는 쪽을 끝까지 넘기는 월요일 전체 받기가 다시 센다.
+ */
+export function sinceAvailable(prevAvailable: number, added: number, count: number): number {
+  return Math.max(prevAvailable + added, count);
+}
+
+/**
  * 바뀐 것만 받기 (D143, 월요일 밖의 날): 지난 mcp-registry.json의 받은 날 하루 전부터 바뀐 서버만 받아
  * 활성이면 더하거나 고치고, 활성이 아니면(지움·폐기) 뺀다. 새 서버가 앞 출처(참조·GitHub·Docker·ToolHive)와 같은 저장소면 싣지 않는다.
  * 뒤 출처(mcpm·Smithery…)와의 겹침과 출처의 전체 개수(available)는 월요일 전체 받기가 맞춘다.
@@ -272,7 +280,7 @@ export async function mainSince(): Promise<void> {
     added++;
   }
   log(`  바뀐 서버 ${servers.length}개: 새 ${added} · 고침 ${updated} · 뺌 ${removed} · 앞 출처와 겹쳐 건너뜀 ${skipped}`);
-  writeCatalog({ source: REGISTRY_SOURCE, available: prev.available, cut: prev.cut ?? REGISTRY_CUT, items: [...items.values()] });
+  writeCatalog({ source: REGISTRY_SOURCE, available: sinceAvailable(prev.available, added, items.size), cut: prev.cut ?? REGISTRY_CUT, items: [...items.values()] });
   log(`(받은 날 ${FETCHED_AT})`);
 }
 

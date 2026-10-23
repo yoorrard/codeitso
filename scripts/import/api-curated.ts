@@ -504,7 +504,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       {
         id: 'official',
         name: '공식 문서에서 확인한 API (코드잇소 손 목록)',
-        url: 'https://github.com/yoorrard/code-chauffeur/blob/main/scripts/import/api-curated-data.ts',
+        url: 'https://github.com/yoorrard/codeitso/blob/main/scripts/import/api-curated-data.ts',
         license: 'Facts (names, official URLs) and the official pages\' own one-line descriptions; Korean lines written by 코드잇소',
         note: `AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). ${siteRankNote()}`,
       },

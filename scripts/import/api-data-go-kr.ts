@@ -64,7 +64,7 @@ export function parseListPage(html: string): { total?: number; items: PortalApi[
 async function fetchPage(page: number, sort: string): Promise<string> {
   const url = `${BASE}/tcs/dss/selectDataSetList.do?dType=API&currentPage=${page}&perPage=${PER_PAGE}&sort=${sort}`;
   return fetchText(url, {
-    headers: { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) codeshopper-catalog-import/1.0', accept: 'text/html' },
+    headers: { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) codeitso-catalog-import/1.0', accept: 'text/html' },
     retries: 8,
     timeoutMs: 90_000,
   });

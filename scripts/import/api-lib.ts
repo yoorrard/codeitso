@@ -15,7 +15,7 @@ export const CATEGORY = 'api';
 export const FETCHED_AT = process.env.IMPORT_DATE ?? new Date().toISOString().slice(0, 10);
 // 사람이 고른 항목(손 목록)은 고른 날을 둔다. 다시 돌려도 바뀌지 않게.
 export const CURATED_AT = '2026-10-14';
-export const USER_AGENT = 'codeshopper-catalog-import/1.0 (api shelf; https://github.com/yoorrard/code-chauffeur)';
+export const USER_AGENT = 'codeitso-catalog-import/1.0 (api shelf; https://github.com/yoorrard/codeitso)';
 
 export type PreviewType =
   | 'font' | 'palette' | 'icons' | 'style' | 'repo' | 'model' | 'dataset' | 'api'
@@ -489,7 +489,7 @@ export async function siteMeta(url: string, opts: { withText?: boolean } = {}): 
     for (let hop = 0; hop < 8; hop++) {
       const res = await fetchRaw(current, {
         headers: {
-          'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36 codeshopper-catalog-import/1.0',
+          'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36 codeitso-catalog-import/1.0',
           accept: 'text/html,application/xhtml+xml',
           'accept-language': 'en,ko;q=0.8',
         },

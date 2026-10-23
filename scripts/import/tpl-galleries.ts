@@ -247,7 +247,7 @@ async function netlifyTemplates(): Promise<{ info: SourceInfo; items: Item[] }> 
 // HTML5 UP: 반응형 HTML5·CSS3 무료 템플릿 (사이트 전체가 CC BY 3.0으로 배포한다고 html5up.net/license에 적혀 있다).
 // 목록 쪽에서 이름·데모·다운로드 수·그림을, 템플릿 쪽의 meta description에서 설명을 읽는다.
 async function html5up(): Promise<{ info: SourceInfo; items: Item[] }> {
-  const UA = { 'user-agent': 'Mozilla/5.0 (compatible; codeshopper-catalog-import/1.0)' };
+  const UA = { 'user-agent': 'Mozilla/5.0 (compatible; codeitso-catalog-import/1.0)' };
   const html = await fetchText('https://html5up.net/', { headers: UA });
   const rows = [...html.matchAll(/<article[^>]*>([\s\S]*?)<\/article>/g)].map((m) => {
     const a = m[1] as string;
@@ -299,7 +299,7 @@ interface GatsbyStarter {
 
 async function gatsbyStarters(): Promise<{ info: SourceInfo; items: Item[] }> {
   const j = await fetchJson<{ result: { data: { allWpStarter: { nodes: GatsbyStarter[] } } } }>('https://www.gatsbyjs.com/page-data/starters/page-data.json', {
-    headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeshopper-catalog-import/1.0)' },
+    headers: { 'user-agent': 'Mozilla/5.0 (compatible; codeitso-catalog-import/1.0)' },
   });
   const nodes = j.result.data.allWpStarter.nodes.filter((n) => n.starterFields?.repoUrl && isHttpUrl(n.starterFields.repoUrl));
   const items = await mapLimit(nodes, 6, async (n) => {

@@ -13,7 +13,7 @@ export const CATALOG_DIR = join(ROOT, 'data', 'catalog');
 export const CACHE_DIR = join(ROOT, '.cache', 'import-oss');
 // 같은 날 다시 돌리면 같은 결과가 나오게 날짜만 쓴다. IMPORT_DATE로 고정할 수 있다.
 export const FETCHED_AT = process.env.IMPORT_DATE ?? new Date().toISOString().slice(0, 10);
-export const USER_AGENT = 'codeshopper-catalog-import/1.0 (+https://github.com/yoorrard/code-chauffeur)';
+export const USER_AGENT = 'codeitso-catalog-import/1.0 (+https://github.com/yoorrard/codeitso)';
 
 // ---------- 모양 ----------
 

@@ -53,7 +53,7 @@ await main('design-curated', async () => {
       {
         id: f.id,
         name: f.name,
-        url: 'https://github.com/yoorrard/code-chauffeur',
+        url: 'https://github.com/yoorrard/codeitso',
         license: 'Hand-written list of public sites (name, link, Korean one-liner by 코드잇소). summary = the site\'s own meta description fetched on the date above. license is filled only where the site\'s license page was read; otherwise follow preview.licenseUrl.',
         note: `Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all. ${siteRankNote()}`,
       },

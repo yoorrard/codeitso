@@ -45,8 +45,8 @@ Cloudflare Workers 정적 파일 + /api/event·/api/stats (D1, 익명 방문 수
 준비물: [Node.js](https://nodejs.org/ko) 22.18 이상, Git.
 
 ```bash
-git clone https://github.com/yoorrard/code-chauffeur.git
-cd code-chauffeur
+git clone https://github.com/yoorrard/codeitso.git
+cd codeitso
 npm ci
 npm run dev        # 진열대를 빌드한 뒤 개발 서버 (http://localhost:4321)
 ```
@@ -73,7 +73,7 @@ docs/        설계·결정 기록(DECISIONS.md)·진행 기록(TASKS.md)
 
 ## 함께 만들기
 
-틀린 상품 정보, 빠진 재료, 버그는 [이슈](https://github.com/yoorrard/code-chauffeur/issues)로 알려 주세요. 상품의 사실은 출처 자료에서만 가져오므로, 정보를 고칠 때는 `data/catalog/**`를 손으로 고치지 않고 가져오기 스크립트(`scripts/import/`)를 고칩니다. 화면 문구는 `src/copy/ko.ts`, 색·크기는 `src/styles/tokens.css`의 변수만 씁니다. 커밋 전에 `npm run check`를 돌려 주세요.
+틀린 상품 정보, 빠진 재료, 버그는 [이슈](https://github.com/yoorrard/codeitso/issues)로 알려 주세요. 상품의 사실은 출처 자료에서만 가져오므로, 정보를 고칠 때는 `data/catalog/**`를 손으로 고치지 않고 가져오기 스크립트(`scripts/import/`)를 고칩니다. 화면 문구는 `src/copy/ko.ts`, 색·크기는 `src/styles/tokens.css`의 변수만 씁니다. 커밋 전에 `npm run check`를 돌려 주세요.
 
 권리 침해 신고는 사이트의 [저작권·게시 중단 요청](https://codeitso.yoorrard.workers.dev/legal/copyright) 안내를 따릅니다.
 
@@ -84,6 +84,8 @@ docs/        설계·결정 기록(DECISIONS.md)·진행 기록(TASKS.md)
 - **진열대 자료**(`data/catalog/`, `data/catalog-models/`, `data/catalog-media/`): 각 출처의 조건을 따릅니다. 파일마다 `source.license`에 적혀 있고, 사이트의 [자료 출처](https://codeitso.yoorrard.workers.dev/about/credits)에서도 볼 수 있습니다. 진열된 재료는 모두 자기 라이선스를 따릅니다.
 - **이름 「코드잇소」·「codeitso」와 로고:** 허락하지 않습니다. 고쳐서 따로 공개할 때는 다른 이름과 로고를 써 주세요.
 - **제3자 구성 요소**(글꼴·아이콘·가져온 스킬): `THIRD_PARTY_NOTICES.md`.
+
+적용 범위 전체는 [`NOTICE.md`](NOTICE.md)에 있습니다.
 
 운영자: 유영재 · yyj19962004@gmail.com
 

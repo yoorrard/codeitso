@@ -34,7 +34,7 @@ const lead = fill(ko.allCategories.lead, {
             {c.nameKo}
             <span class="all-cat-n">{fill(ko.home.count, { n: withCommas(c.total) })}</span>
           </h2>
-          <a class="sec-more" href={categoryPath(c.id)} aria-label={fill(ko.allCategories.open, { name: c.nameKo })}>
+          <a class="sec-more" href={categoryPath(c.id)} aria-label={fill(ko.home.moreOf, { title: c.nameKo })}>
             {ko.home.more}
             <Icon name="chevron" size="16px" />
           </a>

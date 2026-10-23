@@ -8,12 +8,12 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 ## 지금 할 일
 
+- [ ] **H30 Cloudflare 배포 가지를 `main`으로 (1분, D151)** — Cloudflare 대시보드 → **Workers & Pages** → `codeitso` → **Settings** → **Build** → **Branch control**의 Production branch를 `claude/focused-bell-a92t1m`에서 **`main`**으로 바꾸고 저장. 빌드 변수는 그대로 둔다. 바꾸기 전에도 매일 갱신이 옛 가지를 따라 올려 사이트는 계속 갱신된다. 바꾼 뒤에는 `main`에 합칠 때마다 배포되고, PR 검사(e2e까지)를 통과해야 합쳐진다. 옛 가지는 지워도 된다(지우면 따라 올리기도 멈춘다). 자세한 것은 `docs/DEPLOY.md` 11단계 — 배포 — (2026-10-23)
 - [x] **H27 저장소를 공개로 바꾸기 (끝, 2026-10-23)** — 공개(`visibility: public`)와 이름 바꾸기(`yoorrard/code-chauffeur` → `yoorrard/codeitso`, 옛 주소는 GitHub가 넘겨 준다)를 확인했다. 남은 선택 하나: 저장소 첫 화면 오른쪽 **About**의 톱니 → Website에 `https://codeitso.yoorrard.workers.dev`, Topics에 `vibe-coding` `korean` `astro` `cloudflare-workers` (지금은 비어 있다). 라이선스는 `LICENSE`(MIT 원문)와 `NOTICE.md`(적용 범위)로 나눠 GitHub가 MIT로 알아보게 했다 — 계정 — 오픈소스 — (2026-10-23)
-- [ ] H04 법 문서 최종 검토와 겸직 신고 — 이용약관·개인정보 처리방침·이용 안내·저작권·게시 중단 요청은 구현해 정식으로 열었다(D136·D145·D149, 문장은 `src/copy/ko.ts` legal 묶음, 운영자 유영재·문의 메일은 `src/lib/site-config.ts`). 사람이 볼 것: ① **교원 겸직 신고** — 소유자가 교원이면 무료·비영리라도 계속 운영하는 웹 서비스가 소속 기관의 겸직 허가·신고 대상인지 확인, ② 처리방침의 약속 — 문의 메일을 답변 뒤 1년 보관하고 지우기, Gmail(Google LLC) 위탁·국외 이전 표기, ③ 약관의 '계속 이용하면 바뀐 약관에 동의' 문구와 책임 제한(고의·중과실 제외) 문구, ④ 저작권·게시 중단 절차(받으면 내리고 가져오기에서 빼기), ⑤ `LICENSE`의 MIT·CC BY 4.0 적용 범위(코드 MIT, 운영자 글 CC BY 4.0, 진열대 자료는 출처 조건, 이름·로고 제외)와 약관 제9·11조가 뜻대로인지. 고칠 곳이 있으면 문장을 알려 주세요 — 법 — (2026-10-14, 고침 2026-10-23)
+- [x] H04 법 문서 최종 검토 (끝, 2026-10-23) — 소유자 확인: 겸직 신고는 필요 없고, 이용약관·개인정보 처리방침·저작권·게시 중단 안내·라이선스 적용 범위(D136·D145·D150)는 문제없다. 고칠 문장이 생기면 대화로 알려 주면 에이전트가 `src/copy/ko.ts` legal 묶음을 고친다 — 법 — (2026-10-14, 끝 2026-10-23)
 
 ## 선택 (막지 않음)
 
 - [ ] H03 KIPRIS 상표 검색과 도메인 — 이름 **코드잇소·codeitso**(D129)로 KIPRIS(kipris.or.kr)에서 같거나 비슷한 상표가 있는지(소프트웨어·온라인 서비스 쪽 9·35·42류 위주). 도메인을 사서 옮길 때는 공유 링크가 주소째 퍼지므로 옛 주소(`codeitso.yoorrard.workers.dev`)에서 새 주소로 301을 계속 지켜야 한다 — 이름·상표 — (2026-10-12, 고침 2026-10-23)
 - [ ] H28 로고 그림의 권리 확인 — 장바구니 로고 원본(`assets-src/brand/logo-cart-source.webp`)을 이미지 생성 도구로 만들었다면, 그 요금제 약관에서 공개 사이트·상표로 써도 되는지 확인. 글자 로고 '코드잇소'는 Black Han Sans(SIL OFL 1.1)로 그린 그림이라 문제없다 — 브랜드 — (2026-10-13 A07을 옮김, 2026-10-23)
 - [ ] H29 실제 휴대폰으로 한 번 둘러보기 — 아이폰 Safari·갤럭시 Chrome, 카카오톡·네이버 앱 안 브라우저에서 홈 → 검색("날씨") → 상세 → 담기 → 장바구니 → 프롬프트 뽑기 → 복사까지. 이상한 곳이 있으면 화면 캡처를 대화에 붙여 주세요(자동 시험은 360·390·1440px 헤드리스 Chromium으로 돈다) — 실제 기기 — (2026-10-14 H19를 줄임, 2026-10-23)
-- [ ] H30 (선택) Cloudflare 배포 가지를 `main`으로 — 지금은 작업 가지 `claude/focused-bell-a92t1m`이 배포 가지이고 매일 갱신도 그 가지에 올린다(그대로 써도 된다). `main`으로 옮기려면 Workers & Pages → `codeitso` → Settings → Build → **Branch control**의 Production branch를 `main`으로, 저장소 Settings → Secrets and variables → Actions → Variables에 `DEPLOY_BRANCH` = `main`. 바꾼 뒤에는 에이전트가 PR로만 `main`에 올린다 — 배포 — (2026-10-23)

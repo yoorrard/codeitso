@@ -58,7 +58,27 @@ export async function selectText(target: Locator, text: string): Promise<void> {
 
 /** 글 일부가 화면에 그려진 자리: 첫 줄 왼쪽 가운데(x0, y0)와 끝 줄 오른쪽 가운데(x1, y1). 보이게 굴린 뒤 잰다 */
 export async function textBox(target: Locator, text: string): Promise<{ x0: number; y0: number; x1: number; y1: number }> {
-  await target.scrollIntoViewIfNeeded();
+  // 글을 화면 가운데로 옮긴 뒤 잰다. '보이기만 하면 그대로'(scrollIntoViewIfNeeded)로 두면 글이 화면 맨 아래에 남아
+  // 휴대폰의 '맨 위로' 단추(오른쪽 아래에 떠 있음)가 끌기를 가로챈다 (2026-10-23 PR #4 CI: y=808/844에서 끌어 풀이가 뜨지 않음).
+  await target.evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'nearest' }));
+  // 스크롤이 굴러가는 중에 재지 않게, 요소 자리와 스크롤이 세 그림 틀 동안 그대로일 때까지(최대 1.5초) 기다린다.
+  await target.evaluate(
+    (el) =>
+      new Promise<void>((done) => {
+        let last = '';
+        let same = 0;
+        const start = performance.now();
+        const tick = (): void => {
+          const r = el.getBoundingClientRect();
+          const now = `${r.left},${r.top},${window.scrollX},${window.scrollY}`;
+          same = now === last ? same + 1 : 0;
+          last = now;
+          if (same >= 2 || performance.now() - start > 1500) done();
+          else requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }),
+  );
   return target.evaluate((el, t) => {
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     for (let n = walker.nextNode(); n; n = walker.nextNode()) {

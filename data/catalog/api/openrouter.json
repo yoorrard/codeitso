@@ -4,10 +4,10 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 112 providers; kept the 32 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "OpenRouter lists 114 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-20",
-  "count": 32,
+  "fetchedAt": "2026-10-23",
+  "count": 33,
   "items": [
     {
       "id": "openrouter:aion-labs",
@@ -375,34 +375,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "openrouter:liquid",
-      "name": "Liquid",
-      "kind": "ai-llm",
-      "category": "api",
-      "summary": "Liquid AI builds efficient Liquid Foundation Models (LFMs) for on-device, edge, and cloud AI with low latency, privacy, and hardware-aware deployment.",
-      "url": "https://www.liquid.ai",
-      "source": {
-        "name": "OpenRouter providers",
-        "url": "https://openrouter.ai/api/v1/providers"
-      },
-      "tags": [
-        "ai",
-        "llm",
-        "server-key",
-        "via-openrouter"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "keyServerSide": true,
-        "privacyPolicy": "https://www.liquid.ai/privacy-policy",
-        "summarySource": "official page meta description",
-        "terms": "https://www.liquid.ai/terms-conditions",
-        "viaOpenRouter": "https://openrouter.ai/provider/liquid"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "openrouter:mancer",
       "name": "Mancer 2",
       "kind": "ai-inference",
@@ -655,6 +627,39 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "openrouter:pareto-alpha",
+      "name": "ParetoAlpha",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "ParetoAlpha: model provider listed by OpenRouter (headquarters: US; datacenters: US).",
+      "url": "https://paretoalphainference.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://paretoalphainference.com/privacy",
+        "summarySource": "OpenRouter data",
+        "terms": "https://paretoalphainference.com/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/pareto-alpha"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "openrouter:perceptron",
       "name": "Perceptron",
       "kind": "ai-llm",
@@ -714,6 +719,36 @@
         "viaOpenRouter": "https://openrouter.ai/provider/phala"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:recursive",
+      "name": "Recursive",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Recursive self-improving superintelligence to automate knowledge discovery.",
+      "url": "https://recursive.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://recursive.com/legal/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://recursive.com/legal/terms-of-use",
+        "viaOpenRouter": "https://openrouter.ai/provider/recursive"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "openrouter:relace",

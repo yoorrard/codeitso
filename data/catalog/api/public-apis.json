@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-20",
-  "count": 2130,
+  "fetchedAt": "2026-10-23",
+  "count": 2138,
   "items": [
     {
       "id": "public-apis:0x",
@@ -18771,7 +18771,7 @@
       "name": "GEN",
       "kind": "ai-other",
       "category": "api",
-      "summary": "Create and edit video projects, with credit-based AI media generation",
+      "summary": "Creative AI video engineer for ads, AI UGC and microdramas; free editor and social publishing",
       "url": "https://gen.pro/docs#ai-agents",
       "source": {
         "name": "public-apis",
@@ -18790,7 +18790,7 @@
         "https": true,
         "listCategory": "Machine Learning"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "public-apis:genderize-io",
@@ -29297,6 +29297,35 @@
       }
     },
     {
+      "id": "public-apis:marginpad",
+      "name": "MarginPad",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Crypto futures prices, candles, funding, open interest, long/short and liquidations, 9 exchanges",
+      "url": "https://marginpad.io/free-crypto-api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-10-23",
+      "metrics": {
+        "siteRank": 1000000
+      }
+    },
+    {
       "id": "public-apis:mario-kart-tour",
       "name": "Mario Kart Tour",
       "kind": "entertainment",
@@ -34128,6 +34157,32 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "public-apis:online-sudoku-sudokumax",
+      "name": "Online Sudoku - Sudokumax",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Free Sudoku puzzles, printable Sudoku worksheets and online play: https://sudokumax.com",
+      "url": "https://sudokumax.com/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "games-comics",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "public-apis:onomeo",
@@ -47768,6 +47823,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:tanod",
+      "name": "Tanod",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Pay-per-call scans of smart contracts, addresses and MCP/skill packages; small free daily tier",
+      "url": "https://tanod.dev/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "https",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "public-apis:tanvo",
       "name": "Tanvo",
       "kind": "ai-other",
@@ -53591,6 +53671,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:veabird",
+      "name": "Veabird",
+      "kind": "weather",
+      "category": "api",
+      "summary": "Beach (sargassum, waves, hurricanes) and ski snow forecasts for 1,900+ resorts, no key",
+      "url": "https://veabird.com/api/v1",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "weather"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Weather"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
       "id": "public-apis:vector-express-v2-0",
       "name": "Vector Express v2.0",
       "kind": "business",
@@ -53696,6 +53802,32 @@
         "listCategory": "Government"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:verif-entreprise-fr",
+      "name": "Verif Entreprise FR",
+      "kind": "business",
+      "category": "api",
+      "summary": "French company checks by SIREN: status, insolvency (BODACC), VAT (VIES); free preview",
+      "url": "https://api-production-24833.up.railway.app",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "public-apis:verified-handles",
@@ -53852,6 +53984,32 @@
         "listCategory": "Music"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:vessel-class-finder",
+      "name": "Vessel Class Finder",
+      "kind": "maps",
+      "category": "api",
+      "summary": "IACS class society, class status and survey dates for ships by IMO number",
+      "url": "https://vesselclassfinder.com/blog/vessel-classification-api.html",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "public-apis:vett",
@@ -54355,6 +54513,32 @@
         "listCategory": "Open Data"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:w14n",
+      "name": "w14n",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Brazilian company profiles by CNPJ, CNAE establishment counts and municipality coordinates",
+      "url": "https://api.w14n.dev/v1",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "public-apis:w3c-validator",
@@ -55161,6 +55345,32 @@
         "listCategory": "Environment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:webump",
+      "name": "weBump",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Connect games to nearby players' profiles, small saves and recent visitors with consent",
+      "url": "https://developer.webump.app/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-oauth",
+        "cors",
+        "games-comics",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "OAuth",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-10-23"
     },
     {
       "id": "public-apis:wecantrack",

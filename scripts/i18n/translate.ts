@@ -30,7 +30,7 @@ const rpm = intEnv('TRANSLATE_RPM', 10);
 const deadline = Date.now() + intEnv('TRANSLATE_MINUTES', 8) * 60_000;
 
 if (!url || !key || !model) {
-  console.log('번역 건너뜀: TRANSLATE_API_URL·TRANSLATE_API_KEY·TRANSLATE_MODEL이 없다 (docs/HUMAN.md H24).');
+  console.log('번역 건너뜀: TRANSLATE_API_URL·TRANSLATE_API_KEY·TRANSLATE_MODEL이 없다 (선택, docs/DECISIONS.md D143).');
   process.exit(0);
 }
 

@@ -9,6 +9,7 @@ import type { ModelsFile } from '../../src/lib/catalog/models.ts';
 import type { Card, CatalogItem, CategoryId, CategoryMeta, DetailRecord, KitData, NavCategory, Row, Shard, SortKey, SourceFile, SubMeta } from '../../src/lib/catalog/types.ts';
 import { CATEGORY_ORDER, SHARDS, isCategoryId } from '../../src/lib/catalog/types.ts';
 import { isKitTheme } from '../../src/lib/kits.ts';
+import { isGarbled, repairMojibake } from '../lib/text-repair.ts';
 
 export const CATALOG_DIR = join(import.meta.dirname, '..', '..', 'data', 'catalog');
 /** 코드잇소가 쓴 한국어 설명 (v5.1 D122): <이름>.json = { "<상품 id>": "한국어 설명" }. 폴더나 파일이 없어도 된다 */
@@ -104,6 +105,15 @@ function scoreBySub(entries: readonly { raw: CatalogItem; r: Ranked }[]): void {
   }
 }
 
+/** 출처가 인코딩을 틀려 넘긴 이름·설명을 되돌린다 (D146). 바뀐 것이 없으면 같은 객체 */
+function repaired(item: CatalogItem): CatalogItem {
+  const name = repairMojibake(item.name);
+  const fixed = repairMojibake(item.summary);
+  // 바이트를 잃어 되돌릴 수 없는 설명은 비운다 (출처에 읽을 수 있는 설명이 없는 것과 같다)
+  const summary = isGarbled(fixed) ? '' : fixed;
+  return name === item.name && summary === item.summary ? item : { ...item, name, summary };
+}
+
 /** 가져온 그대로의 상품(한국어·그림을 붙이기 전)과 소분류 안 인기 점수. 한국어 설명 스크립트(scripts/i18n/)가 쓴다 */
 export function rawItems(dir: string = DIR): Ranked[] {
   const entries: { raw: CatalogItem; r: Ranked }[] = [];
@@ -113,7 +123,10 @@ export function rawItems(dir: string = DIR): Ranked[] {
     for (const name of readdirSync(catDir).filter((n) => n.endsWith('.json') && n !== 'index.json').sort()) {
       const file = readJson<{ items?: CatalogItem[] }>(join(catDir, name));
       if (!Array.isArray(file.items)) continue;
-      for (const item of file.items) entries.push({ raw: item, r: { item, pop: 0 } });
+      for (const raw of file.items) {
+        const item = repaired(raw);
+        entries.push({ raw: item, r: { item, pop: 0 } });
+      }
     }
   }
   scoreBySub(entries);
@@ -139,7 +152,7 @@ function load(): Loaded {
       sources.push({ category: cat, file: name, name: file.source?.name ?? name, url: file.source?.url ?? '', license: file.source?.license ?? '', count: file.items.length });
       file.items.forEach((raw) => {
         const m = media.get(raw.id);
-        const item = withMedia(withKo(raw, koMap.get(raw.id)), m?.[0], m?.[1]);
+        const item = withMedia(withKo(repaired(raw), koMap.get(raw.id)), m?.[0], m?.[1]);
         if (item.category !== cat || !isCategoryId(item.category)) throw new Error(`${cat}/${name}: ${item.id}의 category가 ${item.category}다`);
         const list = subs.get(item.kind);
         if (!list) throw new Error(`${cat}/${name}: ${item.id}의 소분류 ${item.kind}가 index.json에 없다`);

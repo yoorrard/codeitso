@@ -142,7 +142,10 @@ export default function WishPage({ names }: Props) {
       {undoBar}
       {groups.map((g) => {
         const chosen = chosenOf(g);
-        const title = fill(ko.wish.groupTitle, { cat: names[g.cat] ?? g.cat, sub: names[g.key] ?? g.key });
+        // 자료가 바뀌어 저장해 둔 소분류가 없어졌으면 대분류 이름만 쓴다 (id를 그대로 보이지 않게)
+        const catName = names[g.cat] ?? g.cat;
+        const subName = names[g.key];
+        const title = subName ? fill(ko.wish.groupTitle, { cat: catName, sub: subName }) : catName;
         return (
           <section class="wish-group" data-cat={g.cat} aria-labelledby={`wg-${g.key}`}>
             <div class="sec-head">

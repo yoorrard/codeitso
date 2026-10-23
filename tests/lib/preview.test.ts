@@ -58,6 +58,11 @@ describe('API·MCP·한눈에 칸', () => {
     expect(m).toEqual({ transports: ['stdio'], remotes: ['https://x.example/mcp'], packages: ['npm: pretrip-mcp'], registry: 'a.b/c', requiresKey: true });
   });
 
+  it('MCP: 보일 연결 정보가 하나도 없으면 null (빈 칸을 그리지 않는다)', () => {
+    expect(mcpInfo(item({ type: 'mcp', agent: 'claude-code', category: 'audio', component: 'mcp' }))).toBeNull();
+    expect(mcpInfo(item({ type: 'mcp', requiresKey: true }))).not.toBeNull();
+  });
+
   it('저장소·데이터셋·에셋 한눈에 칸은 있는 값만', () => {
     expect(statsOf(item({ type: 'repo', language: 'TypeScript', version: '1.2.0' }))).toEqual([
       ['language', 'TypeScript'],

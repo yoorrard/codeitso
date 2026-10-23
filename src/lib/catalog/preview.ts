@@ -201,6 +201,8 @@ export function mcpInfo(item: CatalogItem): McpInfo | null {
   const out: McpInfo = { transports: strs(p['transports'], 4), remotes: [...new Set(remotes)].slice(0, 3), packages: [...new Set(packages)].slice(0, 4), requiresKey: p['requiresKey'] === true };
   const reg = str(p['registryName'], 120);
   if (reg) out.registry = reg;
+  // 보일 것이 하나도 없으면 빈 '연결 정보' 칸을 그리지 않게 null
+  if (!out.registry && !out.requiresKey && out.transports.length + out.remotes.length + out.packages.length === 0) return null;
   return out;
 }
 

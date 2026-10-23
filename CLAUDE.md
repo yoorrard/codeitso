@@ -9,11 +9,12 @@
 
 - 끝난 것: **D1 자료 가져오기**(6개 대분류 131,370개, `data/catalog/**`, 가져오기 스크립트·스키마·시험), **S1 새 틀**(옛 단계·엔진·자료·화면 지우기, 장바구니 로고·토큰, 머리줄·홈·카테고리·소분류 목록·쪽 번호·상세·장바구니 최소판·임시 검색·용어 사전, 진열대 빌드).
 - 끝난 것: **S2 장바구니·영수증·.md**(머리줄 서랍, `/cart`, 담은 뒤 작은 창, 계산 → 0원 영수증 `/receipt?id=`, .md 받기·복사, 지난 영수증 `/receipts`, 최근 본 재료, 스타터 키트 `data/kits.json`, 공유 링크 `/cart#s=`, 설치 명령 한꺼번에 복사, 집계 이벤트 다섯 교체).
-- 끝난 것: **S3 찾기·미리 보기·마무리**(전체 검색 `/search?q=&cat=&page=`: 낱말 조각 + 결과 카드 블록, 한글↔영어 같은 뜻 묶음 `data/search-words.json` · 목록 거르기: 소분류마다 자료에서 뽑은 칸, PC 왼쪽 칸·휴대폰 시트, 주소에 남음 · 종류별 상세 미리 보기와 폰트 견본 글꼴 지연 로드 · 넓은 화면 1680, D114~D118).
+- 끝난 것: **S3 찾기·미리 보기·마무리**(전체 검색 `/search?q=&cat=&page=`: 낱말 조각 + 결과 카드 블록, 한글↔영어 같은 뜻 묶음 `data/search-words.json` · 목록 필터: 소분류마다 자료에서 뽑은 칸, PC 왼쪽 칸·휴대폰 시트, 주소에 남음 · 종류별 상세 미리 보기와 폰트 견본 글꼴 지연 로드 · 넓은 화면 1680, D114~D118).
 - 끝난 것: **v5.1**(P1~P4: 해요체 화면 문구, 담기 창, 프롬프트 뽑기, 새 홈, README 그림·그린 장면, 모든 상품 한국어 설명 `data/catalog-ko/`, 매일 자료 새로 받기 `.github/workflows/daily-refresh.yml`, D119~D128).
-- 끝난 것: **v5.1 P1~P4**(해요체·담기 창·프롬프트 뽑기, 새 홈, README 그림·장면 미리 보기, 모든 상품 한국어 설명·매일 자료 새로 받기), **이름 바꿈**(코드쇼퍼 → 코드잇소·codeitso, 새 글자 로고·투명 파비콘, D129).
-- 다음: 실제 사이트 점검을 이어 가며 버그를 고치고, 사람 몫(배포 계정·법·상표, 매일 실행을 main에 합치기·번역 열쇠 H24)을 기다린다.
-- 사람 몫은 `docs/HUMAN.md`(계정·배포 H01·H11, 법·상표 H03·H04). 푸시마다 https://codeitso.yoorrard.workers.dev 에 배포되므로(소유자가 대시보드에서 Worker 이름을 codeitso로 바꾸기 전에는 옛 주소 code-chauffeur.yoorrard.workers.dev, HUMAN H25) 검사가 통과한 것만 푸시한다.
+- 끝난 것: **이름 바꿈**(코드쇼퍼 → 코드잇소·codeitso, 새 글자 로고·투명 파비콘, D129), **R1 인기순·K1 키트·N1 찜·비교·O1 처음 방문 가이드**(D133~D138), **AI API 모델·요금 `/models`**(D141), **바닥글 방문 수**(D134).
+- 끝난 것 (2026-10-23): **한국어 설명** 보이는 앞쪽(소분류마다 인기순 첫 세 쪽)은 번역 `data/catalog-ko/agent.json`, 나머지는 빌드가 자료로 만드는 한 줄(`scripts/lib/ko-rule.ts`), 운영에 AI 없음(D142·D143) · **매일 갱신 R2**(바뀐 것만 쓰기·변동 문턱·출처마다 받는 날·MCP 바뀐 것만, D143) · **디자인 다듬기**(색 띠·옅은 색 판 걷기, D144) · **로딩·피드백**(내용 모양 뼈대·늦게 보이기·CLS 0.05 아래·누른 뒤 확인, D148) · **오픈소스 준비**(코드 MIT·운영자 글 CC BY 4.0·이름과 로고 제외, D145) · 출처가 깨뜨린 글자 되돌리기(D146) · 화면 용어 '필터'(D147).
+- 다음: 정식 공개(`src/lib/site-config.ts` stage → `release`, `docs/DEPLOY.md` '정식 공개 스위치')와 `main`에 합쳐 매일 예약 실행 켜기(H24①)는 소유자 확인 뒤. 그 밖에는 실제 사이트 점검을 이어 가며 버그를 고친다.
+- 사람 몫은 `docs/HUMAN.md`(저장소 공개 H27, 법 문장 H04, 상표 H03). 푸시마다 https://codeitso.yoorrard.workers.dev 에 배포되므로 검사가 통과한 것만 푸시한다.
 
 ## 일하는 방식 (사람 개입 최소)
 
@@ -47,7 +48,7 @@
 | `npm run build` | 진열대 빌드(`npm run catalog`, 자료·코드가 그대로면 건너뜀) → Astro 빌드 → `dist/` |
 | `npm run catalog` | `data/catalog/**` → `public/catalog/`(목록 묶음·상세 조각·검색 조각·결과 블록·거르기 파일, 약 25초) + `.cache/catalog/site.json`(Astro 요약) |
 | `npm run import` / `import:design` · `import:ai` · `import:api` · `import:oss` | 진열대 자료 다시 받기 (네트워크 필요, `docs/DATA.md`) |
-| `npm run refresh` / `ko` / `ko:translate` | 가져오기 16줄을 함께 다시 받기(매일 작업 흐름이 쓴다, 느린 출처는 월요일만) / 자료로 만드는 한국어 설명 / 남은 상품 번역(OpenAI 호환 주소·열쇠가 있을 때만, D128) |
+| `npm run refresh` / `ko` / `ko:translate` | 오늘 받을 출처를 다시 받기(매일 작업 흐름이 쓴다, 출처마다 매일·요일별·월요일 몫, 바뀐 것만 쓴다, D143) / 한국어 한 줄 덮는 비율 세기 / 남은 상품 번역(OpenAI 호환 주소·열쇠가 있을 때만, 기본은 꺼짐) |
 | `npm test` | Vitest 단위 시험 |
 | `npm run guard` / `words` | 품질 바닥선 (토큰 밖 값, 외부 자원, 코드 속 문장, any, 시험 건너뛰기, 주소 글자) / 쓰지 않는 말·해요체 |
 | `npm run e2e` | Playwright 주요 흐름(홈 → 카테고리 → 2쪽 → 상세 → 담기 → 장바구니, 390·1440), 정렬, 메뉴, 전체 검색, 거르기, 폰트 견본, 종류별 미리 보기, 장바구니·영수증, 용어 풀이, CSP, axe. 먼저 `npm run build` |
@@ -59,7 +60,7 @@
 ## 폴더
 
 ```text
-data/catalog/    진열대 자료 (<대분류>/index.json + <출처>.json), data/catalog-ko/ 한국어 설명(agent·auto-<n>·template), data/catalog-media/ README 그림, data/glossary.json 용어, data/kits.json 스타터 키트, data/search-words.json 검색 같은 뜻 묶음
+data/catalog/    진열대 자료 (<대분류>/index.json + <출처>.json), data/catalog-ko/ 번역한 한국어 설명(agent, 나머지는 빌드가 자료로 만든다), data/catalog-media/ README 그림, data/glossary.json 용어, data/kits.json 스타터 키트, data/search-words.json 검색 같은 뜻 묶음
 schemas/         자료 스키마
 scripts/import/  가져오기 · scripts/i18n/ 한국어 설명 · scripts/catalog/ 진열대 읽기·빌드 · scripts/brand/ 로고 · guard·qa·lib·fonts·deploy
 src/lib/catalog/ 진열대 모양(types)·순수 계산(core·search·facets·preview)·미리 보기 CDN 호스트(hosts)·Astro 요약 읽기(site)

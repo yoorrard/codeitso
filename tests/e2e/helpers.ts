@@ -59,6 +59,25 @@ export async function selectText(target: Locator, text: string): Promise<void> {
 /** 글 일부가 화면에 그려진 자리: 첫 줄 왼쪽 가운데(x0, y0)와 끝 줄 오른쪽 가운데(x1, y1). 보이게 굴린 뒤 잰다 */
 export async function textBox(target: Locator, text: string): Promise<{ x0: number; y0: number; x1: number; y1: number }> {
   await target.scrollIntoViewIfNeeded();
+  // 앞 단계의 휠 스크롤은 브라우저가 잠깐 애니메이션으로 굴린다. 느린 CI에서 그 사이에 좌표를 재면 엉뚱한 글을 끈다(2026-10-23 PR #4).
+  // 요소 자리와 스크롤이 세 그림 틀 동안 그대로일 때까지(최대 1.5초) 기다린 뒤 잰다.
+  await target.evaluate(
+    (el) =>
+      new Promise<void>((done) => {
+        let last = '';
+        let same = 0;
+        const start = performance.now();
+        const tick = (): void => {
+          const r = el.getBoundingClientRect();
+          const now = `${r.left},${r.top},${window.scrollX},${window.scrollY}`;
+          same = now === last ? same + 1 : 0;
+          last = now;
+          if (same >= 2 || performance.now() - start > 1500) done();
+          else requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }),
+  );
   return target.evaluate((el, t) => {
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     for (let n = walker.nextNode(); n; n = walker.nextNode()) {

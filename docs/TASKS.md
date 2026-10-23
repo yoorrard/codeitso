@@ -478,4 +478,4 @@ T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 �
 2026-10-23 최종 점검(D150): 저장소 공개·이름 codeitso 확인, LICENSE(MIT 원문)·NOTICE.md(적용 범위) 나눔, 옛 저장소 주소·요청 머리글 바꿈, 진열대 143개 파일이 모두 매일·요일·월요일 계획에 든 것 확인, 사이트맵 117쪽 모두 200.
 2026-10-23 main에 다시 합침(PR #3): GitHub가 라이선스를 MIT로 알아봄, 실제 사이트 상품 146,225개(월요일 몫 반영), daily-refresh 작업 흐름 active·공개 저장소라 Actions 청구 시간 0.
 2026-10-23 배포 가지를 main 하나로(D151): daily-refresh가 main에 올리고 옛 가지는 빨리 감기로 따라 올림, DEPLOY.md 11단계·HUMAN H30(Cloudflare Branch control → main)·ARCHITECTURE·CLAUDE.md 고침.
-2026-10-23 e2e 도우미 textBox가 글자 자리를 재기 전에 스크롤·자리가 멈추기를 기다리게(PR #4 CI에서 휠 스크롤 애니메이션 중 좌표를 재 풀이 상자 시험 하나가 실패). overlays 4번씩 72개 통과.
+2026-10-23 e2e 도우미 textBox: 끌 글을 화면 가운데로 옮긴 뒤 자리가 멈추면 잰다. PR #4 CI에서 휠 스크롤로 글이 화면 맨 아래(y=808/844)에 남아 휴대폰 '맨 위로' 단추가 끌기를 가로챈 것이 원인(CI 트레이스로 확인). overlays 3번씩 54개·guide 통과.

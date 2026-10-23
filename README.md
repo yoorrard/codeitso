@@ -1,66 +1,92 @@
 # 코드잇소 (codeitso)
 
-> 어디로 모실까요? 요금은 0원입니다.
-> 코드는 몰라도 됩니다. 목적지만 말하세요.
+**폰트·API·MCP·템플릿까지, 앱 만들 재료를 담아 내 AI에게 건넨다.**
 
-바이브코딩이 처음인 사람이 만들고 싶은 앱(목적지)을 말하고 필요한 기능마다 도구를 고르면, 자기 AI에게 줄 **설계도**와 **AI에게 할 말**, 미리 읽어 둘 **용어**, 직접 확인할 **알아볼 것**을 요금 0원 영수증과 함께 받아 가는 무료 웹 서비스입니다. 사이트는 AI를 쓰지 않고 공개된 규칙으로 판단하며, 운영비는 월 0원으로 시작합니다.
+https://codeitso.yoorrard.workers.dev
 
-이 저장소는 Claude Code가 사람 개입을 최소로 하고 바로 구현을 이어 갈 수 있게 꾸린 **작업 공간**입니다. 화면은 게임처럼 움직입니다: 답할 때마다 내 앱 지도가 자라고, 고른 도구로 길이 이어지고, 코드잇소 차가 그 길을 달려 설계도가 놓인 빈 터에 닿습니다. 단계는 내 AI 써 보기(연습, 선택) → 1 만들 앱 정하기 → 2 도구 고르기 → 3 도구끼리 맞춰 보기 → 4 설계도 받기입니다 (D64, `docs/CONCEPT.md`).
+코드잇소는 바이브코딩 재료 쇼핑몰입니다. 앱을 만들 때 쓸 수 있는 공개 재료 14만여 개를 카테고리별로 진열해 두었습니다(폰트·색·아이콘·UI 컴포넌트·AI API·공공데이터·MCP 서버·에이전트 스킬·오픈소스·템플릿·데이터셋).
+둘러보며 장바구니에 담고 쓸 곳을 메모한 뒤 **[프롬프트 뽑기]** 를 누르면, 담은 재료와 쓸 곳이 프롬프트 한 장으로 나옵니다. 그 프롬프트를 Claude Code·Cursor·ChatGPT 같은 내 AI에 붙여 넣으면 됩니다.
 
-지금은 v3를 만드는 중입니다: 설계도를 주는 데서 그치지 않고, 처음부터 공개한 뒤까지 모십니다(만들기 안내, 다음 할 일, AI 설정 파일, 디자인 정하기, 고르는 곳마다 직접 쓰기). 정본은 `docs/review/v3/brief.md`, 작업은 `docs/TASKS.md`의 T35~T42입니다.
+- **사이트는 AI를 부르지 않습니다.** 모든 화면은 미리 만든 정적 파일이고, 서버는 익명 방문 수만 셉니다.
+- **회원가입·쿠키·광고·제휴 링크·추적이 없습니다.** 장바구니와 메모는 내 브라우저(localStorage)에만 남습니다.
+- **상품 정보는 출처 자료 그대로입니다.** 설명·라이선스·인증 방식·무료 여부·인기 지표를 지어내지 않고, 출처에 없으면 비워 둡니다.
+- **운영비는 0원입니다.** Cloudflare Workers 무료 요금제에서 돌고, 자료는 GitHub Actions가 매일 새로 받습니다.
 
-## 이 저장소에 든 것
+## 할 수 있는 것
 
-| 경로 | 내용 | 상태 |
-|---|---|---|
-| `CLAUDE.md` | Claude Code가 매번 읽는 규칙 (자율 진행 원칙 포함) | 완성 |
-| `.claude/rules/` | 파일 종류별 규칙 (자료, 엔진, 화면, 문장) | 완성 |
-| `.claude/skills/` | `/next-task`, `/verify`, `/visual-qa` + 검증해 가져온 스킬 8개 (출처는 `THIRD_PARTY_NOTICES.md`) | 완성 |
-| `.claude/agents/` | 전문가 에이전트 2명: 접근성·성능 감사, 한국어 편집 (화면을 크게 바꿨을 때만) | 완성 |
-| `.claude/hooks/`, `.claude/settings.json` | 세션 시작 설치·상황 알림, 위험 명령 차단, 고친 파일 즉시 검사, 실패한 채 멈추지 않기 | 완성 |
-| `docs/` | 요구사항, 컨셉 바이블(세계관·용어·그림·화면·장면의 정본), 디자인 의뢰서, 작업 목록, 구조, 엔진 명세, 자료 안내, 화면 설계, 영수증 형식, 결정 기록, 사람 확인 대기열 | 완성 |
-| `src/lib/engine/` | 판단 엔진: 만들 앱 질문 → 기능마다 도구 추천 → 도구끼리 맞춰 보기(막힌 곳) → 영수증·설계도 | 완성, 검사 통과 |
-| `data/` | 자료: 질문 17개, 도구 49개(진열 상품 48), 규칙 38개, 용어 카드 20장(그림 포함), 알아볼 것 카드 13장, 미리 짠 코스 5개, 에러 안내 20개, 어려운 말 풀이 212개, 낱말표(검색 동의어), 골든 사례 23개 | 진열 상품 46개는 사람 확인 필요 (`docs/HUMAN.md` C01) |
-| `schemas/`, `scripts/` | 자료 스키마, 자료·골든·품질 바닥선·하네스 검사, 시각 점검·성능 예산 | 완성 |
-| `docs/examples/` | 엔진이 미리 짠 코스로 만든 실제 영수증과 설계도 | 완성 |
-| `src/styles/tokens.css` | 색·글꼴·모션 토큰 (로고 색과 색 문법, 낮·밤 두 모드) | 완성 (v2, D61·D67) |
-| `src/pages/`, `src/components/` | Astro 화면 전부 (홈·내 AI 써 보기·만들 앱 정하기·도구 고르기·도구끼리 맞춰 보기·설계도 받기·용어 카드·도구 모음·미리 짠 코스·지난 영수증·사전·소개·법 문서), 길 지도와 장면 S1~S9 | v2(소유자 로고 기반, D60~D71)로 완성, e2e·axe 통과. v3를 얹는 중 (T35~T42) |
-| `worker/`, `migrations/`, `wrangler.jsonc` | 익명 집계 `/api/event` (Cloudflare Workers + D1) | 로컬 시험 끝, 실제 배포는 사람이 계정 연결 뒤 (`docs/DEPLOY.md`) |
-| `.github/workflows/` | 검사(`check.yml`: e2e는 `main` 푸시·PR에서만), 손으로 돌리는 예비 배포(`deploy.yml`). 기본 배포는 Cloudflare Workers Builds (`docs/DEPLOY.md`, D72) | 완성 |
+| 기능 | 내용 |
+|---|---|
+| 진열대 | 대분류 6개(디자인·AI 확장·API·오픈소스·데이터셋·템플릿)와 소분류마다 인기순·이름순·최근 갱신순, 자료에서 뽑은 거르기 |
+| 검색 | 모든 재료에서 찾기. 한글로 써도 같은 뜻의 영어 이름까지 찾습니다 (`data/search-words.json`) |
+| 상세 | 한국어 설명과 원문, 라이선스, 설치 명령, 종류별 미리 보기(폰트 견본, 색, 아이콘, README 그림), 비슷한 재료 비교 |
+| AI 모델·요금 | GPT·Claude·Gemini 등 AI API의 모델별 가격·한도·기능 비교(`/models`), 담을 때 모델 고르기 |
+| 스타터 키트 | 만들 앱(학교 정보 앱, 게임, 업무 자동화 등)에 맞춰 처음 담기 좋은 재료와 만드는 차례 |
+| 장바구니 | 쓸 곳 메모, 프롬프트 뽑기·복사·.md 받기, 설치 명령 한꺼번에 복사, 공유 링크, 지난 프롬프트, 찜, 최근 본 재료 |
+| 용어 사전 | 바이브코딩에 자주 나오는 말을 쉬운 한국어로 풀이 |
 
-결과물이 어떻게 생겼는지 먼저 보려면 `docs/examples/lunch-page.md`를 여세요.
+## 어떻게 돌아가나
 
-## 시작하기
+```text
+공개 출처(GitHub·Hugging Face·npm·공공데이터포털·각 등록소 …)
+   │  scripts/import/   매일 GitHub Actions가 받기 (.github/workflows/daily-refresh.yml)
+   ▼
+data/catalog/**        출처 자료 그대로 (JSON, 스키마 검사)
+   │  scripts/catalog/  진열대 빌드: 정렬·인기 점수·쪽 나누기·검색 조각 (src/lib/catalog/core.ts 순수 함수)
+   ▼
+public/catalog/ + Astro 정적 화면 (Preact 섬은 상태가 필요한 곳에만)
+   ▼
+Cloudflare Workers 정적 파일 + /api/event·/api/stats (D1, 익명 방문 수)
+```
 
-1. 준비물: [Node.js](https://nodejs.org/ko) 22.18 이상 (24 LTS 권장), Git, Claude Code.
-2. 저장소를 받아 폴더로 이동한 뒤 설치하고 검사합니다. '자료 검사 통과', '모든 골든 사례 통과', '품질 바닥선 통과', '하네스 검사 통과'가 보이고 오류 없이 끝나면 정상입니다.
+자세한 구조는 `docs/ARCHITECTURE.md`, 자료와 출처는 `docs/DATA.md`, 배포는 `docs/DEPLOY.md`에 있습니다.
 
-   ```bash
-   git clone https://github.com/yoorrard/code-chauffeur.git
-   cd code-chauffeur
-   npm install
-   npm run check
-   ```
+## 직접 돌려 보기
 
-3. `claude`를 실행하고 `/next-task`를 입력합니다. Claude Code가 작업 하나를 계획 → 구현 → 검사 → 전문가 검토 → 커밋까지 끝내고 다음 작업으로 넘어갑니다. 사람이 해야 할 일은 `docs/HUMAN.md`에 쌓입니다. 클라우드 세션(claude.ai/code)에서도 같은 설정이 그대로 적용됩니다.
+준비물: [Node.js](https://nodejs.org/ko) 22.18 이상, Git.
 
-## 사람이 해야 할 일
-
-Claude Code가 대신할 수 없는 일(계정, 비용, 법·약관, 상표·도메인, 도구 사실의 최종 확인, 차·빈 터·건물 그림 만들기)은 `docs/HUMAN.md`에 쌓입니다. 에이전트는 이 일을 기다리지 않고 다른 작업을 계속합니다. 편할 때 확인해 `[x]`로 바꾸거나 답을 적어 주세요.
-
-## 명령
+```bash
+git clone https://github.com/yoorrard/code-chauffeur.git
+cd code-chauffeur
+npm ci
+npm run dev        # 진열대를 빌드한 뒤 개발 서버 (http://localhost:4321)
+```
 
 | 명령 | 하는 일 |
 |---|---|
-| `npm run check` | 자료 검사 + 골든 사례 + 품질 바닥선 + 하네스 검사 + 타입 검사 |
-| `npm run validate:release` | 배포용 자료 검사 |
-| `npm run golden` | 추천 회귀 검사 |
-| `npm run explain -- case-01` | 사례 하나의 기능(칸)별 점수 풀이 |
-| `npm run examples` | 영수증·설계도 예시 다시 만들기 |
-| `npm run qa:shots` / `npm run qa:budget` | 빌드한 화면 스크린샷·접근성 점검 / 성능 예산 (빌드 뒤) |
+| `npm run check` | 토큰 대비·글꼴·품질 바닥선·쓰지 않는 말·타입 검사·단위 시험 |
+| `npm run build` | 진열대 빌드 → Astro 빌드 → `dist/` |
+| `npm run e2e` | Playwright 주요 흐름·접근성(axe) 시험 (먼저 `npm run build`) |
+| `npm run refresh` | 모든 출처에서 자료를 다시 받기 (네트워크 필요) |
+| `npm run qa:budget` | 성능 예산 (첫 화면 JS 100KB gzip 등) |
+
+## 폴더
+
+```text
+data/        진열대 자료(catalog), 한국어 설명(catalog-ko), AI 모델(catalog-models), 용어·키트·검색 같은 뜻 묶음
+scripts/     가져오기(import)·진열대 빌드(catalog)·한국어 설명(i18n)·검사(guard)·QA
+src/         화면(pages·components), 진열대 계산(lib/catalog), 화면 문구(copy/ko.ts), 디자인 토큰(styles/tokens.css)
+worker/      익명 방문 수 API (Cloudflare Workers + D1)
+tests/       단위 시험(Vitest)·e2e(Playwright)
+docs/        설계·결정 기록(DECISIONS.md)·진행 기록(TASKS.md)
+.claude/     이 저장소를 만든 Claude Code 작업 규칙·스킬·훅
+```
+
+## 함께 만들기
+
+틀린 상품 정보, 빠진 재료, 버그는 [이슈](https://github.com/yoorrard/code-chauffeur/issues)로 알려 주세요. 상품의 사실은 출처 자료에서만 가져오므로, 정보를 고칠 때는 `data/catalog/**`를 손으로 고치지 않고 가져오기 스크립트(`scripts/import/`)를 고칩니다. 화면 문구는 `src/copy/ko.ts`, 색·크기는 `src/styles/tokens.css`의 변수만 씁니다. 커밋 전에 `npm run check`를 돌려 주세요.
+
+권리 침해 신고는 사이트의 [저작권·게시 중단 요청](https://codeitso.yoorrard.workers.dev/legal/copyright) 안내를 따릅니다.
 
 ## 라이선스
 
-이 저장소의 코드·자료·문서·그림은 모두 저작권자에게 있습니다(All rights reserved, `LICENSE`). 예전에 MIT(코드)·CC BY 4.0(자료)으로 안내했던 허락은 2026-10-14 이후 판에는 적용하지 않고, 그 전에 받은 사본은 당시 조건을 따릅니다(D72·D80). 도구 카드가 가리키는 외부 자료의 조건은 각 출처를 따릅니다. 가져온 스킬·글꼴·아이콘·그림의 라이선스는 `THIRD_PARTY_NOTICES.md`에 있습니다.
+- **코드와 문서:** [MIT](LICENSE).
+- **운영자가 쓴 글**(화면 문구·한국어 설명·용어 풀이·스타터 키트·검색 같은 뜻 묶음): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.ko). 출처 "코드잇소(codeitso)"를 밝혀 주세요.
+- **진열대 자료**(`data/catalog/`, `data/catalog-models/`, `data/catalog-media/`): 각 출처의 조건을 따릅니다. 파일마다 `source.license`에 적혀 있고, 사이트의 [자료 출처](https://codeitso.yoorrard.workers.dev/about/credits)에서도 볼 수 있습니다. 진열된 재료는 모두 자기 라이선스를 따릅니다.
+- **이름 「코드잇소」·「codeitso」와 로고:** 허락하지 않습니다. 고쳐서 따로 공개할 때는 다른 이름과 로고를 써 주세요.
+- **제3자 구성 요소**(글꼴·아이콘·가져온 스킬): `THIRD_PARTY_NOTICES.md`.
 
-비공개 저장소입니다. 외부 기여는 받지 않습니다.
+운영자: 유영재 · yyj19962004@gmail.com
+
+---
+
+**codeitso** is a Korean "materials shop" for vibe coding: browse 140k+ public building blocks (fonts, colors, icons, UI kits, AI and public APIs, MCP servers, agent skills, open-source projects, templates, datasets), add them to a cart with notes, and turn the cart into one prompt for your own AI assistant. The site itself never calls an AI, has no accounts, cookies or tracking, and runs at zero cost on Cloudflare Workers with a daily GitHub Actions data refresh. Code is MIT; operator-written text is CC BY 4.0; catalog data follows each source's terms; the name and logo are not licensed.

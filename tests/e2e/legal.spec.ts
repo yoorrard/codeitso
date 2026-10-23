@@ -33,7 +33,7 @@ for (const width of [390, 1440]) {
       expect(Number(await privacy.evaluate((a) => getComputedStyle(a).fontWeight))).toBeGreaterThanOrEqual(600);
       await expect(ft).toContainText(SITE_CONFIG.operator);
       await expect(ft.getByRole('link', { name: SITE_CONFIG.email })).toHaveAttribute('href', `mailto:${SITE_CONFIG.email}`);
-      await expect(ft).toContainText(`© ${SITE_CONFIG.since} 코드잇소(codeitso). All rights reserved.`);
+      await expect(ft).toContainText(ko.footer.copyright.replace('{{year}}', String(SITE_CONFIG.since)));
       await expect(ft).toContainText(ko.footer.rights);
     });
 

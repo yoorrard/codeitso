@@ -2,7 +2,7 @@
 // 법 문서 네 쪽(제목·목차 이동·초안 표시 없음), 게시 중단 요청 메일 단추, robots.txt·sitemap.xml (미리 보기 빌드). 390·1440.
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
-import { SITE_CONFIG } from '../../src/lib/site-config.ts';
+import { SITE_CONFIG, resolveStage } from '../../src/lib/site-config.ts';
 import { blockExternal } from './helpers.ts';
 
 const DOCS = [
@@ -77,9 +77,14 @@ test('저작권 쪽: 게시 중단 요청 메일 단추가 운영자 메일로 �
   expect(decodeURIComponent(href ?? '')).toContain(ko.legal.copyright.mailLines[0]);
 });
 
-test('미리 보기 빌드: robots.txt는 막고, sitemap.xml은 정적 쪽만 절대 주소로', async ({ request }) => {
+test('robots.txt는 단계에 맞게(미리 보기는 막고, 정식은 열고 사이트맵을 알림), sitemap.xml은 정적 쪽만 절대 주소로', async ({ request }) => {
   const robots = await (await request.get('/robots.txt')).text();
-  expect(robots).toContain('Disallow: /');
+  if (resolveStage(process.env['PUBLIC_STAGE']) === 'release') {
+    expect(robots).toContain('Allow: /');
+    expect(robots).toMatch(/Sitemap: https:\/\/[^\s]+\/sitemap\.xml/);
+  } else {
+    expect(robots).toContain('Disallow: /');
+  }
   const res = await request.get('/sitemap.xml');
   expect(res.status()).toBe(200);
   const xml = await res.text();

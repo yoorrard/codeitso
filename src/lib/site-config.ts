@@ -19,7 +19,7 @@ export interface SiteConfig {
 }
 
 export const SITE_CONFIG: SiteConfig = {
-  stage: 'preview',
+  stage: 'release',
   url: 'https://codeitso.yoorrard.workers.dev',
   operator: '유영재',
   email: 'yyj19962004@gmail.com',

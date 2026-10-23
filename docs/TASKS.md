@@ -477,3 +477,4 @@ T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 �
 2026-10-23 main에 합침(PR #2, 매일 갱신 예약이 기본 가지에서 돔), docs/HUMAN.md를 지금 할 일 2건·선택 4건으로 정리(옛 목록은 docs/archive/v4/docs/HUMAN-until-2026-10-23.md).
 2026-10-23 최종 점검(D150): 저장소 공개·이름 codeitso 확인, LICENSE(MIT 원문)·NOTICE.md(적용 범위) 나눔, 옛 저장소 주소·요청 머리글 바꿈, 진열대 143개 파일이 모두 매일·요일·월요일 계획에 든 것 확인, 사이트맵 117쪽 모두 200.
 2026-10-23 main에 다시 합침(PR #3): GitHub가 라이선스를 MIT로 알아봄, 실제 사이트 상품 146,225개(월요일 몫 반영), daily-refresh 작업 흐름 active·공개 저장소라 Actions 청구 시간 0.
+2026-10-23 배포 가지를 main 하나로(D151): daily-refresh가 main에 올리고 옛 가지는 빨리 감기로 따라 올림, DEPLOY.md 11단계·HUMAN H30(Cloudflare Branch control → main)·ARCHITECTURE·CLAUDE.md 고침.

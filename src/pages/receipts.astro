@@ -1,17 +1,6 @@
 ---
-// 지난 영수증 /receipts (brief 6.11, D67 W3b): 이 브라우저에서 받은 영수증을 최근 것부터 30장까지.
-// 줄의 미니 지도는 지도 표지 묶음(<use href="#mk-…">)을 쓰므로 이 페이지에도 표지 묶음을 한 번 숨겨 넣는다.
-import Base from '../layouts/Base.astro';
-import '../styles/catalog-pages.css';
-import '../styles/receipts.css';
-import MapSprite from '../components/MapSprite.astro';
-import ReceiptsList from '../components/ReceiptsList.tsx';
-import { ko } from '../copy/ko.ts';
+// 옛 지난 영수증 주소 /receipts → 지난 프롬프트 (v5.1 D121)
+import Moved from '../components/Moved.astro';
 ---
 
-<Base title={ko.receipts.pageTitle} description={ko.receipts.description}>
-  <h1>{ko.receipts.title}</h1>
-  <p class="page-lead">{ko.receipts.lead}</p>
-  <ReceiptsList client:load />
-  <MapSprite />
-</Base>
+<Moved />

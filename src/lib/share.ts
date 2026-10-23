@@ -1,45 +1,54 @@
-// 영수증 링크 (docs/ARCHITECTURE.md 5절): /arrival#r=<압축 문자열>. 자유 입력(freeText)은 넣지 않는다.
-// 받은 값은 믿지 않는다: 풀기 → fromShareState(모양 검사) → evaluate()가 모르는 id를 버린다.
-import LZString from 'lz-string';
-import { fromShareState, toShareState } from './engine/index.ts';
-import type { Session } from './engine/types.ts';
-import { ROUTES } from './routes.ts';
+// 장바구니·영수증 공유 링크 (brief 7절): 재료 id만 싣는다. 메모·프로젝트 메모는 싣지 않는다 (내 글이 링크로 새지 않게).
+// AI API에서 고른 모델 id는 싣는다 (D141): 상품의 옵션(쇼핑몰의 색·크기)이라 받는 사람도 같은 모델로 담는다. 내 글이 아니다.
+// 꼴: /cart#s=<id>,<id>@<모델 id>,… (id·모델 id마다 encodeURIComponent라 쉼표·@가 그대로 나오지 않아 안전하다).
+// 주소 조각(#)이라 서버 기록에 남지 않는다. 모델 없는 옛 링크도 그대로 읽힌다.
+import { CART_MAX, MODEL_ID_MAX } from './saved.ts';
 
-export const SHARE_PREFIX = '#r=';
-const PREFIX = SHARE_PREFIX;
-/** 이보다 긴 해시는 열어 보지 않는다 (정상 링크는 수백 자) */
-const HASH_MAX = 8000;
+export const SHARE_PARAM = 's';
+const ID_MAX = 200;
 
-export type ShareRead = { status: 'none' } | { status: 'broken' } | { status: 'ok'; session: Partial<Session> };
+/** 공유할 재료 한 줄: id만, 또는 id와 고른 모델 id */
+export type ShareEntry = string | { id: string; model?: string };
 
-export function shareHash(s: Session): string {
-  return PREFIX + LZString.compressToEncodedURIComponent(JSON.stringify(toShareState(s)));
+/** 주소 조각 글 ('s=a%3Ab,c%3Ad@gpt-5'), # 없이 */
+export function shareFragment(entries: readonly ShareEntry[]): string {
+  const part = (e: ShareEntry): string => {
+    if (typeof e === 'string') return encodeURIComponent(e);
+    return e.model ? `${encodeURIComponent(e.id)}@${encodeURIComponent(e.model)}` : encodeURIComponent(e.id);
+  };
+  return `${SHARE_PARAM}=${entries.map(part).join(',')}`;
 }
 
-export function shareUrl(siteUrl: string, s: Session): string {
-  return `${siteUrl.replace(/\/+$/, '')}${ROUTES.arrival}${shareHash(s)}`;
-}
-
-/** location.hash 값을 읽는다. #r=가 없으면 none, 풀 수 없으면 broken */
-export function readShareHash(hash: string): ShareRead {
-  if (!hash.startsWith(PREFIX)) return { status: 'none' };
-  const packed = hash.slice(PREFIX.length);
-  if (packed === '' || packed.length > HASH_MAX) return { status: 'broken' };
+function clean(raw: string | undefined, max: number): string | null {
+  if (raw === undefined) return null;
+  let v: string;
   try {
-    const text = LZString.decompressFromEncodedURIComponent(packed);
-    if (!text) return { status: 'broken' };
-    const session = fromShareState(JSON.parse(text));
-    return session ? { status: 'ok', session } : { status: 'broken' };
+    v = decodeURIComponent(raw).trim();
   } catch {
-    return { status: 'broken' };
+    return null;
   }
+  return v === '' || v.length > max || /[\s<>"]/.test(v) ? null : v;
 }
 
-/** 브라우저: 주소의 #r=를 읽고 바로 지운다 (주소창·방문 기록에 상태를 남기지 않는다) */
-export function consumeShareHash(win: Pick<Window, 'location' | 'history'>): ShareRead {
-  const read = readShareHash(win.location.hash);
-  if (read.status !== 'none') {
-    win.history.replaceState(win.history.state, '', win.location.pathname + win.location.search);
+/** 주소 조각(#s=… 또는 s=…)에서 재료와 모델을 읽는다. 모양이 틀린 것은 버리고(모델만 틀리면 모델만), 같은 id는 한 번, CART_MAX개까지 */
+export function readShareEntries(hash: string): { id: string; model?: string }[] {
+  const body = hash.replace(/^#/, '');
+  if (!body.startsWith(`${SHARE_PARAM}=`)) return [];
+  const out: { id: string; model?: string }[] = [];
+  const seen = new Set<string>();
+  for (const part of body.slice(SHARE_PARAM.length + 1).split(',')) {
+    const [rawId, rawModel, ...rest] = part.split('@');
+    const id = clean(rawId, ID_MAX);
+    if (id === null || seen.has(id)) continue;
+    seen.add(id);
+    const model = rest.length === 0 ? clean(rawModel, MODEL_ID_MAX) : null;
+    out.push(model ? { id, model } : { id });
+    if (out.length === CART_MAX) break;
   }
-  return read;
+  return out;
+}
+
+/** 주소 조각에서 id 목록만 */
+export function readShare(hash: string): string[] {
+  return readShareEntries(hash).map((e) => e.id);
 }

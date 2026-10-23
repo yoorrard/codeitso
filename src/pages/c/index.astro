@@ -1,0 +1,46 @@
+---
+// 전체 카테고리 /c (K1 D131, 홈 '카테고리로 둘러보기'의 모두 보기): 대분류 여섯과 그 소분류 타일을 한 쪽에 모두 보인다.
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import SubTiles from '../../components/SubTiles.astro';
+import { ko } from '../../copy/ko.ts';
+import { withCommas } from '../../lib/catalog/core.ts';
+import { categories, totalItems } from '../../lib/catalog/site.ts';
+import { CATEGORY_ICON } from '../../lib/icons.ts';
+import { ROUTES, categoryPath } from '../../lib/routes.ts';
+import { fill } from '../../lib/text.ts';
+
+const cats = categories();
+const lead = fill(ko.allCategories.lead, {
+  c: cats.length,
+  s: cats.reduce((n, c) => n + c.subcategories.length, 0),
+  n: withCommas(totalItems()),
+});
+---
+
+<Base title={ko.allCategories.pageTitle} description={lead} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
+  <header class="list-head">
+    <h1>{ko.allCategories.pageTitle}</h1>
+    <p class="page-lead">{lead}</p>
+  </header>
+  {
+    cats.map((c) => (
+      <section class="sec all-cat" data-cat={c.id} aria-labelledby={`all-${c.id}`}>
+        <div class="sec-head">
+          <h2 id={`all-${c.id}`} class="all-cat-title">
+            <span class="cat-dot" aria-hidden="true">
+              <Icon name={CATEGORY_ICON[c.id]} size="20px" />
+            </span>
+            {c.nameKo}
+            <span class="all-cat-n">{fill(ko.home.count, { n: withCommas(c.total) })}</span>
+          </h2>
+          <a class="sec-more" href={categoryPath(c.id)} aria-label={fill(ko.allCategories.open, { name: c.nameKo })}>
+            {ko.home.more}
+            <Icon name="chevron" size="16px" />
+          </a>
+        </div>
+        <SubTiles meta={c} />
+      </section>
+    ))
+  }
+</Base>

@@ -1,46 +1,49 @@
 ---
-// 용어 카드 /terms (brief 6.10, D67 W3b): H1 26 + 한 줄 → "20장 중 n장 읽음" → (만들 앱을 정했으면) '읽어 둘 용어' 줄 목록
-// → 2열 타일(640px 이상 4열). 타일 위 96은 옅은 판(--plate) 위 청사진 그림, 아래는 이름 16/600과 상태.
-// 타일은 정적 HTML이고, 상태 글과 위 묶음은 StudyList 섬이 저장된 기록으로 채운다.
+// 용어 사전 /terms (v5): data/glossary.json의 용어를 묶음별로 한 쪽에. 용어마다 #id 자리가 있어 풀이 상자의 '용어 사전에서 보기'가 바로 온다.
 import Base from '../../layouts/Base.astro';
-import '../../styles/catalog-pages.css';
-import '../../styles/terms.css';
-import StudyList from '../../components/StudyList.tsx';
+import glossary from '../../../data/glossary.json';
 import { ko } from '../../copy/ko.ts';
-import { data } from '../../lib/data.ts';
-import { termPath } from '../../lib/routes.ts';
+import { cmpText } from '../../lib/catalog/core.ts';
+import type { GlossaryEntry } from '../../lib/glossary.ts';
+import { fill } from '../../lib/text.ts';
 
-// 필수부터, 같은 무리 안에서는 자료 순서대로
-const all = [...data.concepts.concepts].sort((a, b) => (a.level === b.level ? a.order - b.order : a.level === 'must' ? -1 : 1));
-// 개념 그림 (src/assets/concepts/<id>.svg, 판 색 변수로 칠한다)
-const figures = import.meta.glob<string>('../../assets/concepts/*.svg', { query: '?raw', import: 'default', eager: true });
+/** 자료 파일을 import하면 kind가 string으로 읽힌다. 모양은 schemas/glossary.schema.json과 시험이 지킨다 */
+const terms = glossary.terms as unknown as GlossaryEntry[];
+const kinds = Object.keys(ko.terms.kinds).filter((k) => k !== 'site') as (keyof typeof ko.terms.kinds)[];
+const groups = kinds.map((k) => ({ k, list: terms.filter((t) => t.kind === k).sort((a, b) => cmpText(a.term, b.term)) })).filter((g) => g.list.length > 0);
 ---
 
-<Base title={ko.study.pageTitle}>
-  <h1>{ko.study.title}</h1>
-  <p class="page-lead">{ko.study.lead}</p>
-  <StudyList client:load />
-  <section class="sec" aria-labelledby="terms-all">
-    <h2 id="terms-all" class="visually-hidden">{ko.study.title}</h2>
-    <ul class="term-grid">
-      {
-        all.map((c) => {
-          const svg = figures[`../../assets/concepts/${c.id}.svg`];
-          return (
-            <li>
-              <a class="term-tile" href={termPath(c.id)}>
-                <span class="plate term-plate" aria-hidden="true" set:html={svg ?? ''} />
-                <span class="term-text">
-                  <span class="term-name">{c.title}</span>
-                  <span class="term-state visually-hidden" data-term-state={c.id}>
-                    {ko.study.notRead}
-                  </span>
-                </span>
-              </a>
-            </li>
-          );
-        })
-      }
+<Base title={ko.terms.pageTitle} read>
+  <header class="list-head">
+    <h1>{ko.terms.title}</h1>
+    <p class="page-lead">{ko.terms.lead}</p>
+    <p class="muted">{fill(ko.terms.count, { n: terms.length })}</p>
+  </header>
+  <nav class="sub-strip" aria-label={ko.terms.title}>
+    <ul>
+      {groups.map((g) => <li><a class="chip" href={`#kind-${g.k}`}>{ko.terms.kinds[g.k]}</a></li>)}
     </ul>
-  </section>
+  </nav>
+  {
+    groups.map((g) => (
+      <section class="sec" aria-labelledby={`kind-${g.k}`}>
+        <h2 id={`kind-${g.k}`}>{ko.terms.kinds[g.k]}</h2>
+        <dl class="term-list">
+          {g.list.map((t) => (
+            <div class="term-item" id={t.id}>
+              <dt>
+                {t.term}
+                {t.say && <span class="term-say">{fill(ko.terms.say, { say: t.say })}</span>}
+              </dt>
+              <dd>
+                <p>{t.plain}</p>
+                {t.example && <p class="muted">{fill(ko.terms.example, { example: t.example })}</p>}
+                {t.aliases && t.aliases.length > 0 && <p class="term-aliases">{fill(ko.terms.aliases, { names: t.aliases.join(', ') })}</p>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    ))
+  }
 </Base>

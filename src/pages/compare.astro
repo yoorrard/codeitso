@@ -1,0 +1,15 @@
+---
+// 재료 비교 /compare?ids= (N1, D137): 2~4개 재료를 한 표에. 어떤 재료인지는 주소에 있어 표는 섬(ComparePage)이 상세 조각을 받아 그린다.
+import Base from '../layouts/Base.astro';
+import ComparePage from '../components/ComparePage.tsx';
+import { ko } from '../copy/ko.ts';
+import { navData } from '../lib/catalog/site.ts';
+---
+
+<Base title={ko.compare.pageTitle} description={ko.compare.lead}>
+  <header class="list-head">
+    <h1 id="cmp-title" tabindex="-1">{ko.compare.title}</h1>
+    <p class="page-lead">{ko.compare.lead}</p>
+  </header>
+  <ComparePage client:load nav={navData()} />
+</Base>

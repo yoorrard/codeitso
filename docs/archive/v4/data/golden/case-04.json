@@ -1,0 +1,84 @@
+{
+  "id": "case-04",
+  "title": "회원제 기록장 (개인정보, 저장 지역을 서울로 고르라는 주의)",
+  "note": "Supabase가 저장과 로그인을 함께 맡는다. 지역을 고르는 저장소라 서울 지역을 고르라는 주의가 붙고 발행은 막지 않는다 (D101).",
+  "answers": {
+    "q.type": "record",
+    "q.audience": "few",
+    "q.ai": "agent",
+    "q.login": "yes",
+    "q.domain": "none",
+    "q.budget": "free-only",
+    "q.personal": "yes-others",
+    "q.payment": "no",
+    "q.device": "both",
+    "q.style": "clean"
+  },
+  "cart": ["react-vite", "supabase", "cloudflare-workers"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.login",
+      "q.domain",
+      "q.budget",
+      "q.personal",
+      "q.payment",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "react-vite",
+        "filledBy": ["react-vite"],
+        "score": 4,
+        "runnerUp": "html-single",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "supabase",
+        "filledBy": ["supabase"],
+        "score": 4,
+        "runnerUp": "airtable",
+        "reasons": ["aiTool", "budget", "official"]
+      },
+      {
+        "id": "slot.auth",
+        "required": true,
+        "recommended": "supabase",
+        "filledBy": ["supabase"],
+        "score": 6,
+        "runnerUp": "firebase-auth",
+        "reasons": ["aiTool", "budget", "shared"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "cloudflare-workers",
+        "filledBy": ["cloudflare-workers"],
+        "score": 5,
+        "runnerUp": "firebase-hosting",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": ["conflict.personal-region"],
+    "canIssue": true,
+    "research": ["research.privacy-personal", "research.privacy-overseas"],
+    "safety": ["safety.personal-minimum"],
+    "study": {
+      "required": ["api", "api-key", "env-var"],
+      "all": ["api", "api-key", "env-var", "terminal", "deploy", "auth-login"]
+    },
+    "steps": ["slot.screen", "slot.store", "slot.auth", "slot.host"],
+    "prep": ["Node.js LTS 설치", "Supabase 가입 (GitHub 계정으로도 가능)", "Cloudflare 가입"],
+    "difficulty": 7,
+    "difficultyFirst": 7,
+    "minutes": 170,
+    "split": { "needed": true, "defer": ["slot.auth"], "easier": [] }
+  }
+}

@@ -1,0 +1,65 @@
+---
+// 대분류 쪽 /c/<대분류>: 이 대분류 안 검색창(N1: /search?q=&cat=로 보낸다) → 소분류 타일(상품 수·출처) → 소분류마다 1등 상품을 모은 인기 상품 줄.
+import Base from '../../../layouts/Base.astro';
+import Icon from '../../../components/Icon.astro';
+import ModelsBanner from '../../../components/ModelsBanner.astro';
+import { ProductCard } from '../../../components/ProductCard.tsx';
+import SubTiles from '../../../components/SubTiles.astro';
+import { ko } from '../../../copy/ko.ts';
+import { withCommas } from '../../../lib/catalog/core.ts';
+import { categories, topsOf } from '../../../lib/catalog/site.ts';
+import type { CategoryMeta } from '../../../lib/catalog/types.ts';
+import { CATEGORY_ICON } from '../../../lib/icons.ts';
+import { ROUTES } from '../../../lib/routes.ts';
+import { fill } from '../../../lib/text.ts';
+
+export function getStaticPaths() {
+  return categories().map((c) => ({ params: { cat: c.id }, props: { meta: c } }));
+}
+
+interface Props {
+  meta: CategoryMeta;
+}
+const { meta } = Astro.props;
+const tops = topsOf(meta.id);
+const findLabel = fill(ko.list.findLabel, { name: meta.nameKo });
+---
+
+<Base title={meta.nameKo} description={`${meta.nameKo}: ${ko.categories[meta.id]}`} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
+  <header class="page-head" data-cat={meta.id}>
+    <span class="cat-dot is-lg" aria-hidden="true"><Icon name={CATEGORY_ICON[meta.id]} size="26px" /></span>
+    <div>
+      <h1>{meta.nameKo}</h1>
+      <p class="page-lead">{ko.categories[meta.id]} · {fill(ko.category.count, { n: withCommas(meta.total) })}</p>
+    </div>
+  </header>
+  <form class="find-box is-cat" role="search" action={ROUTES.search} method="get">
+    <label class="visually-hidden" for="cat-q">{findLabel}</label>
+    <input id="cat-q" name="q" type="search" placeholder={findLabel} enterkeyhint="search" autocomplete="off" spellcheck="false" aria-keyshortcuts="/" data-find />
+    <input type="hidden" name="cat" value={meta.id} />
+    <button type="submit" class="find-go" aria-label={findLabel}>
+      <Icon name="search" size="20px" />
+    </button>
+  </form>
+
+  {meta.id === 'api' && <ModelsBanner />}
+  <section class="sec" aria-labelledby="subs-title">
+    <h2 id="subs-title" class="visually-hidden">{fill(ko.category.subsTitle, { name: meta.nameKo })}</h2>
+    <SubTiles meta={meta} />
+  </section>
+
+  <section class="sec" aria-labelledby="tops-title">
+    <div class="sec-head">
+      <h2 id="tops-title">{fill(ko.category.topTitle, { name: meta.nameKo })}</h2>
+    </div>
+    <ul class="grid">
+      {
+        tops.map((c, i) => (
+          <li>
+            <ProductCard card={c} slot={`top${i}`} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>

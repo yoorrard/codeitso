@@ -34,12 +34,10 @@ if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
   } >> "$CLAUDE_ENV_FILE"
 fi
 
-# 3. 지금 상태 한눈에: 다음 작업과 사람 대기열
+# 3. 지금 상태 한눈에: 마지막 진행 기록 한 줄과 사람 대기열 (v5: 할 일은 CLAUDE.md '지금 상태')
 if [ -f docs/TASKS.md ]; then
-  next="$(grep -m1 -E '^### \[ \] T[0-9]+' docs/TASKS.md | sed -E 's/^### \[ \] //')"
-  done_n="$(grep -cE '^### \[x\] T[0-9]+' docs/TASKS.md || true)"
-  total_n="$(grep -cE '^### \[[ x]\] T[0-9]+' docs/TASKS.md || true)"
-  echo "코드쇼퍼 진행: T 작업 ${done_n}/${total_n} 완료. 다음 후보: ${next:-없음}. 이어서 하려면 /next-task."
+  last="$(grep -E '^20[0-9]{2}-' docs/TASKS.md | tail -n 1 | cut -c1-160)"
+  echo "코드잇소 마지막 진행: ${last:-없음}. 다음 할 일은 CLAUDE.md '지금 상태'."
 fi
 if [ -f docs/HUMAN.md ]; then
   open_h="$(grep -cE '^- \[ \]' docs/HUMAN.md || true)"

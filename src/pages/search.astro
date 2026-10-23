@@ -1,0 +1,15 @@
+---
+// 검색 /search?q=&cat=&page= (S3, D114): 검색창과 결과 섬. 결과는 진열대 빌드가 만든 검색 파일(/catalog/search/…)로 섬이 그린다.
+import Base from '../layouts/Base.astro';
+import SearchPage from '../components/SearchPage.tsx';
+import { ko } from '../copy/ko.ts';
+import { navData } from '../lib/catalog/site.ts';
+---
+
+<Base title={ko.search.pageTitle}>
+  <header class="list-head">
+    <h1>{ko.search.title}</h1>
+    <p class="page-lead">{ko.search.lead}</p>
+  </header>
+  <SearchPage client:load nav={navData()} />
+</Base>

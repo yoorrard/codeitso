@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rules.schema.json",
+  "title": "규칙 (칸 만들기, 충돌(화면: 막힌 곳), 알아볼 것, 안전 지시, 막히기 쉬운 곳)",
+  "type": "object",
+  "required": ["version", "rules"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": 1 },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "when"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "type": { "enum": ["slot", "conflict", "research", "safety", "stuck"] },
+          "when": { "$ref": "defs.schema.json#/$defs/condition" },
+          "note": { "type": "string", "description": "사람용 설명. 화면에 나오지 않는다" }
+        },
+        "unevaluatedProperties": false,
+        "oneOf": [
+          {
+            "properties": {
+              "type": { "const": "slot" },
+              "slot": {
+                "type": "object",
+                "required": ["id", "label", "capability", "required", "order"],
+                "additionalProperties": false,
+                "properties": {
+                  "id": { "$ref": "defs.schema.json#/$defs/slotId" },
+                  "label": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+                  "capability": { "$ref": "defs.schema.json#/$defs/capability" },
+                  "required": { "type": "boolean", "description": "같은 칸을 만드는 규칙이 여럿이면 하나라도 true면 필수" },
+                  "order": { "type": "integer", "description": "경유지와 진행 순서에서 칸의 순서 (작을수록 먼저)" },
+                  "matchDomain": { "type": "boolean", "description": "true면 이용자의 domain 태그와 겹치는 상품만 진열" },
+                  "deferrable": { "type": "boolean", "description": "true면 점검에서 나중으로 미룰 수 있다 (나중에 붙일 것)" },
+                  "mustFill": { "type": "boolean", "description": "true면 비워 둔 채 출발할 수 없다 ('그대로 가기' 불가, 화면: 통행 불가). 필수 칸에만" },
+                  "help": { "type": "string", "description": "경유지에서 칸 제목 아래 보일 한 줄 설명" },
+                  "emptyMessage": { "type": "string", "description": "이 칸이 비었을 때 점검에 보일 문장. 없으면 templates.emptySlot.message" },
+                  "emptyFix": { "type": "string", "description": "이 칸이 비었을 때 고치는 방법. 없으면 templates.emptySlot.fixHint" }
+                }
+              }
+            },
+            "required": ["slot"]
+          },
+          {
+            "properties": {
+              "type": { "const": "conflict" },
+              "message": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+              "fixHint": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+              "researchCard": {
+                "type": "string",
+                "pattern": "^research\\.[a-z0-9-]+$",
+                "description": "'그대로 가기'를 고르면 '알아볼 것'에 붙는 조사 카드"
+              },
+              "anchorSlot": {
+                "$ref": "defs.schema.json#/$defs/slotId",
+                "description": "지도에서 이 막힌 곳을 붙일 칸. 없으면 길 전체 (CONCEPT 3.7)"
+              },
+              "severity": {
+                "const": "warning",
+                "description": "주의: 설정·선택으로 풀 수 있어 출발을 막지 않는다. 처음부터 그대로 가기(kept)이고 조사 카드가 확인할 것에 붙는다. 없으면 충돌 (D101)"
+              }
+            },
+            "required": ["message", "fixHint", "researchCard"]
+          },
+          {
+            "properties": {
+              "type": { "const": "research" },
+              "card": { "type": "string", "pattern": "^research\\.[a-z0-9-]+$" }
+            },
+            "required": ["card"]
+          },
+          {
+            "properties": {
+              "type": { "const": "safety" },
+              "line": { "$ref": "defs.schema.json#/$defs/nonEmptyText" }
+            },
+            "required": ["line"]
+          },
+          {
+            "properties": {
+              "type": { "const": "stuck" },
+              "text": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+              "concepts": {
+                "type": "array",
+                "items": { "$ref": "defs.schema.json#/$defs/id" },
+                "uniqueItems": true
+              }
+            },
+            "required": ["text"]
+          }
+        ]
+      }
+    }
+  }
+}

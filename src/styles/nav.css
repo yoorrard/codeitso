@@ -1,0 +1,378 @@
+/* 화면 사이 오가기·찜·비교 (N1, D137): 본문 맨 위 [뒤로] + 위치, 맨 위로 단추, 대분류·소분류 안 검색창,
+   좁은 화면의 붙어 따라오는 거르기·정렬 줄, 찜 하트, 찜한 재료 쪽, 재료 비교 표. 값은 tokens.css 변수만. */
+
+/* ── [뒤로] + 위치 ──────────────────────────────────────────────────── */
+.page-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-3);
+  margin-block: calc(-1 * var(--space-3)) var(--space-2);
+}
+.page-top .crumbs ol {
+  margin: 0;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--tap);
+  margin-inline-start: calc(-1 * var(--space-2));
+  padding-inline: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: var(--size-label);
+  font-weight: var(--weight-strong);
+  text-decoration: none;
+}
+.back-link:hover {
+  background: var(--fill);
+}
+.back-link + .crumbs {
+  padding-inline-start: var(--space-3);
+  border-inline-start: 1px solid var(--hairline);
+}
+
+/* ── 맨 위로 ────────────────────────────────────────────────────────── */
+.to-top {
+  position: fixed;
+  inset-inline-end: var(--gutter);
+  inset-block-end: calc(var(--space-5) + env(safe-area-inset-bottom));
+  z-index: 35;
+  display: grid;
+  place-items: center;
+  inline-size: var(--btn-lg);
+  block-size: var(--btn-lg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: var(--elev-2);
+}
+.to-top[hidden] {
+  display: none;
+}
+.to-top:hover {
+  background: var(--fill);
+}
+@media (max-width: 1023px) {
+  /* 아래에 붙은 [담기]·[프롬프트 뽑기] 줄 위로 올린다 */
+  body:has(.buy-box) .to-top,
+  body:has(.cart-summary .checkout) .to-top {
+    inset-block-end: calc(var(--btn-lg) + var(--space-7) + env(safe-area-inset-bottom));
+  }
+}
+
+/* ── 대분류·소분류 안 검색창 ───────────────────────────────────────── */
+.find-box {
+  position: relative;
+  max-inline-size: 36rem;
+  margin-block: var(--space-4) 0;
+}
+.find-box input {
+  inline-size: 100%;
+  min-block-size: var(--btn-md);
+  padding-inline: var(--space-4) calc(2 * var(--tap) + var(--space-1));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+}
+.find-box input::-webkit-search-cancel-button {
+  appearance: none;
+}
+.find-go,
+.find-clear {
+  position: absolute;
+  inset-block: 0;
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--tap);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-2);
+}
+.find-go {
+  inset-inline-end: var(--space-1);
+}
+.find-clear {
+  inset-inline-end: calc(var(--tap) + var(--space-1));
+}
+.find-go:hover,
+.find-clear:hover {
+  color: var(--text);
+}
+.find-box.is-cat {
+  margin-block: var(--space-4) var(--space-2);
+}
+.find-loose {
+  margin-block: 0 var(--space-3);
+}
+.find-empty-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+
+/* 좁은 화면: 거르기·정렬 줄이 머리줄 아래에 붙어 따라온다 (목록 제목은 흘러가고 줄만 남는다) */
+@media (max-width: 1023px) {
+  .listing-main .list-bar {
+    display: contents;
+  }
+  .listing-main .list-total {
+    margin-block: var(--space-4) var(--space-2);
+  }
+  .listing-main .list-tools {
+    position: sticky;
+    inset-block-start: var(--header-h);
+    z-index: 30;
+    flex-wrap: nowrap;
+    margin-inline: calc(-1 * var(--gutter));
+    margin-block-end: var(--space-3);
+    padding: var(--space-2) var(--gutter);
+    border-block-end: 1px solid var(--hairline);
+    background: var(--bg);
+  }
+  .listing-main .sort-nav {
+    min-inline-size: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .listing-main .sort-nav .chip {
+    white-space: nowrap;
+  }
+}
+
+/* ── 찜 하트: 카드 오른쪽 위, 상세 [담기] 옆 ─────────────────────────── */
+.wish-btn {
+  position: absolute;
+  inset-block-start: var(--space-1);
+  inset-inline-end: var(--space-1);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-2);
+}
+/* 보이는 동그라미는 안쪽에 (누르는 곳은 44px 그대로) */
+.wish-btn::before {
+  content: '';
+  position: absolute;
+  inset: var(--space-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: var(--elev-1);
+}
+.wish-btn > span {
+  position: relative;
+}
+.wish-btn:hover {
+  color: var(--wish);
+}
+.wish-btn:active,
+.buy-wish:active {
+  scale: var(--juice-press-scale);
+}
+.wish-btn .wish-on,
+.buy-wish .wish-on,
+.wish-btn[aria-pressed='true'] .wish-off,
+.buy-wish[aria-pressed='true'] .wish-off {
+  display: none;
+}
+.wish-btn .wish-off,
+.buy-wish .wish-off {
+  display: inline-flex;
+}
+.wish-btn[aria-pressed='true'] .wish-on,
+.buy-wish[aria-pressed='true'] .wish-on {
+  display: inline-flex;
+  color: var(--wish);
+}
+.buy-wish {
+  flex: none;
+  inline-size: var(--btn-lg);
+  padding: 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+}
+.buy-wish:hover {
+  background: var(--fill);
+}
+@media (min-width: 1024px) {
+  .buy-box {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .buy-box > :not(.buy-wish, .buy-add) {
+    grid-column: 1 / -1;
+  }
+}
+.detail-acts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+/* ── 찜한 재료 /wishlist ───────────────────────────────────────────── */
+.wish-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  margin-block: var(--space-4);
+}
+.wish-count {
+  font-weight: var(--weight-strong);
+}
+.wish-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.wish-undo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-4);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--fill);
+  color: var(--text);
+}
+.wish-group {
+  margin-block-start: var(--space-6);
+}
+.wish-group h2 {
+  font-size: var(--size-title-3);
+}
+.wish-group-n {
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-body);
+}
+/* 찜 줄 (D144): 장바구니 줄처럼 한 판 안에 나눔 선으로 (줄마다 상자·색 띠 없이). 판은 cart.css .cart-lines와 같이 쓴다 */
+.wish-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+}
+.wish-pick {
+  display: grid;
+  place-items: center;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  margin-inline-start: calc(-1 * var(--space-2));
+}
+.wish-pick input {
+  inline-size: 20px;
+  block-size: 20px;
+  accent-color: var(--primary);
+}
+.wish-name {
+  flex: 1 1 12rem;
+  min-inline-size: 0;
+  color: var(--text);
+  font-weight: var(--weight-strong);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+.wish-name:hover {
+  text-decoration: underline;
+}
+.wish-line-acts {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-inline-start: auto;
+}
+.add-btn.is-line {
+  margin: 0;
+  padding-inline: var(--space-3);
+}
+.wish-compare {
+  margin-block-start: var(--space-3);
+}
+
+/* ── 재료 비교 /compare: 표는 옆으로 밀고 첫 칸(항목 이름)은 붙어 있다 ─────────── */
+.cmp-scroll {
+  margin-block-start: var(--space-4);
+  overflow-x: auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.cmp {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--size-label);
+}
+.cmp th,
+.cmp td {
+  padding: var(--space-3);
+  border-block-end: 1px solid var(--hairline);
+  text-align: start;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.cmp tbody tr:last-child > * {
+  border-block-end: 0;
+}
+.cmp thead th,
+.cmp td {
+  min-inline-size: 13rem;
+}
+.cmp tbody th,
+.cmp-corner {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  inline-size: 7rem;
+  min-inline-size: 7rem;
+  border-inline-end: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.cmp-name {
+  color: var(--text);
+  font-size: var(--size-body);
+  font-weight: var(--weight-heading);
+}
+.cmp-head-acts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin-block-start: var(--space-2);
+}
+.cmp-sum {
+  color: var(--text-2);
+  font-size: var(--size-caption);
+}
+.cmp-code {
+  font-size: var(--size-caption);
+}
+.cmp .card-facts {
+  margin: 0;
+}
+.cmp-status {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  margin-block-start: var(--space-4);
+}

@@ -1,0 +1,2424 @@
+{
+  "source": {
+    "id": "expo-examples",
+    "name": "Expo 공식 예제",
+    "url": "https://github.com/expo/examples",
+    "license": "Folder names, README text and package.json descriptions from the public repository expo/examples (MIT)."
+  },
+  "fetchedAt": "2026-10-20",
+  "count": 71,
+  "items": [
+    {
+      "id": "expo-examples:blank",
+      "name": "My Universal React Project",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "You can generate native iOS and Android projects from your Expo config file (app.json/ app.config.js) by runnning npx expo prebuild. These native projects can then be compiled and run via XCode and Android Studio.",
+      "url": "https://github.com/expo/examples/tree/master/blank",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "blank",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example blank",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:stickersmash",
+      "name": "StickerSmash Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Example code for \"Get started tutorial\" in Expo documentation.",
+      "url": "https://github.com/expo/examples/tree/master/stickersmash",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "stickersmash",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example stickersmash",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-apollo",
+      "name": "Apollo GraphQL Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Apollo GraphQL Example",
+      "url": "https://github.com/expo/examples/tree/master/with-apollo",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "apollo",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-apollo",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-apollo",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-app-integrity",
+      "name": "App Integrity Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Verify that requests come from a genuine, untampered app on a real device using Expo App Integrity — App Attest on iOS and Play Integrity on Android — with server-side verification via Expo Router API routes.",
+      "url": "https://github.com/expo/examples/tree/master/with-app-integrity",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "app-integrity",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-app-integrity",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-app-integrity",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-auth0",
+      "name": "Auth0 Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "The AuthSession helps you with browser authentication, without the need of an additional server or website. To use this with Auth0 authentication flows, we need to tell Auth0 that the callback URLs are allowed.",
+      "url": "https://github.com/expo/examples/tree/master/with-auth0",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "auth0",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-auth0",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-auth0",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-aws-storage-upload",
+      "name": "AWS Amplify with Storage Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This example demonstrates how to use the AWS Amplify to provision and use the APIs to capture image with Expo and, upload and download images with S3.",
+      "url": "https://github.com/expo/examples/tree/master/with-aws-storage-upload",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "aws-storage-upload",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-aws-storage-upload",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-aws-storage-upload",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-better-auth",
+      "name": "Better Auth Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This example integrates sign-in with email using Better Auth. It uses Prisma SQLite for development, but we recommend using a deployed database. You can learn more about the databases supported by Better Auth in the Databases docs.",
+      "url": "https://github.com/expo/examples/tree/master/with-better-auth",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "better-auth",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-better-auth",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-better-auth",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-camera",
+      "name": "Camera Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This example shows how to take a picture and display it.",
+      "url": "https://github.com/expo/examples/tree/master/with-camera",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "camera",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-camera",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-camera",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-clerk",
+      "name": "Clerk Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Finally you can start the app with npx expo.",
+      "url": "https://github.com/expo/examples/tree/master/with-clerk",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "clerk",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-clerk",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-clerk",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-convex",
+      "name": "Starter Template with Convex",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This is a minimal starter template using Convex.",
+      "url": "https://github.com/expo/examples/tree/master/with-convex",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "convex",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-convex",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-convex",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-custom-font",
+      "name": "With Custom Font",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "With Custom Font",
+      "url": "https://github.com/expo/examples/tree/master/with-custom-font",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "custom-font",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-custom-font",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-custom-font",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-drawer-navigation",
+      "name": "Drawer navigation example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Drawer navigation example",
+      "url": "https://github.com/expo/examples/tree/master/with-drawer-navigation",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "drawer-navigation",
+        "expo",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-drawer-navigation",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-drawer-navigation",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-facebook-auth",
+      "name": "Facebook Auth Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Expo provides a WebBrowser API that opens a SFSafariViewController or Chrome Custom Tab in a modal window. This provides a much better user experience than using a WebView, and it's more secure for your users because code cannot be injected into these browser windows.",
+      "url": "https://github.com/expo/examples/tree/master/with-facebook-auth",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "facebook-auth",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-facebook-auth",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-facebook-auth",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-firebase-saml-login",
+      "name": "Firebase SAML Log In with Redirect Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Firebase does not support SAML (or any popup/redirect) login in React Native, nor in any webview components. However through the use of a web server and dummy page we can give firebase the https protocol it is looking for, authenticate the user in that page, and then pass the auth token back to…",
+      "url": "https://github.com/expo/examples/tree/master/with-firebase-saml-login",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "firebase-saml-login",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-firebase-saml-login",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-firebase-saml-login",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-firebase-storage-upload",
+      "name": "Firebase Storage Upload Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This example demonstrates how you can upload images (and other files) to Firebase Storage. Read App.js for more info, in particular the uploadImageAsync function.",
+      "url": "https://github.com/expo/examples/tree/master/with-firebase-storage-upload",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "firebase-storage-upload",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-firebase-storage-upload",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-firebase-storage-upload",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-formdata-image-upload",
+      "name": "Image Upload Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "A common requirement for apps is to be able to upload an image to a server. This example shows how you can use ImagePicker to snap a photo or grab it from your camera roll, then use FormData with fetch to upload it to a server.",
+      "url": "https://github.com/expo/examples/tree/master/with-formdata-image-upload",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "formdata-image-upload",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-formdata-image-upload",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-formdata-image-upload",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-github-remote-build-cache-provider",
+      "name": "Remote Build Cache Provider Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Example demonstrating how to create a custom build cache provider for Expo CLI. Uses GitHub to store builds.",
+      "url": "https://github.com/expo/examples/tree/master/with-github-remote-build-cache-provider",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "github-remote-build-cache-provider",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-github-remote-build-cache-provider",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-github-remote-build-cache-provider",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-google-vision",
+      "name": "Google Vision Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "The Google Cloud Vision API enables developers to understand the content of an image by encapsulating powerful machine learning models in an easy to use REST API.",
+      "url": "https://github.com/expo/examples/tree/master/with-google-vision",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "google-vision",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-google-vision",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-google-vision",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-graphql",
+      "name": "GraphQL example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This is an example of setting up a graphQL server in an Expo Router API route and using it in the app and web code. The example also includes automatic type generation powered by gql.tada.",
+      "url": "https://github.com/expo/examples/tree/master/with-graphql",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "graphql",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-graphql",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-graphql",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-html",
+      "name": "HTML Elements Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Launch on all platforms with Expo Application Services (EAS).",
+      "url": "https://github.com/expo/examples/tree/master/with-html",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "html",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-html",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-html",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-icons",
+      "name": "Icons Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "The package @expo/vector-icons enables you to use most popular icon sets in a universal app. For more information please refer to the docs: Expo Icons.",
+      "url": "https://github.com/expo/examples/tree/master/with-icons",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "icons",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-icons",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-icons",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-legend-state-supabase",
+      "name": "Expo App with Legend-State and Supabase Realtime",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Local-first Expo App with Legend-State and Supabase.",
+      "url": "https://github.com/expo/examples/tree/master/with-legend-state-supabase",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "legend-state-supabase",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-legend-state-supabase",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-legend-state-supabase",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-libsql",
+      "name": "libSQL Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Example demonstrating use of the libSQL API in Expo.",
+      "url": "https://github.com/expo/examples/tree/master/with-libsql",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "libsql",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-libsql",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-libsql",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-maestro",
+      "name": "EAS build and test with Maestro example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Deploy on all platforms with Expo Application Services (EAS).",
+      "url": "https://github.com/expo/examples/tree/master/with-maestro",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "maestro",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-maestro",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-maestro",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-magic",
+      "name": "Magic Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Magic Example",
+      "url": "https://github.com/expo/examples/tree/master/with-magic",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "magic",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-magic",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-magic",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-maps",
+      "name": "Maps Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "You can generate native iOS and Android projects from your Expo config file (app.json/ app.config.js) by runnning npx expo prebuild. These native projects can then be compiled and run via XCode and Android Studio.",
+      "url": "https://github.com/expo/examples/tree/master/with-maps",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "maps",
+        "mobile",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-maps",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-maps",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-moti",
+      "name": "Moti Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "You can generate native iOS and Android projects from your Expo config file (app.json/ app.config.js) by runnning npx expo prebuild. These native projects can then be compiled and run via XCode and Android Studio.",
+      "url": "https://github.com/expo/examples/tree/master/with-moti",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "moti",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-moti",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-moti",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-nextjs",
+      "name": "Next.js Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This demo shows you how to setup your Next.js website to use packages from the Expo SDK like Camera, Gestures, Permissions, etc... Refer to the Next adapter docs to learn how to add more React Native packages to your Next.js project.",
+      "url": "https://github.com/expo/examples/tree/master/with-nextjs",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "nextjs",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-nextjs",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-nextjs",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-openai",
+      "name": "Open AI Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Expo API Routes to securely interact with the OpenAI API.",
+      "url": "https://github.com/expo/examples/tree/master/with-openai",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "openai",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-openai",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-openai",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-pdf",
+      "name": "PDF Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use react-native-pdf in a custom Expo Dev Client (not available in Expo Go).",
+      "url": "https://github.com/expo/examples/tree/master/with-pdf",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "pdf",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-pdf",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-pdf",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-processing",
+      "name": "Open Processing Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Example demonstrating use of the processing-js library in Expo.",
+      "url": "https://github.com/expo/examples/tree/master/with-processing",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "processing",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-processing",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-processing",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-react-compiler",
+      "name": "React Compiler Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "React Compiler Example",
+      "url": "https://github.com/expo/examples/tree/master/with-react-compiler",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-compiler",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-react-compiler",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-react-compiler",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-react-flow",
+      "name": "React Flow with Expo DOM Components Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Create interactive flowcharts and diagrams using the powerful combination of React Flow, Expo DOM Components, and additional tools like Expo Router, Tailwind CSS, and Nativewind for a seamless, customizable, and modern development experience.",
+      "url": "https://github.com/expo/examples/tree/master/with-react-flow",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-flow",
+        "react-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-react-flow",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-react-flow",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-react-navigation",
+      "name": "Starter Template with React Navigation",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This is a minimal starter template for React Native apps using Expo and React Navigation.",
+      "url": "https://github.com/expo/examples/tree/master/with-react-navigation",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "react-navigation"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-react-navigation",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-react-navigation",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-react-router",
+      "name": "React Router Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "React Router is a universal routing solution that you can use with Expo! This demo shows you how to setup your universal application to switch between web and native routers.",
+      "url": "https://github.com/expo/examples/tree/master/with-react-router",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "react-router"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-react-router",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-react-router",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-react-strict-dom",
+      "name": "React Strict DOM Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Meta's react-strict-dom to style your apps and websites. RSD is the component and styling library used by Meta for Quest apps (React Native) and Meta websites.",
+      "url": "https://github.com/expo/examples/tree/master/with-react-strict-dom",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "react-strict-dom"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-react-strict-dom",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-react-strict-dom",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-react-three-fiber",
+      "name": "React Three Fiber Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Create Three.js projects using React components and props!",
+      "url": "https://github.com/expo/examples/tree/master/with-react-three-fiber",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "react-three-fiber"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-react-three-fiber",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-react-three-fiber",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-reanimated",
+      "name": "Reanimated example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Reanimated example",
+      "url": "https://github.com/expo/examples/tree/master/with-reanimated",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "reanimated"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-reanimated",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-reanimated",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-router",
+      "name": "Expo Router Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use expo-router to build native navigation using files in the app/ directory.",
+      "url": "https://github.com/expo/examples/tree/master/with-router",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "router"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-router",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-router",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-router-ai",
+      "name": "Expo Router AI Chatbot",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Expo Router with AI SDK and Nativewind styling.",
+      "url": "https://github.com/expo/examples/tree/master/with-router-ai",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "router-ai"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-router-ai",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-router-ai",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-router-menus",
+      "name": "Expo Router and native menus",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use native context menus to quickly manipulate state and data in your UI.",
+      "url": "https://github.com/expo/examples/tree/master/with-router-menus",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "router-menus"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-router-menus",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-router-menus",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-router-tv",
+      "name": "Expo Router TV demo",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This is an Expo project that can be built for Apple TV and Android TV targets, and also supports mobile and web platforms.",
+      "url": "https://github.com/expo/examples/tree/master/with-router-tv",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "router-tv"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-router-tv",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-router-tv",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-router-uniwind",
+      "name": "Expo Router and Uniwind",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Expo Router with Uniwind styling.",
+      "url": "https://github.com/expo/examples/tree/master/with-router-uniwind",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "router-uniwind"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-router-uniwind",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-router-uniwind",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-rsc",
+      "name": "Expo Router React Server Components Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use expo-router with experimental React Server Components to create a simple app.",
+      "url": "https://github.com/expo/examples/tree/master/with-rsc",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "rsc"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-rsc",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-rsc",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-s3",
+      "name": "S3 upload example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "An example of uploading images from iOS, Android or web to an AWS S3 bucket using Expo Router and EAS Hosting.",
+      "url": "https://github.com/expo/examples/tree/master/with-s3",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "s3"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-s3",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-s3",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-satori",
+      "name": "Satori Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Expo API Routes to generate images on the server with Satori.",
+      "url": "https://github.com/expo/examples/tree/master/with-satori",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "satori"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-satori",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-satori",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-sentry",
+      "name": "Sentry Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Sentry provides end-to-end distributed tracing, enabling developers to identify and debug performance issues and errors across their systems and services. This example implements Sentry's React Native SDK.",
+      "url": "https://github.com/expo/examples/tree/master/with-sentry",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "sentry"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-sentry",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-sentry",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-shadcn",
+      "name": "Expo Router and shadcn",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Expo Router with Shadcn styling on web (Shadcn does not support native).",
+      "url": "https://github.com/expo/examples/tree/master/with-shadcn",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-shadcn",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-shadcn",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-skia",
+      "name": "Expo Skia example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use expo-router with @shopify/react-native-skia to build beautiful, high-performance graphics applications across web and native.",
+      "url": "https://github.com/expo/examples/tree/master/with-skia",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "skia"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-skia",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-skia",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-socket-io",
+      "name": "Socket IO Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This example shows how to connect and interact with socket-io backends.",
+      "url": "https://github.com/expo/examples/tree/master/with-socket-io",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "socket-io"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-socket-io",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-socket-io",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-splash-screen",
+      "name": "Splash Screen Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This example shows you how to create an animated splash screen for your app. It uses the app loading to load the assets required for the animation. Once that's loaded, it replaces the app loading with a custom component that loads the rest of your app.",
+      "url": "https://github.com/expo/examples/tree/master/with-splash-screen",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "splash-screen"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-splash-screen",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-splash-screen",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-sqlite",
+      "name": "SQLite Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Example demonstrating use of the SQLite API in Expo.",
+      "url": "https://github.com/expo/examples/tree/master/with-sqlite",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "sqlite"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-sqlite",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-sqlite",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-storybook",
+      "name": "Storybook Webpack Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "You can use Storybook to test and share your component library quickly and easily! This example shows how to use Expo libraries with Storybook CLI and Webpack.",
+      "url": "https://github.com/expo/examples/tree/master/with-storybook",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "storybook"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-storybook",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-storybook",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-stripe",
+      "name": "Stripe Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "https://github.com/user-attachments/assets/1a008495-8bde-4327-8e4d-1923d5bd2ccb",
+      "url": "https://github.com/expo/examples/tree/master/with-stripe",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "stripe"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-stripe",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-stripe",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-styled-components",
+      "name": "Styled Components Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Styled Components Example",
+      "url": "https://github.com/expo/examples/tree/master/with-styled-components",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "styled-components"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-styled-components",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-styled-components",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-svg",
+      "name": "SVG Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Import SVG files directly as React components.",
+      "url": "https://github.com/expo/examples/tree/master/with-svg",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "svg"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-svg",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-svg",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-tailwindcss",
+      "name": "Expo Router and Tailwind CSS",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Expo Router with Nativewind styling.",
+      "url": "https://github.com/expo/examples/tree/master/with-tailwindcss",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "tailwindcss"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-tailwindcss",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-tailwindcss",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-tfjs-camera",
+      "name": "TensorFlow Camera example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Identify objects in real time using @tensorflow/tfjs, expo-camera, and expo-gl (for native acceleration).",
+      "url": "https://github.com/expo/examples/tree/master/with-tfjs-camera",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "tfjs-camera"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-tfjs-camera",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-tfjs-camera",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-three",
+      "name": "Three.js Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Three.js Example",
+      "url": "https://github.com/expo/examples/tree/master/with-three",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "three"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-three",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-three",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-tinybase",
+      "name": "TinyBase Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "An example demonstrating the use of TinyBase with Expo.",
+      "url": "https://github.com/expo/examples/tree/master/with-tinybase",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "tinybase"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-tinybase",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-tinybase",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-tv",
+      "name": "TV Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This is an Expo project that can be built for Apple TV and Android TV targets, and also supports mobile and web platforms.",
+      "url": "https://github.com/expo/examples/tree/master/with-tv",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "tv"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-tv",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-tv",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-typescript",
+      "name": "TypeScript Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "TypeScript is a superset of JavaScript which gives you static types and powerful tooling in Visual Studio Code including autocompletion and useful inline warnings for type errors.",
+      "url": "https://github.com/expo/examples/tree/master/with-typescript",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "typescript"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-typescript",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-typescript",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-victory-native",
+      "name": "victory-native",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Expo includes react-native-svg, which is the only native dependency for victory-native. This demo shows that it's as simple as adding a supported version of victory-native and then using it as suggested in the docs. The code in App.js is copied directly out of the victory-native example app.",
+      "url": "https://github.com/expo/examples/tree/master/with-victory-native",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "victory-native"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-victory-native",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-victory-native",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-video-background",
+      "name": "Video Background Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Video backgrounds are common in mobile apps. This shows you how to do it universally with Expo.",
+      "url": "https://github.com/expo/examples/tree/master/with-video-background",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "video-background"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-video-background",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-video-background",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-webbrowser-redirect",
+      "name": "WebBrowser Redirect Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "It's common to use the WebBrowser module, powered by SFSafariViewController and SFAuthenticationSession on iOS and Chrome Custom Tabs on Android to pass information back from a website to an app.",
+      "url": "https://github.com/expo/examples/tree/master/with-webbrowser-redirect",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "webbrowser-redirect"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-webbrowser-redirect",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-webbrowser-redirect",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-webgpu",
+      "name": "Expo with WebGPU",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use Expo Router with react-native-webgpu and Three.js to build cross-platform 3D and GPU-powered applications.",
+      "url": "https://github.com/expo/examples/tree/master/with-webgpu",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "webgpu"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-webgpu",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-webgpu",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-webrtc",
+      "name": "WebRTC Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Use react-native-webrtc in a custom Expo Dev Client (not available in Expo Go).",
+      "url": "https://github.com/expo/examples/tree/master/with-webrtc",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "webrtc"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-webrtc",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-webrtc",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-widgets",
+      "name": "Widgets Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "This example shows how to build an iOS home screen widget and a delivery Live Activity with expo-widgets, and update them from the app.",
+      "url": "https://github.com/expo/examples/tree/master/with-widgets",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "widgets"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-widgets",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-widgets",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-workbox",
+      "name": "Workbox Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Workbox is a collection of libraries for creating and managing powerful web service workers. Service workers can be used to add offline support to websites.",
+      "url": "https://github.com/expo/examples/tree/master/with-workbox",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "workbox"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-workbox",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-workbox",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-yarn-workspaces",
+      "name": "Expo Yarn Workspaces Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Demonstrates the use of a Yarn Workspace Monorepo with Expo. This example installs a monorepo with an application using a separate custom package.",
+      "url": "https://github.com/expo/examples/tree/master/with-yarn-workspaces",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "yarn-workspaces"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-yarn-workspaces",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-yarn-workspaces",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "expo-examples:with-zustand",
+      "name": "Zustand Example",
+      "kind": "mobile",
+      "category": "templates",
+      "summary": "Zustand is a fast state manager with a user-friendly API. This example implements a basic store and list using the zustand library.",
+      "url": "https://github.com/expo/examples/tree/master/with-zustand",
+      "source": {
+        "name": "Expo 공식 예제",
+        "url": "https://github.com/expo/examples"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "expo",
+        "mobile",
+        "react-native",
+        "zustand"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "with-zustand",
+        "repo": "expo/examples"
+      },
+      "use": {
+        "install": "npx create-expo-app@latest --example with-zustand",
+        "docs": "https://docs.expo.dev/more/create-expo/"
+      },
+      "fetchedAt": "2026-10-20"
+    }
+  ]
+}

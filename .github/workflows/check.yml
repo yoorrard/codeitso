@@ -1,5 +1,5 @@
-# 자료·엔진·화면 검사. 비공개 저장소는 GitHub Actions 무료 시간이 월 2,000분이라(공개는 무료) 아껴 쓴다 (D72):
-#   main 푸시·PR·수동 실행 → 전체(검사·빌드·예산·e2e, 약 3.5분) / 작업 브랜치 푸시 → 빠른 검사(검사·빌드·예산, 약 1.5분)
+# 자료·화면 검사. 비공개 저장소는 GitHub Actions 무료 시간이 월 2,000분이라(공개는 무료) 아껴 쓴다 (D72):
+#   main 푸시·PR·수동 실행 → 전체(검사·빌드·예산·e2e·주소 바탕, 약 4분) / 작업 브랜치 푸시 → 빠른 검사(검사·빌드·예산, 약 1.5분)
 #   같은 브랜치에 새로 푸시하면 앞의 실행은 취소한다. 배포는 Cloudflare Workers Builds가 한다 (docs/DEPLOY.md).
 name: check
 
@@ -31,10 +31,8 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: 자료·골든·토큰·글꼴·품질 바닥선·하네스·타입 검사와 단위 시험
+      - name: 토큰·글꼴·품질 바닥선·쓰지 않는 말·하네스·타입 검사와 단위 시험 (진열대 자료 스키마 포함)
         run: npm run check
-      - name: 엔진 시험 범위
-        run: npm run test:coverage
       - name: 빌드
         run: npm run build
       - name: 성능 예산
@@ -45,6 +43,9 @@ jobs:
       - name: e2e (주요 흐름·검색·모션·axe 접근성)
         if: github.ref == 'refs/heads/main' || github.event_name != 'push'
         run: npm run e2e
+      - name: 주소 바탕 (하위 주소 빌드 검사 + e2e, 설계서 9.4절)
+        if: github.ref == 'refs/heads/main' || github.event_name != 'push'
+        run: npm run e2e:base
       - name: e2e 실패 기록
         if: failure()
         uses: actions/upload-artifact@v4

@@ -1,0 +1,85 @@
+{
+  "id": "case-24",
+  "title": "직접 쓴 앱 종류: 반려식물 물 주기 알림 (알림 질문을 묻는다)",
+  "note": "만들 것을 보기에 없는 말로 쓰고 그대로 뒀다. type.custom이라 알림 질문(q.notify)을 묻고, 알림도 내 말을 남긴 채 '네'를 골랐다. 그대로 둔 만들 것은 직접 쓴 앱으로 계산하고 설계도 1번에 내 말을 그대로 넣는다(input.md 11.3).",
+  "answers": {
+    "q.type": "custom",
+    "q.audience": "me",
+    "q.ai": "chat-free",
+    "q.save": "yes",
+    "q.domain": "none",
+    "q.notify": "yes",
+    "q.budget": "free-only",
+    "q.personal": "no",
+    "q.device": "phone",
+    "q.style": "cute"
+  },
+  "notes": {
+    "q.type": "반려식물 물 주기 알림",
+    "q.notify": "비 오는 날 아침에만"
+  },
+  "cart": ["html-single", "browser-storage", "telegram-bot"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.notify", "q.budget", "q.personal", "q.device", "q.style"],
+    "tags": {
+      "type.custom": 1
+    },
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.store",
+        "required": true,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": ["browser-storage"],
+        "score": 6,
+        "runnerUp": "browser-storage",
+        "reasons": ["aiTool", "budget", "proxy"]
+      },
+      {
+        "id": "slot.notify",
+        "required": true,
+        "recommended": "discord-webhook",
+        "filledBy": ["telegram-bot"],
+        "score": 5,
+        "runnerUp": "slack-webhook",
+        "reasons": ["aiTool", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "google-sheets-apps-script",
+        "filledBy": [],
+        "score": 6,
+        "runnerUp": "netlify",
+        "reasons": ["aiTool", "budget", "proxy"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": ["research.schedule-run"],
+    "safety": ["safety.local-key"],
+    "study": {
+      "required": ["api", "api-key", "env-var"],
+      "all": ["api", "api-key", "env-var"]
+    },
+    "steps": ["slot.screen", "slot.store", "slot.notify"],
+    "prep": ["텔레그램에서 BotFather로 봇을 만들고 토큰 받기"],
+    "stuckRules": [],
+    "difficulty": 4,
+    "difficultyFirst": 4,
+    "minutes": 85,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

@@ -1,10 +1,10 @@
-// 보안 헤더 (T21, D53): CSP를 켠 채로 주요 조작(영수증 출력, 설계도 내려받기, 사전 옆 창, 도구 모음 검색, 확인 문제)에서
+// 보안 헤더 (T21, D53·D107): CSP를 켠 채로 주요 조작(목록 쪽 바꾸기, 상세 조각 받기, 담기, 검색, 용어 풀이)에서
 // 막히는 스크립트·스타일·연결이 없는지 본다. 브라우저의 securitypolicyviolation 이벤트를 모은다.
 import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 import { ko } from '../../src/copy/ko.ts';
-import { fill } from '../../src/lib/engine/index.ts';
-import { hydrated, islandsReady, longAnimations, recipes } from './helpers.ts';
+import { fill } from '../../src/lib/text.ts';
+import { addWithSheet, blockExternal, islandsReady, selectText } from './helpers.ts';
 
 async function watchCsp(page: Page): Promise<() => Promise<string[]>> {
   await page.addInitScript(() => {
@@ -15,43 +15,31 @@ async function watchCsp(page: Page): Promise<() => Promise<string[]>> {
   return () => page.evaluate(() => (window as unknown as { __csp?: string[] }).__csp ?? []);
 }
 
-test('CSP: 코스 → 영수증 출력 → 설계도 내려받기', async ({ page }) => {
+test('CSP: 목록 2쪽 → 상세 → 담기 → 검색 → 폰트 견본 → 스타일 견본 → 용어 풀이에서 막힌 것이 없다', async ({ page }) => {
+  await blockExternal(page);
   const violations = await watchCsp(page);
-  const first = recipes[0];
-  if (!first) throw new Error('코스가 없다');
-  await page.goto('/courses');
-  await (await hydrated(page.getByRole('button', { name: fill(ko.home.recipeGoLabel, { title: first.title }) }))).click();
-  await page.waitForURL(/\/check$/);
+  await page.goto('/c/design/palettes');
   await islandsReady(page);
-  await page.locator('.action-bar .btn-issue').click();
-  await page.waitForURL(/\/arrival$/);
+  await page.locator('.pager').getByRole('link', { name: fill(ko.list.pageLabel, { n: 2 }) }).click();
+  await expect(page).toHaveURL(/page=2$/);
+  await page.locator('.listing-grid .card-link').first().click();
   await islandsReady(page);
-  // 출력이 끝날 때까지 (끝나면 도착 알림이 한 번 나온다)
-  await expect(page.locator('#cc-live')).toContainText(ko.dispatch.arrival, { timeout: 8000 });
-  expect(await longAnimations(page, 0)).toEqual([]);
-  await page.getByRole('tab', { name: ko.receipt.tabs.pack }).click();
-  const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: ko.receipt.download }).click();
-  expect((await download).suggestedFilename()).toMatch(/\.md$/);
-  expect(await violations()).toEqual([]);
-});
-
-test('CSP: 사전 옆 창 검색, 도구 모음 검색, 확인 문제', async ({ page }) => {
-  const violations = await watchCsp(page);
-  await page.goto('/waypoints');
+  await expect(page.locator('.swatches')).toBeVisible();
+  await addWithSheet(page, page.getByRole('button', { name: ko.item.add }));
+  await expect(page.locator('.hd-badge')).toHaveText('1');
+  await page.goto('/search?q=weather');
   await islandsReady(page);
-  await page.locator('.topbar .dict-btn').click();
-  await page.locator('#dict-q').fill('CORS');
-  await expect(page.locator('.dict .error-card').first()).toBeVisible();
-  await page.keyboard.press('Escape');
-  await page.goto('/tools');
+  await expect(page.locator('.search-results')).toBeVisible();
+  // 폰트 견본 글꼴(출처 CDN의 CSS·글꼴 파일)은 CSP가 허락한다 (요청은 시험에서 막혀 실패로 남는다)
+  await page.goto('/c/design/fonts');
   await islandsReady(page);
-  await page.locator('#shelf-q').fill('지도');
-  await expect(page.locator('[data-shelf-item][data-id="kakao-maps"]')).toBeVisible();
-  await expect(page.locator('[data-shelf-item][data-id="html-single"]')).toBeHidden();
-  await page.goto('/terms/api');
-  const option = await hydrated(page.locator('.quiz-item .quiz-opt').first());
-  await option.click();
-  await expect(page.locator('.quiz-result').first()).toBeVisible();
+  await expect(page.locator('.listing-grid .font-sample').first()).toHaveAttribute('data-font-state', /ok|fail/);
+  await page.goto('/item?id=styles%3Aaurora');
+  await islandsReady(page);
+  await expect(page.locator('.style-screen')).toBeVisible();
+  await page.goto('/terms');
+  await islandsReady(page);
+  await selectText(page.locator('#api-key dd p').first(), 'API');
+  await expect(page.locator('#term-pop')).toBeVisible();
   expect(await violations()).toEqual([]);
 });

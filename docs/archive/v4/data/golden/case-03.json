@@ -1,0 +1,95 @@
+{
+  "id": "case-03",
+  "title": "주식 알림 현황판 (실시간 주의)",
+  "note": "추천(한국투자증권) 대신 하루 단위 시세를 담고, 알림은 2위 상품을 골랐다. 난이도 합이 8이라 나누기를 제안한다.",
+  "answers": {
+    "q.type": "board",
+    "q.audience": "me",
+    "q.ai": "agent",
+    "q.save": "no",
+    "q.domain": "finance",
+    "q.finance-topic": "stock",
+    "q.notify": "yes",
+    "q.realtime": "realtime",
+    "q.budget": "free-only",
+    "q.device": "phone",
+    "q.style": "bold"
+  },
+  "cart": ["react-vite", "fsc-stock", "telegram-bot", "cloudflare-workers"],
+  "expect": {
+    "asked": [
+      "q.type",
+      "q.audience",
+      "q.ai",
+      "q.save",
+      "q.domain",
+      "q.finance-topic",
+      "q.notify",
+      "q.realtime",
+      "q.budget",
+      "q.device",
+      "q.style"
+    ],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "react-vite",
+        "filledBy": ["react-vite"],
+        "score": 4,
+        "runnerUp": "html-single",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.data",
+        "required": true,
+        "recommended": "kis-open-api",
+        "filledBy": ["fsc-stock"],
+        "score": 6,
+        "runnerUp": "fsc-stock",
+        "reasons": ["domain", "topic", "budget"]
+      },
+      {
+        "id": "slot.notify",
+        "required": true,
+        "recommended": "discord-webhook",
+        "filledBy": ["telegram-bot"],
+        "score": 4,
+        "runnerUp": "slack-webhook",
+        "reasons": ["aiTool", "budget", "official"]
+      },
+      {
+        "id": "slot.host",
+        "required": false,
+        "recommended": "cloudflare-workers",
+        "filledBy": ["cloudflare-workers"],
+        "score": 7,
+        "runnerUp": "netlify",
+        "reasons": ["aiTool", "budget", "proxy"]
+      }
+    ],
+    "conflicts": ["conflict.realtime-mismatch"],
+    "canIssue": true,
+    "research": ["research.schedule-run", "research.realtime-source"],
+    "safety": ["safety.proxy-key", "safety.finance-words"],
+    "study": {
+      "required": ["api", "api-key", "env-var"],
+      "all": ["api", "json", "api-key", "env-var", "terminal", "deploy"]
+    },
+    "steps": ["slot.screen", "step.proxy", "slot.data", "slot.notify", "slot.host"],
+    "prep": [
+      "공공데이터포털 가입 후 API 활용 신청 (승인 뒤 키가 동작하기까지 1~2시간)",
+      "Node.js LTS 설치",
+      "텔레그램에서 BotFather로 봇을 만들고 토큰 받기",
+      "Cloudflare 가입"
+    ],
+    "difficulty": 8,
+    "difficultyFirst": 8,
+    "minutes": 180,
+    "split": {
+      "needed": true,
+      "defer": ["slot.notify"],
+      "easier": [{ "slotId": "slot.notify", "from": "telegram-bot", "to": "discord-webhook" }]
+    }
+  }
+}

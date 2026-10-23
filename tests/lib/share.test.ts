@@ -1,77 +1,41 @@
-// 공유 링크: #r=<압축> 만들기·읽기, 깨진 링크, 자유 입력이 링크에 없음
-import LZString from 'lz-string';
+// 장바구니 공유 링크 (share.ts·routes.ts): 재료 id만, 쉼표가 든 id도 안전하게, 모양이 틀린 것은 버린다.
 import { describe, expect, it } from 'vitest';
-import { evaluate } from '../../src/lib/engine/index.ts';
-import type { Session } from '../../src/lib/engine/types.ts';
-import { consumeShareHash, readShareHash, shareHash, shareUrl } from '../../src/lib/share.ts';
-import { realCatalog } from '../fixtures/tiny.ts';
-
-const cat = realCatalog();
-const recipe = cat.data.recipes.recipes[0];
-if (!recipe) throw new Error('레시피가 없습니다');
-const session: Session = evaluate(cat, { answers: recipe.answers, cart: recipe.cart, kept: recipe.kept ?? [], deferred: [], freeText: '우리 반 급식 비밀 메모' }).session;
-
-const pack = (v: unknown): string => '#r=' + LZString.compressToEncodedURIComponent(JSON.stringify(v));
+import { sharePath, shareUrl } from '../../src/lib/routes.ts';
+import { CART_MAX } from '../../src/lib/saved.ts';
+import { readShare, readShareEntries, shareFragment } from '../../src/lib/share.ts';
 
 describe('공유 링크', () => {
-  it('왕복하면 같은 상태 (자유 입력 빼고)', () => {
-    const read = readShareHash(shareHash(session));
-    expect(read.status).toBe('ok');
-    if (read.status !== 'ok') return;
-    const back = evaluate(cat, read.session).session;
-    const { freeText: _f, ...rest } = session;
-    expect(back).toEqual(rest);
+  it('id 목록이 조각을 거쳐 그대로 돌아온다', () => {
+    const ids = ['google-fonts:roboto', 'mcp-registry:io.github/x', 'odd:a,b', 'data-go-kr:15122275'];
+    const frag = shareFragment(ids);
+    expect(frag.startsWith('s=')).toBe(true);
+    expect(frag).not.toContain('odd:a,b');
+    expect(readShare(`#${frag}`)).toEqual(ids);
+    expect(readShare(frag)).toEqual(ids);
   });
 
-  it('자유 입력은 링크 안에 없다', () => {
-    const text = LZString.decompressFromEncodedURIComponent(shareHash(session).slice(3));
-    expect(text).not.toContain('비밀 메모');
-    expect(JSON.parse(text)).toEqual({ v: 1, a: session.answers, c: session.cart, k: session.kept, d: session.deferred });
+  it('다른 조각·빈 칸·겹친 id·깨진 인코딩·이상한 글자는 버린다', () => {
+    expect(readShare('#r=abc')).toEqual([]);
+    expect(readShare('')).toEqual([]);
+    expect(readShare('#s=a,,a,%E0%A4%A,b%20c,%3Cx%3E,d')).toEqual(['a', 'd']);
   });
 
-  it('주소는 사이트/arrival#r= 모양 (끝 빗금은 하나로)', () => {
-    expect(shareUrl('https://codechauffeur.example/', session).startsWith('https://codechauffeur.example/arrival#r=')).toBe(true);
+  it(`${CART_MAX}개까지만 읽는다`, () => {
+    const many = Array.from({ length: CART_MAX + 10 }, (_, i) => `x:${i}`);
+    expect(readShare(shareFragment(many))).toHaveLength(CART_MAX);
   });
 
-  it('#r=가 없으면 none', () => {
-    expect(readShareHash('')).toEqual({ status: 'none' });
-    expect(readShareHash('#top')).toEqual({ status: 'none' });
+  it('고른 모델 id는 재료 id 뒤 @로 싣고, 모델 없는 옛 링크도 읽는다 (D141)', () => {
+    const frag = shareFragment([{ id: 'models-dev:anthropic', model: 'claude-sonnet-4-5@2025' }, { id: 'models-dev:openai' }, 'x:y']);
+    expect(frag).toBe('s=models-dev%3Aanthropic@claude-sonnet-4-5%402025,models-dev%3Aopenai,x%3Ay');
+    expect(readShareEntries(frag)).toEqual([{ id: 'models-dev:anthropic', model: 'claude-sonnet-4-5@2025' }, { id: 'models-dev:openai' }, { id: 'x:y' }]);
+    expect(readShare(frag)).toEqual(['models-dev:anthropic', 'models-dev:openai', 'x:y']);
+    // 모델만 틀리면 모델만 버린다
+    expect(readShareEntries('#s=a@b%20c,d@,e@f@g')).toEqual([{ id: 'a' }, { id: 'd' }, { id: 'e' }]);
   });
 
-  it('깨진 링크는 broken', () => {
-    for (const hash of ['#r=', '#r=%%%', '#r=' + 'A'.repeat(9000), pack({ v: 2, a: {} }), pack('문자열'), '#r=' + LZString.compressToEncodedURIComponent('{깨진 JSON')]) {
-      expect(readShareHash(hash).status).toBe('broken');
-    }
-  });
-
-  it('모르는 id는 evaluate가 버린다', () => {
-    const read = readShareHash(pack({ v: 1, a: { 'q.nothing': 'x', ...session.answers }, c: ['no-such-product', ...session.cart], k: ['conflict.none'], d: ['nowhere'] }));
-    expect(read.status).toBe('ok');
-    if (read.status !== 'ok') return;
-    const r = evaluate(cat, read.session);
-    expect(r.session.cart).toEqual(session.cart);
-    expect(r.session.answers).toEqual(session.answers);
-    expect(r.session.kept).toEqual([]);
-    expect(r.session.deferred).toEqual([]);
-  });
-
-  it('읽은 뒤 주소에서 #r=를 지운다', () => {
-    let replaced = '';
-    const win = {
-      location: { hash: shareHash(session), pathname: '/arrival', search: '?a=1' },
-      history: { state: null, replaceState: (_s: unknown, _t: string, url: string) => (replaced = url) },
-    } as unknown as Pick<Window, 'location' | 'history'>;
-    expect(consumeShareHash(win).status).toBe('ok');
-    expect(replaced).toBe('/arrival?a=1');
-  });
-
-  it('#r=가 없으면 주소를 건드리지 않는다', () => {
-    let called = false;
-    const win = {
-      location: { hash: '', pathname: '/arrival', search: '' },
-      history: { state: null, replaceState: () => (called = true) },
-    } as unknown as Pick<Window, 'location' | 'history'>;
-    expect(consumeShareHash(win).status).toBe('none');
-    expect(called).toBe(false);
+  it('주소: 장바구니 쪽 + #s=, 절대 주소는 origin을 붙인다 (메모는 없다)', () => {
+    expect(sharePath(['a:b'])).toBe('/cart#s=a%3Ab');
+    expect(shareUrl(['a:b'], 'https://shop.example/')).toBe('https://shop.example/cart#s=a%3Ab');
   });
 });

@@ -5,23 +5,28 @@
 // 풀이 상자는 Popover API로 맨 위 층에 띄우고, 고른 글이나 밑줄 말이 열린 모달 <dialog> 안이면 상자를 그 대화 상자 안으로 옮겨 그린다
 // (1판 P1: 시트 아래에 깔려 누를 수 없었다). 모달 안에서도 Esc는 풀이만 닫는다 (keydown을 먼저 받아 막는다).
 // 닫힘: Esc · 닫기 · 고른 글이 풀림 · 바깥 누르기 · 페이지 이동 · (밑줄 말로 연 풀이) 초점이 밑줄 말과 풀이를 둘 다 벗어남.
-// 스크롤·크기 바뀜에는 닫지 않고 자리를 다시 잡는다(붙인 줄이 화면 밖이면 숨김). 처음 한 번 안내는 본문 흐름 안의 알림 칸에 그린다.
-// 설정의 '어려운 말 풀이'가 꺼지면 고르기 길을, '점선 밑줄'이 꺼지면 밑줄을 거둔다. 한 번 연 용어는 store.ts termsSeen에 적어
-// 다음 화면부터 밑줄을 긋지 않는다 (Astro가 빌드 때 그은 밑줄은 섬이 깨어날 때 거둔다). 고른 글은 어디에도 보내거나 저장하지 않는다.
+// 닫기(X)·바깥 누르기는 고른 글도 푼다. Esc는 고른 글을 남기되 같은 고르기로는 다시 띄우지 않는다. 닫은 뒤에는 그 전에 시작한
+// 고르기 확인이 늦게 끝나도 다시 띄우지 않고, 풀이 상자 안에서 뗀 손은 고르기로 보지 않는다 (D127: X를 누르면 같은 고른 글로
+// 누른 자리에 다시 떠 옆으로 밀리던 버그). 바깥 누르기는 맨 위 한 겹만 닫는다 (src/lib/overlay.ts).
+// 스크롤·크기 바뀜에는 닫지 않고 자리를 다시 잡는다(붙인 줄이 화면 밖이면 숨김, 닫힌 상자는 건드리지 않는다). 처음 한 번 안내는 본문 흐름 안의 알림 칸에 그린다.
+// 설정의 '어려운 말 풀이'가 꺼지면 고르기 길을 거둔다. 한 번 연 용어는 store.ts termsSeen에 적는다. 고른 글은 어디에도 보내거나 저장하지 않는다.
+// v5: 용어 카드·도구 카드·사전 창이 없어져, 이어 가기는 용어 사전(/terms#id) 링크 하나이고 모르는 말은 재료 검색(/search?q=)으로 보낸다.
 import { h, render } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { ko } from '../copy/ko.ts';
-import { DICT_EVENT } from '../lib/dict-event.ts';
-import { fill } from '../lib/engine/index.ts';
 import type { GlossaryEntry, LookupContext } from '../lib/glossary.ts';
-import { termPath, toolPath } from '../lib/routes.ts';
-import { $prefs, $seen, $termsSeen, markSceneSeen, markTermSeen } from '../lib/store.ts';
+import { claimPress } from '../lib/overlay.ts';
+import { ROUTES, searchPath, termPath } from '../lib/routes.ts';
+import { $prefs, $termsSeen, markTermSeen } from '../lib/store.ts';
+import { fill } from '../lib/text.ts';
 import type { TermEngine } from '../lib/term-engine.ts';
 import { termEngine } from '../lib/term-load.ts';
 import { Icon } from './Icon.tsx';
 import '../styles/term-pop.css';
 
 type Via = 'mouse' | 'touch' | 'key' | 'mark';
+/** 닫는 까닭: 닫기 단추(X·'재료 찾기') · Esc · 바깥 누르기 · 저절로(고른 글이 풀림·바뀜, 페이지 이동, 설정 끔, 대화 상자 닫힘, 초점 떠남) */
+type Why = 'x' | 'esc' | 'outside' | 'gone';
 type View = { hit: GlossaryEntry[]; also: GlossaryEntry[] } | { miss: 'error' | 'search'; text: string };
 interface Shown {
   view: View;
@@ -86,8 +91,34 @@ function lineRect(s: Shown): DOMRect | null {
   return (s.back ? rs[0] : rs[rs.length - 1]) ?? null;
 }
 
-/** 자리 잡기 (glossary.md 5.4). 모든 계산은 visualViewport 기준 (핀치 확대·화면 키보드) */
+/** 누른 점이 고른 글 위인지 (그 위를 누르는 것은 고른 글을 끌거나 복사 메뉴를 부르는 것일 수 있어 고른 글을 풀지 않는다) */
+function onRange(r: Range, x: number, y: number): boolean {
+  return [...r.getClientRects()].some((b) => x >= b.left && x <= b.right && y >= b.top && y <= b.bottom);
+}
+
+/**
+ * 고른 글로 연 풀이 안에 있던 초점(키보드로 닫기를 눌렀다)을 고른 글이 든 글 덩어리로 돌린다. 숨긴 상자와 함께 몸통으로 빠지지 않게.
+ * 고른 글이 링크·단추 안이면 그것으로, 아니면 글 덩어리에 잠깐 tabindex=-1을 주고(초점이 떠나면 거둔다) 옮긴다.
+ */
+function focusNear(n: Node): void {
+  const el = n instanceof Element ? n : n.parentElement;
+  if (!el) return;
+  const own = el.closest<HTMLElement>('a[href],button,summary,[tabindex]');
+  const block = el.closest<HTMLElement>(BLOCK);
+  const to = own && (!block || block.contains(own)) ? own : (block ?? own);
+  // 모달 안이면 그 밖(inert)으로는 옮기지 않는다
+  const dlg = el.closest('dialog');
+  if (!to || (dlg && !dlg.contains(to))) return;
+  if (to.tabIndex < 0 && !to.hasAttribute('tabindex')) {
+    to.tabIndex = -1;
+    to.addEventListener('blur', () => to.removeAttribute('tabindex'), { once: true });
+  }
+  to.focus({ preventScroll: true });
+}
+
+/** 자리 잡기 (glossary.md 5.4). 모든 계산은 visualViewport 기준 (핀치 확대·화면 키보드). 닫힌 상자는 건드리지 않는다 */
 function place(el: HTMLElement, s: Shown): void {
+  if (!el.matches(':popover-open')) return;
   const vv = window.visualViewport;
   const vx = vv?.offsetLeft ?? 0;
   const vy = vv?.offsetTop ?? 0;
@@ -98,8 +129,8 @@ function place(el: HTMLElement, s: Shown): void {
   // 붙인 줄이 화면 밖으로 나가면 숨기고, 돌아오면 다시 보인다
   st.visibility = !r || r.bottom < vy || r.top > vy + vh ? 'hidden' : '';
   if (!r) return;
-  const head = document.querySelector('.topbar')?.getBoundingClientRect().bottom ?? 0;
-  const bar = document.querySelector('.action-bar:not(.is-static)')?.getBoundingClientRect().top ?? Infinity;
+  const head = document.querySelector('.site-header')?.getBoundingClientRect().bottom ?? 0;
+  const bar = Infinity;
   const top0 = Math.max(vy, head) + GAP;
   const bot0 = Math.min(vy + vh, bar) - GAP;
   const w = Math.min(320, vw - 2 * EDGE);
@@ -141,8 +172,8 @@ function Pop({ s, eng, live, act }: { s: Shown | null; eng: TermEngine | null; l
   if (v && eng && 'miss' in v) {
     body = (
       <button type="button" class="term-pop-miss" onClick={() => act.ask(v.text)}>
-        <Icon name="dictionary" size="18px" />
-        <span>{v.miss === 'error' ? ko.glossary.missError : fill(ko.glossary.missSearch, { text: v.text })}</span>
+        <Icon name="search" size="18px" />
+        <span>{fill(ko.glossary.missSearch, { text: v.text })}</span>
       </button>
     );
   } else if (v && eng && 'hit' in v) {
@@ -153,9 +184,7 @@ function Pop({ s, eng, live, act }: { s: Shown | null; eng: TermEngine | null; l
       const nest = trail.length > 1;
       // 겹 풀이는 2겹까지: 2겹 풀이 속 상위 용어에는 밑줄을 긋지 않는다
       const see = nest ? null : eng.seeIn(e);
-      const card = e.concept ? termPath(e.concept) : e.tool ? toolPath(e.tool) : null;
-      const errQ = !card && e.error ? eng.errorQuery(e.error) : undefined;
-      const here = card === location.pathname.replace(/\/$/, '');
+      const here = ROUTES.terms === location.pathname.replace(/\/$/, '');
       body = (
         <>
           {nest && (
@@ -196,21 +225,13 @@ function Pop({ s, eng, live, act }: { s: Shown | null; eng: TermEngine | null; l
               ))}
             </ul>
           )}
-          <p class="term-pop-act">
-            {card && !here && (
-              <a class="btn btn-soft btn-sm" href={card}>
-                {e.concept ? ko.glossary.concept : ko.glossary.tool}
+          {!here && (
+            <p class="term-pop-act">
+              <a class="btn btn-sm" href={termPath(e.id)}>
+                {ko.glossary.more}
               </a>
-            )}
-            {errQ && (
-              <button type="button" class="btn btn-soft btn-sm" onClick={() => act.ask(errQ)}>
-                {ko.glossary.error}
-              </button>
-            )}
-            <button type="button" class="btn btn-sm" onClick={() => act.ask(e.term)}>
-              {ko.glossary.more}
-            </button>
-          </p>
+            </p>
+          )}
         </>
       );
     }
@@ -258,8 +279,10 @@ export default function TermPopover() {
     let touching = false;
     let timer = 0;
     let raf = 0;
-    /** Esc로 닫은 고르기 (고른 글이 바뀔 때까지 다시 띄우지 않는다) */
+    /** 고른 글을 남긴 채 닫은 고르기(Esc·오른쪽 누르기 따위). 고른 글이 바뀔 때까지 다시 띄우지 않는다 */
     let dismissed = '';
+    /** 닫은 횟수: 닫기 전에 시작한 고르기 확인(check)이 늦게 끝나도 다시 띄우지 않게 */
+    let shut = 0;
 
     const pop = (): HTMLElement | null => box.querySelector<HTMLElement>('.term-pop');
     const load = (): Promise<TermEngine | null> =>
@@ -269,7 +292,7 @@ export default function TermPopover() {
       );
 
     const act: Act = {
-      close: () => close(),
+      close: () => close('x'),
       go(e) {
         const v = cur?.view;
         if (!v || !('hit' in v) || !v.hit[0]) return;
@@ -283,8 +306,8 @@ export default function TermPopover() {
         repaint(true);
       },
       ask(q) {
-        close();
-        document.dispatchEvent(new CustomEvent(DICT_EVENT, { detail: { q } }));
+        close('x');
+        window.location.assign(searchPath(q));
       },
     };
 
@@ -343,20 +366,35 @@ export default function TermPopover() {
       if ('hit' in v && v.hit[0]) seen(v.hit[0]);
     }
 
-    function close(esc = false): void {
+    /** keep: 바깥 누르기여도 고른 글을 풀지 않는다 (오른쪽 누르기·Shift 넓히기·고른 글 위 누르기) */
+    function close(why: Why = 'gone', keep = false): void {
       const was = cur;
       if (!was) return;
       cur = null;
-      if (esc && was.via !== 'mark') dismissed = was.key;
+      shut += 1;
+      window.clearTimeout(timer);
       const el = pop();
       const inside = !!el?.contains(document.activeElement);
       if (el?.matches(':popover-open')) el.hidePopover();
-      if (was.anchor instanceof HTMLElement && (esc || inside)) was.anchor.focus();
+      const a = was.anchor;
+      if (a instanceof HTMLElement) {
+        if (why === 'esc' || inside) a.focus();
+        return;
+      }
+      if (why === 'esc' || (why === 'outside' && keep)) {
+        dismissed = was.key;
+      } else if (why !== 'gone') {
+        // 닫기·바깥 누르기는 고른 글도 푼다: 남은 고른 글로 손을 뗄 때마다 다시 뜨지 않게
+        dismissed = '';
+        document.getSelection()?.removeAllRanges();
+      }
+      if (inside) focusNear(a.commonAncestorContainer);
     }
 
     /** 고른 글을 보고 풀이·모르는 말 칩·아무것도 중 하나 */
     async function check(via: Via, x = 0, y = 0): Promise<void> {
       const sel = document.getSelection();
+      const at = shut;
       const closeSel = (): void => {
         if (cur && cur.via !== 'mark') close();
       };
@@ -368,8 +406,8 @@ export default function TermPopover() {
       const key = `${text}@${ctx.start}`;
       if (key === dismissed || key === cur?.key) return;
       const e = await load();
-      // 불러오는 사이에 고른 글이 바뀌었으면 그만둔다
-      if (!e || sel.isCollapsed || sel.rangeCount === 0 || sel.getRangeAt(0).toString().trim() !== text) return;
+      // 불러오는 사이에 닫았거나 고른 글이 바뀌었으면 그만둔다
+      if (at !== shut || !e || sel.isCollapsed || sel.rangeCount === 0 || sel.getRangeAt(0).toString().trim() !== text) return;
       // 사전 안에서는 용어가 있을 때만 (모르는 말 칩은 이미 사전 안이라 띄우지 않는다)
       const dict = !!(r.commonAncestorContainer instanceof Element ? r.commonAncestorContainer : r.commonAncestorContainer.parentElement)?.closest('.dict-sheet');
       const hit = e.lookup(text, ctx);
@@ -388,12 +426,21 @@ export default function TermPopover() {
       input = e.pointerType === 'touch' ? 'touch' : 'mouse';
       if (input === 'mouse') mouseDown = true;
       const t = e.target as Node;
-      // 바깥 누르기: 손가락으로 고른 길은 손잡이를 끄는 것일 수 있어 닫지 않는다 (고른 글이 풀리면 닫힌다)
-      if (cur && cur.via !== 'touch' && !pop()?.contains(t) && t !== cur.anchor) close();
+      // 바깥 누르기: 손가락으로 고른 길은 손잡이를 끄는 것일 수 있어 여기서 닫지 않는다 (톡 치기는 click에서, 고른 글이 풀리면 저절로)
+      if (cur && cur.via !== 'touch' && !pop()?.contains(t) && t !== cur.anchor) {
+        const a = cur.anchor;
+        const keep = e.button !== 0 || e.shiftKey || (a instanceof Range && onRange(a, e.clientX, e.clientY));
+        // 이 누르기로 풀이 아래의 창(서랍·시트)까지 닫지 않는다
+        claimPress(e);
+        close('outside', keep);
+      }
     };
     const onUp = (e: PointerEvent): void => {
       if (e.pointerType === 'touch') return;
       mouseDown = false;
+      // 풀이 상자 안에서 뗀 손(닫기·칩·버튼)과 오른쪽 누르기는 고르기가 아니다.
+      // 예전에는 X를 떼면 고르기 확인이 다음 그림 틀에 돌아, X가 닫은 상자를 같은 고른 글로 X 자리에 다시 열었다 (D127)
+      if (e.button !== 0 || (e.target instanceof Node && pop()?.contains(e.target))) return;
       const { clientX: x, clientY: y } = e;
       requestAnimationFrame(() => void check('mouse', x, y));
     };
@@ -426,18 +473,27 @@ export default function TermPopover() {
         // 모달 안에서도 풀이만 닫는다: keydown을 막으면 대화 상자의 닫기 요청이 일어나지 않는다
         e.preventDefault();
         e.stopImmediatePropagation();
-        close(true);
+        close('esc');
         return;
       }
       if (e.key !== 'Tab') input = 'key';
     };
     const onClick = (e: MouseEvent): void => {
-      const m = e.target instanceof Element ? e.target.closest<HTMLElement>('.term-mark') : null;
-      if (!m || m.closest('.term-pop')) return;
-      // popovertarget의 기본 동작 대신 직접 연다 (모달 안이면 그 안으로 옮겨야 해서)
-      e.preventDefault();
-      if (cur?.anchor === m) close();
-      else void openMark(m, e.detail === 0);
+      const t = e.target instanceof Node ? e.target : null;
+      const m = t instanceof Element ? t.closest<HTMLElement>('.term-mark') : null;
+      if (m && !m.closest('.term-pop')) {
+        // popovertarget의 기본 동작 대신 직접 연다 (모달 안이면 그 안으로 옮겨야 해서)
+        e.preventDefault();
+        if (cur?.anchor === m) close('x');
+        else void openMark(m, e.detail === 0);
+        return;
+      }
+      // 손가락으로 연 풀이: 바깥을 톡 치면(click) 닫는다. 고른 글 위를 친 것은 복사 메뉴를 부르는 것일 수 있어 그대로 둔다
+      const a = cur?.anchor;
+      if (cur?.via === 'touch' && t && !pop()?.contains(t) && !(a instanceof Range && onRange(a, e.clientX, e.clientY))) {
+        claimPress(e);
+        close('outside');
+      }
     };
     // 밑줄 말로 연 풀이는 초점이 밑줄 말과 풀이를 둘 다 벗어나면 닫는다 (Tab으로 다음 밑줄 말에 가면 앞 풀이가 남지 않게)
     const onFocus = (e: FocusEvent): void => {
@@ -487,33 +543,12 @@ export default function TermPopover() {
     window.visualViewport?.addEventListener('scroll', onMove);
     window.addEventListener('pagehide', onLeave);
     const stopPrefs = $prefs.listen((p) => {
-      if (!p.marks) unwrap(true);
       if (!p.glossary && cur && cur.via !== 'mark') close();
     });
 
     paint();
-    const p = $prefs.get();
-    const marks = unwrap(!p.marks);
+    unwrap(false);
     root.setAttribute('data-terms', '');
-    // 처음 한 번: 밑줄이 처음 보이는 화면에서 기사 메시지 (조용히 모시기면 내지 않는다).
-    // 화면에 떠서 초점 받은 것을 가리지 않게 본문 흐름 안, 첫 그림 때부터 있는 알림 칸(role="status")에 그린다.
-    // 그 칸이 없는 화면(섬 화면)은 H1이 든 머리 다음에 만들어 둔다
-    let hint: HTMLElement | null = null;
-    if (marks > 0 && !p.quiet && !$seen.get().scenes.includes('glossary-hint')) {
-      markSceneSeen('glossary-hint');
-      let slot = document.querySelector<HTMLElement>('[data-term-hint]');
-      if (!slot) {
-        slot = document.createElement('div');
-        slot.className = 'term-hint-slot';
-        slot.setAttribute('role', 'status');
-        slot.setAttribute('data-term-hint', '');
-        const h1 = document.querySelector('main h1');
-        if (h1) (h1.closest('main > *') ?? h1).after(slot);
-        else document.getElementById('main')?.prepend(slot);
-      }
-      const at = (hint = slot);
-      void import('./DispatchNote.tsx').then((m) => render(h(m.DispatchNote, { text: ko.glossary.hint, class: 'term-hint' }), at));
-    }
     // 섬이 깨어나기 전에 누른 밑줄 말 (TermText.astro의 작은 스크립트가 표시해 둔다)
     const waiting = document.querySelector<HTMLElement>('[data-term-wait]');
     if (waiting) {
@@ -539,7 +574,6 @@ export default function TermPopover() {
       window.removeEventListener('pagehide', onLeave);
       stopPrefs();
       window.clearTimeout(timer);
-      if (hint) render(null, hint);
       render(null, box);
       box.remove();
     };

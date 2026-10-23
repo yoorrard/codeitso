@@ -1,6 +1,7 @@
 ---
-// 404 (T17): 길을 잘못 들었어요. 처음 화면으로 모신다.
+// 404: 없는 쪽. 막다른 길이 되지 않게 다시 찾을 길 셋을 둔다 (U, D148): 재료 검색창 · 처음 화면 · 모든 카테고리.
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 import { ko } from '../copy/ko.ts';
 import { ROUTES } from '../lib/routes.ts';
 ---
@@ -9,14 +10,17 @@ import { ROUTES } from '../lib/routes.ts';
   <section class="lost">
     <h1>{ko.notFound.title}</h1>
     <p class="lead">{ko.notFound.body}</p>
-    <a class="btn btn-primary" href={ROUTES.home}>{ko.notFound.home}</a>
+    <form class="hero-search" role="search" action={ROUTES.search} method="get">
+      <label class="visually-hidden" for="lost-q">{ko.layout.searchLabel}</label>
+      <input id="lost-q" name="q" type="search" placeholder={ko.layout.searchPlaceholder} enterkeyhint="search" autocomplete="off" />
+      <button type="submit" class="btn btn-primary">
+        <Icon name="search" size="20px" />
+        <span>{ko.layout.searchButton}</span>
+      </button>
+    </form>
+    <div class="lost-acts">
+      <a class="btn" href={ROUTES.home}>{ko.notFound.home}</a>
+      <a class="btn btn-text" href={ROUTES.categories}>{ko.notFound.categories}</a>
+    </div>
   </section>
 </Base>
-
-<style>
-  .lost {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-3);
-  }
-</style>

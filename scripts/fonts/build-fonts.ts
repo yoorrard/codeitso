@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { DATA_DIR, ROOT, readJson } from '../lib/load-data.ts';
+import { ROOT, readJson } from '../lib/load-data.ts';
 import { readName, renameFont } from './sfnt-name.ts';
 import type { NameRecords } from './sfnt-name.ts';
 
@@ -25,7 +25,7 @@ const D2_FILES: { weight: number; style: string; file: string; sha256: string }[
 ];
 const RECEIPT_FAMILY = 'CC Receipt';
 
-/** 영수증 글꼴에 넣을 글자: 출력 가능한 ASCII + 기호 + 영수증과 '요금 0원' 칩의 고정 글자 */
+/** 고정폭 글꼴(CC Receipt)에 넣을 글자: 출력 가능한 ASCII + 기호 + 화면 문구의 장바구니·프롬프트 묶음 (v5.1: 영수증 대신 프롬프트 판) */
 export async function receiptChars(): Promise<string> {
   const set = new Set<string>();
   const add = (s: string): void => {
@@ -33,13 +33,11 @@ export async function receiptChars(): Promise<string> {
   };
   for (let c = 0x20; c <= 0x7e; c += 1) add(String.fromCharCode(c));
   add('·…─—–₩×•↑↓←→✓★%°');
-  const templates = readJson<{ receipt: unknown }>(join(DATA_DIR, 'templates.json'));
-  add(JSON.stringify(templates.receipt).replace(/\{\{[a-z]+\}\}/g, ''));
-  const rules = readJson<{ rules: { type: string; slot?: { label: string } }[] }>(join(DATA_DIR, 'rules.json'));
-  for (const r of rules.rules) if (r.type === 'slot' && r.slot) add(r.slot.label);
-  // 화면에서 영수증 글꼴을 쓰는 곳은 영수증 종이와 '요금 0원' 칩뿐이다 (docs/CONCEPT.md 5.4, src/copy/ko.ts의 home.fareChip)
   const { ko } = await import('../../src/copy/ko.ts');
-  add(ko.home.fareChip);
+  const copy = ko as unknown as Record<string, unknown>;
+  // 프롬프트 글의 모델 조각(D141: 모델 이름·id·가격 기준)도 단말 창에 같은 글꼴로 보인다
+  const models = copy['models'] as Record<string, unknown> | undefined;
+  add(JSON.stringify([copy['cart'], copy['prompt'] ?? null, models?.['prompt'] ?? null]).replace(/\{\{[a-z]+\}\}/g, ''));
   return [...set].sort().join('');
 }
 
@@ -100,7 +98,7 @@ async function buildReceipt(chars: string): Promise<string> {
     if (f.sha256 && hashes[f.file] !== f.sha256) throw new Error(`${f.file} 원본이 고정해 둔 것과 다릅니다`);
     const sfnt = new Uint8Array(await subsetFont(Buffer.from(raw), chars, { targetFormat: 'sfnt' }));
     const names: NameRecords = {
-      copyright: 'Copyright (c) 2015, NAVER Corporation. Subset and renamed from D2Coding by Code Chauffeur contributors, 2026.',
+      copyright: 'Copyright (c) 2015, NAVER Corporation. Subset and renamed from D2Coding by codeitso (코드잇소) contributors, 2026.',
       family: RECEIPT_FAMILY,
       subfamily: f.style,
       uniqueId: `${RECEIPT_FAMILY} ${f.style}; 1.4.0-cc1`,
@@ -113,7 +111,8 @@ async function buildReceipt(chars: string): Promise<string> {
     const renamed = renameFont(sfnt, names);
     if (readName(renamed, 1) !== RECEIPT_FAMILY) throw new Error('글꼴 이름 바꾸기에 실패했습니다');
     const woff2 = await fontverter.convert(Buffer.from(renamed), 'woff2');
-    const name = `cc-receipt-${f.style.toLowerCase()}.woff2`;
+    // 이름에 내용 해시를 넣는다: Cloudflare 가장자리 캐시는 이름이 같은 글꼴을 배포 뒤에도 한동안 옛것으로 준다 (D132)
+    const name = `cc-receipt-${f.style.toLowerCase()}.${createHash('sha256').update(woff2).digest('hex').slice(0, 8)}.woff2`;
     writeFileSync(join(OUT_RECEIPT, name), woff2);
     console.log(`${RECEIPT_FAMILY} ${f.style}: 글자 ${[...chars].length}개, ${(woff2.length / 1024).toFixed(1)}KB`);
     faces.push(
@@ -123,7 +122,7 @@ async function buildReceipt(chars: string): Promise<string> {
   const ofl = readFileSync(join(CACHE, 'D2Coding-OFL.txt'), 'utf8');
   writeFileSync(
     join(OUT_RECEIPT, 'OFL.txt'),
-    `CC Receipt는 D2Coding(NAVER Corporation, SIL OFL 1.1)에서 코드쇼퍼 화면에 필요한 글자만 골라 이름을 바꾼 수정본입니다.\nD2Coding은 예약 글꼴 이름이라 수정본에 쓰지 않았습니다. 원본: https://github.com/naver/d2-coding-font (${D2_TAG})\n\n${ofl}`,
+    `CC Receipt는 D2Coding(NAVER Corporation, SIL OFL 1.1)에서 코드잇소 화면에 필요한 글자만 골라 이름을 바꾼 수정본입니다.\nD2Coding은 예약 글꼴 이름이라 수정본에 쓰지 않았습니다. 원본: https://github.com/naver/d2-coding-font (${D2_TAG})\n\n${ofl}`,
   );
   writeFileSync(join(OUT_RECEIPT, 'manifest.json'), JSON.stringify({ family: RECEIPT_FAMILY, source: `naver/d2-coding-font ${D2_TAG}`, sha256: hashes, chars }, null, 2) + '\n');
   return faces.join('\n');

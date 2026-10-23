@@ -31,7 +31,7 @@ export interface GlossaryEntry {
   tool?: string;
   /** 에러 안내 id (errors.json) */
   error?: string;
-  /** 점선 밑줄을 긋지 않음 (흔한 말, 코드쇼퍼 말). 고르기로는 풀린다 */
+  /** 점선 밑줄을 긋지 않음 (흔한 말, 코드잇소 말). 고르기로는 풀린다 */
   noMark?: boolean;
   /** 위험을 품은 용어: 풀이 안에 위험을 숨기지 않는 말('넣으면 안 돼요' 따위)이 있어야 한다 (자료 시험) */
   risk?: boolean;

@@ -1,0 +1,17 @@
+---
+// 최근 본 재료 /recent (K1 D131, 홈 '최근 본 재료'의 모두 보기): 이 브라우저에서 상세를 연 재료(최근 20개)를 한 쪽에 격자로.
+// 기록은 localStorage에만 있으므로 목록은 섬(RecentRow page)이 그린다.
+import Base from '../layouts/Base.astro';
+import RecentRow from '../components/RecentRow.tsx';
+import { ko } from '../copy/ko.ts';
+import { categoryNames } from '../lib/catalog/site.ts';
+import { ROUTES } from '../lib/routes.ts';
+---
+
+<Base title={ko.recent.title} description={ko.recent.pageLead} crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
+  <header class="list-head">
+    <h1 id="recent-title" tabindex="-1">{ko.recent.title}</h1>
+    <p class="page-lead">{ko.recent.pageLead}</p>
+  </header>
+  <RecentRow client:load names={categoryNames()} page />
+</Base>

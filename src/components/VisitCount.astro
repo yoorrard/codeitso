@@ -1,0 +1,33 @@
+---
+// 바닥글 방문 수 (D134): "Today 12 · Total 1,234" 작게. 숫자를 받기 전과 받지 못하면 숨는다 (정적 HTML + 작은 스크립트).
+// 화면 낭독기용 한국어 한 줄의 틀은 data-label로 넘긴다 (스크립트가 문구 묶음 전체를 싣지 않게).
+import { ko } from '../copy/ko.ts';
+---
+
+<p class="ft-line ft-visits" data-visits data-label={ko.visits.label} hidden>
+  <span aria-hidden="true">{ko.visits.today} <span data-visits-today></span> · {ko.visits.total} <span data-visits-total></span></span>
+  <span class="visually-hidden" data-visits-label></span>
+</p>
+
+<script>
+  import { withCommas } from '../lib/catalog/core.ts';
+  import { fill } from '../lib/text.ts';
+  import { visitStats } from '../lib/visit.ts';
+
+  const box = document.querySelector<HTMLElement>('[data-visits]');
+  if (box) {
+    void visitStats(Date.now()).then((s) => {
+      if (!s) return;
+      const today = withCommas(s.today);
+      const total = withCommas(s.total);
+      const set = (sel: string, text: string): void => {
+        const el = box.querySelector(sel);
+        if (el) el.textContent = text;
+      };
+      set('[data-visits-today]', today);
+      set('[data-visits-total]', total);
+      set('[data-visits-label]', fill(box.dataset['label'] ?? '', { today, total }));
+      box.hidden = false;
+    });
+  }
+</script>

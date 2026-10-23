@@ -1,0 +1,60 @@
+{
+  "id": "case-31",
+  "title": "웹에서 만드는 도구로 만드는 안내 페이지 (공개는 빌더의 게시 기능)",
+  "note": "웹에서 만드는 도구(ai.builder)를 골랐다. 배포·공유 칸은 엔진이 빌더의 게시 기능(builder-publish)으로 채우고 추천하지 않는다(B-02, D89). 비용은 모름이라 영수증 합계는 '0원 + 확인 필요', 알아볼 것 research.builder-publish가 붙는다. 이 상품은 쓰던 빌더 안의 기능이라 난이도·예상 시간에 더하지 않는다.",
+  "answers": {
+    "q.type": "page",
+    "q.audience": "anyone",
+    "q.ai": "builder",
+    "q.aitool-builder": "lovable",
+    "q.save": "no",
+    "q.domain": "none",
+    "q.budget": "free-only",
+    "q.payment": "no",
+    "q.device": "both",
+    "q.style": "clean"
+  },
+  "cart": ["html-single"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.aitool-builder", "q.save", "q.domain", "q.budget", "q.payment", "q.device", "q.style"],
+    "tags": {
+      "ai.builder": 1
+    },
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": null,
+        "filledBy": ["builder-publish"]
+      }
+    ],
+    "conflicts": [],
+    "canIssue": true,
+    "research": ["research.builder-publish"],
+    "safety": [],
+    "study": {
+      "required": [],
+      "all": []
+    },
+    "steps": ["slot.screen", "slot.host"],
+    "prep": [],
+    "stuckRules": [],
+    "difficulty": 1,
+    "difficultyFirst": 1,
+    "minutes": 50,
+    "split": {
+      "needed": false,
+      "defer": [],
+      "easier": []
+    }
+  }
+}

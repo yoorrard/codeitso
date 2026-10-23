@@ -1,0 +1,1022 @@
+{
+  "source": {
+    "id": "openrouter",
+    "name": "OpenRouter providers (AI inference companies)",
+    "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
+    "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
+    "note": "OpenRouter lists 114 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+  },
+  "fetchedAt": "2026-10-23",
+  "count": 33,
+  "items": [
+    {
+      "id": "openrouter:aion-labs",
+      "name": "AionLabs",
+      "kind": "ai-llm",
+      "category": "api",
+      "summary": "AionLabs: model provider listed by OpenRouter (headquarters: IL).",
+      "url": "https://www.aionlabs.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-il",
+        "llm",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "IL",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.aionlabs.ai/privacy-policy/",
+        "summarySource": "OpenRouter data",
+        "terms": "https://www.aionlabs.ai/terms/",
+        "viaOpenRouter": "https://openrouter.ai/provider/aion-labs"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:akashml",
+      "name": "AkashML",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "High-performance, low latency AI inference service built on Akash Network. Access Llama, DeepSeek, and Qwen models with competitive pricing starting from $0.15/M tokens.",
+      "url": "https://akashml.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://akashml.com/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://akashml.com/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/akashml"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:atlas-cloud",
+      "name": "AtlasCloud",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Atlas Cloud gives developers one AI API for AI models across chat, image, video & audio. Seedance, Seedream, GPT-image, DeepSeek, Kling, 400+ models. Start free.",
+      "url": "https://www.atlascloud.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.atlascloud.ai/privacy",
+        "summarySource": "official page meta description",
+        "viaOpenRouter": "https://openrouter.ai/provider/atlas-cloud"
+      },
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "openrouter:avian",
+      "name": "Avian",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Fast AI inference billed per token. DeepSeek V4.1, MiniMax M3, GLM-5.3, Kimi K3, MiMo-V2.6 and more via OpenAI-compatible API. From $0.1275/M tokens.",
+      "url": "https://avian.io",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://avian.io/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://avian.io/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/avian"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:cirrascale",
+      "name": "Cirrascale",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Cloud-based AI infrastructure supporting NVIDIA, AMD, Qualcomm, and more. No egress fees, high-bandwidth networking, and managed services.",
+      "url": "https://www.cirrascale.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.cirrascale.com/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://www.cirrascale.com/terms-of-service",
+        "viaOpenRouter": "https://openrouter.ai/provider/cirrascale"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:darkbloom",
+      "name": "Darkbloom",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Darkbloom is a decentralized private inference network powered by Apple Silicon Macs. Consumers use an OpenAI-compatible API; providers contribute compute through the Darkbloom app and CLI.",
+      "url": "https://www.darkbloom.dev",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.darkbloom.dev/privacy.html",
+        "summarySource": "official page meta description",
+        "terms": "https://www.darkbloom.dev/terms.html",
+        "viaOpenRouter": "https://openrouter.ai/provider/darkbloom"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:decart",
+      "name": "Decart",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Cogito is Decart's LLM inference API. It runs frontier models on Trainium, TPU, and GPU, unlocking capacity beyond the GPU crunch and ultra-fast 1,000+ tps endpoints, which is exactly what token-hungry, latency-sensitive agents need.",
+      "url": "https://cogito.decart.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://cogito.decart.ai/legal/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://cogito.decart.ai/legal/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/decart"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:dekallm",
+      "name": "DekaLLM",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "DekaLLM: model provider listed by OpenRouter (headquarters: ID; datacenters: ID).",
+      "url": "https://www.cloudeka.id",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-id",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "ID"
+        ],
+        "headquarters": "ID",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.cloudeka.id/id/privacy-policy/",
+        "summarySource": "OpenRouter data",
+        "terms": "https://docs.cloudeka.ai/service-portal-ai/end-user-license-agreement",
+        "viaOpenRouter": "https://openrouter.ai/provider/dekallm"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:inferact-vllm",
+      "name": "Inferact vLLM",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Inferact is frontier inference you control. Built by the creators of vLLM, it lets you deploy on your GPUs or ours with open weight models and production performance.",
+      "url": "https://inferact.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US",
+          "FI"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://inferact.ai/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://inferact.ai/ortoc",
+        "viaOpenRouter": "https://openrouter.ai/provider/inferact-vllm"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:infermatic",
+      "name": "Infermatic",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Infermatic.ai provides streamlined, private, secure access to the best Large Language Models in one seamless platform, with free and low-cost flat-rate plans.",
+      "url": "https://infermatic.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://infermatic.ai/privacy-policy/",
+        "summarySource": "official page meta description",
+        "terms": "https://infermatic.ai/terms-and-conditions/",
+        "viaOpenRouter": "https://openrouter.ai/provider/infermatic"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:inflection",
+      "name": "Inflection",
+      "kind": "ai-llm",
+      "category": "api",
+      "summary": "Inflection AI is pioneering personal intelligence. We",
+      "url": "https://inflection.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "llm",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://inflection.ai/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://developers.inflection.ai/tos",
+        "viaOpenRouter": "https://openrouter.ai/provider/inflection"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:ionstream",
+      "name": "Ionstream",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Bare-metal GPU cloud for AI. The raw performance of dedicated hardware, the flexibility of the cloud, and the sovereignty your data demands.",
+      "url": "https://ionstream.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://ionstream.ai/privacy-policy/",
+        "summarySource": "official page meta description",
+        "terms": "https://ionstream.ai/terms-and-conditions/",
+        "viaOpenRouter": "https://openrouter.ai/provider/ionstream"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:mancer",
+      "name": "Mancer 2",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Mancer 2: model provider listed by OpenRouter.",
+      "url": "https://mancer.tech",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://mancer.tech/privacy",
+        "summarySource": "OpenRouter data",
+        "terms": "https://mancer.tech/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/mancer"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:mara",
+      "name": "Mara",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Building the infrastructure AI depends on. MARA secures power at scale and develops sites with speed and certainty. 1.9 GW energized, 4.8 GW potential capacity.",
+      "url": "https://www.mara.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.mara.com/mara-legals/ai-policies#cloud-pp",
+        "summarySource": "official page meta description",
+        "terms": "https://www.mara.com/mara-legals/ai-policies#cloud-toc",
+        "viaOpenRouter": "https://openrouter.ai/provider/mara"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:modelrun",
+      "name": "ModelRun",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "The unified AI inference stack - from custom GPU kernels to production cloud serving on NVIDIA and AMD. 2x performance. Top open models. Open source stack.",
+      "url": "https://www.modular.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.modular.com/legal/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://www.modular.com/legal/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/modelrun"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:modular",
+      "name": "Modular",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "The unified AI inference stack - from custom GPU kernels to production cloud serving on NVIDIA and AMD. 2x performance. Top open models. Open source stack.",
+      "url": "https://www.runmodelrun.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.runmodelrun.com/privacy-policy.html",
+        "summarySource": "official page meta description",
+        "terms": "https://www.runmodelrun.com/TOS.html",
+        "viaOpenRouter": "https://openrouter.ai/provider/modular"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:nex-agi",
+      "name": "Nex AGI",
+      "kind": "ai-llm",
+      "category": "api",
+      "summary": "Nex AGI: model provider listed by OpenRouter (headquarters: CN; datacenters: SG).",
+      "url": "https://api.nex-agi.cn",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-cn",
+        "llm",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "SG"
+        ],
+        "headquarters": "CN",
+        "keyServerSide": true,
+        "privacyPolicy": "https://api.nex-agi.cn/privacy-policy",
+        "summarySource": "OpenRouter data",
+        "viaOpenRouter": "https://openrouter.ai/provider/nex-agi"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:nextbit",
+      "name": "NextBit",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Modelos abiertos servidos desde infraestructura propia en España, con API compatible con OpenAI y Anthropic. RGPD y AI Act cubiertos, sin matriz estadounidense.",
+      "url": "https://www.nextbit256.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-es",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "ES"
+        ],
+        "headquarters": "ES",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.nextbit256.com/docs/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://www.nextbit256.com/docs/terms-of-service",
+        "viaOpenRouter": "https://openrouter.ai/provider/nextbit"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:open-inference",
+      "name": "OpenInference",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Open Inference reshapes open models to run fast on any accelerator: model architecture, kernels, and serving software developed together.",
+      "url": "https://www.openinference.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.openinference.ai/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://www.openinference.ai/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/open-inference"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:parasail",
+      "name": "Parasail",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Parasail is the inference cloud for AI-native startups. Run any open model with production reliability, flexible scaling, and per-token pricing.",
+      "url": "https://www.parasail.io",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.parasail.io/legal/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://parasail.io/legal/terms-of-service",
+        "viaOpenRouter": "https://openrouter.ai/provider/parasail"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:pareto-alpha",
+      "name": "ParetoAlpha",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "ParetoAlpha: model provider listed by OpenRouter (headquarters: US; datacenters: US).",
+      "url": "https://paretoalphainference.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://paretoalphainference.com/privacy",
+        "summarySource": "OpenRouter data",
+        "terms": "https://paretoalphainference.com/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/pareto-alpha"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "openrouter:perceptron",
+      "name": "Perceptron",
+      "kind": "ai-llm",
+      "category": "api",
+      "summary": "A layer of intelligence for the physical world. We are a research company building the future of Physical AGI.",
+      "url": "https://www.perceptron.inc",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "llm",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.perceptron.inc/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://www.perceptron.inc/terms-of-use",
+        "viaOpenRouter": "https://openrouter.ai/provider/perceptron"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:phala",
+      "name": "Phala",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Run private AI through verified GPU TEE providers, an attested gateway, signed response receipts, and audit sessions you can independently check.",
+      "url": "https://redpill.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://redpill.ai/privacy",
+        "statusPage": "https://status.phala.network/",
+        "summarySource": "official page meta description",
+        "terms": "https://redpill.ai/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/phala"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:recursive",
+      "name": "Recursive",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Recursive self-improving superintelligence to automate knowledge discovery.",
+      "url": "https://recursive.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://recursive.com/legal/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://recursive.com/legal/terms-of-use",
+        "viaOpenRouter": "https://openrouter.ai/provider/recursive"
+      },
+      "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "openrouter:relace",
+      "name": "Relace",
+      "kind": "ai-llm",
+      "category": "api",
+      "summary": "Open model inference. Trillions of tokens a day, #1 on OpenRouter.",
+      "url": "https://www.relace.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "llm",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.relace.ai/privacy-policy",
+        "statusPage": "https://status.relace.ai",
+        "summarySource": "official page meta description",
+        "terms": "https://www.relace.ai/terms-of-use",
+        "viaOpenRouter": "https://openrouter.ai/provider/relace"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:respan",
+      "name": "Respan",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "The AI router with built-in observability & automated evals.",
+      "url": "https://respan.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://respan.ai/legal/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://respan.ai/legal/terms-of-use",
+        "viaOpenRouter": "https://openrouter.ai/provider/respan"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:sail-research",
+      "name": "Sail Research",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Sail is the most cost-efficient API for the best open-source models. Sail now has the best direct API pricing in the world for DeepSeek V4.1 Flash: 3.3x less for realtime, 6x less for async vs. other providers. Start with $5 in monthly free credits.",
+      "url": "https://www.sailresearch.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.sailresearch.com/privacy",
+        "statusPage": "https://status.sailresearch.com/",
+        "summarySource": "official page meta description",
+        "terms": "https://www.sailresearch.com/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/sail-research"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:scaledown",
+      "name": "ScaleDown",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Purpose-built models for compression, summarization, extraction, and classification. Frontier quality at a fraction of the cost.",
+      "url": "https://scaledown.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://scaledown.ai/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://scaledown.ai/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/scaledown"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:sourceful",
+      "name": "Sourceful",
+      "kind": "ai-image",
+      "category": "api",
+      "summary": "Create high-quality brand visuals. Powered by Riverflow 2, Sourceful delivers reliable, on-brand images across your entire product range. Perfect for Shopify, Instagram and TikTok Shop.",
+      "url": "https://www.sourceful.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "image",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.sourceful.com/legal/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://www.sourceful.com/legal/spring-terms-of-use",
+        "viaOpenRouter": "https://openrouter.ai/provider/sourceful"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:streamlake",
+      "name": "StreamLake",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "StreamLake（溪流湖）是快手旗下AI智能云服务平台，提供万擎大模型平台、视频云、直播云、点播云及RTC实时音视频服务。基于前沿AI技术，助力企业实现数智化转型，SLA可用性高达99.9%。",
+      "url": "https://www.streamlake.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-cn",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "CN",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.streamlake.ai/document/DOC/mgkci47q13qr66h9i54",
+        "statusPage": "https://status.streamlake.ai/",
+        "summarySource": "official page meta description",
+        "terms": "https://www.streamlake.ai/document/DOC/mgkchnd89grpt1961fw",
+        "viaOpenRouter": "https://openrouter.ai/provider/streamlake"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:tenstorrent",
+      "name": "Tenstorrent",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Tenstorrent is a next-generation computing company that builds computers for AI. Headquartered in the U.S. with offices in Austin, Texas, and Silicon Valley, and global offices in Toronto, Belgrade, Seoul, Tokyo, and Bangalore, Tenstorrent brings together experts in the field of computer…",
+      "url": "https://tenstorrent.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://tenstorrent.com/privacy",
+        "statusPage": "https://status.tenstorrent.com/",
+        "summarySource": "official page meta description",
+        "terms": "https://console.tenstorrent.com/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/tenstorrent"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:typesafe",
+      "name": "TypeSafe",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "TypeSafe AI is an AI lab building machine-native intelligence infrastructure for automation, designed to make decisions within software. Try our first System One Model, Jev, in early access.",
+      "url": "https://typesafe.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://typesafe.ai/legal/privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://typesafe.ai/legal/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/typesafe"
+      },
+      "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 50000
+      }
+    },
+    {
+      "id": "openrouter:unbiased",
+      "name": "Unbiased",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Frontier answers at open-source prices. Zero data retention on designated API traffic (not Chat). Plans from $10/month.",
+      "url": "https://unbiased.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://unbiased.ai/terms/#privacy-policy",
+        "summarySource": "official page meta description",
+        "terms": "https://unbiased.ai/terms/",
+        "viaOpenRouter": "https://openrouter.ai/provider/unbiased"
+      },
+      "fetchedAt": "2026-10-20"
+    }
+  ]
+}

@@ -1,26 +1,7 @@
-// e2e 도우미: 섬이 붙기를 기다리기, 자료 읽기, 사례 하나로 만들 앱 정하기·도구 고르기를 걷기.
-import { readFileSync } from 'node:fs';
-import type { Locator, Page } from '@playwright/test';
+// e2e 도우미: 섬이 붙기를 기다리기, 바깥 요청 막기 (출처 그림·글꼴은 시험에서 부르지 않는다).
 import { expect } from '@playwright/test';
-
-function json<T>(path: string): T {
-  return JSON.parse(readFileSync(path, 'utf8')) as T;
-}
-
-export interface Question {
-  id: string;
-  text: string;
-  help?: string;
-  chip?: string;
-  options?: { id: string; label: string }[];
-}
-export const questions = json<{ questions: Question[] }>('data/questions.json').questions;
-export const products = json<{ products: { id: string; name: string; layer: string }[] }>('data/products.json').products;
-export const recipes = json<{ recipes: { id: string; title: string; freeText?: string }[] }>('data/recipes.json').recipes;
-export const receiptWords = json<{ receipt: { destination: string } }>('data/templates.json').receipt;
-export function golden(id: string): { answers: Record<string, string>; cart: string[] } {
-  return json(`data/golden/${id}.json`);
-}
+import type { Locator, Page } from '@playwright/test';
+import { ko } from '../../src/copy/ko.ts';
 
 /** 바로 붙는 섬(client:load·idle)이 다 붙을 때까지 */
 export async function islandsReady(page: Page): Promise<void> {
@@ -43,71 +24,87 @@ export async function hydrated(target: Locator): Promise<Locator> {
   return target;
 }
 
-/**
- * 보이는 질문 제목으로 사례의 답을 골라 만들 앱 정하기 질문을 끝까지 (brief 6.5: 보기를 누르면 바로 다음 질문).
- * 마지막 한 줄 쓰기(선택)에 닿으면 freeText를 쓰고 돌아온다. 주 버튼 [도구 고르러 가기]는 아래 막대(.q-go)에 있다.
- * keyboard면 Tab·Enter·글자 치기만 쓴다
- */
-export async function answerInterview(page: Page, answers: Record<string, string>, opts: { keyboard?: boolean; freeText?: string } = {}): Promise<void> {
-  for (let step = 0; step < 30; step++) {
-    const title = ((await page.locator('#q-title').textContent()) ?? '').trim();
-    const q = questions.find((x) => title.endsWith(x.text));
-    if (!q) {
-      // 마지막 한 줄 쓰기 (선택): 질문 제목에서 Tab 한 번이면 입력 칸이다
-      const line = page.locator('#free-line');
-      await expect(line).toBeVisible();
-      if (opts.freeText) {
-        if (opts.keyboard) {
-          await expect(page.locator('#q-title')).toBeFocused();
-          await page.keyboard.press('Tab');
-          await expect(line).toBeFocused();
-          await page.keyboard.type(opts.freeText);
-        } else await line.fill(opts.freeText);
-      }
+/** 시험 서버 밖으로 나가는 요청(출처 미리 보기 그림 따위)을 막는다: 망 상태와 상관없이 같은 결과가 나오게 */
+export async function blockExternal(page: Page): Promise<void> {
+  await page.route(/^https?:\/\/(?!127\.0\.0\.1[:/]|localhost[:/])/, (route) => route.abort());
+}
+
+/** 상품 카드 이름 (목록 격자 안 n번째) */
+export function cardName(page: Page, n = 0): Locator {
+  return page.locator('.listing-grid .card-name').nth(n);
+}
+
+/** 글 일부를 마우스로 고른 것처럼: 범위를 고르고 손 떼기(pointerup)를 보낸다. 두 번 누르기는 누른 자리의 낱말이 화면 폭마다 달라 쓰지 않는다 */
+export async function selectText(target: Locator, text: string): Promise<void> {
+  await target.scrollIntoViewIfNeeded();
+  await target.evaluate((el, t) => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const i = n.textContent?.indexOf(t) ?? -1;
+      if (i < 0) continue;
+      const r = document.createRange();
+      r.setStart(n, i);
+      r.setEnd(n, i + t.length);
+      const sel = document.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(r);
+      const b = r.getBoundingClientRect();
+      document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerType: 'mouse', clientX: b.right, clientY: b.bottom }));
       return;
     }
-    const answer = answers[q.id];
-    const label = q.options?.find((o) => o.id === answer)?.label;
-    expect(label, `${q.id}의 답 ${answer}`).toBeTruthy();
-    const option = page.locator('.q').getByRole('button', { name: label ?? '', exact: true });
-    if (opts.keyboard) {
-      await option.focus();
-      await expect(option).toBeFocused();
-      await page.keyboard.press('Enter');
-    } else await option.click();
-    await expect(page.locator('#q-title')).not.toHaveText(title);
-  }
-  throw new Error('만들 앱 정하기 질문이 끝나지 않았다');
+    throw new Error(`글이 없다: ${t}`);
+  }, text);
 }
 
-/**
- * 도구 고르기에서 도구를 정한다 (brief 6.6): 그 도구 줄이 있는 칸을 칩으로 열고, 줄을 눌러 '고를 예정'으로 옮긴 뒤
- * 아래 막대의 [{도구}로 정하기]를 누른다. 정하면 다음 남은 꼭 고를 것이 열린다. 정한 도구는 칩이 남색 ✓(.is-chosen)이 된다
- */
-export async function addToCart(page: Page, ids: string[]): Promise<void> {
-  for (const id of ids) {
-    const row = page.locator(`#w-slot button.w-row[data-product="${id}"]`);
-    const chips = page.locator('.w-chips .w-chip');
-    for (let k = 0; k < (await chips.count()) && (await row.count()) === 0; k++) await chips.nth(k).click();
-    // 원문만 있는 도구는 접기 안에 있다
-    if (!(await row.isVisible())) await page.locator('#w-slot .w-index > summary').click();
-    if ((await row.getAttribute('aria-pressed')) !== 'true') await row.click();
-    await expect(row).toHaveAttribute('aria-pressed', 'true');
-    const save = page.locator('.action-bar button.w-save');
-    await expect(save).toBeVisible();
-    await save.click();
-    await expect.poll(async () => page.evaluate(() => (JSON.parse(localStorage.getItem('cc:session:v1') ?? '{}') as { cart?: string[] }).cart ?? [])).toContain(id);
-  }
+/** 글 일부가 화면에 그려진 자리: 첫 줄 왼쪽 가운데(x0, y0)와 끝 줄 오른쪽 가운데(x1, y1). 보이게 굴린 뒤 잰다 */
+export async function textBox(target: Locator, text: string): Promise<{ x0: number; y0: number; x1: number; y1: number }> {
+  await target.scrollIntoViewIfNeeded();
+  return target.evaluate((el, t) => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const i = n.textContent?.indexOf(t) ?? -1;
+      if (i < 0) continue;
+      const r = document.createRange();
+      r.setStart(n, i);
+      r.setEnd(n, i + t.length);
+      const rs = [...r.getClientRects()].filter((b) => b.width > 0);
+      const a = rs[0];
+      const b = rs[rs.length - 1];
+      if (!a || !b) break;
+      return { x0: a.left + 1, y0: (a.top + a.bottom) / 2, x1: b.right - 1, y1: (b.top + b.bottom) / 2 };
+    }
+    throw new Error(`글이 없다: ${t}`);
+  }, text);
 }
 
-/** 지금 도는 애니메이션 중 길이가 limit(ms)보다 긴 것 */
-export async function longAnimations(page: Page, limit = 150): Promise<string[]> {
-  return page.evaluate(
-    (max) =>
-      document
-        .getAnimations()
-        .filter((a) => a.playState === 'running' && Number(a.effect?.getComputedTiming().duration ?? 0) > max)
-        .map((a) => (a as CSSAnimation).animationName ?? 'waapi'),
-    limit,
-  );
+/** 사람처럼 마우스로 끌어 고르기: 글 앞에서 누르고 끝까지 끌고 뗀다 (실제 pointerdown·mousedown·pointerup·click이 다 일어난다) */
+export async function dragSelect(page: Page, target: Locator, text: string): Promise<void> {
+  const b = await textBox(target, text);
+  await page.mouse.move(b.x0, b.y0);
+  await page.mouse.down();
+  await page.mouse.move((b.x0 + b.x1) / 2, b.y1, { steps: 3 });
+  await page.mouse.move(b.x1, b.y1, { steps: 3 });
+  await page.mouse.up();
+}
+
+/** 창 안(from 왼쪽 끝, 높이는 dy 또는 가운데)에서 누르기 시작해 창 밖(to)에서 손을 뗀다: 글을 고르다 바깥에서 놓은 것 */
+export async function dragOut(page: Page, from: Locator, to: { x: number; y: number }, dy?: number): Promise<void> {
+  const box = await from.boundingBox();
+  if (!box) throw new Error('끌기 시작할 자리가 보이지 않는다');
+  const y = box.y + (dy ?? box.height / 2);
+  await page.mouse.move(box.x + 3, y);
+  await page.mouse.down();
+  await page.mouse.move(box.x + Math.min(30, box.width / 2), y, { steps: 3 });
+  await page.mouse.move(to.x, to.y, { steps: 8 });
+  await page.mouse.up();
+}
+
+/** [담기]를 누르면 뜨는 담기 창 (v5.1 D120): 메모를 적고(있으면) 창의 [담기]를 눌러야 담긴다. 닫히면 누른 버튼으로 초점이 돌아온다 */
+export async function addWithSheet(page: Page, btn: Locator, memo = ''): Promise<void> {
+  await btn.click();
+  const sheet = page.locator('dialog.add-sheet');
+  await expect(sheet).toBeVisible();
+  if (memo) await sheet.getByLabel(ko.sheet.memoLabel).fill(memo);
+  await sheet.getByRole('button', { name: ko.sheet.add, exact: true }).click();
+  await expect(sheet).toBeHidden();
 }

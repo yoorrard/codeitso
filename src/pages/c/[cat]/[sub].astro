@@ -1,0 +1,58 @@
+---
+// 목록 쪽 /c/<대분류>/<소분류>?sort=&page=&<거르기 칸>= (D103·D115): 소분류마다 HTML 한 쪽. 빌드 때 인기순 1쪽을 그리고, 다른 쪽·정렬은
+// 목록 섬(Listing)이 진열대 빌드가 만든 JSON(/catalog/list/…)을 받아 그린다. 위: 뒤로·위치 · 제목 · 출처 줄 · 같은 대분류의 다른 소분류(가로로 넘김).
+// 목록 섬 맨 위에 이 소분류 안 검색창이 있다 (?q=, N1 D137). 모델 자료가 있는 AI 소분류는 그 위에 AI 모델 비교 띠 (D141).
+import Base from '../../../layouts/Base.astro';
+import Listing from '../../../components/Listing.tsx';
+import ModelsBanner from '../../../components/ModelsBanner.astro';
+import { ko } from '../../../copy/ko.ts';
+import { pageCount, withCommas } from '../../../lib/catalog/core.ts';
+import { categories, facetsOf, firstPage } from '../../../lib/catalog/site.ts';
+import type { CategoryMeta, SubMeta } from '../../../lib/catalog/types.ts';
+import { ROUTES, categoryPath, listPath } from '../../../lib/routes.ts';
+
+export function getStaticPaths() {
+  return categories().flatMap((c) => c.subcategories.map((s) => ({ params: { cat: c.id, sub: s.id }, props: { meta: c, sub: s } })));
+}
+
+interface Props {
+  meta: CategoryMeta;
+  sub: SubMeta;
+}
+const { meta, sub } = Astro.props;
+const initial = firstPage(meta.id, sub.id);
+const pages = pageCount(sub.count);
+---
+
+<Base
+  title={`${sub.nameKo} · ${meta.nameKo}`}
+  description={sub.descKo ?? `${meta.nameKo} › ${sub.nameKo}: ${ko.categories[meta.id]}`}
+  crumbs={[
+    { href: ROUTES.home, label: ko.site.name },
+    { href: categoryPath(meta.id), label: meta.nameKo },
+  ]}
+>
+  <header class="list-head" data-cat={meta.id}>
+    <h1>{sub.nameKo}</h1>
+    {sub.descKo && <p class="page-lead">{sub.descKo}</p>}
+    <p class="list-sources">
+      <span>{ko.list.sources}</span>
+      {sub.sources.map((s) => <span class="src-pill">{s.name} {withCommas(s.count)}</span>)}
+    </p>
+  </header>
+  <nav class="sub-strip" aria-label={meta.nameKo}>
+    <ul>
+      {
+        meta.subcategories.map((s) => (
+          <li>
+            <a class="chip" href={listPath(meta.id, s.id)} aria-current={s.id === sub.id ? 'page' : undefined}>
+              {s.nameKo}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  {sub.sources.some((x) => x.id === 'models-dev') && <ModelsBanner />}
+  <Listing client:load cat={meta.id} catName={meta.nameKo} sub={sub.id} subName={sub.nameKo} total={sub.count} pages={pages} initial={initial} facets={facetsOf(meta.id, sub.id)} />
+</Base>

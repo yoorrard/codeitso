@@ -1,0 +1,540 @@
+{
+  "version": 1,
+  "checkedAt": "2026-10-14",
+  "contrast": { "target": 4.6, "border": 3.1, "standard": 4.5, "nonText": 3 },
+  "fixed": {
+    "error": { "light": "#C42B36", "dark": "#FF8E8E" },
+    "success": { "light": "#1B7A4A", "dark": "#6FD69C" },
+    "onLight": ["#FFFFFF", "#111111"],
+    "onDark": "#0B1220"
+  },
+  "moods": [
+    {
+      "id": "clean",
+      "label": "깔끔하게",
+      "keywordsKo": ["깔끔한", "여백이 넉넉한", "정돈된"],
+      "keywordsEn": ["clean", "airy", "orderly"],
+      "neutral": "cool",
+      "accent": "blue",
+      "font": "basic",
+      "radius": "slight",
+      "depth": "line",
+      "icons": "lucide",
+      "motion": "subtle"
+    },
+    {
+      "id": "cute",
+      "label": "귀엽게",
+      "keywordsKo": ["말랑한", "밝은", "둥근"],
+      "keywordsEn": ["playful", "soft", "rounded"],
+      "neutral": "pink",
+      "accent": "pink",
+      "font": "round",
+      "radius": "pill",
+      "depth": "soft",
+      "icons": "phosphor",
+      "motion": "lively"
+    },
+    {
+      "id": "serious",
+      "label": "차분하고 믿음직하게",
+      "keywordsKo": ["단정한", "믿음직한", "또렷한"],
+      "keywordsEn": ["calm", "trustworthy", "structured"],
+      "neutral": "cool",
+      "accent": "navy",
+      "font": "basic",
+      "radius": "square",
+      "radiusValues": [4, 4, 6],
+      "depth": "flat",
+      "icons": "lucide",
+      "motion": "none",
+      "tabularNums": true
+    },
+    {
+      "id": "bold",
+      "label": "강렬하게",
+      "keywordsKo": ["굵은", "또렷한", "포스터 같은"],
+      "keywordsEn": ["bold", "high-contrast", "poster-like"],
+      "neutral": "ink",
+      "accent": "red",
+      "font": "heavy",
+      "radius": "square",
+      "radiusValues": [0, 2, 4],
+      "depth": "ink",
+      "icons": "tabler",
+      "motion": "subtle",
+      "motionStyle": "short"
+    },
+    {
+      "id": "warm",
+      "label": "포근하게",
+      "keywordsKo": ["포근한", "손편지 같은", "느긋한"],
+      "keywordsEn": ["warm", "gentle", "cozy"],
+      "neutral": "warm",
+      "accent": "green",
+      "font": "soft",
+      "radius": "round",
+      "depth": "faint",
+      "icons": "phosphor",
+      "motion": "subtle"
+    },
+    {
+      "id": "retro",
+      "label": "오락실처럼",
+      "keywordsKo": ["도트", "오락실", "딱딱 끊기는"],
+      "keywordsEn": ["retro", "pixel", "arcade"],
+      "neutral": "cool",
+      "accent": "purple",
+      "font": "pixel",
+      "radius": "square",
+      "radiusValues": [0, 0, 0],
+      "depth": "offset",
+      "icons": "tabler",
+      "motion": "subtle",
+      "motionStyle": "steps"
+    }
+  ],
+  "neutrals": [
+    {
+      "id": "cool",
+      "label": "차가운 회색",
+      "light": { "bg": "#FFFFFF", "surface": "#F5F7FA", "text": "#18202B", "muted": "#586272", "border": "#7B8494", "line": "#E1E5EA" },
+      "dark": { "bg": "#111418", "surface": "#1A1E24", "text": "#ECEEF1", "muted": "#A9B0BA", "border": "#737C88", "line": "#2A3038" }
+    },
+    {
+      "id": "pink",
+      "label": "분홍 기운",
+      "light": { "bg": "#FFFFFF", "surface": "#FFF1F6", "text": "#2B2130", "muted": "#6B5A68", "border": "#8E7C8B", "line": "#F2DCE5" },
+      "dark": { "bg": "#161216", "surface": "#211A20", "text": "#F5ECF1", "muted": "#BCA9B5", "border": "#86727F", "line": "#33282F" }
+    },
+    {
+      "id": "ink",
+      "label": "먹",
+      "light": { "bg": "#FFFFFF", "surface": "#F1F1F1", "text": "#0A0A0A", "muted": "#4A4A4A", "border": "#0A0A0A", "line": "#D4D4D4" },
+      "dark": { "bg": "#0D0D0D", "surface": "#1A1A1A", "text": "#F5F5F5", "muted": "#B5B5B5", "border": "#F5F5F5", "line": "#333333" }
+    },
+    {
+      "id": "warm",
+      "label": "따뜻한 회색",
+      "light": { "bg": "#FFFFFF", "surface": "#F7F4F0", "text": "#2A2420", "muted": "#6A5F57", "border": "#8C8178", "line": "#E8E1DA" },
+      "dark": { "bg": "#15120F", "surface": "#1F1B17", "text": "#F1ECE6", "muted": "#B3A99F", "border": "#857A70", "line": "#312B25" }
+    }
+  ],
+  "accents": [
+    { "id": "blue", "label": "파랑", "light": "#1D63D6", "dark": "#7AB0FF", "soft": "#EAF2FF" },
+    { "id": "navy", "label": "남색", "light": "#2A3B8F", "dark": "#A3B3FF", "soft": "#ECEFFC" },
+    { "id": "teal", "label": "청록", "light": "#02777D", "dark": "#5FD3D6", "soft": "#E3F6F6" },
+    { "id": "green", "label": "초록", "light": "#1B7A4A", "dark": "#6FD69C", "soft": "#E6F5EC" },
+    { "id": "orange", "label": "주황", "light": "#B9470B", "dark": "#FFA066", "soft": "#FDEEE4" },
+    { "id": "red", "label": "빨강", "light": "#C42B36", "dark": "#FF8E8E", "soft": "#FDECEC" },
+    { "id": "pink", "label": "분홍", "light": "#B8236F", "dark": "#FF8CC8", "soft": "#FCEAF3" },
+    { "id": "purple", "label": "보라", "light": "#6A45D1", "dark": "#B9A6FF", "soft": "#F0ECFC" },
+    { "id": "brown", "label": "갈색", "light": "#8A5634", "dark": "#E0B48F", "soft": "#F5EDE6" },
+    { "id": "ink", "label": "먹색", "light": "#1F2937", "dark": "#E5E7EB", "soft": "#ECEEF1" }
+  ],
+  "themes": [
+    { "id": "light", "label": "밝게만" },
+    { "id": "dark", "label": "어둡게만" },
+    { "id": "both", "label": "둘 다(기기 설정 따라)" }
+  ],
+  "families": [
+    {
+      "id": "pretendard",
+      "name": "Pretendard",
+      "css": "\"Pretendard Variable\", Pretendard",
+      "fallback": "-apple-system, BlinkMacSystemFont, \"Apple SD Gothic Neo\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif",
+      "license": "OFL-1.1",
+      "package": "pretendard",
+      "version": "1.3.9",
+      "html": "<link rel=\"stylesheet\" as=\"style\" crossorigin href=\"https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css\" />",
+      "npm": { "install": "npm install pretendard", "import": "import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';" },
+      "home": "https://github.com/orioncactus/pretendard",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/pretendard", "https://github.com/orioncactus/pretendard"]
+    },
+    {
+      "id": "suit",
+      "name": "SUIT",
+      "css": "SUIT",
+      "fallback": "-apple-system, BlinkMacSystemFont, \"Apple SD Gothic Neo\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif",
+      "license": "OFL-1.1",
+      "package": "@sun-typeface/suit",
+      "version": "2.0.5",
+      "npm": { "install": "npm install @sun-typeface/suit", "import": "import '@sun-typeface/suit/fonts/static/woff2/SUIT.css';" },
+      "home": "https://sun.fo/suit/",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@sun-typeface/suit", "https://github.com/sun-typeface/SUIT"]
+    },
+    {
+      "id": "gowun-dodum",
+      "name": "고운돋움 (Gowun Dodum)",
+      "css": "\"Gowun Dodum\"",
+      "fallback": "\"Pretendard Variable\", Pretendard, sans-serif",
+      "license": "OFL-1.1",
+      "package": "@fontsource/gowun-dodum",
+      "version": "5.3.0",
+      "html": "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap\" />",
+      "npm": { "install": "npm install @fontsource/gowun-dodum", "import": "import '@fontsource/gowun-dodum';" },
+      "home": "https://fontsource.org/fonts/gowun-dodum",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@fontsource/gowun-dodum", "https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"]
+    },
+    {
+      "id": "gowun-batang",
+      "name": "고운바탕 (Gowun Batang)",
+      "css": "\"Gowun Batang\"",
+      "fallback": "serif",
+      "license": "OFL-1.1",
+      "package": "@fontsource/gowun-batang",
+      "version": "5.3.0",
+      "html": "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap\" />",
+      "npm": { "install": "npm install @fontsource/gowun-batang", "import": "import '@fontsource/gowun-batang/700.css';" },
+      "home": "https://fontsource.org/fonts/gowun-batang",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@fontsource/gowun-batang", "https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap"]
+    },
+    {
+      "id": "jua",
+      "name": "주아 (Jua)",
+      "css": "Jua",
+      "fallback": "\"Pretendard Variable\", Pretendard, sans-serif",
+      "license": "OFL-1.1",
+      "package": "@fontsource/jua",
+      "version": "5.3.0",
+      "html": "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Jua&display=swap\" />",
+      "npm": { "install": "npm install @fontsource/jua", "import": "import '@fontsource/jua';" },
+      "home": "https://fontsource.org/fonts/jua",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@fontsource/jua", "https://fonts.googleapis.com/css2?family=Jua&display=swap"]
+    },
+    {
+      "id": "black-han-sans",
+      "name": "검은고딕 (Black Han Sans)",
+      "css": "\"Black Han Sans\"",
+      "fallback": "\"Pretendard Variable\", Pretendard, sans-serif",
+      "license": "OFL-1.1",
+      "package": "@fontsource/black-han-sans",
+      "version": "5.3.0",
+      "html": "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap\" />",
+      "npm": { "install": "npm install @fontsource/black-han-sans", "import": "import '@fontsource/black-han-sans';" },
+      "home": "https://fontsource.org/fonts/black-han-sans",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@fontsource/black-han-sans", "https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap"]
+    },
+    {
+      "id": "gaegu",
+      "name": "개구 (Gaegu)",
+      "css": "Gaegu",
+      "fallback": "\"Pretendard Variable\", Pretendard, sans-serif",
+      "license": "OFL-1.1",
+      "package": "@fontsource/gaegu",
+      "version": "5.3.0",
+      "html": "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap\" />",
+      "npm": { "install": "npm install @fontsource/gaegu", "import": "import '@fontsource/gaegu/700.css';" },
+      "home": "https://fontsource.org/fonts/gaegu",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@fontsource/gaegu", "https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap"]
+    },
+    {
+      "id": "galmuri",
+      "name": "갈무리 (Galmuri11)",
+      "css": "Galmuri11",
+      "fallback": "\"Pretendard Variable\", Pretendard, sans-serif",
+      "license": "OFL-1.1",
+      "package": "galmuri",
+      "version": "2.40.3",
+      "html": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css\">",
+      "npm": { "install": "npm install galmuri", "import": "import 'galmuri/dist/galmuri.css';" },
+      "home": "https://galmuri.quiple.dev",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/galmuri", "https://github.com/quiple/galmuri"]
+    }
+  ],
+  "fonts": [
+    { "id": "basic", "label": "기본 고딕", "heading": "pretendard", "headingWeight": 700, "body": "pretendard" },
+    { "id": "neat", "label": "단정한 고딕", "heading": "suit", "headingWeight": 700, "body": "suit" },
+    { "id": "soft", "label": "부드러운 고딕", "heading": "gowun-dodum", "headingWeight": 400, "body": "pretendard" },
+    { "id": "serif", "label": "명조 제목", "heading": "gowun-batang", "headingWeight": 700, "body": "pretendard" },
+    { "id": "round", "label": "동글동글 제목", "heading": "jua", "headingWeight": 400, "body": "pretendard" },
+    { "id": "heavy", "label": "굵은 제목", "heading": "black-han-sans", "headingWeight": 400, "body": "pretendard" },
+    { "id": "hand", "label": "손글씨 제목", "heading": "gaegu", "headingWeight": 700, "body": "pretendard" },
+    { "id": "pixel", "label": "도트 제목", "heading": "galmuri", "headingWeight": 400, "body": "pretendard" }
+  ],
+  "radius": [
+    { "id": "square", "label": "각지게", "values": [2, 4, 6] },
+    { "id": "slight", "label": "살짝 둥글게", "values": [6, 8, 12] },
+    { "id": "round", "label": "둥글게", "values": [10, 14, 20] },
+    { "id": "pill", "label": "아주 둥글게", "values": [9999, 20, 24] }
+  ],
+  "density": [
+    {
+      "id": "airy",
+      "label": "넉넉하게",
+      "gutter": 20,
+      "section": 40,
+      "row": 64,
+      "tap": 48,
+      "type": {
+        "title": [28, 1.3],
+        "subtitle": [21, 1.4],
+        "bodyLg": [18, 1.65],
+        "body": [17, 1.65],
+        "label": [16, 1.4],
+        "caption": [14, 1.5]
+      }
+    },
+    {
+      "id": "normal",
+      "label": "보통",
+      "gutter": 16,
+      "section": 32,
+      "row": 56,
+      "tap": 48,
+      "type": {
+        "title": [26, 1.35],
+        "subtitle": [20, 1.4],
+        "bodyLg": [17, 1.6],
+        "body": [16, 1.6],
+        "label": [15, 1.4],
+        "caption": [14, 1.45]
+      }
+    },
+    {
+      "id": "compact",
+      "label": "촘촘하게",
+      "gutter": 16,
+      "section": 24,
+      "row": 48,
+      "tap": 44,
+      "type": {
+        "title": [22, 1.35],
+        "subtitle": [18, 1.4],
+        "bodyLg": [16, 1.5],
+        "body": [16, 1.5],
+        "label": [15, 1.4],
+        "caption": [14, 1.45]
+      }
+    }
+  ],
+  "motion": [
+    { "id": "none", "label": "거의 없이", "press": 100, "screen": 0, "list": 0, "celebrate": 0 },
+    { "id": "subtle", "label": "살짝", "press": 100, "screen": 200, "list": 150, "celebrate": 0 },
+    { "id": "lively", "label": "생기 있게", "press": 100, "screen": 200, "list": 150, "celebrate": 600, "easing": "cubic-bezier(0.34, 1.56, 0.64, 1)" }
+  ],
+  "depths": [
+    { "id": "line", "border": 1, "shadow": "0 4px 12px rgb(0 0 0 / 0.08)", "floatOnly": true },
+    { "id": "soft", "border": 0, "shadow": "0 2px 8px rgb(0 0 0 / 0.08)" },
+    { "id": "flat", "border": 1, "shadow": "none" },
+    { "id": "ink", "border": 2, "shadow": "none" },
+    { "id": "faint", "border": 0, "shadow": "0 1px 3px rgb(0 0 0 / 0.06)" },
+    { "id": "offset", "border": 2, "shadow": "4px 4px 0 var(--color-text)" }
+  ],
+  "iconSets": [
+    {
+      "id": "lucide",
+      "label": "선 아이콘",
+      "name": "Lucide",
+      "license": "ISC",
+      "package": "lucide-static",
+      "version": "1.57.0",
+      "react": "lucide-react",
+      "home": "https://lucide.dev",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/lucide-static", "https://www.npmjs.com/package/lucide-react"]
+    },
+    {
+      "id": "phosphor",
+      "label": "둥근 아이콘",
+      "name": "Phosphor",
+      "license": "MIT",
+      "package": "@phosphor-icons/core",
+      "version": "2.1.1",
+      "react": "@phosphor-icons/react",
+      "home": "https://phosphoricons.com",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@phosphor-icons/core", "https://www.npmjs.com/package/@phosphor-icons/react"]
+    },
+    {
+      "id": "tabler",
+      "label": "굵은 선",
+      "name": "Tabler",
+      "license": "MIT",
+      "package": "@tabler/icons",
+      "version": "3.49.0",
+      "react": "@tabler/icons-react",
+      "home": "https://tabler.io/icons",
+      "checkedAt": "2026-10-14",
+      "needsReview": false,
+      "sources": ["https://www.npmjs.com/package/@tabler/icons", "https://www.npmjs.com/package/@tabler/icons-react"]
+    },
+    { "id": "few", "label": "아이콘 적게" }
+  ],
+  "imagery": [
+    { "id": "none", "label": "그림 없이" },
+    { "id": "shapes", "label": "단순한 도형 그림" },
+    { "id": "photos", "label": "직접 찍은 사진" },
+    { "id": "sketch", "label": "손그림 느낌" }
+  ],
+  "tones": [
+    { "id": "haeyo", "label": "해요체" },
+    { "id": "hapsho", "label": "합쇼체" },
+    { "id": "banmal", "label": "반말" }
+  ],
+  "layouts": {
+    "page": [
+      { "id": "today-big", "label": "오늘 정보 크게" },
+      { "id": "week-list", "label": "한 주를 목록으로" }
+    ],
+    "form": [
+      { "id": "all-fields", "label": "한 화면에 모든 칸" },
+      { "id": "one-by-one", "label": "한 번에 한 질문" }
+    ],
+    "record": [
+      { "id": "recent-list", "label": "최근 기록 목록" },
+      { "id": "calendar", "label": "달력에서 날짜 고르기" }
+    ],
+    "quiz": [
+      { "id": "one-question", "label": "한 문제씩" },
+      { "id": "all-questions", "label": "한 화면에 모든 문제" }
+    ],
+    "tool": [
+      { "id": "one-screen", "label": "입력과 결과를 한 화면에" },
+      { "id": "two-screens", "label": "입력 다음 결과 화면" }
+    ],
+    "board": [
+      { "id": "number-cards", "label": "숫자 카드 셋과 목록" },
+      { "id": "chart-first", "label": "그래프 먼저" }
+    ],
+    "custom": [
+      { "id": "one-feature", "label": "가장 중요한 기능 하나를 크게" },
+      { "id": "list-detail", "label": "목록에서 골라 자세히 보기" }
+    ]
+  },
+  "defaultsByType": {
+    "record": { "moods": ["warm", "clean", "cute"], "density": "normal", "imagery": "sketch" },
+    "form": { "moods": ["serious", "clean", "warm"], "density": "normal", "imagery": "none" },
+    "page": { "moods": ["clean", "warm", "bold"], "density": "airy", "imagery": "shapes" },
+    "quiz": { "moods": ["cute", "retro", "bold"], "density": "normal", "imagery": "shapes" },
+    "tool": { "moods": ["clean", "serious", "retro"], "density": "normal", "imagery": "none" },
+    "board": { "moods": ["serious", "clean", "bold"], "density": "compact", "imagery": "none" },
+    "custom": { "moods": ["clean", "cute", "serious"], "density": "normal", "imagery": "none" }
+  },
+  "components": [
+    { "id": "header", "label": "머리줄", "en": "Header", "kind": "part", "browse": true, "rule": "화면 맨 위 한 줄. 화면 이름과 뒤로 가기만 둔다." },
+    { "id": "button-primary", "label": "주 버튼", "en": "Primary button", "kind": "part", "browse": true, "rule": "화면마다 하나. 가장 중요한 일에만 쓴다." },
+    { "id": "button-secondary", "label": "보조 버튼", "en": "Secondary button", "kind": "part", "browse": true, "rule": "주 버튼 다음으로 중요한 일. 옅은 주색 바탕에 주색 글자." },
+    { "id": "button-text", "label": "글 버튼", "en": "Text button", "kind": "part", "browse": true, "rule": "바탕 없이 글자만. 취소나 더 보기 같은 작은 일." },
+    { "id": "input", "label": "입력 칸", "en": "Text field", "kind": "part", "browse": true, "rule": "칸 위에 늘 보이는 이름표. 틀리면 칸 아래에 무엇이 틀렸는지 글로 쓴다." },
+    { "id": "choice", "label": "고르기", "en": "Radio · Checkbox · Select", "kind": "part", "browse": true, "rule": "하나만 고르면 동그라미, 여러 개면 네모. 보기가 5개를 넘으면 펼침 목록." },
+    { "id": "list-row", "label": "목록 줄", "en": "List item", "kind": "part", "browse": true, "rule": "한 줄에 제목 하나와 보조 글 하나. 줄 전체를 누를 수 있게 한다." },
+    { "id": "card", "label": "카드", "en": "Card", "kind": "part", "browse": true, "rule": "관련 있는 것을 한 묶음으로. 카드 안에 카드를 넣지 않는다." },
+    { "id": "chip", "label": "칩", "en": "Chip · Tag", "kind": "part", "browse": true, "rule": "짧은 꼬리표나 거르기. 누를 수 있으면 높이 44px." },
+    { "id": "bottom-nav", "label": "아래 메뉴", "en": "Bottom navigation · Tab bar", "kind": "part", "browse": true, "rule": "자주 가는 화면 3~5개. 아이콘과 글을 함께 둔다." },
+    { "id": "progress", "label": "진행 표시", "en": "Progress bar · Stepper", "kind": "part", "browse": true, "rule": "몇 번째인지 숫자로도 보인다 (예: 2/5)." },
+    { "id": "alert", "label": "알림 상자", "en": "Alert · Banner", "kind": "part", "browse": true, "rule": "색만 쓰지 않고 그림과 글을 함께 둔다. 오류·주의·안내 셋." },
+    { "id": "toast", "label": "토스트", "en": "Toast · Snackbar", "kind": "part", "browse": true, "rule": "잠깐 떴다 사라지는 결과 알림. 꼭 읽어야 하는 말은 여기에만 두지 않는다." },
+    { "id": "dialog", "label": "확인 대화 상자", "en": "Dialog · Modal", "kind": "part", "browse": true, "rule": "지우기처럼 되돌릴 수 없는 일 앞에서만 연다. 버튼 이름은 하는 일로 쓴다." },
+    { "id": "table", "label": "표", "en": "Table · Data table", "kind": "part", "browse": true, "rule": "좁은 화면에서는 줄을 카드처럼 접는다. 숫자는 오른쪽에 맞춘다." },
+    { "id": "stat-card", "label": "숫자 카드", "en": "Stat card · KPI", "kind": "part", "browse": true, "rule": "큰 숫자 하나와 단위. 오름·내림은 색과 함께 그림과 글로 보인다." },
+    { "id": "chart", "label": "그래프", "en": "Chart", "kind": "part", "browse": true, "rule": "색만으로 나누지 않고 이름표를 붙인다. 같은 값을 표로도 볼 수 있게 한다." },
+    { "id": "date-switcher", "label": "날짜 바꾸는 버튼", "en": "Date switcher", "kind": "part", "rule": "‹ 오늘 › 꼴. 양쪽 버튼은 44px, 오늘로 돌아오는 글 버튼을 둔다." },
+    { "id": "search", "label": "검색 칸", "en": "Search field", "kind": "part", "rule": "칸 안에 무엇을 찾는지 보이고, 결과가 없으면 그렇다고 글로 쓴다." },
+    { "id": "source-note", "label": "출처와 갱신 시각", "en": "Source note", "kind": "part", "rule": "정보를 어디서 언제 가져왔는지 작은 글로 둔다." },
+    { "id": "loading", "label": "불러오는 중", "en": "Loading state", "kind": "state", "browse": true, "rule": "자리를 미리 잡아 화면이 튀지 않게 하고, 오래 걸리면 글로 알린다." },
+    { "id": "empty", "label": "비어 있음", "en": "Empty state", "kind": "state", "browse": true, "rule": "왜 비었는지와 처음 할 일 하나를 버튼으로 보인다." },
+    { "id": "error", "label": "오류", "en": "Error state", "kind": "state", "browse": true, "rule": "무엇이 안 됐는지 쉬운 말로, 다시 해 볼 버튼을 함께 둔다." },
+    { "id": "saved", "label": "저장됨", "en": "Success state", "kind": "state", "browse": true, "rule": "다 됐다고 짧게 알리고, 다음에 할 일로 이어 준다." },
+    { "id": "disabled", "label": "꺼진 버튼과 그 이유", "en": "Disabled state", "kind": "state", "browse": true, "rule": "누를 수 없는 버튼 옆에 왜 못 누르는지 한 줄로 쓴다." }
+  ],
+  "keywords": {
+    "mood": [
+      { "id": "clean", "aliases": ["깔끔", "심플", "단순", "미니멀", "깨끗", "정돈", "하얀", "흰색"] },
+      { "id": "cute", "aliases": ["귀여", "귀엽", "아기자기", "둥글", "파스텔", "동글", "발랄", "사랑스", "말랑"] },
+      { "id": "serious", "aliases": ["차분", "믿음", "신뢰", "진지", "단정", "전문", "공식", "고급"] },
+      { "id": "bold", "aliases": ["강렬", "화려", "눈에 띄", "선명", "대담", "힙하", "=힙", "개성", "네온"] },
+      { "id": "warm", "aliases": ["포근", "따뜻", "편안", "아늑", "다정", "손편지"] },
+      { "id": "retro", "aliases": ["레트로", "도트", "오락실", "게임", "픽셀", "8비트", "복고"] }
+    ],
+    "accent": [
+      { "id": "teal", "aliases": ["바다", "하늘", "시원", "청록", "민트", "에메랄드"] },
+      { "id": "green", "aliases": ["=숲", "숲속", "=풀", "풀잎", "초록", "녹색", "연두", "그린"] },
+      { "id": "blue", "aliases": ["파랑", "파란", "블루", "푸른"] },
+      { "id": "navy", "aliases": ["남색", "네이비", "군청"] },
+      { "id": "red", "aliases": ["빨강", "빨간", "레드", "붉은"] },
+      { "id": "pink", "aliases": ["분홍", "핑크", "벚꽃"] },
+      { "id": "purple", "aliases": ["보라", "퍼플", "라벤더"] },
+      { "id": "orange", "aliases": ["주황", "오렌지", "=귤"] },
+      { "id": "brown", "aliases": ["갈색", "커피", "나무", "브라운", "초콜릿"] },
+      { "id": "ink", "aliases": ["검정", "검은색", "까만", "흑백", "블랙", "모노"] }
+    ],
+    "theme": [
+      { "id": "both", "aliases": ["어둡", "어두운", "다크", "=밤", "밤에", "야간"] }
+    ]
+  },
+  "references": [
+    {
+      "id": "mobbin",
+      "name": "Mobbin",
+      "url": "https://mobbin.com/",
+      "what": "휴대폰·웹 앱 화면과 흐름",
+      "checkedAt": "2026-10-14",
+      "needsReview": true,
+      "sources": ["https://mobbin.com/", "https://www.rutlandherald.com/news/business/mobbin-launches-mcp-server-giving-ai-tools-621-500-real-app-screens-to-reference/article_27c6b6bb-5bac-57cb-9e47-c620b2307a49.html"]
+    },
+    {
+      "id": "refero",
+      "name": "Refero",
+      "url": "https://refero.design/",
+      "what": "웹·iOS 화면, 흐름, 스타일",
+      "checkedAt": "2026-10-14",
+      "needsReview": true,
+      "sources": ["https://refero.design/how-it-works", "https://doc.refero.design/mcp/getting-started"]
+    },
+    {
+      "id": "nicely-done",
+      "name": "Nicely Done",
+      "url": "https://nicelydone.club/",
+      "what": "웹 서비스 화면과 부품",
+      "checkedAt": "2026-10-14",
+      "needsReview": true,
+      "sources": ["https://nicelydone.club/apps/supabase/components", "https://toolradar.com/companies/nicelydone-club"]
+    },
+    {
+      "id": "lazyweb",
+      "name": "Lazyweb",
+      "url": "https://www.lazyweb.com/",
+      "what": "실제 앱 화면 검색",
+      "checkedAt": "2026-10-14",
+      "needsReview": true,
+      "sources": ["https://www.lazyweb.com/", "https://experiments.lazyweb.com/vs/refero"]
+    },
+    {
+      "id": "inspoai",
+      "name": "InspoAI",
+      "url": "https://inspoai.io/",
+      "what": "분야·스타일·색·글꼴로 거르는 화면 모음",
+      "checkedAt": "2026-10-14",
+      "needsReview": true,
+      "sources": ["https://inspoai.io/", "https://www.producthunt.com/products/inspoai/launches/inspoai"]
+    }
+  ],
+  "referenceKeywords": {
+    "page": { "first": ["menu", "schedule", "calendar"], "more": ["detail", "empty state", "error"] },
+    "form": { "first": ["form", "sign up", "survey"], "more": ["success", "validation", "stepper"] },
+    "record": { "first": ["journal", "notes", "list"], "more": ["editor", "empty state", "search"] },
+    "quiz": { "first": ["quiz", "progress bar"], "more": ["result screen", "onboarding"] },
+    "tool": { "first": ["calculator", "converter"], "more": ["input", "result"] },
+    "board": { "first": ["dashboard", "stats", "chart"], "more": ["notifications", "settings"] },
+    "custom": { "first": ["home screen", "list"], "more": ["empty state", "settings"] }
+  }
+}

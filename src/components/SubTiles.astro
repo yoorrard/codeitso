@@ -1,0 +1,26 @@
+---
+// 대분류 하나의 소분류 타일 (상품 수·설명·출처): 대분류 쪽 /c/<대분류>와 전체 카테고리 쪽 /c가 같이 쓴다.
+import { withCommas } from '../lib/catalog/core.ts';
+import type { CategoryMeta } from '../lib/catalog/types.ts';
+import { listPath } from '../lib/routes.ts';
+
+interface Props {
+  meta: CategoryMeta;
+}
+const { meta } = Astro.props;
+---
+
+<ul class="sub-tiles" data-cat={meta.id}>
+  {
+    meta.subcategories.map((s) => (
+      <li>
+        <a class="sub-tile" href={listPath(meta.id, s.id)}>
+          <span class="sub-tile-name">{s.nameKo}</span>
+          <span class="sub-tile-n">{withCommas(s.count)}</span>
+          {s.descKo && <span class="sub-tile-desc">{s.descKo}</span>}
+          <span class="sub-tile-src">{s.sources.map((x) => x.name).slice(0, 3).join(' · ')}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

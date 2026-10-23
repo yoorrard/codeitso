@@ -7,7 +7,7 @@ paths:
   - "tests/**"
 ---
 
-> 출처: obra/superpowers v7.0.0 `skills/test-driven-development` (MIT, LICENSE 동봉). 코드쇼퍼에 맞게 고친 곳:
+> 출처: obra/superpowers v7.0.0 `skills/test-driven-development` (MIT, LICENSE 동봉). 코드잇소에 맞게 고친 곳:
 > 사람에게 묻는 대목을 '스스로 정하고 docs/DECISIONS.md에 기록'으로 바꿨고, 시험 없이 이미 있는 엔진 코드(T04)는
 > 지우지 않고 특성 시험(characterization test)을 먼저 붙인다. 골든 기대값은 엔진 결과가 아니라 명세와 손 계산에서 온다.
 > 화면 모양·CSS·모션은 이 규칙 대상이 아니다 (화면은 `/visual-qa`와 e2e로 확인).

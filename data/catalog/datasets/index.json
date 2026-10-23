@@ -1,0 +1,205 @@
+{
+  "category": "datasets",
+  "nameKo": "데이터셋",
+  "fetchedAt": "2026-10-23",
+  "total": 17973,
+  "subcategories": [
+    {
+      "id": "ai-training",
+      "nameKo": "AI 학습 데이터셋",
+      "count": 2463,
+      "sources": [
+        {
+          "id": "hf-datasets",
+          "name": "Hugging Face 데이터셋",
+          "count": 2463
+        }
+      ]
+    },
+    {
+      "id": "kaggle",
+      "nameKo": "Kaggle 데이터셋",
+      "count": 3033,
+      "sources": [
+        {
+          "id": "kaggle",
+          "name": "Kaggle 데이터셋",
+          "count": 3033
+        }
+      ]
+    },
+    {
+      "id": "ml-classic",
+      "nameKo": "머신러닝 기본 데이터셋",
+      "count": 815,
+      "sources": [
+        {
+          "id": "awesome-public-datasets",
+          "name": "Awesome Public Datasets (분야별)",
+          "count": 126
+        },
+        {
+          "id": "uci",
+          "name": "UCI Machine Learning Repository",
+          "count": 689
+        }
+      ]
+    },
+    {
+      "id": "kr-public",
+      "nameKo": "한국 공공데이터 (파일)",
+      "count": 3452,
+      "sources": [
+        {
+          "id": "data-go-kr-files",
+          "name": "공공데이터포털 파일데이터",
+          "count": 3452
+        }
+      ]
+    },
+    {
+      "id": "kr-language",
+      "nameKo": "한국어·한국 데이터 모음",
+      "count": 107,
+      "sources": [
+        {
+          "id": "korean-data",
+          "name": "한국어 데이터셋 모음 (AwesomeKorean_Data)",
+          "count": 107
+        }
+      ]
+    },
+    {
+      "id": "world-stats",
+      "nameKo": "세계 통계·지표",
+      "count": 5804,
+      "sources": [
+        {
+          "id": "owid",
+          "name": "Our World in Data 차트 데이터",
+          "count": 4306
+        },
+        {
+          "id": "worldbank-wdi",
+          "name": "세계은행 세계개발지표 (WDI)",
+          "count": 1498
+        }
+      ]
+    },
+    {
+      "id": "open-data",
+      "nameKo": "분야별 공개 데이터",
+      "count": 2179,
+      "sources": [
+        {
+          "id": "awesome-public-datasets",
+          "name": "Awesome Public Datasets (분야별)",
+          "count": 943
+        },
+        {
+          "id": "aws-open-data",
+          "name": "Registry of Open Data on AWS",
+          "count": 1236
+        }
+      ]
+    },
+    {
+      "id": "sample-data",
+      "nameKo": "앱에 넣는 기본 데이터 (국가·통화·지도)",
+      "count": 120,
+      "sources": [
+        {
+          "id": "reference-data",
+          "name": "앱에 넣는 기본 데이터 (국가·통화·도시·지도 경계)",
+          "count": 120
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "awesome-public-datasets",
+      "name": "Awesome Public Datasets (분야별)",
+      "url": "https://github.com/awesomedata/awesome-public-datasets",
+      "license": "Dataset list from awesomedata/apd-core (GPL-3.0 list repository; names, links and one-line descriptions). Each dataset keeps its own terms.",
+      "count": 1069,
+      "note": "원본 저장소가 깨진 링크로 표시한 항목은 뺀다."
+    },
+    {
+      "id": "aws-open-data",
+      "name": "Registry of Open Data on AWS",
+      "url": "https://registry.opendata.aws/",
+      "license": "Registry entries from awslabs/open-data-registry (Apache-2.0 registry repository); each dataset keeps the license named by its provider.",
+      "count": 1236,
+      "total": 1242,
+      "cut": "폐기(Deprecated) 0개 제외"
+    },
+    {
+      "id": "data-go-kr-files",
+      "name": "공공데이터포털 파일데이터",
+      "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=FILE",
+      "license": "공공데이터포털 목록 정보(제목·설명·제공기관·형식·다운로드 수). 각 데이터의 이용허락범위(공공누리 유형)는 데이터 쪽에서 확인한다.",
+      "count": 3452,
+      "total": 87325,
+      "cut": "다운로드 3,000건 이상 (활용 많은 순으로 넘기다 기준 밑에서 멈춘다)"
+    },
+    {
+      "id": "hf-datasets",
+      "name": "Hugging Face 데이터셋",
+      "url": "https://huggingface.co/datasets",
+      "license": "Hugging Face Hub public API metadata (dataset id, card description, tasks, downloads, likes, license tag); each dataset keeps its own license (field license).",
+      "count": 2463,
+      "cut": "최근 30일 내려받기 10,000회 이상 또는 좋아요 100개 이상 또는 요즘 뜨는 순 상위 300개. 카드 설명이 없으면 좋아요 20개 이상만",
+      "note": "Hub에는 공개 데이터셋이 50만 개 넘게 있다. 설명이 없는 데이터셋은 이름과 만든 곳으로 짧게 적는다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다)."
+    },
+    {
+      "id": "kaggle",
+      "name": "Kaggle 데이터셋",
+      "url": "https://www.kaggle.com/datasets",
+      "license": "Kaggle public API listing metadata (title, subtitle, owner, license name, votes, downloads); each dataset keeps its own license (field license). Downloading needs a Kaggle account.",
+      "count": 3033,
+      "cut": "투표 100개 이상 (투표 많은 순으로 넘겨 받다가 기준 밑에서 멈춘다)",
+      "note": "Kaggle에는 공개 데이터셋이 50만 개 넘게 있고, 목록 API는 깊은 쪽을 주지 않는다. 설치 명령은 Kaggle 공식 명령줄 도구(kaggle) 형식이다."
+    },
+    {
+      "id": "korean-data",
+      "name": "한국어 데이터셋 모음 (AwesomeKorean_Data)",
+      "url": "https://github.com/songys/AwesomeKorean_Data",
+      "license": "List entries (name, link, description) from songys/AwesomeKorean_Data as indexed by awesome.ecosyste.ms (CC BY-SA 4.0). Each dataset keeps its own terms.",
+      "count": 107
+    },
+    {
+      "id": "owid",
+      "name": "Our World in Data 차트 데이터",
+      "url": "https://ourworldindata.org/",
+      "license": "Chart metadata from the official OWID Chart API. OWID-produced data and charts are CC BY 4.0; data from third-party providers keeps the provider terms named in each chart citation.",
+      "count": 4306,
+      "note": "사이트맵의 모든 차트를 싣는다. snippet은 공식 Chart API의 CSV 주소다."
+    },
+    {
+      "id": "reference-data",
+      "name": "앱에 넣는 기본 데이터 (국가·통화·도시·지도 경계)",
+      "url": "https://github.com/datasets",
+      "license": "Repository metadata via repos.ecosyste.ms (CC BY-SA 4.0). DataHub core datasets are mostly ODC-PDDL; each repository keeps its own license (field license).",
+      "count": 120,
+      "note": "GitHub 'datasets' 조직(DataHub core datasets) 전체(별 5개 이상) + 널리 쓰는 참조 데이터 저장소: dr5hn/countries-states-cities-database, mledoze/countries, umpirsky/country-list, annexare/Countries, lukes/ISO-3166-Countries-with-Regional-Codes, datasets/country-codes, southkorea/southkorea-maps, vuski/admdongkor, johan/world.geo.json, nvkelso/natural-earth-vector, unicode-org/cldr-json, samayo/country-json (고른 목록은 코드잇소)."
+    },
+    {
+      "id": "uci",
+      "name": "UCI Machine Learning Repository",
+      "url": "https://archive.ics.uci.edu/",
+      "license": "Dataset metadata from the public UCI ML Repository API. UCI states its donated datasets are licensed CC BY 4.0 unless noted on the dataset page.",
+      "count": 689,
+      "total": 689
+    },
+    {
+      "id": "worldbank-wdi",
+      "name": "세계은행 세계개발지표 (WDI)",
+      "url": "https://datatopics.worldbank.org/world-development-indicators/",
+      "license": "Indicator metadata from the public World Bank Indicators API. The World Bank publishes WDI under CC BY 4.0 (see each indicator page for third-party source terms).",
+      "count": 1498,
+      "total": 1498,
+      "note": "snippet은 공식 Indicators API의 지표 주소다 (모든 나라, JSON)."
+    }
+  ]
+}

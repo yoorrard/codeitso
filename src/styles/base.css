@@ -10,16 +10,17 @@
 }
 
 html {
-  /* color-scheme(낮·밤)은 tokens.css가 정한다 */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* 붙박이 머리말·아래 막대가 초점 받은 요소를 가리지 않게 (WCAG 2.4.11) */
-  scroll-padding-block: var(--bar-top) var(--bar-bottom);
+  /* 붙박이 머리줄이 초점 받은 요소를 가리지 않게 (WCAG 2.4.11) */
+  scroll-padding-block-start: calc(var(--header-h) + var(--space-3));
   background: var(--bg);
 }
 
 body {
   min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -27,45 +28,35 @@ body {
   font-weight: var(--weight-body);
   line-height: var(--leading-body);
   word-break: keep-all;
-  overflow-wrap: anywhere; /* 글자를 크게 키워 낱말이 줄보다 길면 그 안에서라도 끊어 가로 스크롤을 막는다 (WCAG 1.4.10) */
+  overflow-wrap: anywhere; /* 글자를 키워 낱말이 줄보다 길면 그 안에서라도 끊어 가로 스크롤을 막는다 (WCAG 1.4.10) */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  caret-color: var(--text);
-  scrollbar-color: var(--text-2) transparent;
 }
 
-/* 글자 단계 (brief 5.1): 굵기는 400·600·700 셋만. 제목 줄 높이는 '크기 + 9px'(19px 이상 규칙, systems 4.1)이라
-   화면 CSS가 크기만 바꿔도 줄 높이가 따라간다. 단계 밖 H1은 26/35, 묶음 제목 H2는 19/28·600 */
 h1,
 h2,
 h3,
 h4 {
   font-weight: var(--weight-heading);
-  line-height: calc(1em + 0.5625rem);
-  letter-spacing: var(--tracking-title-sm);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
   text-wrap: balance;
 }
 
 h1 {
   font-size: var(--size-title-1);
-  letter-spacing: var(--tracking-title);
 }
 
 h2 {
-  font-size: var(--size-title-3);
-  font-weight: var(--weight-strong);
+  font-size: var(--size-title-2);
 }
 
 h3 {
-  font-size: var(--size-body-lg);
-  font-weight: var(--weight-strong);
-  letter-spacing: var(--tracking-body);
+  font-size: var(--size-title-3);
 }
 
 h4 {
   font-size: var(--size-body);
-  font-weight: var(--weight-strong);
-  letter-spacing: var(--tracking-body);
 }
 
 p,
@@ -108,8 +99,6 @@ textarea {
 button,
 [role='button'],
 summary {
-  min-block-size: var(--tap);
-  min-inline-size: var(--tap);
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -120,14 +109,10 @@ button:disabled,
   cursor: not-allowed;
 }
 
-/* 키보드 초점은 늘 보인다 (마우스로 누를 때는 숨김). 2px 고리 + 2px 띄움 (brief 4.6): 고른 줄의 안쪽 2px 고리와 띄움으로 갈린다 */
+/* 키보드 초점은 늘 보인다 (마우스로 누를 때는 숨김). 2px 고리 + 2px 띄움 */
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
-}
-
-.on-dark :focus-visible {
-  outline-color: var(--focus-on-navy);
 }
 
 ::selection {
@@ -137,9 +122,10 @@ button:disabled,
 
 code,
 kbd,
-samp {
-  font-family: var(--font-receipt);
-  font-size: 0.95em;
+samp,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
 }
 
 /* hidden 속성은 클래스의 display보다 늘 이긴다 */
@@ -168,18 +154,16 @@ samp {
   z-index: 100;
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-sm);
-  background: var(--navy);
-  color: var(--on-navy);
+  background: var(--primary);
+  color: var(--on-primary);
   font-weight: var(--weight-strong);
   transform: translateY(-200%);
 }
 
 .skip-link:focus-visible {
   transform: none;
-  outline-color: var(--focus-on-navy);
 }
 
-/* 숫자를 나란히 비교하는 곳 (비용·개수·시간·n/4). 고정폭 글꼴은 영수증 종이 안에서만 쓴다 */
 .tabular {
   font-variant-numeric: tabular-nums;
 }

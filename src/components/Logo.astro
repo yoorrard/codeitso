@@ -1,20 +1,32 @@
 ---
-// 소유자 로고를 손으로 다시 그린 벡터(D65, brief 3.1·3.5)를 인라인 SVG로 싣는다. 섬 안에서는 Logo.tsx.
-// 경로에는 클래스만 있고 색은 frame.css의 .logo-* 규칙이 --logo-* 토큰으로 칠한다 (밤 모드도 토큰을 따른다).
-// label이 없으면 장식(aria-hidden)이다. 머리줄은 링크 안의 숨은 글 '코드쇼퍼'가 이름을 전한다.
-import { LOGO } from '../lib/logo-paths.ts';
-import type { LogoVariant } from '../lib/logo-paths.ts';
-import { logoA11y, logoWidth } from '../lib/logo.ts';
+// 로고 (v5, D104): 소유자가 준 장바구니 로고에서 npm run logo가 만든 그림 넷(장바구니·글자, 낮·밤 짝).
+// 밤 짝은 남색 글자 '코드'와 바퀴를 밝게 바꾼 것이라, 어두운 화면(기기 설정)에서만 보인다 (shop.css .logo-night).
+// 이름은 둘러싼 링크가 말하므로 그림은 모두 장식(alt="")이다.
+import { FILES } from '../lib/routes.ts';
+import sizes from '../lib/brand-sizes.json';
 
 interface Props {
-  variant: LogoVariant;
-  /** 그릴 높이(CSS px). 폭은 viewBox 비율로 정한다 */
-  height: number;
-  label?: string;
+  /** 장바구니 높이(px). 글자는 그 0.55배. 휴대폰 머리줄은 CSS가 조금 줄인다 */
+  height?: number;
+  /** 글자 '코드잇소'를 함께 그린다 */
+  word?: boolean;
   class?: string;
 }
-const { variant, height, label, class: cls } = Astro.props;
-const art = LOGO[variant];
+const { height = 40, word = true, class: extra } = Astro.props;
+const cartW = Math.round((sizes.cart.w / sizes.cart.h) * height);
+const wordH = Math.round(height * 0.55);
+const wordW = Math.round((sizes.wordmark.w / sizes.wordmark.h) * wordH);
 ---
 
-<svg class:list={['logo', `logo--${variant}`, cls]} viewBox={art.viewBox} width={logoWidth(art, height)} height={height} {...logoA11y(label)} set:html={art.markup} />
+<span class:list={['logo', extra]} style={`--logo-h: ${height}px`}>
+  <img class="logo-day" src={FILES.cart} width={cartW} height={height} alt="" decoding="async" />
+  <img class="logo-night" src={FILES.cartNight} width={cartW} height={height} alt="" decoding="async" />
+  {
+    word && (
+      <>
+        <img class="logo-day logo-word" src={FILES.wordmark} width={wordW} height={wordH} alt="" decoding="async" />
+        <img class="logo-night logo-word" src={FILES.wordmarkNight} width={wordW} height={wordH} alt="" decoding="async" />
+      </>
+    )
+  }
+</span>

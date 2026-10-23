@@ -1,0 +1,78 @@
+{
+  "source": {
+    "id": "electron-forge-templates",
+    "name": "Electron Forge 공식 템플릿",
+    "url": "https://github.com/electron/forge",
+    "license": "Folder names, README text and package.json descriptions from the public repository electron/forge (MIT)."
+  },
+  "fetchedAt": "2026-10-20",
+  "count": 2,
+  "items": [
+    {
+      "id": "electron-forge-templates:vite",
+      "name": "Electron Forge + Vite",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "Vite template for Electron Forge, gets you started with Vite really quickly",
+      "url": "https://github.com/electron/forge/tree/main/packages/template/vite",
+      "source": {
+        "name": "Electron Forge 공식 템플릿",
+        "url": "https://github.com/electron/forge/tree/main/packages/template"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-10-10"
+      },
+      "tags": [
+        "desktop",
+        "electron",
+        "vite"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "packages/template/vite",
+        "repo": "electron/forge"
+      },
+      "use": {
+        "install": "npx create-electron-app@latest my-app --template=vite",
+        "docs": "https://www.electronforge.io/templates/vite"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "electron-forge-templates:webpack",
+      "name": "Electron Forge + Webpack",
+      "kind": "desktop",
+      "category": "templates",
+      "summary": "Webpack template for Electron Forge, gets you started with Webpack really quickly",
+      "url": "https://github.com/electron/forge/tree/main/packages/template/webpack",
+      "source": {
+        "name": "Electron Forge 공식 템플릿",
+        "url": "https://github.com/electron/forge/tree/main/packages/template"
+      },
+      "license": "MIT",
+      "metrics": {
+        "updatedAt": "2026-10-10"
+      },
+      "tags": [
+        "desktop",
+        "electron",
+        "webpack"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "packages/template/webpack",
+        "repo": "electron/forge"
+      },
+      "use": {
+        "install": "npx create-electron-app@latest my-app --template=webpack",
+        "docs": "https://www.electronforge.io/templates/vite"
+      },
+      "fetchedAt": "2026-10-20"
+    }
+  ]
+}

@@ -1,22 +1,9 @@
 ---
-// 이용 안내 초안 /legal/notice (R-73·R-74, T17). 정식 출시 전 사람이 최종 문구를 확인한다 (docs/HUMAN.md H04).
-import Base from '../../layouts/Base.astro';
+// 이용 안내 /legal/notice (R-73·R-74, T17 → L, D136): 이용약관·처리방침을 짧게 줄인 안내. 최종 문구는 사람이 한 번 더 본다 (H04).
+import LegalDoc from '../../components/LegalDoc.astro';
 import { ko } from '../../copy/ko.ts';
 
-const L = ko.legal;
+const L = ko.legal.notice;
 ---
 
-<Base title={L.noticeTitle}>
-  <article class="prose">
-    <p class="review-banner" role="note">{L.reviewing}</p>
-    <h1>{L.noticeTitle}</h1>
-    {
-      L.notice.map((x) => (
-        <>
-          <h2>{x.h}</h2>
-          <p>{x.p}</p>
-        </>
-      ))
-    }
-  </article>
-</Base>
+<LegalDoc doc="notice" pageTitle={L.pageTitle} title={L.title} lead={L.lead} sections={L.sections} />

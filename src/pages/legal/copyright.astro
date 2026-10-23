@@ -1,0 +1,13 @@
+---
+// 저작권·게시 중단 요청 /legal/copyright (L, D136): 사이트의 저작권, 상품 정보의 권리, 권리자의 게시 중단 요청 절차(저작권법의 복제·전송 중단 요구를 본뜸)와
+// 요청 메일을 바로 쓰는 단추(이용자의 메일 앱을 연다, 서버로 받는 폼은 없다). 최종 문구는 사람이 한 번 더 본다 (H04).
+import LegalDoc from '../../components/LegalDoc.astro';
+import { ko } from '../../copy/ko.ts';
+import { CONTACT_EMAIL, mailtoFor } from '../../lib/feedback.ts';
+import { SITE_CONFIG } from '../../lib/site-config.ts';
+
+const L = ko.legal.copyright;
+const mailto = mailtoFor({ email: CONTACT_EMAIL || SITE_CONFIG.email, subject: L.mailSubject, lines: L.mailLines });
+---
+
+<LegalDoc doc="copyright" pageTitle={L.pageTitle} title={L.title} lead={L.lead} sections={L.sections} action={{ section: 'request', href: mailto, label: L.mailButton }} />

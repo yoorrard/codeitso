@@ -1,10 +1,16 @@
 ---
-// 크레딧 /about/credits (T17): THIRD_PARTY_NOTICES.md의 '사이트에 실리는 자료' 표를 빌드 때 그대로 읽어 보여 준다 (한 곳에서만 고친다).
+// 자료 출처 /about/credits: 진열대 자료를 받은 출처 파일마다 이름·상품 수·이용 조건(출처 파일의 source.license 그대로),
+// 그다음 사이트에 실리는 글꼴·아이콘·라이브러리 (THIRD_PARTY_NOTICES.md의 '사이트에 실리는 자료' 표를 빌드 때 읽는다).
 import Base from '../../layouts/Base.astro';
 import notices from '../../../THIRD_PARTY_NOTICES.md?raw';
 import { ko } from '../../copy/ko.ts';
+import { withCommas } from '../../lib/catalog/core.ts';
+import { categories, sources } from '../../lib/catalog/site.ts';
+import { ROUTES } from '../../lib/routes.ts';
 
 const C = ko.credits;
+const names = new Map(categories().map((c) => [c.id, c.nameKo]));
+const groups = categories().map((c) => ({ id: c.id, name: names.get(c.id) ?? c.id, files: sources().filter((s) => s.category === c.id) }));
 const section = notices.split(/^## /m).find((s) => s.startsWith('사이트에 실리는 자료')) ?? ''; // floor-guard-ignore: 화면 문구가 아니라 THIRD_PARTY_NOTICES.md의 절 제목을 찾는 열쇠
 const rows = section
   .split('\n')
@@ -18,13 +24,39 @@ const rows = section
   );
 ---
 
-<Base title={C.pageTitle}>
-  <article class="prose">
+<Base title={C.pageTitle} back={ROUTES.about}>
+  <article class="prose is-wide">
     <h1>{C.title}</h1>
-    <p class="lead">{C.lead}</p>
+    <p class="page-lead">{C.lead}</p>
+    <p>{C.attribution}</p>
+    <h2>{C.sourcesTitle}</h2>
+    {
+      groups.map((g) => (
+        <section aria-labelledby={`cr-${g.id}`}>
+          <h3 id={`cr-${g.id}`}>{g.name}</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>{C.cols.map((c) => <th scope="col">{c}</th>)}</tr>
+              </thead>
+              <tbody>
+                {g.files.map((f) => (
+                  <tr>
+                    <th scope="row">{f.url ? <a href={f.url} target="_blank" rel="noopener noreferrer">{f.name}</a> : f.name}</th>
+                    <td class="num">{withCommas(f.count)}</td>
+                    <td>{f.license}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ))
+    }
+    <h2>{C.siteTitle}</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr>{C.cols.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+        <thead><tr>{C.siteCols.map((c) => <th scope="col">{c}</th>)}</tr></thead>
         <tbody>
           {
             rows.map((r) => (

@@ -1,4 +1,4 @@
-> 출처: emilkowalski/skills @ 2d228630ba1446365f614a108cb8252f1feda202 (MIT). 원문 그대로다. React·Base UI·Motion 예시는 원리만 참고하고, 코드쇼퍼에서는 Preact + CSS/WAAPI + 토큰으로 옮겨 쓴다.
+> 출처: emilkowalski/skills @ 2d228630ba1446365f614a108cb8252f1feda202 (MIT). 원문 그대로다. React·Base UI·Motion 예시는 원리만 참고하고, 코드잇소에서는 Preact + CSS/WAAPI + 토큰으로 옮겨 쓴다.
 
 # Animation Standards Reference
 

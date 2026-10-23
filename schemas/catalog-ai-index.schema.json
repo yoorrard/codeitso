@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "catalog-ai-index.schema.json",
+  "title": "AI 확장 진열대 색인 (data/catalog/ai/index.json)",
+  "type": "object",
+  "required": ["category", "nameKo", "fetchedAt", "count", "subcategories"],
+  "additionalProperties": false,
+  "properties": {
+    "category": { "const": "ai" },
+    "nameKo": { "type": "string" },
+    "fetchedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "count": { "type": "integer", "minimum": 0 },
+    "subcategories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "nameKo", "count", "sources"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "enum": ["skill", "mcp", "plugin", "subagent", "rules", "prompt", "hook", "framework", "workflow"] },
+          "nameKo": { "type": "string" },
+          "descKo": { "type": "string" },
+          "count": { "type": "integer", "minimum": 0 },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "url", "file", "count", "available", "license"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "url": { "type": "string", "pattern": "^https://" },
+                "file": { "type": "string", "pattern": "^[a-z0-9-]+\\.json$" },
+                "count": { "type": "integer", "minimum": 0 },
+                "available": { "type": "integer", "minimum": 0 },
+                "cut": { "type": "string" },
+                "license": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # 제3자 고지 (Third-party notices)
 
-코드쇼퍼 저장소에 들어 있거나 빌드 결과에 실리는 외부 자료와 그 라이선스다. 각 라이선스 원문은 표의 위치에 함께 둔다. 사이트의 `/about/credits` 페이지가 이 표를 이용자에게 보여 준다.
+코드잇소 저장소에 들어 있거나 빌드 결과에 실리는 외부 자료와 그 라이선스다. 각 라이선스 원문은 표의 위치에 함께 둔다. 사이트의 `/about/credits` 페이지가 이 표를 이용자에게 보여 준다.
 
 ## 개발 하네스: Claude Code 스킬 (`.claude/skills/`)
 
@@ -17,7 +17,7 @@
 | `accessibility` | addyosmani/web-quality-skills `skills/accessibility` (afa8da942115f2961fdbfa80807ea0b232ff6c00) | MIT (`LICENSE`) | WCAG 2.2·한국어·Preact 예시, 시험 방법을 프로젝트 도구로, 축약 |
 | `polish` | pbakaus/impeccable v4.5.2 `reference/craft-floor.md`, `polish.md`, `audit.md` (919dbeba520df760a157fe635be62faae88d58da) | Apache-2.0 (`LICENSE`, `NOTICE.md`) | 실행 파일·감지기 제거, 프로젝트 규칙에 맞춤 (Apache-2.0 4조 b항 고지는 파일 머리말) |
 
-`next-task`, `verify`, `add-product`, `visual-qa`, `game-motion`과 `.claude/agents/`, `.claude/rules/`, `.claude/hooks/`는 이 저장소에서 쓴 것이다 (MIT).
+`next-task`, `verify`, `visual-qa`와 `.claude/agents/`, `.claude/rules/`, `.claude/hooks/`는 이 저장소에서 쓴 것이다 (MIT).
 
 ## 사이트에 실리는 자료
 
@@ -25,6 +25,7 @@
 |---|---|---|---|
 | Pretendard Variable 1.3.9 (가변 글꼴 동적 하위 집합 92조각, 고치지 않음) | orioncactus/pretendard (npm `pretendard`) | SIL OFL 1.1 | `public/fonts/pretendard/` + `OFL.txt` |
 | 영수증 글꼴 `CC Receipt` | naver/d2-coding-font VER1.4.0 (D2Coding)에서 글자를 골라 이름을 바꾼 수정본 (`scripts/fonts/build-fonts.ts`) | SIL OFL 1.1 | `public/fonts/receipt/` + `OFL.txt` |
+| 로고 글자 그림 '코드잇소' (`assets-src/brand/wordmark-codeitso.png`, 글꼴 파일은 싣지 않음) | google/fonts `ofl/blackhansans` Black Han Sans (Zess Type)로 그린 그림 (`scripts/brand/make-wordmark.ts`) | SIL OFL 1.1 (글꼴로 만든 그림은 자유롭게 쓸 수 있다) | 그림만 저장소에 |
 | UI 아이콘 (Regular, 등록한 것만) | phosphor-icons/core 2.1.1 (npm `@phosphor-icons/core`) | MIT | 빌드 때 HTML에 인라인 (`src/lib/icons.ts`), 라이선스는 `node_modules/@phosphor-icons/core/LICENSE`와 `/about/credits` |
 | 효과음 합성 | KilledByAPixel/ZzFX (쓸 경우) | MIT | npm 의존성 |
 

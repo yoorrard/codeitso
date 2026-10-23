@@ -1,0 +1,37 @@
+---
+// 홈 '무엇을 만들고 싶어요?' (brief 7절 묶음 기획전, v5.1 D124 → K1 D131): 주제마다 한 장씩 고른 키트 다섯 장과 '모두 보기'(/kits, 키트 모두).
+// 휴대폰·태블릿은 가로로 넘기고, PC는 다섯 장을 한 줄에 둔다. 카드는 KitCard.astro.
+import Icon from './Icon.astro';
+import KitCard from './KitCard.astro';
+import { ko } from '../copy/ko.ts';
+import type { KitData } from '../lib/catalog/types.ts';
+import { ROUTES } from '../lib/routes.ts';
+import { fill } from '../lib/text.ts';
+
+interface Props {
+  kits: KitData[];
+}
+const { kits } = Astro.props;
+---
+
+{
+  kits.length > 0 && (
+    <section class="sec kits" aria-labelledby="kits-title">
+      <div class="sec-head">
+        <div class="sec-titles">
+          <h2 id="kits-title">{ko.kits.title}</h2>
+          <p class="sec-lead">{ko.kits.lead}</p>
+        </div>
+        <a class="sec-more" href={ROUTES.kits} aria-label={fill(ko.home.moreOf, { title: ko.kits.pageTitle })}>
+          {ko.home.more}
+          <Icon name="chevron" size="16px" />
+        </a>
+      </div>
+      <ul class="kit-track">
+        {kits.map((k) => (
+          <KitCard kit={k} />
+        ))}
+      </ul>
+    </section>
+  )
+}

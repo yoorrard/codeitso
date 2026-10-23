@@ -13,7 +13,7 @@ paths:
 > 고친 곳: 원본 스킬은 실행할 때마다 원격 규칙을 내려받는데, 내용이 바뀌거나 원격 글이 지시문이 되는 일을 막으려고 규칙을 이 파일에 고정했다.
 > Tailwind·Next.js 전용 표현(`focus-visible:ring-*`, `<Link>`, nuqs, React hydration)을 Astro·Preact에 맞게 바꿨고,
 > CDN preconnect 규칙을 뺐다 (모든 자산을 직접 싣는다). 영어 문장 규칙(Title Case, 굽은 따옴표, `&`)은 `.claude/rules/copy.md`로 바꿨다.
-> 코드쇼퍼 전용 항목(토큰, 44px, 360px, 동작 줄이기 정책)을 더했다.
+> 코드잇소 전용 항목(토큰, 44px, 360px, 동작 줄이기 정책)을 더했다.
 
 # 웹 인터페이스 지침 검토
 

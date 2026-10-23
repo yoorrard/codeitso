@@ -1,0 +1,451 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "looks.schema.json",
+  "title": "디자인 정하기 자료 (T38, docs/review/v3/brief.md 4절·design.md 5·9절): 느낌 여섯, 바탕 넷, 대표 색 열, 글꼴, 모서리·촘촘함·움직임·깊이, 아이콘, 그림, 첫 화면 배치, 앱 종류별 기본값, 화면 부품 이름, 느낌·색 낱말, 참고 사이트. 값과 이름표만 둔다: 설계도 6번 문장은 templates.json look, 화면 문구는 src/copy/ko.ts look. 엔진 계산(evaluate)은 이 파일을 읽지 않는다(src/lib/engine/look.ts가 따로 받는다). 대비(대표 색 10 × 바탕 4 × 밝기 2 = 80쌍 4.6:1 이상, 테두리 3.1:1 이상)와 라이선스 허용 목록은 npm run validate가 본다",
+  "type": "object",
+  "required": [
+    "version",
+    "checkedAt",
+    "contrast",
+    "fixed",
+    "moods",
+    "neutrals",
+    "accents",
+    "themes",
+    "families",
+    "fonts",
+    "radius",
+    "density",
+    "motion",
+    "depths",
+    "iconSets",
+    "imagery",
+    "tones",
+    "layouts",
+    "defaultsByType",
+    "components",
+    "keywords",
+    "references",
+    "referenceKeywords"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "hex": { "type": "string", "pattern": "^#[0-9A-F]{6}$", "description": "대문자 #RRGGBB" },
+    "day": { "type": "string", "pattern": "^20[0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$" },
+    "label": { "type": "string", "minLength": 1, "maxLength": 30 },
+    "sources": { "type": "array", "minItems": 1, "items": { "$ref": "defs.schema.json#/$defs/url" } },
+    "license": { "enum": ["OFL-1.1", "MIT", "ISC"], "description": "허용 목록. 여기 없는 라이선스의 글꼴·아이콘은 싣지 않는다 (design.md 3.4·5.5절)" },
+    "neutralSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bg", "surface", "text", "muted", "border", "line"],
+      "properties": {
+        "bg": { "$ref": "#/$defs/hex", "description": "화면 바탕" },
+        "surface": { "$ref": "#/$defs/hex", "description": "면(카드·묶음)" },
+        "text": { "$ref": "#/$defs/hex", "description": "글자" },
+        "muted": { "$ref": "#/$defs/hex", "description": "약한 글자" },
+        "border": { "$ref": "#/$defs/hex", "description": "입력 테두리 (글자가 아닌 것, 3.1:1 이상)" },
+        "line": { "$ref": "#/$defs/hex", "description": "나눔 선 (꾸밈, 대비 기준 없음)" }
+      }
+    },
+    "lightDark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["light", "dark"],
+      "properties": { "light": { "$ref": "#/$defs/hex" }, "dark": { "$ref": "#/$defs/hex" } }
+    },
+    "typeStep": {
+      "type": "array",
+      "prefixItems": [
+        { "type": "integer", "minimum": 14, "maximum": 40, "description": "글자 크기 px" },
+        { "type": "number", "minimum": 1.1, "maximum": 2, "description": "줄 높이" }
+      ],
+      "items": false,
+      "minItems": 2
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label"],
+      "properties": { "id": { "$ref": "defs.schema.json#/$defs/id" }, "label": { "$ref": "#/$defs/label" } }
+    },
+    "aliasEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "aliases"],
+      "properties": {
+        "id": { "$ref": "defs.schema.json#/$defs/id" },
+        "aliases": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "이용자가 칠 말 (data/aliases.json과 같은 규칙: '='로 시작하면 어절 하나 전체가 같을 때만, 한 글자 말은 '='가 있어야 한다)"
+        }
+      }
+    }
+  },
+  "properties": {
+    "version": { "const": 1 },
+    "checkedAt": { "$ref": "#/$defs/day" },
+    "contrast": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "border", "standard", "nonText"],
+      "description": "target: 견본과 엔진이 맞추는 글자 대비(여유를 둔 값), border: 견본 테두리, standard·nonText: 화면과 설계도에 적는 기준(WCAG 2.2 AA)",
+      "properties": {
+        "target": { "const": 4.6 },
+        "border": { "const": 3.1 },
+        "standard": { "const": 4.5 },
+        "nonText": { "const": 3 }
+      }
+    },
+    "fixed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error", "success", "onLight", "onDark"],
+      "description": "오류·성공 색은 대표 색과 상관없이 고정. onLight: 밝은 화면 버튼 글자 후보 (앞의 것이 먼저), onDark: 어두운 화면 버튼 글자",
+      "properties": {
+        "error": { "$ref": "#/$defs/lightDark" },
+        "success": { "$ref": "#/$defs/lightDark" },
+        "onLight": { "type": "array", "prefixItems": [{ "const": "#FFFFFF" }, { "$ref": "#/$defs/hex" }], "items": false, "minItems": 2 },
+        "onDark": { "$ref": "#/$defs/hex" }
+      }
+    },
+    "moods": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "description": "느낌 여섯. id와 이름은 questions.json q.style의 보기와 같다 (npm run validate)",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "keywordsKo", "keywordsEn", "neutral", "accent", "font", "radius", "depth", "icons", "motion"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "keywordsKo": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "string", "minLength": 1 }, "description": "AI에게 줄 느낌 낱말 (설계도 6-1)" },
+          "keywordsEn": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "string", "pattern": "^[a-z][a-z -]*$" } },
+          "neutral": { "$ref": "defs.schema.json#/$defs/id" },
+          "accent": { "$ref": "defs.schema.json#/$defs/id" },
+          "font": { "$ref": "defs.schema.json#/$defs/id" },
+          "radius": { "$ref": "defs.schema.json#/$defs/id" },
+          "radiusValues": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": { "type": "integer", "minimum": 0, "maximum": 9999 },
+            "description": "이 느낌만의 작은·보통·큰 모서리 (없으면 radius 단계 값). 이용자가 모서리 줄을 고르면 그 단계 값을 쓴다"
+          },
+          "depth": { "$ref": "defs.schema.json#/$defs/id" },
+          "icons": { "$ref": "defs.schema.json#/$defs/id" },
+          "motion": { "$ref": "defs.schema.json#/$defs/id" },
+          "motionStyle": { "enum": ["short", "steps"], "description": "short: 짧고 빠르게, steps: steps()로 끊어서 (설계도 6-8)" },
+          "tabularNums": { "const": true, "description": "숫자 자리 맞춤(tabular-nums)을 설계도에 적는다" }
+        }
+      }
+    },
+    "neutrals": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "light", "dark"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "light": { "$ref": "#/$defs/neutralSet" },
+          "dark": { "$ref": "#/$defs/neutralSet" }
+        }
+      }
+    },
+    "accents": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "description": "대표 색 열 (노랑 없음: 흰 글자 대비가 모자란다). light는 밝은 화면의 버튼 바탕이자 글자·링크 색, dark는 어두운 화면의 같은 자리, soft는 밝은 화면의 옅은 주색 면",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "light", "dark", "soft"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "light": { "$ref": "#/$defs/hex" },
+          "dark": { "$ref": "#/$defs/hex" },
+          "soft": { "$ref": "#/$defs/hex" }
+        }
+      }
+    },
+    "themes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label"],
+        "properties": { "id": { "enum": ["light", "dark", "both"] }, "label": { "$ref": "#/$defs/label" } }
+      }
+    },
+    "families": {
+      "type": "array",
+      "minItems": 1,
+      "description": "글꼴 가족의 사실 (판·라이선스·받는 법). 받는 법은 공식 원본(패키지 안내·패키지 파일·글꼴 주소 응답)에서 확인한 것만 쓴다. 확인하지 못했으면 html·npm을 비우고 needsReview: true (설계도는 공식 안내 주소만 적는다)",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "css", "fallback", "license", "package", "version", "home", "checkedAt", "needsReview", "sources"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "name": { "type": "string", "minLength": 1 },
+          "css": { "type": "string", "minLength": 1, "description": "CSS font-family에 쓰는 이름" },
+          "fallback": { "type": "string", "minLength": 1 },
+          "license": { "$ref": "#/$defs/license" },
+          "package": { "type": "string", "minLength": 1 },
+          "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+          "html": { "type": "string", "pattern": "^<link ", "description": "HTML <head>에 넣는 한 줄 (공식 안내 그대로)" },
+          "npm": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["install", "import"],
+            "properties": {
+              "install": { "type": "string", "pattern": "^npm install [@a-z0-9/._-]+$", "description": "판 번호를 박지 않는다" },
+              "import": { "type": "string", "pattern": "^import '[^']+';$" }
+            }
+          },
+          "home": { "$ref": "defs.schema.json#/$defs/url" },
+          "checkedAt": { "$ref": "#/$defs/day" },
+          "needsReview": { "type": "boolean" },
+          "sources": { "$ref": "#/$defs/sources" }
+        }
+      }
+    },
+    "fonts": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "description": "글꼴 짝 여덟 (제목 + 본문). 가족은 둘까지",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "heading", "headingWeight", "body"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "heading": { "$ref": "defs.schema.json#/$defs/id" },
+          "headingWeight": { "enum": [400, 600, 700] },
+          "body": { "$ref": "defs.schema.json#/$defs/id" }
+        }
+      }
+    },
+    "radius": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "values"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "values": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "integer", "minimum": 0, "maximum": 9999 }, "description": "작은·보통·큰 (px). 9999는 알약" }
+        }
+      }
+    },
+    "density": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "gutter", "section", "row", "tap", "type"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "gutter": { "type": "integer", "minimum": 12, "maximum": 32 },
+          "section": { "type": "integer", "minimum": 16, "maximum": 64 },
+          "row": { "type": "integer", "minimum": 44, "maximum": 80 },
+          "tap": { "type": "integer", "minimum": 44, "maximum": 64, "description": "누르는 곳. 촘촘하게도 44 아래로 내리지 않는다" },
+          "type": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "subtitle", "bodyLg", "body", "label", "caption"],
+            "properties": {
+              "title": { "$ref": "#/$defs/typeStep" },
+              "subtitle": { "$ref": "#/$defs/typeStep" },
+              "bodyLg": { "$ref": "#/$defs/typeStep" },
+              "body": { "$ref": "#/$defs/typeStep" },
+              "label": { "$ref": "#/$defs/typeStep" },
+              "caption": { "$ref": "#/$defs/typeStep" }
+            }
+          }
+        }
+      }
+    },
+    "motion": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "움직임 셋 (ms). 모두 동작 줄이기면 끈다",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "press", "screen", "list", "celebrate"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "press": { "type": "integer", "minimum": 0, "maximum": 300 },
+          "screen": { "type": "integer", "minimum": 0, "maximum": 400 },
+          "list": { "type": "integer", "minimum": 0, "maximum": 400 },
+          "celebrate": { "type": "integer", "minimum": 0, "maximum": 600 },
+          "easing": { "type": "string", "pattern": "^cubic-bezier\\(" }
+        }
+      }
+    },
+    "depths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "border", "shadow"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "border": { "type": "integer", "minimum": 0, "maximum": 2 },
+          "shadow": { "type": "string", "minLength": 1 },
+          "floatOnly": { "const": true, "description": "그림자는 떠 있는 것(메뉴·대화 상자)에만" }
+        }
+      }
+    },
+    "iconSets": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "아이콘 묶음 셋 + '아이콘 적게'. 묶음은 판·라이선스·패키지를 npm 등록 정보로 확인한다",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "name": { "type": "string", "minLength": 1 },
+          "license": { "$ref": "#/$defs/license" },
+          "package": { "type": "string", "minLength": 1 },
+          "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+          "react": { "type": "string", "minLength": 1, "description": "React에서 쓰는 패키지 이름" },
+          "home": { "$ref": "defs.schema.json#/$defs/url" },
+          "checkedAt": { "$ref": "#/$defs/day" },
+          "needsReview": { "type": "boolean" },
+          "sources": { "$ref": "#/$defs/sources" }
+        },
+        "dependentRequired": {
+          "name": ["license", "package", "version", "react", "home", "checkedAt", "needsReview", "sources"]
+        }
+      }
+    },
+    "imagery": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "$ref": "#/$defs/option" } },
+    "tones": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/option" }, "description": "앱 말투 (P1 '내 말로' 넓히기)" },
+    "layouts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page", "form", "record", "quiz", "tool", "board", "custom"],
+      "description": "앱 종류마다 첫 화면 배치 둘 (앞의 것이 기본). id는 모든 종류에서 겹치지 않는다",
+      "patternProperties": { "^[a-z]+$": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/option" } } }
+    },
+    "defaultsByType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page", "form", "record", "quiz", "tool", "board", "custom"],
+      "description": "앱 종류(q.type 보기 id, 직접 쓴 앱·안 정함은 custom)별 추천 느낌 셋(앞의 것이 '모르겠어요'의 값)·촘촘함·그림",
+      "patternProperties": {
+        "^[a-z]+$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["moods", "density", "imagery"],
+          "properties": {
+            "moods": { "type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": { "$ref": "defs.schema.json#/$defs/id" } },
+            "density": { "$ref": "defs.schema.json#/$defs/id" },
+            "imagery": { "$ref": "defs.schema.json#/$defs/id" }
+          }
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "description": "화면 부품과 상태의 쉬운 이름·영어 이름·규칙 한 줄 (설계도 6-7, 디자인 둘러보기). browse가 참이면 /looks의 부품 목록(부품 17)·상태 다섯에 보인다",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "en", "kind", "rule"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "label": { "$ref": "#/$defs/label" },
+          "en": { "type": "string", "pattern": "^[A-Z][A-Za-z ·-]+$" },
+          "kind": { "enum": ["part", "state"] },
+          "browse": { "const": true },
+          "rule": { "type": "string", "minLength": 1, "maxLength": 80 }
+        }
+      }
+    },
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mood", "accent", "theme"],
+      "description": "직접 쓴 말에서 느낌·대표 색·밝기를 찾는 낱말표 (설계서 4.5절, 찾기는 engine/match.ts findAliases). 순서: 직접 고른 값 > 쓴 말에서 찾은 값 > 앱 종류 기본값. 화면 문구 검사(npm run words)는 이 칸을 보지 않는다",
+      "properties": {
+        "mood": { "type": "array", "minItems": 6, "items": { "$ref": "#/$defs/aliasEntry" } },
+        "accent": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/aliasEntry" } },
+        "theme": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": { "$ref": "#/$defs/aliasEntry" },
+          "description": "어두운 말은 '둘 다'로 둔다 ('어둡게만'으로 두지 않는다: 낮에도 읽혀야 한다)"
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "description": "다른 앱 둘러보기 (설계서 4.9절 7). 첫 화면 주소만, 제휴·추적 매개변수 없음, 화면 수·요금 같은 숫자 없음. 원문을 열지 못해 모두 needsReview: true (H16)",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "url", "what", "checkedAt", "needsReview", "sources"],
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/id" },
+          "name": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+/$", "description": "첫 화면 주소 (경로·매개변수 없음)" },
+          "what": { "type": "string", "minLength": 1, "maxLength": 40 },
+          "checkedAt": { "$ref": "#/$defs/day" },
+          "needsReview": { "const": true },
+          "sources": { "$ref": "#/$defs/sources" }
+        }
+      }
+    },
+    "referenceKeywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page", "form", "record", "quiz", "tool", "board", "custom"],
+      "description": "앱 종류별 영어 찾을 낱말 (참고 사이트가 영어로 나눈다). first: 첫 화면, more: 다른 화면·상태",
+      "patternProperties": {
+        "^[a-z]+$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["first", "more"],
+          "properties": {
+            "first": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^[a-z][a-z ]*$" } },
+            "more": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^[a-z][a-z ]*$" } }
+          }
+        }
+      }
+    }
+  }
+}

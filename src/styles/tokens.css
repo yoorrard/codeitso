@@ -1,174 +1,143 @@
-/* 디자인 토큰 v2 (D60, docs/review/v2/systems.md): 로고의 남색 #001E5A · 파랑 #0082FA · 청록 #00B4FA에서 만든 값.
+/* 디자인 토큰 v5 (docs/review/v5/brief.md 4절, D104): 장바구니 로고(assets-src/brand/logo-cart-source.webp)에서 뽑은 색.
+   로고 파랑 #0364F5 = 주색, 로고 남색 #142A4C = 글자, 카드 네 색(보라 #7050EC·노랑 #FFB505·코랄 #FF6982·초록 #25B085)은 대분류 강조색.
    색·글꼴·크기·모서리·그림자·모션 길이는 이 변수만 쓴다 (품질 바닥선 검사). 글자색 줄의 '대비:' 주석은 scripts/check-tokens.ts가
-   낮·밤 두 값으로 검사한다. 화면 코드는 뜻 색(--text, --surface, --accent…)만 쓰고 원색(--gray-*, --blue-*)은 이 파일 안에서만 쓴다. */
+   낮·밤 두 값으로 검사한다. 화면 코드는 뜻 색(--text, --surface, --primary…)만 쓰고 원색(--gray-*, --blue-*)은 이 파일 안에서만 쓴다. */
 :root {
   color-scheme: light;
 
-  /* 원색 1: 길 회색. 남색 기운(OKLCH 색상각 258). 1·2 바탕, 3~5 부품 면, 6~8 선, 9·10 그림·꼬리 글, 11·12 글자 */
-  --gray-1: #f8fafc;
-  --gray-2: #f2f5f8;
-  --gray-3: #eaedf2;
-  --gray-4: #e2e5eb;
-  --gray-5: #d9dde4;
-  --gray-6: #d0d5de;
-  --gray-7: #c2c8d3;
-  --gray-8: #a9b2be;
-  --gray-9: #7d8795;
-  --gray-10: #656f7f;
-  --gray-11: #515c6c;
-  --gray-12: #111c2c;
+  /* 원색 1: 남색 기운 회색. 1·2 바탕, 3~5 부품 면, 6·7 선, 8~10 꼬리·보조 글, 12 = 로고 남색 */
+  --gray-1: #f6f8fb;
+  --gray-2: #eff2f7;
+  --gray-3: #e6eaf1;
+  --gray-4: #dce1ea;
+  --gray-5: #cdd4df;
+  --gray-6: #b3bccb;
+  --gray-7: #848fa4;
+  --gray-8: #5d6a82;
+  --gray-9: #4d5c77;
+  --gray-10: #34435f;
+  --gray-11: #1f3051;
+  --gray-12: #142a4c;
 
-  /* 원색 2: 파랑. 9 = 로고 파랑, 12 = 로고 남색 */
-  --blue-1: #f6fbff;
-  --blue-2: #eaf5ff;
-  --blue-3: #d9eeff;
-  --blue-4: #c7e5ff;
-  --blue-5: #b3dcff;
-  --blue-6: #9dcfff;
-  --blue-7: #7fbdff;
-  --blue-8: #5aa5ff;
-  --blue-9: #0082fa;
-  --blue-10: #0a6fdc;
-  --blue-11: #0f61c3;
-  --blue-12: #001e5a;
+  /* 원색 2: 파랑. 8 = 로고 파랑 */
+  --blue-1: #f3f7ff;
+  --blue-2: #e7efff;
+  --blue-3: #d4e3ff;
+  --blue-4: #b9d1ff;
+  --blue-5: #90b5fb;
+  --blue-6: #5d93f7;
+  --blue-7: #2f77f6;
+  --blue-8: #0364f5;
+  --blue-9: #0258d6;
+  --blue-10: #034bb5;
+  --blue-11: #0a3d8f;
+  --blue-12: #142a4c;
 
-  /* 브랜드 세 색 (로고 값 그대로) */
-  --navy: #001e5a; /* 브랜드 면: 머리 띠, 영수증 머리, 내 길 바깥선, 고른 곳 */
-  --navy-raised: #0b2d74; /* 남색 위 누름·겹친 면 */
-  --brand-blue: #0082fa; /* 그림 전용(글자 아님): 진행 막대 채움(바탕은 --fill), 지금 위치, 로고. 대비: --surface 3, --bg 3, --fill 3, --navy 3 */
-  --cyan: #00b4fa; /* 남색 위에서만 글자로 쓴다. 밝은 바탕에서는 장식(전조등 빛, 길 심). 대비: --navy 4.5 */
-  --brand-white: #f6f8fa; /* 로고의 흰색(얼굴·손·운전대), 모자 배지의 모자. 대비: --navy 4.5 */
-
-  /* 로고 칠 (D65, brief 3.4): 인라인 SVG 로고(Logo.astro·Logo.tsx)의 경로 클래스가 이 다섯 변수로 칠한다.
-     밤에는 색마다 한 단씩 밝게, 몸은 채도를 낮춰 빛이 위에 뜨게. 흰색은 바꾸지 않는다. 모자 배지·영수증은 낮 값 그대로 */
-  --logo-body: var(--navy); /* 모자, 옷, 차 몸. 대비: --surface 3, --bg 3 */
-  --logo-letter: var(--navy); /* 글자 '코드'. 대비: --surface 4.5, --bg 4.5 */
-  --logo-accent: var(--brand-blue); /* 모자 띠, 넥타이, 괄호, 글자 '쇼퍼'. 대비: --surface 3, --bg 3 */
-  --logo-light: var(--cyan); /* 전조등, 그릴 띠. 대비: --logo-body 3 */
-  --logo-white: var(--brand-white); /* 얼굴, 손, 운전대. 대비: --logo-body 4.5 */
+  /* 로고 색 (값 그대로). 글자로 쓸 때는 대비 쌍을 지킨다 */
+  --brand-blue: #0364f5; /* 로고 파랑. 대비: --surface 4.5 */
+  --brand-navy: #142a4c; /* 로고 남색. 대비: --surface 4.5 */
 
   /* 면 */
-  --bg: var(--gray-2); /* 페이지 바탕 (흰 묶음 뒤 회색) */
-  --surface: #ffffff; /* 묶음 목록·카드·아래 막대 */
-  --surface-raised: #ffffff; /* 시트·대화 상자·떠 있는 것 (밤에는 한 단 밝다) */
-  --fill: var(--gray-3); /* 칩·보조 버튼·입력 칸의 면 */
-  --fill-press: var(--gray-4); /* 누름 */
-  --selected: var(--blue-2); /* 고른 줄·고른 보기의 옅은 면 */
-  --chosen: var(--navy); /* 고른 칩·칸 고르개 손잡이의 채움 (밤에는 밝은 회색). 대비: --fill 3, --surface 3, --bg 3 */
-  --on-chosen: #ffffff; /* 대비: --chosen 4.5 */
-  --hairline: var(--gray-4); /* 장식 선 (묶음 안 나눔 선) */
-  --border: var(--gray-9); /* 입력 칸 테두리. 대비: --surface 3, --bg 3 */
-  --scrim: rgb(8 16 27 / 0.4); /* 시트 뒤 어둡게 */
+  --bg: var(--gray-1); /* 페이지 바탕 */
+  --surface: #ffffff; /* 카드·머리줄·표 */
+  --surface-raised: #ffffff; /* 메뉴·풀이 상자처럼 떠 있는 것 (밤에는 한 단 밝다) */
+  --surface-sunken: var(--gray-2); /* 카드 안 미리 보기 판, 코드 덩어리 */
+  --fill: var(--gray-2); /* 칩·보조 버튼·입력 칸의 면 */
+  --fill-press: var(--gray-3);
+  --selected: var(--blue-2); /* 고른 칩·지금 쪽 번호의 옅은 면 */
+  --hairline: var(--gray-4); /* 카드 테두리, 나눔 선 */
+  --skeleton: var(--gray-4); /* 기다리는 동안의 뼈대 판 (U, D148). 바탕·카드 위 모두 보이게 눌린 면보다 한 단 진하다 (밤에도 같은 단) */
+  --border: var(--gray-7); /* 입력 칸 테두리. 대비: --surface 3, --bg 3 */
+  --scrim: rgb(8 16 32 / 0.45);
 
   /* 글자 */
-  --text: var(--gray-12); /* 대비: --bg 4.5, --surface 4.5, --surface-raised 4.5, --fill 4.5, --selected 4.5 */
-  --text-2: var(--gray-11); /* 보조 글. 대비: --bg 4.5, --surface 4.5, --surface-raised 4.5, --fill 4.5 */
-  --text-3: var(--gray-10); /* 꼬리 글. --fill 위에는 쓰지 않는다. 지도 위 회색 그림(학생 정보 빗금 mk-hatch, 굴 둔덕, 나중 가지)도 이 색이다. 대비: --bg 4.5, --surface 4.5, --map-land 3 */
-  --text-disabled: var(--gray-9); /* 꺼진 버튼 글. 꺼진 부품은 대비 예외지만 초점을 받고 할 일을 말하는 주 버튼이라 3:1을 지킨다 (D70 검토 반영). 대비: --fill 3 */
-  --link: var(--blue-11); /* 대비: --bg 4.5, --surface 4.5, --selected 4.5 */
-  --on-navy: #ffffff; /* 대비: --navy 4.5 */
-  --on-navy-2: #a9c3e6; /* 남색 위 보조 글. 대비: --navy 4.5 */
+  --text: var(--gray-12); /* 대비: --bg 4.5, --surface 4.5, --surface-sunken 4.5, --fill 4.5, --selected 4.5 */
+  --text-2: var(--gray-9); /* 보조 글. 대비: --bg 4.5, --surface 4.5, --surface-sunken 4.5, --fill 4.5 */
+  --text-3: var(--gray-8); /* 꼬리 글(출처·숫자). 대비: --bg 4.5, --surface 4.5, --surface-sunken 4.5 */
+  --link: var(--blue-9); /* 대비: --bg 4.5, --surface 4.5, --surface-sunken 4.5, --selected 4.5 */
 
-  /* 행동: 화면마다 주 버튼 하나 */
-  --accent: var(--blue-10); /* 주 버튼 채움. 대비: --surface 3, --bg 3 */
-  --accent-press: var(--blue-11);
-  --on-accent: #ffffff; /* 대비: --accent 4.5, --accent-press 4.5 */
-  --accent-soft: var(--blue-2); /* 옅은 버튼 면 */
-  --on-accent-soft: var(--blue-11); /* 대비: --accent-soft 4.5 */
+  /* 행동: 주 버튼(담기·검색)은 로고 파랑 */
+  --primary: var(--blue-8); /* 주 버튼 채움. 대비: --surface 3, --bg 3 */
+  --primary-press: var(--blue-9);
+  --on-primary: #ffffff; /* 대비: --primary 4.5, --primary-press 4.5 */
+  --primary-soft: var(--blue-2); /* 옅은 버튼·담은 상태 */
+  --on-primary-soft: var(--blue-10); /* 대비: --primary-soft 4.5 */
 
-  /* 상태: 원활·서행·막힘. 늘 그림 + 글과 함께 (색만으로 뜻을 전하지 않는다) */
-  --ok: #0e8f50; /* 그림. 대비: --surface 3 */
+  /* 장바구니 개수 배지: 로고 코랄 위 남색 글자 */
+  --badge: #ff6982;
+  --on-badge: #142a4c; /* 대비: --badge 4.5 */
+
+  /* 대분류 강조색 (로고 카드 색). 면(-soft) 위 글자는 -ink, 그림·띠는 기본 값 */
+  --cat-design: #ff6982; /* 디자인 = 코랄 (아이콘 카드) */
+  --cat-design-soft: #ffeef1;
+  --cat-design-ink: #b42744; /* 대비: --cat-design-soft 4.5, --surface 4.5 */
+  --cat-ai: #0364f5; /* AI 확장 = 파랑 (MD 문서 카드) */
+  --cat-ai-soft: #e7efff;
+  --cat-ai-ink: #034bb5; /* 대비: --cat-ai-soft 4.5, --surface 4.5 */
+  --cat-api: #7050ec; /* API = 보라 (API 카드) */
+  --cat-api-soft: #f0edff;
+  --cat-api-ink: #5236c9; /* 대비: --cat-api-soft 4.5, --surface 4.5 */
+  --cat-opensource: #25b085; /* 오픈소스 = 초록 */
+  --cat-opensource-soft: #e3f6ef;
+  --cat-opensource-ink: #0b6e4f; /* 대비: --cat-opensource-soft 4.5, --surface 4.5 */
+  --cat-datasets: #ffb505; /* 데이터셋 = 노랑 (차트 카드) */
+  --cat-datasets-soft: #fff4d6;
+  --cat-datasets-ink: #7a4f00; /* 대비: --cat-datasets-soft 4.5, --surface 4.5 */
+  --cat-templates: #142a4c; /* 템플릿 = 남색 (장바구니 바퀴) */
+  --cat-templates-soft: #e8ecf4;
+  --cat-templates-ink: #142a4c; /* 대비: --cat-templates-soft 4.5, --surface 4.5 */
+
+  /* 상태. 늘 글과 함께 (색만으로 뜻을 전하지 않는다) */
+  --ok: #0e8f50;
   --ok-ink: #0b7a43; /* 대비: --surface 4.5, --ok-soft 4.5 */
   --ok-soft: #e4f6ec;
-  --warn: #f5a524; /* 채움 전용. 위 글자는 --on-warn */
-  --warn-ink: #8f5a00; /* 대비: --surface 4.5, --warn-soft 4.5 */
+  --warn-ink: #8a5a00; /* 대비: --surface 4.5, --warn-soft 4.5 */
   --warn-soft: #fff4dc;
-  --on-warn: #111c2c; /* 대비: --warn 4.5 */
-  --bad: #d42e3a; /* 대비: --surface 3 */
   --bad-ink: #c0262f; /* 대비: --surface 4.5, --bad-soft 4.5 */
   --bad-soft: #fdecec;
-  --on-bad: #ffffff; /* 대비: --bad 4.5 */
 
   /* 초점: 2px 고리 + 2px 띄움 */
-  --focus: var(--blue-10); /* 대비: --surface 3, --bg 3, --surface-raised 3 */
-  --focus-on-navy: var(--cyan); /* 대비: --navy 3 */
+  --focus: var(--blue-8); /* 대비: --surface 3, --bg 3, --surface-raised 3 */
+  --wish: var(--cat-design-ink); /* 찜한 하트 (N1). 대비: --surface 3, --surface-raised 3 */
 
-  /* 그림 판 (brief 4.3·5.7): 48px 이하 그림 타일은 남색 채움(--tile), 64px 이상 청사진 그림은 옅은 판(--plate)에 선(--plate-line).
-     밤에는 남색 면이 바탕에 묻혀(1.14:1) 둘 다 한 단 밝은 남색 판 + 밝은 파랑 선으로 바뀐다. 요금 칩·영수증 프린터 틈도 --tile */
-  --tile: var(--navy); /* 그림 타일·요금 칩·프린터 틈의 면 */
-  --on-tile: #ffffff; /* 타일 위 그림·글자. 대비: --tile 4.5 */
-  --plate: var(--blue-2); /* 큰 청사진 그림의 옅은 판 */
-  --plate-line: var(--navy); /* 판 위 선 1.5. 대비: --plate 4.5, --plate-read 4.5 */
-  --plate-read: var(--blue-4); /* 읽은 용어 카드의 판: [다 읽었어요]면 왼쪽부터 이 색으로 채워진다 (S9) */
-  --plate-ring: var(--navy); /* 다 맞힌 용어 카드 판의 2px 고리 (brief 4.8, 금테 자리). 대비: --plate-read 3, --surface 3, --bg 3 */
-
-  /* 영수증 종이 (낮·밤 모두 흰 종이) */
-  --receipt: #ffffff;
-  --receipt-ink: #111c2c; /* 대비: --receipt 4.5 */
-  --receipt-soft: #515c6c; /* 대비: --receipt 4.5 */
-  --seal: var(--navy); /* 도장 잉크 = 로고 남색 (D65: 다 끝난 순간에 오류 빨강을 쓰지 않는다). 대비: --receipt 3 */
-  --receipt-bad: #c0262f; /* 종이 위 막힘 표시 (낮 --bad-ink 값. 종이가 늘 희어서 밤에도 같다). 대비: --receipt 4.5 */
-
-  /* 지도. 땅·블록·길·물·공원은 장식 */
-  --map-land: #eef2f6;
-  --map-block: #e3e8ef;
-  --map-road: #ffffff;
-  --map-road-edge: #cdd5df;
-  --map-water: #cfe3f6;
-  --map-park: #dceee2;
-  --map-ghost: #7d8795; /* 아직 안 난 길. 대비: --map-land 3 */
-  --route-outer: var(--navy); /* 내 길 바깥선. 대비: --map-land 3 */
-  --route-core: var(--cyan); /* 차 앞 청록 띠와 같은 심. 대비: --route-outer 3 */
-  --node-fill: var(--navy); /* 고른 곳. 대비: --map-land 3 */
-  --on-node: #ffffff; /* 대비: --node-fill 4.5 */
-  --you: var(--brand-blue); /* 지금 위치. 대비: --map-land 3 */
-  --map-car: var(--navy); /* 지도 위 차 몸 (로고의 남색 차를 위에서 본 것). 대비: --map-land 3 */
-  --map-car-light: var(--cyan); /* 차 앞 전조등. 대비: --map-car 3 */
-  --map-car-edge: var(--surface); /* 차 테두리 (장식). 밤에는 밝게 바꿔 어두운 길과 나뉘게 한다 */
-  --map-flag: var(--brand-blue); /* 빈 터 깃발. 대비: --map-land 3 */
-  --route-halo: transparent; /* 밤 주행 빛 (장식, 흐림 필터 없이 넓은 선 하나). 낮에는 없다 */
-  --map-shadow: rgb(0 20 60 / 0.16); /* 지도 위 물건의 바닥 그림자 (장식) */
-  --map-roof: #b7c0cc; /* 집 지붕 (장식, 땅 위 약 2:1). 마디·내 길보다 옅게 */
-  --map-lot: #e5eaf0; /* 빈 터의 맨땅 (--map-block 집안, 말뚝은 --node-fill, 청사진 윤곽은 --brand-blue). 대비: --brand-blue 3, --node-fill 3 */
-  /* 교통 정보 길 (도구끼리 맞춰 보기, D68): 바깥은 교통 색, 심은 무늬로도 나눈다 (원활 실선 · 막힘 대시 3 3 · 서행 둥근 점 0 5) */
-  --route-smooth: var(--ok-ink); /* 원활 길 바깥 8. 대비: --map-land 3 */
-  --route-slow: var(--warn-ink); /* 서행 길 바깥 8, 서행 마디 고리. 대비: --map-land 3 */
-  --route-jam: var(--bad-ink); /* 막힘 길 바깥 8, 막힘 마디 고리. 대비: --map-land 3 */
-  --route-smooth-core: var(--ok); /* 원활 길의 심 4: 바깥과 거의 같은 색이라 한 줄 실선으로 보인다 (장식). 회색조에서는 실선 · 대시 · 점으로 셋이 나뉜다 */
-  --route-traffic-core: var(--map-road); /* 막힘(대시) 길의 심 4. 대비: --route-jam 3 */
-  --route-slow-core: #ffd27a; /* 서행 길의 둥근 점 3 (호박). 밤에는 바깥(--warn-ink)이 --warn과 같은 색이라 어두운 점으로. 대비: --route-slow 3 */
+  /* 프롬프트 판 (낮·밤 모두 어두운 단말 화면, v5.1 D121): 고정폭 글, 네온 강조 하나 */
+  --term: #0a1020;
+  --term-raised: #121b30;
+  --term-line: #26344f;
+  --term-ink: #e2eaff; /* 대비: --term 7, --term-raised 7 */
+  --term-dim: #93a4c6; /* 대비: --term 4.5, --term-raised 4.5 */
+  --term-neon: #3cf2b0; /* 대비: --term 7, --term-raised 7 */
+  --term-cyan: #6ad6ff; /* 대비: --term 7, --term-raised 7 */
+  --on-term-neon: #03150e; /* 대비: --term-neon 7 */
 
   /* 글꼴 */
   --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  --font-receipt: 'CC Receipt', 'Pretendard Variable', ui-monospace, 'Courier New', monospace; /* 영수증 종이 안에서만 */
+  --font-mono: 'CC Receipt', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; /* 설치 명령·설정 조각·프롬프트 판 */
+  --font-preview-serif: Georgia, 'Times New Roman', 'Noto Serif KR', serif; /* 폰트 카드의 일반 모양 견본 (원본 글꼴은 S3에서 지연 로드) */
   --weight-body: 400;
-  --weight-strong: 600; /* 버튼·칩·줄 이름·숫자 */
-  --weight-heading: 700; /* 제목 */
+  --weight-strong: 600;
+  --weight-heading: 700;
+  --weight-brand: 800;
 
-  /* 글자 단계 (rem이라 기기 글자 크기를 따른다). 줄 높이는 18px 이하 1.5배, 19px 이상 '크기 + 9px' (토스 TDS 표와 같은 규칙) */
-  --size-display: 2rem; /* 32 홈 첫 줄만. 1024px부터 2.75rem */
-  --leading-display: 2.5rem; /* 40 (1024px부터 3.375rem) */
-  --size-title-1: 1.625rem; /* 26 화면 제목 */
-  --leading-title-1: 2.1875rem; /* 35 */
-  --size-title-2: 1.375rem; /* 22 묶음 제목, 시트 제목 */
-  --leading-title-2: 1.9375rem; /* 31 */
-  --size-title-3: 1.1875rem; /* 19 카드 제목 */
-  --leading-title-3: 1.75rem; /* 28 */
-  --size-body-lg: 1.0625rem; /* 17 읽는 글(설명, 용어 풀이) */
-  --leading-body-lg: 1.6; /* 27. 초심자가 읽는 긴 글이라 토스(1.5)보다 한 단 넓게 */
-  --size-body: 1rem; /* 16 기본 */
-  --leading-body: 1.5;
-  --size-label: 0.9375rem; /* 15 버튼·칩·줄 이름 */
-  --leading-label: 1.375rem; /* 22 */
-  --size-caption: 0.875rem; /* 14 꼬리 글. 이 아래로 내리지 않는다 */
-  --leading-caption: 1.25rem; /* 20 */
-  --size-number: 2.5rem; /* 40 영수증 합계 같은 큰 숫자 (tabular-nums) */
+  /* 글자 단계 (rem이라 기기 글자 크기를 따른다, 유동 척도) */
+  --size-display: clamp(1.625rem, 1.3rem + 1.1vw, 2.25rem); /* 26~36 홈 첫 줄 */
+  --size-title-1: clamp(1.375rem, 1.2rem + 0.6vw, 1.875rem); /* 22~30 화면 제목 */
+  --size-title-2: clamp(1.1875rem, 1.1rem + 0.35vw, 1.4375rem); /* 19~23 묶음 제목 */
+  --size-title-3: 1.0625rem; /* 17 카드 이름 */
+  --size-body-lg: 1.0625rem; /* 17 읽는 글 */
+  --size-body: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem); /* 15~16 기본 */
+  --size-label: 0.9375rem; /* 15 버튼·칩 */
+  --size-caption: 0.8125rem; /* 13 꼬리 글(출처·숫자). 이 아래로 내리지 않는다 */
+  --leading-display: 1.25;
+  --leading-title: 1.35;
+  --leading-body: 1.55;
+  --leading-tight: 1.35;
+  --leading-label: 1.375rem; /* 22: 버튼·칩 */
+  --leading-caption: 1.25rem; /* 20: 꼬리 글 */
   --tracking-display: -0.025em;
-  --tracking-title: -0.02em; /* 26 이상 */
-  --tracking-title-sm: -0.01em; /* 19~22 */
-  --tracking-body: 0; /* Pretendard는 본문 자간 조정이 필요 없게 만들어졌다 (README) */
+  --tracking-title: -0.015em;
 
-  /* 간격: 4px 바탕. 옛 이름·값(1~7)은 그대로 두고 64만 더한다 (조용히 값이 바뀌는 일을 막으려고) */
+  /* 간격: 4px 바탕 */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -177,285 +146,125 @@
   --space-6: 32px;
   --space-7: 48px;
   --space-8: 64px;
-  --gutter: 20px; /* 360px부터. 359px 이하는 16px (320px 다시 흐름) */
-  --content-max: 640px; /* 읽는 폭: 양옆 여백을 빼면 17px 한글 한 줄 약 35자 */
-  --tap: 44px;
-  --bar-top: 16px;
-  --bar-bottom: calc(7rem + env(safe-area-inset-bottom));
+  --gutter: clamp(16px, 2.5vw, 32px);
 
-  /* 모서리: 네 단 + 알약. 안쪽 모서리 = 바깥 모서리 - 안쪽 여백 */
-  --radius-xs: 6px; /* 꼬리표, 뼈대 막대 */
-  --radius-sm: 10px; /* 작은 버튼(36), 칸 안 작은 면 */
-  --radius-md: 14px; /* 보통 버튼(48), 입력 칸, 토스트 */
-  --radius-lg: 16px; /* 큰 버튼(56), 묶음 목록, 카드 */
-  --radius-xl: 20px; /* 시트 위 모서리, 큰 그림 카드 */
-  --radius-pill: 999px; /* 칩, 진행 막대 */
+  /* 레이아웃 (brief 4절). 구간은 문서용이다(미디어 조건에는 변수를 못 쓴다):
+     휴대폰 <600 · 태블릿 600~1023 · PC 1024~1439 · 넓은 PC ≥1440 */
+  --bp-medium: 600px;
+  --bp-expanded: 1024px;
+  --bp-large: 1440px;
+  --container-max: 1440px; /* ≥1680px 화면은 1680 (아래, D117) */
+  --read-max: 72ch;
+  --facet-w: 15rem; /* 목록 왼쪽 거르기 칸 폭 */
+  --header-h: 64px;
+  --thumb-h: 132px; /* 카드 미리 보기 판 높이 */
+  --thumb-h-sm: 84px; /* 그림 없는 카드(머리글자·이모지)의 낮은 판: 스크롤을 줄인다 */
+  --tap: 44px;
+
+  /* 모서리 */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
 
   /* 버튼 높이 */
-  --btn-lg: 56px;
-  --btn-md: 48px;
-  --btn-sm: 36px; /* 누르는 곳은 --tap으로 넓힌다 */
-  --row-1: 56px; /* 한 줄 목록 행 */
-  --row-2: 72px; /* 두 줄 목록 행 */
+  --btn-lg: 52px;
+  --btn-md: 44px;
+  --btn-sm: 36px;
 
-  /* 높이(그림자). 남색 기운 그림자, 투명도 4~22%. 밤에는 면 밝기와 윗변 빛줄로 높이를 보인다 */
-  --elev-1: 0 1px 2px rgb(0 20 60 / 0.06), 0 1px 1px rgb(0 20 60 / 0.04); /* 쉬는 것: 칸 고르개 손잡이, 지도 핀 */
-  --elev-2: 0 0 0 1px rgb(0 20 60 / 0.04), 0 2px 8px -2px rgb(0 20 60 / 0.08), 0 8px 24px -4px rgb(0 20 60 / 0.1); /* 떠 있는 것: 아래 막대, 토스트, 지도 버튼 */
-  --elev-3: 0 0 0 1px rgb(0 20 60 / 0.04), 0 24px 48px -12px rgb(0 20 60 / 0.22); /* 대화 상자 */
-  --elev-sheet: 0 -1px 0 rgb(0 20 60 / 0.04), 0 -12px 32px -8px rgb(0 20 60 / 0.14); /* 아래에서 올라온 시트 */
-  --edge-light: inset 0 0 0 0 transparent; /* 밤에만: 윗변 빛줄 */
+  /* 높이(그림자): 남색 기운 */
+  --elev-1: 0 1px 2px rgb(20 42 76 / 0.06), 0 1px 1px rgb(20 42 76 / 0.04);
+  --elev-2: 0 0 0 1px rgb(20 42 76 / 0.05), 0 4px 12px -2px rgb(20 42 76 / 0.1), 0 12px 32px -8px rgb(20 42 76 / 0.12);
+  --elev-3: 0 0 0 1px rgb(20 42 76 / 0.05), 0 24px 48px -12px rgb(20 42 76 / 0.24);
 
-  /* 모션 길이: 자주 하는 동작일수록 짧게. 나갈 때는 들어올 때의 약 70% */
-  --dur-tap: 100ms; /* 누르기, 색 바뀜 */
-  --dur-ui: 200ms; /* 칩 고르기, 접고 펴기, 토스트 */
-  --dur-exit: 200ms; /* 시트·대화 상자 나가기 */
-  --dur-sheet: 320ms; /* 시트·대화 상자 들어오기 */
-  --dur-pop: 300ms; /* 마디 생기기 */
-  --dur-settle: 400ms;
-  --dur-draw: 400ms; /* 길 한 토막 */
-  --dur-fly: 500ms;
-  --dur-hop: 400ms;
-  --dur-roll: 600ms; /* 숫자 굴리기 */
-  --dur-sweep: 700ms; /* 다 풀림: 청록 대시 하나가 출발에서 빈 터까지 (S4) */
-  --dur-route: 600ms; /* 홈 첫 방문: 본보기 길 그리기 (S1) */
-  --dur-approach: 800ms; /* 홈 첫 방문: 차가 가장자리에서 출발로 (S1) */
-  --dur-pulse: 1000ms; /* 막힌 길 두 번 진해짐, 1초에 2번 (S4) */
-  --dur-loop: 600ms; /* 연습 고리 한 바퀴 (S8) */
-  --dur-signal: 350ms;
-  --dur-print: 700ms; /* 영수증 출력 */
-  --dur-stamp: 250ms;
-  --dur-blink: 320ms; /* 전조등 두 번 깜빡임 (켜짐 120 · 꺼짐 80 · 켜짐 120, 1초에 3번 미만) */
-  --dur-night: 300ms; /* 출발 → 도착(S5): 지도 층만 밤 주행 모드로. 낮으로 돌아올 때는 --dur-settle */
-  --dur-drive: 1200ms; /* 출발 → 도착(S5): 밤이 된 뒤 빈 터에 닿기까지 (카메라가 지나온 길을 훑고, 차가 남은 길을 한 번에 달린다) */
-  --dur-scene: 3000ms; /* 대표 장면 상한 (S5+S6 합계, brief 7절) */
-  --dur-skip-min: 1000ms; /* 남은 길이가 이보다 긴 장면에만 [건너뛰기]를 띄운다 (짧은 장면은 화면 누르기·Esc로 충분) */
+  /* 모션 길이: 자주 하는 동작일수록 짧게 */
+  --dur-tap: 100ms;
+  --dur-ui: 200ms;
+  --dur-exit: 160ms;
+  --dur-sheet: 280ms;
+  --dur-reveal: 600ms; /* 프롬프트 판이 펼쳐지는 길이 (700ms 안쪽, 누르면 끝) */
   --dur-fade: 150ms; /* 동작 줄이기에서도 남긴다 (D30) */
+  --dur-wait: 200ms; /* 뼈대를 보이기 전에 기다리는 시간: 빨리 오면 깜박이지 않게 (U, D148, src/lib/wait.ts의 WAIT_MS와 같게) */
+  --dur-pulse: 900ms; /* 뼈대가 옅어졌다 돌아오는 반 바퀴 (동작 줄이기면 0 = 멈춘 판) */
 
   /* 곡선 */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* 들어오기 (Base easeDecelerate) */
-  --ease-in: cubic-bezier(0.64, 0, 0.78, 0); /* 나가기 (Base easeAccelerate) */
-  --ease-in-out: cubic-bezier(0.2, 0, 0, 1); /* 화면 위 이동 (Material 3 standard) */
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* 시트 */
-  --ease-drive: cubic-bezier(0.45, 0, 0.25, 1); /* 차: 천천히 출발 → 달림 → 부드럽게 섬 */
-  --ease-linear: linear; /* 같은 빠르기: 다 풀림 빛이 길을 훑음 (S4) */
-  --ease-spring: linear(0, 0.06, 0.195, 0.358, 0.518, 0.66, 0.776, 0.866, 0.93, 0.974, 1.001, 1.016, 1.023, 1.024, 1.023, 1.019, 1.015, 1.011, 1.008, 1.005, 1); /* 강성 270·감쇠 25 (TDS 'medium'과 같은 값), 넘침 2.4%, 460ms */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-in-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  /* 손맛: 드문 순간일수록 크게 */
-  --juice-s-scale: 1.03;
-  --juice-m-scale: 1.06;
-  --juice-l-scale: 1.12;
-  --juice-s-shake: 2px;
-  --juice-m-shake: 3px;
-  --juice-l-shake: 4px;
-  --juice-press-scale: 0.98;
-  --juice-stamp-scale: 1.3;
-  /* 옛 별명은 모두 지웠다 (D67): 개념 그림 20장도 옅은 판 색(--plate·--plate-line·--surface·--brand-blue)으로 옮겼다 (W3b) */
+  /* 손맛 */
+  --juice-press-scale: 0.97;
+}
+
+/* 넓은 화면 (S3, D117): 1920px 모니터에서 양옆이 비지 않게 본문을 1680까지 넓힌다 (상품 격자 5열 + 거르기 칸) */
+@media (min-width: 1680px) {
+  :root {
+    --container-max: 1680px;
+  }
 }
 
 /* 밤: 기기가 어두운 모드일 때. 같은 '대비:' 쌍을 이 값으로도 검사한다 */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --gray-1: #08101b;
-    --gray-2: #0f1724;
-    --gray-3: #17202d;
-    --gray-4: #1d2735;
-    --gray-5: #242e3d;
-    --gray-6: #2d3746;
-    --gray-7: #3b4655;
-    --gray-8: #515c6b;
-    --gray-9: #6b7584;
-    --gray-10: #848d9a;
-    --gray-11: #b2bac4;
-    --gray-12: #eef0f4;
-    --blue-1: #0a1628;
-    --blue-2: #0c1e38;
-    --blue-3: #0c284f;
-    --blue-4: #093164;
-    --blue-5: #0b3b78;
-    --blue-6: #0a478d;
-    --blue-7: #0d57ab;
-    --blue-8: #0d6bcc;
-    --blue-10: #3496f8;
-    --blue-11: #73b6fa;
-    --blue-12: #cbe5fe;
+    --gray-1: #0a1120;
+    --gray-2: #0f1829;
+    --gray-3: #152036;
+    --gray-4: #1d2a44;
+    --gray-5: #263552;
+    --gray-6: #3a4a68;
+    --gray-7: #6f7d97;
+    --gray-8: #9aa6bc;
+    --gray-9: #b9c3d5;
+    --gray-10: #d3dae6;
+    --gray-11: #e3e8f1;
+    --gray-12: #eef2f9;
+    --blue-1: #0b1530;
+    --blue-2: #10204a;
+    --blue-3: #152a5e;
+    --blue-9: #79a9ff;
+    --blue-10: #a9c7ff;
     --bg: var(--gray-1);
-    --surface: var(--gray-2);
-    --surface-raised: var(--gray-3);
-    --fill: var(--gray-4);
-    --fill-press: var(--gray-5);
+    --surface: #111a2d;
+    --surface-raised: #18233a;
+    --surface-sunken: #0d1526;
+    --fill: var(--gray-3);
+    --fill-press: var(--gray-4);
     --selected: var(--blue-3);
-    --chosen: var(--gray-12);
-    --on-chosen: var(--gray-1);
-    --hairline: var(--gray-6);
+    --hairline: #233150;
     --scrim: rgb(0 0 0 / 0.6);
-    --accent: #0a6fdc;
-    --accent-press: #0f61c3;
-    --accent-soft: var(--blue-3);
-    --ok: #2bc37a;
-    --ok-ink: #2bc37a;
+    --brand-blue: #6ea0ff;
+    --brand-navy: #eef2f9;
+    --primary: #0364f5;
+    --primary-press: #0258d6;
+    --primary-soft: var(--blue-2);
+    --on-primary-soft: var(--blue-10);
+    --cat-design-soft: #3a1621;
+    --cat-design-ink: #ff9aad;
+    --cat-ai-soft: #10204a;
+    --cat-ai-ink: #9cc0ff;
+    --cat-api-soft: #231a52;
+    --cat-api-ink: #b9a8ff;
+    --cat-opensource-soft: #0c2e25;
+    --cat-opensource-ink: #6fdcb8;
+    --cat-datasets-soft: #33260a;
+    --cat-datasets-ink: #ffcf5c;
+    --cat-templates: #8fa3c7;
+    --cat-templates-soft: #1b2843;
+    --cat-templates-ink: #c9d5ea;
+    --ok-ink: #3fcf8a;
     --ok-soft: #0e2a1f;
-    --warn: #f5b43c;
-    --warn-ink: #f5b43c;
+    --warn-ink: #f5c04c;
     --warn-soft: #2b2311;
-    --on-warn: #08101b;
-    --bad: #ff6b6b;
-    --bad-ink: #ff6b6b;
+    --bad-ink: #ff7b7b;
     --bad-soft: #3a1518;
-    --on-bad: #08101b;
-    --focus: var(--blue-11);
-    --map-land: #0b1422;
-    --map-block: #111c2e;
-    --map-road: #1e2a3e;
-    --map-road-edge: #2a3850;
-    --map-water: #0c2038;
-    --map-park: #0e2620;
-    --map-ghost: #6b7584;
-    --route-outer: var(--brand-blue);
-    --route-core: #ffffff;
-    --node-fill: #e6eef8;
-    --on-node: #08101b;
-    --you: var(--cyan);
-    --map-car: #4a6699; /* 로고 밤 팔레트의 강철 남색 (docs/review/v2/brand.md 7절) */
-    --map-car-light: #8fe3ff;
-    --map-car-edge: var(--gray-12);
-    --map-flag: var(--blue-10);
-    --route-halo: rgb(0 180 250 / 0.18);
-    --map-lot: #15213a;
-    --map-roof: var(--gray-7);
-    --route-slow-core: var(--warn-soft);
-    --tile: var(--blue-3);
-    --on-tile: var(--blue-11);
-    --plate: var(--blue-3);
-    --plate-line: var(--blue-11);
-    --plate-read: var(--blue-5);
-    --plate-ring: var(--blue-11);
-    --logo-body: #4a6699; /* 강철 남색 (brand.md 7절). --map-car 밤 값과 같다 */
-    --logo-letter: var(--gray-12);
-    --logo-accent: var(--blue-10);
-    --logo-light: #8fe3ff;
+    --focus: #79a9ff;
     --elev-1: 0 1px 2px rgb(0 0 0 / 0.4);
     --elev-2: 0 0 0 1px rgb(255 255 255 / 0.06), 0 8px 24px -4px rgb(0 0 0 / 0.5);
     --elev-3: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 48px -12px rgb(0 0 0 / 0.7);
-    --elev-sheet: 0 0 0 1px rgb(255 255 255 / 0.06), 0 -12px 32px -8px rgb(0 0 0 / 0.6);
-    --edge-light: inset 0 1px 0 rgb(255 255 255 / 0.06);
-  }
-}
-
-/* 느낌 팔레트 (CONCEPT 5.3): 목적지의 '느낌' 답은 지도(MapBoard의 data-palette)의 땅·물·공원 색만 바꾼다.
-   글자·마디·교통 색은 그대로라, 땅 위 그림 대비(--map-ghost·--ok-ink·--warn-ink·--bad-ink·--node-fill·--map-car 3:1 이상)를
-   네 팔레트 낮·밤 모두에서 계산해 두었다 (낮 가장 낮은 값: 강렬하게의 --map-ghost 3.11, 밤: 기본의 --map-car 3.21) */
-[data-palette='cute'] {
-  --map-land: #f3eef4;
-  --map-water: #cfe3f5;
-  --map-park: #dcefdf;
-}
-
-[data-palette='calm'] {
-  --map-land: #eceeea;
-  --map-water: #c6d4db;
-  --map-park: #d3ddcf;
-}
-
-[data-palette='bold'] {
-  --map-land: #e9edf7;
-  --map-water: #a9c8f0;
-  --map-park: #bfe0b8;
-}
-
-@media (prefers-color-scheme: dark) {
-  [data-palette='cute'] {
-    --map-land: #130f1f;
-    --map-water: #12203a;
-    --map-park: #10261f;
-  }
-
-  [data-palette='calm'] {
-    --map-land: #0f1413;
-    --map-water: #0f1d24;
-    --map-park: #11201b;
-  }
-
-  [data-palette='bold'] {
-    --map-land: #08132a;
-    --map-water: #0a2650;
-    --map-park: #0b2c1c;
-  }
-}
-
-/* 밤 주행 모드 (출발 → 도착 S5, brief 7절): 장면이 지도 판(svg)에 data-night를 잠깐 붙여 이 값을 읽고, 지도 층만 이 색으로 넘겼다가
-   낮으로 돌아온다(src/lib/map/arrive.ts). 값은 밤 지도(어두운 모드 덩어리)의 지도 색과 같다: 밤 지도를 바꾸면 여기도 같이 바꾼다.
-   지도 안에서만 쓰는 글·면 색(이름표 --text, 마디 테두리 --surface …)도 지도 판 안에서만 밤 값으로 둔다 */
-.map-board[data-night] {
-  --map-land: #0b1422;
-  --map-block: #111c2e;
-  --map-road: #1e2a3e;
-  --map-road-edge: #2a3850;
-  --map-water: #0c2038;
-  --map-park: #0e2620;
-  --map-ghost: #6b7584;
-  --route-outer: var(--brand-blue);
-  --route-core: #ffffff;
-  --node-fill: #e6eef8;
-  --on-node: #08101b;
-  --you: var(--cyan);
-  --map-car: #4a6699;
-  --map-car-light: #8fe3ff;
-  --map-car-edge: #eef0f4;
-  --map-flag: #3496f8;
-  --route-halo: rgb(0 180 250 / 0.18);
-  --map-lot: #15213a;
-  --map-roof: #3b4655;
-  --route-slow-core: #2b2311;
-  --text: #eef0f4;
-  --text-2: #b2bac4;
-  --text-3: #848d9a;
-  --surface: #0f1724;
-  --ok: #2bc37a;
-}
-
-/* 느낌 팔레트의 밤 땅·물·공원 (위 어두운 모드 팔레트와 같은 값) */
-.map-board[data-palette='cute'][data-night] {
-  --map-land: #130f1f;
-  --map-water: #12203a;
-  --map-park: #10261f;
-}
-
-.map-board[data-palette='calm'][data-night] {
-  --map-land: #0f1413;
-  --map-water: #0f1d24;
-  --map-park: #11201b;
-}
-
-.map-board[data-palette='bold'][data-night] {
-  --map-land: #08132a;
-  --map-water: #0a2650;
-  --map-park: #0b2c1c;
-}
-
-/* 어두운 모드에서는 낮 지도가 이미 위의 밤 색이라 밤 주행 모드가 티 나지 않는다: 땅·구역만 한 단 더 어둡게 해 길 빛이 살게 한다 (D71 검토 반영) */
-@media (prefers-color-scheme: dark) {
-  .map-board[data-night] {
-    --map-land: #060c16;
-    --map-block: #0b1322;
-  }
-
-  .map-board[data-palette='cute'][data-night] {
-    --map-land: #0b0813;
-  }
-
-  .map-board[data-palette='calm'][data-night] {
-    --map-land: #080c0b;
-  }
-
-  .map-board[data-palette='bold'][data-night] {
-    --map-land: #040b1a;
-  }
-}
-
-@supports not (transition-timing-function: linear(0, 1)) {
-  :root {
-    --ease-spring: var(--ease-out);
   }
 }
 
@@ -465,33 +274,9 @@
     --dur-ui: 0ms;
     --dur-exit: 0ms;
     --dur-sheet: 0ms;
-    --dur-pop: 0ms;
-    --dur-settle: 0ms;
-    --dur-draw: 0ms;
-    --dur-fly: 0ms;
-    --dur-hop: 0ms;
-    --dur-roll: 0ms;
-    --dur-sweep: 0ms;
-    --dur-route: 0ms;
-    --dur-approach: 0ms;
+    --dur-reveal: 0ms;
     --dur-pulse: 0ms;
-    --dur-loop: 0ms;
-    --dur-signal: 0ms;
-    --dur-print: 0ms;
-    --dur-stamp: 0ms;
-    --dur-blink: 0ms;
-    --dur-night: 0ms;
-    --dur-drive: 0ms;
-    --dur-scene: 0ms;
-    --dur-skip-min: 0ms;
-    --juice-s-scale: 1;
-    --juice-m-scale: 1;
-    --juice-l-scale: 1;
-    --juice-s-shake: 0px;
-    --juice-m-shake: 0px;
-    --juice-l-shake: 0px;
     --juice-press-scale: 1;
-    --juice-stamp-scale: 1;
   }
 }
 
@@ -500,31 +285,7 @@
   --dur-ui: 0ms;
   --dur-exit: 0ms;
   --dur-sheet: 0ms;
-  --dur-pop: 0ms;
-  --dur-settle: 0ms;
-  --dur-draw: 0ms;
-  --dur-fly: 0ms;
-  --dur-hop: 0ms;
-  --dur-roll: 0ms;
-  --dur-sweep: 0ms;
-  --dur-route: 0ms;
-  --dur-approach: 0ms;
+  --dur-reveal: 0ms;
   --dur-pulse: 0ms;
-  --dur-loop: 0ms;
-  --dur-signal: 0ms;
-  --dur-print: 0ms;
-  --dur-stamp: 0ms;
-  --dur-blink: 0ms;
-  --dur-night: 0ms;
-  --dur-drive: 0ms;
-  --dur-scene: 0ms;
-  --dur-skip-min: 0ms;
-  --juice-s-scale: 1;
-  --juice-m-scale: 1;
-  --juice-l-scale: 1;
-  --juice-s-shake: 0px;
-  --juice-m-shake: 0px;
-  --juice-l-shake: 0px;
   --juice-press-scale: 1;
-  --juice-stamp-scale: 1;
 }

@@ -1,13 +1,9 @@
-// 성능 예산 검사 (docs/ARCHITECTURE.md 11절): 빌드한 dist/의 페이지마다
-//  - 처음 불러오는 자바스크립트 합계(gzip): 홈 100KB 이하, 다른 페이지 140KB 이하
+// 성능 예산 검사 (docs/ARCHITECTURE.md 11절, v5 D103): 빌드한 dist/의 페이지마다
+//  - 처음 불러오는 자바스크립트 합계(gzip): 모든 페이지 100KB 이하 (brief 5절)
 //  - 처음 불러오는 CSS 합계(gzip): 30KB 이하 (CSS는 첫 화면 그리기를 막는다)
-//  - 그림·애니메이션 파일 합계: 300KB 이하 (<picture>와 srcset은 실제로 내려오는 하나만 센다)
-// 나중에 동적으로 불러오는 묶음(예: 지연 3D 장면)은 HTML에 드러나지 않으므로 따로 LAZY_LIMIT으로 본다.
-// 길 지도(docs/MAP.md, D68)는 따로 본다: 땅 판 24KB · 표지 묶음 10KB · 지도 섬 8KB · 지도 모형 6.5KB(gzip).
-// 섬과 모형은 각 파일만 줄여(esbuild minify, import는 밖에 둔 채) 재고, 빌드에서 둘이 함께 실린 MapBoard 묶음은 합계 안인지 본다.
-// 섬에는 지도 장면(D71)의 움직임 모듈(map/scene.ts 바뀐 것 견주기, map/rest.ts 서는 자리, scene.ts 건너뛰기)도 넣어 잰다: 모형은 키우지 않는다.
-// 어려운 말 풀이(brief 8절, D69)도 따로 본다: 풀이 섬 5KB · 자료(/glossary.json) + 매처 묶음 17KB · 도구 이름(/glossary-tools.json) 4KB.
-// 사전 검색 색인(/search-index.json)은 처음 찾을 때 받는다: 100KB (gzip).
+//  - 그림 파일 합계: 300KB 이하 (사이트 안 파일만. 상품 미리 보기 그림은 출처에서 지연 로드한다, brief 5절)
+// 나중에 받는 것은 따로 본다: 풀이 섬·풀이 자료, 임시 검색 색인, 목록 묶음(8쪽)·상세 조각 중 가장 큰 것 (scripts/catalog/build.ts).
+// 배포 한 판의 파일 수(Cloudflare 2만 개 한도, 진열대 자료 5천 개 아래 + 쪽·정적 파일)와 파일 하나 크기(25MiB 한도)도 본다.
 //   npm run qa:budget
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
@@ -17,7 +13,7 @@ import { ROOT } from '../lib/load-data.ts';
 const DIST = join(ROOT, 'dist');
 const KB = 1024;
 const HOME_JS = 100 * KB;
-const PAGE_JS = 140 * KB;
+const PAGE_JS = 100 * KB;
 const CSS_LIMIT = 30 * KB;
 const MEDIA = 300 * KB;
 const LAZY_LIMIT = 200 * KB;
@@ -54,7 +50,7 @@ function pages(dir: string, out: string[] = []): string[] {
 }
 
 /** JS 파일이 정적으로 import하는(또는 export … from으로 다시 내보내는) 다른 JS 조각까지 따라간다 (처음 불러올 때 함께 내려온다).
- *  여러 곳이 쓰는 섬(MapBoard: 지도 띠·지난 영수증·느낌 견본)은 빌드가 'export{…}from"./조각.js"' 한 줄짜리 입구로 만든다 (D70) */
+ *  여러 곳이 쓰는 섬은 빌드가 'export{…}from"./조각.js"' 한 줄짜리 입구로 만들기도 한다 (D70) */
 function withStaticImports(file: string, seen: Set<string>): void {
   if (seen.has(file) || !existsSync(file)) return;
   seen.add(file);
@@ -144,51 +140,73 @@ if (biggestLazy) {
   if (!ok) failed += 1;
   console.log(`${ok ? '✓' : '✗'} 가장 큰 지연 묶음 ${relative(DIST, biggestLazy.f)} ${(biggestLazy.n / KB).toFixed(1)}KB/${LAZY_LIMIT / KB}KB`);
 }
-// 길 지도
-const MAP_LIMITS = { land: 24 * KB, sprite: 10 * KB, island: 8 * KB, model: 6.5 * KB } as const;
-async function minifiedGz(files: string[]): Promise<number> {
-  // esbuild는 vite·wrangler와 함께 깔린다. 파일 하나씩 줄이므로 import한 다른 모듈(엔진·문구·preact)은 세지 않는다
-  const { transform } = await import('esbuild');
-  let code = '';
-  for (const f of files) {
-    const src = readFileSync(join(ROOT, f), 'utf8');
-    const out = await transform(src, { loader: f.endsWith('.tsx') ? 'tsx' : 'ts', minify: true, format: 'esm', jsx: 'automatic', jsxImportSource: 'preact', target: 'es2022' });
-    code += out.code;
-  }
-  return gzipSync(Buffer.from(code), { level: 9 }).length;
-}
-const mapRows: [string, number, number][] = [
-  ['땅 판 src/assets/map/land.svg', gzSize(join(ROOT, 'src/assets/map/land.svg')), MAP_LIMITS.land],
-  ['표지 묶음 src/assets/map/map-sprite.svg', gzSize(join(ROOT, 'src/assets/map/map-sprite.svg')), MAP_LIMITS.sprite],
-  [
-    '지도 섬 MapBoard.tsx + map/focus.ts + 장면(map/scene.ts, map/rest.ts, scene.ts)',
-    await minifiedGz(['src/components/MapBoard.tsx', 'src/lib/map/focus.ts', 'src/lib/map/scene.ts', 'src/lib/map/rest.ts', 'src/lib/scene.ts']),
-    MAP_LIMITS.island,
-  ],
-  ['지도 모형 src/lib/map/model.ts', await minifiedGz(['src/lib/map/model.ts']), MAP_LIMITS.model],
-];
-const shipped = [...allJs].filter((f) => /[\\/]MapBoard\.[^\\/]+\.js$/.test(f)).reduce((a, f) => a + gzSize(f), 0);
-if (shipped > 0) mapRows.push(['빌드한 MapBoard 묶음 (섬 + 모형)', shipped, MAP_LIMITS.island + MAP_LIMITS.model]);
-for (const [name, n, limit] of mapRows) {
-  const ok = n <= limit;
-  if (!ok) failed += 1;
-  console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB`);
-}
-
-// 어려운 말 풀이와 검색 색인 (나중에 받는 자료라 페이지 합계에 들지 않는다)
-const GLOSSARY_LIMITS = { island: 5 * KB, data: 17 * KB, tools: 4 * KB, search: 100 * KB } as const;
+// 나중에 받는 것 (페이지 합계에 들지 않는다)
 const chunk = (re: RegExp): number => [...allJs].filter((f) => re.test(f)).reduce((a, f) => a + gzSize(f), 0);
+/** 폴더 안 JSON 중 gzip이 가장 큰 것 */
+function biggestJson(dir: string): { f: string; n: number } {
+  let best = { f: '', n: 0 };
+  const walk = (d: string): void => {
+    if (!existsSync(d)) return;
+    for (const name of readdirSync(d)) {
+      const p = join(d, name);
+      if (statSync(p).isDirectory()) walk(p);
+      else if (name.endsWith('.json')) {
+        const n = gzipSync(readFileSync(p), { level: 6 }).length;
+        if (n > best.n) best = { f: p, n };
+      }
+    }
+  };
+  walk(dir);
+  return best;
+}
+const bigList = biggestJson(join(DIST, 'catalog', 'list'));
+const bigItem = biggestJson(join(DIST, 'catalog', 'item'));
+const bigShard = biggestJson(join(DIST, 'catalog', 'search')); // 조각(t-)과 블록(b-) 가운데 큰 것
+const bigFacet = biggestJson(join(DIST, 'catalog', 'facet'));
+const bigModel = biggestJson(join(DIST, 'catalog', 'models', 'p'));
 const lazyRows: [string, number, number][] = [
-  ['풀이 섬 TermPopover', chunk(/[\\/]TermPopover\.[^\\/]+\.js$/), GLOSSARY_LIMITS.island],
-  ['풀이 자료 + 매처 /glossary.json + term-engine', gzSize(join(DIST, 'glossary.json')) + chunk(/[\\/]term-engine\.[^\\/]+\.js$/), GLOSSARY_LIMITS.data],
-  ['도구 이름 풀이 /glossary-tools.json', gzSize(join(DIST, 'glossary-tools.json')), GLOSSARY_LIMITS.tools],
-  ['사전 검색 색인 /search-index.json', gzSize(join(DIST, 'search-index.json')), GLOSSARY_LIMITS.search],
+  ['풀이 섬 TermPopover', chunk(/[\\/]TermPopover\.[^\\/]+\.js$/), 6 * KB],
+  ['풀이 자료 + 매처 /glossary.json + term-engine', gzSize(join(DIST, 'glossary.json')) + chunk(/[\\/]term-engine\.[^\\/]+\.js$/), 17 * KB],
+  // 전체 검색 (D114): 메타는 검색 쪽마다, 낱말 조각·결과 블록은 질의마다 몇 개씩 받는다
+  ['검색 메타 /catalog/search/meta.json', gzSize(join(DIST, 'catalog', 'search', 'meta.json')), 10 * KB],
+  [`가장 큰 검색 조각·블록 ${relative(DIST, bigShard.f)}`, bigShard.n, 80 * KB],
+  // 거르기 (D115): 거르기를 켤 때만 받는다. MCP 서버(5만 개)가 가장 크다. 정렬 순서 파일은 상품 수만큼의 순열이라
+  // (5만 개 117KB, 이론 바닥 약 88KB) MCP가 날마다 늘면 같이 큰다 → 200KB (D143). 약 8만 개(이 크기로 200KB)에 닿기 전에 순서 파일을 다시 짠다
+  [`가장 큰 거르기 파일 ${relative(DIST, bigFacet.f)}`, bigFacet.n, 200 * KB],
+  // 묶음 하나는 보통 30KB 안팎이다. 배경 패턴처럼 SVG 조각을 싣는 소분류만 크다 (D103)
+  [`가장 큰 목록 묶음 ${relative(DIST, bigList.f)}`, bigList.n, 160 * KB],
+  [`가장 큰 상세 조각 ${relative(DIST, bigItem.f)}`, bigItem.n, 100 * KB],
+  // AI 모델·요금 (D141): 상세 표·담기 창은 제공자 파일 하나, /models는 처음에 direct.json, 호스팅·라우터까지 볼 때만 hosts.json
+  [`가장 큰 제공자 모델 파일 ${relative(DIST, bigModel.f)}`, bigModel.n, 40 * KB],
+  ['비교 쪽 처음 묶음 /catalog/models/direct.json', gzSize(join(DIST, 'catalog', 'models', 'direct.json')), 30 * KB],
+  ['비교 쪽 호스팅 묶음 /catalog/models/hosts.json (고를 때만)', gzSize(join(DIST, 'catalog', 'models', 'hosts.json')), 220 * KB],
 ];
 for (const [name, n, limit] of lazyRows) {
   const ok = n > 0 && n <= limit;
   if (!ok) failed += 1;
   console.log(`${ok ? '✓' : '✗'} ${name} ${(n / KB).toFixed(1)}KB/${(limit / KB).toFixed(1)}KB${n === 0 ? ' (빌드에 없다)' : ''}`);
 }
+
+// 배포 한 판: 파일 수와 파일 하나 크기 (Cloudflare Workers 정적 파일 한도 2만 개·25MiB, D103)
+let files = 0;
+let biggest = { f: '', n: 0 };
+const countAll = (d: string): void => {
+  for (const name of readdirSync(d)) {
+    const p = join(d, name);
+    const st = statSync(p);
+    if (st.isDirectory()) countAll(p);
+    else {
+      files += 1;
+      if (st.size > biggest.n) biggest = { f: p, n: st.size };
+    }
+  }
+};
+countAll(DIST);
+const FILE_LIMIT = 6_000;
+const SIZE_LIMIT = 25 * KB * KB;
+const filesOk = files <= FILE_LIMIT && biggest.n <= SIZE_LIMIT;
+if (!filesOk) failed += 1;
+console.log(`${filesOk ? '✓' : '✗'} 배포 파일 ${files}개/${FILE_LIMIT}개, 가장 큰 파일 ${relative(DIST, biggest.f)} ${(biggest.n / KB / KB).toFixed(1)}MB/25MB`);
 
 if (failed > 0) {
   console.log(`\n예산 초과 ${failed}건. 섬을 나누거나(client:visible/idle), 그림을 줄이거나, 라이브러리를 바꾼다.`);

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "questions.schema.json",
+  "title": "목적지 질문 (적힌 순서대로, 보이는 첫 미응답 질문을 묻는다)",
+  "type": "object",
+  "required": ["version", "questions"],
+  "additionalProperties": false,
+  "$defs": {
+    "aiTool": {
+      "type": "object",
+      "description": "'쓰는 AI' 보기가 가리키는 도구와 쓰는 곳 (설계서 7.7절). AI 설정 파일은 도구(tool → guides.json setupTarget)로, 설치 안내는 쓰는 곳(surface → guides.json surfaces[].kind)으로 고른다",
+      "required": ["tool", "surface"],
+      "additionalProperties": false,
+      "properties": {
+        "tool": { "$ref": "defs.schema.json#/$defs/id", "description": "도구 id. 태그 aitool.<tool>과 같고, data/guides.json tools[].id(T39)와 같게 쓴다" },
+        "surface": { "enum": ["cli", "desktop", "ide-extension", "editor", "web", "mobile"], "description": "쓰는 곳: 터미널 · 데스크톱 앱 · 편집기 확장 · 편집기 · 웹 · 휴대폰 앱" },
+        "paidOnly": { "const": true, "description": "유료 구독이 있어야 쓰는 곳. 공식 원문 출처(sources)가 있어야 한다" },
+        "needsReview": { "type": "boolean", "description": "공식 원문으로 확인하지 못한 사실이 있으면 true. 화면은 무료·유료 꼬리표를 달지 않는다" },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "defs.schema.json#/$defs/url" } }
+      }
+    }
+  },
+  "properties": {
+    "version": { "const": 1 },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "text", "picture", "options"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "defs.schema.json#/$defs/questionId" },
+          "text": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+          "help": { "type": "string" },
+          "chip": { "type": "string", "description": "'길 찾는 중' 미리 보기와 설계도 1번 '고른 답'에 쓰는 짧은 이름" },
+          "picture": { "type": "boolean", "description": "true면 그림 보기. 모든 보기에 alt가 있어야 한다 (직접 쓰기 보기는 빼고)" },
+          "optional": {
+            "const": true,
+            "description": "고르지 않아도 되는 질문 ('쓰는 AI'). 차례가 오면 묻지만, 답하지 않은 채 다른 질문을 다 마치면 묻지 않은 것으로 보고 '모르겠어요' 보기('아직 안 정했어요')와 같게 본다. 보기 태그는 aitool.*뿐이고 점수·규칙·노출 조건에 쓰지 않는다"
+          },
+          "groups": {
+            "type": "array",
+            "minItems": 2,
+            "description": "보기를 무리로 나눠 보일 때 무리 이름 (적힌 순서대로). 보기마다 group으로 가리킨다",
+            "items": {
+              "type": "object",
+              "required": ["id", "label"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "$ref": "defs.schema.json#/$defs/id" },
+                "label": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+                "help": { "type": "string", "minLength": 1 }
+              }
+            }
+          },
+          "showIf": { "$ref": "defs.schema.json#/$defs/condition" },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": ["id", "label", "tags"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "$ref": "defs.schema.json#/$defs/id" },
+                "label": { "$ref": "defs.schema.json#/$defs/nonEmptyText" },
+                "alt": { "type": "string", "description": "그림 보기의 대체 텍스트" },
+                "sub": { "type": "string", "minLength": 1, "description": "보기 둘째 줄: 아는 이름 몇 개 (설계서 7.7절 P1). 이름만 쓰고 로고는 쓰지 않는다" },
+                "isUnknown": { "type": "boolean", "description": "'모르겠어요' 보기. 질문마다 하나" },
+                "isCustom": {
+                  "const": true,
+                  "description": "'직접 쓰기' 보기 (D74, input.md 9.1절). 질문마다 하나, id는 custom, '모르겠어요' 바로 앞. 화면은 보기 줄 대신 펼치는 글 칸으로 그린다"
+                },
+                "like": { "$ref": "defs.schema.json#/$defs/id", "description": "직접 쓴 말을 그대로 둘 때 같게 계산할 보기. 있으면 tags가 그 보기의 tags와 똑같아야 한다" },
+                "field": { "type": "string", "minLength": 1, "maxLength": 40, "description": "직접 쓰기 칸의 라벨" },
+                "hint": { "type": "string", "minLength": 1, "description": "직접 쓰기 칸의 도움말 (예시). 화면이 끝에 '이름·연락처는 쓰지 마세요.'를 붙인다" },
+                "keep": { "type": "string", "minLength": 1, "description": "like가 없을 때 그대로 두면 어떻게 계산하는지 화면이 말하는 한 줄" },
+                "group": { "$ref": "defs.schema.json#/$defs/id", "description": "질문의 groups 가운데 이 보기가 든 무리" },
+                "aiTool": { "$ref": "#/$defs/aiTool" },
+                "tags": {
+                  "type": "object",
+                  "propertyNames": { "$ref": "defs.schema.json#/$defs/tagId" },
+                  "additionalProperties": { "type": "number" }
+                }
+              },
+              "if": { "required": ["isCustom"] },
+              "then": { "required": ["field", "hint"] },
+              "else": { "properties": { "like": false, "field": false, "hint": false, "keep": false } }
+            }
+          }
+        },
+        "if": {
+          "properties": {
+            "picture": { "const": true }
+          }
+        },
+        "then": {
+          "properties": {
+            "options": {
+              "items": { "anyOf": [{ "required": ["alt"] }, { "required": ["isCustom"] }] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

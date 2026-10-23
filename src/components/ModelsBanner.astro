@@ -1,0 +1,15 @@
+---
+// AI 모델 비교(/models)로 가는 띠 (D141): API 대분류 쪽과 모델 자료가 있는 소분류(AI 언어 모델·AI 모델 호스팅) 쪽 위에 둔다.
+import Icon from './Icon.astro';
+import { ko } from '../copy/ko.ts';
+import { ROUTES } from '../lib/routes.ts';
+---
+
+<a class="models-banner" href={ROUTES.models} data-cat="api">
+  <span class="cat-dot" aria-hidden="true"><Icon name="columns" size="20px" /></span>
+  <span class="models-banner-text">
+    <strong>{ko.models.banner.title}</strong>
+    <span>{ko.models.banner.text}</span>
+  </span>
+  <span class="models-banner-go" aria-hidden="true"><Icon name="next" size="20px" /></span>
+</a>

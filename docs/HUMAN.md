@@ -4,27 +4,46 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 형식: `- [ ] 무엇을 — 왜 필요한가 — 막히는 작업 — (적은 날)`
 
+> **v5 메모 (2026-10-14, D102):** 코드쇼퍼는 바이브코딩 재료 쇼핑몰로 바뀌었다(`docs/review/v5/brief.md`). v4 기능에 걸린 항목(H14의 안내 카드 주소, H08·H09·T19 색인 수집, H17 글꼴 견본 SVG, H23 안내의 제품 이름, C01 상품 사실 대조)은 v5에서 할 일이 없어 멈춘다. 계정·배포(H01·H11·H13·H22)와 법·상표(H03·H04)는 그대로다. 진열대 자료의 출처별 이용 조건은 각 대분류 `data/catalog/<대분류>/index.json`과 `/about/credits`에 있다.
+
+## 맨 먼저 (5분)
+
+- [ ] **H14 허용 주소 더하기 (가장 먼저, 5분)** — 클라우드 환경 설정 **Network access**의 **Allowed domains**에 아래 주소를 더해 주세요: `docs.github.com` `cursor.com` `developers.openai.com` `docs.devin.ai` `docs.windsurf.com` `antigravity.google` `docs.lovable.dev` `support.bolt.new` `v0.app` `docs.replit.com` `ai.google.dev` `help.openai.com` `openai.com` `support.claude.com` `www.anthropic.com` `policies.google.com` `support.google.com` `nodejs.org` `git-scm.com` `support.apple.com` `vercel.com` `docs.netlify.com` `firebase.google.com` `www.data.go.kr` `api.odcloud.kr` `infuser.odcloud.kr` `open.neis.go.kr` `developers.kakao.com` `www.ncloud.com` `mobbin.com` `refero.design` `nicelydone.club` `www.lazyweb.com` `inspoai.io` `vibe-design-one.vercel.app` `lucianlabs.dev` — 에이전트가 공식 원문을 직접 읽어야 안내 카드 약 23장(약 40%)을 단계 안내로 바꾸고, C01 증거와 가입 나이 숫자를 채울 수 있다. 이번 세션에서도 `docs.github.com`·`firebase.google.com`이 열리지 않았다(`getaddrinfo ENOTFOUND`, 응답 코드 000). 이 오류는 '주소가 없다'가 아니라 '허용 목록 밖'일 수 있다 — **출시**(v3 설계서 8.1 H14, T39의 C01 증거 채우기·2순위 안내 승격) — (2026-10-14, v3 설계서 12절. 짝 문서의 aitools H12 · services H14 · companions H-C1과 옛 H10을 이 줄 하나로 합침)
+
 ## 계정·배포
 
-- [ ] H01 Cloudflare 계정 만들기(무료 플랜, 카드 필요 없음) — 미리 보기 배포(T21)에 필요 — T21 — (2026-10-14 고침, D72). 순서는 `docs/DEPLOY.md` 2~6단계 (계정 → D1 만들고 표 만들기·database_id → Workers Builds로 저장소 연결(빌드 명령 `npm run build:cf`)과 빌드 변수 → 방문 통계(선택) → 첫 배포 확인). 비용 비교는 0절: 하루 수천 명까지 0원, 책스책(Vercel·Supabase)에 영향 없음
-- [x] H01b (필요 없어짐, D72) Workers Builds로 연결하면 GitHub Secrets에 Cloudflare 토큰을 넣지 않는다. 예비 길(GitHub Actions 배포)을 쓸 때만 필요 — `docs/DEPLOY.md` 맨 아래 (2026-10-14)
-- [ ] H11 D1 `code-chauffeur-events`를 만들고 Console에서 `migrations/0001_events.sql`을 실행, database_id를 알려 주기(또는 `wrangler.jsonc`에 직접 넣기), Workers Builds 빌드 변수 `PUBLIC_SITE_URL`·(선택) `PUBLIC_CF_BEACON_TOKEN` 넣기 — `docs/DEPLOY.md` 3~5단계 — T21 — (2026-10-14 고침)
-- [ ] H12 저장소를 비공개로: Settings → Pages에서 켜진 Pages 끄기 → Settings → General → Danger Zone → Change repository visibility → Make private — 소유자 요청(2026-10-14), D72. 비공개가 되면 GitHub Actions 무료 시간이 월 2,000분이라 `check` 작업을 아껴 돌리게 바꿨다 — 막지 않음 — (2026-10-14)
+- [ ] H01 Cloudflare 계정 확인과 저장소 연결(무료 플랜, 카드 필요 없음) — 미리 보기 배포(T21)에 필요 — T21 — (2026-10-14 고침, D72). 순서는 `docs/DEPLOY.md` 1~9단계: 계정 확인·하위 도메인(1) → D1과 표(2·3) → Database ID 보내기(4) → 저장소 연결(5, 빌드 명령 `npm run build:cf`) → 브랜치(6) → 빌드 변수(7) → 대화창에 '빌드 돌려 줘' → 확인(8), 실패하면 9단계. 방문 통계(10)·`main`으로 바꾸기(11)는 나중에. 비용은 0절: 하루 수천 명까지 0원, 카드가 없어 청구될 길이 없음, 책스책(Vercel·Supabase)에 영향 없음
+- [x] H01b (필요 없어짐, D72) Workers Builds로 연결하면 GitHub Secrets에 Cloudflare 토큰을 넣지 않는다. 예비 길(GitHub Actions 배포)을 쓸 때만 필요 — `docs/DEPLOY.md` '예비 길' 절 (2026-10-14)
+- [ ] H11 D1 `code-chauffeur-events`를 만들고 Console에서 표 만들기 글(`migrations/0001_events.sql`과 같음)을 실행(2·3단계), Database ID를 대화창에 보내기(4단계, 에이전트가 작업 브랜치의 `wrangler.jsonc`에 넣음 — 저장소 연결보다 먼저), 저장소 연결 뒤 빌드 변수 다섯 줄(`NODE_VERSION`·`PUBLIC_STAGE`·`PUBLIC_SITE_URL`·`ASTRO_TELEMETRY_DISABLED`·`WRANGLER_SEND_METRICS`) 넣기(7단계). `PUBLIC_CF_BEACON_TOKEN`은 10단계(나중에) — `docs/DEPLOY.md` 2~4·7단계 — T21 — (2026-10-14 고침)
+- [ ] H12 저장소 비공개 — 저장소는 이미 비공개다(2026-10-14 GitHub REST API `private: true`, `has_pages: false`). 남은 일은 Settings → Pages에 켜진 Pages가 없는지 눈으로 확인하는 것 하나(`docs/DEPLOY.md` '저장소 비공개' 절) — 소유자 요청(2026-10-14), D72. 비공개가 되면 GitHub Actions 무료 시간이 월 2,000분이라 `check` 작업을 아껴 돌리게 바꿨다. **알아 둘 것: 이미 만들어진 포크와 받아 간 사본은 비공개로 돌려도 그대로 남는다(되돌릴 수 없음)** — 막지 않음 — (2026-10-14, 한 줄 더함: v3 설계서 12절)
+- [ ] H13 호스팅 고르기: ① Cloudflare Workers 그대로(권함: 비공개 저장소, 0원, 익명 집계·보안 머리글 모두 됨) ② GitHub Pages(저장소를 다시 공개로 하거나 GitHub Pro 이상 + `PUBLIC_BASE_PATH=/<저장소 이름>`·`PUBLIC_HOST=static`, 익명 집계·보안 머리글이 빠짐) ③ 그 밖 — 비교표는 v3 설계서 9.3절. GitHub Pages를 고르면 그때 에이전트가 `.github/workflows/pages.yml`을 만든다(9.5절) — 계정·돈 — T21 배포 — (2026-10-14)
+- [x] H22 연락 메일 주소 정하기 — (정함, D136) 소유자가 준 `yyj19962004@gmail.com`을 저장소 설정 `src/lib/site-config.ts`에 두었다. 빌드 변수 `PUBLIC_CONTACT_EMAIL`은 넣지 않아도 되고, 넣으면 그 값이 먼저다 — (2026-10-14, 정함 2026-10-20)
+- [ ] H24 매일 자료 새로 받기 켜기 (D128) — ① **예약 실행:** GitHub는 기본 가지(`main`)에 있는 작업 흐름 파일로만 매일 실행한다. `.github/workflows/daily-refresh.yml`을 main에 합치거나(작업 브랜치를 main에 합치기), Settings → General → Default branch를 배포 가지로 바꿔 주세요. 그 전에는 Actions → daily-refresh → Run workflow로 손으로 돌릴 수 있다. ② **번역 열쇠(선택):** GitHub Models는 2026-07-30에 닫혔다. Cloudflare 대시보드 → My Profile → API Tokens에서 'Workers AI' 읽기·편집 권한 토큰을 만들고, 저장소 Settings → Secrets and variables → Actions에 비밀 값 `TRANSLATE_API_KEY`(그 토큰), 변수 `TRANSLATE_API_URL` = `https://api.cloudflare.com/client/v4/accounts/<계정 id>/ai/v1/chat/completions`, 변수 `TRANSLATE_MODEL` = Workers AI 모델 목록에서 고른 대화 모델 이름(예: `@cf/...`)을 넣어 주세요. 하루 10,000 Neurons까지 무료라 `TRANSLATE_BUDGET`(기본 200)은 대시보드의 사용량을 보고 늘리거나 줄인다. 다른 OpenAI 호환 공급자도 같은 세 칸으로 쓴다. 없으면 번역만 건너뛰고 나머지(자료·README 그림·자료로 만든 한국어)는 돈다. **2026-10-23 (D143): 운영에 AI를 쓰지 않으려면 ②는 하지 않아도 된다** — 번역하지 않은 모든 상품은 진열대 빌드가 자료로 한국어 한 줄을 만들어 한국어로 먼저 읽힌다. ①만 하면 예약 실행이 돌고, 공개 저장소의 '60일 동안 활동이 없으면 예약 실행 꺼짐' 규칙은 작업 흐름이 스스로 다시 켜서 넘긴다 — 계정·돈 — 매일 새로 받기·한국어 설명 — (2026-10-20, 2026-10-23 고침)
+- [ ] **H25 이름 바꾸기: Worker 이름을 `codeitso`로 (5분, D129)** — 사이트 주소를 `https://codeitso.yoorrard.workers.dev`로 바꾸려면 Cloudflare 대시보드에서 해야 한다(에이전트의 연결 도구에는 이름 바꾸기가 없다). ① **Workers & Pages** → `code-chauffeur` → **Settings** → Worker 이름 옆 편집 → `codeitso` → 저장. ② 같은 **Settings** → **Build** → **Variables and secrets**(빌드 변수)에서 `PUBLIC_SITE_URL`을 `https://codeitso.yoorrard.workers.dev`로 고친다(지금 값은 `code-chauffeur.code-chauffeur.workers.dev`로 하위 도메인이 틀려 있다. 공개 화면의 대표 주소 줄에서 확인함). ③ Cloudflare가 'name conflict' PR을 열면 합치지 말고 닫는다(저장소는 이미 `codeitso`). ④ 바꾼 뒤에는 옛 주소 `code-chauffeur.yoorrard.workers.dev`가 열리지 않는다(아직 검색에 나오지 않는 미리 보기라 괜찮다). 자세한 순서는 `docs/DEPLOY.md` '이름 바꾸기' 절 — 새 주소 — (2026-10-20)
 - [x] H02 GitHub 저장소 만들고 이 폴더 올리기 — yoorrard/code-chauffeur (2026-10-12)
 - [ ] H08 공공데이터포털(data.go.kr) 회원가입·약관 동의, '공공데이터활용지원센터_목록조회서비스'(15077093, 자동승인) 활용신청, 받은 일반 인증키를 GitHub Secrets `DATA_GO_KR_SERVICE_KEY`에 넣기(인코딩·디코딩 키 중 어느 쪽인지도 적어 주세요) — 색인 수집(T19) — T19 — (2026-10-12)
 - [ ] H09 브라우저로 직접 확인: `https://www.data.go.kr/robots.txt` 내용, 이용정책(https://www.data.go.kr/ugs/selectPortalPolicyView.do)의 "센터의 사전 승인 없이 포털 서비스의 지식재산을 이용하거나 제3자가 이용하게 해서는 안 된다" 조항이 목록(이름·기관·링크)을 우리 사이트에 싣는 일에 걸리는지. 괜찮으면 `data/sources.json`의 `redistribution`을 정해 주세요(지금 `metadata-only`, 확인 전에는 `link-only`로 다룬다) — T19 수집 시작 — T19 — (2026-10-12). 조사 내용은 D51
-- [ ] H10 (선택) 에이전트가 data.go.kr을 직접 확인하게 하려면 클라우드 환경 설정 Network access의 Allowed domains에 `www.data.go.kr`, `api.odcloud.kr`, `infuser.odcloud.kr`를 더하기 — 지금 이 환경에서는 막혀 있어 공식 원문을 검색 색인으로만 확인했다 — T19 — (2026-10-12)
+- [x] H10 (H14에 합침, 2026-10-14) data.go.kr 허용 주소 `www.data.go.kr`·`api.odcloud.kr`·`infuser.odcloud.kr`는 맨 위 H14 목록에 들어 있다 — T19 — (2026-10-12)
 
 ## 이름·법·학교
 
-- [ ] H03 KIPRIS 상표 검색, 도메인(codechauffeur.com 등) 확인과 결정 — 정식 출시 전 — T22
-- [ ] H04 교원 겸직 신고, '학원' 명칭, 국외 이전(Cloudflare) 고지, 개인정보 처리방침·이용 안내 최종 문구 — 정식 출시 전 — T22. 초안은 `/legal/privacy`·`/legal/notice`(`src/copy/ko.ts`의 legal 묶음)에 있고 '검토 중' 표시가 붙어 있다. 문의 방법도 정해 주세요.
-- [x] H07 (정함, D72) 저장소는 비공개. 소개 페이지의 저장소 링크는 빼고, 문의는 정식 출시 전 정할 연락처로 바꾼다(H04) — (2026-10-14)
+- [ ] H03 KIPRIS 상표 검색과 도메인 결정 — 새 이름 **코드잇소·codeitso**(D129)로 KIPRIS(kipris.or.kr)에서 같거나 비슷한 상표가 있는지 봐 주세요(소프트웨어·온라인 서비스 쪽 9·35·42류 위주). 정식 공개를 막지는 않는다(지금은 `codeitso.yoorrard.workers.dev`). 산 도메인으로 옮길 때는 공유 링크가 주소째 퍼지므로 옛 주소의 301을 끝까지 지켜야 한다 — 이름·상표 — (2026-10-12, 고침 2026-10-20)
+- [ ] H04 법 문서 최종 검토와 겸직 신고 — 이용약관·개인정보 처리방침·이용 안내·저작권·게시 중단 요청을 구현했다(D136, 문장은 `src/copy/ko.ts` legal 묶음, 운영자 유영재·문의 메일은 `src/lib/site-config.ts`). 정식 공개를 막지 않는다. 사람이 볼 것: ① **교원 겸직 신고** — 소유자가 교원이면 무료·비영리라도 계속 운영하는 웹 서비스가 소속 기관의 겸직 허가·신고 대상인지 확인, ② 처리방침의 약속 — 문의 메일을 답변 뒤 1년 보관하고 지우기, Gmail(Google LLC) 위탁·국외 이전 표기, ③ 약관의 '계속 이용하면 바뀐 약관에 동의' 문구와 책임 제한(고의·중과실 제외) 문구, ④ 저작권·게시 중단 절차(받으면 내리고 가져오기에서 빼기), ⑤ `LICENSE`의 MIT·CC BY 4.0 적용 범위(D145: 코드 MIT, 운영자 글 CC BY 4.0, 진열대 자료는 출처 조건, 이름·로고 제외)와 약관 제9·11조가 뜻대로인지. 고칠 곳이 있으면 문장을 알려 주세요 — 법 — (2026-10-14, 고침 2026-10-20)
+- [ ] H23 안내에 Claude·Copilot·Codex 같은 제품 이름을 쓰는 것과 "각 회사와 관계없어요" 문구가 괜찮은지. 나이 조건은 자료 칸(`minAge`, T39)이 맡으므로 **가입 카드의 나이 문구만** 확인 (`docs/review/v3/services.md` G04) — 상표·법 — 출시 — (2026-10-14)
+- [ ] H17 글꼴 견본 SVG를 배포하는 것이 OFL 1.1에 맞는지, 미리 보기 아이콘(Lucide ISC · Phosphor MIT · Tabler MIT) 라이선스 고지가 충분한지. 그리고 설계도가 권하는 '도트 제목' 갈무리(galmuri 2.40.3, npm 라이선스 칸 OFL-1.1)의 README에 있는 단서(일부 글리프가 Nintendo 글꼴을 바탕으로 했다는 설명)가 이용자 앱에 써도 되는 수준인지 — 라이선스 최종 확인 — 견본 SVG(P1, T38), 갈무리를 계속 권할지 — (2026-10-14)
+- [ ] H18 KWCAG 2.2 원문의 검사 항목과 WCAG 2.2 AA와 다른 점 (에이전트가 원문을 찾지 못함) — 접근성 안내 `/about/accessibility`(P1, T41) — (2026-10-14)
+- [x] H07 (정함, D72 → D145에서 바꿈: 정식 공개 때 공개 저장소·MIT, H27) 저장소는 비공개. 소개 페이지의 저장소 링크는 빼고, 문의는 정식 출시 전 정할 연락처로 바꾼다(H04) — (2026-10-14)
 - [ ] H06 설명문 초안에 AI를 쓸지 결정 — C02~C04 자료 채우기 방식 — 막지 않음 (지금은 에이전트가 초안을 쓰고 needsReview로 둔다)
 
 ## 자료 사실 확인
 
-- [ ] C01 진열 상품 46개를 공식 문서와 대조해 `needsReview: false`로 — 정식 배포(`npm run validate:release`) — T22. 대조표는 이 파일 아래 'C01 대조표'에 에이전트가 채운다.
+- [ ] C01 진열 상품 46개를 공식 문서와 대조해 `needsReview: false`로 — 정식 배포(`npm run validate:release`) — T22. 대조표는 이 파일 아래 'C01 대조표'에 에이전트가 채운다. v3(2026-10-14): 도구 49개 중 47개가 `needsReview: true`이고 `validate:release` 오류는 46개다. **H14 뒤 에이전트가 'C01 대조표'에 상품마다 공식 원문 인용과 확인한 날을 미리 채운다(T39). 사람은 확인란만 누른다.** 원문을 못 연 줄은 '원문 못 엶'으로 남기고 지어내지 않는다
+- [ ] H21 로그인한 화면으로 대조: `docs/review/v3/services.md` G03 여덟 줄, 웹에서 만드는 도구 다섯(Lovable·Bolt.new·v0·Replit·Google AI Studio)의 '설계도를 넣는 곳' 메뉴 이름과 게시(공개) 메뉴 이름, 채팅 AI 셋(Claude·ChatGPT·Gemini)의 '프로젝트 지시 글' 넣는 곳 이름 — 로그인한 화면이 필요 — 2순위 안내를 1순위로 올리기(T39) — (2026-10-14)
+- [ ] H20 AI 설정 파일 실측표(`docs/review/v3/aitools.md` 9.5): Claude Code `/memory`, Gemini CLI `/memory show`, Codex 규칙 요약, 스킬 목록, 웹 빌더 지식 칸 1만 자. 윈도우(Git 없음)에서 `PowerShell(...)` 권한 규칙이 걸리는지(문서로는 확인함, 실기만 남음). **묶음 파일 방법**(묶음 파일을 폴더에 두고 짧은 메시지)이 Claude Code · Codex · Gemini CLI · ChatGPT 앱의 Codex에서 되는지, **전체 메시지(약 3만 자) 붙여 넣기**가 맥 터미널 · 윈도우 터미널 · VS Code 터미널에서 잘리거나 경고가 뜨는지, 알림 훅이 맥·윈도우에서 뜨는지 — 내 컴퓨터·계정 — AI 설정 파일의 '확인함' 표시(T40) — (2026-10-14)
+- [ ] H15 https://vibe-design-one.vercel.app/ 과 lucianlabs.dev를 열어 보고 무엇을 참고하라는 것인지 두세 줄이나 캡처를 남겨 주세요. 이 세션에서는 앞의 것이 `getaddrinfo ENOTFOUND`(허용 목록 밖일 수 있음, H14), 뒤의 것은 검색 0건이었다. 단서: 'VibeDesigner'(페이지 종류 10 × 스타일 18 × 색 조합 106 → Cursor·Bolt·Lovable·v0에 넣을 명세, https://www.hunted.space/product/vibedesigner, 검색 요약)가 같은 곳인지 — 열 수 없었음 — 막지 않음(그동안은 v3 설계서 4절의 느낌 여섯 + 설계도 6번 + DESIGN.md가 맡는다) — (2026-10-14)
+- [ ] H16 Mobbin · Refero · Nicely Done · Lazyweb의 검색 주소 꼴, 무료로 볼 수 있는 범위, 이름 표기·링크를 막는 약관이 없는지 — 약관 판단 — `/looks`의 '다른 앱 둘러보기' 링크를 검색 주소로 바꾸기(T38) — (2026-10-14)
+- [x] H26 (에이전트가 고침, 2026-10-23) CLAUDE.md '꼭 지킬 것 2'의 "공유 링크에는 재료 id만 싣는다"를 "재료 id와 고른 모델 id만 싣는다(메모는 싣지 않는다)"로 고칠지 — 에이전트는 CLAUDE.md를 고치지 않는다 — D141에서 공유 링크에 AI API의 고른 모델 id(상품 옵션)를 싣기로 했다. 막지 않음
+- [ ] **H27 저장소를 공개로 바꾸기 (2분, D145)** — 코드는 MIT로 열기로 했다. ① GitHub 저장소 → **Settings** → **General** 맨 아래 **Danger Zone** → **Change repository visibility** → **Make public** → 저장소 이름을 쳐서 확인. ② (선택) 같은 쪽 위 **Repository name**을 `codeitso`로 바꾸기 — 옛 주소는 GitHub가 새 주소로 넘겨 준다. ③ (선택) 저장소 첫 화면 오른쪽 **About**의 톱니 → Website에 `https://codeitso.yoorrard.workers.dev`, Topics에 `vibe-coding` `korean` `astro` `cloudflare-workers`. 공개 저장소는 GitHub Actions 시간이 무료라 매일 자료 새로 받기의 시간 걱정이 없어진다. 공개 전 git 기록의 비밀 값 검사는 통과했다(2026-10-23) — 계정 — 오픈소스 — (2026-10-23)
 
 ## 그림 (D56)
 
@@ -43,7 +62,8 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 ## 관찰 시험
 
-- [ ] H05 교사 5명 관찰 시험, 처음 써 본 10명의 첫 결과물 확인 — 2단계로 넘어가는 기준 — T22 뒤
+- [ ] H05 교사 5명 관찰 시험, 처음 써 본 10명의 첫 결과물 확인 — 2단계로 넘어가는 기준 — T22 뒤. v3 과제 여덟(만들기 안내 이름, 느낌 고르기, 학교 색, 직접 쓰기, AI 설정 파일, 다음 할 일, 참고 사이트, 디자인 따르기)은 v3 설계서 13절, `docs/OBSERVATION.md`에 T42가 더한다
+- [ ] H19 실기기·화면 낭독기 표(`docs/review/v3/launch.md` 3.12) + 한글 키보드 두 줄(아이폰 Safari · 갤럭시 Chrome에서 "가계부 앱"을 치고 완료). 카카오톡·네이버 앱 안 브라우저에서 설계도 받기, 앱 안 브라우저의 사용자 에이전트 문자열(`DaumApps`·`everytimeApp` 시험 자료용)도 받아 주세요 — 실제 기기 — 출시(L-12, T42) — (2026-10-14)
 
 ---
 

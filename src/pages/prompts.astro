@@ -1,0 +1,16 @@
+---
+// 지난 프롬프트 /prompts (v5.1 D121): 이 브라우저에 남긴 프롬프트 목록(최근 30개)과 [보기]·[.md 받기]·[다시 담기]·[지우기].
+// 방문 통계를 싣지 않는 쪽이다 (stage.ts analyticsAllowed).
+import Base from '../layouts/Base.astro';
+import PromptList from '../components/PromptList.tsx';
+import { ko } from '../copy/ko.ts';
+import { navData } from '../lib/catalog/site.ts';
+---
+
+<Base title={ko.prompts.pageTitle}>
+  <header class="list-head">
+    <h1 tabindex="-1">{ko.prompts.title}</h1>
+    <p class="page-lead">{ko.prompts.lead}</p>
+  </header>
+  <PromptList client:load nav={navData()} />
+</Base>

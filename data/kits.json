@@ -1,0 +1,342 @@
+{
+  "about": "스타터 키트 (brief 7절 묶음 기획전, K1 D131): 만들 앱마다 한 번에 담는 재료 묶음과 구현안(outlineKo). items는 진열대 id(data/catalog/**)이고 손으로 골랐다. theme은 src/lib/kits.ts KIT_THEMES, 키트 id 순서는 KIT_IDS와 같아야 한다. home은 홈에 싣는 다섯 장 (tests/lib/kits.test.ts).",
+  "home": ["school", "game-3d", "office-docs", "landing", "ai-chatbot"],
+  "kits": [
+    {
+      "id": "school",
+      "theme": "edu",
+      "nameKo": "학교 정보 앱 키트",
+      "descKo": "초·중·고·특수학교의 기본정보·급식·시간표·학사일정 앱 재료예요. 나이스(NEIS) API와 한글 폰트·아이콘을 묶었어요.",
+      "items": ["official:neis", "data-go-kr:15122275", "data-go-kr:15139198", "data-go-kr:15122331", "data-go-kr:15122332", "data-go-kr:15122333", "data-go-kr:15122396", "data-go-kr:15137088", "korean-fonts:pretendard", "iconify:tabler"],
+      "outlineKo": ["나이스 교육정보 개방 포털에서 API 키 받기", "학교 이름으로 학교기본정보를 찾아 학교 코드 얻기", "학교 코드로 급식·학사일정 불러오기", "학교급에 맞는 시간표 API 고르기 (초·중·고·특수)", "오늘 날짜로 급식·시간표를 한 화면에 모으기"]
+    },
+    {
+      "id": "class-quiz",
+      "theme": "edu",
+      "nameKo": "수업 퀴즈 키트",
+      "descKo": "배운 내용을 퀴즈로 내고 반 전체가 함께 푸는 앱 재료예요. 문항을 만드는 AI·프롬프트, 실시간 DB, 퀴즈 UI, 효과음을 묶었어요.",
+      "items": ["models-dev:google", "prompt-fabric:create-quiz", "vercel:supabase", "shadcn-registry:quiz-ui", "github:tsparticles--tsparticles", "kenney:interface-sounds", "korean-fonts:kakao-big-sans", "iconify:fluent-emoji-flat"],
+      "outlineKo": ["단원·학습 목표를 AI에 주고 문항 초안 만들기", "문항과 방 코드를 Supabase에 저장하기", "학생은 방 코드로 들어와 실시간으로 답하기", "정답이면 효과음과 축하 효과 보여 주기", "끝나면 문항별 정답률 보여 주기"]
+    },
+    {
+      "id": "class-tools",
+      "theme": "edu",
+      "nameKo": "교실 도구 키트",
+      "descKo": "타이머·모둠 뽑기·자리 바꾸기처럼 칠판 화면에 띄우는 도구 재료예요. 소리·움직임 라이브러리와 큰 글씨 폰트를 묶었어요.",
+      "items": ["github-lists:goldfire--howler.js", "kenney:interface-sounds", "kenney:music-jingles", "github:tsparticles--tsparticles", "github:greensock--gsap", "korean-fonts:kakao-big-sans", "iconify:fluent-emoji-flat", "iconify:ph", "github-lists:suren-atoyan--react-pwa"],
+      "outlineKo": ["타이머·뽑기·자리 바꾸기 가운데 필요한 것 정하기", "큰 글씨 폰트로 교실 TV 화면에 맞추기", "끝날 때 소리와 축하 효과 넣기", "학생 명단은 브라우저에만 저장하기", "인터넷이 끊겨도 열리게 PWA로 만들기"]
+    },
+    {
+      "id": "class-manage",
+      "theme": "edu",
+      "nameKo": "학급 관리 키트",
+      "descKo": "출결·과제 제출을 기록하고 정리하는 학급 관리 앱 재료예요. DB·로그인, 공휴일·학사일정 API, 차트, 엑셀 스킬을 묶었어요.",
+      "items": ["vercel:supabase", "official:google-identity", "data-go-kr:15012690", "data-go-kr:15137088", "github:chartjs--chart.js", "skill-anthropic:xlsx", "korean-fonts:pretendard", "iconify:tabler"],
+      "outlineKo": ["학생 명단을 엑셀에서 불러오기 (개인정보는 최소로)", "날짜별 출결·과제 제출을 표로 기록하기", "공휴일·학사일정을 불러와 수업 날만 보여 주기", "월별 출석률·제출률을 차트로 보기", "기록을 엑셀로 내보내기"]
+    },
+    {
+      "id": "reading-log",
+      "theme": "edu",
+      "nameKo": "독서 기록 키트",
+      "descKo": "읽은 책을 기록하고 다음 책을 추천받는 앱 재료예요. 도서관 정보나루·국립중앙도서관·책 검색 API와 차트를 묶었어요.",
+      "items": ["public-apis-4kr:data4library.kr-apiutilization", "data-go-kr:3078982", "data-go-kr:15064371", "public-apis-4kr:developers.kakao.com-docs-latest-ko-daum-search-common", "public-apis:google-books", "public-apis:open-library", "github:chartjs--chart.js", "korean-fonts:maru-buri", "iconify:ph"],
+      "outlineKo": ["책 제목·ISBN으로 서지 정보와 표지 불러오기", "읽은 날짜·쪽수·한 줄 감상 기록하기", "사서 추천 도서·인기 대출 도서로 다음 책 추천하기", "달마다 읽은 권수를 차트로 보기", "학급 독서 기록을 모아 칭찬 배지 주기"]
+    },
+    {
+      "id": "word-study",
+      "theme": "edu",
+      "nameKo": "받아쓰기·어휘 키트",
+      "descKo": "문장을 읽어 주는 받아쓰기와 낱말 뜻 찾기 앱 재료예요. 국어사전 API, 한국어 음성 합성(TTS)·받아 적기(STT)를 묶었어요.",
+      "items": ["official:stdict", "official:krdict", "official:clova-voice", "official:rtzr-stt", "official:google-speech-to-text", "hf-models:openai--whisper-large-v3-turbo", "kenney:interface-sounds", "korean-fonts:nanum-barun-pen"],
+      "outlineKo": ["급수표·낱말 목록 준비하기", "TTS로 문장을 읽어 주고 속도 조절하기", "학생이 쓴 답과 정답을 견줘 틀린 곳 표시하기", "사전 API로 뜻과 예문 보여 주기", "말하기 연습은 STT로 받아 적어 맞춰 보기"]
+    },
+    {
+      "id": "sim-lab",
+      "theme": "edu",
+      "nameKo": "과학·수학 실험실 키트",
+      "descKo": "변수를 바꿔 가며 결과를 보는 과학·수학 시뮬레이션 재료예요. 그림·물리·3D·그래프 라이브러리와 계산 API를 묶었어요.",
+      "items": ["github-lists:processing--p5.js", "github-lists:liabru--matter-js", "github-lists:mrdoob--three.js", "github:plotly--plotly.js", "public-apis:wolframalpha", "korean-fonts:pretendard", "iconify:ph"],
+      "outlineKo": ["실험 하나와 바꿀 변수(질량·각도·속도) 정하기", "p5.js나 Matter.js로 움직임 그리기 (3D는 three.js)", "슬라이더로 변수를 바꾸며 결과 보기", "측정값을 plotly.js 그래프로 그리기", "학생이 먼저 예상을 적고 결과와 견주기"]
+    },
+    {
+      "id": "coding-class",
+      "theme": "edu",
+      "nameKo": "코딩·AI 수업 키트",
+      "descKo": "설치 없이 브라우저에서 하는 코딩·데이터·AI 수업 재료예요. 브라우저 파이썬, 쉬운 게임 엔진, 수업용 데이터셋을 묶었어요.",
+      "items": ["github-lists:brython-dev--brython", "github-lists:kaplayjs--kaplay", "selfhosted:jupyterlab", "pypi:pandas", "pypi:streamlit", "kaggle:uciml--iris", "kaggle:yasserh--titanic-dataset", "korean-data:nsmc-github.com", "fw-github:huggingface-transformers-js", "korean-fonts:d2coding"],
+      "outlineKo": ["학년에 맞게 시작하기 (게임은 KAPLAY, 파이썬은 Brython)", "브라우저에서 바로 코드를 돌리는 연습장 만들기", "데이터 수업은 아이리스·타이타닉·NSMC로 시작하기", "pandas로 정리하고 Streamlit으로 화면 만들기", "transformers.js로 브라우저 안 AI 체험하기"]
+    },
+    {
+      "id": "career",
+      "theme": "edu",
+      "nameKo": "진로 탐색 키트",
+      "descKo": "관심사에서 직업·학과·대학까지 이어 보는 진로 앱 재료예요. 커리어넷·고용24·대학알리미 자료와 상담용 AI를 묶었어요.",
+      "items": ["data-go-kr:15056641", "data-go-kr:15057133", "data-go-kr:15057878", "data-go-kr:15058917", "official:work24", "data-go-kr-files:15119005", "models-dev:anthropic", "github:recharts--recharts", "korean-fonts:pretendard"],
+      "outlineKo": ["흥미·적성 질문 몇 개로 관심 분야 고르기", "커리어넷 직업정보에서 관련 직업 불러오기", "직업마다 관련 학과·대학 정보 잇기", "고용24로 실제 채용·자격 정보 보여 주기", "AI가 학생 답을 바탕으로 진로 이야기 나누기"]
+    },
+    {
+      "id": "study-bot",
+      "theme": "edu",
+      "nameKo": "학습 도우미 챗봇 키트",
+      "descKo": "수업 자료를 읽고 근거와 함께 답하는 챗봇(RAG) 재료예요. RAG 템플릿, 언어 모델·임베딩 API, 벡터 DB, 문서 읽기 API를 묶었어요.",
+      "items": ["vercel:ai-sdk-rag", "models-dev:openai", "official:openai-embeddings", "fw-github:pgvector-pgvector", "vercel:supabase", "official:upstage-document-parse", "skill-anthropic:pdf", "korean-fonts:pretendard"],
+      "outlineKo": ["수업 자료(PDF·슬라이드)를 글로 바꾸기", "글을 조각내 임베딩으로 저장하기 (pgvector)", "질문과 가까운 조각을 찾아 답에 붙이기", "답마다 근거 쪽수 보여 주기", "정답 대신 힌트부터 주도록 지시하기"]
+    },
+    {
+      "id": "feedback",
+      "theme": "edu",
+      "nameKo": "평가·피드백 도우미 키트",
+      "descKo": "평가 기준에 맞춰 학생 글에 의견 초안을 쓰는 도구 재료예요. 언어 모델 API, 손글씨 OCR, 엑셀·워드 스킬을 묶었어요.",
+      "items": ["models-dev:anthropic", "models-dev:google", "official:clova-ocr", "skill-anthropic:xlsx", "skill-anthropic:docx", "pypi:openpyxl", "korean-fonts:pretendard"],
+      "outlineKo": ["평가 기준(루브릭)을 표로 정리하기", "학생 제출물을 모아 글로 바꾸기 (손글씨는 OCR)", "AI가 기준별 의견 초안 쓰기", "교사가 살펴 고친 뒤 엑셀·워드로 내보내기", "점수는 교사가 정하고 AI는 초안만 맡기기"]
+    },
+    {
+      "id": "notice-translate",
+      "theme": "edu",
+      "nameKo": "가정통신문 번역 키트",
+      "descKo": "가정통신문을 학부모가 쓰는 언어로 옮겨 주는 앱 재료예요. 번역·OCR·문서 읽기·음성 합성 API와 다국어 폰트를 묶었어요.",
+      "items": ["official:papago-translation", "official:google-cloud-translation", "models-dev:anthropic", "official:upstage-document-parse", "official:clova-ocr", "official:clova-voice", "google-fonts:noto-sans", "korean-fonts:pretendard", "skill-anthropic:pdf"],
+      "outlineKo": ["가정통신문 PDF·사진을 글로 바꾸기", "학부모가 쓰는 언어 고르기", "번역 API로 옮기고 AI로 쉬운 말로 다듬기", "날짜·준비물 같은 중요한 내용 따로 강조하기", "다국어 폰트로 PDF를 다시 만들고 소리로 읽어 주기"]
+    },
+    {
+      "id": "game",
+      "theme": "game",
+      "nameKo": "2D 웹 게임 키트",
+      "descKo": "브라우저에서 도는 2D 게임 재료예요. 게임 엔진과 시작 템플릿, 맵 편집기, 도트 그림·효과음·음악, 도트 한글 폰트를 묶었어요.",
+      "items": ["github-lists:phaserjs--template-vite-ts", "github-lists:phaserjs--phaser", "github-lists:mapeditor--tiled", "kenney:pixel-platformer", "kenney:ui-pack", "kenney:interface-sounds", "kenney:music-jingles", "korean-fonts:galmuri"],
+      "outlineKo": ["Phaser 템플릿(Vite + TypeScript)으로 시작하기", "Tiled로 맵 그리기", "Kenney 도트 그림·UI로 화면 채우기", "효과음과 배경 음악 넣기", "점수·다시 하기 화면을 만들고 정적 호스팅에 올리기"]
+    },
+    {
+      "id": "game-3d",
+      "theme": "game",
+      "nameKo": "3D 웹 게임 키트",
+      "descKo": "three.js로 브라우저에서 도는 3D 게임 재료예요. React Three Fiber·물리 엔진, Blender·Tripo로 만든 모델, 무료 3D 에셋·하늘·질감·소리를 묶었어요.",
+      "items": ["github-lists:mrdoob--three.js", "github-lists:pmndrs--react-three-fiber", "github-lists:pmndrs--drei", "github-lists:dimforge--rapier", "github-lists:pmndrs--gltfjsx", "curated:blender", "official:tripo", "kenney:platformer-kit", "curated:quaternius", "polyhaven:kloofendal-48d-partly-cloudy-puresky", "ambientcg:ground037", "kenney:impact-sounds"],
+      "outlineKo": ["Blender나 Tripo(글·사진 → 3D)로 캐릭터·소품 모델 만들기", "glTF(.glb) 파일로 내보내기", "gltfjsx --transform으로 압축하고 React 컴포넌트로 바꾸기", "React Three Fiber·drei로 장면에 불러오기 (three.js 위)", "Rapier로 중력·충돌 넣기", "Poly Haven 하늘·ambientCG 바닥 질감·Kenney 소리로 마무리하기"]
+    },
+    {
+      "id": "asset-3d",
+      "theme": "game",
+      "nameKo": "3D 에셋 만들기 키트",
+      "descKo": "게임·전시에 쓸 3D 모델을 구하고 만드는 재료예요. 무료 에셋 모음, 글·사진으로 3D를 만드는 AI, Blender와 Blender MCP, 동작 붙이기 도구를 묶었어요.",
+      "items": ["curated:blender", "mcp-mcpm:blender", "official:tripo", "official:meshy", "official:rodin", "hf-models:stabilityai--triposr", "curated:mixamo", "curated:poly-pizza", "curated:sketchfab", "curated:quaternius", "kenney:nature-kit"],
+      "outlineKo": ["무료 모델부터 찾기 (Kenney·Quaternius·Poly Pizza, 라이선스 확인)", "없으면 Tripo·Meshy·Rodin으로 글·사진에서 만들기", "Blender에서 크기·원점·면 수 다듬기 (Blender MCP로 AI에게 맡길 수도 있어요)", "Mixamo로 뼈대와 걷기 동작 붙이기", "glTF(.glb)로 내보내 게임에서 불러오기"]
+    },
+    {
+      "id": "edu-game",
+      "theme": "game",
+      "nameKo": "교육용 게임 키트",
+      "descKo": "맞히면 앞으로 나가는 학습 게임 재료예요. 쉬운 게임 엔진, 문항을 만드는 AI, 국어사전 API, 귀여운 그림·소리를 묶었어요.",
+      "items": ["github-lists:kaplayjs--kaplay", "models-dev:google", "official:stdict", "kenney:board-game-icons", "kenney:animal-pack-remastered", "kenney:interface-sounds", "kenney:music-jingles", "korean-fonts:neodgm", "iconify:fluent-emoji-flat"],
+      "outlineKo": ["학습 목표 하나를 게임 규칙으로 바꾸기 (맞히면 한 칸 앞으로)", "KAPLAY로 캐릭터와 점수 화면 만들기", "문항은 JSON 파일로 따로 두고 AI로 늘리기", "사전 API로 낱말 뜻 확인하기", "틀린 문제는 끝나고 다시 보여 주기"]
+    },
+    {
+      "id": "multiplayer",
+      "theme": "game",
+      "nameKo": "멀티플레이 게임 키트",
+      "descKo": "여럿이 같은 방에서 함께 하는 게임 재료예요. 실시간 통신 라이브러리·DB, 게임 엔진, UI·소리를 묶었어요.",
+      "items": ["github-lists:socketio--socket.io", "vercel:supabase", "vercel:liveblocks-starter-kit", "github-lists:phaserjs--phaser", "kenney:ui-pack", "kenney:interface-sounds", "korean-fonts:galmuri"],
+      "outlineKo": ["방 만들기와 방 코드로 들어오기", "Socket.IO나 Supabase Realtime으로 위치·점수 주고받기", "점수는 서버가 정해서 속임수 막기", "끊겼다 다시 들어오면 상태 이어 받기", "Phaser로 화면 그리기"]
+    },
+    {
+      "id": "rhythm-puzzle",
+      "theme": "game",
+      "nameKo": "퍼즐·리듬 게임 키트",
+      "descKo": "맞추기 퍼즐과 박자 맞추기 게임 재료예요. 2D 그리기·소리·움직임·물리 라이브러리와 퍼즐 그림·음악 모음을 묶었어요.",
+      "items": ["github-lists:pixijs--pixijs", "github-lists:tonejs--tone.js", "github-lists:goldfire--howler.js", "github:greensock--gsap", "github-lists:liabru--matter-js", "kenney:puzzle-pack-1", "kenney:music-jingles", "curated:freesound", "curated:free-music-archive", "korean-fonts:galmuri"],
+      "outlineKo": ["판 크기와 규칙 정하기 (맞추기·떨어뜨리기·박자 맞추기)", "PixiJS로 블록·노트 그리기", "Tone.js로 박자를 재고 Howler.js로 소리 내기", "GSAP으로 터지는 움직임 넣기", "음악은 라이선스(CC)를 확인하고 쓰기"]
+    },
+    {
+      "id": "webxr",
+      "theme": "game",
+      "nameKo": "3D 체험·VR 키트",
+      "descKo": "가상 전시실·교실처럼 둘러보는 3D·VR 재료예요. WebXR을 지원하는 3D 엔진, 360° 배경, 3D 모델 모음과 만들기 API를 묶었어요.",
+      "items": ["github-lists:aframevr--aframe", "github-lists:babylonjs--babylon.js", "github-lists:playcanvas--engine", "github-lists:mrdoob--three.js", "polyhaven:lilienstein", "curated:sketchfab", "kenney:furniture-kit", "official:tripo"],
+      "outlineKo": ["A-Frame으로 HTML 몇 줄짜리 3D 장면 시작하기 (크게는 Babylon.js·PlayCanvas)", "360° HDRI로 배경 깔기", "모델(.glb)을 놓아 가상 전시실·교실 꾸미기", "VR 기기는 WebXR로, 없으면 마우스·휴대폰 기울이기로 둘러보기", "전시물은 Tripo로 3D 모델 만들기"]
+    },
+    {
+      "id": "office-docs",
+      "theme": "work",
+      "nameKo": "문서 자동화 키트",
+      "descKo": "되풀이하는 문서 일을 줄이는 자동화 재료예요. AI 코딩 툴용 문서 스킬, 엑셀·워드·PDF 파이썬 라이브러리, PDF 도구를 묶었어요.",
+      "items": ["skill-anthropic:xlsx", "skill-anthropic:docx", "skill-anthropic:pdf", "skill-anthropic:pptx", "pypi:pandas", "pypi:openpyxl", "pypi:python-docx", "pypi:pypdf", "selfhosted:stirling-pdf"],
+      "outlineKo": ["되풀이하는 일을 한 줄로 적기 (예: 엑셀 30개 합치기)", "AI 코딩 툴에 xlsx·docx·pdf 스킬 붙이기", "pandas·openpyxl로 표를 합치고 정리하기", "python-docx로 공문·보고서 틀 채우기", "PDF 합치기·나누기는 Stirling-PDF로 하기"]
+    },
+    {
+      "id": "meeting-notes",
+      "theme": "work",
+      "nameKo": "회의록 요약 키트",
+      "descKo": "녹음을 받아 적고 결정 사항·할 일을 정리하는 회의록 재료예요. 한국어 STT, 화자 나누기 모델, 언어 모델 API, 워드 스킬을 묶었어요.",
+      "items": ["official:rtzr-stt", "official:clova-speech", "official:openai-audio", "hf-models:openai--whisper-large-v3-turbo", "hf-models:systran--faster-whisper-small", "hf-models:pyannote--speaker-diarization-3.1", "models-dev:anthropic", "skill-anthropic:docx", "official:slack-api"],
+      "outlineKo": ["녹음 파일 올리기 (참석자 동의 받기)", "STT로 받아 적기 (한국어는 리턴제로·CLOVA, 무료는 Whisper)", "pyannote로 말한 사람 나누기", "AI로 결정 사항·할 일·담당자 뽑기", "회의록 양식(워드)으로 저장하고 메신저로 보내기"]
+    },
+    {
+      "id": "booking",
+      "theme": "work",
+      "nameKo": "일정·예약 키트",
+      "descKo": "상담·회의실·수업 예약을 받는 앱 재료예요. 예약 오픈소스, 공휴일 API, 메일·문자 알림, 자동 신청 막기를 묶었어요.",
+      "items": ["github-lists:calcom--cal.diy", "vercel:supabase", "data-go-kr:15012690", "mcp-smithery:googlecalendar", "official:resend", "official:solapi", "official:cloudflare-turnstile", "korean-fonts:pretendard", "iconify:tabler"],
+      "outlineKo": ["예약받을 시간대·인원 정하기", "공휴일 API로 쉬는 날 막기", "예약 폼은 Turnstile로 자동 신청 막기", "확정되면 메일(Resend)·문자(SOLAPI)로 알리기", "관리 화면에서 예약 바꾸기·취소하기"]
+    },
+    {
+      "id": "dashboard",
+      "theme": "work",
+      "nameKo": "보고 대시보드 키트",
+      "descKo": "숫자를 차트로 보여 주는 보고·관리 화면 재료예요. 대시보드 템플릿·차트 라이브러리·차트 색·통계 데이터를 묶었어요.",
+      "items": ["github-lists:kiranism--next-shadcn-dashboard-starter", "github:recharts--recharts", "pypi:streamlit", "chart-colors:d3-tableau10", "owid:life-expectancy", "owid:co-emissions-per-capita", "korean-fonts:pretendard", "iconify:lucide"],
+      "outlineKo": ["보고할 숫자 3~5개 정하기", "엑셀·CSV·DB에서 자료 불러오기", "추이는 선, 비교는 막대 차트로 그리기", "기간·부서로 거르기", "빠르게는 Streamlit, 오래 쓸 화면은 대시보드 템플릿으로 만들기"]
+    },
+    {
+      "id": "public-data",
+      "theme": "work",
+      "nameKo": "공공데이터 대시보드 키트",
+      "descKo": "지역 통계·대기질·상권을 지도와 차트로 보는 재료예요. 국가통계·에어코리아·상권 API, 행정구역 지도, 지도·차트 라이브러리를 묶었어요.",
+      "items": ["data-go-kr:15059039", "data-go-kr:15073861", "data-go-kr:15012005", "data-go-kr:15077871", "reference-data:southkorea--southkorea-maps", "github:paullecam--react-leaflet", "github:apache--echarts", "korean-fonts:pretendard"],
+      "outlineKo": ["공공데이터포털에서 활용 신청하고 API 키 받기", "법정동 코드로 지역과 기간 정하기", "행정구역 지도(Leaflet) 위에 색으로 표시하기", "추이는 ECharts 차트로 보기", "자료 출처와 기준일을 화면에 적기"]
+    },
+    {
+      "id": "faq-bot",
+      "theme": "work",
+      "nameKo": "사내 FAQ 챗봇 키트",
+      "descKo": "규정·안내 문서로 묻는 말에 답하는 업무용 챗봇 재료예요. 노코드 AI 앱 빌더, 문서 읽기·재정렬 API, 메신저 연결을 묶었어요.",
+      "items": ["selfhosted:dify.ai", "github-lists:flowiseai--flowise", "models-dev:anthropic", "official:upstage-document-parse", "official:cohere-embed-rerank", "official:slack-api", "official:channel-talk", "selfhosted:open-webui"],
+      "outlineKo": ["규정·안내 문서를 모아 Dify 지식 베이스에 올리기", "답에 근거 문서 링크 붙이기", "모르는 질문은 담당자에게 넘기기", "Slack·채널톡에 붙여 바로 묻게 하기", "내부 문서는 공개 범위를 확인하고 올리기"]
+    },
+    {
+      "id": "forms",
+      "theme": "work",
+      "nameKo": "설문·신청 폼 키트",
+      "descKo": "설문·참가 신청·만족도 조사를 받고 정리하는 재료예요. 오픈소스 폼 도구, 폼 라이브러리, 구글 시트 연결, 자동 신청 막기, 메일·차트를 묶었어요.",
+      "items": ["selfhosted:formbricks", "selfhosted:heyform", "selfhosted:opnform", "nextjs-examples:with-react-hook-form", "mcp-smithery:googlesheets", "official:cloudflare-turnstile", "official:resend", "github:chartjs--chart.js", "korean-fonts:pretendard"],
+      "outlineKo": ["문항과 답 형식(고르기·글·파일) 정하기", "빠르게는 Formbricks·HeyForm, 직접 만들 땐 react-hook-form 쓰기", "응답을 구글 시트나 DB에 모으기", "자동 제출은 Turnstile로 막기", "결과를 차트로 요약하고 접수 메일 보내기"]
+    },
+    {
+      "id": "automation",
+      "theme": "work",
+      "nameKo": "업무 자동화 흐름 키트",
+      "descKo": "메일·시트·메신저를 이어 반복 업무를 자동으로 돌리는 재료예요. 워크플로 도구와 AI 코딩 툴용 스킬, 구글·메신저 연결을 묶었어요.",
+      "items": ["selfhosted:n8n", "selfhosted:activepieces", "skill-awesome-agent:czlonkowski-n8n-skills-n8n-workflow-patterns", "mcp-smithery:googlesheets", "mcp-smithery:googlecalendar", "official:slack-api", "official:telegram-bot-api", "models-dev:openai"],
+      "outlineKo": ["반복 업무를 '언제 → 무엇을 → 어디로'로 적기", "n8n이나 Activepieces에서 흐름 잇기", "구글 시트·캘린더·메신저 연결하기", "중간에 AI 단계를 넣어 요약·분류하기", "실패하면 알림 받게 하기"]
+    },
+    {
+      "id": "landing",
+      "theme": "biz",
+      "nameKo": "가게 홈페이지 키트",
+      "descKo": "가게·서비스를 한 쪽에 소개하는 랜딩 페이지 재료예요. 한글 폰트·색·아이콘·UI·템플릿·일러스트와 지도를 묶었어요.",
+      "items": ["korean-fonts:pretendard", "color-systems:tailwind", "iconify:lucide", "github:saadeghi--daisyui", "astro-themes:blackspike-astro-landing-page", "curated:undraw", "public-apis-4kr:apis.map.kakao.com-web-guide", "skill-anthropic:frontend-design"],
+      "outlineKo": ["가게·서비스를 한 문장으로 정하기", "첫 화면에 사진·가격·연락처 두기", "템플릿에서 시작해 한글 폰트·색 바꾸기", "지도와 예약·문의 링크 넣기", "무료 정적 호스팅에 올리기"]
+    },
+    {
+      "id": "shop-order",
+      "theme": "biz",
+      "nameKo": "주문·결제 키트",
+      "descKo": "온라인으로 주문받고 결제하는 가게 재료예요. 국내·해외 결제 API, 쇼핑몰 오픈소스, 주소 검색, 주문 알림 문자를 묶었어요.",
+      "items": ["public-apis-4kr:docs.tosspayments.com-reference", "official:portone", "official:stripe", "vercel:medusa", "vercel:supabase", "official:daum-postcode", "official:solapi", "korean-fonts:pretendard"],
+      "outlineKo": ["상품·가격·재고 표 만들기", "배송 주소는 Daum 우편번호로 받기", "결제는 토스페이먼츠·포트원(해외는 Stripe) 테스트 키로 먼저 붙이기", "결제 결과는 서버에서 한 번 더 확인하기", "주문이 들어오면 문자로 알리기"]
+    },
+    {
+      "id": "store-map",
+      "theme": "biz",
+      "nameKo": "지도·매장 찾기 키트",
+      "descKo": "가까운 매장·장소를 지도에서 찾는 앱 재료예요. 카카오·네이버·OpenStreetMap 지도, 주소↔좌표 바꾸기, 상권 정보를 묶었어요.",
+      "items": ["public-apis-4kr:apis.map.kakao.com-web-guide", "public-apis-4kr:ncloud.com-product-applicationservice-maps", "official:kakao-local", "official:daum-postcode", "data-go-kr:15012005", "github:paullecam--react-leaflet", "official:nominatim", "iconify:tabler"],
+      "outlineKo": ["매장 주소를 좌표로 바꾸기 (카카오 로컬)", "지도 API 하나 고르기 (카카오·네이버, 해외는 OpenStreetMap)", "내 위치에서 가까운 순으로 늘어놓기", "표시를 누르면 영업시간과 길찾기 링크 보여 주기", "상권 정보로 주변 가게 함께 보기"]
+    },
+    {
+      "id": "weather",
+      "theme": "biz",
+      "nameKo": "날씨·미세먼지 앱 키트",
+      "descKo": "오늘·이번 주 날씨와 미세먼지를 보는 앱 재료예요. 기상청 초단기·단기·중기예보와 생활기상지수, 에어코리아, 해외 날씨 API, 날씨 아이콘을 묶었어요.",
+      "items": ["data-go-kr:15084084", "data-go-kr:15059468", "data-go-kr:15085288", "data-go-kr:15073861", "selfhosted:open-meteo", "iconify:meteocons", "github:chartjs--chart.js", "korean-fonts:pretendard"],
+      "outlineKo": ["위치를 기상청 격자 좌표로 바꾸기", "단기예보로 시간별 날씨, 중기예보로 10일 날씨 보여 주기", "에어코리아로 미세먼지 등급 보여 주기", "날씨 아이콘과 색으로 한눈에 보이게 하기", "해외 지역은 Open-Meteo로 불러오기"]
+    },
+    {
+      "id": "transit",
+      "theme": "biz",
+      "nameKo": "버스·지하철 도착 앱 키트",
+      "descKo": "정류장·역의 도착 예정 시간을 보는 앱 재료예요. 서울·경기·전국(TAGO) 버스 도착, 지하철 실시간 도착·위치·혼잡도 자료를 묶었어요.",
+      "items": ["data-go-kr:15000314", "data-go-kr:15080346", "data-go-kr:15098530", "data-go-kr:15058052", "data-go-kr:15058569", "data-go-kr:15058404", "data-go-kr-files:15071311", "official:kakao-local", "iconify:tabler"],
+      "outlineKo": ["지역에 맞는 버스 API 고르기 (서울·경기, 그 밖은 TAGO)", "정류장 ID로 도착 예정 시간 불러오기", "지하철은 역 이름으로 실시간 도착·열차 위치 보기", "즐겨찾는 정류장·역은 브라우저에 저장하기", "30초마다 새로 고치되 호출 한도 지키기"]
+    },
+    {
+      "id": "real-estate",
+      "theme": "biz",
+      "nameKo": "집 실거래가 앱 키트",
+      "descKo": "동네 집값과 전월세 시세를 보는 앱 재료예요. 아파트·연립다세대·단독/다가구·오피스텔의 매매·전월세 실거래가 API와 법정동 코드를 묶었어요.",
+      "items": ["data-go-kr:15126469", "data-go-kr:15126474", "data-go-kr:15126467", "data-go-kr:15126473", "data-go-kr:15126465", "data-go-kr:15126472", "data-go-kr:15126464", "data-go-kr:15126475", "data-go-kr:15077871", "github:apache--echarts", "public-apis-4kr:apis.map.kakao.com-web-guide"],
+      "outlineKo": ["법정동 코드로 지역 고르기", "주택 유형(아파트·연립다세대·단독/다가구·오피스텔)마다 API 고르기", "매매·전월세 거래를 달마다 불러오기", "단지별 시세 추이를 차트로 보기", "지도에 단지를 표시하기"]
+    },
+    {
+      "id": "health",
+      "theme": "biz",
+      "nameKo": "건강 기록 키트",
+      "descKo": "식단·운동·복약을 기록하는 앱 재료예요. 식품영양성분·의약품·병원·약국 공공 API와 운동 기록 오픈소스, 차트를 묶었어요. 진단은 하지 않아요.",
+      "items": ["data-go-kr:15127578", "data-go-kr:15075057", "data-go-kr:15001698", "data-go-kr:15000576", "selfhosted:wger", "github:recharts--recharts", "github-lists:suren-atoyan--react-pwa", "korean-fonts:pretendard", "iconify:ph"],
+      "outlineKo": ["기록할 것 정하기 (식단·운동·복약·수면)", "음식 이름으로 영양성분을 찾아 열량 합치기", "약 이름으로 효능·주의 사항 보여 주기", "기록은 기기에만 두고 내보내기 제공하기", "주간 그래프와 근처 병원·약국 찾기 넣기"]
+    },
+    {
+      "id": "ai-chatbot",
+      "theme": "trend",
+      "nameKo": "AI 챗봇 키트",
+      "descKo": "묻고 답하는 챗봇 재료예요. 언어 모델 API 둘, 챗봇 템플릿, UI, 최신 문서를 읽어 오는 MCP 서버를 묶었어요.",
+      "items": ["models-dev:anthropic", "models-dev:openai", "vercel:chatbot", "design-systems:shadcn-ui", "google-fonts:noto-sans-kr", "iconify:ph", "mcp-aitmpl:mcps-devtools-context7"],
+      "outlineKo": ["챗봇의 역할과 말투를 시스템 프롬프트로 정하기", "모델 API 하나 고르기 (API 키는 서버에만)", "Chatbot 템플릿으로 화면 시작하기", "답을 한 글자씩 흘려 보여 주기 (스트리밍)", "대화 기록 저장과 지우기 넣기"]
+    },
+    {
+      "id": "mcp-agent",
+      "theme": "trend",
+      "nameKo": "MCP 에이전트 키트",
+      "descKo": "도구를 직접 쓰며 일하는 AI 에이전트 재료예요. MCP SDK와 만들기 스킬, 파일·웹·GitHub·브라우저 MCP 서버, 에이전트 프레임워크를 묶었어요.",
+      "items": ["fw-github:modelcontextprotocol-typescript-sdk", "skill-anthropic:mcp-builder", "mcp-reference:filesystem", "mcp-reference:fetch", "mcp-github:io-github-github-github-mcp-server", "mcp-github:microsoft-playwright-mcp", "mcp-aitmpl:mcps-devtools-context7", "github-lists:openai--openai-agents-python", "github-lists:mastra-ai--mastra", "fw-github:langchain-ai-langgraph"],
+      "outlineKo": ["에이전트가 할 일과 쓸 도구 정하기", "있는 MCP 서버부터 붙이기 (파일·웹·GitHub·브라우저)", "없는 도구는 MCP SDK로 만들기 (mcp-builder 스킬)", "여러 단계 일은 Agents SDK·Mastra·LangGraph로 잇기", "지우기·보내기 같은 동작은 사람 확인 받기"]
+    },
+    {
+      "id": "voice-assistant",
+      "theme": "trend",
+      "nameKo": "음성 비서 키트",
+      "descKo": "말로 묻고 말로 답하는 음성 비서 재료예요. 실시간 음성 에이전트 프레임워크, STT·TTS API(한국어 포함), 말 끝 감지 모델을 묶었어요.",
+      "items": ["github-lists:pipecat-ai--pipecat", "fw-github:livekit-agents", "official:deepgram", "official:rtzr-stt", "official:elevenlabs", "official:typecast", "official:openai-audio", "hf-models:livekit--turn-detector", "models-dev:openai"],
+      "outlineKo": ["말 → 글(STT) → AI 답 → 말(TTS) 흐름 잡기", "Pipecat이나 LiveKit Agents로 실시간 연결하기", "말 끝 감지로 끼어들기 처리하기", "한국어 목소리 고르기 (Typecast·ElevenLabs)", "응답 시간을 재고 줄이기"]
+    },
+    {
+      "id": "browser-ext",
+      "theme": "trend",
+      "nameKo": "브라우저 확장 키트",
+      "descKo": "보고 있는 웹 페이지를 요약·번역·메모하는 크롬 확장 재료예요. 확장 프레임워크와 템플릿, 크롬 공식 예제, UI·아이콘, AI API를 묶었어요.",
+      "items": ["github-lists:wxt-dev--wxt", "wxt-templates:react", "chrome-extension-samples:sample.sidepanel-dictionary", "chrome-extension-samples:ai.gemini-on-device-calendar-mate", "design-systems:shadcn-ui", "iconify:lucide", "models-dev:google"],
+      "outlineKo": ["확장이 할 일 하나 정하기 (요약·번역·메모)", "WXT 템플릿으로 시작하기", "꼭 필요한 권한만 manifest에 적기", "AI는 기기 안 Gemini Nano나 API로 부르기", "크롬 웹 스토어 등록 준비하기"]
+    },
+    {
+      "id": "local-llm",
+      "theme": "trend",
+      "nameKo": "로컬 LLM 키트",
+      "descKo": "인터넷이나 API 키 없이 내 컴퓨터에서 돌리는 AI 재료예요. 모델 실행 도구, 채팅 화면, 한국어를 잘하는 모델, 임베딩 모델을 묶었어요.",
+      "items": ["selfhosted:ollama", "selfhosted:open-webui", "ollama:gemma3", "ollama:qwen3", "ollama:exaone3.5", "ollama:nomic-embed-text", "hf-models:lgai-exaone--exaone-3.5-7.8b-instruct", "fw-github:huggingface-transformers-js"],
+      "outlineKo": ["내 컴퓨터 메모리에 맞는 모델 크기 고르기", "Ollama로 모델을 받아 실행하기", "Open WebUI로 채팅 화면 띄우기", "내 앱에서는 Ollama API(localhost)로 부르기", "문서 검색은 nomic-embed-text 임베딩으로 하기"]
+    },
+    {
+      "id": "saas-starter",
+      "theme": "trend",
+      "nameKo": "SaaS 스타터 키트",
+      "descKo": "로그인·요금제·결제가 갖춰진 구독형 서비스 재료예요. SaaS 스타터 템플릿, 로그인·결제·메일 API, UI를 묶었어요.",
+      "items": ["vercel:next-js-saas-starter", "github-lists:wasp-lang--open-saas", "vercel:supabase", "official:supabase-auth", "official:clerk", "official:stripe", "public-apis-4kr:docs.tosspayments.com-reference", "official:resend", "design-systems:shadcn-ui", "korean-fonts:pretendard"],
+      "outlineKo": ["스타터 하나 고르기 (Next.js SaaS Starter·Open SaaS)", "로그인 붙이기 (Supabase Auth·Clerk)", "요금제와 결제 붙이기 (Stripe, 국내는 토스페이먼츠)", "가입·결제 메일 보내기 (Resend)", "관리자 화면과 사용량 한도 만들기"]
+    },
+    {
+      "id": "ai-image",
+      "theme": "trend",
+      "nameKo": "AI 이미지 앱 키트",
+      "descKo": "글로 그림을 만들고 다듬는 앱 재료예요. 이미지 생성 API 여럿, 오픈 모델 데모, 배경 지우기 API를 묶었어요.",
+      "items": ["official:openai-images", "official:gemini-imagen", "official:black-forest-labs", "official:ideogram", "official:fal", "official:replicate", "hf-spaces:black-forest-labs--flux.1-schnell", "official:remove-bg"],
+      "outlineKo": ["만들 그림 종류 정하기 (프로필·상품 사진·포스터)", "모델 API 고르기 (글자가 든 그림은 Ideogram)", "프롬프트 틀과 스타일 버튼 만들기", "배경 지우기·크기 바꾸기로 다듬기", "생성 횟수 제한과 저작권·초상권 안내 넣기"]
+    },
+    {
+      "id": "portfolio-blog",
+      "theme": "trend",
+      "nameKo": "포트폴리오·블로그 키트",
+      "descKo": "내 작품과 글을 모아 보여 주는 사이트 재료예요. 학생 포트폴리오에도 써요. 블로그·포트폴리오 템플릿, 한글 폰트, 기술 로고 아이콘, 무료 사진을 묶었어요.",
+      "items": ["astro-themes:astropaper", "astro-themes:astrofy-personal-porfolio-website-template", "vercel:portfolio-starter-kit", "github-lists:soumyajit4419--portfolio", "korean-fonts:pretendard", "iconify:simple-icons", "curated:unsplash"],
+      "outlineKo": ["보여 줄 작품 3~6개 고르기", "템플릿 하나로 시작하기 (블로그는 AstroPaper)", "글은 마크다운 파일로 쓰기", "작품마다 사진·만든 과정·배운 점 적기", "무료 정적 호스팅에 올리기"]
+    }
+  ]
+}

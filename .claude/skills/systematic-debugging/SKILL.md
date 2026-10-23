@@ -3,7 +3,7 @@ name: systematic-debugging
 description: Use when encountering any bug, test failure, build or e2e failure, flaky Playwright test, or unexpected behavior, before proposing fixes
 ---
 
-> 출처: obra/superpowers v7.0.0 `skills/systematic-debugging` (MIT, LICENSE 동봉). 코드쇼퍼에 맞게 고친 곳:
+> 출처: obra/superpowers v7.0.0 `skills/systematic-debugging` (MIT, LICENSE 동봉). 코드잇소에 맞게 고친 곳:
 > 사람과 상의하는 대목을 '판정을 docs/DECISIONS.md에 적고 진행'으로 바꿨다. 사람이 지켜보지 않는 자율 실행이므로
 > 막혔다고 멈추지 말고, 조사 → 가설 → 최소 시험 → 판정의 고리를 끝까지 돈다.
 

@@ -1,35 +1,32 @@
 ---
 paths:
-  - "src/lib/engine/**"
+  - "src/lib/catalog/**"
   - "scripts/**"
   - "tests/**"
 ---
 
-# 엔진·스크립트·시험 규칙
+# 진열대 계산·스크립트·시험 규칙
 
-명세는 `docs/ENGINE.md`. 코드와 명세가 다르면 버그다.
+## 진열대 계산 (`src/lib/catalog/core.ts`)
 
-## 엔진 (`src/lib/engine/`)
-
-- 순수 함수만. DOM·`window`·`localStorage`·`fetch`·Node API(`fs`, `path`, `process`)를 쓰지 않는다. 시각(`Date.now()`)과 난수도 쓰지 않는다 (발행 시각은 밖에서 넘긴다).
-- 같은 자료와 같은 `Session`이면 늘 같은 결과. 정렬은 `cmp`(로캘과 무관). `localeCompare` 금지.
+- 순수 함수만. DOM·`window`·`localStorage`·`fetch`·Node API를 쓰지 않는다. 시각(`Date.now()`)과 난수도 쓰지 않는다 (품질 바닥선이 막는다).
+- 진열대 빌드(`scripts/catalog/build.ts`)와 화면 섬이 같은 함수를 쓴다: 정렬, 인기 점수, 쪽·묶음 나누기, 상세 조각 번호(FNV-1a), 카드 모양, 관련 상품.
+- 정렬은 `cmpText`(로캘과 무관). `localeCompare` 금지.
 - Node가 빌드 없이 바로 실행하므로 **지울 수 있는 타입 문법만**: `enum`·`namespace`·매개변수 속성 금지, 타입만 쓰는 import는 `import type`, 상대 경로 import에는 `.ts` 확장자.
-- 문장을 코드에 박지 않는다. 엔진이 쓰는 문장은 `data/templates.json`에서 가져오고 `fill()`로 채운다.
-- 동작을 바꾸면 같은 커밋에서 `docs/ENGINE.md`, `data/golden/`(이유를 적고 손으로), 필요하면 `/about/criteria` 화면을 함께 고친다. 절차는 `docs/ENGINE.md` 8절.
-- 화면에서 필요한 계산이 엔진에 없으면 화면에서 계산하지 말고 엔진에 함수를 더한다 (시험과 함께).
+- 쪽 크기·묶음·조각 수(`types.ts`)를 바꾸면 배포 파일 수(5천 개 아래)와 `npm run qa:budget`을 다시 본다.
 
 ## 스크립트 (`scripts/`)
 
 - `node scripts/*.ts`로 바로 돈다 (Node 22.18+ 타입 지우기). 같은 문법 제약을 지킨다.
 - `scripts/lib/`는 부작용 없는 도우미만 둔다. Vitest가 그대로 import한다.
 - 검사 스크립트는 실패하면 0이 아닌 코드로 끝내고, 무엇을 어떻게 고치면 되는지 쉬운 말로 출력한다.
+- 가져오기 스크립트(`scripts/import/`)는 같은 날 다시 돌려도 같은 파일을 쓴다. 요청 캐시는 저장소 밖(`.cache/`, `node_modules/.cache/`)에.
 
 ## 시험 (`tests/`)
 
-- Vitest. 엔진 시험은 `tests/fixtures/`의 작은 가짜 자료로 규칙 하나하나를 고립해서 본다.
+- Vitest. 순수 함수는 작은 가짜 항목으로 하나씩 본다. 실제 자료 시험(`tests/lib/catalog.test.ts`, `tests/import/`)은 개수·모양·파일 수를 본다.
 - 버그를 고칠 때는 먼저 실패하는 시험을 쓰고, 고친 뒤 통과를 확인한다.
-- `src/lib/engine` 줄 기준 시험 범위 90% 이상을 유지한다.
-- 화면 흐름은 Playwright(`tests/e2e/`), 접근성은 `@axe-core/playwright`. 스냅숏 이미지는 저장소에 올리지 않고 `.qa/`에 둔다.
+- 화면 흐름은 Playwright(`tests/e2e/`), 접근성은 `@axe-core/playwright`. 바깥 요청은 `blockExternal`로 막는다. 스냅숏 이미지는 저장소에 올리지 않고 `.qa/`에 둔다.
 
 ## 코드 모양
 

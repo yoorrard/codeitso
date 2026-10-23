@@ -5,10 +5,10 @@ license: Complete terms in LICENSE.txt
 ---
 
 > 출처: anthropics/skills `skills/frontend-design` @ dbd4588f9e1033efb41dad4bef2f7947c8993d44 (Apache-2.0, LICENSE.txt 동봉).
-> **이 파일은 코드쇼퍼가 고친 사본이다 (Apache-2.0 4조 b항 고지).** 고친 곳: 이 머리말 상자를 더했고, 본문의
+> **이 파일은 코드잇소가 고친 사본이다 (Apache-2.0 4조 b항 고지).** 고친 곳: 이 머리말 상자를 더했고, 본문의
 > "confirm with the client" 한 문장을 "record it in docs/DECISIONS.md and proceed"로 바꿨다. 나머지 본문은 원문 그대로다.
 >
-> 코드쇼퍼에서 이 스킬을 쓸 때:
+> 코드잇소에서 이 스킬을 쓸 때:
 > - **디자인 의뢰서(brief)는 `docs/CONCEPT.md`다** (세계관, 아트 디렉션, 화면 구성, 대표 장면). 의뢰서의 말이 이 스킬의 일반 지침보다 늘 앞선다 (이 스킬도 그렇게 말한다).
 >   특히 게임 같은 연출(자라는 길 지도, 대표 장면 S1~S9, 영수증 출력)은 의뢰서가 정한 것이므로 "모션을 아껴 쓰라"는 일반 지침보다 우선한다.
 >   다만 모션 예산과 동작 줄이기 정책(CONCEPT 7절)과 싸 보이는 신호 목록(CONCEPT 5.9)은 지킨다.

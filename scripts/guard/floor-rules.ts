@@ -9,27 +9,43 @@ export interface Finding {
   message: string;
 }
 
-/** 지운 옛 토큰 이름 (v1 → v2, docs/review/v2/systems.md 7절, D67). 화면 코드에서 쓰면 값이 조용히 비어 버린다 */
+/** 지운 옛 토큰 이름 (v1 → v2 D67, v4 → v5 D104). 화면 코드에서 쓰면 값이 조용히 비어 버린다 */
 export const OLD_TOKENS = [
   'paper', 'card', 'surface-2', 'sky', 'ink', 'ink-soft', 'ink-faint', 'on-ink', 'navy-deep', 'blueprint',
   'flow', 'on-flow', 'slow', 'on-slow', 'jam', 'on-jam', 'caution', 'caution-ink', 'focus-on-dark',
   'shadow', 'shadow-lift', 'radius', 'radius-btn', 'radius-tile', 'radius-sheet', 'btn', 'btn-bar', 'btn-home', 'chip',
   'text-sm', 'text-base', 'text-md', 'text-lg', 'text-xl', 'text-2xl', 'text-3xl',
-  'leading', 'leading-tight', 'tracking-heading', 'weight-display', 'weight-medium',
+  'leading', 'tracking-heading', 'weight-display', 'weight-medium',
+  // v5에서 지운 v2~v4 토큰 (기사 로고·지도·단계 화면)
+  'navy', 'navy-raised', 'cyan', 'brand-white', 'logo-body', 'logo-letter', 'logo-accent', 'logo-light', 'logo-white',
+  'accent', 'accent-press', 'on-accent', 'accent-soft', 'on-accent-soft', 'chosen', 'on-chosen', 'tile', 'on-tile',
+  'plate', 'plate-line', 'plate-read', 'plate-ring', 'seal', 'receipt-soft', 'receipt-bad', 'on-navy', 'on-navy-2', 'focus-on-navy',
+  'warn', 'on-warn', 'bad', 'on-bad', 'font-receipt', 'bar-top', 'bar-bottom', 'pane-left', 'card-min', 'content-max',
+  // v5.1에서 지운 영수증 종이 (프롬프트 단말 판 --term-*로 바뀌었다)
+  'receipt', 'receipt-ink',
 ] as const;
 
-/** 남색 면 위 청록 글자를 허락하는 단 하나의 클래스 (parts.css에 정의, brief 4.1). 이 클래스가 든 규칙만 color에 --cyan을 쓸 수 있다 */
-export const CYAN_ON_NAVY_CLASS = 'cyan-on-navy';
-
-/** 그림(SVG)의 currentColor를 칠하는 스타일 파일: color가 글자색이 아니라 선 색이다 */
-const GRAPHIC_STYLES = new Set(['src/styles/map.css', 'src/styles/map-land.css']);
-
 /** 카드·상자에 두르면 싸 보이는 진한 테두리 색 (brief 5.5, 10절) */
-const HEAVY_INK = /var\(\s*--(text|chosen|navy)\s*\)/;
+const HEAVY_INK = /var\(\s*--(text|brand-navy|primary)\s*\)/;
+
+/**
+ * 사이트 안 주소의 첫 마디 (설계서 9.4절, D81). 화면 부품·도우미(src/components·src/lib)에 이 글자로 시작하는 주소를 쓰면
+ * 주소 바탕(PUBLIC_BASE_PATH)이 빠져 하위 주소 호스트에서 404가 난다. 주소는 src/lib/routes.ts 한 곳에서만 쓴다.
+ * 단계·둘러보는 곳·정보 화면, v3 새 화면, public/ 파일, 빌드가 만드는 끝점.
+ */
+export const INTERNAL_PATHS = [
+  'c', 'item', 'search', 'cart', 'prompts', 'receipts', 'receipt', 'terms', 'about', 'legal', 'kits', 'recent',
+  'catalog', 'brand', 'fonts', 'og.png', '_astro', 'favicon.ico', 'icon-192.png', 'icon-512.png', 'apple-touch-icon', 'manifest.webmanifest',
+  'glossary', 'robots.txt', 'sitemap.xml', 'api',
+] as const;
+
+const esc = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const INTERNAL_PATH_RE = new RegExp(`['"\`]/(${INTERNAL_PATHS.map(esc).join('|')})(?=[/'"\`?#.-]|$)`);
+/** 사이트 안 주소를 직접 쓰면 안 되는 파일: 화면 부품과 도우미. 시험(tests/)은 밖이고, 주소를 정하는 routes.ts만 뺀다 */
+const isRouteScope = (rel: string): boolean => /^src\/(components|lib)\//.test(rel) && rel !== 'src/lib/routes.ts';
 
 const OLD_TOKEN_RE = new RegExp(`var\\(\\s*--(${OLD_TOKENS.join('|')})\\s*[,)]`);
 const GOLD_RE = /--(on-)?gold(-[a-z]+)?\b/;
-const BRAND_TEXT_RE = /(^|[^-\w])color\s*:\s*['"]?\s*var\(\s*--(brand-blue|cyan)\s*\)/;
 
 /** 주석을 지운다 (줄 번호는 그대로 두려고 줄바꿈은 남긴다). 문자열 안의 // 은 대략 지키지만 완벽하지 않다. */
 export function stripComments(src: string, ext: string): string {
@@ -140,7 +156,8 @@ export function checkSource(rel: string, raw: string): Finding[] {
   };
 
   const isTokens = rel === 'src/styles/tokens.css';
-  const isEngine = rel.startsWith('src/lib/engine/');
+  // 진열대 계산(core.ts)은 빌드와 화면이 함께 쓰는 순수 함수다 (v5에서 옛 엔진 src/lib/engine을 대신한다)
+  const isEngine = rel === 'src/lib/catalog/core.ts';
   const isUi = /^src\/(components|pages|layouts)\//.test(rel);
   const isUiOrStyle = isUi || rel.startsWith('src/styles/') || rel.startsWith('src/lib/');
   const isTest = rel.startsWith('tests/');
@@ -197,49 +214,34 @@ export function checkSource(rel: string, raw: string): Finding[] {
     if (isSrc && /(\bfrom\s*|\bimport\s*\(?\s*)['"]three(\/[^'"]*)?['"]/.test(line)) {
       add(i, 'no-three', 'three는 화면에서 쓰지 않는다. 3D는 npm run art로 미리 구운 그림만 싣는다');
     }
-    // 7. 화면 코드 속 한국어 문장 (문구는 src/copy/ko.ts, 엔진 문장은 data/templates.json)
+    // 7. 화면 코드 속 한국어 문장 (문구는 src/copy/ko.ts)
     if (isUi && (ext === '.tsx' || ext === '.astro' || ext === '.ts') && /[가-힣]/.test(line)) {
       add(i, 'copy-in-code', '화면 문구는 src/copy/ko.ts에 두고 가져다 쓴다');
     }
+    // 13. 사이트 안 주소 글자 (설계서 9.4절): 주소 바탕이 빠지지 않게 routes.ts의 도우미만 쓴다
+    if (isRouteScope(rel) && INTERNAL_PATH_RE.test(line)) {
+      add(i, 'base-path', '사이트 안 주소를 글자로 쓰지 않는다. src/lib/routes.ts의 ROUTES·FILES·listPath 같은 도우미를 쓴다 (그래야 하위 주소에서도 주소 바탕이 붙는다)');
+    }
     // 9. 금색은 없앴다 (D61·D67): 이름도 쓰지 않는다
-    if (isSrc && GOLD_RE.test(line)) add(i, 'no-gold', "금색 토큰(--gold…)은 없앴다. 행동은 --accent, 추천 꼬리표는 --accent-soft, 빛은 --cyan");
+    if (isSrc && GOLD_RE.test(line)) add(i, 'no-gold', "금색 토큰(--gold…)은 없앴다. 행동은 --primary, 옅은 면은 --primary-soft");
     // 10. 지운 옛 토큰 이름 (D67)
     if (isUiOrStyle && !isTokens && OLD_TOKEN_RE.test(line)) {
-      add(i, 'old-token', '옛 토큰 이름이다. 새 이름을 쓴다 (--ink → --text, --card → --surface, --text-sm → --size-caption…, systems.md 7절)');
-    }
-    // 11-a. 로고 파랑·청록 글자 (화면 코드의 인라인 style. CSS는 아래에서 규칙 단위로 본다)
-    if (isUiOrStyle && ext !== '.css' && ext !== '.astro' && BRAND_TEXT_RE.test(line)) {
-      add(i, 'brand-color-text', `--brand-blue·--cyan은 글자색으로 쓰지 않는다 (흰 바탕 3.77·2.36:1). 남색 면 위 청록 글자는 .${CYAN_ON_NAVY_CLASS}`);
+      add(i, 'old-token', '옛 토큰 이름이다. 새 이름을 쓴다 (--accent → --primary, --navy → --brand-navy, --plate → --surface-sunken…, tokens.css)');
     }
   });
 
   // CSS 규칙 단위 검사: .css 파일과 .astro의 <style>
   if (isUiOrStyle && !isTokens && (ext === '.css' || ext === '.astro')) {
     const css = ext === '.astro' ? astroStyles(code) : code;
-    if (ext === '.astro') {
-      // <style> 밖(태그의 style 속성)은 줄 단위로
-      const outside = code.split('\n').map((l, i) => (css.split('\n')[i]?.trim() ? '' : l));
-      outside.forEach((l, i) => {
-        if (BRAND_TEXT_RE.test(l)) add(i, 'brand-color-text', `--brand-blue·--cyan은 글자색으로 쓰지 않는다. 남색 면 위 청록 글자는 .${CYAN_ON_NAVY_CLASS}`);
-      });
-    }
     for (const block of cssBlocks(css)) {
-      // 11-b. 로고 파랑·청록 글자: 그림 스타일 파일(지도)은 currentColor가 선 색이라 뺀다
-      if (!GRAPHIC_STYLES.has(rel) && !new RegExp(`\\.${CYAN_ON_NAVY_CLASS}(?![-\\w])`).test(block.selector)) {
-        for (const d of block.decls) {
-          if (d.prop === 'color' && /var\(\s*--(brand-blue|cyan)\s*\)/.test(d.value)) {
-            add(d.line, 'brand-color-text', `--brand-blue·--cyan은 글자색으로 쓰지 않는다 (흰 바탕 3.77·2.36:1). 남색 면 위 청록 글자는 .${CYAN_ON_NAVY_CLASS}`);
-          }
-        }
-      }
-      // 12. 2px 넘는 진한 테두리 (brief 5.5): 고름은 안쪽 2px --chosen 고리(box-shadow) + --selected 면으로
+      // 12. 2px 넘는 진한 테두리: 고름은 안쪽 2px --primary 고리(box-shadow) + --selected 면으로
       const borders = block.decls.filter((d) => BORDER_PROP.test(d.prop));
       const blockWide = borders.some((d) => (borderWidth(d) ?? 0) >= 2);
       for (const d of borders) {
         if (!HEAVY_INK.test(d.value)) continue;
         const own = borderWidth(d);
         if ((own ?? 0) >= 2 || (own === null && blockWide)) {
-          add(d.line, 'heavy-border', '2px 넘는 진한 테두리(--text·--chosen·--navy)는 쓰지 않는다. 고름은 box-shadow: inset 0 0 0 2px var(--chosen) + --selected 면');
+          add(d.line, 'heavy-border', '2px 넘는 진한 테두리(--text·--brand-navy·--primary)는 쓰지 않는다. 고름은 box-shadow: inset 0 0 0 2px var(--primary) + --selected 면');
         }
       }
     }

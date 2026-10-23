@@ -1,22 +1,18 @@
 ---
-// 개인정보 처리방침 초안 /legal/privacy (R-74, T17). 정식 출시 전 사람이 최종 문구를 확인한다 (docs/HUMAN.md H04).
-import Base from '../../layouts/Base.astro';
+// 개인정보 처리방침 /legal/privacy (R-74 → L, D136). 「개인정보 보호법」 처리방침 작성 항목에 맞춰 사이트가 실제로 하는 일만 적는다
+// (익명 집계 worker/index.ts, 브라우저 저장 src/lib/saved.ts, 바깥 그림·글꼴 src/lib/catalog/hosts.ts, 메일 문의). 최종 문구는 사람이 한 번 더 본다 (H04).
+// 서버 없는 정적 호스트(PUBLIC_HOST=static)는 집계·방문 통계가 없고 호스팅 업체가 다르므로 그 묶음의 본문을 legal.privacy.staticHost로 통째로 바꾼다.
+import LegalDoc from '../../components/LegalDoc.astro';
+import type { LegalSection } from '../../components/LegalDoc.astro';
 import { ko } from '../../copy/ko.ts';
+import { HOST } from '../../lib/stage.ts';
 
-const L = ko.legal;
+const L = ko.legal.privacy;
+const swap: Partial<Record<string, Omit<LegalSection, 'id' | 'h'>>> = HOST === 'static' ? L.staticHost : {};
+const sections: LegalSection[] = L.sections.map((s) => {
+  const o = swap[s.id];
+  return o ? { id: s.id, h: s.h, ...o } : s;
+});
 ---
 
-<Base title={L.privacyTitle}>
-  <article class="prose">
-    <p class="review-banner" role="note">{L.reviewing}</p>
-    <h1>{L.privacyTitle}</h1>
-    {
-      L.privacy.map((x) => (
-        <>
-          <h2>{x.h}</h2>
-          <p>{x.p}</p>
-        </>
-      ))
-    }
-  </article>
-</Base>
+<LegalDoc doc="privacy" pageTitle={L.pageTitle} title={L.title} lead={L.lead} sections={sections} />

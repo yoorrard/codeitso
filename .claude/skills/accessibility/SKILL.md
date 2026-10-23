@@ -1,6 +1,6 @@
 ---
 name: accessibility
-description: Auditing or building UI for WCAG 2.2 AA in this Astro + Preact Korean app (코드쇼퍼, lang="ko", 360px baseline). Use when creating or changing components, pages, layouts or styles, when a screen needs keyboard, focus, dialog or sheet, aria-live, form, contrast, 44px target, reflow or reduced-motion work, or when asked for an a11y or WCAG audit. Verify with /visual-qa, npm run e2e (@axe-core/playwright) and keyboard-only e2e.
+description: Auditing or building UI for WCAG 2.2 AA in this Astro + Preact Korean app (코드잇소, lang="ko", 360px baseline). Use when creating or changing components, pages, layouts or styles, when a screen needs keyboard, focus, dialog or sheet, aria-live, form, contrast, 44px target, reflow or reduced-motion work, or when asked for an a11y or WCAG audit. Verify with /visual-qa, npm run e2e (@axe-core/playwright) and keyboard-only e2e.
 license: MIT (see LICENSE in this folder)
 paths:
   - "src/components/**"
@@ -10,9 +10,9 @@ paths:
 ---
 
 > Source: [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills) `skills/accessibility` (SKILL.md, references/WCAG.md, references/A11Y-PATTERNS.md) at commit `afa8da942115f2961fdbfa80807ea0b232ff6c00`, MIT License (copy in `LICENSE`).
-> Changed (by 코드쇼퍼): Korean/`lang="ko"` and Preact/Astro examples; 44px target rule; reduced-motion kill switch replaced by the token policy (`--dur-fade` kept); dialog/sheet focus, focus-not-obscured and live-region guidance tied to our layout; testing via `/visual-qa`, `npm run e2e` + `@axe-core/playwright` and keyboard-only e2e instead of Lighthouse/DevTools MCP/global axe CLI; "코드쇼퍼 특이점" section added; large-text threshold corrected to px; two references merged into one; autonomy rule added ("decide, record in docs/DECISIONS.md, continue").
+> Changed (by 코드잇소): Korean/`lang="ko"` and Preact/Astro examples; 44px target rule; reduced-motion kill switch replaced by the token policy (`--dur-fade` kept); dialog/sheet focus, focus-not-obscured and live-region guidance tied to our layout; testing via `/visual-qa`, `npm run e2e` + `@axe-core/playwright` and keyboard-only e2e instead of Lighthouse/DevTools MCP/global axe CLI; "코드잇소 특이점" section added; large-text threshold corrected to px; two references merged into one; autonomy rule added ("decide, record in docs/DECISIONS.md, continue").
 
-# Accessibility (a11y): WCAG 2.2 AA for 코드쇼퍼
+# Accessibility (a11y): WCAG 2.2 AA for 코드잇소
 
 Every screen must pass WCAG 2.2 Level A and AA at 360px, with the keyboard only, with a screen reader reading Korean, at 200% text size and with reduced motion. Where this project is stricter than WCAG (44px targets, color + icon + text), the project rule wins. AAA items we get almost free are adopted too: 2.5.5 (44px targets), 2.4.13 (3px focus ring), 2.3.3 (reduced-motion setting).
 
@@ -183,7 +183,7 @@ Do not use the global `* { animation-duration: 0.01ms !important }` kill switch:
 }
 ```
 
-Web Animations API scenes (`src/lib/motion.ts`, see the `game-motion` skill) read the same state and the same tokens:
+Web Animations API motion reads the same state and the same tokens:
 
 ```ts
 const css = () => getComputedStyle(document.documentElement);
@@ -287,7 +287,7 @@ A real screen-reader pass (VoiceOver, TalkBack, NVDA with a Korean voice) can't 
 - **Serious (fix before the task is done):** missing `lang="ko"` or page title, broken heading order, focus lost after a step change or dialog close, focus hidden behind a bar, targets under 44px, color-only status, a control that advances on arrow keys.
 - **Moderate (fix in the same task if cheap):** decorative images announced, inconsistent dictionary placement, no live announcement for copy/add results, missing landmarks.
 
-## 코드쇼퍼 특이점
+## 코드잇소 특이점
 
 - **Interview options are buttons, not radios** (D19 in `docs/DECISIONS.md`, WCAG 3.2.2). Choosing an option advances to the next question, so each option is a `<button type="button">`: click, Enter and Space advance; arrow keys never do. The earlier choice shows `aria-pressed="true"`. Options sit in a `role="group"` named by the question heading (`aria-labelledby`).
 - **Traffic status is color + icon + text** (docs/CONCEPT.md 5.3): 막힘 = red + accident mark + "막힘", 서행 (kept on purpose) = amber + question mark + "서행", 원활 = green + check + "원활". Lamps change at most once per 350ms (never 3+ flashes per second); under reduced motion only the final state is shown.
@@ -301,4 +301,4 @@ A real screen-reader pass (VoiceOver, TalkBack, NVDA with a Korean voice) can't 
 - [WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)
 - [Deque axe rules](https://dequeuniversity.com/rules/axe/)
 - [references/criteria-and-patterns.md](references/criteria-and-patterns.md): A/AA criteria table and Preact/Astro patterns (visually-hidden, dialog, skip link, interview options, tabs, live region, form errors, dragging, keyboard e2e)
-- `docs/UX.md` §4 (motion M1–M8) and §6 (accessibility checklist), `game-motion` skill
+- `src/styles/tokens.css` motion tokens and the `animate` skill

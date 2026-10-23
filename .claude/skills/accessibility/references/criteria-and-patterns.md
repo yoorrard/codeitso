@@ -1,4 +1,4 @@
-# WCAG 2.2 criteria and code patterns (코드쇼퍼)
+# WCAG 2.2 criteria and code patterns (코드잇소)
 
 Part of the vendored `accessibility` skill. Source, commit and the list of changes are in the header of [../SKILL.md](../SKILL.md); this file merges and adapts the source's `references/WCAG.md` and `references/A11Y-PATTERNS.md`. Korean strings below are illustrations: real UI text lives in `src/copy/ko.ts`, and every color, size and duration comes from `src/styles/tokens.css`.
 
@@ -6,7 +6,7 @@ Part of the vendored `accessibility` skill. Source, commit and the list of chang
 
 Both levels must pass. The last column says where the criterion bites in this app.
 
-| Criterion | Level | Requirement | 코드쇼퍼 |
+| Criterion | Level | Requirement | 코드잇소 |
 |---|---|---|---|
 | 1.1.1 Non-text Content | A | Images and icons have text alternatives | Route map (role=img summary), picture options, renders and blueprint placeholders |
 | 1.2.1 Audio-only and Video-only | A | Transcript or audio description | No media in phase 1 |

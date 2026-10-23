@@ -1,0 +1,61 @@
+---
+// 머리줄 카테고리 메뉴 (brief 3절): 모든 대분류와 소분류를 한 판에 (상품 수와 함께). <details>라 스크립트 없이도 열리고,
+// Base의 작은 스크립트가 Esc·바깥 누르기로 닫고 초점을 단추로 돌린다. 판 아래 도움말 줄: 이용 가이드(O1, 누르면 메뉴를 닫고 가이드를 연다)·용어 사전.
+import Icon from './Icon.astro';
+import { ko } from '../copy/ko.ts';
+import { withCommas } from '../lib/catalog/core.ts';
+import type { NavCategory } from '../lib/catalog/types.ts';
+import { CATEGORY_ICON } from '../lib/icons.ts';
+import { ROUTES, categoryPath, listPath } from '../lib/routes.ts';
+
+interface Props {
+  nav: NavCategory[];
+}
+const { nav } = Astro.props;
+---
+
+<details class="catmenu" data-menu>
+  <summary class="catmenu-btn">
+    <Icon name="menu" size="22px" />
+    <span class="catmenu-word">{ko.layout.categories}</span>
+  </summary>
+  <div class="catmenu-panel">
+    <nav aria-label={ko.layout.categoriesMenu}>
+      <ul class="catmenu-cols">
+        {
+          nav.map((c) => (
+            <li class="catmenu-col" data-cat={c.id}>
+              <a class="catmenu-cat" href={categoryPath(c.id)}>
+                <span class="cat-dot" aria-hidden="true">
+                  <Icon name={CATEGORY_ICON[c.id]} size="18px" />
+                </span>
+                <span>{c.name}</span>
+                <span class="catmenu-n">{withCommas(c.total)}</span>
+              </a>
+              <ul class="catmenu-subs">
+                {c.subs.map((s) => (
+                  <li>
+                    <a href={listPath(c.id, s.id)}>
+                      <span>{s.name}</span>
+                      <span class="catmenu-n">{withCommas(s.count)}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="catmenu-help" role="group" aria-label={ko.layout.help}>
+      <button type="button" class="catmenu-help-btn" data-tour-open>
+        <Icon name="help" size="20px" />
+        {ko.layout.guide}
+      </button>
+      <a class="catmenu-help-btn" href={ROUTES.terms}>
+        <Icon name="book" size="20px" />
+        {ko.footer.glossary}
+      </a>
+    </div>
+  </div>
+</details>

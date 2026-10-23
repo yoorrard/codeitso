@@ -1,0 +1,51 @@
+{
+  "id": "case-32",
+  "title": "우리 반 퀴즈를 Heroku에 올림 (0원만인데 무료 플랜이 없는 도구: 충돌)",
+  "note": "레시피 class-quiz와 같은 답에 배포를 Heroku로 바꿨다. Heroku는 무료 플랜이 없어(가장 싼 Eco가 한 달 5달러) 0원 예산과 충돌하고 발행이 막힌다. 무료 사용량이 있는 도구(case-21 구글 지도)는 주의로만 나온다 (D101).",
+  "answers": {
+    "q.type": "quiz",
+    "q.audience": "few",
+    "q.ai": "chat-free",
+    "q.save": "no",
+    "q.domain": "none",
+    "q.budget": "free-only",
+    "q.payment": "no",
+    "q.device": "phone",
+    "q.style": "cute"
+  },
+  "cart": ["html-single", "heroku"],
+  "expect": {
+    "asked": ["q.type", "q.audience", "q.ai", "q.save", "q.domain", "q.budget", "q.payment", "q.device", "q.style"],
+    "slots": [
+      {
+        "id": "slot.screen",
+        "required": true,
+        "recommended": "html-single",
+        "filledBy": ["html-single"],
+        "score": 4,
+        "runnerUp": "react-vite",
+        "reasons": ["aiTool", "budget"]
+      },
+      {
+        "id": "slot.host",
+        "required": true,
+        "recommended": "github-pages",
+        "filledBy": ["heroku"],
+        "score": 4,
+        "runnerUp": "google-sheets-apps-script",
+        "reasons": ["aiTool", "budget", "official"]
+      }
+    ],
+    "conflicts": ["conflict.paid-on-free"],
+    "canIssue": false,
+    "research": ["research.copyright"],
+    "safety": [],
+    "study": { "required": ["terminal", "deploy"], "all": ["terminal", "deploy", "git-repo"] },
+    "steps": ["slot.screen", "slot.host"],
+    "prep": ["Heroku 가입과 카드 등록(계정 확인)", "Heroku CLI 설치"],
+    "difficulty": 4,
+    "difficultyFirst": 4,
+    "minutes": 110,
+    "split": { "needed": false, "defer": [], "easier": [] }
+  }
+}

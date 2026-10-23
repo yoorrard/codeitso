@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "weights": {
+    "domainMatch": 3,
+    "topicMatch": 3,
+    "topicMissed": -3,
+    "aiToolMatch": 2,
+    "freeProduct": 2,
+    "paidWhenBudgetFree": -4,
+    "realtimeMet": 2,
+    "realtimeMissed": -3,
+    "difficultyGap": -1,
+    "providerOfficial": 1,
+    "proxyNeeded": 2,
+    "sharedTool": 2,
+    "localForMe": 2,
+    "localForShared": -6,
+    "accessPenalty": { "none": 0, "signup": 0, "key": -1, "approval": -2, "account-or-business": -4 }
+  },
+  "recommendThreshold": 3,
+  "userLevelByAi": { "ai.chat-free": 1, "ai.chat-paid": 1, "ai.builder": 1, "ai.agent": 2 },
+  "defaultUserLevel": 1,
+  "phaseSplitDifficulty": 6,
+  "studyRequiredMax": 3,
+  "baseMinutes": 30,
+  "unknownSetupMinutes": 60,
+  "unknownDifficulty": 2,
+  "reasonsMax": 3
+}

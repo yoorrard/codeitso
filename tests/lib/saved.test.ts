@@ -1,141 +1,191 @@
-// 저장된 값 고르기: 브라우저 저장소의 값은 누가 고쳤을 수도 있으니 모양을 믿지 않는다.
+// 저장 값 읽기 (saved.ts): 장바구니·프로젝트 메모·지난 프롬프트·최근 본 재료·찜·메타·설정. 읽은 값은 믿지 않고 모양을 고른다.
 import { describe, expect, it } from 'vitest';
 import {
+  CART_MAX,
   DEFAULT_PREFS,
-  FREE_TEXT_MAX,
-  RECEIPTS_MAX,
+  MEMO_MAX,
+  MODEL_ID_MAX,
+  PROJECT_MAX,
+  PROMPTS_MAX,
+  PROMPT_FIELD_MAX,
+  RECENT_MAX,
   SENT_MAX,
-  addReceiptEntry,
+  WISH_MAX,
+  addLine,
+  addLines,
+  cleanMemo,
   isDefaultPrefs,
+  isEmptyCart,
   isEmptyMeta,
-  isEmptySession,
-  isEmptyStudy,
-  isEmptySeen,
+  pushRecent,
+  readCart,
   readMeta,
+  readModelChoice,
   readPrefs,
-  readReceipts,
-  readSession,
-  readStudy,
-  readSeen,
+  readProject,
+  readPrompt,
+  readPrompts,
+  readRecent,
+  readWish,
+  samePrompt,
+  stamp,
+  toggleWishList,
 } from '../../src/lib/saved.ts';
 
-describe('세션 읽기', () => {
-  it('정상 값은 그대로', () => {
-    const s = { answers: { 'q.type': 'page' }, cart: ['a', 'b'], kept: ['conflict.x'], deferred: ['notify'], freeText: '급식 페이지' };
-    expect(readSession(s)).toEqual(s);
+const line = (id: string, extra: Record<string, unknown> = {}) => ({ id, name: `이름 ${id}`, cat: 'design', sub: 'fonts', addedAt: 1, ...extra });
+
+describe('장바구니 읽기', () => {
+  it('정상 줄은 그대로, 메모는 다듬는다', () => {
+    expect(readCart([line('a', { memo: '  제목 글꼴로  ' })])).toEqual([{ id: 'a', name: '이름 a', cat: 'design', sub: 'fonts', addedAt: 1, memo: '제목 글꼴로' }]);
   });
 
-  it('깨진 값은 빈 세션으로', () => {
-    for (const raw of [null, undefined, 3, 'x', [], true]) {
-      expect(readSession(raw)).toEqual({ answers: {}, cart: [], kept: [], deferred: [] });
-    }
+  it('고른 모델은 모양이 맞을 때만 읽고, 옛 줄(모델 없음)은 그대로다 (D141)', () => {
+    const got = readCart([
+      line('a', { model: { id: 'claude-x', name: ' Claude X ' } }),
+      line('b', { model: { id: 'gpt 5' } }),
+      line('c', { model: 'gpt-5' }),
+      line('d', { model: { id: 'x'.repeat(MODEL_ID_MAX + 1), name: 'X' } }),
+      line('e', { model: { id: 'only-id' } }),
+      line('f'),
+    ]);
+    expect(got.map((x) => x.model)).toEqual([{ id: 'claude-x', name: 'Claude X' }, undefined, undefined, undefined, { id: 'only-id', name: 'only-id' }, undefined]);
+    expect(readModelChoice(null)).toBeUndefined();
+    const p = readPrompt({ id: 'p1', at: 5, lines: [line('a', { model: { id: 'm', name: 'M', in: 3, out: -1, at: '2026-10-20' } }), line('b', { modelOpen: true })] });
+    expect(p?.lines[0]?.model).toEqual({ id: 'm', name: 'M', in: 3, at: '2026-10-20' });
+    expect(p?.lines[1]?.modelOpen).toBe(true);
   });
 
-  it('문자열이 아닌 답·목록 값과 겹친 id를 버린다', () => {
-    const s = readSession({ answers: { a: 'x', b: 3, c: null }, cart: ['p', 'p', 4, '', 'q'], kept: 'nope', deferred: [null] });
-    expect(s).toEqual({ answers: { a: 'x' }, cart: ['p', 'q'], kept: [], deferred: [] });
+  it('S1 판의 담은 때(at)도 읽는다', () => {
+    expect(readCart([{ id: 'a', name: 'A', cat: 'ai', sub: 'mcp', at: 42 }])[0]?.addedAt).toBe(42);
   });
 
-  it('자유 입력은 길이를 자르고, 빈 글은 버린다', () => {
-    expect(readSession({ freeText: 'ㄱ'.repeat(FREE_TEXT_MAX + 50) }).freeText).toHaveLength(FREE_TEXT_MAX);
-    expect(readSession({ freeText: '   ' }).freeText).toBeUndefined();
+  it('깨진 값·모양이 틀린 줄·겹친 id를 버린다', () => {
+    expect(readCart('x')).toEqual([]);
+    expect(readCart(null)).toEqual([]);
+    expect(readCart([line('a'), line('a'), { id: 'b' }, line('c', { cat: 'Design!' }), line('', {}), line('d', { sub: '' }), line('e', { name: '  ' })]).map((x) => x.id)).toEqual(['a']);
+  });
+
+  it(`메모는 ${MEMO_MAX}자, 줄은 ${CART_MAX}개까지. 시각이 이상하면 0`, () => {
+    expect(cleanMemo('가'.repeat(MEMO_MAX + 10))?.length).toBe(MEMO_MAX);
+    expect(cleanMemo('   ')).toBeUndefined();
+    const many = Array.from({ length: CART_MAX + 5 }, (_, i) => line(`x${i}`));
+    expect(readCart(many)).toHaveLength(CART_MAX);
+    expect(readCart([line('a', { addedAt: 'soon' })])[0]?.addedAt).toBe(0);
+  });
+
+  it('더하기: 새 줄은 끝에, 있는 줄은 메모만 바꾸고(exists), 가득 차면 full', () => {
+    const a = { ...line('a'), memo: '처음' };
+    const first = addLine([a], { ...line('b'), addedAt: 2 });
+    expect(first.result).toBe('added');
+    expect(first.list.map((x) => x.id)).toEqual(['a', 'b']);
+    const again = addLine(first.list, { ...line('a'), memo: '다시', addedAt: 9 });
+    expect(again.result).toBe('exists');
+    expect(again.list[0]).toEqual({ ...a, memo: '다시' });
+    expect(addLine(first.list, { ...line('a'), addedAt: 9 }).list[0]).toEqual(a);
+    const full = Array.from({ length: CART_MAX }, (_, i) => line(`x${i}`));
+    expect(addLine(full, line('new')).result).toBe('full');
+  });
+
+  it('여러 줄 더하기: 있는 것은 건너뛰고, 가득 차면 거기서 멈춘다', () => {
+    const r = addLines([line('a')], [line('a'), line('b'), line('c')]);
+    expect(r).toMatchObject({ added: 2, skipped: 1, full: false });
+    expect(r.list.map((x) => x.id)).toEqual(['a', 'b', 'c']);
+    const almost = Array.from({ length: CART_MAX - 1 }, (_, i) => line(`x${i}`));
+    const f = addLines(almost, [line('n1'), line('n2')]);
+    expect(f).toMatchObject({ added: 1, full: true });
+    expect(f.list).toHaveLength(CART_MAX);
   });
 });
 
-describe('공부 기록 읽기', () => {
-  it('읽음과 맞힌 문제 번호(정수, 겹침 없이 정렬)', () => {
-    expect(readStudy({ api: { read: true, quiz: [2, 0, 2, -1, 1.5, 'x'] } })).toEqual({ api: { read: true, quiz: [0, 2] } });
+describe('프로젝트 메모·영수증·최근 본 재료 읽기', () => {
+  it(`프로젝트 메모는 ${PROJECT_MAX}자까지, 아니면 빈 글`, () => {
+    expect(readProject('  급식 앱 ')).toBe('급식 앱');
+    expect(readProject(3)).toBe('');
+    expect(readProject('가'.repeat(PROJECT_MAX + 1))).toHaveLength(PROJECT_MAX);
   });
 
-  it('아무것도 안 한 개념과 깨진 값은 버린다', () => {
-    expect(readStudy({ api: { read: false, quiz: [] }, json: 'x', env: null })).toEqual({});
-    expect(readStudy([1, 2])).toEqual({});
+  const prompt = (id: string, at: number, extra: Record<string, unknown> = {}) => ({
+    id,
+    at,
+    lines: [{ id: 'google-fonts:roboto', name: 'Roboto', cat: 'design', sub: 'fonts', url: 'https://fonts.google.com/specimen/Roboto', install: 'npm i @fontsource/roboto', auth: 'key' }],
+    ...extra,
+  });
+
+  it('지난 프롬프트: 모양이 맞는 것만, 주소는 http(s)만, 칸은 길이 상한까지, v5 영수증도 읽는다', () => {
+    const r = readPrompt(prompt('abc', 5, { project: ' 급식 앱 ' }));
+    expect(r).toMatchObject({ id: 'abc', at: 5, project: '급식 앱' });
+    expect(r?.lines[0]).toEqual({ id: 'google-fonts:roboto', name: 'Roboto', cat: 'design', sub: 'fonts', url: 'https://fonts.google.com/specimen/Roboto', install: 'npm i @fontsource/roboto', auth: 'key' });
+    expect(readPrompt(prompt('abc', 5, { lines: [{ ...prompt('x', 1).lines[0], url: 'javascript:alert(1)', auth: 'yes' }] }))?.lines[0]).toEqual({ id: 'google-fonts:roboto', name: 'Roboto', cat: 'design', sub: 'fonts', install: 'npm i @fontsource/roboto' });
+    const long = readPrompt(prompt('abc', 5, { lines: [{ ...prompt('x', 1).lines[0], install: 'x'.repeat(PROMPT_FIELD_MAX.install + 50) }] }));
+    expect(long?.lines[0]?.install).toHaveLength(PROMPT_FIELD_MAX.install);
+    expect(readPrompt(prompt('ABC!', 5))).toBeNull();
+    expect(readPrompt(prompt('abc', 0))).toBeNull();
+    expect(readPrompt(prompt('abc', 5, { lines: [] }))).toBeNull();
+    expect(readPrompt({ ...prompt('old', 5), no: '20261014-0427', lines: [{ id: 'a:b', name: 'B', cat: 'api', sub: 'weather', license: 'MIT', snippet: 'x' }] })?.lines[0]).toEqual({ id: 'a:b', name: 'B', cat: 'api', sub: 'weather' });
+  });
+
+  it(`지난 프롬프트 목록: 새것이 앞, 같은 id는 하나, ${PROMPTS_MAX}개까지`, () => {
+    expect(readPrompts([prompt('a', 1), prompt('b', 3), prompt('a', 9), 'x']).map((r) => r.id)).toEqual(['b', 'a']);
+    const many = Array.from({ length: PROMPTS_MAX + 4 }, (_, i) => prompt(`r${i}`, i + 1));
+    const got = readPrompts(many);
+    expect(got).toHaveLength(PROMPTS_MAX);
+    expect(got[0]?.id).toBe(`r${PROMPTS_MAX + 3}`);
+  });
+
+  it('같은 재료·메모·만들 앱이면 같은 프롬프트다', () => {
+    const a = readPrompt(prompt('a', 1));
+    const b = readPrompt(prompt('b', 2));
+    const c = readPrompt(prompt('c', 3, { project: '앱' }));
+    expect(a && b && samePrompt(a, b)).toBe(true);
+    expect(a && c && samePrompt(a, c)).toBe(false);
+  });
+
+  it(`최근 본 재료: 본 것이 앞, 다시 보면 앞으로, ${RECENT_MAX}개까지`, () => {
+    const it0 = { id: 'a', name: 'A', cat: 'api', sub: 'weather', at: 1 };
+    let list = pushRecent([], it0);
+    list = pushRecent(list, { ...it0, id: 'b', at: 2 });
+    list = pushRecent(list, { ...it0, at: 3 });
+    expect(list.map((x) => x.id)).toEqual(['a', 'b']);
+    const many = Array.from({ length: RECENT_MAX + 3 }, (_, i) => ({ ...it0, id: `x${i}` }));
+    expect(readRecent(many)).toHaveLength(RECENT_MAX);
+    expect(readRecent([{ id: 'a' }, 'x'])).toEqual([]);
+  });
+
+  it(`찜: 켜면 앞에, 다시 누르면 빼고, ${WISH_MAX}개가 차면 더 켜지 않는다`, () => {
+    const it0 = { id: 'a', name: 'A', cat: 'api', sub: 'weather', at: 1 };
+    const on = toggleWishList([], it0);
+    expect(on).toMatchObject({ on: true, full: false });
+    expect(toggleWishList(on.list, it0)).toEqual({ list: [], on: false, full: false });
+    const many = Array.from({ length: WISH_MAX }, (_, i) => ({ ...it0, id: `x${i}` }));
+    expect(toggleWishList(many, it0)).toMatchObject({ on: false, full: true });
+    expect(readWish([...many, it0])).toHaveLength(WISH_MAX);
+    expect(readWish('x')).toEqual([]);
   });
 });
 
-describe('메타 읽기', () => {
+describe('시각', () => {
+  it('파일 이름 시각은 YYYYMMDD-HHMM (기기 시각)', () => {
+    const at = new Date(2026, 9, 14, 9, 5).getTime();
+    expect(stamp(at)).toBe('20261014-0905');
+  });
+});
+
+describe('메타·설정 읽기', () => {
   it('보낸 이벤트는 최근 것만 남긴다', () => {
-    const sent = Array.from({ length: SENT_MAX + 5 }, (_, i) => `e${i}`);
-    const m = readMeta({ sent });
-    expect(m.sent).toHaveLength(SENT_MAX);
-    expect(m.sent[0]).toBe('e5');
+    const sent = Array.from({ length: SENT_MAX + 3 }, (_, i) => `e${i}`);
+    expect(readMeta({ sent }).sent).toEqual(sent.slice(-SENT_MAX));
+    expect(readMeta('x')).toEqual({ sent: [] });
   });
 
-  it('true일 때만 첫 수업·영수증 표시를 둔다', () => {
-    expect(readMeta({ lessonDone: true, issued: 'yes', interviewStartedAt: -1 })).toEqual({ sent: [], lessonDone: true });
-    expect(readMeta({ interviewStartedAt: 1_700_000_000_000 }).interviewStartedAt).toBe(1_700_000_000_000);
-    // 도구끼리 맞춰 보기에서 마지막으로 본 막힌 마디 (S4 '뚫림', D71): 글자 목록만, 비면 두지 않는다
-    expect(readMeta({ checkJams: ['slot.store', 3, '', 'slot.store'] }).checkJams).toEqual(['slot.store']);
-    expect(readMeta({ checkJams: [] })).toEqual({ sent: [] });
-    expect(isEmptyMeta({ sent: [], checkJams: ['slot.host'] })).toBe(false);
-  });
-});
-
-describe('설정 읽기', () => {
-  it('모르는 값은 기본값 (동작은 기기 설정 따르기, 효과음·조용히 모시기 꺼짐, 풀이·점선 밑줄 켜짐)', () => {
-    expect(readPrefs({ motion: 'fast', sound: 'on', quiet: 1, glossary: 'no', marks: null })).toEqual(DEFAULT_PREFS);
-    expect(DEFAULT_PREFS).toEqual({ motion: 'auto', sound: false, quiet: false, glossary: true, marks: true });
+  it('모르는 값은 기본값, 줄이기·풀이 끄기는 남긴다 (옛 marks 칸은 버린다)', () => {
+    expect(readPrefs({ motion: 'fast', marks: false })).toEqual(DEFAULT_PREFS);
+    expect(readPrefs({ motion: 'reduce', glossary: false })).toEqual({ motion: 'reduce', glossary: false });
   });
 
-  it('줄이기와 효과음 켜기 (옛 저장 값에 없는 칸은 기본값)', () => {
-    expect(readPrefs({ motion: 'reduce', sound: true })).toEqual({ motion: 'reduce', sound: true, quiet: false, glossary: true, marks: true });
-  });
-
-  it('조용히 모시기 켜기, 풀이·점선 밑줄 끄기 (brief 6.13)', () => {
-    expect(readPrefs({ quiet: true, glossary: false, marks: false })).toEqual({ motion: 'auto', sound: false, quiet: true, glossary: false, marks: false });
-  });
-});
-
-describe('본 장면 기록 읽기', () => {
-  it('장면 id만, 겹침 없이', () => {
-    expect(readSeen({ scenes: ['s1', 's1', 7] })).toEqual({ scenes: ['s1'] });
-    expect(readSeen({ seenStamps: ['station.interview'] })).toEqual({ scenes: [] });
-  });
-});
-
-describe('처음 값 판단 (처음 값이면 저장 키를 지운다)', () => {
-  it('비었는지', () => {
-    expect(isEmptySession(readSession(undefined))).toBe(true);
-    expect(isEmptySession(readSession({ freeText: '한 줄' }))).toBe(false);
-    expect(isEmptyStudy({})).toBe(true);
+  it('처음 값 판단', () => {
+    expect(isEmptyCart([])).toBe(true);
     expect(isEmptyMeta({ sent: [] })).toBe(true);
-    expect(isEmptyMeta({ sent: [], issued: true })).toBe(false);
     expect(isDefaultPrefs(DEFAULT_PREFS)).toBe(true);
-    expect(isDefaultPrefs({ ...DEFAULT_PREFS, motion: 'reduce' })).toBe(false);
-    expect(isDefaultPrefs({ ...DEFAULT_PREFS, quiet: true })).toBe(false);
-    expect(isDefaultPrefs({ ...DEFAULT_PREFS, marks: false })).toBe(false);
-    expect(isEmptySeen({ scenes: [] })).toBe(true);
-    expect(isEmptySeen({ scenes: ['s5'] })).toBe(false);
-  });
-});
-
-describe('지난 영수증 (CONCEPT 6.11·8절)', () => {
-  const e = (r: string, type?: string) => ({ r, at: '2026-10-13 09:00', ...(type ? { type } : {}) });
-
-  it('모양이 맞는 장만 읽고, 같은 조각은 하나만', () => {
-    expect(
-      readReceipts([e('abc', 'record'), e('abc'), { r: 'x y', at: 't' }, { r: 'ok' }, { r: 'good', at: 't', type: 'Not Valid!' }, 'junk', null]),
-    ).toEqual([e('abc', 'record'), { r: 'good', at: 't' }]);
-    expect(readReceipts('nope')).toEqual([]);
-  });
-
-  it(`${RECEIPTS_MAX}장까지만 읽는다`, () => {
-    expect(readReceipts(Array.from({ length: RECEIPTS_MAX + 5 }, (_, i) => e(`r${i}`))).length).toBe(RECEIPTS_MAX);
-  });
-
-  it('새 장은 맨 앞에, 같은 조각은 앞으로 옮기기만', () => {
-    const { list, dropped } = addReceiptEntry([e('a'), e('b')], e('b', 'quiz'));
-    expect(list.map((x) => x.r)).toEqual(['b', 'a']);
-    expect(list[0]?.type).toBe('quiz');
-    expect(dropped).toBe(false);
-  });
-
-  it(`${RECEIPTS_MAX}장을 넘으면 가장 오래된 장을 빼고 알린다`, () => {
-    const full = Array.from({ length: RECEIPTS_MAX }, (_, i) => e(`r${i}`));
-    const { list, dropped } = addReceiptEntry(full, e('new'));
-    expect(list.length).toBe(RECEIPTS_MAX);
-    expect(list[0]?.r).toBe('new');
-    expect(list.some((x) => x.r === `r${RECEIPTS_MAX - 1}`)).toBe(false);
-    expect(dropped).toBe(true);
+    expect(isDefaultPrefs({ motion: 'reduce', glossary: true })).toBe(false);
   });
 });

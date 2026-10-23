@@ -1,0 +1,758 @@
+{
+  "source": {
+    "id": "astro-examples",
+    "name": "Astro 공식 예제",
+    "url": "https://github.com/withastro/astro",
+    "license": "Folder names, README text and package.json descriptions from the public repository withastro/astro."
+  },
+  "fetchedAt": "2026-10-20",
+  "count": 24,
+  "items": [
+    {
+      "id": "astro-examples:advanced-routing",
+      "name": "Astro Advanced Routing Example",
+      "kind": "backend",
+      "category": "templates",
+      "summary": "This example showcases Astro's experimental advanced routing with src/app.ts, using Hono middleware to control the request pipeline.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/advanced-routing",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "advanced-routing",
+        "astro"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/advanced-routing",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template advanced-routing",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:basics",
+      "name": "Astro Starter Kit: Basics",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "To learn more about the folder structure of an Astro project, refer to our guide on project structure.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/basics",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "basics"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/basics",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template basics",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:blog",
+      "name": "Astro Starter Kit: Blog",
+      "kind": "blog-portfolio",
+      "category": "templates",
+      "summary": "Astro looks for .astro or .md files in the src/pages/ directory. Each page is exposed as a route based on its file name.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/blog",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "blog"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/blog",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template blog",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:component",
+      "name": "Astro Starter Kit: Component Package",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This is a template for an Astro component library. Use this template for writing components to use in multiple projects or publish to NPM.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/component",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "astro-component",
+        "component"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/component",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template component",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:container-with-vitest",
+      "name": "Astro + Vitest + Container API Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with Vitest and how to test components using the Container API.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/container-with-vitest",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "container-with-vitest"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/container-with-vitest",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template container-with-vitest",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:framework-alpine",
+      "name": "Astro + AlpineJS Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with AlpineJS.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/framework-alpine",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "framework-alpine"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/framework-alpine",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template framework-alpine",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:framework-multiple",
+      "name": "Kitchen Sink: Microfrontends with Astro",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro's built-in support for multiple frameworks (React, Preact, Svelte, and Vue (v3.x)).",
+      "url": "https://github.com/withastro/astro/tree/main/examples/framework-multiple",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "framework-multiple"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/framework-multiple",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template framework-multiple",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:framework-preact",
+      "name": "Astro + Preact Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with Preact.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/framework-preact",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "framework-preact"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/framework-preact",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template framework-preact",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:framework-react",
+      "name": "Astro + React Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with React.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/framework-react",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "framework-react"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/framework-react",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template framework-react",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:framework-solid",
+      "name": "Astro + Solid.js Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with Solid.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/framework-solid",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "framework-solid"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/framework-solid",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template framework-solid",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:framework-svelte",
+      "name": "Astro + Svelte Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with Svelte.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/framework-svelte",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "framework-svelte"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/framework-svelte",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template framework-svelte",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:framework-vue",
+      "name": "Astro + Vue Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with Vue.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/framework-vue",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "framework-vue"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/framework-vue",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template framework-vue",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:hackernews",
+      "name": "Astro Starter Kit: Hackernews",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "Astro looks for .astro or .md files in the src/pages/ directory. Each page is exposed as a route based on its file name. Because the list of stories and users is always changing, dynamic routes like [id].astro are used to build pages when a specific page is requested.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/hackernews",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "hackernews"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/hackernews",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template hackernews",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:integration",
+      "name": "Astro Starter Kit: Integration Package",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This is a template for an Astro integration. Use this template for writing integrations to use in multiple projects or publish to NPM.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/integration",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "integration",
+        "withastro"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/integration",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template integration",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:minimal",
+      "name": "Astro Starter Kit: Minimal",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "Astro looks for .astro or .md files in the src/pages/ directory. Each page is exposed as a route based on its file name.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/minimal",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "minimal"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/minimal",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template minimal",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:portfolio",
+      "name": "Astro Starter Kit: Portfolio",
+      "kind": "blog-portfolio",
+      "category": "templates",
+      "summary": "Feel free to check our documentation or jump into our Discord server.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/portfolio",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "portfolio"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/portfolio",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template portfolio",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:ssr",
+      "name": "Astro SSR Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases server-side rendering with Astro using the @astrojs/node adapter and @astrojs/svelte integration.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/ssr",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "ssr"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/ssr",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template ssr",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:starlog",
+      "name": "Starlog",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "Built with Astro and Sass. Supports both dark and light modes.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/starlog",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "starlog"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/starlog",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template starlog",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:toolbar-app",
+      "name": "Astro Starter Kit: Toolbar App",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "The logic of your app is in the appropriately named app.ts file. This is where the vast majority of your toolbar app logic will live.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/toolbar-app",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "toolbar-app"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/toolbar-app",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template toolbar-app",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:with-markdoc",
+      "name": "Astro Example: Markdoc (experimental)",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This starter showcases the experimental Markdoc integration.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/with-markdoc",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "with-markdoc"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/with-markdoc",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template with-markdoc",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:with-mdx",
+      "name": "Astro Example: MDX",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases using @astrojs/mdx to author content using MDX.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/with-mdx",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "with-mdx"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/with-mdx",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template with-mdx",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:with-nanostores",
+      "name": "Astro Example: Nanostores",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases using nanostores to provide shared state between components of any framework. Read our documentation on sharing state for a complete breakdown of this project, along with guides to use React, Vue, Svelte, or Solid!",
+      "url": "https://github.com/withastro/astro/tree/main/examples/with-nanostores",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "with-nanostores"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/with-nanostores",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template with-nanostores",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:with-tailwindcss",
+      "name": "Astro with Tailwind",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "Astro comes with Tailwind support out of the box. This example showcases how to style your Astro project with Tailwind.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/with-tailwindcss",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "with-tailwindcss"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/with-tailwindcss",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template with-tailwindcss",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "astro-examples:with-vitest",
+      "name": "Astro + Vitest Example",
+      "kind": "web-starter",
+      "category": "templates",
+      "summary": "This example showcases Astro working with Vitest.",
+      "url": "https://github.com/withastro/astro/tree/main/examples/with-vitest",
+      "source": {
+        "name": "Astro 공식 예제",
+        "url": "https://github.com/withastro/astro/tree/main/examples"
+      },
+      "metrics": {
+        "updatedAt": "2026-10-20"
+      },
+      "tags": [
+        "astro",
+        "with-vitest"
+      ],
+      "preview": {
+        "type": "template",
+        "host": "github",
+        "language": "TypeScript",
+        "path": "examples/with-vitest",
+        "repo": "withastro/astro"
+      },
+      "use": {
+        "install": "npm create astro@latest -- --template with-vitest",
+        "docs": "https://docs.astro.build/en/install-and-setup/"
+      },
+      "fetchedAt": "2026-10-20"
+    }
+  ]
+}

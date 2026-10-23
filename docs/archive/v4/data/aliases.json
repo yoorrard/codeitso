@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "searchSynonyms": [
+    { "id": "theme", "aliases": ["테마", "theme"], "to": ["디자인 정하기", "디자인 둘러보기", "CSS"] },
+    { "id": "dark-mode", "aliases": ["다크 모드", "dark mode", "야간 모드"], "to": ["어두운 화면", "화면 밝기", "CSS"] },
+    { "id": "font", "aliases": ["폰트", "font", "서체"], "to": ["글꼴", "CSS"] },
+    { "id": "palette", "aliases": ["팔레트", "컬러 팔레트", "palette"], "to": ["디자인 정하기", "디자인 둘러보기", "CSS"] },
+    { "id": "preview", "aliases": ["프리뷰", "preview"], "to": ["미리 보기", "디자인 둘러보기"] },
+    { "id": "custom", "aliases": ["커스텀", "커스터마이징", "custom"], "to": ["직접 쓰기", "직접 쓴 도구"] },
+    { "id": "guide", "aliases": ["가이드", "튜토리얼", "길잡이", "guide", "tutorial"], "to": ["만들기 안내", "공식 문서"] },
+    { "id": "checklist", "aliases": ["체크리스트", "checklist"], "to": ["다음 할 일"] },
+    { "id": "onboarding", "aliases": ["온보딩", "onboarding"], "to": ["내 AI 써 보기", "만들기 안내"] },
+    { "id": "publish", "aliases": ["배포", "화면 올리기"], "to": ["공개하기", "배포"] }
+  ],
+  "options": {
+    "q.type": [
+      { "id": "record", "aliases": ["기록", "기록장", "일기", "다이어리", "가계부", "메모", "습관", "체크리스트", "할 일", "투두", "todo", "독서", "일지", "노트", "출석부", "용돈", "지출", "식단", "운동 기록", "단어장"] },
+      { "id": "form", "aliases": ["신청", "설문", "투표", "접수", "예약", "응답", "지원서", "참가", "모집", "의견", "피드백", "문의", "동의서", "제출", "방명록", "주문"] },
+      { "id": "page", "aliases": ["안내", "소개", "홈페이지", "블로그", "포트폴리오", "공지", "랜딩", "홍보", "메뉴판", "웹사이트", "사이트", "청첩장", "초대장", "이력서", "명함"] },
+      { "id": "quiz", "aliases": ["퀴즈", "문제", "시험", "테스트", "맞히기", "맞추기", "문답", "복습", "ox", "오엑스", "플래시카드", "암기", "단어 외우", "골든벨"] },
+      { "id": "tool", "aliases": ["계산", "변환", "환산", "생성기", "타이머", "스톱워치", "뽑기", "랜덤", "추첨", "자리 바꾸", "자리배치", "정산", "더치페이", "n빵", "도우미", "룰렛", "사다리", "팀 나누", "조 짜기"] },
+      { "id": "board", "aliases": ["현황", "대시보드", "알림", "알리미", "모니터링", "그래프", "차트", "통계", "시세", "순위", "랭킹", "집계", "상황판", "실시간"] }
+    ],
+    "q.audience": [
+      { "id": "me", "aliases": ["나만", "혼자", "=나", "=저", "저만", "개인용", "나 혼자"] },
+      { "id": "few", "aliases": ["가족", "친구", "동아리", "우리 반", "반 친구", "학생들", "팀원", "동료", "회원", "모임", "몇 명", "선생님", "부서", "같이", "함께"] },
+      { "id": "anyone", "aliases": ["아무나", "누구나", "모두", "전체 공개", "공개", "손님", "고객", "방문자", "시민", "주민", "모르는 사람", "전국", "사람들"] }
+    ],
+    "q.domain": [
+      { "id": "none", "aliases": ["없어요", "없음", "따로 없", "필요 없"] },
+      { "id": "education", "aliases": ["학교", "급식", "학사", "시간표", "교육", "수업", "진로", "교과", "성취기준", "방과 후", "나이스", "neis", "학년"] },
+      { "id": "finance", "aliases": ["주식", "금융", "환율", "코인", "비트코인", "암호화폐", "증권", "금리", "물가", "경제", "은행", "펀드", "업비트", "달러", "시세"] },
+      { "id": "weather", "aliases": ["날씨", "기온", "미세먼지", "황사", "대기", "기상", "=비", "=눈", "강수", "일기예보", "예보", "자외선", "온도", "습도", "태풍", "장마"] },
+      { "id": "map", "aliases": ["지도", "위치", "주소", "길 찾기", "맛집", "주변", "근처", "장소", "gps", "좌표", "동네"] },
+      { "id": "transport", "aliases": ["교통", "버스", "지하철", "기차", "ktx", "열차", "정류장", "택시", "따릉이", "자전거", "주차", "비행기"] },
+      { "id": "book", "aliases": ["=책", "도서", "도서관", "독서", "소설", "베스트셀러", "isbn"] },
+      { "id": "language", "aliases": ["번역", "영어", "외국어", "사전", "낱말", "단어 뜻", "맞춤법", "일본어", "중국어", "국어", "한자", "통역"] },
+      { "id": "image", "aliases": ["이미지", "사진", "그림", "일러스트", "배경 화면", "아이콘"] },
+      { "id": "culture", "aliases": ["공연", "전시", "축제", "관광", "여행", "문화", "영화", "박물관", "미술관", "콘서트", "행사"] },
+      { "id": "public", "aliases": ["공공", "공공데이터", "정부", "시청", "구청", "민원", "공휴일", "인구", "통계청", "쓰레기", "병원", "약국", "휴관일"] }
+    ],
+    "q.edu-topic": [
+      { "id": "meal", "aliases": ["급식", "식단", "메뉴", "점심", "반찬"] },
+      { "id": "schedule", "aliases": ["학사일정", "일정", "방학", "개학", "학교 행사"] },
+      { "id": "timetable", "aliases": ["시간표", "수업 시간", "교시"] },
+      { "id": "curriculum", "aliases": ["교육과정", "성취기준", "교과서", "진도"] },
+      { "id": "school-info", "aliases": ["학교 정보", "학교 목록", "학교 위치", "학교 주소", "학교 기본"] },
+      { "id": "career", "aliases": ["진로", "직업", "학과", "대학", "적성", "커리어"] }
+    ],
+    "q.weather-topic": [
+      { "id": "forecast", "aliases": ["예보", "날씨", "기온", "강수", "=비", "=눈", "내일", "주간"] },
+      { "id": "air", "aliases": ["미세먼지", "공기", "대기", "황사", "오존", "대기질"] }
+    ],
+    "q.lang-topic": [
+      { "id": "translate", "aliases": ["번역", "통역", "옮기", "영어로", "외국어", "일본어", "중국어", "다른 나라 말"] },
+      { "id": "dictionary", "aliases": ["사전", "=뜻", "낱말", "단어", "맞춤법", "국어", "어휘", "표준어"] }
+    ],
+    "q.finance-topic": [
+      { "id": "stock", "aliases": ["주식", "주가", "시세", "코스피", "코스닥", "종목", "증권", "나스닥"] },
+      { "id": "exchange", "aliases": ["환율", "달러", "엔화", "유로", "외화", "환전"] },
+      { "id": "economy", "aliases": ["금리", "물가", "경제", "지표", "gdp", "실업률", "경기"] }
+    ],
+    "q.realtime": [
+      { "id": "realtime", "aliases": ["실시간", "바로", "자주", "즉시", "계속", "수시로", "초마다", "분마다", "시간마다", "라이브"] },
+      { "id": "daily", "aliases": ["하루", "매일", "가끔", "매주", "매달", "일주일", "아침마다", "한 번이면"] }
+    ],
+    "q.budget": [
+      { "id": "free-only", "aliases": ["무료", "공짜", "돈 없", "돈은 없", "무과금", "안 쓸", "못 써"] },
+      { "id": "small", "aliases": ["몇천", "조금", "커피 한 잔", "적게", "싸게"] },
+      { "id": "more", "aliases": ["몇만", "만원", "상관없", "필요하면", "얼마든", "넉넉"] }
+    ],
+    "q.personal": [
+      { "id": "yes-students", "aliases": ["학생", "학번", "반 번호", "학년", "출석 번호", "생활기록부"] },
+      { "id": "yes-others", "aliases": ["이름", "연락처", "전화번호", "이메일", "주소", "생년월일", "생일", "계좌", "회원 정보", "학부모", "보호자"] },
+      { "id": "no", "aliases": ["없어요", "안 받", "필요 없", "익명"] }
+    ],
+    "q.device": [
+      { "id": "phone", "aliases": ["휴대폰", "핸드폰", "스마트폰", "=폰", "아이폰", "갤럭시", "모바일"] },
+      { "id": "pc", "aliases": ["컴퓨터", "노트북", "데스크톱", "데스크탑", "=pc", "모니터", "크롬북", "맥북", "윈도우"] },
+      { "id": "both", "aliases": ["둘 다", "어디서나", "반응형", "다 써"] }
+    ],
+    "q.aitool-chat": [
+      { "id": "claude", "aliases": ["claude", "클로드"] },
+      { "id": "chatgpt", "aliases": ["chatgpt", "챗gpt", "챗지피티", "=gpt", "지피티"] },
+      { "id": "gemini", "aliases": ["gemini", "제미나이", "제미니"] }
+    ],
+    "q.aitool-builder": [
+      { "id": "lovable", "aliases": ["lovable", "러버블"] },
+      { "id": "bolt", "aliases": ["bolt", "볼트"] },
+      { "id": "v0", "aliases": ["=v0", "v0 dev", "v0 app"] },
+      { "id": "replit", "aliases": ["replit", "리플릿"] },
+      { "id": "ai-studio", "aliases": ["ai studio", "에이아이 스튜디오", "ai 스튜디오"] }
+    ],
+    "q.aitool-agent": [
+      { "id": "codex-app", "aliases": ["chatgpt 앱", "챗gpt 앱", "codex 앱", "코덱스 앱", "chatgpt 데스크톱"] },
+      { "id": "claude-app", "aliases": ["claude 앱", "클로드 앱", "code 탭", "코드 탭", "claude 데스크톱"] },
+      { "id": "vscode-copilot", "aliases": ["vs code", "비주얼 스튜디오 코드", "github copilot", "깃허브 코파일럿", "copilot", "코파일럿"] },
+      { "id": "cursor", "aliases": ["cursor", "커서"] },
+      { "id": "devin-desktop", "aliases": ["devin", "데빈", "windsurf", "윈드서프"] },
+      { "id": "antigravity", "aliases": ["antigravity", "안티그래비티"] },
+      { "id": "claude-code", "aliases": ["claude code", "클로드 코드", "claude cli"] },
+      { "id": "codex-cli", "aliases": ["=codex", "코덱스", "codex cli"] },
+      { "id": "gemini-cli", "aliases": ["gemini cli", "제미나이 cli", "gemini", "제미나이"] },
+      { "id": "copilot-cli", "aliases": ["copilot cli", "코파일럿 cli"] }
+    ]
+  },
+  "yesNo": {
+    "topics": { "q.save": ["저장", "남겨", "남기", "기록", "보관", "쌓아", "불러오", "백업", "다시 보"], "q.login": ["로그인", "회원", "계정", "가입", "비밀번호", "아이디", "내 것만", "각자"], "q.notify": ["알림", "알려", "푸시", "문자", "메시지", "연락"], "q.payment": ["결제", "돈 받", "유료", "판매", "후원", "기부", "구매", "송금", "입금", "계좌"] },
+    "answers": [
+      { "id": "no", "aliases": ["=아니", "아니요", "아뇨", "=no", "필요 없", "안 해도", "안 받", "안 써", "하지 않", "없어도", "없이", "빼고", "말고", "싫어", "싫다"] },
+      { "id": "unknown", "aliases": ["모르", "모름", "잘 모"] },
+      { "id": "maybe", "aliases": ["아마", "혹시 모르", "나중에", "글쎄", "혹시", "언젠가", "일단", "될 수도", "할 수도", "것 같"] },
+      { "id": "yes", "aliases": ["=네", "=예", "=응", "=yes", "필요", "있어", "해야", "=꼭", "원해", "하고 싶", "좋겠", "있으면"] }
+    ],
+    "negAfter": ["없", "안 ", "안해", "말고", "빼고", "싫", "아니", "않"],
+    "negWindow": 6
+  },
+  "aiNames": [
+    { "id": "agent", "aliases": ["claude code", "클로드 코드", "codex", "코덱스", "cursor", "커서", "copilot", "코파일럿", "gemini cli", "에이전트", "터미널", "antigravity", "안티그래비티", "devin", "windsurf", "vs code"] },
+    { "id": "builder", "aliases": ["lovable", "러버블", "bolt", "볼트", "=v0", "replit", "리플릿", "ai studio", "웹 빌더", "노코드"] },
+    { "id": "chat", "aliases": ["chatgpt", "챗gpt", "챗지피티", "=gpt", "gemini", "제미나이", "claude", "클로드", "뤼튼", "wrtn", "클로바"] },
+    { "id": "paid", "aliases": ["유료", "구독", "plus", "플러스", "=pro", "=프로", "=max", "요금제"] },
+    { "id": "free", "aliases": ["무료", "공짜"] }
+  ],
+  "toolHints": [
+    { "id": "supabase", "aliases": ["수파베이스", "슈파베이스", "수퍼베이스"], "product": "supabase" },
+    { "id": "github-pages", "aliases": ["깃허브 페이지", "깃헙 페이지", "github io"], "product": "github-pages" },
+    { "id": "google-sheets", "aliases": ["구글 시트", "google sheets", "스프레드시트", "앱스 스크립트", "apps script"], "product": "google-sheets-apps-script" },
+    { "id": "cloudflare", "aliases": ["클라우드플레어", "cloudflare", "워커스"], "product": "cloudflare-workers" },
+    { "id": "firebase-hosting", "aliases": ["파이어베이스 호스팅"], "product": "firebase-hosting" },
+    { "id": "firestore", "aliases": ["파이어스토어", "firestore", "파이어베이스 데이터베이스"], "product": "firebase-firestore" },
+    { "id": "firebase-auth", "aliases": ["파이어베이스 로그인", "파이어베이스 인증", "firebase auth"], "product": "firebase-auth" },
+    { "id": "vercel", "aliases": ["버셀", "베르셀"], "product": "vercel" },
+    { "id": "netlify", "aliases": ["네틀리파이", "넷리파이"], "product": "netlify" },
+    { "id": "heroku", "aliases": ["헤로쿠"], "product": "heroku" },
+    { "id": "airtable", "aliases": ["에어테이블"], "product": "airtable" },
+    { "id": "telegram", "aliases": ["텔레그램", "telegram"], "product": "telegram-bot" },
+    { "id": "discord", "aliases": ["디스코드", "discord"], "product": "discord-webhook" },
+    { "id": "slack", "aliases": ["슬랙", "slack"], "product": "slack-webhook" },
+    { "id": "google-forms", "aliases": ["구글 설문", "구글 폼", "google forms"], "product": "google-forms" },
+    { "id": "react-vite", "aliases": ["리액트", "react", "비트", "vite"], "product": "react-vite" },
+    { "id": "browser-storage", "aliases": ["로컬 스토리지", "localstorage", "브라우저 저장"], "product": "browser-storage" },
+    { "id": "kakao-maps", "aliases": ["카카오맵", "카카오 지도", "다음 지도"], "product": "kakao-maps" },
+    { "id": "naver-maps", "aliases": ["네이버 지도", "네이버 맵"], "product": "naver-maps" },
+    { "id": "google-maps", "aliases": ["구글 지도", "구글 맵", "google maps"], "product": "google-maps-js" },
+    { "id": "leaflet", "aliases": ["리플렛", "leaflet", "오픈스트리트맵", "openstreetmap"], "product": "leaflet-osm" },
+    { "id": "deepl", "aliases": ["딥엘", "deepl"], "product": "deepl-api" },
+    { "id": "papago", "aliases": ["파파고", "papago"], "product": "papago-translation" },
+    { "id": "unsplash", "aliases": ["언스플래시", "unsplash"], "product": "unsplash-api" },
+    { "id": "open-meteo", "aliases": ["오픈메테오", "open meteo"], "product": "open-meteo" },
+    { "id": "kma", "aliases": ["기상청", "단기예보", "동네예보"], "product": "kma-forecast" },
+    { "id": "neis-meal", "aliases": ["나이스 급식", "급식 api"], "product": "neis-meal" },
+    { "id": "data-go-kr", "aliases": ["data go kr"], "product": "data-go-kr" },
+    { "id": "kis", "aliases": ["한국투자증권", "한투"], "product": "kis-open-api" },
+    { "id": "weather", "aliases": ["openweather", "오픈웨더", "weatherapi", "accuweather", "아큐웨더"], "capability": "data", "domain": "domain.weather" },
+    { "id": "finance", "aliases": ["업비트", "upbit", "비트코인", "코인 시세", "빗썸", "바이낸스", "yahoo finance", "야후 파이낸스", "alpha vantage", "coingecko"], "capability": "data", "domain": "domain.finance" },
+    { "id": "map", "aliases": ["티맵", "mapbox", "맵박스"], "capability": "data", "domain": "domain.map" },
+    { "id": "book", "aliases": ["알라딘", "교보문고", "예스24"], "capability": "data", "domain": "domain.book" },
+    { "id": "image", "aliases": ["pixabay", "픽사베이", "pexels", "펙셀스"], "capability": "data", "domain": "domain.image" },
+    { "id": "language", "aliases": ["구글 번역", "google translate"], "capability": "data", "domain": "domain.language" },
+    { "id": "store", "aliases": ["mongodb", "몽고db", "mysql", "postgres", "notion", "노션", "엑셀", "excel", "sqlite"], "capability": "store" },
+    { "id": "auth", "aliases": ["auth0", "clerk", "카카오 로그인", "네이버 로그인", "구글 로그인"], "capability": "auth" },
+    { "id": "notify", "aliases": ["알림톡", "카카오톡", "카톡", "=sms", "문자", "이메일", "푸시"], "capability": "notify" },
+    { "id": "host", "aliases": ["railway", "레일웨이"], "capability": "host" }
+  ],
+  "gaps": [
+    { "id": "ai-feature", "aliases": ["챗봇", "=ai", "인공지능", "gpt", "chatgpt", "openai", "=llm", "요약해", "자동 답변", "생성형"], "where": ["q.type", "q.domain", "line", "tool"], "message": "AI 기능은 아직 코드쇼퍼가 도구를 골라 드리지 못해요. 설계도의 '알아볼 것'에 넣어 둘게요." },
+    { "id": "native-app", "aliases": ["앱스토어", "플레이스토어", "구글 플레이", "아이폰 앱", "안드로이드 앱", "설치형", "react native", "리액트 네이티브", "flutter", "플러터"], "where": ["q.type", "line", "tool"], "message": "코드쇼퍼 설계도는 브라우저에서 여는 웹앱 기준이에요. 스토어에 올리는 일은 '알아볼 것'에 넣어 둘게요." },
+    { "id": "chat", "aliases": ["채팅", "메신저", "실시간 대화", "단톡"], "where": ["q.type", "q.domain", "line", "tool"], "message": "바로바로 대화하는 기능은 아직 코드쇼퍼가 도구를 확인하지 않았어요. '알아볼 것'에 넣어 둘게요." },
+    { "id": "file-upload", "aliases": ["업로드", "파일 올리", "사진 올리", "첨부"], "where": ["q.type", "q.domain", "line"], "message": "사진·파일 올리기는 아직 코드쇼퍼가 도구를 확인하지 않았어요. '알아볼 것'에 넣어 둘게요." }
+  ]
+}

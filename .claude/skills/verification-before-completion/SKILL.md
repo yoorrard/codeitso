@@ -3,7 +3,7 @@ name: verification-before-completion
 description: Use when about to claim work is complete, fixed, or passing, before committing, pushing, marking a task [x] in docs/TASKS.md, or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always
 ---
 
-> 출처: obra/superpowers v7.0.0 `skills/verification-before-completion` (MIT, LICENSE 동봉). 맨 아래 '코드쇼퍼의 증거 명령' 절을 더했다.
+> 출처: obra/superpowers v7.0.0 `skills/verification-before-completion` (MIT, LICENSE 동봉). 맨 아래 '코드잇소의 증거 명령' 절을 더했다.
 
 # Verification Before Completion
 
@@ -121,7 +121,7 @@ Skip any step = lying, not verifying
 - Implications of success
 - ANY communication suggesting completion/correctness
 
-## 코드쇼퍼의 증거 명령
+## 코드잇소의 증거 명령
 
 작업 중에는 바꾼 부분의 시험만 돌려도 된다. **완료라고 말하기 전, `[x]`를 치기 전, 커밋·푸시 전**에는 아래를 새로 돌리고 출력을 읽는다.
 

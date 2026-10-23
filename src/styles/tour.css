@@ -1,0 +1,342 @@
+/* 처음 방문 가이드 (O1, D138): Tour.tsx와 함께 열 때만 받는다(첫 화면 CSS에 들지 않는다). 값은 tokens.css 변수만.
+   넓은 화면(≥600)은 가운데 창(최대 40rem), 휴대폰은 아래에서 올라오는 시트. 머리(이름·걸음 수·닫기) · 몸(굴림) · 발(점·단추).
+   열림·걸음 바뀜은 --dur-ui 안쪽, 동작 줄이기면 움직이지 않는다(토큰 길이 0 + animation: none). */
+
+.tour {
+  inline-size: min(40rem, 100vw - 2 * var(--space-4));
+  max-inline-size: none;
+  /* 걸음마다 높이가 달라 창이 출렁이지 않게 바닥 높이를 둔다 (긴 걸음만 늘고, 넘치면 몸만 굴린다) */
+  min-block-size: min(36rem, 100dvh - 2 * var(--space-5));
+  max-block-size: min(46rem, 100dvh - 2 * var(--space-5));
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-xl);
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: var(--elev-3);
+}
+.tour[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  animation: pop-in var(--dur-ui) var(--ease-out);
+}
+.tour::backdrop {
+  background: var(--scrim);
+}
+@media (max-width: 599px) {
+  .tour {
+    inline-size: 100%;
+    min-block-size: min(36rem, 100dvh - var(--space-6));
+    max-block-size: calc(100dvh - var(--space-6));
+    margin: auto 0 0;
+    border-block-end: 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+  .tour[open] {
+    animation: sheet-up var(--dur-sheet) var(--ease-drawer);
+  }
+}
+
+/* ── 머리 ─────────────────────────────────────────────────────────── */
+.tour-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-2) 0 var(--space-5);
+}
+.tour-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  color: var(--link);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.tour-count {
+  color: var(--text-3);
+  font-weight: var(--weight-body);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 몸 (넘치면 이 칸만 굴린다) ───────────────────────────────────── */
+.tour-body {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-3) var(--space-5) var(--space-5);
+  animation: tour-step var(--dur-ui) var(--ease-out);
+}
+@keyframes tour-step {
+  from {
+    opacity: 0;
+    translate: var(--space-2) 0;
+  }
+}
+.tour-title {
+  margin: 0;
+  font-size: var(--size-title-2);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+.tour-lead {
+  margin: 0;
+  color: var(--text-2);
+  line-height: var(--leading-body);
+}
+.tour-note {
+  margin: 0;
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+.tour-with-icon {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--text-2);
+}
+.tour-more {
+  margin: 0;
+}
+.tour-points {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tour-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--text-2);
+  line-height: var(--leading-body);
+}
+.tour-points li > .icon-wrap {
+  flex: none;
+  margin-block-start: 0.2em;
+  color: var(--link);
+}
+
+/* ── 그림 줄 (꾸밈): 쇼핑몰의 실제 단추 모양을 작게 ──────────────── */
+.tour-fig {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
+}
+.tour-node {
+  display: inline-grid;
+  justify-items: center;
+  gap: var(--space-1);
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.tour-node-dot {
+  display: grid;
+  place-items: center;
+  inline-size: var(--btn-lg);
+  block-size: var(--btn-lg);
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+  color: var(--on-primary-soft);
+}
+.tour-arrow {
+  display: inline-flex;
+  color: var(--text-3);
+}
+.tour-mock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--btn-sm);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--size-label);
+  white-space: nowrap;
+}
+.tour-mock-btn {
+  background: var(--surface);
+  color: var(--text);
+  font-weight: var(--weight-strong);
+  box-shadow: var(--elev-1);
+}
+.tour-mock-btn.is-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.tour-mock-field {
+  min-inline-size: 8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-2);
+}
+.tour-mock-chip {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ── 카테고리 ─────────────────────────────────────────────────────── */
+.tour-cats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tour-cats li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'dot name n'
+    'dot desc desc';
+  align-items: center;
+  gap: 2px var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+}
+.tour-cats .cat-dot {
+  grid-area: dot;
+  align-self: start;
+  color: var(--cat-ink);
+}
+.tour-cat-name {
+  grid-area: name;
+  font-weight: var(--weight-heading);
+}
+.tour-cat-n {
+  grid-area: n;
+  color: var(--text-3);
+  font-size: var(--size-caption);
+  font-variant-numeric: tabular-nums;
+}
+.tour-cat-desc {
+  grid-area: desc;
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+/* ── 꼭 알아 둘 말 ────────────────────────────────────────────────── */
+.tour-words {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0 var(--space-5);
+  margin: 0;
+}
+.tour-word {
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--hairline);
+}
+.tour-word dt {
+  font-size: var(--size-label);
+  font-weight: var(--weight-heading);
+}
+.tour-word dd {
+  margin: 2px 0 0;
+  color: var(--text-2);
+  font-size: var(--size-caption);
+  line-height: var(--leading-caption);
+}
+
+/* ── 드래그 해 보기: 이 상자의 글을 끌어 고르면 풀이 섬이 창 안에 풀이를 띄운다 ── */
+.tour-try {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.tour-try-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-block-end: var(--space-2);
+  color: var(--link);
+  font-size: var(--size-caption);
+  font-weight: var(--weight-strong);
+}
+.tour-try-text {
+  margin: 0;
+  font-size: var(--size-body-lg);
+  line-height: var(--leading-body);
+}
+/* 풀이 섬이 깨어나기 전이어도 이 상자의 점선은 보인다 (보기로 두는 말) */
+.tour .term-mark {
+  text-decoration-color: var(--link);
+}
+
+/* ── 발: 진행 점 + 단추 ───────────────────────────────────────────── */
+.tour-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5) calc(var(--space-4) + env(safe-area-inset-bottom));
+  border-block-start: 1px solid var(--hairline);
+}
+.tour-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tour-dots li {
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--border);
+  transition:
+    inline-size var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) var(--ease-out);
+}
+.tour-dots li[data-done] {
+  background: var(--text-3);
+}
+.tour-dots li[data-on] {
+  inline-size: 24px;
+  background: var(--primary);
+}
+.tour-acts {
+  display: flex;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+@media (max-width: 599px) {
+  .tour-acts {
+    inline-size: 100%;
+  }
+  .tour-acts .tour-next {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour[open],
+  .tour-body {
+    animation: none;
+  }
+}
+:root[data-motion='reduce'] .tour[open],
+:root[data-motion='reduce'] .tour-body {
+  animation: none;
+}

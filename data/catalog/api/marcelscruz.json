@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-23",
-  "count": 697,
+  "fetchedAt": "2026-10-24",
+  "count": 701,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -1832,6 +1832,30 @@
         "listCategory": "Blockchain"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:blockvectra",
+      "name": "BlockVectra",
+      "kind": "finance",
+      "category": "api",
+      "summary": "EVM JSON-RPC, indexed blockchain data, and keyless chain discovery",
+      "url": "https://blockvectra.com/en/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "blockchain",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Blockchain"
+      },
+      "fetchedAt": "2026-10-24"
     },
     {
       "id": "marcelscruz:bly-to",
@@ -6956,6 +6980,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:ink-studio-ai",
+      "name": "Ink Studio AI",
+      "kind": "media",
+      "category": "api",
+      "summary": "Generate AI tattoo designs from text prompts in 13 styles and search a public tattoo gallery. One free design per new account, then one-time plans",
+      "url": "https://inkstudioai.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-10-24"
+    },
+    {
       "id": "marcelscruz:insomnia",
       "name": "Insomnia",
       "kind": "dev",
@@ -10971,6 +11018,29 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:plateapi",
+      "name": "PlateAPI",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Australian vehicle registration plate lookup API. Send a plate and state, get year, make, model, body, and engine back as JSON. All 8 states and territories",
+      "url": "https://plateapi.com.au",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-10-24"
+    },
+    {
       "id": "marcelscruz:platzi-fake-store",
       "name": "Platzi Fake Store",
       "kind": "payments",
@@ -13440,6 +13510,29 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:social-media-management-api",
+      "name": "Social Media Management API",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Schedule and publish posts, upload media, and fetch analytics across 11 social platforms like Instagram, TikTok, LinkedIn, and X, from one REST API",
+      "url": "https://omnisocials.com/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-10-24"
+    },
+    {
       "id": "marcelscruz:socialclaw",
       "name": "SocialClaw",
       "kind": "news-social",
@@ -15103,30 +15196,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "marcelscruz:unicum",
-      "name": "Unicum",
-      "kind": "entertainment",
-      "category": "api",
-      "summary": "World of Tanks player, clan and tank stats, ratings, leaderboards and server population for EU, NA and Asia",
-      "url": "https://unicum.gg",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "games-comics"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Games & Comics"
-      },
-      "fetchedAt": "2026-10-23"
-    },
-    {
       "id": "marcelscruz:unidb",
       "name": "UniDb",
       "kind": "open-data",
@@ -15416,6 +15485,30 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:validalatam",
+      "name": "ValidaLatam",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Validate and format Latin American tax IDs, national IDs and bank accounts (CUIT, CPF, CNPJ, RFC, CURP, CLABE, RUT, NIT, RUC, IBAN) using check-digit algorithms",
+      "url": "https://validalatam.ia-latam.app/docs",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "data-validation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Data Validation"
+      },
+      "fetchedAt": "2026-10-24"
     },
     {
       "id": "marcelscruz:validate-iban-api",

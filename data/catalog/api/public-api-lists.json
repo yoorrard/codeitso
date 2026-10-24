@@ -6,7 +6,7 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-20",
+  "fetchedAt": "2026-10-24",
   "count": 369,
   "items": [
     {
@@ -652,32 +652,6 @@
       "metrics": {
         "siteRank": 1000000
       }
-    },
-    {
-      "id": "public-api-lists:auregistre",
-      "name": "Auregistre",
-      "kind": "business",
-      "category": "api",
-      "summary": "French company history since 2008 from the BODACC gazette, no key required",
-      "url": "https://auregistre.fr/api",
-      "source": {
-        "name": "Public API Lists",
-        "url": "https://github.com/public-api-lists/public-api-lists"
-      },
-      "tags": [
-        "auth-none",
-        "business",
-        "cors",
-        "https"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "https": true,
-        "listCategory": "Business"
-      },
-      "fetchedAt": "2026-10-20"
     },
     {
       "id": "public-api-lists:auto-dev",
@@ -3235,6 +3209,33 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-api-lists:frankfurter",
+      "name": "Frankfurter",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Exchange rates, currency conversion and time series",
+      "summaryKo": "환율, 통화 변환 및 시계열",
+      "url": "https://www.frankfurter.app/docs",
+      "source": {
+        "name": "Public API Lists",
+        "url": "https://github.com/public-api-lists/public-api-lists"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "currency-exchange",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Currency Exchange"
+      },
+      "fetchedAt": "2026-10-24"
     },
     {
       "id": "public-api-lists:freegeoip",

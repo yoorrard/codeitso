@@ -1,30 +1,30 @@
 {
   "category": "datasets",
   "nameKo": "데이터셋",
-  "fetchedAt": "2026-10-24",
-  "total": 17997,
+  "fetchedAt": "2026-10-25",
+  "total": 18005,
   "subcategories": [
     {
       "id": "ai-training",
       "nameKo": "AI 학습 데이터셋",
-      "count": 2514,
+      "count": 2526,
       "sources": [
         {
           "id": "hf-datasets",
           "name": "Hugging Face 데이터셋",
-          "count": 2514
+          "count": 2526
         }
       ]
     },
     {
       "id": "kaggle",
       "nameKo": "Kaggle 데이터셋",
-      "count": 3011,
+      "count": 3003,
       "sources": [
         {
           "id": "kaggle",
           "name": "Kaggle 데이터셋",
-          "count": 3011
+          "count": 3003
         }
       ]
     },
@@ -48,12 +48,12 @@
     {
       "id": "kr-public",
       "nameKo": "한국 공공데이터 (파일)",
-      "count": 3448,
+      "count": 3451,
       "sources": [
         {
           "id": "data-go-kr-files",
           "name": "공공데이터포털 파일데이터",
-          "count": 3448
+          "count": 3451
         }
       ]
     },
@@ -72,12 +72,12 @@
     {
       "id": "world-stats",
       "nameKo": "세계 통계·지표",
-      "count": 5803,
+      "count": 5804,
       "sources": [
         {
           "id": "owid",
           "name": "Our World in Data 차트 데이터",
-          "count": 4305
+          "count": 4306
         },
         {
           "id": "worldbank-wdi",
@@ -139,8 +139,8 @@
       "name": "공공데이터포털 파일데이터",
       "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=FILE",
       "license": "공공데이터포털 목록 정보(제목·설명·제공기관·형식·다운로드 수). 각 데이터의 이용허락범위(공공누리 유형)는 데이터 쪽에서 확인한다.",
-      "count": 3448,
-      "total": 89382,
+      "count": 3451,
+      "total": 89542,
       "cut": "다운로드 3,000건 이상 (활용 많은 순으로 넘기다 기준 밑에서 멈춘다)"
     },
     {
@@ -148,7 +148,7 @@
       "name": "Hugging Face 데이터셋",
       "url": "https://huggingface.co/datasets",
       "license": "Hugging Face Hub public API metadata (dataset id, card description, tasks, downloads, likes, license tag); each dataset keeps its own license (field license).",
-      "count": 2514,
+      "count": 2526,
       "cut": "최근 30일 내려받기 10,000회 이상 또는 좋아요 100개 이상 또는 요즘 뜨는 순 상위 300개. 카드 설명이 없으면 좋아요 20개 이상만",
       "note": "Hub에는 공개 데이터셋이 50만 개 넘게 있다. 설명이 없는 데이터셋은 이름과 만든 곳으로 짧게 적는다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다)."
     },
@@ -157,7 +157,7 @@
       "name": "Kaggle 데이터셋",
       "url": "https://www.kaggle.com/datasets",
       "license": "Kaggle public API listing metadata (title, subtitle, owner, license name, votes, downloads); each dataset keeps its own license (field license). Downloading needs a Kaggle account.",
-      "count": 3011,
+      "count": 3003,
       "cut": "투표 100개 이상 (투표 많은 순으로 넘겨 받다가 기준 밑에서 멈춘다)",
       "note": "Kaggle에는 공개 데이터셋이 50만 개 넘게 있고, 목록 API는 깊은 쪽을 주지 않는다. 설치 명령은 Kaggle 공식 명령줄 도구(kaggle) 형식이다."
     },
@@ -173,7 +173,7 @@
       "name": "Our World in Data 차트 데이터",
       "url": "https://ourworldindata.org/",
       "license": "Chart metadata from the official OWID Chart API. OWID-produced data and charts are CC BY 4.0; data from third-party providers keeps the provider terms named in each chart citation.",
-      "count": 4305,
+      "count": 4306,
       "note": "사이트맵의 모든 차트를 싣는다. snippet은 공식 Chart API의 CSV 주소다."
     },
     {

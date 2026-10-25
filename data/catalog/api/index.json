@@ -1,8 +1,8 @@
 {
   "category": "api",
   "nameKo": "API",
-  "fetchedAt": "2026-10-24",
-  "total": 11906,
+  "fetchedAt": "2026-10-25",
+  "total": 11926,
   "subcategories": [
     {
       "id": "ai-llm",
@@ -29,12 +29,12 @@
     {
       "id": "ai-inference",
       "nameKo": "AI 모델 호스팅·라우터",
-      "count": 211,
+      "count": 213,
       "sources": [
         {
           "id": "models-dev",
           "name": "models.dev (AI model providers)",
-          "count": 176
+          "count": 178
         },
         {
           "id": "official",
@@ -148,12 +148,12 @@
     {
       "id": "kr-public",
       "nameKo": "한국 공공데이터",
-      "count": 5498,
+      "count": 5510,
       "sources": [
         {
           "id": "data-go-kr",
           "name": "공공데이터포털 오픈API",
-          "count": 5296
+          "count": 5308
         },
         {
           "id": "official",
@@ -288,7 +288,7 @@
     {
       "id": "finance",
       "nameKo": "금융·암호화폐·환율",
-      "count": 463,
+      "count": 466,
       "sources": [
         {
           "id": "apis-guru",
@@ -303,7 +303,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 101
+          "count": 104
         },
         {
           "id": "public-api-lists",
@@ -421,7 +421,7 @@
     {
       "id": "dev",
       "nameKo": "개발 도구",
-      "count": 780,
+      "count": 783,
       "sources": [
         {
           "id": "apis-guru",
@@ -436,7 +436,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 117
+          "count": 120
         },
         {
           "id": "public-api-lists",
@@ -661,10 +661,10 @@
       "name": "공공데이터포털 오픈API",
       "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API",
       "license": "공공데이터의 제공 및 이용 활성화에 관한 법률에 따른 공개 목록 (각 API의 이용허락범위는 상세 쪽에 있다)",
-      "note": "Portal lists 12031 Open APIs (read all 12031 on 2026-10-23 by paging both the 'applications' and 'last updated' orders to the end). Kept the 5296 with at least 100 applications (활용신청). metrics.downloads = 활용신청 수.",
+      "note": "Portal lists 12012 Open APIs (read all 12012 on 2026-10-25 by paging both the 'applications' and 'last updated' orders to the end). Kept the 5308 with at least 100 applications (활용신청). metrics.downloads = 활용신청 수.",
       "file": "data-go-kr.json",
-      "count": 5296,
-      "fetchedAt": "2026-10-23"
+      "count": 5308,
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "graphql-apis",
@@ -683,8 +683,8 @@
       "license": "MIT (list text); each API has its own terms",
       "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
       "file": "marcelscruz.json",
-      "count": 701,
-      "fetchedAt": "2026-10-24"
+      "count": 707,
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "models-dev",
@@ -693,8 +693,8 @@
       "license": "MIT (models.dev data); each provider has its own terms",
       "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
       "file": "models-dev.json",
-      "count": 230,
-      "fetchedAt": "2026-10-24"
+      "count": 232,
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "official",
@@ -704,7 +704,7 @@
       "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
       "file": "official.json",
       "count": 225,
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "openrouter",

@@ -6,7 +6,7 @@
     "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드잇소",
     "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-24",
+  "fetchedAt": "2026-10-25",
   "count": 225,
   "items": [
     {
@@ -421,9 +421,6 @@
         "name": "assemblyai.com",
         "url": "https://www.assemblyai.com/docs"
       },
-      "metrics": {
-        "downloads": 273583
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -432,8 +429,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:assemblyai",
-        "freeTierCheckedAt": "2026-10-23",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "The free tier includes up to 185 hours of pre-recorded transcription and up to 333 hours of streaming transcription.",
         "keyServerSide": true,
         "pricingUrl": "https://www.assemblyai.com/pricing",
@@ -444,7 +440,10 @@
         "install": "npm install assemblyai",
         "docs": "https://www.assemblyai.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:audioshake",
@@ -488,9 +487,6 @@
         "name": "auth0.com",
         "url": "https://auth0.com/docs"
       },
-      "metrics": {
-        "downloads": 1264655
-      },
       "tags": [
         "auth-oauth",
         "server-key"
@@ -498,8 +494,7 @@
       "preview": {
         "type": "api",
         "auth": "OAuth / OIDC",
-        "downloadsOf": "npm:auth0",
-        "freeTierCheckedAt": "2026-10-24",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "Flexible pricing for all your apps and AI agents from user 1 to 1,000,000+ Start building for free.",
         "keyServerSide": true,
         "pricingUrl": "https://auth0.com/pricing",
@@ -510,7 +505,10 @@
         "install": "npm install auth0",
         "docs": "https://auth0.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:azure-ai-language",
@@ -1453,6 +1451,9 @@
         "name": "docs.cohere.com",
         "url": "https://docs.cohere.com/docs/embeddings"
       },
+      "metrics": {
+        "downloads": 336235
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -1461,6 +1462,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:cohere-ai",
         "keyServerSide": true,
         "pricingUrl": "https://cohere.com/pricing",
         "sdk": "cohere-ai",
@@ -1470,10 +1472,7 @@
         "install": "npm install cohere-ai",
         "docs": "https://docs.cohere.com/docs/embeddings"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 500000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:contextual-ai",
@@ -1980,6 +1979,9 @@
         "name": "firebase.google.com",
         "url": "https://firebase.google.com/docs/auth"
       },
+      "metrics": {
+        "downloads": 6659675
+      },
       "tags": [
         "auth-cloud-iam",
         "firebase"
@@ -1987,6 +1989,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey (public) / service account",
+        "downloadsOf": "npm:firebase",
         "pricingUrl": "https://firebase.google.com/pricing",
         "sdk": "firebase",
         "summarySource": "https://firebase.google.com/docs/auth"
@@ -1995,10 +1998,7 @@
         "install": "npm install firebase",
         "docs": "https://firebase.google.com/docs/auth"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 50000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:firebase-cloud-messaging",
@@ -2013,9 +2013,6 @@
         "name": "firebase.google.com",
         "url": "https://firebase.google.com/docs/cloud-messaging"
       },
-      "metrics": {
-        "downloads": 5892994
-      },
       "tags": [
         "auth-oauth",
         "push",
@@ -2024,7 +2021,6 @@
       "preview": {
         "type": "api",
         "auth": "service account (OAuth)",
-        "downloadsOf": "npm:firebase-admin",
         "keyServerSide": true,
         "sdk": "firebase-admin",
         "summarySource": "https://firebase.google.com/docs/cloud-messaging"
@@ -2033,7 +2029,10 @@
         "install": "npm install firebase-admin",
         "docs": "https://firebase.google.com/docs/cloud-messaging"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:firecrawl",
@@ -2785,9 +2784,6 @@
         "name": "dev.hume.ai",
         "url": "https://dev.hume.ai"
       },
-      "metrics": {
-        "downloads": 54055
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -2796,7 +2792,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:hume",
         "keyServerSide": true,
         "pricingUrl": "https://www.hume.ai/pricing",
         "sdk": "hume",
@@ -3540,9 +3535,6 @@
         "name": "loops.so",
         "url": "https://loops.so/docs/api-reference"
       },
-      "metrics": {
-        "downloads": 184651
-      },
       "tags": [
         "auth-apikey",
         "email",
@@ -3551,8 +3543,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:loops",
-        "freeTierCheckedAt": "2026-10-23",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "Pricing: Free Plan and Contact-Based Plans",
         "keyServerSide": true,
         "pricingUrl": "https://loops.so/pricing",
@@ -3608,6 +3599,9 @@
         "name": "docs.lumalabs.ai",
         "url": "https://docs.lumalabs.ai"
       },
+      "metrics": {
+        "downloads": 9165
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -3616,6 +3610,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:lumaai",
         "keyServerSide": true,
         "pricingUrl": "https://lumalabs.ai/api/pricing",
         "sdk": "lumaai",
@@ -3625,10 +3620,7 @@
         "install": "npm install lumaai",
         "docs": "https://docs.lumalabs.ai"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 100000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:mailchimp-transactional",
@@ -3678,6 +3670,9 @@
         "name": "documentation.mailgun.com",
         "url": "https://documentation.mailgun.com"
       },
+      "metrics": {
+        "downloads": 652791
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -3686,7 +3681,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "freeTierCheckedAt": "2026-10-24",
+        "downloadsOf": "npm:mailgun.js",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "Free plans are limited to 1 user per account.",
         "keyServerSide": true,
         "pricingUrl": "https://www.mailgun.com/pricing/",
@@ -3697,10 +3693,7 @@
         "install": "npm install mailgun.js",
         "docs": "https://documentation.mailgun.com"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 500000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:mailjet",
@@ -3715,6 +3708,9 @@
         "name": "dev.mailjet.com",
         "url": "https://dev.mailjet.com"
       },
+      "metrics": {
+        "downloads": 111180
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -3723,6 +3719,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey / secret",
+        "downloadsOf": "npm:node-mailjet",
         "keyServerSide": true,
         "pricingUrl": "https://www.mailjet.com/pricing/",
         "sdk": "node-mailjet",
@@ -3732,10 +3729,7 @@
         "install": "npm install node-mailjet",
         "docs": "https://dev.mailjet.com"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 1000000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:mapbox",
@@ -4990,6 +4984,9 @@
         "name": "portkey.ai",
         "url": "https://portkey.ai/docs"
       },
+      "metrics": {
+        "downloads": 130482
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -4998,6 +4995,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:portkey-ai",
         "keyServerSide": true,
         "pricingUrl": "https://portkey.ai/pricing",
         "sdk": "portkey-ai",
@@ -5057,9 +5055,6 @@
         "name": "postmarkapp.com",
         "url": "https://postmarkapp.com/developer"
       },
-      "metrics": {
-        "downloads": 642418
-      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5068,8 +5063,7 @@
       "preview": {
         "type": "api",
         "auth": "server token",
-        "downloadsOf": "npm:postmark",
-        "freeTierCheckedAt": "2026-10-23",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "Start Free Trial No Credit Card Required.",
         "keyServerSide": true,
         "pricingUrl": "https://postmarkapp.com/pricing",
@@ -5080,7 +5074,10 @@
         "install": "npm install postmark",
         "docs": "https://postmarkapp.com/developer"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:publicai",
@@ -5147,7 +5144,7 @@
       "name": "Razorpay API",
       "kind": "payments",
       "category": "api",
-      "summary": "Online Payments India: Start Accepting Payments Instantly with Razorpay",
+      "summary": "Accept online payments in the US with Razorpay using cards, ACH, digital wallets and more. Sell in India, settle in USD and scale with easy integrations.",
       "summaryKo": "인도 결제 API (Razorpay)",
       "written": "codeshopper",
       "url": "https://razorpay.com",
@@ -5494,6 +5491,9 @@
         "name": "docs.rev.ai",
         "url": "https://docs.rev.ai"
       },
+      "metrics": {
+        "downloads": 5969
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5502,7 +5502,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "freeTierCheckedAt": "2026-10-24",
+        "downloadsOf": "npm:revai-node-sdk",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "Free credits equivalent to 5 hours of Reverb ASR (free credits can be used for all products).",
         "keyServerSide": true,
         "pricingUrl": "https://www.rev.ai/pricing",
@@ -5718,9 +5719,6 @@
         "name": "runware.ai",
         "url": "https://runware.ai/docs"
       },
-      "metrics": {
-        "downloads": 1312
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5729,8 +5727,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@runware/sdk",
-        "freeTierCheckedAt": "2026-10-24",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "New users who sign up with a business email receive $2 in free credits to explore the platform and test various models.",
         "keyServerSide": true,
         "pricingUrl": "https://runware.ai/pricing",
@@ -5741,7 +5738,10 @@
         "install": "npm install @runware/sdk",
         "docs": "https://runware.ai/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:runway",
@@ -5859,9 +5859,6 @@
         "name": "twilio.com",
         "url": "https://www.twilio.com/docs/sendgrid"
       },
-      "metrics": {
-        "downloads": 2877704
-      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5870,7 +5867,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@sendgrid/mail",
         "keyServerSide": true,
         "sdk": "@sendgrid/mail",
         "summarySource": "https://sendgrid.com"
@@ -5879,7 +5875,10 @@
         "install": "npm install @sendgrid/mail",
         "docs": "https://www.twilio.com/docs/sendgrid"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:serpapi",
@@ -6061,9 +6060,6 @@
         "name": "docs.slack.dev",
         "url": "https://docs.slack.dev"
       },
-      "metrics": {
-        "downloads": 8253425
-      },
       "tags": [
         "auth-oauth",
         "chat",
@@ -6072,7 +6068,6 @@
       "preview": {
         "type": "api",
         "auth": "OAuth / bot token",
-        "downloadsOf": "npm:@slack/web-api",
         "keyServerSide": true,
         "sdk": "@slack/web-api"
       },
@@ -6080,7 +6075,10 @@
         "install": "npm install @slack/web-api",
         "docs": "https://docs.slack.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:smallest-ai",
@@ -6124,6 +6122,9 @@
         "name": "solapi.com",
         "url": "https://solapi.com/developers"
       },
+      "metrics": {
+        "downloads": 19082
+      },
       "tags": [
         "auth-apikey",
         "messaging",
@@ -6133,6 +6134,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey / secret",
+        "downloadsOf": "npm:solapi",
         "keyServerSide": true,
         "sdk": "solapi",
         "summarySource": "https://solapi.com"
@@ -6481,9 +6483,6 @@
         "name": "supabase.com",
         "url": "https://supabase.com/docs/guides/auth"
       },
-      "metrics": {
-        "downloads": 20655219
-      },
       "tags": [
         "auth-apikey",
         "supabase"
@@ -6491,8 +6490,7 @@
       "preview": {
         "type": "api",
         "auth": "anon key (public) / service key",
-        "downloadsOf": "npm:@supabase/supabase-js",
-        "freeTierCheckedAt": "2026-10-23",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "Free projects are paused after 1 week of inactivity.",
         "pricingUrl": "https://supabase.com/pricing",
         "sdk": "@supabase/supabase-js",
@@ -6502,7 +6500,10 @@
         "install": "npm install @supabase/supabase-js",
         "docs": "https://supabase.com/docs/guides/auth"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "official:synthesia",
@@ -6549,9 +6550,6 @@
         "name": "docs.tavily.com",
         "url": "https://docs.tavily.com"
       },
-      "metrics": {
-        "downloads": 227800
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -6560,8 +6558,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@tavily/core",
-        "freeTierCheckedAt": "2026-10-23",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "Get 100k free API credits, hands-on support from our team, and help bringing your product to market.",
         "keyServerSide": true,
         "pricingUrl": "https://www.tavily.com/pricing",
@@ -6572,7 +6569,10 @@
         "install": "npm install @tavily/core",
         "docs": "https://docs.tavily.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:tavus",
@@ -7175,9 +7175,6 @@
         "name": "docs.voyageai.com",
         "url": "https://docs.voyageai.com"
       },
-      "metrics": {
-        "downloads": 145662
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -7186,8 +7183,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:voyageai",
-        "freeTierCheckedAt": "2026-10-20",
+        "freeTierCheckedAt": "2026-10-25",
         "freeTierQuote": "The first 200M text tokens and 150B pixels for voyage-multimodal-3.5 and voyage-multimodal-3 are free for every account.",
         "keyServerSide": true,
         "pricingUrl": "https://docs.voyageai.com/docs/pricing",
@@ -7339,9 +7335,6 @@
         "name": "dev.writer.com",
         "url": "https://dev.writer.com"
       },
-      "metrics": {
-        "downloads": 6257
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -7350,7 +7343,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:writer-sdk",
         "keyServerSide": true,
         "pricingUrl": "https://writer.com/pricing/",
         "sdk": "writer-sdk",

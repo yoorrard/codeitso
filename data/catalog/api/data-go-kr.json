@@ -4,10 +4,10 @@
     "name": "공공데이터포털 오픈API",
     "url": "https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API",
     "license": "공공데이터의 제공 및 이용 활성화에 관한 법률에 따른 공개 목록 (각 API의 이용허락범위는 상세 쪽에 있다)",
-    "note": "Portal lists 12031 Open APIs (read all 12031 on 2026-10-23 by paging both the 'applications' and 'last updated' orders to the end). Kept the 5296 with at least 100 applications (활용신청). metrics.downloads = 활용신청 수."
+    "note": "Portal lists 12012 Open APIs (read all 12012 on 2026-10-25 by paging both the 'applications' and 'last updated' orders to the end). Kept the 5308 with at least 100 applications (활용신청). metrics.downloads = 활용신청 수."
   },
-  "fetchedAt": "2026-10-23",
-  "count": 5296,
+  "fetchedAt": "2026-10-25",
+  "count": 5308,
   "items": [
     {
       "id": "data-go-kr:15000017",
@@ -1995,15 +1995,15 @@
       "name": "대전광역시 당직의료기관",
       "kind": "kr-public",
       "category": "api",
-      "summary": "대전광역시 당직의료기관입니다.",
+      "summary": "대전광역시 당직의료기관 데이터는 시내·군내 모든 병원·의원·보건소 등 24시간 진료가 가능한 의료기관을 한눈에 확인할 수 있도록 정리한 공공데이터입니다. 응급 상황 시 신속히 연락·이동할 수 있도록 당직 체계와 연락망을 투명하게 제공함으로써 시민 안전과 보건 서비스를 강화하는 것이 주요 목적입니다. 데이터는 기관명, 주소, 전화번호, 당직 담당 부서·담당자, 운영 시간, 진료 가능 분야(내과·외과·소아과 등) 등 10여 개 항목으로 구성됩니다.",
       "url": "https://www.data.go.kr/data/15000870/openapi.do",
       "source": {
         "name": "공공데이터포털",
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 118,
-        "updatedAt": "2021-10-28"
+        "downloads": 125,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "data-go-kr",
@@ -2017,7 +2017,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 118,
+        "applications": 125,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -2026,9 +2026,9 @@
         "orgType": "자치행정기관",
         "portalCategory": "보건의료",
         "provider": "대전광역시",
-        "views": 6673
+        "views": 6778
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15000881",
@@ -2373,15 +2373,15 @@
       "name": "대전광역시 대전뉴스동영상",
       "kind": "kr-public",
       "category": "api",
-      "summary": "대전광역시 대전뉴스 동영상입니다.",
+      "summary": "대전광역시가 제공하는 ‘대전뉴스동영상’ 데이터셋은 시청·시청각센터·시민소통채널 등에서 제작·배포한 영상 뉴스 콘텐츠를 일괄 제공한다. 영상은 대전시 주요 정책·사업·행사·재난·복지 등 다양한 분야를 다루며, 시민에게 시의 소식을 시각·청각으로 전달하는 역할을 한다. 데이터는 MP4·AVI 등 일반 영상 포맷으로 제공되며, 파일명에 촬영일자·주제 키워드가 포함된다. 최신 영상은 매주 1회 업데이트되며, 메타데이터에는 제목, 요약, 촬영시간, 담당 부서, 관련 키워드(‘대전’, ‘뉴스’, ‘동영상’)가 포함된다.",
       "url": "https://www.data.go.kr/data/15001043/openapi.do",
       "source": {
         "name": "공공데이터포털",
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 119,
-        "updatedAt": "2021-10-28"
+        "downloads": 124,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "data-go-kr",
@@ -2394,7 +2394,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 119,
+        "applications": 124,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -2402,9 +2402,9 @@
         "orgType": "자치행정기관",
         "portalCategory": "공공행정",
         "provider": "대전광역시",
-        "views": 5624
+        "views": 5693
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15001184",
@@ -7916,15 +7916,15 @@
       "name": "대전광역시 유기동물공고 현황",
       "kind": "kr-public",
       "category": "api",
-      "summary": "대전광역시 유기동물공고 정보 서비스 (유기동물 종류, 유기동물종,몸무게,몸상태,입양여부등) 정보제공",
+      "summary": "대전광역시에서 매월 발표하는 “유기동물공고 현황” 데이터는 시·군·구 관내 동물보호시설에 신고·보호된 유기동물의 종류, 발견 일시·장소, 공고 기간, 입양 현황 등을 체계적으로 정리한 행정통계입니다. 대전시청 동물보호과가 담당하며, 공고일 기준 최신 정보를 제공해 시민이 실시간으로 유기동물 상황을 파악할 수 있도록 설계되었습니다. 데이터는 CSV·XLSX 형식으로 제공되며, 주요 항목은 동물 번호, 종(개·고양이·기타), 성별·연령, 발견·보호 장소, 공고 시작·종료일, 입양 여부·입양 일자 등입니다.",
       "url": "https://www.data.go.kr/data/15016646/openapi.do",
       "source": {
         "name": "공공데이터포털",
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 429,
-        "updatedAt": "2023-05-03"
+        "downloads": 436,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "data-go-kr",
@@ -7937,7 +7937,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 429,
+        "applications": 436,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -7945,9 +7945,9 @@
         "orgType": "자치행정기관",
         "portalCategory": "사회복지",
         "provider": "대전광역시",
-        "views": 9004
+        "views": 9063
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15017227",
@@ -23890,46 +23890,6 @@
       "fetchedAt": "2026-10-14"
     },
     {
-      "id": "data-go-kr:15051436",
-      "name": "한국전력거래소_전력수급예보조회",
-      "kind": "kr-public",
-      "category": "api",
-      "summary": "ㅇ 전력거래소는 정부의 장단기 전력수급기본계획 수립, 수요예측모형개발 등 정부지원업무를 담당함으로써 국민에게 질 좋은 전기를 안정적으로 공급하며, 전력산업의 미래와 국가경제에 이바지하고 있습니다. ㅇ 전력수급기본계획은 수요예측, 발전설비계획, 수요관리계획, 송변전설비계획, 신재생설비계획 등 전력수요와 공급을 일치시키기 위한 종합적인 계획을 말하며, 경기변동과 미래 불확실성에 따른 수요예측 오차에 대비하고 있습니다. ㅇ 아울러 안정적으로 전기가 항시 공급될수 있도록 일정규모의 예비력을 보유하고 있습니다.",
-      "url": "https://www.data.go.kr/data/15051436/openapi.do",
-      "source": {
-        "name": "공공데이터포털",
-        "url": "https://www.data.go.kr"
-      },
-      "metrics": {
-        "downloads": 966,
-        "updatedAt": "2026-06-04"
-      },
-      "tags": [
-        "data-go-kr",
-        "xml",
-        "공공기관",
-        "산업고용",
-        "수급",
-        "수요예측",
-        "예보",
-        "전력",
-        "전력수요"
-      ],
-      "preview": {
-        "type": "api",
-        "applications": 966,
-        "auth": "apiKey",
-        "formats": [
-          "XML"
-        ],
-        "orgType": "공공기관",
-        "portalCategory": "산업고용",
-        "provider": "한국전력거래소",
-        "views": 18364
-      },
-      "fetchedAt": "2026-10-14"
-    },
-    {
       "id": "data-go-kr:15051731",
       "name": "서울특별시_공공서비스예약 조회",
       "kind": "kr-public",
@@ -27617,46 +27577,6 @@
         "portalCategory": "공공행정",
         "provider": "행정안전부",
         "views": 4211
-      },
-      "fetchedAt": "2026-10-14"
-    },
-    {
-      "id": "data-go-kr:15056640",
-      "name": "한국전력거래소_현재전력수급현황조회",
-      "kind": "kr-public",
-      "category": "api",
-      "summary": "ㅇ 한국전력거래소는 전력을 생산하는 발전사업자, 전력을 수요지까지 전달하는 송배전사업자, 전력을 구매하여 판매하는 판매사업자, 전력을 사용하는 소비자 등으로 구성되는 전력시장에서 전력의 판매 및 구매 활동을 실시간으로 운영, 감시하는 '전력시장 운영 업무'와 전력 수요에 맞춰 전력 생산량을 결정하고 이를 안정적으로 수요지에 공급되도록 하는 '전력계통 운영 업무'등을 전담하고 있습니다. 해당 데이터는 현재의 전력수급 현황을 제공합니다.",
-      "url": "https://www.data.go.kr/data/15056640/openapi.do",
-      "source": {
-        "name": "공공데이터포털",
-        "url": "https://www.data.go.kr"
-      },
-      "metrics": {
-        "downloads": 1517,
-        "updatedAt": "2026-06-04"
-      },
-      "tags": [
-        "data-go-kr",
-        "xml",
-        "공공기관",
-        "공급능력",
-        "산업고용",
-        "예비력",
-        "전력계통수급",
-        "전력수급현황",
-        "현재"
-      ],
-      "preview": {
-        "type": "api",
-        "applications": 1517,
-        "auth": "apiKey",
-        "formats": [
-          "XML"
-        ],
-        "orgType": "공공기관",
-        "portalCategory": "산업고용",
-        "provider": "한국전력거래소",
-        "views": 30837
       },
       "fetchedAt": "2026-10-14"
     },
@@ -32806,46 +32726,6 @@
         "portalCategory": "사회복지",
         "provider": "경기도",
         "views": 8573
-      },
-      "fetchedAt": "2026-10-14"
-    },
-    {
-      "id": "data-go-kr:15056879",
-      "name": "한국전력거래소_오늘전력수급현황조회",
-      "kind": "kr-public",
-      "category": "api",
-      "summary": "ㅇ 한국전력거래소는 전력을 생산하는 발전사업자, 전력을 수요지까지 전달하는 송배전사업자, 전력을 구매하여 판매하는 판매사업자, 전력을 사용하는 소비자 등으로 구성되는 전력시장에서 전력의 판매 및 구매 활동을 실시간으로 운영, 감시하는 '전력시장 운영 업무'와 전력 수요에 맞춰 전력 생산량을 결정하고 이를 안정적으로 수요지에 공급되도록 하는 '전력계통 운영 업무'등을 전담하고 있습니다.",
-      "url": "https://www.data.go.kr/data/15056879/openapi.do",
-      "source": {
-        "name": "공공데이터포털",
-        "url": "https://www.data.go.kr"
-      },
-      "metrics": {
-        "downloads": 932,
-        "updatedAt": "2026-06-04"
-      },
-      "tags": [
-        "data-go-kr",
-        "xml",
-        "공공기관",
-        "공급능력",
-        "산업고용",
-        "예비력",
-        "오늘",
-        "전력수급",
-        "전력시장"
-      ],
-      "preview": {
-        "type": "api",
-        "applications": 932,
-        "auth": "apiKey",
-        "formats": [
-          "XML"
-        ],
-        "orgType": "공공기관",
-        "portalCategory": "산업고용",
-        "provider": "한국전력거래소",
-        "views": 21116
       },
       "fetchedAt": "2026-10-14"
     },
@@ -59800,7 +59680,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 119,
+        "downloads": 121,
         "updatedAt": "2026-05-14"
       },
       "tags": [
@@ -59817,7 +59697,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 119,
+        "applications": 121,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -59825,9 +59705,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "행정안전부 한국지역정보개발원",
-        "views": 8063
+        "views": 9038
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15058244",
@@ -73836,47 +73716,6 @@
         "portalCategory": "농축수산",
         "provider": "경기도",
         "views": 3739
-      },
-      "fetchedAt": "2026-10-14"
-    },
-    {
-      "id": "data-go-kr:15058920",
-      "name": "한국전력거래소_오늘제주계통운영정보",
-      "kind": "kr-public",
-      "category": "api",
-      "summary": "ㅇ 한국전력거래소는 전력을 생산하는 발전사업자, 전력을 수요지까지 전달하는 송배전사업자, 전력을 구매하여 판매하는 판매사업자, 전력을 사용하는 소비자 등으로 구성되는 전력시장에서 전력의 판매 및 구매 활동을 실시간으로 운영, 감시하는 '전력시장 운영 업무'와 전력 수요에 맞춰 전력 생산량을 결정하고 이를 안정적으로 수요지에 공급되도록 하는 '전력계통 운영 업무'등을 전담하고 있습니다. 전력계통수요, 공급능력등 제주 전력계통 데이터 제공 ㅇ 2024.11.29 OPENAPI 활용자 가이드 v1.6로 업데이트",
-      "url": "https://www.data.go.kr/data/15058920/openapi.do",
-      "source": {
-        "name": "공공데이터포털",
-        "url": "https://www.data.go.kr"
-      },
-      "metrics": {
-        "downloads": 351,
-        "updatedAt": "2026-06-04"
-      },
-      "tags": [
-        "data-go-kr",
-        "xml",
-        "공공기관",
-        "공급능력",
-        "산업고용",
-        "운영정보",
-        "전력계통",
-        "제주",
-        "태양광",
-        "풍력"
-      ],
-      "preview": {
-        "type": "api",
-        "applications": 351,
-        "auth": "apiKey",
-        "formats": [
-          "XML"
-        ],
-        "orgType": "공공기관",
-        "portalCategory": "산업고용",
-        "provider": "한국전력거래소",
-        "views": 16669
       },
       "fetchedAt": "2026-10-14"
     },
@@ -88517,6 +88356,49 @@
       "fetchedAt": "2026-10-14"
     },
     {
+      "id": "data-go-kr:15059981",
+      "name": "해양환경공단_해양수질자동측정망 정기운항선박 관측서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "본 데이터는 해양환경공단이 정기 운항선박을 활용해 정점명과 조사기간을 기준으로 해양환경 정보를 제공하는 API이다. 수온, 염분, 탁도, 수소이온농도, 용존산소량 등 수질지표와 기온, 습도, 풍향·풍속, 강수량, 일사량 등 기상정보를 조회할 수 있다. 또한 클로로필A, 남조류, 조류형광, CDOM, 투명도 등 생태·광학 자료와 질산성질소, 암모니아성질소, 인산성인 등 영양염 항목이 포함된다. 이용자는 정점코드와 위도·경도를 통해 관측일자별 변동을 확인할 수 있으며 운항차수와 UV 자료도 제공된다.",
+      "url": "https://www.data.go.kr/data/15059981/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2025-11-13"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "공공기관",
+        "수질관측",
+        "자동측정",
+        "정기운항선박 관측자료",
+        "해양수질자동측정망",
+        "해양환경",
+        "환경감시",
+        "환경기상"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "공공기관",
+        "portalCategory": "환경기상",
+        "provider": "해양환경공단",
+        "views": 4162
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15059982",
       "name": "과학기술정보통신부_도서관서지목록",
       "kind": "kr-public",
@@ -96971,7 +96853,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 120,
+        "downloads": 132,
         "updatedAt": "2026-04-19"
       },
       "tags": [
@@ -96987,7 +96869,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 120,
+        "applications": 132,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -96995,9 +96877,9 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국마사회",
-        "views": 3360
+        "views": 3455
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15063970",
@@ -97606,6 +97488,46 @@
         "views": 6435
       },
       "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "data-go-kr:15064141",
+      "name": "농촌진흥청_농기계 안전용품",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "농기계 사용 시 안전은 선택이 아닌 필수입니다. 농사로는 작업 중 발생할 수 있는 사고를 예방하고 피해를 최소화하기 위해 다양한 안전용품 정보를 제공합니다. 안면보호구, 반사조끼, 안전표지판, 장갑 등 필수 장비의 규격과 올바른 선택 기준은 물론, 신뢰할 수 있는 업체 정보까지 한눈에 확인할 수 있습니다. 초보 농업인도 쉽게 이해할 수 있도록 구성되어 있어 누구나 실천 가능한 안전관리를 돕습니다. 농사로와 함께라면 작은 준비로 큰 사고를 예방할 수 있습니다. 안전한 농작업, 지금 바로 시작하세요.",
+      "url": "https://www.data.go.kr/data/15064141/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2026-04-20"
+      },
+      "tags": [
+        "data-go-kr",
+        "xml",
+        "국가행정기관",
+        "농기계",
+        "농림",
+        "농사",
+        "농축수산",
+        "안전",
+        "용품"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "XML"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "농축수산",
+        "provider": "농촌진흥청",
+        "views": 2819
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15064154",
@@ -99328,6 +99250,48 @@
         "views": 3702
       },
       "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "data-go-kr:15064914",
+      "name": "식품의약품안전처_우수수입업소 등록 현황",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "우수수입업소 등록제도는 수입식품 등 수입자가 해외제조업소의 위생관리 상태를 사전 점검하고 현지실사 등을 통해 기준 적합 여부를 확인 후 등록하는 제도입니다. 이에 대한 등록 업체의 속성정보를 제공합니다. 우수수입업소 등록 현황은 '식품안전나라>식품·안전>수입식품>우수수입업소'에서 매월 파일(pdf)로 현행화하고 있습니다. 이 자료를 통하여 경제적으로는 신규 비즈니스 창출과 데이터 산업 활성화를 통한 창업 및 일자리 창출 효과를 가져오며, 사회적으로는 국민의 알 권리 보장과 공공 가치 창출을 실현하는데 기여할 수 있습니다.",
+      "url": "https://www.data.go.kr/data/15064914/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2025-08-27"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "국가행정기관",
+        "등록",
+        "수입",
+        "수입식품법",
+        "식품건강",
+        "우수수입업소",
+        "우수수입업소현황"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "식품건강",
+        "provider": "식품의약품안전처",
+        "views": 2546
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15064916",
@@ -103861,6 +103825,48 @@
       "fetchedAt": "2026-10-14"
     },
     {
+      "id": "data-go-kr:15073888",
+      "name": "식품의약품안전처_의료기기 품목분류관련 문서정보",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "이 공공데이터 정보는 식품의약품안전처에서 관리하는 의료기기의 고유한 품목분류번호, 세분화된 품목등급, 상세한 국제규격 등의 분류 문서정보를 표 형태의 목록으로 제공하는 공공데이터입니다. 이 공공데이터 안에 있는 품목분류번호에 해당하는 품목 등급, 국제규격정보 등을 한눈에 파악할 수 있습니다. 그리고 사용자는 해당 품목분류번호에 해당하는 자세한 국제규격정보를 확인하고 싶을 시 해당 국제규격 정보를 웹사이트에 검색하시면 상세한 내용을 확인하는 데 큰 도움을 받으실 수 있습니다.",
+      "url": "https://www.data.go.kr/data/15073888/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 101,
+        "updatedAt": "2025-08-12"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "국가행정기관",
+        "국제규격 관련 문서정보",
+        "국제규격 문서카테고리이름",
+        "식품건강",
+        "의료기기 국제규격정보",
+        "의료기기 품목등급",
+        "의료기기 품목분류번호"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 101,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "식품건강",
+        "provider": "식품의약품안전처",
+        "views": 5584
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15073889",
       "name": "식품의약품안전처_의료기기 임상시험계획승인신청 목록",
       "kind": "kr-public",
@@ -107564,6 +107570,48 @@
       "fetchedAt": "2026-10-14"
     },
     {
+      "id": "data-go-kr:15075635",
+      "name": "공무원연금공단_직종별 지역별 재직자현황 조회 서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "공무원연금공단에서 관리하는 재직자 현황 통계를 조회할 수 있는 서비스로 공공데이터포털을 통해 발급받은 서비스키 및 직종, 지역, 기준년도, 페이지 당 결과수, 페이지 수 등을 입력하여 조회 가능합니다. 직종 및 지역(시·도명)은 일부 명칭만 입력하는 것도 가능합니다. (ex. 소방, 교육 등 / 서울, 충북 등) 기준년도는 필수입력 데이터로, 모든 데이터는 기준년도에 따른 연말 기준 통계입니다. 응답데이터는 각 직종 및 지역, 기준년도에 따른 공무원수를 제공합니다.",
+      "url": "https://www.data.go.kr/data/15075635/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 103,
+        "updatedAt": "2026-08-31"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "공공기관",
+        "공공행정",
+        "공무원",
+        "재직자",
+        "지역",
+        "직종",
+        "통계"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 103,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "공공기관",
+        "portalCategory": "공공행정",
+        "provider": "공무원연금공단",
+        "views": 5531
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15075720",
       "name": "해양수산부_연속정보 수온(15분)",
       "kind": "kr-public",
@@ -107743,7 +107791,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 100,
+        "downloads": 110,
         "updatedAt": "2025-08-05"
       },
       "tags": [
@@ -107759,7 +107807,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 100,
+        "applications": 110,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -107767,9 +107815,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부",
-        "views": 4986
+        "views": 5057
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15075845",
@@ -114638,49 +114686,6 @@
       "fetchedAt": "2026-10-14"
     },
     {
-      "id": "data-go-kr:15078218",
-      "name": "성평등가족부_전국다문화가족실태조사 통계 데이터 정보 서비스",
-      "kind": "kr-public",
-      "category": "api",
-      "summary": "전국다문화가족실태조사 통계 데이터 정보 서비스를 제공하는 오픈API입니다. 해당 개방 데이터를 통해 통계ID, 통계명, 통계주기명, 통계시점 등의 내용을 확인할 수 있습니다. 다문화가족 실태조사 통계 데이터를 API 형태로 제공하여 통계ID, 통계시점 등의 항목을 활용해 시간 흐름에 따른 주요 지표 변화를 쉽게 파악할 수 있습니다. 통계주기명 정보는 시계열 분석이나 변화 추적에 용이하며, 전국 단위의 정책 효과나 지역 간 격차 분석에도 기초 자료로 쓰일 수 있습니다.",
-      "url": "https://www.data.go.kr/data/15078218/openapi.do",
-      "source": {
-        "name": "공공데이터포털",
-        "url": "https://www.data.go.kr"
-      },
-      "metrics": {
-        "downloads": 238,
-        "updatedAt": "2026-02-11"
-      },
-      "tags": [
-        "data-go-kr",
-        "json",
-        "xml",
-        "결혼이민자",
-        "국가행정기관",
-        "다문화가정",
-        "사회복지",
-        "성평등가족부",
-        "실태조사",
-        "전국다문화가족",
-        "통계"
-      ],
-      "preview": {
-        "type": "api",
-        "applications": 238,
-        "auth": "apiKey",
-        "formats": [
-          "XML",
-          "JSON"
-        ],
-        "orgType": "국가행정기관",
-        "portalCategory": "사회복지",
-        "provider": "성평등가족부",
-        "views": 12968
-      },
-      "fetchedAt": "2026-10-14"
-    },
-    {
       "id": "data-go-kr:15079018",
       "name": "충청북도_환경분야정보 대기환경 측정소별 실시간 데이터",
       "kind": "kr-public",
@@ -116668,7 +116673,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 206,
+        "downloads": 227,
         "updatedAt": "2025-07-03"
       },
       "tags": [
@@ -116686,7 +116691,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 206,
+        "applications": 227,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -116695,9 +116700,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국주택금융공사",
-        "views": 11349
+        "views": 11490
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15082029",
@@ -118156,7 +118161,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 108,
+        "downloads": 119,
         "updatedAt": "2025-08-25"
       },
       "tags": [
@@ -118173,7 +118178,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 108,
+        "applications": 119,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -118181,9 +118186,9 @@
         "orgType": "공공기관",
         "portalCategory": "산업고용",
         "provider": "한국중부발전(주)",
-        "views": 5438
+        "views": 5549
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15084620",
@@ -121349,7 +121354,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 150,
+        "downloads": 165,
         "updatedAt": "2025-06-18"
       },
       "tags": [
@@ -121366,7 +121371,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 150,
+        "applications": 165,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -121374,9 +121379,9 @@
         "orgType": "공공기관",
         "portalCategory": "산업고용",
         "provider": "대한무역투자진흥공사",
-        "views": 4966
+        "views": 5087
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15088476",
@@ -122652,7 +122657,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 108,
+        "downloads": 119,
         "updatedAt": "2026-04-19"
       },
       "tags": [
@@ -122669,7 +122674,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 108,
+        "applications": 119,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -122678,9 +122683,9 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국마사회",
-        "views": 2421
+        "views": 2485
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15089715",
@@ -123682,7 +123687,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 125,
+        "downloads": 139,
         "updatedAt": "2025-06-02"
       },
       "tags": [
@@ -123699,7 +123704,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 125,
+        "applications": 139,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -123708,9 +123713,9 @@
         "orgType": "공공기관",
         "portalCategory": "산업고용",
         "provider": "한국에너지공단",
-        "views": 9793
+        "views": 9930
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15091535",
@@ -124173,7 +124178,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 258,
+        "downloads": 289,
         "updatedAt": "2026-09-09"
       },
       "tags": [
@@ -124189,7 +124194,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 258,
+        "applications": 289,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -124197,9 +124202,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "공정거래위원회",
-        "views": 5173
+        "views": 5340
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15092275",
@@ -124420,7 +124425,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 321,
+        "downloads": 355,
         "updatedAt": "2026-09-23"
       },
       "tags": [
@@ -124436,7 +124441,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 321,
+        "applications": 355,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -124444,9 +124449,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "공정거래위원회",
-        "views": 6553
+        "views": 6763
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15093660",
@@ -124623,7 +124628,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 183,
+        "downloads": 202,
         "updatedAt": "2026-05-19"
       },
       "tags": [
@@ -124640,7 +124645,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 183,
+        "applications": 202,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -124648,9 +124653,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "공정거래위원회",
-        "views": 5259
+        "views": 5374
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15093667",
@@ -126804,7 +126809,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1216,
+        "downloads": 1359,
         "updatedAt": "2026-09-23"
       },
       "tags": [
@@ -126822,7 +126827,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1216,
+        "applications": 1359,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -126831,9 +126836,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "재정금융",
         "provider": "금융위원회",
-        "views": 37127
+        "views": 38936
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15094851",
@@ -131831,6 +131836,44 @@
       "fetchedAt": "2026-10-14"
     },
     {
+      "id": "data-go-kr:15096617",
+      "name": "충청남도_충남넷_공모전공지사항",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "충청남도 충남넷 공모전공지사항의 데이터를 제공합니다, 데이터는 게시글의 제목, 내용, 담당자, 담당부서 및 관련 첨부파일 등을 제공합니다.",
+      "url": "https://www.data.go.kr/data/15096617/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2025-01-31"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "공공행정",
+        "공모전",
+        "공모전공지사항",
+        "자치행정기관",
+        "충남넷"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "JSON"
+        ],
+        "orgType": "자치행정기관",
+        "portalCategory": "공공행정",
+        "provider": "충청남도",
+        "views": 2730
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15096635",
       "name": "국가유산청 국립문화유산연구원_『문화재 窓』 소식지 목록",
       "kind": "kr-public",
@@ -134154,7 +134197,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 118,
+        "downloads": 131,
         "updatedAt": "2025-11-12"
       },
       "tags": [
@@ -134172,7 +134215,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 118,
+        "applications": 131,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -134181,9 +134224,9 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국등산트레킹지원센터",
-        "views": 2623
+        "views": 2700
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15097960",
@@ -135418,7 +135461,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 186,
+        "downloads": 206,
         "updatedAt": "2024-09-03"
       },
       "tags": [
@@ -135432,7 +135475,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 186,
+        "applications": 206,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -135440,9 +135483,9 @@
         "orgType": "입법기관",
         "portalCategory": "교육",
         "provider": "국회 국회도서관",
-        "views": 4404
+        "views": 4539
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15098206",
@@ -136237,7 +136280,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 5806,
+        "downloads": 6412,
         "updatedAt": "2024-03-19"
       },
       "tags": [
@@ -136252,7 +136295,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 5806,
+        "applications": 6412,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -136261,9 +136304,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "한국부동산원",
-        "views": 82362
+        "views": 85330
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15098552",
@@ -137700,7 +137743,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 2181,
+        "downloads": 2410,
         "updatedAt": "2024-03-19"
       },
       "tags": [
@@ -137715,7 +137758,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 2181,
+        "applications": 2410,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -137724,9 +137767,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "한국부동산원",
-        "views": 44312
+        "views": 45641
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15098913",
@@ -138081,7 +138124,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 110,
+        "downloads": 121,
         "updatedAt": "2025-08-21"
       },
       "tags": [
@@ -138098,7 +138141,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 110,
+        "applications": 121,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -138107,9 +138150,9 @@
         "orgType": "공공기관",
         "portalCategory": "국토관리",
         "provider": "한국수자원공사",
-        "views": 7030
+        "views": 7118
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15099052",
@@ -143071,7 +143114,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 226,
+        "downloads": 250,
         "updatedAt": "2025-08-22"
       },
       "tags": [
@@ -143088,7 +143131,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 226,
+        "applications": 250,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -143097,9 +143140,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "한국수자원공사",
-        "views": 8992
+        "views": 9131
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15101628",
@@ -143113,7 +143156,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 177,
+        "downloads": 197,
         "updatedAt": "2025-08-22"
       },
       "tags": [
@@ -143130,7 +143173,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 177,
+        "applications": 197,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -143139,9 +143182,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "한국수자원공사",
-        "views": 5245
+        "views": 5384
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15101630",
@@ -147097,6 +147140,49 @@
       "fetchedAt": "2026-10-14"
     },
     {
+      "id": "data-go-kr:15102383",
+      "name": "국민권익위원회_고충민원 결정례 조회 서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "국민이 일상생활 속에서 겪는 다양한 고충민원에 대해 2013년 이후 국민권익위원회에서 처리한 약 700여 건의 고충민원 사례를 수록한 결정례집을 기반으로 하며, 각 사례는 행정, 교육, 복지, 주택, 세무, 산업 등 다양한 분야를 포괄합니다. 결정례집은 연도별로 발간되며, 주요 사례를 선정하여 처리 결과를 상세히 수록하고 있습니다.제도 개선이나 정책 반영의 기초 자료로 활용 가능하며, 민원 예방에도 기여합니다.",
+      "url": "https://www.data.go.kr/data/15102383/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 101,
+        "updatedAt": "2025-09-01"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "결정례",
+        "고충민원",
+        "공공행정",
+        "국가행정기관",
+        "민원",
+        "민원사례",
+        "민원처리",
+        "정책개선"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 101,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "공공행정",
+        "provider": "국민권익위원회",
+        "views": 3820
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15102410",
       "name": "농림수산식품교육문화정보원_축산물 부분육 경락가격",
       "kind": "kr-public",
@@ -149795,7 +149881,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 729,
+        "downloads": 736,
         "updatedAt": "2025-08-20"
       },
       "tags": [
@@ -149813,7 +149899,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 729,
+        "applications": 736,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -149822,9 +149908,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "문화체육관광부",
-        "views": 9452
+        "views": 10410
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15105195",
@@ -150550,6 +150636,48 @@
         "views": 16639
       },
       "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "data-go-kr:15105560",
+      "name": "식품의약품안전처_나트륨 줄이기 실천음식점 지정업체 대장",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "식품의약품안전처에서 관리하는 업종, 영업소재지, 지정일자, 기타정보, 관할기관, 인허가번호, 업체명 정보를 제공합니다. 이 자료를 통하여 신규 비즈니스 창출과 데이터 산업 활성화를 통한 창업 및 일자리 창출 효과를 가져오며, 사회적으로는 국민의 알 권리 보장과 사회문제 해결 기여, 공공 가치 창출을 실현하는데 기여할 수 있습니다. 또한 식품안전 분야의 정보 투명성 제고, 식품산업 발전 지원, 데이터에 기반한 식품안전정책 수립, 맞춤형 서비스 개발 기반 제공으로 국민 편의성을 향상 시킬 수 있습니다.",
+      "url": "https://www.data.go.kr/data/15105560/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2026-08-07"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "건강",
+        "국가행정기관",
+        "나트륨 줄이기",
+        "나트륨 줄이기 실천음식점",
+        "나트륨 줄이기 지정업체",
+        "식품건강",
+        "영양"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "식품건강",
+        "provider": "식품의약품안전처",
+        "views": 2018
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15105575",
@@ -151472,7 +151600,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 114,
+        "downloads": 128,
         "updatedAt": "2026-08-06"
       },
       "tags": [
@@ -151490,7 +151618,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 114,
+        "applications": 128,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -151499,9 +151627,9 @@
         "orgType": "공공기관",
         "portalCategory": "교통물류",
         "provider": "인천국제공항공사",
-        "views": 8217
+        "views": 8341
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15107258",
@@ -151862,6 +151990,46 @@
         "views": 9391
       },
       "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "data-go-kr:15107314",
+      "name": "행정안전부_통계연보_특별재난지역 선포(자연재난)",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "- 행정안전부에서는, 「행정안전부 통계관리규정」에 따라, 행정안전부 본부와 소속기관의 통계자료를 취합하여 매년 '행정안전 통계연보'를 발간하고 있습니다. - '행정안전 통계연보'에 수록된 분야별 통계정보를 공공·민간의 다양한 분야에서 이용할 수 있도록 오픈API로 제공하고 있습니다. - 해당 오픈API는 '행정안전 통계연보'에 수록된 '재난관리' 중 '특별재난지역 선포(자연재난)'에 관한 통계입니다.",
+      "url": "https://www.data.go.kr/data/15107314/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 101,
+        "updatedAt": "2025-06-03"
+      },
+      "tags": [
+        "data-go-kr",
+        "xml",
+        "국가행정기관",
+        "선포",
+        "선포지역",
+        "자연재난",
+        "재난안전",
+        "재해명",
+        "특별재난지역"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 101,
+        "auth": "apiKey",
+        "formats": [
+          "XML"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "재난안전",
+        "provider": "행정안전부",
+        "views": 4564
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15107316",
@@ -152986,7 +153154,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 870,
+        "downloads": 967,
         "updatedAt": "2025-11-19"
       },
       "tags": [
@@ -153003,7 +153171,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 870,
+        "applications": 967,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -153012,9 +153180,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "행정안전부",
-        "views": 18764
+        "views": 19338
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15108072",
@@ -157904,46 +158072,6 @@
       "fetchedAt": "2026-10-14"
     },
     {
-      "id": "data-go-kr:15109797",
-      "name": "전남광주통합특별시 신안군_지형지질 공공데이타",
-      "kind": "kr-public",
-      "category": "api",
-      "summary": "신안군 자연생태 데이터 OPEN API는 신안군(http://www.shinandata.or.kr/openapi/) 홈페이지에서 관리되는 자연생태 데이터(생물, 생태, 자연경관, 정원, 지형지질, 특정도서 데이터)를 XML, JSON 형식의 데이터를 실시간으로 출력 할 수 있는 URL Link를 제공하고 사용 가능하도록 지원.",
-      "url": "https://www.data.go.kr/data/15109797/openapi.do",
-      "source": {
-        "name": "공공데이터포털",
-        "url": "https://www.data.go.kr"
-      },
-      "metrics": {
-        "downloads": 107,
-        "updatedAt": "2022-12-20"
-      },
-      "tags": [
-        "data-go-kr",
-        "json",
-        "xml",
-        "신안군 자연생태 데이타",
-        "신안군 지형지질 데이타",
-        "신안군 특저도서",
-        "자치행정기관",
-        "환경기상"
-      ],
-      "preview": {
-        "type": "api",
-        "applications": 107,
-        "auth": "apiKey",
-        "formats": [
-          "XML",
-          "JSON"
-        ],
-        "orgType": "자치행정기관",
-        "portalCategory": "환경기상",
-        "provider": "전남광주통합특별시 신안군",
-        "views": 1841
-      },
-      "fetchedAt": "2026-10-14"
-    },
-    {
       "id": "data-go-kr:15109821",
       "name": "공정거래위원회_가맹정보_업종별 업종개황 제공 서비스",
       "kind": "kr-public",
@@ -158234,7 +158362,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 174,
+        "downloads": 193,
         "updatedAt": "2025-08-07"
       },
       "tags": [
@@ -158251,7 +158379,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 174,
+        "applications": 193,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -158260,9 +158388,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "식품의약품안전처",
-        "views": 10767
+        "views": 11019
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15110214",
@@ -158360,7 +158488,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 322,
+        "downloads": 360,
         "updatedAt": "2025-05-27"
       },
       "tags": [
@@ -158376,7 +158504,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 322,
+        "applications": 360,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -158385,9 +158513,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 5017
+        "views": 5338
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15110284",
@@ -159182,7 +159310,7 @@
       "name": "대전광역시_소상공인 기간별 생존율_폐업율 현황",
       "kind": "kr-public",
       "category": "api",
-      "summary": "2020년 코로나19 관련 대전시에서 공공요금감면혜택을 받은 10만여 소상공인의 개업년월 기준 현재(22년 10월말 기준) 영업상태(영업, 휴폐업) 현황입니다. 업데이트는 2개월 단위로 이루어집니다.",
+      "summary": "대전광역시가 제공하는 “소상공인 기간별 생존율·폐업율 현황”은 지역 내 소상공인의 창업 후 일정 기간(1년, 3년, 5년 등) 동안의 생존 현황과 폐업 비율을 연도별·업종별로 정리한 통계자료입니다. 데이터는 사업자등록 정보를 기반으로 매년 갱신되며, 사업체 규모(종사자 5인 이하)와 업종 구분을 통해 세분화된 생존율을 제공해 정책 수립과 현장 지원에 활용됩니다. 주요 내용은 각 기간별 생존율, 폐업율, 재창업 비율 및 평균 영업기간이며, 이를 통해 소상공인의 성장·위기 요인을 파악할 수 있습니다.",
       "url": "https://www.data.go.kr/data/15111566/openapi.do",
       "source": {
         "name": "공공데이터포털",
@@ -159190,15 +159318,17 @@
       },
       "metrics": {
         "downloads": 136,
-        "updatedAt": "2023-01-04"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "data-go-kr",
         "json",
         "공공행정",
+        "상권분석",
         "생존율",
         "소상공인",
         "자치행정기관",
+        "창업",
         "폐업율"
       ],
       "preview": {
@@ -159211,9 +159341,9 @@
         "orgType": "자치행정기관",
         "portalCategory": "공공행정",
         "provider": "대전광역시",
-        "views": 2484
+        "views": 2518
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15111568",
@@ -159260,7 +159390,7 @@
       "name": "대전광역시_구별 업종별 영업상태 현황",
       "kind": "kr-public",
       "category": "api",
-      "summary": "대전광역시 구별 인허가년도 기준 업종별 영업상태 현황에 대한 현재(2022년 11월말) 기준의 조회 서비스 입니다. 업태를 기준으로 업종(대중소)을 재분류 하여 영업상태 현황과 개수를 나타내었습니다.",
+      "summary": "‘구별 업종별 영업상태 현황’은 대전광역시가 매월 조사·공개하는 데이터로, 시·구별로 업종을 구분해 영업 중, 일시 중단, 폐업 등 영업 상태를 정량화한 자료입니다. 주요 변수는 구코드·업종코드·영업상태·사업체수이며, 연도·월별 시계열 형태로 제공돼 지역·산업별 변화를 한눈에 파악할 수 있습니다. 이 데이터는 지방자치단체의 정책 수립·예산 편성, 지역 기업 지원·시장 진입 전략, 학술·민간 연구 등에 활용되며, 공공데이터포털에서 CSV·API 형태로 자유롭게 다운로드할 수 있습니다.",
       "url": "https://www.data.go.kr/data/15111573/openapi.do",
       "source": {
         "name": "공공데이터포털",
@@ -159268,13 +159398,15 @@
       },
       "metrics": {
         "downloads": 103,
-        "updatedAt": "2023-01-04"
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "data-go-kr",
         "json",
         "공공행정",
         "구별",
+        "대분류",
+        "소분류",
         "업종별",
         "영업상태",
         "자치행정기관"
@@ -159289,9 +159421,9 @@
         "orgType": "자치행정기관",
         "portalCategory": "공공행정",
         "provider": "대전광역시",
-        "views": 2125
+        "views": 2158
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15111576",
@@ -159550,7 +159682,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 198,
+        "downloads": 220,
         "updatedAt": "2025-08-12"
       },
       "tags": [
@@ -159567,7 +159699,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 198,
+        "applications": 220,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -159576,9 +159708,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "식품의약품안전처",
-        "views": 6573
+        "views": 6799
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15111772",
@@ -161198,7 +161330,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 142,
+        "downloads": 158,
         "updatedAt": "2026-09-16"
       },
       "tags": [
@@ -161215,7 +161347,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 142,
+        "applications": 158,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -161223,9 +161355,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "중소벤처기업부",
-        "views": 5338
+        "views": 5511
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15113315",
@@ -161532,7 +161664,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 3222,
+        "downloads": 3612,
         "updatedAt": "2025-12-29"
       },
       "tags": [
@@ -161547,7 +161679,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 3222,
+        "applications": 3612,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -161556,9 +161688,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "행정안전부",
-        "views": 42397
+        "views": 45418
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15113986",
@@ -162429,6 +162561,48 @@
       "fetchedAt": "2026-10-14"
     },
     {
+      "id": "data-go-kr:15116583",
+      "name": "식품의약품안전처_식품첨가물의 기준 및 규격 현황",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "식품의약품안전처에서 관리하는 식품첨가물의 기준규격에 대한 데이터로, 품목한글명, 품목분류코드, 시험항목 한글명, 세부항목명, 품목항목속성 한글명, 기준규격값, 기준규격값 요약, 유효개시일자, 유효종료일자, 출처, 최대값, 최소값, 위해여부, 단위명, 수정사유, 수정일자 정보를 제공합니다. 이 자료를 통하여 데이터 산업 활성화, 국민의 알 권리 보장과 공공 가치 창출을 실현하는데 기여할 수 있습니다.",
+      "url": "https://www.data.go.kr/data/15116583/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 102,
+        "updatedAt": "2025-08-18"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "국가행정기관",
+        "기준규격",
+        "시험항목",
+        "식품건강",
+        "식품위생법",
+        "식품첨가물",
+        "식품첨가물공전"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 102,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "식품건강",
+        "provider": "식품의약품안전처",
+        "views": 5052
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15116617",
       "name": "해양수산부_해수욕장별 해양방사능 안전 정보 서비스",
       "kind": "kr-public",
@@ -163224,7 +163398,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 316,
+        "downloads": 349,
         "updatedAt": "2025-07-22"
       },
       "tags": [
@@ -163241,7 +163415,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 316,
+        "applications": 349,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -163250,9 +163424,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "교통물류",
         "provider": "국토교통부",
-        "views": 9221
+        "views": 9408
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15117911",
@@ -166423,7 +166597,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 150,
+        "downloads": 165,
         "updatedAt": "2025-06-17"
       },
       "tags": [
@@ -166441,7 +166615,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 150,
+        "applications": 165,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -166450,9 +166624,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "대한무역투자진흥공사",
-        "views": 3069
+        "views": 3178
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15122662",
@@ -166466,7 +166640,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 177,
+        "downloads": 197,
         "updatedAt": "2025-06-17"
       },
       "tags": [
@@ -166484,7 +166658,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 177,
+        "applications": 197,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -166493,9 +166667,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "대한무역투자진흥공사",
-        "views": 4884
+        "views": 5048
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15122665",
@@ -168927,7 +169101,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 195,
+        "downloads": 216,
         "updatedAt": "2025-08-25"
       },
       "tags": [
@@ -168945,7 +169119,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 195,
+        "applications": 216,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -168954,9 +169128,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "지식재산처",
-        "views": 13377
+        "views": 13719
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15124952",
@@ -169164,6 +169338,46 @@
         "views": 2716
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "data-go-kr:15125000",
+      "name": "한국환경공단_올바로 회원 정보 서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "사업자등록번호를 기준으로 올바로 회원 정보(사업자등록번호, 업체명, 업체 주소, 업체 상태)를 조회하는 올바로 회원 확인 서비스",
+      "url": "https://www.data.go.kr/data/15125000/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 103,
+        "updatedAt": "2023-11-30"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "공공기관",
+        "업체정보",
+        "올바로회원정보",
+        "폐기물",
+        "환경기상"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 103,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "공공기관",
+        "portalCategory": "환경기상",
+        "provider": "한국환경공단",
+        "views": 10840
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125024",
@@ -169803,7 +170017,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 112,
+        "downloads": 125,
         "updatedAt": "2025-08-29"
       },
       "tags": [
@@ -169820,7 +170034,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 112,
+        "applications": 125,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -169829,9 +170043,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "재정경제부",
-        "views": 6950
+        "views": 7060
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125287",
@@ -169969,7 +170183,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 126,
+        "downloads": 141,
         "updatedAt": "2025-12-02"
       },
       "tags": [
@@ -169986,7 +170200,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 126,
+        "applications": 141,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -169994,9 +170208,9 @@
         "orgType": "공공기관",
         "portalCategory": "산업고용",
         "provider": "한국남부발전(주)",
-        "views": 3307
+        "views": 3409
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125342",
@@ -170430,7 +170644,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 255,
+        "downloads": 282,
         "updatedAt": "2023-12-14"
       },
       "tags": [
@@ -170445,7 +170659,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 255,
+        "applications": 282,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -170454,9 +170668,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 4663
+        "views": 4905
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125450",
@@ -170640,7 +170854,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 127,
+        "downloads": 141,
         "updatedAt": "2023-12-14"
       },
       "tags": [
@@ -170655,7 +170869,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 127,
+        "applications": 141,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -170664,9 +170878,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 1660
+        "views": 1733
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125467",
@@ -170680,7 +170894,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 890,
+        "downloads": 986,
         "updatedAt": "2025-03-31"
       },
       "tags": [
@@ -170695,7 +170909,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 890,
+        "applications": 986,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -170704,9 +170918,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 14589
+        "views": 15169
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125469",
@@ -170760,7 +170974,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 143,
+        "downloads": 158,
         "updatedAt": "2023-12-26"
       },
       "tags": [
@@ -170775,7 +170989,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 143,
+        "applications": 158,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -170784,23 +170998,23 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 1394
+        "views": 1520
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
-      "id": "data-go-kr:15125479",
-      "name": "공정거래위원회_가맹정보_브랜드 가맹점 인테리어 비용정보 제공 서비스",
+      "id": "data-go-kr:15125476",
+      "name": "공정거래위원회_가맹정보_브랜드 가맹점 사업자 가맹금 정보 제공 서비스",
       "kind": "kr-public",
       "category": "api",
-      "summary": "브랜드 가맹점 인테리어 비용에 대한 기준년도, 브랜드관리번호를 이용하여 브랜드명, 단위면적인테리어금액, 점포기준면적 등 정보 조회 서비스를 제공합니다.",
-      "url": "https://www.data.go.kr/data/15125479/openapi.do",
+      "summary": "브랜드 가맹점 사업자 가맹금 정보에 대한 기준년도, 브랜드관리번호를 이용하여 가맹금액, 가맹금액구분명 등 정보 조회 서비스를 제공합니다.",
+      "url": "https://www.data.go.kr/data/15125476/openapi.do",
       "source": {
         "name": "공공데이터포털",
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 193,
+        "downloads": 100,
         "updatedAt": "2023-12-14"
       },
       "tags": [
@@ -170815,7 +171029,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 193,
+        "applications": 100,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -170824,9 +171038,49 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 2976
+        "views": 1701
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
+    },
+    {
+      "id": "data-go-kr:15125479",
+      "name": "공정거래위원회_가맹정보_브랜드 가맹점 인테리어 비용정보 제공 서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "브랜드 가맹점 인테리어 비용에 대한 기준년도, 브랜드관리번호를 이용하여 브랜드명, 단위면적인테리어금액, 점포기준면적 등 정보 조회 서비스를 제공합니다.",
+      "url": "https://www.data.go.kr/data/15125479/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 215,
+        "updatedAt": "2023-12-14"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "가맹본부",
+        "국가행정기관",
+        "본부",
+        "브랜드",
+        "산업고용"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 215,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "산업고용",
+        "provider": "공정거래위원회",
+        "views": 3108
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125484",
@@ -170880,7 +171134,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 613,
+        "downloads": 679,
         "updatedAt": "2026-06-09"
       },
       "tags": [
@@ -170898,7 +171152,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 613,
+        "applications": 679,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -170907,9 +171161,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 5838
+        "views": 6334
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125491",
@@ -170990,6 +171244,46 @@
         "views": 8299
       },
       "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "data-go-kr:15125493",
+      "name": "공정거래위원회_가맹정보_브랜드 직영점 운영 정보 제공 서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "브랜드 직영점 운영에 대한 기준년도, 브랜드관리번호를 이용하여 업종대분류명, 업종중분류, 직영점수, 평균운영기간 등 정보 조회 서비스를 제공합니다.",
+      "url": "https://www.data.go.kr/data/15125493/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2023-12-14"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "가맹본부",
+        "국가행정기관",
+        "본부",
+        "브랜드",
+        "산업고용"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "산업고용",
+        "provider": "공정거래위원회",
+        "views": 1927
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15125494",
@@ -173682,6 +173976,46 @@
       "fetchedAt": "2026-10-14"
     },
     {
+      "id": "data-go-kr:15126302",
+      "name": "공정거래위원회_방문판매사업자 등록현황 제공 서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "이 API는 사업자등록번호, 상호명, 영업상태, 인허가관리번호 등의 조회 조건으로 방문판매사업자의 등록 현황 정보를 조회 합니다. 활용 가능 상세 기능으로 인허가관리번호별 방문판매사업자 등록현황 조회, 방문판매사업자 등록현황 조회, 허가일자별 방문판매사업자 등록현황 조회, 사업자등록번호별 방문판매사업자 등록현황 조회, 상호명별 방문판매사업자 등록현황 조회, 영업상태별 방문판매사업자 등록현황 조회, 지역별 방문판매사업자 등록현황 조회 등이 있습니다.",
+      "url": "https://www.data.go.kr/data/15126302/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2025-03-31"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "국가행정기관",
+        "방문",
+        "방문판매",
+        "방문판매사업자",
+        "재정금융"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "국가행정기관",
+        "portalCategory": "재정금융",
+        "provider": "공정거래위원회",
+        "views": 4810
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15126311",
       "name": "공정거래위원회_통신판매사업자 등록현황 제공 서비스",
       "kind": "kr-public",
@@ -174230,7 +174564,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 3976,
+        "downloads": 4406,
         "updatedAt": "2026-07-22"
       },
       "tags": [
@@ -174246,7 +174580,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 3976,
+        "applications": 4406,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -174254,9 +174588,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "국토교통부",
-        "views": 33202
+        "views": 35284
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15126467",
@@ -177019,7 +177353,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 4731,
+        "downloads": 5232,
         "updatedAt": "2026-05-15"
       },
       "tags": [
@@ -177037,7 +177371,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 4731,
+        "applications": 5232,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -177046,9 +177380,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "조달청",
-        "views": 72919
+        "views": 76498
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15129437",
@@ -177062,7 +177396,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 4232,
+        "downloads": 4695,
         "updatedAt": "2026-08-10"
       },
       "tags": [
@@ -177080,7 +177414,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 4232,
+        "applications": 4695,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -177089,9 +177423,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "조달청",
-        "views": 38397
+        "views": 40494
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15129453",
@@ -177143,7 +177477,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1295,
+        "downloads": 1429,
         "updatedAt": "2026-06-29"
       },
       "tags": [
@@ -177161,7 +177495,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1295,
+        "applications": 1429,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -177170,9 +177504,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "조달청",
-        "views": 21802
+        "views": 23176
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15129458",
@@ -177186,7 +177520,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 892,
+        "downloads": 987,
         "updatedAt": "2026-06-29"
       },
       "tags": [
@@ -177204,7 +177538,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 892,
+        "applications": 987,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -177213,9 +177547,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "조달청",
-        "views": 10803
+        "views": 11341
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15129459",
@@ -177229,7 +177563,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1701,
+        "downloads": 1878,
         "updatedAt": "2026-05-15"
       },
       "tags": [
@@ -177247,7 +177581,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1701,
+        "applications": 1878,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -177256,9 +177590,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "조달청",
-        "views": 32331
+        "views": 33761
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15129462",
@@ -177569,7 +177903,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1873,
+        "downloads": 2092,
         "updatedAt": "2026-08-10"
       },
       "tags": [
@@ -177587,7 +177921,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1873,
+        "applications": 2092,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -177596,9 +177930,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "조달청",
-        "views": 30533
+        "views": 32472
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15129485",
@@ -178267,7 +178601,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 149,
+        "downloads": 165,
         "updatedAt": "2024-08-27"
       },
       "tags": [
@@ -178281,7 +178615,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 149,
+        "applications": 165,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -178289,9 +178623,9 @@
         "orgType": "공공기관",
         "portalCategory": "산업고용",
         "provider": "한국석유관리원",
-        "views": 4408
+        "views": 4556
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15133604",
@@ -178347,7 +178681,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 104,
+        "downloads": 116,
         "updatedAt": "2026-04-19"
       },
       "tags": [
@@ -178364,7 +178698,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 104,
+        "applications": 116,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -178373,9 +178707,51 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국마사회",
-        "views": 1922
+        "views": 2019
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
+    },
+    {
+      "id": "data-go-kr:15133742",
+      "name": "한국마사회_홈페이지자료실_개최정보_부산경남출전마현황",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "한국마사회 부산경남경마장과 영천경마장에서 개최하는 경주에 대해 출전신청 후 경주 참여가 확정된 경주마에 대한 정보를 표출한다. (제공정보는 경주일자(raceDt), 경주번호(raceNo), 출전마번호(pthrNo), 마명(hrnm), 생산지(prds), 성별(gndr), 연령(ag), 부담중량(burdWgt), 기수명(jckyNm), 조교사명(trarNm), 마주명(ownerNm), 레이팅(ratg), 수득상금통산(erngSump), 수득상금1년(erngLoy), 수득상금6개월(erngLsm),…",
+      "url": "https://www.data.go.kr/data/15133742/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 101,
+        "updatedAt": "2026-08-20"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "개최정보",
+        "경마정보",
+        "공공기관",
+        "농축수산",
+        "부산경남경마출전표",
+        "자료실",
+        "출전마현황"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 101,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "공공기관",
+        "portalCategory": "농축수산",
+        "provider": "한국마사회",
+        "views": 1569
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15133762",
@@ -178473,7 +178849,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 102,
+        "downloads": 113,
         "updatedAt": "2026-08-20"
       },
       "tags": [
@@ -178490,7 +178866,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 102,
+        "applications": 113,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -178499,9 +178875,9 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국마사회",
-        "views": 1283
+        "views": 1344
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15133773",
@@ -178515,7 +178891,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 105,
+        "downloads": 116,
         "updatedAt": "2026-04-19"
       },
       "tags": [
@@ -178532,7 +178908,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 105,
+        "applications": 116,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -178541,9 +178917,9 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국마사회",
-        "views": 2810
+        "views": 2901
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15133855",
@@ -178891,7 +179267,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 129,
+        "downloads": 143,
         "updatedAt": "2025-09-11"
       },
       "tags": [
@@ -178908,7 +179284,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 129,
+        "applications": 143,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -178916,9 +179292,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "산림청",
-        "views": 4137
+        "views": 4289
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15134251",
@@ -179248,7 +179624,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 13171,
+        "downloads": 14509,
         "updatedAt": "2026-07-10"
       },
       "tags": [
@@ -179265,7 +179641,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 13171,
+        "applications": 14509,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -179274,9 +179650,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "국토관리",
         "provider": "국토교통부",
-        "views": 117972
+        "views": 125747
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15134761",
@@ -179624,7 +180000,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 3033,
+        "downloads": 3380,
         "updatedAt": "2026-07-10"
       },
       "tags": [
@@ -179641,7 +180017,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 3033,
+        "applications": 3380,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -179650,9 +180026,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "국토관리",
         "provider": "국토교통부",
-        "views": 40390
+        "views": 45559
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15136379",
@@ -181718,7 +182094,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 153,
+        "downloads": 171,
         "updatedAt": "2026-01-05"
       },
       "tags": [
@@ -181736,7 +182112,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 153,
+        "applications": 171,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -181745,9 +182121,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "식품의약품안전처",
-        "views": 4401
+        "views": 4579
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15139398",
@@ -185958,7 +186334,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 109,
+        "downloads": 121,
         "updatedAt": "2025-08-27"
       },
       "tags": [
@@ -185976,7 +186352,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 109,
+        "applications": 121,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -185985,9 +186361,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "통일외교안보",
         "provider": "외교부",
-        "views": 3823
+        "views": 3976
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15141649",
@@ -186625,7 +187001,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 114,
+        "downloads": 126,
         "updatedAt": "2026-09-21"
       },
       "tags": [
@@ -186642,7 +187018,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 114,
+        "applications": 126,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -186651,9 +187027,9 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국농수산식품유통공사",
-        "views": 2303
+        "views": 2441
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15141815",
@@ -186875,7 +187251,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 118,
+        "downloads": 133,
         "updatedAt": "2026-01-23"
       },
       "tags": [
@@ -186892,7 +187268,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 118,
+        "applications": 133,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -186901,9 +187277,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "농림축산식품부 농림축산검역본부",
-        "views": 3213
+        "views": 3399
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15142010",
@@ -187035,7 +187411,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 574,
+        "downloads": 646,
         "updatedAt": "2026-04-21"
       },
       "tags": [
@@ -187052,7 +187428,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 574,
+        "applications": 646,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -187061,9 +187437,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "교통물류",
         "provider": "국토교통부",
-        "views": 11756
+        "views": 12302
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15142031",
@@ -187997,7 +188373,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 236,
+        "downloads": 265,
         "updatedAt": "2026-01-28"
       },
       "tags": [
@@ -188014,7 +188390,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 236,
+        "applications": 265,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -188023,9 +188399,9 @@
         "orgType": "공공기관",
         "portalCategory": "교통물류",
         "provider": "한국해양교통안전공단",
-        "views": 3759
+        "views": 4027
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15142304",
@@ -188039,7 +188415,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 280,
+        "downloads": 310,
         "updatedAt": "2026-03-31"
       },
       "tags": [
@@ -188056,7 +188432,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 280,
+        "applications": 310,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -188065,9 +188441,9 @@
         "orgType": "공공기관",
         "portalCategory": "교통물류",
         "provider": "한국해양교통안전공단",
-        "views": 3442
+        "views": 3693
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15142469",
@@ -188166,7 +188542,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 117,
+        "downloads": 129,
         "updatedAt": "2026-07-10"
       },
       "tags": [
@@ -188183,7 +188559,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 117,
+        "applications": 129,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -188192,9 +188568,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 1310
+        "views": 1424
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15142486",
@@ -188506,7 +188882,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 247,
+        "downloads": 276,
         "updatedAt": "2026-09-29"
       },
       "tags": [
@@ -188523,7 +188899,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 247,
+        "applications": 276,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -188532,9 +188908,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 5717
+        "views": 6078
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15142506",
@@ -188885,7 +189261,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 115,
+        "downloads": 130,
         "updatedAt": "2025-09-25"
       },
       "tags": [
@@ -188902,7 +189278,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 115,
+        "applications": 130,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -188911,49 +189287,9 @@
         "orgType": "공공기관",
         "portalCategory": "재난안전",
         "provider": "한국소비자원",
-        "views": 2606
+        "views": 2813
       },
-      "fetchedAt": "2026-10-14"
-    },
-    {
-      "id": "data-go-kr:15142651",
-      "name": "한국전력거래소_발전원별 발전량 현황조회",
-      "kind": "kr-public",
-      "category": "api",
-      "summary": "한국전력거래소는 전력을 생산하는 발전사업자, 전력을 수요지까지 전달하는 송배전사업자, 전력을 구매하여 판매하는 판매사업자, 전력을 사용하는 소비자 등으로 구성되는 전력시장에서 전력의 판매 및 구매 활동을 실시간으로 운영, 감시하는 '전력시장 운영 업무'와 전력 수요에 맞춰 전력 생산량을 결정하고 이를 안정적으로 수요지에 공급되도록 하는 '전력계통 운영 업무'등을 전담하고 있습니다. ㅇ 해당 목록은 한국전력거래소_발전원별 발전량 현황조회에 대한 데이터로 총 수요(추계) 데이터를 제공합니다.",
-      "url": "https://www.data.go.kr/data/15142651/openapi.do",
-      "source": {
-        "name": "공공데이터포털",
-        "url": "https://www.data.go.kr"
-      },
-      "metrics": {
-        "downloads": 262,
-        "updatedAt": "2026-06-04"
-      },
-      "tags": [
-        "data-go-kr",
-        "mw",
-        "xml",
-        "공공기관",
-        "발전량",
-        "발전원별",
-        "산업고용",
-        "총 수요(추계)",
-        "현황조회"
-      ],
-      "preview": {
-        "type": "api",
-        "applications": 262,
-        "auth": "apiKey",
-        "formats": [
-          "XML"
-        ],
-        "orgType": "공공기관",
-        "portalCategory": "산업고용",
-        "provider": "한국전력거래소",
-        "views": 10413
-      },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15142872",
@@ -189702,7 +190038,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 145,
+        "downloads": 161,
         "updatedAt": "2025-06-24"
       },
       "tags": [
@@ -189720,7 +190056,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 145,
+        "applications": 161,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -189729,9 +190065,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 2027
+        "views": 2192
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15143698",
@@ -189874,7 +190210,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1372,
+        "downloads": 1465,
         "updatedAt": "2025-07-01"
       },
       "tags": [
@@ -189892,7 +190228,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1372,
+        "applications": 1465,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -189901,9 +190237,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 7278
+        "views": 8096
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15143711",
@@ -190907,6 +191243,48 @@
         "views": 4871
       },
       "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "data-go-kr:15144288",
+      "name": "한국마사회_경주마 등급변동내역",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "한국마사회에서 제공하는 경주마에 대한 등급변동 내역 정보를 제공합니다. (제공자료는 경마장명(rccrsNm), 마명(hrnm), 영문마명(engHrnm), 마번(hrno), 품종명(spcsNm), 생산지명(prdsNm), 등급시작연령(clasStartAG), 등급시작일자(clasStartDt), 등급종료일자(clasEndDt), 변경전등급(chbfClas), 변경후등급(chafClas) 자료입니다.) - 요청메세지로 경마장코드(rccrs_cd-1:서울, 2:제주, 3:부산경남), 등급부여일자(clas_grt_dt),…",
+      "url": "https://www.data.go.kr/data/15144288/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 100,
+        "updatedAt": "2026-08-17"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "경주마",
+        "공공기관",
+        "농축수산",
+        "등급변동",
+        "마필등급",
+        "변경전 등급",
+        "변경후 등급"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 100,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "공공기관",
+        "portalCategory": "농축수산",
+        "provider": "한국마사회",
+        "views": 990
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15144291",
@@ -192574,7 +192952,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 118,
+        "downloads": 132,
         "updatedAt": "2025-11-19"
       },
       "tags": [
@@ -192590,7 +192968,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 118,
+        "applications": 132,
         "auth": "apiKey",
         "formats": [
           "WMS"
@@ -192598,9 +192976,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 1206
+        "views": 1281
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15149566",
@@ -193591,7 +193969,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 170,
+        "downloads": 187,
         "updatedAt": "2025-11-06"
       },
       "tags": [
@@ -193605,7 +193983,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 170,
+        "applications": 187,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -193613,9 +193991,9 @@
         "orgType": "공공기관",
         "portalCategory": "국토관리",
         "provider": "한국승강기안전공단",
-        "views": 2658
+        "views": 2800
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15151161",
@@ -193872,7 +194250,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 303,
+        "downloads": 335,
         "updatedAt": "2025-11-06"
       },
       "tags": [
@@ -193886,7 +194264,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 303,
+        "applications": 335,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -193894,9 +194272,9 @@
         "orgType": "공공기관",
         "portalCategory": "국토관리",
         "provider": "한국승강기안전공단",
-        "views": 4170
+        "views": 4508
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15151216",
@@ -193910,7 +194288,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 138,
+        "downloads": 152,
         "updatedAt": "2025-11-06"
       },
       "tags": [
@@ -193924,7 +194302,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 138,
+        "applications": 152,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -193932,9 +194310,9 @@
         "orgType": "공공기관",
         "portalCategory": "국토관리",
         "provider": "한국승강기안전공단",
-        "views": 1789
+        "views": 1900
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15151220",
@@ -194029,7 +194407,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 119,
+        "downloads": 136,
         "updatedAt": "2025-11-10"
       },
       "tags": [
@@ -194043,7 +194421,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 119,
+        "applications": 136,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -194051,9 +194429,9 @@
         "orgType": "공공기관",
         "portalCategory": "국토관리",
         "provider": "한국승강기안전공단",
-        "views": 2404
+        "views": 2547
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15151365",
@@ -194523,7 +194901,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 413,
+        "downloads": 459,
         "updatedAt": "2025-11-20"
       },
       "tags": [
@@ -194539,7 +194917,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 413,
+        "applications": 459,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -194547,9 +194925,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 1237
+        "views": 1381
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15153266",
@@ -194563,7 +194941,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 104,
+        "downloads": 110,
         "updatedAt": "2025-11-20"
       },
       "tags": [
@@ -194579,7 +194957,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 104,
+        "applications": 110,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -194587,9 +194965,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 437
+        "views": 490
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15153276",
@@ -194723,7 +195101,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 202,
+        "downloads": 207,
         "updatedAt": "2025-11-21"
       },
       "tags": [
@@ -194739,7 +195117,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 202,
+        "applications": 207,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -194747,9 +195125,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "국토관리",
         "provider": "행정안전부",
-        "views": 873
+        "views": 965
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15153442",
@@ -194763,7 +195141,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 131,
+        "downloads": 132,
         "updatedAt": "2025-11-21"
       },
       "tags": [
@@ -194779,7 +195157,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 131,
+        "applications": 132,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -194787,9 +195165,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "국토관리",
         "provider": "행정안전부",
-        "views": 606
+        "views": 673
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15153443",
@@ -194843,7 +195221,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 125,
+        "downloads": 134,
         "updatedAt": "2025-11-21"
       },
       "tags": [
@@ -194859,7 +195237,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 125,
+        "applications": 134,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -194867,9 +195245,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "국토관리",
         "provider": "행정안전부",
-        "views": 738
+        "views": 836
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15153595",
@@ -195132,7 +195510,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 239,
+        "downloads": 267,
         "updatedAt": "2025-12-09"
       },
       "tags": [
@@ -195149,7 +195527,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 239,
+        "applications": 267,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -195157,9 +195535,9 @@
         "orgType": "공공기관",
         "portalCategory": "보건의료",
         "provider": "국민건강보험공단",
-        "views": 5977
+        "views": 6317
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154423",
@@ -195256,7 +195634,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 203,
+        "downloads": 225,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -195273,7 +195651,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 203,
+        "applications": 225,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195282,9 +195660,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 3329
+        "views": 3615
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154774",
@@ -195298,7 +195676,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 125,
+        "downloads": 139,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -195315,7 +195693,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 125,
+        "applications": 139,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195324,9 +195702,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "공공행정",
         "provider": "행정안전부",
-        "views": 3074
+        "views": 3326
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154784",
@@ -195340,7 +195718,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 178,
+        "downloads": 197,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -195357,7 +195735,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 178,
+        "applications": 197,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195366,9 +195744,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 4178
+        "views": 4515
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154787",
@@ -195382,7 +195760,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 135,
+        "downloads": 151,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195399,7 +195777,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 135,
+        "applications": 151,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195408,9 +195786,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1046
+        "views": 1150
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154788",
@@ -195424,7 +195802,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 220,
+        "downloads": 252,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195441,7 +195819,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 220,
+        "applications": 252,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195450,9 +195828,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1388
+        "views": 1566
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154791",
@@ -195466,7 +195844,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 233,
+        "downloads": 266,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -195483,7 +195861,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 233,
+        "applications": 266,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195492,9 +195870,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 2815
+        "views": 3087
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154803",
@@ -195508,7 +195886,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 136,
+        "downloads": 152,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195525,7 +195903,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 136,
+        "applications": 152,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195534,9 +195912,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 1113
+        "views": 1219
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154808",
@@ -195592,7 +195970,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 192,
+        "downloads": 217,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195609,7 +195987,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 192,
+        "applications": 217,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195618,9 +195996,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1359
+        "views": 1523
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154822",
@@ -195676,7 +196054,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 176,
+        "downloads": 200,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195694,7 +196072,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 176,
+        "applications": 200,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195703,9 +196081,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1379
+        "views": 1551
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154829",
@@ -195719,7 +196097,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 205,
+        "downloads": 230,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195736,7 +196114,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 205,
+        "applications": 230,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195745,9 +196123,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1788
+        "views": 1993
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154834",
@@ -195803,7 +196181,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 129,
+        "downloads": 144,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195820,7 +196198,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 129,
+        "applications": 144,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195829,9 +196207,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1088
+        "views": 1200
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154837",
@@ -195845,7 +196223,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 128,
+        "downloads": 144,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195862,7 +196240,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 128,
+        "applications": 144,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195871,9 +196249,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 923
+        "views": 1025
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154842",
@@ -195887,7 +196265,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 171,
+        "downloads": 189,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -195905,7 +196283,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 171,
+        "applications": 189,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -195914,9 +196292,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 1443
+        "views": 1566
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154848",
@@ -196014,7 +196392,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 242,
+        "downloads": 246,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -196031,7 +196409,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 242,
+        "applications": 246,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196040,9 +196418,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 7122
+        "views": 8263
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154854",
@@ -196056,7 +196434,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 130,
+        "downloads": 146,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196074,7 +196452,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 130,
+        "applications": 146,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196083,9 +196461,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1071
+        "views": 1195
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154857",
@@ -196099,7 +196477,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 155,
+        "downloads": 174,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196116,7 +196494,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 155,
+        "applications": 174,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196125,9 +196503,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1078
+        "views": 1214
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154861",
@@ -196141,7 +196519,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 138,
+        "downloads": 155,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -196158,7 +196536,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 138,
+        "applications": 155,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196167,9 +196545,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 1070
+        "views": 1192
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154864",
@@ -196183,7 +196561,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 177,
+        "downloads": 197,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -196200,7 +196578,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 177,
+        "applications": 197,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196209,9 +196587,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 1547
+        "views": 1733
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154866",
@@ -196225,7 +196603,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 128,
+        "downloads": 144,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196242,7 +196620,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 128,
+        "applications": 144,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196251,9 +196629,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 944
+        "views": 1065
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154869",
@@ -196267,7 +196645,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 131,
+        "downloads": 147,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196284,7 +196662,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 131,
+        "applications": 147,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196293,9 +196671,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 966
+        "views": 1075
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154871",
@@ -196393,7 +196771,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 131,
+        "downloads": 147,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196410,7 +196788,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 131,
+        "applications": 147,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196419,9 +196797,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 975
+        "views": 1087
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154879",
@@ -196603,7 +196981,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 327,
+        "downloads": 369,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196620,7 +196998,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 327,
+        "applications": 369,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196629,9 +197007,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 4120
+        "views": 4472
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154891",
@@ -196645,7 +197023,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 132,
+        "downloads": 147,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196662,7 +197040,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 132,
+        "applications": 147,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196671,9 +197049,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 897
+        "views": 1008
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154895",
@@ -196813,7 +197191,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 131,
+        "downloads": 146,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196830,7 +197208,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 131,
+        "applications": 146,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196839,9 +197217,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 922
+        "views": 1047
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154902",
@@ -196897,7 +197275,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 210,
+        "downloads": 230,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196914,7 +197292,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 210,
+        "applications": 230,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196923,9 +197301,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1908
+        "views": 2100
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154905",
@@ -196939,7 +197317,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 129,
+        "downloads": 144,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -196957,7 +197335,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 129,
+        "applications": 144,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -196966,9 +197344,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 893
+        "views": 1001
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154909",
@@ -197108,7 +197486,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 132,
+        "downloads": 147,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197125,7 +197503,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 132,
+        "applications": 147,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197134,9 +197512,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1108
+        "views": 1215
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154916",
@@ -197318,7 +197696,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 195,
+        "downloads": 218,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197335,7 +197713,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 195,
+        "applications": 218,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197344,9 +197722,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 2378
+        "views": 2623
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154926",
@@ -197360,7 +197738,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 141,
+        "downloads": 159,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197377,7 +197755,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 141,
+        "applications": 159,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197386,9 +197764,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1239
+        "views": 1388
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154927",
@@ -197444,7 +197822,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 138,
+        "downloads": 154,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197461,7 +197839,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 138,
+        "applications": 154,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197470,9 +197848,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1139
+        "views": 1287
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154931",
@@ -197570,7 +197948,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 161,
+        "downloads": 178,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197587,7 +197965,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 161,
+        "applications": 178,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197596,9 +197974,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 2025
+        "views": 2244
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154937",
@@ -197697,7 +198075,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 135,
+        "downloads": 151,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197714,7 +198092,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 135,
+        "applications": 151,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197723,9 +198101,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1196
+        "views": 1318
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154944",
@@ -197781,7 +198159,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 184,
+        "downloads": 204,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197798,7 +198176,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 184,
+        "applications": 204,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197807,9 +198185,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1482
+        "views": 1629
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154948",
@@ -197823,7 +198201,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 448,
+        "downloads": 464,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -197840,7 +198218,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 448,
+        "applications": 464,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197849,9 +198227,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 9063
+        "views": 10122
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154949",
@@ -197949,7 +198327,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 694,
+        "downloads": 721,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -197966,7 +198344,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 694,
+        "applications": 721,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -197975,9 +198353,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 10798
+        "views": 12048
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154954",
@@ -198033,7 +198411,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 211,
+        "downloads": 237,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -198050,7 +198428,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 211,
+        "applications": 237,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198059,9 +198437,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1842
+        "views": 2050
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154956",
@@ -198159,7 +198537,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 229,
+        "downloads": 253,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -198176,7 +198554,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 229,
+        "applications": 253,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198185,9 +198563,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 4791
+        "views": 5317
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154960",
@@ -198201,7 +198579,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 133,
+        "downloads": 150,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -198219,7 +198597,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 133,
+        "applications": 150,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198228,9 +198606,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1506
+        "views": 1634
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154961",
@@ -198328,7 +198706,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 121,
+        "downloads": 137,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -198345,7 +198723,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 121,
+        "applications": 137,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198354,9 +198732,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1036
+        "views": 1157
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154966",
@@ -198370,7 +198748,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 218,
+        "downloads": 241,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -198387,7 +198765,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 218,
+        "applications": 241,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198396,9 +198774,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1496
+        "views": 1646
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154968",
@@ -198496,7 +198874,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 175,
+        "downloads": 194,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -198514,7 +198892,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 175,
+        "applications": 194,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198523,9 +198901,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1452
+        "views": 1578
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154971",
@@ -198791,7 +199169,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 294,
+        "downloads": 302,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -198808,7 +199186,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 294,
+        "applications": 302,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198817,9 +199195,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "보건의료",
         "provider": "행정안전부",
-        "views": 6639
+        "views": 7774
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154982",
@@ -198875,7 +199253,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 148,
+        "downloads": 166,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -198892,7 +199270,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 148,
+        "applications": 166,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198901,9 +199279,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 975
+        "views": 1100
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154984",
@@ -198917,7 +199295,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 142,
+        "downloads": 160,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -198934,7 +199312,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 142,
+        "applications": 160,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198943,9 +199321,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 1187
+        "views": 1331
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15154989",
@@ -198959,7 +199337,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 142,
+        "downloads": 159,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -198976,7 +199354,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 142,
+        "applications": 159,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -198985,9 +199363,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1055
+        "views": 1180
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155004",
@@ -199169,7 +199547,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 210,
+        "downloads": 232,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199186,7 +199564,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 210,
+        "applications": 232,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199195,9 +199573,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 2018
+        "views": 2188
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155019",
@@ -199211,7 +199589,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 136,
+        "downloads": 153,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199229,7 +199607,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 136,
+        "applications": 153,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199238,9 +199616,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1121
+        "views": 1263
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155020",
@@ -199296,7 +199674,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 131,
+        "downloads": 148,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199313,7 +199691,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 131,
+        "applications": 148,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199322,9 +199700,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 975
+        "views": 1088
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155022",
@@ -199422,7 +199800,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 125,
+        "downloads": 141,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199439,7 +199817,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 125,
+        "applications": 141,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199448,9 +199826,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 949
+        "views": 1052
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155027",
@@ -199464,7 +199842,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 133,
+        "downloads": 150,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199481,7 +199859,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 133,
+        "applications": 150,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199490,9 +199868,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1531
+        "views": 1669
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155028",
@@ -199506,7 +199884,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 144,
+        "downloads": 161,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199523,7 +199901,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 144,
+        "applications": 161,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199532,9 +199910,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 2026
+        "views": 2219
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155029",
@@ -199590,7 +199968,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 129,
+        "downloads": 145,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199607,7 +199985,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 129,
+        "applications": 145,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199616,9 +199994,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 1450
+        "views": 1600
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155031",
@@ -199716,7 +200094,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 136,
+        "downloads": 153,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199733,7 +200111,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 136,
+        "applications": 153,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199742,9 +200120,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "환경기상",
         "provider": "행정안전부",
-        "views": 2429
+        "views": 2601
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155038",
@@ -199842,7 +200220,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 300,
+        "downloads": 338,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -199859,7 +200237,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 300,
+        "applications": 338,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199868,9 +200246,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "재난안전",
         "provider": "행정안전부",
-        "views": 6406
+        "views": 6988
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155043",
@@ -199884,7 +200262,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 134,
+        "downloads": 151,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199901,7 +200279,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 134,
+        "applications": 151,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199910,9 +200288,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 915
+        "views": 1029
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155045",
@@ -199968,7 +200346,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 130,
+        "downloads": 146,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -199985,7 +200363,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 130,
+        "applications": 146,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -199994,9 +200372,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 1131
+        "views": 1259
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155050",
@@ -200010,7 +200388,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 143,
+        "downloads": 163,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -200027,7 +200405,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 143,
+        "applications": 163,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -200036,9 +200414,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1330
+        "views": 1499
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155051",
@@ -200514,7 +200892,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 241,
+        "downloads": 266,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -200531,7 +200909,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 241,
+        "applications": 266,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -200540,9 +200918,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 2247
+        "views": 2511
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155075",
@@ -200934,7 +201312,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 282,
+        "downloads": 309,
         "updatedAt": "2026-07-28"
       },
       "tags": [
@@ -200951,7 +201329,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 282,
+        "applications": 309,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -200960,9 +201338,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 2288
+        "views": 2545
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155090",
@@ -200976,7 +201354,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 483,
+        "downloads": 501,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -200993,7 +201371,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 483,
+        "applications": 501,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201002,9 +201380,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 8623
+        "views": 9827
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155091",
@@ -201018,7 +201396,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 306,
+        "downloads": 344,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201035,7 +201413,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 306,
+        "applications": 344,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201044,9 +201422,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 2337
+        "views": 2583
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155093",
@@ -201060,7 +201438,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 173,
+        "downloads": 194,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201077,7 +201455,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 173,
+        "applications": 194,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201086,9 +201464,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1771
+        "views": 1925
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155095",
@@ -201102,7 +201480,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 155,
+        "downloads": 175,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201119,7 +201497,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 155,
+        "applications": 175,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201128,9 +201506,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1383
+        "views": 1510
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155097",
@@ -201144,7 +201522,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 126,
+        "downloads": 142,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -201161,7 +201539,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 126,
+        "applications": 142,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201170,9 +201548,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 844
+        "views": 957
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155098",
@@ -201186,7 +201564,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 121,
+        "downloads": 136,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -201203,7 +201581,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 121,
+        "applications": 136,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201212,9 +201590,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 957
+        "views": 1076
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155099",
@@ -201228,7 +201606,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 155,
+        "downloads": 173,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201245,7 +201623,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 155,
+        "applications": 173,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201254,9 +201632,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1301
+        "views": 1450
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155100",
@@ -201270,7 +201648,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 131,
+        "downloads": 149,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201287,7 +201665,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 131,
+        "applications": 149,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201296,9 +201674,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1289
+        "views": 1417
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155103",
@@ -201312,7 +201690,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 263,
+        "downloads": 294,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201329,7 +201707,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 263,
+        "applications": 294,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201338,9 +201716,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 2137
+        "views": 2355
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155105",
@@ -201354,7 +201732,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 140,
+        "downloads": 158,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -201371,7 +201749,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 140,
+        "applications": 158,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201380,9 +201758,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 1105
+        "views": 1243
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155108",
@@ -201480,7 +201858,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 207,
+        "downloads": 224,
         "updatedAt": "2026-07-28"
       },
       "tags": [
@@ -201497,7 +201875,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 207,
+        "applications": 224,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201506,9 +201884,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 972
+        "views": 1091
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155113",
@@ -201564,7 +201942,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 122,
+        "downloads": 137,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -201581,7 +201959,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 122,
+        "applications": 137,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201590,9 +201968,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 876
+        "views": 985
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155118",
@@ -201606,7 +201984,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 201,
+        "downloads": 219,
         "updatedAt": "2026-07-28"
       },
       "tags": [
@@ -201623,7 +202001,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 201,
+        "applications": 219,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201632,9 +202010,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 1328
+        "views": 1471
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155120",
@@ -201732,7 +202110,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 661,
+        "downloads": 682,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201749,7 +202127,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 661,
+        "applications": 682,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201758,9 +202136,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 9748
+        "views": 10813
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155126",
@@ -201774,7 +202152,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 164,
+        "downloads": 185,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201792,7 +202170,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 164,
+        "applications": 185,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201801,9 +202179,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 1204
+        "views": 1350
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155127",
@@ -201817,7 +202195,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 124,
+        "downloads": 139,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -201834,7 +202212,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 124,
+        "applications": 139,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -201843,9 +202221,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 911
+        "views": 1031
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155128",
@@ -201987,7 +202365,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 160,
+        "downloads": 177,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202004,7 +202382,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 160,
+        "applications": 177,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202013,9 +202391,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1016
+        "views": 1120
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155135",
@@ -202071,7 +202449,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 123,
+        "downloads": 138,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202088,7 +202466,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 123,
+        "applications": 138,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202097,9 +202475,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 812
+        "views": 914
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155138",
@@ -202197,7 +202575,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 144,
+        "downloads": 161,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202215,7 +202593,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 144,
+        "applications": 161,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202224,9 +202602,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 975
+        "views": 1081
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155144",
@@ -202240,7 +202618,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 170,
+        "downloads": 190,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202257,7 +202635,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 170,
+        "applications": 190,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202266,9 +202644,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 1278
+        "views": 1415
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155146",
@@ -202282,7 +202660,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 221,
+        "downloads": 246,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202300,7 +202678,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 221,
+        "applications": 246,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202309,9 +202687,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 2549
+        "views": 2871
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155147",
@@ -202325,7 +202703,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 127,
+        "downloads": 143,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202342,7 +202720,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 127,
+        "applications": 143,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202351,9 +202729,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1118
+        "views": 1251
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155149",
@@ -202409,7 +202787,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 260,
+        "downloads": 267,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202426,7 +202804,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 260,
+        "applications": 267,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202435,9 +202813,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 6936
+        "views": 8079
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155152",
@@ -202451,7 +202829,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 144,
+        "downloads": 160,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202468,7 +202846,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 144,
+        "applications": 160,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202477,9 +202855,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 967
+        "views": 1075
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155154",
@@ -202493,7 +202871,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 125,
+        "downloads": 140,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202510,7 +202888,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 125,
+        "applications": 140,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202519,9 +202897,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 911
+        "views": 1020
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155155",
@@ -202577,7 +202955,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 190,
+        "downloads": 209,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202594,7 +202972,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 190,
+        "applications": 209,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202603,9 +202981,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1287
+        "views": 1418
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155159",
@@ -202619,7 +202997,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 241,
+        "downloads": 268,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202636,7 +203014,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 241,
+        "applications": 268,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202645,9 +203023,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 15938
+        "views": 17237
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155162",
@@ -202703,7 +203081,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 144,
+        "downloads": 161,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202720,7 +203098,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 144,
+        "applications": 161,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202729,9 +203107,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 1286
+        "views": 1419
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155164",
@@ -202829,7 +203207,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 215,
+        "downloads": 243,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202847,7 +203225,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 215,
+        "applications": 243,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202856,9 +203234,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 3000
+        "views": 3295
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155169",
@@ -202872,7 +203250,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 161,
+        "downloads": 181,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202889,7 +203267,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 161,
+        "applications": 181,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202898,9 +203276,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 1413
+        "views": 1562
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155170",
@@ -202914,7 +203292,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 223,
+        "downloads": 248,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -202931,7 +203309,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 223,
+        "applications": 248,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202940,9 +203318,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 1923
+        "views": 2107
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155171",
@@ -202956,7 +203334,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 121,
+        "downloads": 136,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -202973,7 +203351,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 121,
+        "applications": 136,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -202982,9 +203360,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 870
+        "views": 977
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155173",
@@ -202998,7 +203376,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 180,
+        "downloads": 184,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -203015,7 +203393,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 180,
+        "applications": 184,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203024,9 +203402,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 6793
+        "views": 8061
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155221",
@@ -203124,7 +203502,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 177,
+        "downloads": 198,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203142,7 +203520,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 177,
+        "applications": 198,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203151,9 +203529,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1133
+        "views": 1248
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155235",
@@ -203167,7 +203545,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 182,
+        "downloads": 202,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203185,7 +203563,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 182,
+        "applications": 202,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203194,9 +203572,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1439
+        "views": 1617
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155236",
@@ -203210,7 +203588,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 148,
+        "downloads": 165,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203228,7 +203606,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 148,
+        "applications": 165,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203237,9 +203615,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1029
+        "views": 1142
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155237",
@@ -203295,7 +203673,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 172,
+        "downloads": 192,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203312,7 +203690,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 172,
+        "applications": 192,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203321,9 +203699,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1137
+        "views": 1253
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155242",
@@ -203337,7 +203715,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 176,
+        "downloads": 197,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203354,7 +203732,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 176,
+        "applications": 197,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203363,9 +203741,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1134
+        "views": 1251
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155245",
@@ -203379,7 +203757,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 264,
+        "downloads": 301,
         "updatedAt": "2026-04-15"
       },
       "tags": [
@@ -203396,7 +203774,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 264,
+        "applications": 301,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203405,9 +203783,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 2715
+        "views": 2997
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155246",
@@ -203421,7 +203799,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 174,
+        "downloads": 195,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203438,7 +203816,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 174,
+        "applications": 195,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203447,9 +203825,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "문화관광",
         "provider": "행정안전부",
-        "views": 1239
+        "views": 1357
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155250",
@@ -203505,7 +203883,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 181,
+        "downloads": 203,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203522,7 +203900,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 181,
+        "applications": 203,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203531,9 +203909,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "식품건강",
         "provider": "행정안전부",
-        "views": 1613
+        "views": 1799
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155252",
@@ -203632,7 +204010,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 129,
+        "downloads": 145,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203649,7 +204027,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 129,
+        "applications": 145,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203658,9 +204036,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 904
+        "views": 1019
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155258",
@@ -203674,7 +204052,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 136,
+        "downloads": 154,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203691,7 +204069,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 136,
+        "applications": 154,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203700,9 +204078,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "행정안전부",
-        "views": 910
+        "views": 1027
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155262",
@@ -203758,7 +204136,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 316,
+        "downloads": 349,
         "updatedAt": "2026-04-16"
       },
       "tags": [
@@ -203775,7 +204153,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 316,
+        "applications": 349,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203784,9 +204162,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "행정안전부",
-        "views": 2878
+        "views": 3120
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155508",
@@ -203800,7 +204178,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 524,
+        "downloads": 578,
         "updatedAt": "2026-03-13"
       },
       "tags": [
@@ -203818,7 +204196,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 524,
+        "applications": 578,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203827,9 +204205,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 6792
+        "views": 7411
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155516",
@@ -203843,7 +204221,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 526,
+        "downloads": 585,
         "updatedAt": "2026-03-13"
       },
       "tags": [
@@ -203861,7 +204239,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 526,
+        "applications": 585,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203870,9 +204248,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 5965
+        "views": 6507
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155531",
@@ -203886,7 +204264,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 153,
+        "downloads": 170,
         "updatedAt": "2026-03-13"
       },
       "tags": [
@@ -203904,7 +204282,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 153,
+        "applications": 170,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -203913,9 +204291,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 2132
+        "views": 2295
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15155779",
@@ -204056,7 +204434,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 106,
+        "downloads": 118,
         "updatedAt": "2026-05-20"
       },
       "tags": [
@@ -204073,7 +204451,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 106,
+        "applications": 118,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -204082,9 +204460,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 2469
+        "views": 2709
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156011",
@@ -204183,7 +204561,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1184,
+        "downloads": 1315,
         "updatedAt": "2026-06-22"
       },
       "tags": [
@@ -204201,7 +204579,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1184,
+        "applications": 1315,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -204210,9 +204588,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 11482
+        "views": 12786
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156022",
@@ -204312,7 +204690,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 107,
+        "downloads": 122,
         "updatedAt": "2026-03-16"
       },
       "tags": [
@@ -204330,7 +204708,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 107,
+        "applications": 122,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -204339,9 +204717,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 2558
+        "views": 2719
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156026",
@@ -204398,7 +204776,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 129,
+        "downloads": 142,
         "updatedAt": "2026-03-16"
       },
       "tags": [
@@ -204416,7 +204794,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 129,
+        "applications": 142,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -204425,9 +204803,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "농축수산",
         "provider": "해양수산부 국립해양조사원",
-        "views": 2479
+        "views": 2670
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156054",
@@ -204527,7 +204905,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 148,
+        "downloads": 164,
         "updatedAt": "2026-09-21"
       },
       "tags": [
@@ -204545,7 +204923,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 148,
+        "applications": 164,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -204554,9 +204932,9 @@
         "orgType": "공공기관",
         "portalCategory": "농축수산",
         "provider": "한국농수산식품유통공사",
-        "views": 1788
+        "views": 1975
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156062",
@@ -204914,7 +205292,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 215,
+        "downloads": 229,
         "updatedAt": "2026-06-30"
       },
       "tags": [
@@ -204931,7 +205309,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 215,
+        "applications": 229,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -204940,9 +205318,9 @@
         "orgType": "공공기관",
         "portalCategory": "환경기상",
         "provider": "한국환경공단",
-        "views": 9218
+        "views": 10750
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156662",
@@ -204956,7 +205334,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 141,
+        "downloads": 156,
         "updatedAt": "2025-12-23"
       },
       "tags": [
@@ -204973,7 +205351,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 141,
+        "applications": 156,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -204982,9 +205360,9 @@
         "orgType": "공공기관",
         "portalCategory": "환경기상",
         "provider": "한국환경공단",
-        "views": 4915
+        "views": 5190
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156746",
@@ -205082,7 +205460,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 234,
+        "downloads": 263,
         "updatedAt": "2025-12-30"
       },
       "tags": [
@@ -205097,7 +205475,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 234,
+        "applications": 263,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -205106,9 +205484,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "재정금융",
         "provider": "기획예산처",
-        "views": 2852
+        "views": 3154
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15156866",
@@ -205246,7 +205624,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1853,
+        "downloads": 2081,
         "updatedAt": "2026-04-09"
       },
       "tags": [
@@ -205263,7 +205641,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1853,
+        "applications": 2081,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -205272,9 +205650,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 13463
+        "views": 15070
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157216",
@@ -205498,7 +205876,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 378,
+        "downloads": 421,
         "updatedAt": "2026-04-09"
       },
       "tags": [
@@ -205515,7 +205893,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 378,
+        "applications": 421,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -205524,9 +205902,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 3411
+        "views": 3785
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157245",
@@ -205540,7 +205918,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 300,
+        "downloads": 332,
         "updatedAt": "2026-04-09"
       },
       "tags": [
@@ -205557,7 +205935,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 300,
+        "applications": 332,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -205566,9 +205944,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 1651
+        "views": 1860
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157247",
@@ -205750,7 +206128,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 922,
+        "downloads": 1019,
         "updatedAt": "2026-04-08"
       },
       "tags": [
@@ -205767,7 +206145,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 922,
+        "applications": 1019,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -205776,9 +206154,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 4822
+        "views": 5391
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157256",
@@ -205792,7 +206170,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 334,
+        "downloads": 365,
         "updatedAt": "2026-04-06"
       },
       "tags": [
@@ -205809,7 +206187,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 334,
+        "applications": 365,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -205818,9 +206196,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 2116
+        "views": 2372
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157258",
@@ -205834,7 +206212,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 348,
+        "downloads": 383,
         "updatedAt": "2026-04-08"
       },
       "tags": [
@@ -205851,7 +206229,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 348,
+        "applications": 383,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -205860,9 +206238,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 2351
+        "views": 2581
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157266",
@@ -206041,7 +206419,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 287,
+        "downloads": 319,
         "updatedAt": "2026-09-15"
       },
       "tags": [
@@ -206058,7 +206436,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 287,
+        "applications": 319,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -206066,9 +206444,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "한국가스공사",
-        "views": 2358
+        "views": 2587
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157403",
@@ -206123,7 +206501,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 353,
+        "downloads": 397,
         "updatedAt": "2026-06-30"
       },
       "tags": [
@@ -206140,7 +206518,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 353,
+        "applications": 397,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -206148,9 +206526,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국예탁결제원",
-        "views": 5821
+        "views": 6222
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157416",
@@ -206538,7 +206916,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 1786,
+        "downloads": 1891,
         "updatedAt": "2026-09-17"
       },
       "tags": [
@@ -206555,7 +206933,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 1786,
+        "applications": 1891,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -206563,9 +206941,9 @@
         "orgType": "공공기관",
         "portalCategory": "재난안전",
         "provider": "한국산업안전보건공단",
-        "views": 16794
+        "views": 18741
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157637",
@@ -206579,7 +206957,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 102,
+        "downloads": 109,
         "updatedAt": "2026-09-10"
       },
       "tags": [
@@ -206596,7 +206974,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 102,
+        "applications": 109,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -206604,9 +206982,9 @@
         "orgType": "공공기관",
         "portalCategory": "교통물류",
         "provider": "인천항만공사",
-        "views": 950
+        "views": 1053
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157660",
@@ -206620,7 +206998,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 168,
+        "downloads": 177,
         "updatedAt": "2026-06-18"
       },
       "tags": [
@@ -206638,7 +207016,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 168,
+        "applications": 177,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -206647,9 +207025,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "산업고용",
         "provider": "공정거래위원회",
-        "views": 6367
+        "views": 7639
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157687",
@@ -206705,7 +207083,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 163,
+        "downloads": 179,
         "updatedAt": "2026-04-09"
       },
       "tags": [
@@ -206722,7 +207100,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 163,
+        "applications": 179,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -206731,9 +207109,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 891
+        "views": 984
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157704",
@@ -206747,7 +207125,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 147,
+        "downloads": 162,
         "updatedAt": "2026-04-09"
       },
       "tags": [
@@ -206764,7 +207142,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 147,
+        "applications": 162,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -206773,9 +207151,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 1151
+        "views": 1232
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157709",
@@ -206789,7 +207167,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 146,
+        "downloads": 161,
         "updatedAt": "2026-04-09"
       },
       "tags": [
@@ -206806,7 +207184,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 146,
+        "applications": 161,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -206815,9 +207193,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 828
+        "views": 939
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157719",
@@ -206831,7 +207209,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 124,
+        "downloads": 139,
         "updatedAt": "2026-04-06"
       },
       "tags": [
@@ -206848,7 +207226,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 124,
+        "applications": 139,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -206857,9 +207235,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 964
+        "views": 1069
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157725",
@@ -206873,7 +207251,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 102,
+        "downloads": 112,
         "updatedAt": "2026-04-06"
       },
       "tags": [
@@ -206890,7 +207268,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 102,
+        "applications": 112,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -206899,9 +207277,9 @@
         "orgType": "공공기관",
         "portalCategory": "재정금융",
         "provider": "한국자산관리공사",
-        "views": 706
+        "views": 783
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157738",
@@ -207126,7 +207504,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 141,
+        "downloads": 157,
         "updatedAt": "2026-06-11"
       },
       "tags": [
@@ -207143,7 +207521,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 141,
+        "applications": 157,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -207151,9 +207529,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "한국지역난방공사",
-        "views": 950
+        "views": 1040
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157881",
@@ -207287,7 +207665,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 400,
+        "downloads": 447,
         "updatedAt": "2026-04-01"
       },
       "tags": [
@@ -207304,7 +207682,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 400,
+        "applications": 447,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -207312,9 +207690,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "재정금융",
         "provider": "관세청",
-        "views": 4536
+        "views": 4833
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157908",
@@ -207328,7 +207706,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 731,
+        "downloads": 818,
         "updatedAt": "2026-09-15"
       },
       "tags": [
@@ -207345,7 +207723,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 731,
+        "applications": 818,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -207353,9 +207731,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "재정금융",
         "provider": "관세청",
-        "views": 6958
+        "views": 7771
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157909",
@@ -207410,7 +207788,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 157,
+        "downloads": 177,
         "updatedAt": "2026-04-10"
       },
       "tags": [
@@ -207426,7 +207804,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 157,
+        "applications": 177,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -207434,9 +207812,9 @@
         "orgType": "자치행정기관",
         "portalCategory": "교통물류",
         "provider": "대전광역시",
-        "views": 1318
+        "views": 1455
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15157923",
@@ -207820,7 +208198,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 164,
+        "downloads": 190,
         "updatedAt": "2026-05-18"
       },
       "tags": [
@@ -207837,7 +208215,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 164,
+        "applications": 190,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -207845,9 +208223,9 @@
         "orgType": "국가행정기관",
         "portalCategory": "통일외교안보",
         "provider": "방위사업청",
-        "views": 1365
+        "views": 1503
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15158625",
@@ -208219,6 +208597,47 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "data-go-kr:15158687",
+      "name": "경상북도 경주시_버스 관련 정보_GW",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "경주시 관내에 운행 중인 시내버스를 시민과 관광객이 편리하게 이용할 수 있도록 아래의 정보를 제공을 위한 공공데이터 등록 1. 버스노선 정보 : 경주시에서 운행하는 시내버스에 대한 노선관련 정보를 조회할 수 있으며 버스 노선명, 시/종점명, 버스회사 정보 등을 제공하는 기능 2. 버스정류장 정보 : 경주시 일원의 시내버스 정류장의 위치 정보와 해당 정류장 명칭, 해당 정류장에 정차하는 버스번호를 조회, 제공하는 기능 3.",
+      "url": "https://www.data.go.kr/data/15158687/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 109,
+        "updatedAt": "2026-10-22"
+      },
+      "tags": [
+        "data-go-kr",
+        "xml",
+        "경주시",
+        "교통",
+        "교통물류",
+        "버스노선",
+        "버스정류장위치",
+        "시내버스",
+        "실시간 버스정보",
+        "자치행정기관"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 109,
+        "auth": "apiKey",
+        "formats": [
+          "XML"
+        ],
+        "orgType": "자치행정기관",
+        "portalCategory": "교통물류",
+        "provider": "경상북도 경주시",
+        "views": 875
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15158689",
       "name": "한국공항공사_전국공항 주차장 혼잡도_GW",
       "kind": "kr-public",
@@ -208396,7 +208815,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 157,
+        "downloads": 175,
         "updatedAt": "2026-07-06"
       },
       "tags": [
@@ -208413,7 +208832,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 157,
+        "applications": 175,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -208422,9 +208841,9 @@
         "orgType": "공공기관",
         "portalCategory": "산업고용",
         "provider": "한국전력거래소",
-        "views": 1475
+        "views": 1629
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15158780",
@@ -208560,7 +208979,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 110,
+        "downloads": 125,
         "updatedAt": "2026-08-19"
       },
       "tags": [
@@ -208578,7 +208997,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 110,
+        "applications": 125,
         "auth": "apiKey",
         "formats": [
           "XML",
@@ -208587,9 +209006,9 @@
         "orgType": "공공기관",
         "portalCategory": "교통물류",
         "provider": "한국공항공사",
-        "views": 1293
+        "views": 1340
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15158955",
@@ -208724,7 +209143,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 100,
+        "downloads": 106,
         "updatedAt": "2026-07-20"
       },
       "tags": [
@@ -208741,7 +209160,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 100,
+        "applications": 106,
         "auth": "apiKey",
         "formats": [
           "JSON"
@@ -208749,9 +209168,9 @@
         "orgType": "공공기관",
         "portalCategory": "교통물류",
         "provider": "부산교통공사",
-        "views": 886
+        "views": 990
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15159010",
@@ -209173,7 +209592,7 @@
         "url": "https://www.data.go.kr"
       },
       "metrics": {
-        "downloads": 174,
+        "downloads": 196,
         "updatedAt": "2026-06-09"
       },
       "tags": [
@@ -209190,7 +209609,7 @@
       ],
       "preview": {
         "type": "api",
-        "applications": 174,
+        "applications": 196,
         "auth": "apiKey",
         "formats": [
           "XML"
@@ -209198,9 +209617,9 @@
         "orgType": "공공기관",
         "portalCategory": "공공행정",
         "provider": "행정안전부 한국지역정보개발원",
-        "views": 1597
+        "views": 1828
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15160195",
@@ -209330,6 +209749,47 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "data-go-kr:15160586",
+      "name": "공공데이터활용지원센터_검색서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "공공데이터 포털에서 제공하는 목록 검색 서비스 정보입니다. 본 서비스는 이용자가 공공데이터 포털 내에서 검색하는 다양한 키워드를 기반으로 연관 데이터의 메타데이터와 관련 집계 수치를 종합적으로 제공합니다. 구체적으로 검색된 키워드별 데이터 수량, 조회수 및 다운로드 건수 등 상세 활용 통계지표를 실시간 및 주기적으로 집계하여 정제된 상태로 제공하는 것이 특징입니다.",
+      "url": "https://www.data.go.kr/data/15160586/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 101,
+        "updatedAt": "2026-08-05"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "검색서비스",
+        "검색키워드",
+        "공공기관",
+        "공공데이터포털",
+        "공공행정",
+        "메타데이터",
+        "집계데이터",
+        "활용통계"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 101,
+        "auth": "apiKey",
+        "formats": [
+          "JSON"
+        ],
+        "orgType": "공공기관",
+        "portalCategory": "공공행정",
+        "provider": "공공데이터활용지원센터",
+        "views": 999
+      },
+      "fetchedAt": "2026-10-25"
+    },
+    {
       "id": "data-go-kr:15161098",
       "name": "인천국제공항공사_출국장 혼잡도_제2여객터미널 조회",
       "kind": "kr-public",
@@ -209371,6 +209831,49 @@
         "views": 890
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "data-go-kr:15162188",
+      "name": "한국관광공사_관광 동영상 서비스",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "본 API는 한국관광공사 한국관광콘텐츠랩(https://api.visitkorea.or.kr)에서 제공하는 관광 동영상에 대한 콘텐츠명, 촬영장소, 동영상 썸네일, 동영상 URL 등 정보를 제공하는 서비스입니다. 개방 데이터는 동영상 목록, 동영상 상세, 동영상 정보 동기화, 법정동 정보, 분류체계 정보 5종으로 국내 관광 동영상에 대한 정보를 제공하여 전국의 다양한 관광지 영상 정보를 쉽게 접할 수 있습니다. 이를 통해 교육, 홍보, 관광 안내, 미디어 콘텐츠 제작 등 여러 분야에 활용하실 수 있습니다.",
+      "url": "https://www.data.go.kr/data/15162188/openapi.do",
+      "source": {
+        "name": "공공데이터포털",
+        "url": "https://www.data.go.kr"
+      },
+      "metrics": {
+        "downloads": 109,
+        "updatedAt": "2026-09-03"
+      },
+      "tags": [
+        "data-go-kr",
+        "json",
+        "xml",
+        "고품질",
+        "공공기관",
+        "관광",
+        "국내관광지",
+        "동영상",
+        "드론",
+        "문화관광",
+        "한국관광콘텐츠랩"
+      ],
+      "preview": {
+        "type": "api",
+        "applications": 109,
+        "auth": "apiKey",
+        "formats": [
+          "XML",
+          "JSON"
+        ],
+        "orgType": "공공기관",
+        "portalCategory": "문화관광",
+        "provider": "한국관광공사",
+        "views": 908
+      },
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "data-go-kr:15163060",

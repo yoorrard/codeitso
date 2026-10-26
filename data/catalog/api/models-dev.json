@@ -6,7 +6,7 @@
     "license": "MIT (models.dev data); each provider has its own terms",
     "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-25",
+  "fetchedAt": "2026-10-26",
   "count": 232,
   "items": [
     {
@@ -436,7 +436,7 @@
           "AIAND_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 13,
+        "modelCount": 10,
         "models": [
           "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash",
@@ -444,10 +444,10 @@
           "Qwen3.8 27B",
           "Motif 3",
           "Kimi K3",
-          "GLM-5.2",
-          "Kimi K2.7 Code"
+          "DeepSeek V4 Pro",
+          "Qwen3.6 27B"
         ],
-        "openWeightModels": 13,
+        "openWeightModels": 10,
         "outputs": [
           "text"
         ],
@@ -458,7 +458,7 @@
         "snippet": "AIAND_API_KEY=",
         "docs": "https://docs.aiand.com/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:aihubmix",
@@ -472,7 +472,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 17833
+        "downloads": 9806
       },
       "tags": [
         "ai",
@@ -512,7 +512,7 @@
         "snippet": "AIHUBMIX_API_KEY=",
         "docs": "https://docs.aihubmix.com"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:aimlapi",
@@ -541,16 +541,16 @@
           "AIMLAPI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 178,
+        "modelCount": 172,
         "models": [
+          "GPT-6.1 Terra",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
           "Claude Sonnet 5.5",
           "Mk1.5",
           "Qwen3.8 Max Prime",
           "Claude Opus 5.5",
-          "GPT-6 Luna",
-          "GPT-6 Sol"
+          "GPT-6 Luna"
         ],
         "openWeightModels": 73,
         "outputs": [
@@ -564,7 +564,7 @@
         "snippet": "AIMLAPI_API_KEY=",
         "docs": "https://docs.aimlapi.com"
       },
-      "fetchedAt": "2026-10-25",
+      "fetchedAt": "2026-10-26",
       "metrics": {
         "siteRank": 1000000
       }
@@ -724,7 +724,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 168589
+        "downloads": 39308
       },
       "tags": [
         "ai",
@@ -769,7 +769,7 @@
         "snippet": "DASHSCOPE_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:alibaba-cn",
@@ -1067,7 +1067,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 8915848
+        "downloads": 8386150
       },
       "tags": [
         "ai",
@@ -1088,7 +1088,7 @@
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html",
-        "modelCount": 199,
+        "modelCount": 200,
         "models": [
           "Claude Haiku 5.5",
           "Claude Haiku 5.5 (AU)",
@@ -1112,7 +1112,7 @@
         "snippet": "AWS_ACCESS_KEY_ID=\nAWS_SECRET_ACCESS_KEY=\nAWS_REGION=\nAWS_BEARER_TOKEN_BEDROCK=",
         "docs": "https://docs.aws.amazon.com/bedrock/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:ambient",
@@ -1231,7 +1231,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 28258993
+        "downloads": 22538770
       },
       "tags": [
         "ai",
@@ -1272,7 +1272,7 @@
         "snippet": "ANTHROPIC_API_KEY=",
         "docs": "https://docs.anthropic.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:anyapi",
@@ -1488,7 +1488,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 1606699
+        "downloads": 1741704
       },
       "tags": [
         "ai",
@@ -1508,16 +1508,16 @@
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://learn.microsoft.com/en-us/azure/foundry/openai/quotas-limits",
-        "modelCount": 95,
+        "modelCount": 96,
         "models": [
+          "GPT-6.1 Terra",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
           "Claude Sonnet 5.5",
           "Claude Opus 5.5",
           "GPT-6 Luna",
           "GPT-6 Sol",
-          "Grok 4.7",
-          "DeepSeek-V4.1-Flash"
+          "Grok 4.7"
         ],
         "openWeightModels": 22,
         "outputs": [
@@ -1532,7 +1532,7 @@
         "snippet": "AZURE_RESOURCE_NAME=\nAZURE_API_KEY=",
         "docs": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:azure-cognitive-services",
@@ -1562,16 +1562,16 @@
           "AZURE_COGNITIVE_SERVICES_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 95,
+        "modelCount": 96,
         "models": [
+          "GPT-6.1 Terra",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
           "Claude Sonnet 5.5",
           "Claude Opus 5.5",
           "GPT-6 Luna",
           "GPT-6 Sol",
-          "Grok 4.7",
-          "DeepSeek-V4.1-Flash"
+          "Grok 4.7"
         ],
         "openWeightModels": 22,
         "outputs": [
@@ -1585,7 +1585,7 @@
         "snippet": "AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=\nAZURE_COGNITIVE_SERVICES_API_KEY=",
         "docs": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models"
       },
-      "fetchedAt": "2026-10-23",
+      "fetchedAt": "2026-10-26",
       "metrics": {
         "siteRank": 5000
       }
@@ -1648,7 +1648,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 49102
+        "downloads": 35194
       },
       "tags": [
         "ai",
@@ -1688,7 +1688,7 @@
         "snippet": "BASETEN_API_KEY=",
         "docs": "https://docs.baseten.co/inference/model-apis/overview"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:bee",
@@ -1988,7 +1988,7 @@
       "name": "Chutes",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Chutes: 16 models listed on models.dev (newest: DeepSeek V4 Pro 0813, Qwen3.8 Max 0902, Qwen3.8 27B TEE).",
+      "summary": "Chutes: 17 models listed on models.dev (newest: DeepSeek V4.1 Flash 1017, GLM 5.2 Fast, GLM 5.3).",
       "url": "https://llm.chutes.ai/v1/models",
       "source": {
         "name": "models.dev",
@@ -2009,18 +2009,18 @@
           "CHUTES_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 16,
+        "modelCount": 17,
         "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "GLM 5.2 Fast",
+          "GLM 5.3",
+          "Kimi K2.7 Code",
+          "Qwen3.8 2.4T A95B",
           "DeepSeek V4 Pro 0813",
           "Qwen3.8 Max 0902",
-          "Qwen3.8 27B TEE",
-          "DeepSeek V4 Flash 0731 TEE",
-          "Nemotron 3 Nano Omni 30B TEE",
-          "Kimi K3 TEE",
-          "GLM 5.2 TEE",
-          "Qwen3.6 27B TEE"
+          "Qwen3.8 27B TEE"
         ],
-        "openWeightModels": 16,
+        "openWeightModels": 17,
         "outputs": [
           "text"
         ],
@@ -2031,7 +2031,7 @@
         "snippet": "CHUTES_API_KEY=",
         "docs": "https://llm.chutes.ai/v1/models"
       },
-      "fetchedAt": "2026-10-25"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:clarifai",
@@ -2356,7 +2356,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 593502
+        "downloads": 492074
       },
       "tags": [
         "ai",
@@ -2398,7 +2398,7 @@
         "snippet": "COHERE_API_KEY=",
         "docs": "https://docs.cohere.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:commandcode",
@@ -2426,16 +2426,16 @@
           "CMD_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 71,
+        "modelCount": 72,
         "models": [
+          "GPT-6.1 Terra",
           "Gemini 4 Argon",
           "Muse Wonder",
           "Claude Haiku 5.5",
           "Mistral Large 4",
           "GPT-6.1 Sol",
           "Ling 3.1 Flash",
-          "Claude Sonnet 5.5",
-          "Claude Opus 5.5"
+          "Claude Sonnet 5.5"
         ],
         "openWeightModels": 27,
         "outputs": [
@@ -2448,7 +2448,7 @@
         "snippet": "CMD_API_KEY=",
         "docs": "https://commandcode.ai/docs/provider"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-10-26",
       "metrics": {
         "siteRank": 100000
       }
@@ -2764,7 +2764,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 181278
+        "downloads": 103319
       },
       "tags": [
         "ai",
@@ -2805,7 +2805,7 @@
         "snippet": "DEEPINFRA_API_KEY=",
         "docs": "https://deepinfra.com/docs"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:deepseek",
@@ -2821,7 +2821,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 1753874
+        "downloads": 1233491
       },
       "tags": [
         "ai",
@@ -2860,7 +2860,7 @@
         "snippet": "DEEPSEEK_API_KEY=",
         "docs": "https://api-docs.deepseek.com"
       },
-      "fetchedAt": "2026-10-25"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:digitalocean",
@@ -3130,16 +3130,16 @@
           "EDENAI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 372,
+        "modelCount": 370,
         "models": [
+          "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017 (Alibaba)",
           "DeepSeek V4.1 Flash 1017 (Cloudflare)",
           "DeepSeek V4.1 Flash 1017 (Deep Infra)",
           "DeepSeek V4.1 Flash 1017 (FlexAI)",
-          "DeepSeek V4.1 Flash 1017 (Nebius)",
-          "DeepSeek V4.1 Flash 1017 (Sference)"
+          "DeepSeek V4.1 Flash 1017 (Nebius)"
         ],
         "openWeightModels": 212,
         "outputs": [
@@ -3153,7 +3153,7 @@
         "snippet": "EDENAI_API_KEY=",
         "docs": "https://docs.edenai.co"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:empiriolabs",
@@ -3596,16 +3596,16 @@
           "GITHUB_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 35,
+        "modelCount": 36,
         "models": [
+          "GPT-6.1 Terra",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
           "Claude Sonnet 5.5",
           "Claude Opus 5.5",
           "GPT-6 Luna",
-          "GPT-6 Sol",
-          "Grok 4.7"
+          "GPT-6 Sol"
         ],
         "openWeightModels": 2,
         "outputs": [
@@ -3618,21 +3618,21 @@
         "snippet": "GITHUB_TOKEN=",
         "docs": "https://docs.github.com/en/copilot"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:gitlab",
       "name": "GitLab Duo",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "GitLab Duo: 30 models listed on models.dev (newest: Agentic Chat (GPT-6.1 Sol), Agentic Chat (Claude Sonnet 5.5), Agentic Chat (Claude Opus 5.5)).",
+      "summary": "GitLab Duo: 31 models listed on models.dev (newest: Agentic Chat (Claude Haiku 5.5), Agentic Chat (GPT-6.1 Sol), Agentic Chat (Claude Sonnet 5.5)).",
       "url": "https://docs.gitlab.com/user/duo_agent_platform/",
       "source": {
         "name": "models.dev",
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 165171
+        "downloads": 25782
       },
       "tags": [
         "ai",
@@ -3648,16 +3648,16 @@
           "GITLAB_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 30,
+        "modelCount": 31,
         "models": [
+          "Agentic Chat (Claude Haiku 5.5)",
           "Agentic Chat (GPT-6.1 Sol)",
           "Agentic Chat (Claude Sonnet 5.5)",
           "Agentic Chat (Claude Opus 5.5)",
           "Agentic Chat (GPT-6 Luna)",
           "Agentic Chat (GPT-6 Sol)",
           "Agentic Chat (GPT-6 Astra)",
-          "Agentic Chat (Claude Fable 5.1)",
-          "Agentic Chat (Claude Opus 5)"
+          "Agentic Chat (Claude Fable 5.1)"
         ],
         "outputs": [
           "text"
@@ -3669,7 +3669,7 @@
         "snippet": "GITLAB_TOKEN=",
         "docs": "https://docs.gitlab.com/user/duo_agent_platform/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:gmicloud",
@@ -3683,7 +3683,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 2343
+        "downloads": 0
       },
       "tags": [
         "ai",
@@ -3723,7 +3723,7 @@
         "snippet": "GMICLOUD_API_KEY=",
         "docs": "https://docs.gmicloud.ai/inference-engine/api-reference/llm-api-reference"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:google",
@@ -3972,7 +3972,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 553755
+        "downloads": 1449109
       },
       "tags": [
         "ai",
@@ -3984,7 +3984,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/groq",
         "auth": "apiKey",
-        "downloadsOf": "npm:groq-sdk",
+        "downloadsOf": "npm:@ai-sdk/groq",
         "env": [
           "GROQ_API_KEY"
         ],
@@ -4016,7 +4016,7 @@
         "snippet": "GROQ_API_KEY=",
         "docs": "https://console.groq.com/docs"
       },
-      "fetchedAt": "2026-10-25"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:helicone",
@@ -4176,7 +4176,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 255148
+        "downloads": 361660
       },
       "tags": [
         "ai",
@@ -4194,16 +4194,16 @@
           "HF_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 81,
+        "modelCount": 82,
         "models": [
+          "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "DeepSeek V4.1 Flash",
           "DeepSeek V4 Flash Vision Exp",
           "Hy4 preview",
           "GLM-5.3-Flash",
           "DeepSeek V4 Pro 0813",
-          "GLM-5.3",
-          "Qwen3.8 27B"
+          "GLM-5.3"
         ],
         "openWeightModels": 81,
         "outputs": [
@@ -4218,7 +4218,7 @@
         "snippet": "HF_TOKEN=",
         "docs": "https://huggingface.co/docs/inference-providers"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:hyper",
@@ -4948,16 +4948,16 @@
         "keyServerSide": true,
         "modelCount": 397,
         "models": [
+          "OpenAI: GPT-6.1 Terra",
           "MoonshotAI: Kimi K3.1 Pro",
           "Recursive: Flint (free)",
           "MiniMax: MiniMax M3.1 Flash",
           "DeepSeek V4.1 Flash 1017",
           "Elorian: Glimpse",
           "Inception: Mercury 3",
-          "Reflection: Beam 1.0 501B A23B",
-          "XingChen: Xing4.0 29B A4B (free)"
+          "Reflection: Beam 1.0 501B A23B"
         ],
-        "openWeightModels": 151,
+        "openWeightModels": 150,
         "outputs": [
           "audio",
           "image",
@@ -4970,7 +4970,7 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-10-25",
+      "fetchedAt": "2026-10-26",
       "metrics": {
         "siteRank": 500000
       }
@@ -5322,16 +5322,16 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 207,
+        "modelCount": 208,
         "models": [
+          "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
           "Kimi K3.1 Pro Highspeed",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Gemini 4 Argon",
           "Muse Wonder",
-          "Reka Edge 2603",
-          "Claude Haiku 5.5"
+          "Reka Edge 2603"
         ],
         "openWeightModels": 90,
         "outputs": [
@@ -5344,7 +5344,7 @@
         "snippet": "LLMGATEWAY_API_KEY=",
         "docs": "https://llmgateway.io/docs"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:llmgateway-providers",
@@ -5372,18 +5372,18 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 430,
+        "modelCount": 432,
         "models": [
+          "GPT-6.1 Terra (OpenAI)",
           "Kimi K3.1 Pro (Moonshot AI)",
           "Kimi K3.1 Pro Highspeed (Moonshot AI)",
           "MiniMax M3.1 Flash (Inference.net)",
           "MiniMax M3.1 Flash (MiniMax)",
           "MiniMax M3.1 Flash (Nebius AI)",
           "MiniMax M3.1 Flash (NovitaAI)",
-          "MiniMax M3.1 Flash (Together AI)",
-          "DeepSeek V4.1 Flash 1017 (Alibaba Cloud)"
+          "MiniMax M3.1 Flash (Together AI)"
         ],
-        "openWeightModels": 225,
+        "openWeightModels": 226,
         "outputs": [
           "text"
         ],
@@ -5394,7 +5394,7 @@
         "snippet": "LLMGATEWAY_API_KEY=",
         "docs": "https://llmgateway.io/docs"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:llmtech",
@@ -5613,16 +5613,16 @@
           "LOWROUTER_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 31,
+        "modelCount": 32,
         "models": [
+          "GPT-6.1 Terra",
           "Mistral Large 4",
           "GPT-6.1 Sol",
           "GPT-6 Luna",
           "GPT-6 Sol",
           "GPT-6 Astra",
           "GPT-5.6 Luna",
-          "GPT-5.6 Sol",
-          "GPT-5.6 Terra"
+          "GPT-5.6 Sol"
         ],
         "openWeightModels": 10,
         "outputs": [
@@ -5635,7 +5635,7 @@
         "snippet": "LOWROUTER_API_KEY=",
         "docs": "https://lowrouter.ai/docs/models/available"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:lucidquery",
@@ -5836,7 +5836,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 877
+        "downloads": 52
       },
       "tags": [
         "ai",
@@ -5854,16 +5854,16 @@
           "MERGE_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 201,
+        "modelCount": 202,
         "models": [
+          "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
           "MiniMax M3.1 Flash",
           "DeepSeek V4.1 Flash 1017",
           "Muse Spark Open",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
-          "GPT-6.1 Sol",
-          "Claude Sonnet 5.5"
+          "GPT-6.1 Sol"
         ],
         "openWeightModels": 87,
         "outputs": [
@@ -5877,7 +5877,7 @@
         "snippet": "MERGE_GATEWAY_API_KEY=",
         "docs": "https://docs.merge.dev/merge-gateway"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:meta",
@@ -5942,7 +5942,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 36780
+        "downloads": 0
       },
       "tags": [
         "ai",
@@ -5983,7 +5983,7 @@
         "snippet": "MINIMAX_API_KEY=",
         "docs": "https://platform.minimax.io/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:minimax-cn",
@@ -6151,7 +6151,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 4003738
+        "downloads": 4981503
       },
       "tags": [
         "ai",
@@ -6193,7 +6193,7 @@
         "snippet": "MISTRAL_API_KEY=",
         "docs": "https://docs.mistral.ai"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:mixlayer",
@@ -6513,7 +6513,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 73481
+        "downloads": 18874
       },
       "tags": [
         "ai",
@@ -6553,7 +6553,7 @@
         "snippet": "MOONSHOT_API_KEY=",
         "docs": "https://platform.moonshot.ai/docs"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:moonshotai-cn",
@@ -6609,7 +6609,7 @@
       "name": "Morph",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Morph: 3 models listed on models.dev (newest: Morph v3 Fast, Morph v3 Large, Auto).",
+      "summary": "Morph: 11 models listed on models.dev (newest: DeepSeek V4.1 Flash 1017, DeepSeek V4.1 Flash, GLM-5.3-Flash).",
       "url": "https://docs.morphllm.com/api-reference/introduction",
       "source": {
         "name": "models.dev",
@@ -6630,12 +6630,18 @@
           "MORPH_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 3,
+        "modelCount": 11,
         "models": [
-          "Morph v3 Fast",
-          "Morph v3 Large",
-          "Auto"
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "DeepSeek V4 Flash 0731",
+          "Kimi K3",
+          "Kimi K3 Fast",
+          "GLM-5.2"
         ],
+        "openWeightModels": 8,
         "outputs": [
           "text"
         ],
@@ -6646,7 +6652,7 @@
         "snippet": "MORPH_API_KEY=",
         "docs": "https://docs.morphllm.com/api-reference/introduction"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:munito",
@@ -6819,18 +6825,18 @@
           "NANO_GPT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 649,
+        "modelCount": 650,
         "models": [
+          "GPT 6.1 Terra",
           "Kimi K3.1 Pro Highspeed",
           "Xing 4.0 29B A4B",
           "Abliterated Large Flash",
           "Kimi K3.1 Pro",
           "Ternary Bonsai2 9B",
           "Mercury 3",
-          "Ornith 1.5 122B",
-          "MiniMax M3.1 Flash"
+          "Ornith 1.5 122B"
         ],
-        "openWeightModels": 378,
+        "openWeightModels": 377,
         "outputs": [
           "text"
         ],
@@ -6841,7 +6847,7 @@
         "snippet": "NANO_GPT_API_KEY=",
         "docs": "https://docs.nano-gpt.com"
       },
-      "fetchedAt": "2026-10-25",
+      "fetchedAt": "2026-10-26",
       "metrics": {
         "siteRank": 1000000
       }
@@ -6875,14 +6881,14 @@
         "keyServerSide": true,
         "modelCount": 57,
         "models": [
+          "Kimi K3.1 Pro",
           "DeepSeek V4.1 Flash 1017",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
           "Claude Sonnet 5.5",
           "Claude Opus 5.5",
           "GPT-6 Luna",
-          "GPT-6 Sol",
-          "Grok 4.7"
+          "GPT-6 Sol"
         ],
         "openWeightModels": 14,
         "outputs": [
@@ -6896,7 +6902,7 @@
         "snippet": "NEARAI_API_KEY=",
         "docs": "https://docs.near.ai/"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:nebius",
@@ -7434,7 +7440,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 10039775
+        "downloads": 25312664
       },
       "tags": [
         "ai",
@@ -7447,23 +7453,23 @@
         "type": "api",
         "aiSdk": "@ai-sdk/openai",
         "auth": "apiKey",
-        "downloadsOf": "npm:@ai-sdk/openai",
+        "downloadsOf": "npm:openai",
         "env": [
           "OPENAI_API_KEY"
         ],
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://developers.openai.com/api/docs/guides/rate-limits",
-        "modelCount": 51,
+        "modelCount": 52,
         "models": [
+          "GPT-6.1 Terra",
           "GPT-6.1 Sol",
           "GPT-6 Luna",
           "GPT-6 Sol",
           "GPT-6 Astra",
           "Daybreak Blue",
           "Daybreak Red",
-          "GPT-5.6",
-          "GPT-5.6 Luna"
+          "GPT-5.6"
         ],
         "outputs": [
           "audio",
@@ -7479,7 +7485,7 @@
         "snippet": "OPENAI_API_KEY=",
         "docs": "https://platform.openai.com/docs"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:opencode",
@@ -7646,7 +7652,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 1981571
+        "downloads": 1295390
       },
       "tags": [
         "ai",
@@ -7664,23 +7670,23 @@
         "env": [
           "OPENROUTER_API_KEY"
         ],
-        "freeTierCheckedAt": "2026-10-25",
+        "freeTierCheckedAt": "2026-10-26",
         "freeTierQuote": "Free models are capped at 20 requests per minute and 50 per day, rising to 1,000 per day once your account has bought at least $10 of credits.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://openrouter.ai/docs/api_reference/limits",
         "modelCount": 390,
         "models": [
+          "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
           "Flint (free)",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Glimpse",
           "Beam 1.0 501B A23B",
-          "Mercury 3",
-          "Xing4.0 29B A4B (free)"
+          "Mercury 3"
         ],
-        "openWeightModels": 177,
+        "openWeightModels": 176,
         "outputs": [
           "audio",
           "image",
@@ -7694,7 +7700,7 @@
         "snippet": "OPENROUTER_API_KEY=",
         "docs": "https://openrouter.ai/docs"
       },
-      "fetchedAt": "2026-10-25"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:opper",
@@ -8415,7 +8421,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 782
+        "downloads": 48
       },
       "tags": [
         "ai",
@@ -8453,7 +8459,7 @@
         "snippet": "QVAC_API_KEY=",
         "docs": "https://www.npmjs.com/package/@qvac/ai-sdk-provider"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:reflection",
@@ -8577,16 +8583,16 @@
           "REQUESTY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 182,
+        "modelCount": 185,
         "models": [
+          "GPT-6.1 Terra",
+          "GPT-6.1 Terra (EU)",
           "Kimi K3.1 Pro",
           "Kimi K3.1 Pro Highspeed",
           "MiniMax-M3.1-Flash",
+          "MiniMax-M3.1-Flash (EU)",
           "DeepSeek V4.1 Flash 1017",
-          "DeepSeek V4.1 Flash 1017 (EU)",
-          "Muse Spark Open",
-          "Gemini 4 Argon",
-          "Gemini 4 Argon (EU)"
+          "DeepSeek V4.1 Flash 1017 (EU)"
         ],
         "openWeightModels": 63,
         "outputs": [
@@ -8600,7 +8606,7 @@
         "snippet": "REQUESTY_API_KEY=",
         "docs": "https://requesty.ai/solution/llm-routing/models"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:routing-run",
@@ -10162,7 +10168,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 557746
+        "downloads": 653012
       },
       "tags": [
         "ai",
@@ -10204,7 +10210,7 @@
         "snippet": "TOGETHER_API_KEY=",
         "docs": "https://docs.together.ai"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:tokengo",
@@ -10618,7 +10624,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 123373
+        "downloads": 22617
       },
       "tags": [
         "ai",
@@ -10656,7 +10662,7 @@
         "snippet": "VENICE_API_KEY=",
         "docs": "https://docs.venice.ai"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:vercel",
@@ -10672,7 +10678,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 201315
+        "downloads": 61479
       },
       "tags": [
         "ai",
@@ -10691,16 +10697,16 @@
           "AI_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 416,
+        "modelCount": 418,
         "models": [
+          "GPT-6.1 Terra",
+          "GPT-6.1 Terra (Fast)",
           "Kimi K3.1 Pro",
           "Kimi K3.1 Pro Highspeed",
           "Cohere Rerank 5 Fast",
           "Cohere Rerank 5 Pro",
           "Extract-1",
-          "Summarize-1",
-          "Voxtral Mini Transcribe 3",
-          "Voxtral Small Transcribe 3"
+          "Summarize-1"
         ],
         "openWeightModels": 108,
         "outputs": [
@@ -10716,7 +10722,7 @@
         "snippet": "AI_GATEWAY_API_KEY=",
         "docs": "https://vercel.com/docs/ai-gateway"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:vispark",
@@ -11127,7 +11133,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 445
+        "downloads": 25
       },
       "tags": [
         "ai",
@@ -11163,7 +11169,7 @@
         "snippet": "WATSONX_AI_APIKEY=\nWATSONX_AI_PROJECT_ID=",
         "docs": "https://www.ibm.com/docs/en/watsonx/saas?topic=solutions-supported-foundation-models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:xai",
@@ -11504,7 +11510,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 20647
+        "downloads": 0
       },
       "tags": [
         "ai",
@@ -11544,7 +11550,7 @@
         "snippet": "ZHIPU_API_KEY=",
         "docs": "https://docs.z.ai"
       },
-      "fetchedAt": "2026-10-24"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "models-dev:zai-coding-plan",

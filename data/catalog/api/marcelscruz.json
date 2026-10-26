@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-25",
-  "count": 707,
+  "fetchedAt": "2026-10-26",
+  "count": 717,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -782,6 +782,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:anon-li",
+      "name": "anon.li",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Create and manage anonymous email aliases, forwarding recipients, custom domains and end-to-end encrypted file drops",
+      "url": "https://anon.li",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:anyapi",
       "name": "AnyAPI",
       "kind": "dev",
@@ -1549,6 +1572,30 @@
       }
     },
     {
+      "id": "marcelscruz:bankday",
+      "name": "Bankday",
+      "kind": "business",
+      "category": "api",
+      "summary": "Business days, bank holidays and settlement dates for ACH, Fedwire, TARGET2, Bacs, Payments Canada, 28 stock exchanges and 247 countries",
+      "url": "https://bankday.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "calendar",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Calendar"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:bargo-congress-trades",
       "name": "Bargo Congress Trades",
       "kind": "finance",
@@ -1983,7 +2030,7 @@
       "kind": "text",
       "category": "api",
       "summary": "Pay-as-you-go multilingual text-to-speech with Portuguese voices and WAV, MP3, and Opus output",
-      "url": "https://www.brainiall.com/en/apis/text-to-speech",
+      "url": "https://brainiall.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -1999,7 +2046,7 @@
         "cors": "yes",
         "listCategory": "Text Analysis"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:brand-dev",
@@ -2790,33 +2837,6 @@
         "listCategory": "Cryptocurrency"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "marcelscruz:codex-reset",
-      "name": "Codex Reset",
-      "kind": "dev",
-      "category": "api",
-      "summary": "OpenAI Codex usage-limit reset history, verified announcements and 24h/48h reset probability",
-      "url": "https://codex-reset.com/llms.txt",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "development"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Development"
-      },
-      "fetchedAt": "2026-10-20",
-      "metrics": {
-        "siteRank": 500000
-      }
     },
     {
       "id": "marcelscruz:cogdepot",
@@ -5363,6 +5383,30 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:firmsapi",
+      "name": "FIRMSapi",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Look up, search and validate US CBP FIRMS facility codes for piers, container freight stations, bonded warehouses and FTZs",
+      "url": "https://firmsapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:flatmark",
       "name": "flatmark",
       "kind": "business",
@@ -6112,7 +6156,7 @@
       "kind": "finance",
       "category": "api",
       "summary": "Tax calculations for Germany: income tax, crypto, commuter allowance, and more",
-      "url": "https://rechner-hub.de/steuerrechner-api/",
+      "url": "https://rechner-hub.de",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -6127,7 +6171,7 @@
         "cors": "no",
         "listCategory": "Finance"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:getblock",
@@ -6985,7 +7029,7 @@
       "kind": "media",
       "category": "api",
       "summary": "Render videos from JSON: motion templates, effects, transitions, batch rendering",
-      "url": "https://ilovevideoeditor.com/docs/api",
+      "url": "https://ilovevideoeditor.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -7000,7 +7044,7 @@
         "cors": "no",
         "listCategory": "Video"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:imdb",
@@ -7479,6 +7523,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:isgenai",
+      "name": "isGenAI",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Check images, text and URLs for recorded evidence of AI use, such as C2PA Content Credentials, IPTC AI labels and saved prompts",
+      "url": "https://isgenai.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-none"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:ismalicious",
       "name": "isMalicious",
       "kind": "auth-security",
@@ -7721,7 +7788,7 @@
       "kind": "business",
       "category": "api",
       "summary": "Live, vetted job listings from official employer sources across India",
-      "url": "https://www.jobvetta.com/api",
+      "url": "https://jobvetta.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -7737,7 +7804,7 @@
         "cors": "yes",
         "listCategory": "Jobs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:jobyap",
@@ -7952,30 +8019,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "marcelscruz:kiprio-pdf-text",
-      "name": "Kiprio PDF Text",
-      "kind": "business",
-      "category": "api",
-      "summary": "Extract plain text from PDF documents for LLM and RAG pipelines",
-      "url": "https://kiprio.com/v1/pdf-text/",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "documents-productivity"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Documents & Productivity"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "marcelscruz:kite-connect",
       "name": "Kite Connect",
       "kind": "finance",
@@ -8148,6 +8191,30 @@
         "listCategory": "Government"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:labelixa",
+      "name": "Labelixa",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Render, validate, debug and convert ZPL, EPL, TSPL and CPCL thermal labels to PNG or PDF, with barcode generation",
+      "url": "https://labelixa.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:languagetool",
@@ -9551,6 +9618,30 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:mydentify",
+      "name": "Mydentify",
+      "kind": "business",
+      "category": "api",
+      "summary": "Startup-directory research and weekly product leaderboard data",
+      "url": "https://mydentify.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:mysql-visual-explain",
@@ -12010,6 +12101,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:receiptedit-sales-tax-api",
+      "name": "ReceiptEdit Sales Tax API",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Free sales-tax lookup API covering all US states + zip-level city/county rates. No signup, no rate limit. Also supports Canadian GST/HST/PST and Indian GST slabs. Ideal for building expense-reimbursement flows, invoicing SaaS demos, receipt OCR pipelines, or seeding accounting tools.",
+      "url": "https://receiptedit.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:receptapi",
       "name": "ReceptAPI",
       "kind": "life",
@@ -12759,6 +12874,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:screenshotapi",
+      "name": "ScreenshotAPI",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Website screenshots, PDFs, HTML rendering, caching, and webhooks",
+      "url": "https://screenshotapi.to",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:screenshotbase",
       "name": "Screenshotbase",
       "kind": "dev",
@@ -13292,6 +13431,29 @@
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "marcelscruz:shortsintel",
+      "name": "ShortsIntel",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Short-form video and ad intelligence API and MCP server: TikTok, Instagram Reels, YouTube Shorts and Meta ad library data with AI video analysis",
+      "url": "https://www.shortsintel.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:shotog",
@@ -14843,6 +15005,30 @@
       }
     },
     {
+      "id": "marcelscruz:tipsaudit",
+      "name": "TipsAudit",
+      "kind": "life",
+      "category": "api",
+      "summary": "Football fair odds (bookmaker margin removed) and bookmaker margin index",
+      "url": "https://tipsaudit.com/api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:tolgee",
       "name": "Tolgee",
       "kind": "dev",
@@ -15751,6 +15937,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:vantaspec",
+      "name": "VantaSpec",
+      "kind": "payments",
+      "category": "api",
+      "summary": "UK PC hardware prices, price history and specs across UK retailers",
+      "url": "https://vantaspec.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-10-26"
+    },
+    {
       "id": "marcelscruz:vatcheckapi",
       "name": "VatcheckAPI",
       "kind": "dev",
@@ -16617,6 +16827,29 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "marcelscruz:xquik-api",
+      "name": "Xquik API",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Search X posts, profiles, followers, trends, and communities through 128 REST operations, MCP, webhooks, SDKs, and exports. Not affiliated with X Corp",
+      "url": "https://xquik.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "marcelscruz:xrpl-to",

@@ -4,11 +4,11 @@
     "name": "Registry of Open Data on AWS",
     "url": "https://registry.opendata.aws/",
     "license": "Registry entries from awslabs/open-data-registry (Apache-2.0 registry repository); each dataset keeps the license named by its provider.",
-    "total": 1242,
+    "total": 1243,
     "cut": "폐기(Deprecated) 0개 제외"
   },
-  "fetchedAt": "2026-10-20",
-  "count": 1236,
+  "fetchedAt": "2026-10-26",
+  "count": 1237,
   "items": [
     {
       "id": "aws-open-data:1000-genomes",
@@ -36104,6 +36104,40 @@
         "updateFrequency": "Dataset is static."
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "aws-open-data:thal-kak-msa",
+      "name": "Thal-Kak Multiple Sequence Alignment Databases",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "A collection of prebuilt protein sequence databases for multiple sequence alignment (MSA) search. MSAs are the main input of protein structure prediction and are also used to study conservation, coevolution and protein function.",
+      "url": "https://registry.opendata.aws/thal-kak-msa/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "tags": [
+        "aws",
+        "aws-pds",
+        "bioinformatics",
+        "biomolecular-modeling",
+        "life-sciences",
+        "metagenomics",
+        "msa",
+        "protein",
+        "protein-folding"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "licenseText": "Each database carries the license of the source it derives from; no database mixes sources. LICENSE.txt at the bucket root is the full record of upstream licenses, attribution, citation and changes.",
+        "managedBy": "CSSB, Seoul National University",
+        "updateFrequency": "Irregularly. New releases are added as new archives."
+      },
+      "use": {
+        "docs": "https://github.com/CSSB-SNU/Thal-Kak/tree/main/aws_open_data"
+      },
+      "fetchedAt": "2026-10-26"
     },
     {
       "id": "aws-open-data:tiger",

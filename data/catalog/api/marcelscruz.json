@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-26",
-  "count": 717,
+  "fetchedAt": "2026-10-27",
+  "count": 742,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -223,6 +223,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:adhdevaluations",
+      "name": "ADHDEvaluations",
+      "kind": "life",
+      "category": "api",
+      "summary": "Find an ADHD evaluation provider near you",
+      "url": "https://adhdevaluations.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:adsbdb",
       "name": "adsbdb",
       "kind": "maps",
@@ -365,6 +389,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-25"
+    },
+    {
+      "id": "marcelscruz:ai-benchmark-index",
+      "name": "AI Benchmark Index",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "AI benchmarks with traceable data, licences and scores",
+      "url": "https://aibenchmarkindex.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-none",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:ai-decisions",
@@ -1113,6 +1161,54 @@
         "listCategory": "News"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:apiverve",
+      "name": "APIVerve",
+      "kind": "dev",
+      "category": "api",
+      "summary": "About 380 APIs behind one key: email and phone validation, IP, DNS and SSL lookups, exchange and VAT rates, VIN decoding and more",
+      "url": "https://apiverve.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
+      "id": "marcelscruz:apostille-finder",
+      "name": "Apostille Finder",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Find the government office that issues your apostille",
+      "url": "https://apostilles.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:appgoat",
@@ -2961,6 +3057,30 @@
       }
     },
     {
+      "id": "marcelscruz:coinxview",
+      "name": "CoinXview",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Crypto prices aggregated from 22 exchanges, OHLC history, Fear & Greed index and per-coin risk score",
+      "url": "https://coinxview.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:colormagic",
       "name": "ColorMagic",
       "kind": "media",
@@ -4181,6 +4301,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:devpros-calculator-api",
+      "name": "DevPros Calculator API",
+      "kind": "finance",
+      "category": "api",
+      "summary": "565 free calculator endpoints (finance, tax, maths, health, conversions) returning JSON results with step-by-step breakdowns — no signup, no API key, OpenAPI spec at /openapi.json",
+      "url": "https://devpros.uk/tools/api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:dex",
       "name": "DeX",
       "kind": "payments",
@@ -4320,6 +4464,54 @@
         "listCategory": "Open Data"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:discord-timestamp-generator",
+      "name": "Discord Timestamp Generator",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Turns an ISO 8601 datetime or a Unix time into Discord timestamp codes in all 7 styles, with a format list endpoint and an OpenAPI 3.1 spec",
+      "url": "https://discordtimestampgen.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
+      "id": "marcelscruz:dish-directory",
+      "name": "Dish Directory",
+      "kind": "life",
+      "category": "api",
+      "summary": "Restaurants with their dishes, prices and hours, by city",
+      "url": "https://dishdirectory.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "food-drink"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Food & Drink"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:docforge",
@@ -4681,6 +4873,54 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:ek-litre",
+      "name": "ek litre",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Pakistan's petrol, diesel and kerosene prices since 2006, with OGRA's line-by-line price build-up",
+      "url": "https://eklitre.pk/data/#h-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
+      "id": "marcelscruz:el-mapa-del-agua",
+      "name": "El mapa del agua",
+      "kind": "weather",
+      "category": "api",
+      "summary": "Water hardness (°fH) of Spanish municipalities by INE code or postal code, with the source and date of each analysis",
+      "url": "https://elmapadelagua.com/api-dureza-agua",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "environment"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Environment"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:elonmu-sh",
       "name": "elonmu.sh",
       "kind": "entertainment",
@@ -4773,6 +5013,30 @@
         "listCategory": "Email"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:esa-vendors",
+      "name": "ESA Vendors",
+      "kind": "business",
+      "category": "api",
+      "summary": "Learning vendors that education funds reimburse",
+      "url": "https://esavendors.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:eunormia-e-invoice-api",
@@ -5502,6 +5766,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:flyitalyadsb",
+      "name": "FlyItalyADSB",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Live aircraft positions in ADS-B JSON for any point on Earth from a community receiver network, plus history and overflights",
+      "url": "https://flyitalyadsb.com/en/data/api/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:football-highlights",
       "name": "Football Highlights",
       "kind": "life",
@@ -5718,6 +6006,30 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "marcelscruz:funeralcompare",
+      "name": "FuneralCompare",
+      "kind": "business",
+      "category": "api",
+      "summary": "Funeral homes and cremation providers, compared by the fees they publish",
+      "url": "https://funeralcompare.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:fuzzy-text-search-api",
@@ -6102,6 +6414,30 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:genrelay",
+      "name": "GenRelay",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Unified API for image and video generation models (Nano Banana, Seedance, GPT Image, Veo), pay-as-you-go in USD with free credits",
+      "url": "https://genrelay.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:geodescription",
@@ -7639,6 +7975,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:itinagents",
+      "name": "ITINAgents",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Directory of IRS ITIN acceptance agents",
+      "url": "https://itinagents.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:itunes",
       "name": "iTunes",
       "kind": "media",
@@ -8507,6 +8867,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:logoapi-sh",
+      "name": "logoapi.sh",
+      "kind": "business",
+      "category": "api",
+      "summary": "Company logo as SVG by domain, with name search and white, black, grey and dark variants. No key or signup. Free for 1M requests a month per site",
+      "url": "https://logoapi.sh",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:logokit",
       "name": "LogoKit",
       "kind": "business",
@@ -8800,6 +9184,33 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:mailtester-ninja",
+      "name": "MailTester Ninja",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Real-time email verification checked live against the mail server: valid, invalid or catch-all, disposable detection, free tier without signup",
+      "url": "https://mailtester.ninja",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-10-27",
+      "metrics": {
+        "siteRank": 1000000
+      }
+    },
+    {
       "id": "marcelscruz:mailtrap",
       "name": "Mailtrap",
       "kind": "messaging",
@@ -8967,6 +9378,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:marriagelicense",
+      "name": "MarriageLicense",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Where to give notice of marriage or get a marriage licence, by country",
+      "url": "https://marriagelicense.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:mconverter",
       "name": "MConverter",
       "kind": "business",
@@ -9038,6 +9473,30 @@
         "listCategory": "Entertainment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:memorycarehomes",
+      "name": "MemoryCareHomes",
+      "kind": "life",
+      "category": "api",
+      "summary": "Memory care homes, checkable against the public register",
+      "url": "https://memorycarehomes.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:mercadobitcoin",
@@ -9133,6 +9592,30 @@
         "listCategory": "Currency Exchange"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:metals-api",
+      "name": "Metals-API",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Real-time and historical gold, silver, platinum, LBMA and LME base metals prices",
+      "url": "https://metals-api.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:metascrape",
@@ -10678,6 +11161,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:opioid-treatment-directory",
+      "name": "Opioid Treatment Directory",
+      "kind": "life",
+      "category": "api",
+      "summary": "Methadone and buprenorphine treatment providers",
+      "url": "https://opioidtreatment.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:orbitalwiki",
       "name": "OrbitalWiki",
       "kind": "open-data",
@@ -11084,6 +11591,29 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "marcelscruz:pic2svg",
+      "name": "Pic2svg",
+      "kind": "media",
+      "category": "api",
+      "summary": "Trace raster images into SVG filled paths with a keyless JSON HTTP API; daily usage limits apply",
+      "url": "https://pic2svg.com/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-none"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:pictotext-ocr",
@@ -11815,6 +12345,30 @@
       }
     },
     {
+      "id": "marcelscruz:public-adjusters-directory",
+      "name": "Public Adjusters Directory",
+      "kind": "business",
+      "category": "api",
+      "summary": "Public adjusters, so you can check a licence before you hire one",
+      "url": "https://publicadjusters.fyi",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-27"
+    },
+    {
       "id": "marcelscruz:publicdatahub",
       "name": "PublicDataHub",
       "kind": "open-data",
@@ -12503,6 +13057,29 @@
         "listCategory": "AI"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "marcelscruz:rrm-academy-research-library",
+      "name": "RRM Academy Research Library",
+      "kind": "life",
+      "category": "api",
+      "summary": "Physician-curated restorative reproductive medicine research: endometriosis, PCOS, NaProTechnology, fertility awareness",
+      "url": "https://rrmacademy.org/connect/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:rss-to-json",
@@ -16610,6 +17187,30 @@
         "listCategory": "Social"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:wordle-hints-today-api",
+      "name": "Wordle Hints Today Api",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Returns the most recent NYT Wordle answer in a single clean JSON object. Ideal for daily widgets and status bots",
+      "url": "https://wordlehintstoday.org/wordle-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:words-into-music",

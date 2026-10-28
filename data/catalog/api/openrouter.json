@@ -4,9 +4,9 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 114 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "OpenRouter lists 116 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-23",
+  "fetchedAt": "2026-10-28",
   "count": 33,
   "items": [
     {
@@ -436,72 +436,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "openrouter:modelrun",
-      "name": "ModelRun",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "The unified AI inference stack - from custom GPU kernels to production cloud serving on NVIDIA and AMD. 2x performance. Top open models. Open source stack.",
-      "url": "https://www.modular.com",
-      "source": {
-        "name": "OpenRouter providers",
-        "url": "https://openrouter.ai/api/v1/providers"
-      },
-      "tags": [
-        "ai",
-        "hq-us",
-        "inference",
-        "server-key",
-        "via-openrouter"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "datacenters": [
-          "US"
-        ],
-        "headquarters": "US",
-        "keyServerSide": true,
-        "privacyPolicy": "https://www.modular.com/legal/privacy",
-        "summarySource": "official page meta description",
-        "terms": "https://www.modular.com/legal/terms",
-        "viaOpenRouter": "https://openrouter.ai/provider/modelrun"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "openrouter:modular",
-      "name": "Modular",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "The unified AI inference stack - from custom GPU kernels to production cloud serving on NVIDIA and AMD. 2x performance. Top open models. Open source stack.",
-      "url": "https://www.runmodelrun.com",
-      "source": {
-        "name": "OpenRouter providers",
-        "url": "https://openrouter.ai/api/v1/providers"
-      },
-      "tags": [
-        "ai",
-        "hq-us",
-        "inference",
-        "server-key",
-        "via-openrouter"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "datacenters": [
-          "US"
-        ],
-        "headquarters": "US",
-        "keyServerSide": true,
-        "privacyPolicy": "https://www.runmodelrun.com/privacy-policy.html",
-        "summarySource": "official page meta description",
-        "terms": "https://www.runmodelrun.com/TOS.html",
-        "viaOpenRouter": "https://openrouter.ai/provider/modular"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "openrouter:nex-agi",
       "name": "Nex AGI",
       "kind": "ai-llm",
@@ -660,6 +594,40 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "openrouter:particle-ai",
+      "name": "Particle AI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Particle is building a new AI inference layer for open weight models—fast, low-cost, and reliable. Use our API to power your apps with frontier AI.",
+      "url": "https://particle.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "US"
+        ],
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://particle.ai/privacy/",
+        "statusPage": "https://status.particle.ai",
+        "summarySource": "official page meta description",
+        "terms": "https://particle.ai/terms/",
+        "viaOpenRouter": "https://openrouter.ai/provider/particle-ai"
+      },
+      "fetchedAt": "2026-10-28"
+    },
+    {
       "id": "openrouter:perceptron",
       "name": "Perceptron",
       "kind": "ai-llm",
@@ -719,6 +687,37 @@
         "viaOpenRouter": "https://openrouter.ai/provider/phala"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:primalabs",
+      "name": "PrimaLabs",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "PrimaLabs builds and operates a dedicated inference stack around each workload. Open models, served on sovereign terms, tuned continuously in production.",
+      "url": "https://www.primalabs.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-us",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "headquarters": "US",
+        "keyServerSide": true,
+        "privacyPolicy": "https://www.primalabs.ai/privacy",
+        "statusPage": "https://status.primalabs.ai/",
+        "summarySource": "official page meta description",
+        "terms": "https://www.primalabs.ai/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/primalabs"
+      },
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "openrouter:recursive",

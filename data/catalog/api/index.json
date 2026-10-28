@@ -1,8 +1,8 @@
 {
   "category": "api",
   "nameKo": "API",
-  "fetchedAt": "2026-10-27",
-  "total": 11961,
+  "fetchedAt": "2026-10-28",
+  "total": 11968,
   "subcategories": [
     {
       "id": "ai-llm",
@@ -29,12 +29,12 @@
     {
       "id": "ai-inference",
       "nameKo": "AI 모델 호스팅·라우터",
-      "count": 213,
+      "count": 214,
       "sources": [
         {
           "id": "models-dev",
           "name": "models.dev (AI model providers)",
-          "count": 178
+          "count": 179
         },
         {
           "id": "official",
@@ -116,7 +116,7 @@
     {
       "id": "ai-other",
       "nameKo": "그 밖의 AI·머신러닝",
-      "count": 100,
+      "count": 101,
       "sources": [
         {
           "id": "apis-guru",
@@ -126,7 +126,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 36
+          "count": 37
         },
         {
           "id": "official",
@@ -219,7 +219,7 @@
     {
       "id": "maps",
       "nameKo": "지도·위치·교통",
-      "count": 430,
+      "count": 431,
       "sources": [
         {
           "id": "apis-guru",
@@ -234,7 +234,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 41
+          "count": 42
         },
         {
           "id": "official",
@@ -288,7 +288,7 @@
     {
       "id": "finance",
       "nameKo": "금융·암호화폐·환율",
-      "count": 470,
+      "count": 469,
       "sources": [
         {
           "id": "apis-guru",
@@ -303,7 +303,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 108
+          "count": 107
         },
         {
           "id": "public-api-lists",
@@ -421,7 +421,7 @@
     {
       "id": "dev",
       "nameKo": "개발 도구",
-      "count": 786,
+      "count": 788,
       "sources": [
         {
           "id": "apis-guru",
@@ -436,7 +436,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 123
+          "count": 125
         },
         {
           "id": "public-api-lists",
@@ -453,7 +453,7 @@
     {
       "id": "business",
       "nameKo": "업무·생산성",
-      "count": 357,
+      "count": 358,
       "sources": [
         {
           "id": "apis-guru",
@@ -468,7 +468,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 83
+          "count": 84
         },
         {
           "id": "public-api-lists",
@@ -485,7 +485,7 @@
     {
       "id": "media",
       "nameKo": "사진·영상·음악",
-      "count": 589,
+      "count": 590,
       "sources": [
         {
           "id": "apis-guru",
@@ -500,7 +500,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 63
+          "count": 64
         },
         {
           "id": "public-api-lists",
@@ -517,7 +517,7 @@
     {
       "id": "news-social",
       "nameKo": "뉴스·소셜",
-      "count": 154,
+      "count": 155,
       "sources": [
         {
           "id": "apis-guru",
@@ -532,7 +532,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 42
+          "count": 43
         },
         {
           "id": "public-api-lists",
@@ -683,8 +683,8 @@
       "license": "MIT (list text); each API has its own terms",
       "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
       "file": "marcelscruz.json",
-      "count": 742,
-      "fetchedAt": "2026-10-27"
+      "count": 748,
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "models-dev",
@@ -693,8 +693,8 @@
       "license": "MIT (models.dev data); each provider has its own terms",
       "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
       "file": "models-dev.json",
-      "count": 232,
-      "fetchedAt": "2026-10-27"
+      "count": 233,
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "official",
@@ -704,17 +704,17 @@
       "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
       "file": "official.json",
       "count": 225,
-      "fetchedAt": "2026-10-27"
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "openrouter",
       "name": "OpenRouter providers (AI inference companies)",
       "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
       "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-      "note": "OpenRouter lists 114 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
+      "note": "OpenRouter lists 116 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
       "file": "openrouter.json",
       "count": 33,
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "public-api-lists",

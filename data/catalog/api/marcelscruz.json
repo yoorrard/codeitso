@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-27",
-  "count": 742,
+  "fetchedAt": "2026-10-28",
+  "count": 748,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -4299,30 +4299,6 @@
         "listCategory": "Open Data"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "marcelscruz:devpros-calculator-api",
-      "name": "DevPros Calculator API",
-      "kind": "finance",
-      "category": "api",
-      "summary": "565 free calculator endpoints (finance, tax, maths, health, conversions) returning JSON results with step-by-step breakdowns — no signup, no API key, OpenAPI spec at /openapi.json",
-      "url": "https://devpros.uk/tools/api",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "finance"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Finance"
-      },
-      "fetchedAt": "2026-10-27"
     },
     {
       "id": "marcelscruz:dex",
@@ -8843,6 +8819,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:logbrew",
+      "name": "LogBrew",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Send app errors, logs, traces and metrics over REST or OpenTelemetry (OTLP), then read them back with a project key",
+      "url": "https://logbrew.co",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-28"
+    },
+    {
       "id": "marcelscruz:logo-dev",
       "name": "Logo.dev",
       "kind": "business",
@@ -10634,6 +10634,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:obscurify-ai",
+      "name": "Obscurify AI",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Anonymous OpenAI-compatible API for 200+ LLMs. Accounts are a random number, no email; pay with Monero, Bitcoin or card",
+      "url": "https://obscurify.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-10-28"
+    },
+    {
       "id": "marcelscruz:oddsmagnet",
       "name": "Oddsmagnet",
       "kind": "life",
@@ -12148,6 +12172,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:privatus-analytics",
+      "name": "Privatus Analytics",
+      "kind": "business",
+      "category": "api",
+      "summary": "Cookieless website analytics. Read visitors, pages, sources, goals and funnels for your sites",
+      "url": "https://privatusanalytics.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-28"
+    },
+    {
       "id": "marcelscruz:proofread-and-grammar-check-api",
       "name": "Proofread and Grammar Check API",
       "kind": "text",
@@ -12414,6 +12462,29 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:qovia",
+      "name": "Qovia",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Public posts, comments and creator data from Douyin, Xiaohongshu, Weibo, Bilibili, TikTok, YouTube and more as one JSON API",
+      "url": "https://qovia.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "marcelscruz:qr-code-generator",
@@ -14511,6 +14582,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:soundza",
+      "name": "Soundza",
+      "kind": "media",
+      "category": "api",
+      "summary": "Free sound effects, music loops and ambience to search and download, plus sound effect generation from a prompt",
+      "url": "https://soundza.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "music"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Music"
+      },
+      "fetchedAt": "2026-10-28"
+    },
+    {
       "id": "marcelscruz:spacetradersapi",
       "name": "SpaceTradersAPI",
       "kind": "entertainment",
@@ -14796,6 +14891,30 @@
         "listCategory": "Food & Drink"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:stayingapi",
+      "name": "StayingAPI",
+      "kind": "maps",
+      "category": "api",
+      "summary": "One REST API + native MCP server for live search, availability, price, cross-OTA price comparison and reviews across Airbnb, Booking.com, Vrbo & Google Hotels",
+      "url": "https://stayingapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "marcelscruz:stellary",
@@ -17094,6 +17213,29 @@
       }
     },
     {
+      "id": "marcelscruz:webextract",
+      "name": "WebExtract",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Web page to clean Markdown or structured JSON (product, price, tables, metadata). 20 free calls/day per IP, then x402 USDC per call or prepaid credits",
+      "url": "https://webextract.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-28"
+    },
+    {
       "id": "marcelscruz:webz-io-news-api",
       "name": "Webz.io News API",
       "kind": "news-social",
@@ -17555,7 +17697,7 @@
       "name": "Your Move - Exercise API",
       "kind": "life",
       "category": "api",
-      "summary": "The complete exercise library and fitness API for your app. 698+ professional HD exercise videos with workout generation and program builder.",
+      "summary": "Exercise library and fitness API for your app. 2,005+ professional HD exercise videos with instructions, workout generation and program builder.",
       "url": "https://ymove.app/exercise-api",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -17572,7 +17714,7 @@
         "cors": "yes",
         "listCategory": "Sports & Fitness"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "marcelscruz:your-move-nutrition-api",

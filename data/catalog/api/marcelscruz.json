@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-28",
-  "count": 748,
+  "fetchedAt": "2026-10-29",
+  "count": 752,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -948,6 +948,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:api-indonesia",
+      "name": "API Indonesia",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Indonesian public data: regions down to 83,000+ villages with postal codes, schools, hospitals, minimum wages, DJKI trademarks. Paid per request",
+      "url": "https://apiindonesia.id",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-10-29"
+    },
+    {
       "id": "marcelscruz:api-league",
       "name": "API League",
       "kind": "dev",
@@ -1451,6 +1475,29 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:atmospore-pollen-forecasts",
+      "name": "Atmospore Pollen forecasts",
+      "kind": "life",
+      "category": "api",
+      "summary": "The Atmospore API provides real-time and forecast pollen data for locations worldwide. Data is updated daily and include forecasts up to 7 days into the future",
+      "url": "https://pollenapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-10-29"
     },
     {
       "id": "marcelscruz:atomic-mail",
@@ -11640,6 +11687,29 @@
       "fetchedAt": "2026-10-27"
     },
     {
+      "id": "marcelscruz:pictograph",
+      "name": "Pictograph",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Label images with SAM3, train RF-DETR and YOLOX detectors, and run them on GPU endpoints that take live RTSP and WebRTC video",
+      "url": "https://pictograph.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-10-29"
+    },
+    {
       "id": "marcelscruz:pictotext-ocr",
       "name": "PicToText OCR",
       "kind": "business",
@@ -14630,6 +14700,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:sparetext",
+      "name": "Sparetext",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Send and receive SMS from your own Android phone or iPhone through a REST API, signed webhooks and an MCP server",
+      "url": "https://sparetext.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "phone"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Phone"
+      },
+      "fetchedAt": "2026-10-29"
+    },
+    {
       "id": "marcelscruz:spoo-me",
       "name": "Spoo.me",
       "kind": "dev",
@@ -16297,6 +16391,30 @@
       }
     },
     {
+      "id": "marcelscruz:unprofane",
+      "name": "Unprofane",
+      "kind": "text",
+      "category": "api",
+      "summary": "Profanity and toxicity checks in 17 languages that read leetspeak, look-alike letters and spacing, with a Perspective API compatible endpoint",
+      "url": "https://unprofane.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "text-analysis"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Text Analysis"
+      },
+      "fetchedAt": "2026-10-29"
+    },
+    {
       "id": "marcelscruz:upload-post",
       "name": "Upload-Post",
       "kind": "news-social",
@@ -17593,30 +17711,6 @@
         "listCategory": "Social"
       },
       "fetchedAt": "2026-10-26"
-    },
-    {
-      "id": "marcelscruz:xrpl-to",
-      "name": "XRPL.to",
-      "kind": "finance",
-      "category": "api",
-      "summary": "XRP Ledger token prices, holders, trades and NFT data",
-      "url": "https://xrpl.to/docs",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "cryptocurrency"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Cryptocurrency"
-      },
-      "fetchedAt": "2026-10-23"
     },
     {
       "id": "marcelscruz:yamline",

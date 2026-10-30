@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-29",
-  "count": 752,
+  "fetchedAt": "2026-10-30",
+  "count": 755,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -3227,6 +3227,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:contratero",
+      "name": "Contratero",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Spanish public tenders and awards from the official PLACSP platform, updated hourly, with buyer and winner per contract",
+      "url": "https://contratero.es/docs",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "marcelscruz:conversor-iae-cnae",
       "name": "Conversor IAE CNAE",
       "kind": "open-data",
@@ -3747,6 +3770,29 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:cryptokeyhole",
+      "name": "CryptoKeyhole",
+      "kind": "finance",
+      "category": "api",
+      "summary": "On-chain and market metrics for Bitcoin, Ethereum and more, calculated from its own nodes; Free charts need no key",
+      "url": "https://cryptokeyhole.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "marcelscruz:cryptolabel",
@@ -9184,29 +9230,6 @@
       }
     },
     {
-      "id": "marcelscruz:mailchannels",
-      "name": "MailChannels",
-      "kind": "messaging",
-      "category": "api",
-      "summary": "Send transactional email over HTTPS with official JavaScript, Python and PHP SDKs",
-      "url": "https://www.mailchannels.com/email-api/",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "email"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "no",
-        "listCategory": "Email"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "marcelscruz:mailfloss",
       "name": "mailfloss",
       "kind": "messaging",
@@ -11254,6 +11277,30 @@
         "listCategory": "Health"
       },
       "fetchedAt": "2026-10-27"
+    },
+    {
+      "id": "marcelscruz:optiic",
+      "name": "Optiic",
+      "kind": "business",
+      "category": "api",
+      "summary": "OCR API that extracts text from images and PDFs, sent as a file or a URL, with optional translation of the result",
+      "url": "https://optiic.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "marcelscruz:orbitalwiki",
@@ -14626,6 +14673,30 @@
         "listCategory": "Programming"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:soldfetch",
+      "name": "SoldFetch",
+      "kind": "payments",
+      "category": "api",
+      "summary": "eBay sold and active listings via REST and MCP; not affiliated with eBay",
+      "url": "https://soldfetch.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "marcelscruz:sonto",

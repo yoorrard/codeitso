@@ -6,8 +6,8 @@
     "license": "MIT (models.dev data); each provider has its own terms",
     "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-29",
-  "count": 233,
+  "fetchedAt": "2026-10-30",
+  "count": 234,
   "items": [
     {
       "id": "models-dev:302ai",
@@ -436,18 +436,18 @@
           "AIAND_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 10,
+        "modelCount": 12,
         "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "Muse Spark Open",
           "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash",
           "GLM-5.3",
           "Qwen3.8 27B",
           "Motif 3",
-          "Kimi K3",
-          "DeepSeek V4 Pro",
-          "Qwen3.6 27B"
+          "Kimi K3"
         ],
-        "openWeightModels": 10,
+        "openWeightModels": 12,
         "outputs": [
           "text"
         ],
@@ -458,7 +458,7 @@
         "snippet": "AIAND_API_KEY=",
         "docs": "https://docs.aiand.com/"
       },
-      "fetchedAt": "2026-10-26"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:aihubmix",
@@ -2821,7 +2821,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 3631518
+        "downloads": 3605367
       },
       "tags": [
         "ai",
@@ -2838,6 +2838,8 @@
         "env": [
           "DEEPSEEK_API_KEY"
         ],
+        "freeTierCheckedAt": "2026-10-30",
+        "freeTierQuote": "These calls are currently free of charge; per-request billing starts at 00:00 Beijing time on November 1, 2026.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://api-docs.deepseek.com/quick_start/rate_limit/",
@@ -2860,7 +2862,7 @@
         "snippet": "DEEPSEEK_API_KEY=",
         "docs": "https://api-docs.deepseek.com"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:digitalocean",
@@ -3130,7 +3132,7 @@
           "EDENAI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 389,
+        "modelCount": 390,
         "models": [
           "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
@@ -3141,7 +3143,7 @@
           "DeepSeek V4.1 Flash 1017 (Deep Infra)",
           "DeepSeek V4.1 Flash 1017 (FlexAI)"
         ],
-        "openWeightModels": 226,
+        "openWeightModels": 227,
         "outputs": [
           "image",
           "text"
@@ -3153,7 +3155,7 @@
         "snippet": "EDENAI_API_KEY=",
         "docs": "https://docs.edenai.co"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:empiriolabs",
@@ -3805,7 +3807,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 5436246
+        "downloads": 5469189
       },
       "tags": [
         "ai",
@@ -3824,6 +3826,8 @@
           "GOOGLE_VERTEX_LOCATION",
           "GOOGLE_APPLICATION_CREDENTIALS"
         ],
+        "freeTierCheckedAt": "2026-10-30",
+        "freeTierQuote": "$0.00 (Free) / 1,000 count, per 1 month / account.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/quotas",
@@ -3852,7 +3856,7 @@
         "snippet": "GOOGLE_VERTEX_PROJECT=\nGOOGLE_VERTEX_LOCATION=\nGOOGLE_APPLICATION_CREDENTIALS=",
         "docs": "https://cloud.google.com/vertex-ai/generative-ai/docs"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:google-vertex-anthropic",
@@ -4111,6 +4115,50 @@
         "docs": "https://experiments.hetzner.com/docs/inference"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "models-dev:hopper",
+      "name": "Hopper",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Run DeepSeek V4.1 Flash 1017 with your coding agent. OpenAI-compatible inference and a simple agent setup, with $5 in starting credit for new Hopper accounts.",
+      "url": "https://withhopper.com/agents/deepseek-v4.1-flash-1017",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.withhopper.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "HOPPER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash 1017 Abliterated"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "HOPPER_API_KEY=",
+        "docs": "https://withhopper.com/agents/deepseek-v4.1-flash-1017"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:hpc-ai",
@@ -4946,7 +4994,7 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 383,
+        "modelCount": 384,
         "models": [
           "Particle AI: Particle-1",
           "OpenAI: GPT-6.1 Terra",
@@ -4970,7 +5018,7 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-10-29",
+      "fetchedAt": "2026-10-30",
       "metrics": {
         "siteRank": 500000
       }
@@ -5372,18 +5420,18 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 418,
+        "modelCount": 420,
         "models": [
           "DeepSeek V4.1 Flash Cyber (Inference.net)",
+          "GPT-6.1 Terra (Azure)",
           "GPT-6.1 Terra (OpenAI)",
           "Kimi K3.1 Pro (Moonshot AI)",
           "Kimi K3.1 Pro Highspeed (Moonshot AI)",
           "MiniMax M3.1 Flash (Inference.net)",
           "MiniMax M3.1 Flash (MiniMax)",
-          "MiniMax M3.1 Flash (Nebius AI)",
-          "MiniMax M3.1 Flash (NovitaAI)"
+          "MiniMax M3.1 Flash (Nebius AI)"
         ],
-        "openWeightModels": 213,
+        "openWeightModels": 211,
         "outputs": [
           "text"
         ],
@@ -5394,7 +5442,7 @@
         "snippet": "LLMGATEWAY_API_KEY=",
         "docs": "https://llmgateway.io/docs"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:llmtech",
@@ -6151,7 +6199,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 6850163
+        "downloads": 6976613
       },
       "tags": [
         "ai",
@@ -6168,16 +6216,16 @@
           "MISTRAL_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 35,
+        "modelCount": 36,
         "models": [
           "DeepSeek V4.1 Flash 1017",
           "Mistral Large 4",
+          "Mistral Large 4.0.8",
           "GLM-5.3-Flash",
           "GLM-5.3",
           "Leanstral 1.5",
           "GLM-5.2",
-          "GLM-5.2",
-          "Mistral Medium (latest)"
+          "GLM-5.2"
         ],
         "openWeightModels": 29,
         "outputs": [
@@ -6193,7 +6241,7 @@
         "snippet": "MISTRAL_API_KEY=",
         "docs": "https://docs.mistral.ai"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:mixlayer",
@@ -6871,16 +6919,16 @@
           "NANO_GPT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 640,
+        "modelCount": 641,
         "models": [
+          "OrcaCyber Zero 1.5",
           "Particle-1",
           "DeepSeek V4.1 Flash 0910 Uncensored",
           "DeepSeek V4.1 Flash 0910 Uncensored Thinking",
           "DeepSeek V4.1 Flash 1017 Uncensored",
           "DeepSeek V4.1 Flash 1017 Uncensored Thinking",
           "GPT 6.1 Terra Pro",
-          "GPT 6.1 Terra",
-          "Kimi K3.1 Pro Highspeed"
+          "GPT 6.1 Terra"
         ],
         "openWeightModels": 376,
         "outputs": [
@@ -6893,7 +6941,7 @@
         "snippet": "NANO_GPT_API_KEY=",
         "docs": "https://docs.nano-gpt.com"
       },
-      "fetchedAt": "2026-10-29",
+      "fetchedAt": "2026-10-30",
       "metrics": {
         "siteRank": 1000000
       }
@@ -6925,18 +6973,18 @@
           "NEARAI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 57,
+        "modelCount": 60,
         "models": [
+          "DeepSeek V4.1 Flash 1017 Abliterated",
+          "Qwen3.8 27B Abliterated",
           "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
           "DeepSeek V4.1 Flash 1017",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
-          "Claude Sonnet 5.5",
-          "Claude Opus 5.5",
-          "GPT-6 Luna",
-          "GPT-6 Sol"
+          "Claude Sonnet 5.5"
         ],
-        "openWeightModels": 14,
+        "openWeightModels": 15,
         "outputs": [
           "image",
           "text"
@@ -6948,7 +6996,7 @@
         "snippet": "NEARAI_API_KEY=",
         "docs": "https://docs.near.ai/"
       },
-      "fetchedAt": "2026-10-26"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:nebius",
@@ -7486,7 +7534,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 55347579
+        "downloads": 21412856
       },
       "tags": [
         "ai",
@@ -7499,7 +7547,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/openai",
         "auth": "apiKey",
-        "downloadsOf": "npm:openai",
+        "downloadsOf": "npm:@ai-sdk/openai",
         "env": [
           "OPENAI_API_KEY"
         ],
@@ -7531,7 +7579,7 @@
         "snippet": "OPENAI_API_KEY=",
         "docs": "https://platform.openai.com/docs"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:opencode",
@@ -10670,7 +10718,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 204283
+        "downloads": 204579
       },
       "tags": [
         "ai",
@@ -10686,7 +10734,7 @@
           "VENICE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 129,
+        "modelCount": 128,
         "models": [
           "DeepSeek V4.1 Flash 1017 Uncensored",
           "GPT-6.1 Terra",
@@ -10708,7 +10756,7 @@
         "snippet": "VENICE_API_KEY=",
         "docs": "https://docs.venice.ai"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:vercel",
@@ -10724,7 +10772,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 380638
+        "downloads": 379098
       },
       "tags": [
         "ai",
@@ -10745,16 +10793,16 @@
         "keyServerSide": true,
         "modelCount": 418,
         "models": [
+          "Ling 3.1 Flash 1019",
           "Particle-1",
           "GPT-6.1 Terra",
           "GPT-6.1 Terra (Fast)",
           "Kimi K3.1 Pro",
           "Kimi K3.1 Pro Highspeed",
           "Cohere Rerank 5 Fast",
-          "Cohere Rerank 5 Pro",
-          "Extract-1"
+          "Cohere Rerank 5 Pro"
         ],
-        "openWeightModels": 108,
+        "openWeightModels": 107,
         "outputs": [
           "audio",
           "image",
@@ -10768,7 +10816,7 @@
         "snippet": "AI_GATEWAY_API_KEY=",
         "docs": "https://vercel.com/docs/ai-gateway"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:vispark",
@@ -11556,7 +11604,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 36546
+        "downloads": 32484
       },
       "tags": [
         "ai",
@@ -11596,7 +11644,7 @@
         "snippet": "ZHIPU_API_KEY=",
         "docs": "https://docs.z.ai"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "models-dev:zai-coding-plan",

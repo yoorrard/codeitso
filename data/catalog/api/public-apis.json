@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-29",
-  "count": 2184,
+  "fetchedAt": "2026-10-30",
+  "count": 2202,
   "items": [
     {
       "id": "public-apis:0x",
@@ -60,6 +60,32 @@
         "listCategory": "Open Data"
       },
       "fetchedAt": "2026-10-29"
+    },
+    {
+      "id": "public-apis:17nas",
+      "name": "17NAS",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Free IP geolocation API with IPv4/IPv6 detection, ASN and country info, no auth required",
+      "url": "https://17nas.com",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "geocoding",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:1forge",
@@ -5672,6 +5698,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:boltpatternhq",
+      "name": "BoltPatternHQ",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Vehicle wheel fitment, bolt pattern (PCD), offset, and center bore specifications",
+      "url": "https://boltpatternhq.com/mcp/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "vehicle"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Vehicle"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:bookrank",
       "name": "BookRank",
       "kind": "entertainment",
@@ -9847,6 +9899,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:coinxview",
+      "name": "CoinXview",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Real-time crypto prices aggregated from 22 exchanges, OHLC, market stats, Fear & Greed",
+      "url": "https://coinxview.com/en/api-mien-phi",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:collegecalcai",
       "name": "CollegeCalcAI",
       "kind": "open-data",
@@ -10322,6 +10400,32 @@
         "listCategory": "Transportation"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:consumersun-recalls",
+      "name": "ConsumerSun Recalls",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "US product, food, drug, device and vehicle recalls from CPSC, FDA and NHTSA",
+      "url": "https://consumersun.com/data/recalls.json",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:contaclt",
@@ -12874,6 +12978,31 @@
         "listCategory": "Health"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:deepscout",
+      "name": "DeepScout",
+      "kind": "payments",
+      "category": "api",
+      "summary": "Scrape product data from any e-shop and match the same products across shops, without EAN",
+      "url": "https://docs.deepscout.ai",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:deezer",
@@ -16746,6 +16875,32 @@
         "listCategory": "News"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:fertilityclinics",
+      "name": "FertilityClinics",
+      "kind": "life",
+      "category": "api",
+      "summary": "US fertility and IVF clinics built from CDC public data",
+      "url": "https://fertilityclinics.fyi/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:festivo-public-holidays",
@@ -21811,6 +21966,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:haulierscope",
+      "name": "HaulierScope",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Great Britain goods vehicle and PSV operator licences, change history and public inquiries",
+      "url": "https://haulierscope.co.uk/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:haveibeenpwned",
       "name": "HaveIBeenPwned",
       "kind": "auth-security",
@@ -22617,6 +22798,32 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:hourora",
+      "name": "Hourora",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Current time, DST-aware conversion, all IANA zones with clock changes, city and coordinate lookup",
+      "url": "https://hourora.app/en/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:housingfeed",
@@ -26597,31 +26804,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "public-apis:k-data-gate",
-      "name": "K-Data Gate",
-      "kind": "open-data",
-      "category": "api",
-      "summary": "Korean market data: K-beauty/K-food products, Naver trends, stocks, real estate, weather",
-      "url": "https://kdata-gate.vercel.app/docs",
-      "source": {
-        "name": "public-apis",
-        "url": "https://github.com/public-apis/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "https",
-        "open-data"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "unknown",
-        "https": true,
-        "listCategory": "Open Data"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "public-apis:kaggle",
       "name": "Kaggle",
       "kind": "open-data",
@@ -28872,6 +29054,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:lottizen",
+      "name": "Lottizen",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Lottery draw history and stats (Canada, US, Europe) and Canadian scratch-ticket remaining prizes",
+      "url": "https://lottizen.com/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-x-mashape-key",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "X-Mashape-Key",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:lottolens-ph",
       "name": "LottoLens PH",
       "kind": "open-data",
@@ -29320,6 +29528,31 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "public-apis:mailchannels",
+      "name": "MailChannels",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Send transactional email over HTTPS with official JavaScript, Python and PHP SDKs",
+      "url": "https://www.mailchannels.com/email-api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:mailcheck-ai",
@@ -31014,32 +31247,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "public-apis:micro-db",
-      "name": "Micro DB",
-      "kind": "dev",
-      "category": "api",
-      "summary": "Simple database service",
-      "summaryKo": "간단한 데이터베이스 서비스",
-      "url": "https://m3o.com/db",
-      "source": {
-        "name": "public-apis",
-        "url": "https://github.com/public-apis/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "development",
-        "https"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "unknown",
-        "https": true,
-        "listCategory": "Development"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "public-apis:micro-saas-ai-suite",
       "name": "Micro-SaaS AI Suite",
       "kind": "dev",
@@ -31061,58 +31268,6 @@
         "cors": "unknown",
         "https": true,
         "listCategory": "Development"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "public-apis:micro-user-service",
-      "name": "Micro User Service",
-      "kind": "auth-security",
-      "category": "api",
-      "summary": "User management and authentication",
-      "summaryKo": "사용자 관리 및 인증",
-      "url": "https://m3o.com/user",
-      "source": {
-        "name": "public-apis",
-        "url": "https://github.com/public-apis/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "authentication-authorization",
-        "https"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "no",
-        "https": true,
-        "listCategory": "Authentication & Authorization"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "public-apis:micro-weather",
-      "name": "Micro Weather",
-      "kind": "weather",
-      "category": "api",
-      "summary": "Real time weather forecasts and historic data",
-      "summaryKo": "실시간 일기예보 및 과거 데이터",
-      "url": "https://m3o.com/weather/api",
-      "source": {
-        "name": "public-apis",
-        "url": "https://github.com/public-apis/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "https",
-        "weather"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "unknown",
-        "https": true,
-        "listCategory": "Weather"
       },
       "fetchedAt": "2026-10-20"
     },
@@ -31636,6 +31791,32 @@
         "listCategory": "Authentication & Authorization"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:molicheck",
+      "name": "Molicheck",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Anonymous JSON lab/GMP calculators (molarity, dilution, ICH limits); no API key",
+      "url": "https://molicheck.com/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "science-math"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Science & Math"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:monday",
@@ -37014,6 +37195,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:opengeocoding",
+      "name": "OpenGeocoding",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Forward and reverse geocoding and address autocomplete on open data",
+      "url": "https://opengeocoding.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "geocoding",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:opengraphr",
       "name": "OpenGraphr",
       "kind": "dev",
@@ -41254,6 +41461,32 @@
       }
     },
     {
+      "id": "public-apis:quivad",
+      "name": "QuiVad",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Net short positions disclosed to 23 market regulators, fund by fund, since 2010",
+      "url": "https://www.quivad.com/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:quizapi-io",
       "name": "quizapi.io",
       "kind": "entertainment",
@@ -41496,6 +41729,31 @@
       "metrics": {
         "siteRank": 100000
       }
+    },
+    {
+      "id": "public-apis:racehooks",
+      "name": "RaceHooks",
+      "kind": "life",
+      "category": "api",
+      "summary": "Motorsport analytics platform and ML analytics API: live F1 timing data and race intelligence",
+      "url": "https://racehooks.io/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:racinghub",
@@ -43897,6 +44155,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:salvagealert",
+      "name": "SalvageAlert",
+      "kind": "maps",
+      "category": "api",
+      "summary": "IAA, Copart and GovDeals salvage auction lots, VIN history and buyer-fee estimates",
+      "url": "https://salvagealert.com/developers/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "vehicle"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Vehicle"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:sampuli",
       "name": "Sampuli",
       "kind": "dev",
@@ -45089,6 +45372,32 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:serpkite",
+      "name": "SerpKite",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Google Search, News, Maps, Images, Scholar and Patents results as JSON or Markdown for AI agents",
+      "url": "https://serpkite.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:serply",
@@ -47003,6 +47312,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:spotwave",
+      "name": "SpotWave",
+      "kind": "weather",
+      "category": "api",
+      "summary": "Day-ahead electricity prices for 40+ European market zones, incl. taxes and VAT",
+      "url": "https://spotwave.eu/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "environment",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Environment"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:spyse",
       "name": "Spyse",
       "kind": "auth-security",
@@ -48224,6 +48559,32 @@
         "listCategory": "Test Data"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:superduperbundle",
+      "name": "SuperDuperBundle",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Lowest listed PC game key prices across official and key stores, by name or Steam app ID",
+      "url": "https://superduperbundle.com/tools/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "games-comics",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:superheroes",
@@ -50685,6 +51046,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:timezones",
+      "name": "Timezones",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Time now, conversions and DST changes for every IANA time zone, no key needed",
+      "url": "https://timezones.in/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-30"
+    },
+    {
       "id": "public-apis:tinify-dev",
       "name": "Tinify.dev",
       "kind": "media",
@@ -51088,6 +51475,32 @@
         "listCategory": "Weather"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:toolalize",
+      "name": "Toolalize",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Unit and live currency conversion with NIST SI factors, no key needed",
+      "url": "https://toolalize.com/openapi.json",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "science-math"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Science & Math"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:toolcarton",
@@ -52631,6 +53044,31 @@
       "metrics": {
         "siteRank": 5000
       }
+    },
+    {
+      "id": "public-apis:trendsagi",
+      "name": "TrendsAGI",
+      "kind": "business",
+      "category": "api",
+      "summary": "Trending topic volume, velocity and growth with AI insights; free plan of 100 calls/day",
+      "url": "https://trendsagi.com/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:trendsmcp",
@@ -54618,6 +55056,32 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "public-apis:vantaspec",
+      "name": "VantaSpec",
+      "kind": "payments",
+      "category": "api",
+      "summary": "UK PC hardware prices, price history and specs across UK retailers",
+      "url": "https://vantaspec.com/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "public-apis:vat-validation",

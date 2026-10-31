@@ -6,7 +6,7 @@
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
     "note": "OpenRouter lists 117 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-30",
+  "fetchedAt": "2026-10-31",
   "count": 33,
   "items": [
     {
@@ -783,7 +783,7 @@
       "name": "Respan",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "The AI router with built-in observability & automated evals.",
+      "summary": "Respan: model provider listed by OpenRouter.",
       "url": "https://respan.ai",
       "source": {
         "name": "OpenRouter providers",
@@ -800,11 +800,11 @@
         "auth": "apiKey",
         "keyServerSide": true,
         "privacyPolicy": "https://respan.ai/legal/privacy-policy",
-        "summarySource": "official page meta description",
+        "summarySource": "OpenRouter data",
         "terms": "https://respan.ai/legal/terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/respan"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "openrouter:sail-research",

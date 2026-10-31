@@ -6,8 +6,8 @@
     "license": "MIT (models.dev data); each provider has its own terms",
     "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-30",
-  "count": 234,
+  "fetchedAt": "2026-10-31",
+  "count": 235,
   "items": [
     {
       "id": "models-dev:302ai",
@@ -2893,16 +2893,16 @@
           "DIGITALOCEAN_ACCESS_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 83,
+        "modelCount": 84,
         "models": [
+          "OpenAI GPT-6.1 Terra",
           "Beam",
           "MiniMax M3.1-Flash (Public Preview)",
           "DeepSeek V4.1 Flash 1017",
           "NVIDIA Nemotron 3.5 Super VL",
           "Anthropic Claude 5.5 Haiku",
           "OpenAI GPT-6.1 Sol",
-          "Anthropic Claude Sonnet 5.5",
-          "Anthropic Claude Opus 5.5"
+          "Anthropic Claude Sonnet 5.5"
         ],
         "openWeightModels": 37,
         "outputs": [
@@ -2918,7 +2918,7 @@
         "snippet": "DIGITALOCEAN_ACCESS_TOKEN=",
         "docs": "https://docs.digitalocean.com/products/gradient-ai-platform/details/models/"
       },
-      "fetchedAt": "2026-10-24",
+      "fetchedAt": "2026-10-31",
       "metrics": {
         "siteRank": 500000
       }
@@ -3132,7 +3132,7 @@
           "EDENAI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 390,
+        "modelCount": 388,
         "models": [
           "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
@@ -3143,7 +3143,7 @@
           "DeepSeek V4.1 Flash 1017 (Deep Infra)",
           "DeepSeek V4.1 Flash 1017 (FlexAI)"
         ],
-        "openWeightModels": 227,
+        "openWeightModels": 225,
         "outputs": [
           "image",
           "text"
@@ -3155,7 +3155,7 @@
         "snippet": "EDENAI_API_KEY=",
         "docs": "https://docs.edenai.co"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:empiriolabs",
@@ -3525,7 +3525,7 @@
       "name": "FrogBot",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "FrogBot is an open-source AI agent framework you configure in one TypeScript file, then deploy anywhere or run as a Docker image.",
+      "summary": "FrogBot is the open-source lego bricks for AI to build and replace SaaS apps in one typed TypeScript config.",
       "url": "https://docs.frogbot.ai",
       "source": {
         "name": "models.dev",
@@ -3568,7 +3568,7 @@
         "snippet": "FROGBOT_API_KEY=",
         "docs": "https://docs.frogbot.ai"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:github-copilot",
@@ -3806,9 +3806,6 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
-      "metrics": {
-        "downloads": 5469189
-      },
       "tags": [
         "ai",
         "inference",
@@ -3820,13 +3817,12 @@
         "type": "api",
         "aiSdk": "@ai-sdk/google-vertex",
         "auth": "cloud IAM",
-        "downloadsOf": "npm:@ai-sdk/google-vertex",
         "env": [
           "GOOGLE_VERTEX_PROJECT",
           "GOOGLE_VERTEX_LOCATION",
           "GOOGLE_APPLICATION_CREDENTIALS"
         ],
-        "freeTierCheckedAt": "2026-10-30",
+        "freeTierCheckedAt": "2026-10-31",
         "freeTierQuote": "$0.00 (Free) / 1,000 count, per 1 month / account.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
@@ -3856,7 +3852,10 @@
         "snippet": "GOOGLE_VERTEX_PROJECT=\nGOOGLE_VERTEX_LOCATION=\nGOOGLE_APPLICATION_CREDENTIALS=",
         "docs": "https://cloud.google.com/vertex-ai/generative-ai/docs"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-10-31",
+      "metrics": {
+        "siteRank": 5000
+      }
     },
     {
       "id": "models-dev:google-vertex-anthropic",
@@ -4994,7 +4993,7 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 384,
+        "modelCount": 380,
         "models": [
           "Particle AI: Particle-1",
           "OpenAI: GPT-6.1 Terra",
@@ -5005,7 +5004,7 @@
           "DeepSeek V4.1 Flash 1017",
           "Elorian: Glimpse"
         ],
-        "openWeightModels": 148,
+        "openWeightModels": 144,
         "outputs": [
           "audio",
           "image",
@@ -5018,7 +5017,7 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-10-30",
+      "fetchedAt": "2026-10-31",
       "metrics": {
         "siteRank": 500000
       }
@@ -5420,18 +5419,18 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 420,
+        "modelCount": 423,
         "models": [
           "DeepSeek V4.1 Flash Cyber (Inference.net)",
           "GPT-6.1 Terra (Azure)",
           "GPT-6.1 Terra (OpenAI)",
           "Kimi K3.1 Pro (Moonshot AI)",
+          "Kimi K3.1 Pro (Runpod)",
           "Kimi K3.1 Pro Highspeed (Moonshot AI)",
-          "MiniMax M3.1 Flash (Inference.net)",
-          "MiniMax M3.1 Flash (MiniMax)",
-          "MiniMax M3.1 Flash (Nebius AI)"
+          "Kimi K3.1 Pro Highspeed (Runpod)",
+          "MiniMax M3.1 Flash (Inference.net)"
         ],
-        "openWeightModels": 211,
+        "openWeightModels": 212,
         "outputs": [
           "text"
         ],
@@ -5442,7 +5441,7 @@
         "snippet": "LLMGATEWAY_API_KEY=",
         "docs": "https://llmgateway.io/docs"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:llmtech",
@@ -6400,7 +6399,7 @@
       "name": "Model Oracle AI",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Configure Cursor, Claude Code, Codex, or OpenCode to use the Model Oracle AI endpoint for model intelligence, metrics, and spend tracking.",
+      "summary": "Model Oracle AI: 15 models listed on models.dev (newest: Auto, Claude Sonnet 5, GLM-5.2).",
       "url": "https://modeloracle.com/setup/",
       "source": {
         "name": "models.dev",
@@ -6436,14 +6435,14 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "official page meta description"
+        "summarySource": "models.dev data"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "MODEL_ORACLE_API_KEY=",
         "docs": "https://modeloracle.com/setup/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:modelis",
@@ -6753,7 +6752,7 @@
       "name": "Munito AI",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Each open model with its context, its EU and US regions, and its price in USD for each service tier.",
+      "summary": "The open models of Munito AI, with their inputs, context and regions.",
       "url": "https://docs.munito.ai/models",
       "source": {
         "name": "models.dev",
@@ -6793,7 +6792,7 @@
         "snippet": "MUNITO_API_KEY=",
         "docs": "https://docs.munito.ai/models"
       },
-      "fetchedAt": "2026-10-25"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:munito-eu",
@@ -6919,18 +6918,18 @@
           "NANO_GPT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 641,
+        "modelCount": 643,
         "models": [
+          "DeepSeek V4.1 Flash Heretic",
+          "DeepSeek V4.1 Flash Heretic Thinking",
           "OrcaCyber Zero 1.5",
           "Particle-1",
           "DeepSeek V4.1 Flash 0910 Uncensored",
           "DeepSeek V4.1 Flash 0910 Uncensored Thinking",
           "DeepSeek V4.1 Flash 1017 Uncensored",
-          "DeepSeek V4.1 Flash 1017 Uncensored Thinking",
-          "GPT 6.1 Terra Pro",
-          "GPT 6.1 Terra"
+          "DeepSeek V4.1 Flash 1017 Uncensored Thinking"
         ],
-        "openWeightModels": 376,
+        "openWeightModels": 378,
         "outputs": [
           "text"
         ],
@@ -6941,7 +6940,7 @@
         "snippet": "NANO_GPT_API_KEY=",
         "docs": "https://docs.nano-gpt.com"
       },
-      "fetchedAt": "2026-10-30",
+      "fetchedAt": "2026-10-31",
       "metrics": {
         "siteRank": 1000000
       }
@@ -7746,7 +7745,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 4070765
+        "downloads": 4159749
       },
       "tags": [
         "ai",
@@ -7764,12 +7763,12 @@
         "env": [
           "OPENROUTER_API_KEY"
         ],
-        "freeTierCheckedAt": "2026-10-29",
+        "freeTierCheckedAt": "2026-10-31",
         "freeTierQuote": "Free models are capped at 20 requests per minute and 50 per day, rising to 1,000 per day once your account has bought at least $10 of credits.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://openrouter.ai/docs/api_reference/limits",
-        "modelCount": 381,
+        "modelCount": 377,
         "models": [
           "Particle-1",
           "GPT-6.1 Terra",
@@ -7780,7 +7779,7 @@
           "DeepSeek V4.1 Flash 1017",
           "Glimpse"
         ],
-        "openWeightModels": 174,
+        "openWeightModels": 170,
         "outputs": [
           "audio",
           "image",
@@ -7794,7 +7793,7 @@
         "snippet": "OPENROUTER_API_KEY=",
         "docs": "https://openrouter.ai/docs"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:opper",
@@ -10791,7 +10790,7 @@
           "AI_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 418,
+        "modelCount": 417,
         "models": [
           "Ling 3.1 Flash 1019",
           "Particle-1",
@@ -10802,7 +10801,7 @@
           "Cohere Rerank 5 Fast",
           "Cohere Rerank 5 Pro"
         ],
-        "openWeightModels": 107,
+        "openWeightModels": 106,
         "outputs": [
           "audio",
           "image",
@@ -10816,7 +10815,7 @@
         "snippet": "AI_GATEWAY_API_KEY=",
         "docs": "https://vercel.com/docs/ai-gateway"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:vispark",
@@ -11159,6 +11158,56 @@
         "docs": "https://wallabytoken.com/docs"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "models-dev:wally",
+      "name": "Wally",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Models, chat completions, streaming, and errors",
+      "url": "https://docs.runanywhere.ai/wally-cloud/api",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://inference.runanywhere.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "WALLY_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 8,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "DeepSeek V4.1 Flash Fast",
+          "GLM-5.3-Flash",
+          "GLM-5.3 Fast",
+          "DeepSeek V4 Flash 0731",
+          "Kimi K3",
+          "MiniMax-M3",
+          "DeepSeek V4 Pro Fast"
+        ],
+        "openWeightModels": 8,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "WALLY_API_KEY=",
+        "docs": "https://docs.runanywhere.ai/wally-cloud/api"
+      },
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "models-dev:wandb",

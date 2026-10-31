@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-30",
-  "count": 755,
+  "fetchedAt": "2026-10-31",
+  "count": 760,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -1983,7 +1983,7 @@
       "kind": "finance",
       "category": "api",
       "summary": "Crypto prices, OHLCV history, sentiment, technical indicators, exchanges and liquidations",
-      "url": "https://bitculator.com/en/crypto-api",
+      "url": "https://bitculator.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -1999,7 +1999,7 @@
         "cors": "yes",
         "listCategory": "Cryptocurrency"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "marcelscruz:blackforge",
@@ -2498,6 +2498,29 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:carrier-ledger",
+      "name": "Carrier Ledger",
+      "kind": "maps",
+      "category": "api",
+      "summary": "FMCSA carrier records with authority, insurance and suspension notices, and daily change alerts for brokers",
+      "url": "https://carrierledger.steellantern.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "marcelscruz:casheva",
@@ -3225,6 +3248,30 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:comunicate-eu",
+      "name": "Comunicate.eu",
+      "kind": "business",
+      "category": "api",
+      "summary": "Catalogue of 3,800+ news sites for press releases and advertorials: niches, authority, prices",
+      "url": "https://comunicate.eu",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "marcelscruz:contratero",
@@ -5457,6 +5504,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:fax-for-agents",
+      "name": "Fax for Agents",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Fax API, hosted MCP server and SDKs built so AI agents can send and receive faxes, with a free sandbox",
+      "url": "https://faxforagents.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "phone"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Phone"
+      },
+      "fetchedAt": "2026-10-31"
+    },
+    {
       "id": "marcelscruz:fcc-uls-daily-change-archive",
       "name": "FCC ULS Daily Change Archive",
       "kind": "open-data",
@@ -7452,6 +7522,29 @@
       "fetchedAt": "2026-10-26"
     },
     {
+      "id": "marcelscruz:imageat",
+      "name": "imageat",
+      "kind": "media",
+      "category": "api",
+      "summary": "Run FFmpeg 8 commands in the cloud as async jobs with webhooks, billed per minute of run time",
+      "url": "https://imageat.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-10-31"
+    },
+    {
       "id": "marcelscruz:imdb",
       "name": "IMDb",
       "kind": "media",
@@ -7926,6 +8019,29 @@
         "listCategory": "Geocoding"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:irmu",
+      "name": "Irmu",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Web scraping API and hosted MCP server: JavaScript rendering, screenshots, proxy rotation, AI JSON extraction, ChatGPT answers and Booking.com search data",
+      "url": "https://irmu.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "marcelscruz:isgenai",

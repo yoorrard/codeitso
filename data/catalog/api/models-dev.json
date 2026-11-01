@@ -4,9 +4,9 @@
     "name": "models.dev (AI model providers)",
     "url": "https://models.dev",
     "license": "MIT (models.dev data); each provider has its own terms",
-    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-31",
+  "fetchedAt": "2026-11-01",
   "count": 235,
   "items": [
     {
@@ -2088,7 +2088,7 @@
       "name": "Claudinio",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "From coder to coder. You know… that unlimited: flat price, two coding-optimized models, and transparent anti-runaway protection. No token meters, no surprise bills.",
+      "summary": "Claudinio: 2 models listed on models.dev (newest: Claudinio, Claudius).",
       "url": "https://claudin.io",
       "source": {
         "name": "models.dev",
@@ -2117,14 +2117,14 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "official page meta description"
+        "summarySource": "models.dev data"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "CLAUDINIO_API_KEY=",
         "docs": "https://claudin.io"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "models-dev:cline-pass",
@@ -2838,8 +2838,6 @@
         "env": [
           "DEEPSEEK_API_KEY"
         ],
-        "freeTierCheckedAt": "2026-10-30",
-        "freeTierQuote": "These calls are currently free of charge; per-request billing starts at 00:00 Beijing time on November 1, 2026.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://api-docs.deepseek.com/quick_start/rate_limit/",
@@ -2862,7 +2860,7 @@
         "snippet": "DEEPSEEK_API_KEY=",
         "docs": "https://api-docs.deepseek.com"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "models-dev:digitalocean",
@@ -3525,7 +3523,7 @@
       "name": "FrogBot",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "FrogBot is the open-source lego bricks for AI to build and replace SaaS apps in one typed TypeScript config.",
+      "summary": "FrogBot is the open-source lego bricks for AI to build internal apps, automate workflows, and replace SaaS apps.",
       "url": "https://docs.frogbot.ai",
       "source": {
         "name": "models.dev",
@@ -3568,7 +3566,7 @@
         "snippet": "FROGBOT_API_KEY=",
         "docs": "https://docs.frogbot.ai"
       },
-      "fetchedAt": "2026-10-31"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "models-dev:github-copilot",
@@ -3806,6 +3804,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 5469189
+      },
       "tags": [
         "ai",
         "inference",
@@ -3817,12 +3818,13 @@
         "type": "api",
         "aiSdk": "@ai-sdk/google-vertex",
         "auth": "cloud IAM",
+        "downloadsOf": "npm:@ai-sdk/google-vertex",
         "env": [
           "GOOGLE_VERTEX_PROJECT",
           "GOOGLE_VERTEX_LOCATION",
           "GOOGLE_APPLICATION_CREDENTIALS"
         ],
-        "freeTierCheckedAt": "2026-10-31",
+        "freeTierCheckedAt": "2026-11-01",
         "freeTierQuote": "$0.00 (Free) / 1,000 count, per 1 month / account.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
@@ -3852,10 +3854,7 @@
         "snippet": "GOOGLE_VERTEX_PROJECT=\nGOOGLE_VERTEX_LOCATION=\nGOOGLE_APPLICATION_CREDENTIALS=",
         "docs": "https://cloud.google.com/vertex-ai/generative-ai/docs"
       },
-      "fetchedAt": "2026-10-31",
-      "metrics": {
-        "siteRank": 5000
-      }
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "models-dev:google-vertex-anthropic",
@@ -7469,7 +7468,7 @@
       "name": "Ollama Cloud",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Ollama Cloud: 23 models listed on models.dev (newest: MiniMax-M3.1-Flash, DeepSeek V4.1 Flash 1017, Beam 1.0 501B A23B).",
+      "summary": "Ollama Cloud: 25 models listed on models.dev (newest: MiniMax-M3.1-Flash, DeepSeek V4.1 Flash 1017, Beam 1.0 501B A23B).",
       "summaryKo": "Ollama 모델을 클라우드에서 돌리는 Ollama Cloud",
       "written": "codeshopper",
       "url": "https://docs.ollama.com/cloud",
@@ -7492,18 +7491,18 @@
           "OLLAMA_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 23,
+        "modelCount": 25,
         "models": [
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Beam 1.0 501B A23B",
           "Muse Spark Open",
           "Mistral Large 4",
-          "DeepSeek V4.1 Flash",
-          "GLM-5.3-Flash",
-          "DeepSeek V4 Pro 0813"
+          "MiMo-V2.6-Flash",
+          "MiMo-V2.6-Pro",
+          "DeepSeek V4.1 Flash"
         ],
-        "openWeightModels": 21,
+        "openWeightModels": 23,
         "outputs": [
           "text"
         ],
@@ -7514,7 +7513,7 @@
         "snippet": "OLLAMA_API_KEY=",
         "docs": "https://docs.ollama.com/cloud"
       },
-      "fetchedAt": "2026-10-23",
+      "fetchedAt": "2026-11-01",
       "metrics": {
         "siteRank": 50000
       }
@@ -7533,7 +7532,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 21412856
+        "downloads": 55491198
       },
       "tags": [
         "ai",
@@ -7546,7 +7545,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/openai",
         "auth": "apiKey",
-        "downloadsOf": "npm:@ai-sdk/openai",
+        "downloadsOf": "npm:openai",
         "env": [
           "OPENAI_API_KEY"
         ],
@@ -7578,7 +7577,7 @@
         "snippet": "OPENAI_API_KEY=",
         "docs": "https://platform.openai.com/docs"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "models-dev:opencode",
@@ -9300,7 +9299,7 @@
       "name": "SiliconFlow (China)",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "SiliconFlow (China): 40 models listed on models.dev (newest: GLM-5.2, DeepSeek V4 Flash, deepseek-ai/DeepSeek-V4-Pro).",
+      "summary": "SiliconFlow (China): 45 models listed on models.dev (newest: GLM-5.3-Flash, GLM-5.3, Qwen3.8 27B).",
       "url": "https://cloud.siliconflow.com/models",
       "source": {
         "name": "models.dev",
@@ -9322,18 +9321,18 @@
           "SILICONFLOW_CN_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 40,
+        "modelCount": 45,
         "models": [
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B",
           "GLM-5.2",
           "DeepSeek V4 Flash",
           "deepseek-ai/DeepSeek-V4-Pro",
-          "Pro/moonshotai/Kimi-K2.6",
-          "Qwen/Qwen3.6-35B-A3B",
-          "Pro/zai-org/GLM-5.1",
-          "Qwen/Qwen3.5-4B",
-          "Qwen/Qwen3.5-122B-A10B"
+          "Qwen3.6 27B",
+          "Pro/moonshotai/Kimi-K2.6"
         ],
-        "openWeightModels": 40,
+        "openWeightModels": 45,
         "outputs": [
           "text"
         ],
@@ -9344,7 +9343,7 @@
         "snippet": "SILICONFLOW_CN_API_KEY=",
         "docs": "https://cloud.siliconflow.com/models"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "models-dev:snowflake-cortex",

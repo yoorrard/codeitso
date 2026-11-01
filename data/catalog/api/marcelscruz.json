@@ -4,10 +4,10 @@
     "name": "Public APIs (marcelscruz)",
     "url": "https://github.com/marcelscruz/public-apis",
     "license": "MIT (list text); each API has its own terms",
-    "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-31",
-  "count": 760,
+  "fetchedAt": "2026-11-01",
+  "count": 767,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -2142,6 +2142,29 @@
         "listCategory": "URL Shorteners"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:bookfolio-fixer",
+      "name": "Bookfolio Fixer",
+      "kind": "business",
+      "category": "api",
+      "summary": "Validate and repair EPUB ebooks, returns JSON store-readiness verdicts",
+      "url": "https://fixer.bookfolio.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "marcelscruz:bootprint",
@@ -4652,6 +4675,30 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:docspring",
+      "name": "DocSpring",
+      "kind": "business",
+      "category": "api",
+      "summary": "Fill PDF forms, generate PDFs and Word documents, and collect e-signatures with one API. Free plan, no credit card",
+      "url": "https://docspring.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "marcelscruz:dogs",
@@ -8691,6 +8738,33 @@
       }
     },
     {
+      "id": "marcelscruz:kraken",
+      "name": "Kraken",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Cryptocurrencies Exchange",
+      "summaryKo": "암호화폐 거래소",
+      "url": "https://docs.kraken.com/rest/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-01",
+      "metrics": {
+        "siteRank": 50000
+      }
+    },
+    {
       "id": "marcelscruz:kunstlerfinanzen",
       "name": "Künstlerfinanzen",
       "kind": "open-data",
@@ -11393,6 +11467,29 @@
         "listCategory": "Health"
       },
       "fetchedAt": "2026-10-27"
+    },
+    {
+      "id": "marcelscruz:opsis",
+      "name": "Opsis",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Check which of 1,000+ sites an email address or username is registered on, with profile details and the source for each result",
+      "url": "https://useopsis.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "marcelscruz:optiic",
@@ -15268,6 +15365,30 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:stopmailing",
+      "name": "StopMailing",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Temporary email addresses with a free, no-signup REST API: create, read messages, live updates (SSE)",
+      "url": "https://stopmailing.net",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-01"
+    },
+    {
       "id": "marcelscruz:str-mpriser-i-dag",
       "name": "Strømpriser i dag",
       "kind": "weather",
@@ -17395,6 +17516,33 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:watson-natural-language-understanding",
+      "name": "Watson Natural Language Understanding",
+      "kind": "text",
+      "category": "api",
+      "summary": "Natural language processing for advanced text analysis",
+      "summaryKo": "고급 텍스트 분석을 위한 자연어 처리",
+      "url": "https://cloud.ibm.com/apidocs/natural-language-understanding/natural-language-understanding",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-oauth",
+        "text-analysis"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "OAuth",
+        "cors": "unknown",
+        "listCategory": "Text Analysis"
+      },
+      "fetchedAt": "2026-11-01",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "marcelscruz:wattbuy",
       "name": "WattBuy",
       "kind": "weather",
@@ -17779,6 +17927,30 @@
         "listCategory": "Cryptocurrency"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:xaxios",
+      "name": "xAxios",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Solana and Robinhood Chain token rug risk scores over REST, plus a free public WebSocket with live prices, trades and new launches",
+      "url": "https://xaxios.com/solutions/api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "marcelscruz:xchangeapi",

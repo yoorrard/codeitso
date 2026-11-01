@@ -4,10 +4,10 @@
     "name": "public-apis",
     "url": "https://github.com/public-apis/public-apis",
     "license": "MIT (list text); each API has its own terms",
-    "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-30",
-  "count": 2202,
+  "fetchedAt": "2026-11-01",
+  "count": 2220,
   "items": [
     {
       "id": "public-apis:0x",
@@ -809,7 +809,7 @@
       "name": "Africa Compliance Data",
       "kind": "business",
       "category": "api",
-      "summary": "Public holidays and business days for all 54 African countries, from official sources",
+      "summary": "Public holidays and business days for African countries, with sources and per-country coverage",
       "url": "https://africacompliancedata.com/docs",
       "source": {
         "name": "public-apis",
@@ -828,7 +828,7 @@
         "https": true,
         "listCategory": "Calendar"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:aftership",
@@ -1161,18 +1161,17 @@
       },
       "tags": [
         "auth-apikey",
-        "cors",
         "https",
         "machine-learning"
       ],
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "cors": "yes",
+        "cors": "no",
         "https": true,
         "listCategory": "Machine Learning"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:ai-trainer-work",
@@ -1357,6 +1356,31 @@
         "listCategory": "Transportation"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:ais-trail",
+      "name": "AIS Trail",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Live and historical AIS ship positions, vessel search, port calls and events worldwide",
+      "url": "https://aistrail.com/docs/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:alchemy-ethereum",
@@ -7705,6 +7729,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:checkwaitingtimes",
+      "name": "CheckWaitingTimes",
+      "kind": "life",
+      "category": "api",
+      "summary": "NHS England waiting times by hospital and area: planned care, A&E with live waits, scans, ambulances",
+      "url": "https://checkwaitingtimes.co.uk/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-11-01"
+    },
+    {
       "id": "public-apis:cheetaho",
       "name": "CheetahO",
       "kind": "media",
@@ -8617,6 +8667,31 @@
         "listCategory": "URL Shorteners"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:clear-street",
+      "name": "Clear Street",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Trade US stocks and options, with market data, fundamentals and account data",
+      "url": "https://docs.clearstreet.com/?utm_source=github&utm_medium=developer&utm_campaign=api_listings&utm_content=public_apis",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:clearbit-logo",
@@ -11494,8 +11569,8 @@
       "name": "Crawl Readiness",
       "kind": "dev",
       "category": "api",
-      "summary": "Check if AI crawlers (ChatGPT, Claude, Perplexity, 30+ others) can access any website",
-      "url": "https://crawlreadiness.com",
+      "summary": "Check what 50+ AI crawlers can read on a website and whether a page permits an AI use",
+      "url": "https://www.crawlreadiness.com",
       "source": {
         "name": "public-apis",
         "url": "https://github.com/public-apis/public-apis"
@@ -11513,7 +11588,7 @@
         "https": true,
         "listCategory": "Development"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:crawlbrulee",
@@ -11828,6 +11903,31 @@
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "public-apis:cryptokeyhole",
+      "name": "CryptoKeyhole",
+      "kind": "finance",
+      "category": "api",
+      "summary": "On-chain and market metrics for Bitcoin, Ethereum and more, computed from self-hosted nodes",
+      "url": "https://cryptokeyhole.com/data-access/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:cryptomarket",
@@ -12820,6 +12920,31 @@
         "listCategory": "Open Source Projects"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:daydream",
+      "name": "Daydream",
+      "kind": "media",
+      "category": "api",
+      "summary": "Make instrumental songs with five stems from a description",
+      "url": "https://gen.daydream.live/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "music"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Music"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:ddownload",
@@ -16536,6 +16661,35 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:fast-data-job-search",
+      "name": "Fast Data Job Search",
+      "kind": "business",
+      "category": "api",
+      "summary": "Jobs from Arbeitsagentur, Arbeitnow, Remote OK and company ATS boards as one deduplicated JSON list",
+      "url": "https://apify.com/fast_data_asap/job-search-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-01",
+      "metrics": {
+        "siteRank": 100000
+      }
+    },
+    {
       "id": "public-apis:fastballapi",
       "name": "FastballAPI",
       "kind": "life",
@@ -17331,6 +17485,32 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:findip",
+      "name": "FindIP",
+      "kind": "maps",
+      "category": "api",
+      "summary": "IP geolocation with VPN, proxy, Tor, datacenter and malicious IP detection, free",
+      "url": "https://www.findip.net/Docs/api-response",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "geocoding",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:findlocal",
@@ -18763,6 +18943,32 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:fundbiz",
+      "name": "FundBiz",
+      "kind": "finance",
+      "category": "api",
+      "summary": "UK specialty business finance lender terms, typical rates and decision times",
+      "url": "https://fundbiz.co.uk/data/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:funding-signals",
@@ -22636,8 +22842,8 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "public-apis:hong-kong-obervatory",
-      "name": "Hong Kong Obervatory",
+      "id": "public-apis:hong-kong-observatory",
+      "name": "Hong Kong Observatory",
       "kind": "weather",
       "category": "api",
       "summary": "Provide weather information, earthquake information, and climate data",
@@ -22659,7 +22865,7 @@
         "https": true,
         "listCategory": "Weather"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-01",
       "metrics": {
         "siteRank": 50000
       }
@@ -25894,6 +26100,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:isgenai",
+      "name": "isGenAI",
+      "kind": "media",
+      "category": "api",
+      "summary": "Check images, URLs and text for C2PA Content Credentials, AI labels and saved prompts",
+      "url": "https://isgenai.com/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "https",
+        "photography"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Photography"
+      },
+      "fetchedAt": "2026-11-01"
+    },
+    {
       "id": "public-apis:ismalicious",
       "name": "isMalicious",
       "kind": "auth-security",
@@ -27531,8 +27762,7 @@
       "kind": "finance",
       "category": "api",
       "summary": "Cryptocurrencies Exchange",
-      "summaryKo": "암호화폐 거래소",
-      "url": "https://docs.kraken.com/rest/",
+      "url": "https://docs.kraken.com/exchange/guides/rest/introduction",
       "source": {
         "name": "public-apis",
         "url": "https://github.com/public-apis/public-apis"
@@ -27549,7 +27779,7 @@
         "https": true,
         "listCategory": "Cryptocurrency"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-01",
       "metrics": {
         "siteRank": 50000
       }
@@ -31040,6 +31270,31 @@
       }
     },
     {
+      "id": "public-apis:metal-sentinel",
+      "name": "Metal Sentinel",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Live and historical precious and base metal prices in 180+ currencies",
+      "url": "https://metal-sentinel.com/endpoints",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-01"
+    },
+    {
       "id": "public-apis:metaphorsum",
       "name": "Metaphorsum",
       "kind": "dev",
@@ -34307,6 +34562,32 @@
       }
     },
     {
+      "id": "public-apis:nu-legal-deutsches-recht",
+      "name": "nu:legal Deutsches Recht",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "German federal and state statutes and 640,000 court decisions as JSON, with citation links",
+      "url": "https://recht.nulegal.eu/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-01"
+    },
+    {
       "id": "public-apis:nuget",
       "name": "NuGet",
       "kind": "dev",
@@ -34612,7 +34893,7 @@
       "name": "Odds-API",
       "kind": "life",
       "category": "api",
-      "summary": "Real-time sports betting odds from 365+ bookmakers across 34 sports via REST and WebSocket",
+      "summary": "Real-time sports betting odds from 415+ bookmakers across 34 sports via REST and WebSocket",
       "url": "https://docs.odds-api.io",
       "source": {
         "name": "public-apis",
@@ -34631,7 +34912,7 @@
         "https": true,
         "listCategory": "Sports & Fitness"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:oddsbench",
@@ -37005,6 +37286,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:openapps",
+      "name": "OpenApps",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Rankings, launches and featuring across the ChatGPT, Claude, Cursor and Grok Bot app stores",
+      "url": "https://theopenapps.com/docs/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-01"
+    },
+    {
       "id": "public-apis:openaq",
       "name": "OpenAQ",
       "kind": "weather",
@@ -37514,6 +37821,31 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "public-apis:opentaxrate",
+      "name": "OpenTaxRate",
+      "kind": "finance",
+      "category": "api",
+      "summary": "US sales tax rates by street address, from the states' own published data",
+      "url": "https://opentaxrate.com",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:opentiendas",
@@ -45899,6 +46231,35 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:siftsmith-company-jobs",
+      "name": "Siftsmith Company Jobs",
+      "kind": "business",
+      "category": "api",
+      "summary": "Open jobs from company career pages on Greenhouse, Lever, Ashby, Workday and more, as JSON or XML",
+      "url": "https://apify.com/siftsmith/company-jobs/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-01",
+      "metrics": {
+        "siteRank": 100000
+      }
+    },
+    {
       "id": "public-apis:signaliz",
       "name": "Signaliz",
       "kind": "business",
@@ -48931,7 +49292,7 @@
       "name": "Systembolaget",
       "kind": "life",
       "category": "api",
-      "summary": "Govornment owned liqour store in Sweden",
+      "summary": "Government owned liquor store in Sweden",
       "summaryKo": "스웨덴의 정부 소유 주류 판매점",
       "url": "https://api-portal.systembolaget.se",
       "source": {
@@ -48950,7 +49311,7 @@
         "https": true,
         "listCategory": "Food & Drink"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:tacofancy",
@@ -50910,6 +51271,31 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:tieredtravel",
+      "name": "TieredTravel",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Daily travel costs at budget, mid-range and luxury for 100 cities, plus walking routes",
+      "url": "https://tieredtravel.com/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "https",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:tiktok",
@@ -53148,6 +53534,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:tronorb",
+      "name": "TronOrb",
+      "kind": "finance",
+      "category": "api",
+      "summary": "TRON data: USDT TRC-20 fees, address checks, Tether freezes, dApp and exchange rankings",
+      "url": "https://tronorb.com/developers/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-01"
+    },
+    {
       "id": "public-apis:trove",
       "name": "Trove",
       "kind": "news-social",
@@ -55218,7 +55630,7 @@
     {
       "id": "public-apis:vedinteltm-astroapi",
       "name": "VedIntel™ AstroAPI",
-      "kind": "open-data",
+      "kind": "entertainment",
       "category": "api",
       "summary": "Vedic astrology computation — birth charts, dashas, panchang, AI narratives",
       "url": "https://vedintelastroapi.com/docs",
@@ -55230,16 +55642,16 @@
         "auth-apikey",
         "cors",
         "https",
-        "science-math"
+        "personality"
       ],
       "preview": {
         "type": "api",
         "auth": "apiKey",
         "cors": "yes",
         "https": true,
-        "listCategory": "Science & Math"
+        "listCategory": "Personality"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:velib-metropolis-paris-france",
@@ -55529,6 +55941,32 @@
         "listCategory": "Government"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:vetto",
+      "name": "Vetto",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Check email domains in bulk for disposable providers and dead domains, no key needed",
+      "url": "https://usevetto.com/docs#domain-lookup",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "email",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:viacep",
@@ -56471,8 +56909,7 @@
       "kind": "text",
       "category": "api",
       "summary": "Natural language processing for advanced text analysis",
-      "summaryKo": "고급 텍스트 분석을 위한 자연어 처리",
-      "url": "https://cloud.ibm.com/apidocs/natural-language-understanding/natural-language-understanding",
+      "url": "https://cloud.ibm.com/apidocs/natural-language-understanding",
       "source": {
         "name": "public-apis",
         "url": "https://github.com/public-apis/public-apis"
@@ -56489,7 +56926,7 @@
         "https": true,
         "listCategory": "Text Analysis"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-01",
       "metrics": {
         "siteRank": 500000
       }
@@ -58394,6 +58831,32 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:yubhub",
+      "name": "YubHub",
+      "kind": "business",
+      "category": "api",
+      "summary": "Job listings read from employers' careers pages, with salary, skills and hiring statistics",
+      "url": "https://yubhub.co/developers/api-reference/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "public-apis:yumi-wheel-evidence",

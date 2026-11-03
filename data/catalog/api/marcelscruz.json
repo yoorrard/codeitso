@@ -7,7 +7,7 @@
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-11-03",
-  "count": 774,
+  "count": 789,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -389,6 +389,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-25"
+    },
+    {
+      "id": "marcelscruz:agingresearch",
+      "name": "AgingResearch",
+      "kind": "life",
+      "category": "api",
+      "summary": "Every new aging research paper from PubMed, bioRxiv, medRxiv, arXiv and Europe PMC, judged on evidence, with trials, grants and extracted claims",
+      "url": "https://agingresearch.news/developers",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:ai-benchmark-index",
@@ -1810,6 +1834,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:bewary",
+      "name": "Bewary",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Scam detection API: verdicts with reason codes for links, domains, phone numbers, SMS short codes, emails, crypto wallets and IBANs",
+      "url": "https://bewary.app",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "anti-malware",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Anti-Malware"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:big-book",
       "name": "Big Book",
       "kind": "entertainment",
@@ -2189,6 +2236,30 @@
         "listCategory": "Science & Math"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:bowmark",
+      "name": "Bowmark",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Typed functions for live websites (LinkedIn, Amazon, YouTube, Reddit and more) for agents and cron jobs, like daily price checks or lead lists. Free $10",
+      "url": "https://bowmark.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:brainiall-text-to-speech",
@@ -8635,6 +8706,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:keenable",
+      "name": "Keenable",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Web search and page fetch API for AI agents, backed by an independent web index",
+      "url": "https://keenable.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:kimiquotes",
       "name": "kimiquotes",
       "kind": "entertainment",
@@ -8811,6 +8905,30 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "marcelscruz:kranli",
+      "name": "Kranli",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Demandes de permis de construire suisses des 90 derniers jours, par commune et métier",
+      "url": "https://kranli.ch/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:kunstlerfinanzen",
@@ -11470,6 +11588,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:openshield",
+      "name": "openshield",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Image and text moderation API (accept, review or reject) and fraud scoring for sign-ups, logins and payments, EU-hosted, free monthly tier",
+      "url": "https://www.openshield.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:openweb-ninja",
       "name": "OpenWeb Ninja",
       "kind": "dev",
@@ -12550,6 +12691,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:priorcase",
+      "name": "Priorcase",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Precedent search for markets: past moments that look like a given one, with what followed each",
+      "url": "https://priorcase.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:prismix-status-api",
       "name": "Prismix Status API",
       "kind": "ai-other",
@@ -12910,6 +13074,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:qr-kept",
+      "name": "QR Kept",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Free QR code API: one GET request returns an SVG, no key or account needed",
+      "url": "https://qrkept.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:quizbase",
@@ -16100,6 +16288,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:tickermint",
+      "name": "TickerMint",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Daily market prices and price history for Pokemon, One Piece, Lorcana, Riftbound, Yu-Gi-Oh and Gundam cards and sealed products",
+      "url": "https://tickermint.cards",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:tiktok-live",
       "name": "TikTok LIVE",
       "kind": "news-social",
@@ -16122,6 +16333,30 @@
         "listCategory": "Social"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:timefoo",
+      "name": "TimeFoo",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Current time, timestamp format conversion and IANA time zone conversion, no key needed",
+      "url": "https://time.foo/api/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:timezones-dictionary-api",
@@ -17130,6 +17365,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:valo-data",
+      "name": "Valo.Data",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Pokémon TCG cards in EN, FR, JA and ZH with Cardmarket, US market and eBay prices, graded sales and PSA populations; 14 TCGs, free Sandbox",
+      "url": "https://valotcg.com/developers/api/pokemon",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:vaneform",
       "name": "Vaneform",
       "kind": "business",
@@ -17373,6 +17632,30 @@
       }
     },
     {
+      "id": "marcelscruz:videoupscaler",
+      "name": "VideoUpscaler",
+      "kind": "media",
+      "category": "api",
+      "summary": "AI video upscaling, denoising, stabilization, and frame interpolation to 4K",
+      "url": "https://videoupscaler.co",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:virus-and-malware-scan-api-by-attachmentav",
       "name": "Virus and Malware Scan API by attachmentAV",
       "kind": "auth-security",
@@ -17394,6 +17677,30 @@
         "listCategory": "Security"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:vitalityfit",
+      "name": "Vitalityfit",
+      "kind": "life",
+      "category": "api",
+      "summary": "Current prices of medicines, supplements and care products from German online pharmacies and shops, by name, PZN or EAN",
+      "url": "https://vitality-fit.de/api/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:vncnt-labs-trademark-checker",
@@ -17928,6 +18235,30 @@
       }
     },
     {
+      "id": "marcelscruz:wisepim",
+      "name": "WISEPIM",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Free keyless API: GTIN/EAN/UPC validation with GS1 prefix country, HS code search and EU/US tariff lookup, and EU marketplace fees",
+      "url": "https://wisepim.com/developers/open-data",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "data-validation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Data Validation"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "marcelscruz:woopsocial",
       "name": "WoopSocial",
       "kind": "news-social",
@@ -18166,6 +18497,29 @@
         "listCategory": "Art & Design"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:xdataapi-io",
+      "name": "xdataapi.io",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Read-only public X (Twitter) data: profiles, tweets, threads, followers and search with x.com operators, plus a hosted MCP server. Not affiliated with X Corp",
+      "url": "https://xdataapi.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:xiurouter",

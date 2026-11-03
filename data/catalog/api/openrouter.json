@@ -4,10 +4,10 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 117 providers; kept the 34 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "OpenRouter lists 118 providers; kept the 35 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-11-03",
-  "count": 34,
+  "count": 35,
   "items": [
     {
       "id": "openrouter:aion-labs",
@@ -659,6 +659,34 @@
         "viaOpenRouter": "https://openrouter.ai/provider/particle-ai"
       },
       "fetchedAt": "2026-10-28"
+    },
+    {
+      "id": "openrouter:pearl-research",
+      "name": "Pearl Research",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Pearl Research is building infrastructure and algorithms that deliver more tokens, faster, with AI economics built for scale, on any hardware - approaching the limit of intelligence-per-watt. Access leading open models through the most efficient inference engine.",
+      "url": "https://pearlresearch.ai",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "keyServerSide": true,
+        "privacyPolicy": "https://pearlresearch.ai/legal/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://pearlresearch.ai/legal/terms",
+        "viaOpenRouter": "https://openrouter.ai/provider/pearl-research"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "openrouter:perceptron",

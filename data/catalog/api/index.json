@@ -1,8 +1,8 @@
 {
   "category": "api",
   "nameKo": "API",
-  "fetchedAt": "2026-11-01",
-  "total": 12090,
+  "fetchedAt": "2026-11-03",
+  "total": 12098,
   "subcategories": [
     {
       "id": "ai-llm",
@@ -29,7 +29,7 @@
     {
       "id": "ai-inference",
       "nameKo": "AI 모델 호스팅·라우터",
-      "count": 216,
+      "count": 217,
       "sources": [
         {
           "id": "models-dev",
@@ -44,7 +44,7 @@
         {
           "id": "openrouter",
           "name": "OpenRouter providers (AI inference companies)",
-          "count": 27
+          "count": 28
         }
       ]
     },
@@ -187,7 +187,7 @@
     {
       "id": "open-data",
       "nameKo": "공공·과학 데이터",
-      "count": 658,
+      "count": 659,
       "sources": [
         {
           "id": "apis-guru",
@@ -202,7 +202,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 52
+          "count": 53
         },
         {
           "id": "public-api-lists",
@@ -421,7 +421,7 @@
     {
       "id": "dev",
       "nameKo": "개발 도구",
-      "count": 795,
+      "count": 796,
       "sources": [
         {
           "id": "apis-guru",
@@ -436,7 +436,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 126
+          "count": 127
         },
         {
           "id": "public-api-lists",
@@ -453,7 +453,7 @@
     {
       "id": "business",
       "nameKo": "업무·생산성",
-      "count": 368,
+      "count": 370,
       "sources": [
         {
           "id": "apis-guru",
@@ -468,7 +468,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 88
+          "count": 90
         },
         {
           "id": "public-api-lists",
@@ -485,7 +485,7 @@
     {
       "id": "media",
       "nameKo": "사진·영상·음악",
-      "count": 594,
+      "count": 596,
       "sources": [
         {
           "id": "apis-guru",
@@ -500,7 +500,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 65
+          "count": 67
         },
         {
           "id": "public-api-lists",
@@ -549,7 +549,7 @@
     {
       "id": "text",
       "nameKo": "글·사전·언어",
-      "count": 110,
+      "count": 111,
       "sources": [
         {
           "id": "apis-guru",
@@ -559,7 +559,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 12
+          "count": 13
         },
         {
           "id": "public-api-lists",
@@ -683,8 +683,8 @@
       "license": "MIT (list text); each API has its own terms",
       "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "marcelscruz.json",
-      "count": 767,
-      "fetchedAt": "2026-11-01"
+      "count": 774,
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev",
@@ -694,7 +694,7 @@
       "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "models-dev.json",
       "count": 235,
-      "fetchedAt": "2026-11-01"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "official",
@@ -704,17 +704,17 @@
       "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "official.json",
       "count": 225,
-      "fetchedAt": "2026-11-01"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "openrouter",
       "name": "OpenRouter providers (AI inference companies)",
       "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
       "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-      "note": "OpenRouter lists 117 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting.",
+      "note": "OpenRouter lists 117 providers; kept the 34 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "openrouter.json",
-      "count": 33,
-      "fetchedAt": "2026-10-31"
+      "count": 34,
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "public-api-lists",

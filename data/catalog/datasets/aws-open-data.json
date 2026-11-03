@@ -4,11 +4,11 @@
     "name": "Registry of Open Data on AWS",
     "url": "https://registry.opendata.aws/",
     "license": "Registry entries from awslabs/open-data-registry (Apache-2.0 registry repository); each dataset keeps the license named by its provider.",
-    "total": 1243,
+    "total": 1245,
     "cut": "폐기(Deprecated) 0개 제외"
   },
-  "fetchedAt": "2026-10-26",
-  "count": 1237,
+  "fetchedAt": "2026-11-03",
+  "count": 1239,
   "items": [
     {
       "id": "aws-open-data:1000-genomes",
@@ -6274,6 +6274,36 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "aws-open-data:ccrsmodiscomposite",
+      "name": "CCRS MODIS Clear-Sky Composites over Canada | Composites MODIS sous ciel dégagé du CCT couvrant le Canada",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "CCRS MODIS Clear-Sky Composites over Canada | Composites MODIS sous ciel dégagé du CCT couvrant le Canada",
+      "url": "https://registry.opendata.aws/ccrsmodiscomposite/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "tags": [
+        "analysis-ready-data",
+        "aws",
+        "aws-pds",
+        "cog",
+        "earth-observation",
+        "satellite-imagery"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "licenseText": "Creative Commons Licence. Creative Commons BY 4.0 https://creativecommons.org/licenses/by/4.0/",
+        "managedBy": "Canada Centre for Remote Sensing (CCRS), Canada Centre for Mapping and Earth Observation (CCMEO), Department of Natural Resources Canada (NRCan) https://natural-resources.canada.ca/science-data/science-research/research-centres/canada-centre-remote-sensing https://natural-resources.canada.ca/science-data/science-research/research-centres/canada-centre-mapping-earth-observation"
+      },
+      "use": {
+        "docs": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/CCRS/Trishchenko_MODIS_Albedo"
+      },
+      "fetchedAt": "2026-11-03"
+    },
+    {
       "id": "aws-open-data:cell-painting-image-collection",
       "name": "Cell Painting Image Collection",
       "kind": "open-data",
@@ -12072,6 +12102,40 @@
         "docs": "https://training.geoglows.org"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "aws-open-data:geonadir-fair-data",
+      "name": "GeoNadir FAIR Data",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "GeoNadir FAIR Data is an open collection of uncrewed aerial vehicle (UAV or drone) mapping datasets contributed through the GeoNadir platform and published as cloud-native geospatial files on Amazon S3. Each dataset represents one drone survey.",
+      "url": "https://registry.opendata.aws/geonadir-fair-data/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "tags": [
+        "aerial-imagery",
+        "aws",
+        "aws-pds",
+        "cog",
+        "dem",
+        "earth-observation",
+        "elevation",
+        "geospatial",
+        "stac"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "licenseText": "This dataset is licensed under the Creative Commons Attribution 4.0 International license (CC-BY-4.0). You are free to share and adapt the material for any purpose, provided you give appropriate credit to GeoNadir and the contributing data provider.",
+        "managedBy": "GeoNadir",
+        "updateFrequency": "New drone mapping datasets are added as they are contributed and cleared for open publication."
+      },
+      "use": {
+        "docs": "https://github.com/Geonadir/open-data-examples/blob/main/OPEN_DATA_STRUCTURE.md"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "aws-open-data:geonet",
@@ -28550,10 +28614,10 @@
     },
     {
       "id": "aws-open-data:noaa-nos-cora",
-      "name": "NOAA's Coastal Ocean Reanalysis (CORA) Dataset: 1979-2022",
+      "name": "NOAA's Coastal Ocean Reanalysis (CORA)",
       "kind": "open-data",
       "category": "datasets",
-      "summary": "NOAA's Coastal Ocean Reanalysis (CORA) for the Gulf, East Coast/Atlantic, and Caribbean (GEC) is produced using verified hourly water levels from the National Ocean Service’s Center of Operational Oceanographic Products & Services (CO-OPS).",
+      "summary": "NOAA's Coastal Ocean Reanalysis (CORA) provides re-analyzed wave and water level data and derived products for the U.S. coastlines. The data are produced by coupling ADCIRC (ADvanced CIRCulation Model) and SWAN (Simulating WAves Nearshore) and assimilating verified hourly water levels from the…",
       "url": "https://registry.opendata.aws/noaa-nos-cora/",
       "source": {
         "name": "Registry of Open Data on AWS",
@@ -28566,17 +28630,18 @@
         "climate",
         "disaster-response",
         "environmental",
+        "oceans",
         "transportation",
         "weather"
       ],
       "preview": {
         "type": "dataset",
         "host": "aws",
-        "licenseText": "NOAA data disseminated through NODD are open to the public and can be used as desired. NOAA makes data openly available to ensure maximum use of our data, and to spur and encourage exploration and innovation throughout the industry.",
+        "licenseText": "These data are produced by NOAA and are not subject to copyright protection in the United States. NOAA waives any potential copyright and related rights in these data worldwide through the Creative Commons Universal Public Domain Dedication (CC0-1.0). Pursuant to 17 U.S.C.",
         "managedBy": "NOAA’s National Ocean Service, The Center for Operational Oceanographic Products and Services (CO-OPS)",
-        "updateFrequency": "Product dependent. At minimum, annually."
+        "updateFrequency": "Intermittent."
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "aws-open-data:noaa-nos-eccofs",

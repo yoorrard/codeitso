@@ -4,10 +4,10 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 117 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "OpenRouter lists 117 providers; kept the 34 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-31",
-  "count": 33,
+  "fetchedAt": "2026-11-03",
+  "count": 34,
   "items": [
     {
       "id": "openrouter:aion-labs",
@@ -373,6 +373,39 @@
         "viaOpenRouter": "https://openrouter.ai/provider/ionstream"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "openrouter:kt",
+      "name": "KT",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "KT 토큰팩토리에서 AI 모델의 선택과 연결을 더 쉽고 안전하게 이용해 보세요.",
+      "url": "https://tokenfactory.kt.com",
+      "source": {
+        "name": "OpenRouter providers",
+        "url": "https://openrouter.ai/api/v1/providers"
+      },
+      "tags": [
+        "ai",
+        "hq-kr",
+        "inference",
+        "server-key",
+        "via-openrouter"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "datacenters": [
+          "KR"
+        ],
+        "headquarters": "KR",
+        "keyServerSide": true,
+        "privacyPolicy": "https://tokenfactory.kt.com/terms/privacy",
+        "summarySource": "official page meta description",
+        "terms": "https://tokenfactory.kt.com/terms/service",
+        "viaOpenRouter": "https://openrouter.ai/provider/kt"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "openrouter:mancer",

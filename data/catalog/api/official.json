@@ -6,7 +6,7 @@
     "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드잇소",
     "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-01",
+  "fetchedAt": "2026-11-03",
   "count": 225,
   "items": [
     {
@@ -384,6 +384,9 @@
         "name": "docs.apify.com",
         "url": "https://docs.apify.com/api/v2"
       },
+      "metrics": {
+        "downloads": 581629
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -392,7 +395,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "freeTierCheckedAt": "2026-10-28",
+        "downloadsOf": "npm:apify-client",
+        "freeTierCheckedAt": "2026-11-03",
         "freeTierQuote": "Enjoy $500 worth of free usage to build your own Actors and AI agents along with other benefits for 6 months.",
         "keyServerSide": true,
         "pricingUrl": "https://apify.com/pricing",
@@ -403,10 +407,7 @@
         "install": "npm install apify-client",
         "docs": "https://docs.apify.com/api/v2"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 100000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:assemblyai",
@@ -479,7 +480,7 @@
       "name": "Auth0",
       "kind": "auth-security",
       "category": "api",
-      "summary": "Secure users, AI agents, and more with Auth0, an easy-to-implement, scalable, and adaptable authentication and authorization platform.",
+      "summary": "Secure users, AI agents, and more with Auth0, a production-ready authentication and authorization platform built to help you ship faster and drive sign-ups.",
       "summaryKo": "로그인·회원 관리를 대신하는 Auth0",
       "written": "codeshopper",
       "url": "https://auth0.com",
@@ -488,7 +489,7 @@
         "url": "https://auth0.com/docs"
       },
       "metrics": {
-        "downloads": 2883772
+        "downloads": 2813416
       },
       "tags": [
         "auth-oauth",
@@ -498,7 +499,7 @@
         "type": "api",
         "auth": "OAuth / OIDC",
         "downloadsOf": "npm:auth0",
-        "freeTierCheckedAt": "2026-11-01",
+        "freeTierCheckedAt": "2026-11-03",
         "freeTierQuote": "Flexible pricing for all your apps and AI agents from user 1 to 1,000,000+ Start building for free.",
         "keyServerSide": true,
         "pricingUrl": "https://auth0.com/pricing",
@@ -689,10 +690,9 @@
       "name": "Baichuan API",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "百川大模型系列API，支持搜索增强+企业知识库，实现互联网实时信息+企业完整知识的融合，并能最多支持192k上下文窗口，解决大部分定制化场景。",
-      "summaryKo": "Baichuan 모델 API (중국)",
+      "summary": "Baichuan 모델 API (중국)",
       "written": "codeshopper",
-      "url": "https://platform.baichuan-ai.com",
+      "url": "https://platform.baichuan-ai.com/docs/api",
       "source": {
         "name": "platform.baichuan-ai.com",
         "url": "https://platform.baichuan-ai.com/docs/api"
@@ -706,8 +706,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "keyServerSide": true,
-        "summarySource": "https://platform.baichuan-ai.com"
+        "keyServerSide": true
       },
       "use": {
         "docs": "https://platform.baichuan-ai.com/docs/api"
@@ -1127,7 +1126,7 @@
         "url": "https://docs.cartesia.ai"
       },
       "metrics": {
-        "downloads": 112657
+        "downloads": 96724
       },
       "tags": [
         "ai",
@@ -1138,7 +1137,7 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:@cartesia/cartesia-js",
-        "freeTierCheckedAt": "2026-10-29",
+        "freeTierCheckedAt": "2026-11-03",
         "freeTierQuote": "Pricing: free plan, TTS, STT, and voice agents",
         "keyServerSide": true,
         "pricingUrl": "https://cartesia.ai/pricing",
@@ -1813,7 +1812,7 @@
         "url": "https://elevenlabs.io/docs"
       },
       "metrics": {
-        "downloads": 1417182
+        "downloads": 1356665
       },
       "tags": [
         "ai",
@@ -1824,8 +1823,6 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:@elevenlabs/elevenlabs-js",
-        "freeTierCheckedAt": "2026-11-01",
-        "freeTierQuote": "$18.33 per month, 2 months free.",
         "keyServerSide": true,
         "pricingUrl": "https://elevenlabs.io/pricing/api",
         "sdk": "@elevenlabs/elevenlabs-js",
@@ -1918,7 +1915,7 @@
         "url": "https://docs.fal.ai"
       },
       "metrics": {
-        "downloads": 2173186
+        "downloads": 2412082
       },
       "tags": [
         "ai",
@@ -2560,7 +2557,7 @@
         "url": "https://cloud.google.com/natural-language/docs"
       },
       "metrics": {
-        "downloads": 120138
+        "downloads": 101945
       },
       "tags": [
         "ai",
@@ -3319,7 +3316,7 @@
       "summary": "AI-powered creative tools for everyone. Generate stunning images and videos with cutting-edge AI models, or integrate our API into your applications.",
       "summaryKo": "여러 이미지·영상 모델을 한곳에서 부르는 Krea API",
       "written": "codeshopper",
-      "url": "https://docs.krea.ai",
+      "url": "https://www.krea.ai/api",
       "source": {
         "name": "docs.krea.ai",
         "url": "https://docs.krea.ai"
@@ -3618,6 +3615,9 @@
         "name": "docs.lumalabs.ai",
         "url": "https://docs.lumalabs.ai"
       },
+      "metrics": {
+        "downloads": 18380
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -3626,6 +3626,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:lumaai",
         "keyServerSide": true,
         "pricingUrl": "https://lumalabs.ai/api/pricing",
         "sdk": "lumaai",
@@ -3635,10 +3636,7 @@
         "install": "npm install lumaai",
         "docs": "https://docs.lumalabs.ai"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 100000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:mailchimp-transactional",
@@ -4900,7 +4898,8 @@
       "name": "Picsart Creative APIs",
       "kind": "ai-image",
       "category": "api",
-      "summary": "사진 편집·배경 지우기·이미지 생성을 하는 Picsart API",
+      "summary": "Integrate Photo and Video editing SDK, leverage AI-powered APIs and add custom configurations for your business. Powerful content editing quickly",
+      "summaryKo": "사진 편집·배경 지우기·이미지 생성을 하는 Picsart API",
       "written": "codeshopper",
       "url": "https://picsart.io",
       "source": {
@@ -4915,7 +4914,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "keyServerSide": true
+        "keyServerSide": true,
+        "summarySource": "https://picsart.io"
       },
       "use": {
         "docs": "https://docs.picsart.io"
@@ -5005,7 +5005,7 @@
         "url": "https://portkey.ai/docs"
       },
       "metrics": {
-        "downloads": 306866
+        "downloads": 252981
       },
       "tags": [
         "ai",
@@ -5032,13 +5032,16 @@
       "name": "PortOne (포트원)",
       "kind": "kr-dev",
       "category": "api",
-      "summary": "결제부터 파트너 정산·세무까지, AI로 연결하는 하나의 재무 인프라. 국내외 약 25개 PG사 통합 연동, 정산 자동화, 글로벌 커머스 마감까지 포트원 하나로 완성하세요. 전 세계 2,500개 비즈니스가 선택한 결제 인프라",
+      "summary": "포트원이 제공하는 단 한 줄의 코드로 세상의 모든 결제를 손쉽게 연동해보세요. PG사 통합결제 연동, 해외결제, 파트너 정산 관리, 결제 애널리틱스, 수수료 혜택까지, 포트원의 맞춤 컨설팅을 통해 최적의 비즈니스 인프라를 구축하세요.",
       "summaryKo": "여러 PG사 결제를 한 번에 붙이는 포트원 결제 연동 API",
       "written": "codeshopper",
       "url": "https://portone.io",
       "source": {
         "name": "developers.portone.io",
         "url": "https://developers.portone.io"
+      },
+      "metrics": {
+        "downloads": 40144
       },
       "tags": [
         "auth-apikey",
@@ -5048,6 +5051,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey (V2 API Secret)",
+        "downloadsOf": "npm:@portone/server-sdk",
         "keyServerSide": true,
         "sdk": "@portone/server-sdk",
         "summarySource": "https://portone.io"
@@ -5071,6 +5075,9 @@
         "name": "postmarkapp.com",
         "url": "https://postmarkapp.com/developer"
       },
+      "metrics": {
+        "downloads": 1618013
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5079,7 +5086,8 @@
       "preview": {
         "type": "api",
         "auth": "server token",
-        "freeTierCheckedAt": "2026-11-01",
+        "downloadsOf": "npm:postmark",
+        "freeTierCheckedAt": "2026-11-03",
         "freeTierQuote": "Start Free Trial No Credit Card Required.",
         "keyServerSide": true,
         "pricingUrl": "https://postmarkapp.com/pricing",
@@ -5090,10 +5098,7 @@
         "install": "npm install postmark",
         "docs": "https://postmarkapp.com/developer"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 1000000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:publicai",
@@ -5168,6 +5173,9 @@
         "name": "razorpay.com",
         "url": "https://razorpay.com/docs/api/"
       },
+      "metrics": {
+        "downloads": 437178
+      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -5175,6 +5183,7 @@
       "preview": {
         "type": "api",
         "auth": "key id / secret",
+        "downloadsOf": "npm:razorpay",
         "keyServerSide": true,
         "sdk": "razorpay",
         "summarySource": "https://razorpay.com"
@@ -5183,10 +5192,7 @@
         "install": "npm install razorpay",
         "docs": "https://razorpay.com/docs/api/"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 10000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:recaptcha",
@@ -5363,6 +5369,9 @@
         "name": "replicate.com",
         "url": "https://replicate.com/docs"
       },
+      "metrics": {
+        "downloads": 756543
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5371,6 +5380,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:replicate",
         "keyServerSide": true,
         "pricingUrl": "https://replicate.com/pricing",
         "sdk": "replicate",
@@ -5380,10 +5390,7 @@
         "install": "npm install replicate",
         "docs": "https://replicate.com/docs"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 100000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:resemble",
@@ -5431,6 +5438,9 @@
         "name": "resend.com",
         "url": "https://resend.com/docs"
       },
+      "metrics": {
+        "downloads": 17213657
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5439,6 +5449,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:resend",
         "keyServerSide": true,
         "pricingUrl": "https://resend.com/pricing",
         "sdk": "resend",
@@ -5448,10 +5459,7 @@
         "install": "npm install resend",
         "docs": "https://resend.com/docs"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 50000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:retell",
@@ -5466,6 +5474,9 @@
         "name": "docs.retellai.com",
         "url": "https://docs.retellai.com"
       },
+      "metrics": {
+        "downloads": 308519
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5474,7 +5485,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "freeTierCheckedAt": "2026-11-01",
+        "downloadsOf": "npm:retell-sdk",
+        "freeTierCheckedAt": "2026-11-03",
         "freeTierQuote": "Go live in minutes with $10 in free credits.",
         "keyServerSide": true,
         "pricingUrl": "https://www.retellai.com/pricing",
@@ -5485,10 +5497,7 @@
         "install": "npm install retell-sdk",
         "docs": "https://docs.retellai.com"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 500000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:rev-ai",
@@ -5768,6 +5777,9 @@
         "name": "docs.dev.runwayml.com",
         "url": "https://docs.dev.runwayml.com"
       },
+      "metrics": {
+        "downloads": 77839
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5776,6 +5788,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@runwayml/sdk",
         "keyServerSide": true,
         "pricingUrl": "https://docs.dev.runwayml.com/guides/pricing/",
         "sdk": "@runwayml/sdk",
@@ -5785,10 +5798,7 @@
         "install": "npm install @runwayml/sdk",
         "docs": "https://docs.dev.runwayml.com"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 1000000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:scrapingbee",
@@ -5870,6 +5880,9 @@
         "name": "twilio.com",
         "url": "https://www.twilio.com/docs/sendgrid"
       },
+      "metrics": {
+        "downloads": 6449897
+      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5878,6 +5891,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:@sendgrid/mail",
         "keyServerSide": true,
         "sdk": "@sendgrid/mail",
         "summarySource": "https://sendgrid.com"
@@ -5886,10 +5900,7 @@
         "install": "npm install @sendgrid/mail",
         "docs": "https://www.twilio.com/docs/sendgrid"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 1000000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:serpapi",
@@ -6072,6 +6083,9 @@
         "name": "docs.slack.dev",
         "url": "https://docs.slack.dev"
       },
+      "metrics": {
+        "downloads": 17726100
+      },
       "tags": [
         "auth-oauth",
         "chat",
@@ -6080,6 +6094,7 @@
       "preview": {
         "type": "api",
         "auth": "OAuth / bot token",
+        "downloadsOf": "npm:@slack/web-api",
         "keyServerSide": true,
         "sdk": "@slack/web-api"
       },
@@ -6087,10 +6102,7 @@
         "install": "npm install @slack/web-api",
         "docs": "https://docs.slack.dev"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 50000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:smallest-ai",
@@ -6424,6 +6436,9 @@
         "name": "docs.stripe.com",
         "url": "https://docs.stripe.com/api"
       },
+      "metrics": {
+        "downloads": 32741893
+      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -6431,6 +6446,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:stripe",
         "keyServerSide": true,
         "pricingUrl": "https://stripe.com/pricing",
         "sdk": "stripe",
@@ -6440,10 +6456,7 @@
         "install": "npm install stripe",
         "docs": "https://docs.stripe.com/api"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 50000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:stytch",
@@ -6815,7 +6828,8 @@
       "name": "Tripo API",
       "kind": "ai-image",
       "category": "api",
-      "summary": "글·이미지로 3D 모델을 만드는 Tripo API",
+      "summary": "Build with the Tripo API. Generate 3D models from text and images, texture, rig, animate, and convert — all via API.",
+      "summaryKo": "글·이미지로 3D 모델을 만드는 Tripo API",
       "written": "codeshopper",
       "url": "https://platform.tripo3d.ai",
       "source": {
@@ -6831,7 +6845,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "keyServerSide": true
+        "keyServerSide": true,
+        "summarySource": "https://platform.tripo3d.ai"
       },
       "use": {
         "docs": "https://platform.tripo3d.ai/docs"

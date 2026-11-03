@@ -6,7 +6,7 @@
     "license": "MIT (models.dev data); each provider has its own terms",
     "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-01",
+  "fetchedAt": "2026-11-03",
   "count": 235,
   "items": [
     {
@@ -472,7 +472,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 29120
+        "downloads": 33467
       },
       "tags": [
         "ai",
@@ -512,7 +512,7 @@
         "snippet": "AIHUBMIX_API_KEY=",
         "docs": "https://docs.aihubmix.com"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:aimlapi",
@@ -715,7 +715,7 @@
       "name": "Alibaba",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Supercharge Your AI Journey Effortlessly With Industry-Leading GenAI Models",
+      "summary": "Model Studio, Alibaba Cloud",
       "summaryKo": "Qwen 모델을 부르는 Alibaba Cloud Model Studio API",
       "written": "codeshopper",
       "url": "https://www.alibabacloud.com/product/modelstudio",
@@ -724,7 +724,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 309632
+        "downloads": 303018
       },
       "tags": [
         "ai",
@@ -769,7 +769,7 @@
         "snippet": "DASHSCOPE_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:alibaba-cn",
@@ -1695,7 +1695,7 @@
       "name": "Bee by HEOSSI",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Official Bee SDKs for Python and TypeScript, plus any OpenAI-compatible client via a base-URL change. Chat completions, streaming, tool calling, and the MCP server.",
+      "summary": "Official Bee SDKs for Python and TypeScript, plus any OpenAI-compatible client via a base-URL change.",
       "url": "https://bee.heossi.com/docs/sdks",
       "source": {
         "name": "models.dev",
@@ -1735,7 +1735,7 @@
         "snippet": "BEE_API_KEY=",
         "docs": "https://bee.heossi.com/docs/sdks"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:berget",
@@ -2088,7 +2088,7 @@
       "name": "Claudinio",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Claudinio: 2 models listed on models.dev (newest: Claudinio, Claudius).",
+      "summary": "From coder to coder. You know… that unlimited: flat price, two coding-optimized models, and transparent anti-runaway protection. No token meters, no surprise bills.",
       "url": "https://claudin.io",
       "source": {
         "name": "models.dev",
@@ -2117,14 +2117,14 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "models.dev data"
+        "summarySource": "official page meta description"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "CLAUDINIO_API_KEY=",
         "docs": "https://claudin.io"
       },
-      "fetchedAt": "2026-11-01"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:cline-pass",
@@ -2821,7 +2821,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 3605367
+        "downloads": 3615817
       },
       "tags": [
         "ai",
@@ -2838,6 +2838,8 @@
         "env": [
           "DEEPSEEK_API_KEY"
         ],
+        "freeTierCheckedAt": "2026-11-03",
+        "freeTierQuote": "These calls are currently free of charge; per-request billing starts at 00:00 Beijing time on November 1, 2026.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://api-docs.deepseek.com/quick_start/rate_limit/",
@@ -2860,7 +2862,7 @@
         "snippet": "DEEPSEEK_API_KEY=",
         "docs": "https://api-docs.deepseek.com"
       },
-      "fetchedAt": "2026-11-01"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:digitalocean",
@@ -3523,7 +3525,7 @@
       "name": "FrogBot",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "FrogBot is the open-source lego bricks for AI to build internal apps, automate workflows, and replace SaaS apps.",
+      "summary": "FrogBot is the open-source lego bricks for AI to vibe code any app, workflow, or automation fast.",
       "url": "https://docs.frogbot.ai",
       "source": {
         "name": "models.dev",
@@ -3566,7 +3568,7 @@
         "snippet": "FROGBOT_API_KEY=",
         "docs": "https://docs.frogbot.ai"
       },
-      "fetchedAt": "2026-11-01"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:github-copilot",
@@ -3631,9 +3633,6 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
-      "metrics": {
-        "downloads": 324543
-      },
       "tags": [
         "ai",
         "inference",
@@ -3643,7 +3642,6 @@
         "type": "api",
         "aiSdk": "gitlab-ai-provider",
         "auth": "apiKey",
-        "downloadsOf": "npm:gitlab-ai-provider",
         "env": [
           "GITLAB_TOKEN"
         ],
@@ -3669,7 +3667,7 @@
         "snippet": "GITLAB_TOKEN=",
         "docs": "https://docs.gitlab.com/user/duo_agent_platform/"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:gmicloud",
@@ -4992,18 +4990,18 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 380,
+        "modelCount": 382,
         "models": [
+          "Z.ai: GLM 5.3 FlashX Legal",
           "Particle AI: Particle-1",
           "OpenAI: GPT-6.1 Terra",
           "OpenAI: GPT-6.1 Terra Pro",
           "MoonshotAI: Kimi K3.1 Pro",
           "Recursive: Flint (free)",
           "MiniMax: MiniMax M3.1 Flash",
-          "DeepSeek V4.1 Flash 1017",
-          "Elorian: Glimpse"
+          "DeepSeek V4.1 Flash 1017"
         ],
-        "openWeightModels": 144,
+        "openWeightModels": 145,
         "outputs": [
           "audio",
           "image",
@@ -5016,7 +5014,7 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-10-31",
+      "fetchedAt": "2026-11-03",
       "metrics": {
         "siteRank": 500000
       }
@@ -5881,9 +5879,6 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
-      "metrics": {
-        "downloads": 2261
-      },
       "tags": [
         "ai",
         "inference",
@@ -5895,7 +5890,6 @@
         "aiSdk": "merge-gateway-ai-sdk-provider",
         "apiBase": "https://api-gateway.merge.dev/v1/ai-sdk",
         "auth": "apiKey",
-        "downloadsOf": "npm:merge-gateway-ai-sdk-provider",
         "env": [
           "MERGE_GATEWAY_API_KEY"
         ],
@@ -5923,7 +5917,10 @@
         "snippet": "MERGE_GATEWAY_API_KEY=",
         "docs": "https://docs.merge.dev/merge-gateway"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-03",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "models-dev:meta",
@@ -6917,18 +6914,18 @@
           "NANO_GPT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 643,
+        "modelCount": 638,
         "models": [
+          "GLM 5.3 FlashX Legal",
+          "OrcaCyber MiniMax M3.1 Flash Uncensored",
+          "OrcaCyber Qwen3.8 Flash Next Uncensored",
           "DeepSeek V4.1 Flash Heretic",
           "DeepSeek V4.1 Flash Heretic Thinking",
           "OrcaCyber Zero 1.5",
           "Particle-1",
-          "DeepSeek V4.1 Flash 0910 Uncensored",
-          "DeepSeek V4.1 Flash 0910 Uncensored Thinking",
-          "DeepSeek V4.1 Flash 1017 Uncensored",
-          "DeepSeek V4.1 Flash 1017 Uncensored Thinking"
+          "DeepSeek V4.1 Flash 0910 Uncensored"
         ],
-        "openWeightModels": 378,
+        "openWeightModels": 376,
         "outputs": [
           "text"
         ],
@@ -6939,7 +6936,7 @@
         "snippet": "NANO_GPT_API_KEY=",
         "docs": "https://docs.nano-gpt.com"
       },
-      "fetchedAt": "2026-10-31",
+      "fetchedAt": "2026-11-03",
       "metrics": {
         "siteRank": 1000000
       }
@@ -7605,16 +7602,16 @@
           "OPENCODE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 130,
+        "modelCount": 131,
         "models": [
+          "Pulse Alpha Free",
           "Flint 40B Free",
           "MiniMax M3.1 Flash Free",
           "Beam Free",
           "LL Alpha Free",
           "Nemotron 3.5 Super VL Free",
           "Gemini 4 Argon",
-          "Cat Jam Free",
-          "Muse Wonder"
+          "Cat Jam Free"
         ],
         "openWeightModels": 53,
         "outputs": [
@@ -7627,7 +7624,7 @@
         "snippet": "OPENCODE_API_KEY=",
         "docs": "https://opencode.ai/v2/docs/console/models/"
       },
-      "fetchedAt": "2026-10-23",
+      "fetchedAt": "2026-11-03",
       "metrics": {
         "siteRank": 50000
       }
@@ -7744,7 +7741,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 4159749
+        "downloads": 4238638
       },
       "tags": [
         "ai",
@@ -7762,23 +7759,23 @@
         "env": [
           "OPENROUTER_API_KEY"
         ],
-        "freeTierCheckedAt": "2026-10-31",
+        "freeTierCheckedAt": "2026-11-03",
         "freeTierQuote": "Free models are capped at 20 requests per minute and 50 per day, rising to 1,000 per day once your account has bought at least $10 of credits.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://openrouter.ai/docs/api_reference/limits",
-        "modelCount": 377,
+        "modelCount": 376,
         "models": [
+          "GLM 5.3 FlashX Legal",
           "Particle-1",
           "GPT-6.1 Terra",
           "GPT-6.1 Terra Pro",
           "Kimi K3.1 Pro",
           "Flint (free)",
           "MiniMax-M3.1-Flash",
-          "DeepSeek V4.1 Flash 1017",
-          "Glimpse"
+          "DeepSeek V4.1 Flash 1017"
         ],
-        "openWeightModels": 170,
+        "openWeightModels": 168,
         "outputs": [
           "audio",
           "image",
@@ -7792,7 +7789,7 @@
         "snippet": "OPENROUTER_API_KEY=",
         "docs": "https://openrouter.ai/docs"
       },
-      "fetchedAt": "2026-10-31"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:opper",
@@ -8513,7 +8510,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 3776
+        "downloads": 4271
       },
       "tags": [
         "ai",
@@ -8551,7 +8548,7 @@
         "snippet": "QVAC_API_KEY=",
         "docs": "https://www.npmjs.com/package/@qvac/ai-sdk-provider"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:reflection",
@@ -10715,9 +10712,6 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
-      "metrics": {
-        "downloads": 204579
-      },
       "tags": [
         "ai",
         "inference",
@@ -10727,12 +10721,11 @@
         "type": "api",
         "aiSdk": "venice-ai-sdk-provider",
         "auth": "apiKey",
-        "downloadsOf": "npm:venice-ai-sdk-provider",
         "env": [
           "VENICE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 128,
+        "modelCount": 127,
         "models": [
           "DeepSeek V4.1 Flash 1017 Uncensored",
           "GPT-6.1 Terra",
@@ -10743,7 +10736,7 @@
           "Mercury 3",
           "MiniMax M3.1 Flash"
         ],
-        "openWeightModels": 55,
+        "openWeightModels": 54,
         "outputs": [
           "text"
         ],
@@ -10754,7 +10747,10 @@
         "snippet": "VENICE_API_KEY=",
         "docs": "https://docs.venice.ai"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-11-03",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:vercel",
@@ -10770,7 +10766,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 379098
+        "downloads": 341124
       },
       "tags": [
         "ai",
@@ -10789,18 +10785,18 @@
           "AI_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 417,
+        "modelCount": 416,
         "models": [
+          "GLM 5.3 FlashX Legal",
+          "LongCat 2.5",
           "Ling 3.1 Flash 1019",
           "Particle-1",
           "GPT-6.1 Terra",
           "GPT-6.1 Terra (Fast)",
           "Kimi K3.1 Pro",
-          "Kimi K3.1 Pro Highspeed",
-          "Cohere Rerank 5 Fast",
-          "Cohere Rerank 5 Pro"
+          "Kimi K3.1 Pro Highspeed"
         ],
-        "openWeightModels": 106,
+        "openWeightModels": 104,
         "outputs": [
           "audio",
           "image",
@@ -10814,7 +10810,7 @@
         "snippet": "AI_GATEWAY_API_KEY=",
         "docs": "https://vercel.com/docs/ai-gateway"
       },
-      "fetchedAt": "2026-10-31"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:vispark",
@@ -11274,9 +11270,6 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
-      "metrics": {
-        "downloads": 1119
-      },
       "tags": [
         "ai",
         "inference",
@@ -11286,7 +11279,6 @@
         "type": "api",
         "aiSdk": "watsonx-ai-provider",
         "auth": "cloud IAM",
-        "downloadsOf": "npm:watsonx-ai-provider",
         "env": [
           "WATSONX_AI_APIKEY",
           "WATSONX_AI_PROJECT_ID"
@@ -11311,7 +11303,10 @@
         "snippet": "WATSONX_AI_APIKEY=\nWATSONX_AI_PROJECT_ID=",
         "docs": "https://www.ibm.com/docs/en/watsonx/saas?topic=solutions-supported-foundation-models"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-03",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "models-dev:xai",
@@ -11327,7 +11322,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 3721131
+        "downloads": 3729855
       },
       "tags": [
         "ai",
@@ -11347,7 +11342,7 @@
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://docs.x.ai/developers/rate-limits",
-        "modelCount": 13,
+        "modelCount": 12,
         "models": [
           "Grok Imagine Video 1.5 Lite",
           "Grok 4.7",
@@ -11356,7 +11351,7 @@
           "Grok Imagine Video 1.5",
           "Grok 4.3",
           "Grok Build 0.1",
-          "Grok Imagine Image Quality"
+          "Grok 4.20 (Non-Reasoning)"
         ],
         "outputs": [
           "image",
@@ -11370,7 +11365,7 @@
         "snippet": "XAI_API_KEY=",
         "docs": "https://docs.x.ai"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:xiaomi",
@@ -11652,7 +11647,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 32484
+        "downloads": 27914
       },
       "tags": [
         "ai",
@@ -11692,7 +11687,7 @@
         "snippet": "ZHIPU_API_KEY=",
         "docs": "https://docs.z.ai"
       },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "models-dev:zai-coding-plan",

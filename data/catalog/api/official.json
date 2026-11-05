@@ -6,7 +6,7 @@
     "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드잇소",
     "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-03",
+  "fetchedAt": "2026-11-04",
   "count": 225,
   "items": [
     {
@@ -1055,7 +1055,7 @@
       "name": "BytePlus ModelArk",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Build, deploy, and scale AI with BytePlus — cutting-edge models, tools, and infrastructure proven on global platforms.",
+      "summary": "All-in-one AI model service platform, offering top-rated models to empower diverse scenarios",
       "summaryKo": "ByteDance의 Seed 모델(글·이미지·영상)을 쓰는 BytePlus ModelArk",
       "written": "codeshopper",
       "url": "https://www.byteplus.com/en/product/modelark",
@@ -3931,7 +3931,7 @@
         "url": "https://docs.mindee.com"
       },
       "metrics": {
-        "downloads": 62252
+        "downloads": 54505
       },
       "tags": [
         "ai",
@@ -6087,9 +6087,6 @@
         "name": "docs.slack.dev",
         "url": "https://docs.slack.dev"
       },
-      "metrics": {
-        "downloads": 17726100
-      },
       "tags": [
         "auth-oauth",
         "chat",
@@ -6098,7 +6095,6 @@
       "preview": {
         "type": "api",
         "auth": "OAuth / bot token",
-        "downloadsOf": "npm:@slack/web-api",
         "keyServerSide": true,
         "sdk": "@slack/web-api"
       },
@@ -6106,7 +6102,10 @@
         "install": "npm install @slack/web-api",
         "docs": "https://docs.slack.dev"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:smallest-ai",
@@ -6579,9 +6578,6 @@
         "name": "docs.tavily.com",
         "url": "https://docs.tavily.com"
       },
-      "metrics": {
-        "downloads": 450633
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -6590,8 +6586,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@tavily/core",
-        "freeTierCheckedAt": "2026-11-03",
+        "freeTierCheckedAt": "2026-11-04",
         "freeTierQuote": "Get 100k free API credits, hands-on support from our team, and help bringing your product to market.",
         "keyServerSide": true,
         "pricingUrl": "https://www.tavily.com/pricing",
@@ -6602,7 +6597,10 @@
         "install": "npm install @tavily/core",
         "docs": "https://docs.tavily.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:tavus",
@@ -6682,7 +6680,7 @@
         "url": "https://developers.telnyx.com"
       },
       "metrics": {
-        "downloads": 653789
+        "downloads": 740261
       },
       "tags": [
         "auth-apikey",
@@ -7174,9 +7172,6 @@
         "name": "developer.vonage.com",
         "url": "https://developer.vonage.com/en/documentation"
       },
-      "metrics": {
-        "downloads": 204164
-      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -7184,7 +7179,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey / JWT",
-        "downloadsOf": "npm:@vonage/server-sdk",
         "keyServerSide": true,
         "sdk": "@vonage/server-sdk",
         "summarySource": "https://developer.vonage.com"
@@ -7193,7 +7187,10 @@
         "install": "npm install @vonage/server-sdk",
         "docs": "https://developer.vonage.com/en/documentation"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:voyage",
@@ -7209,7 +7206,7 @@
         "url": "https://docs.voyageai.com"
       },
       "metrics": {
-        "downloads": 307527
+        "downloads": 339079
       },
       "tags": [
         "ai",
@@ -7220,7 +7217,7 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:voyageai",
-        "freeTierCheckedAt": "2026-10-31",
+        "freeTierCheckedAt": "2026-11-04",
         "freeTierQuote": "The first 200M text tokens and 150B pixels for voyage-multimodal-3.5 and voyage-multimodal-3 are free for every account.",
         "keyServerSide": true,
         "pricingUrl": "https://docs.voyageai.com/docs/pricing",
@@ -7336,9 +7333,6 @@
         "name": "workos.com",
         "url": "https://workos.com/docs"
       },
-      "metrics": {
-        "downloads": 5466480
-      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -7346,8 +7340,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@workos-inc/node",
-        "freeTierCheckedAt": "2026-11-03",
+        "freeTierCheckedAt": "2026-11-04",
         "freeTierQuote": "First 1 million active users free.",
         "keyServerSide": true,
         "pricingUrl": "https://workos.com/pricing",
@@ -7358,7 +7351,10 @@
         "install": "npm install @workos-inc/node",
         "docs": "https://workos.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:writer",

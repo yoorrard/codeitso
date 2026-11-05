@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-03",
-  "count": 789,
+  "fetchedAt": "2026-11-04",
+  "count": 793,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -7574,7 +7574,7 @@
       "name": "IBANforge",
       "kind": "finance",
       "category": "api",
-      "summary": "IBAN validation, BIC/SWIFT lookup & compliance scoring",
+      "summary": "IBAN and bank/BIC reference checks, with sourced results and a keyless validation trial",
       "url": "https://ibanforge.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -7590,7 +7590,7 @@
         "cors": "no",
         "listCategory": "Finance"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-04"
     },
     {
       "id": "marcelscruz:icon-horse",
@@ -13316,6 +13316,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:realtime-sports",
+      "name": "Realtime Sports",
+      "kind": "life",
+      "category": "api",
+      "summary": "Live scores, play-by-play, box scores, schedules, injuries and odds for NFL, NBA, MLB, NHL, college and 23 soccer leagues, via REST, webhooks and WebSocket",
+      "url": "https://www.realtimesportsapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-04"
+    },
+    {
       "id": "marcelscruz:receiptedit-sales-tax-api",
       "name": "ReceiptEdit Sales Tax API",
       "kind": "finance",
@@ -16359,6 +16383,30 @@
       "fetchedAt": "2026-11-03"
     },
     {
+      "id": "marcelscruz:timelogic",
+      "name": "TimeLogic",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Current time, time zone conversion and DST, plus WorldTimeAPI-compatible routes. Free plan: 10,000 requests a month",
+      "url": "https://timelogicapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-04"
+    },
+    {
       "id": "marcelscruz:timezones-dictionary-api",
       "name": "Timezones Dictionary API",
       "kind": "maps",
@@ -16904,6 +16952,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:uberllm",
+      "name": "UberLLM",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "OpenAI- and Anthropic-compatible API for GPT, Claude, Gemini, DeepSeek and uncensored models plus image, video and music, billed at provider cost",
+      "url": "https://uberllm.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-04"
     },
     {
       "id": "marcelscruz:udemy-coupons-courses-instructors-data",
@@ -18736,6 +18808,30 @@
         "listCategory": "Cloud Storage & File Sharing"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:zaptu",
+      "name": "Zaptu",
+      "kind": "business",
+      "category": "api",
+      "summary": "Remote MCP server and REST API that send consented contact requests to local US home-service pros (plumbing, cleaning, pest). Not a booking",
+      "url": "https://zaptu.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-04"
     },
     {
       "id": "marcelscruz:zelda",

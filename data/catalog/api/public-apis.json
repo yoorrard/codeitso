@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-04",
-  "count": 2247,
+  "fetchedAt": "2026-11-05",
+  "count": 2279,
   "items": [
     {
       "id": "public-apis:0x",
@@ -1493,6 +1493,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:allratestoday",
+      "name": "AllRatesToday",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Official exchange rates published by 121 central banks and tax authorities, keyless latest table",
+      "url": "https://allratestoday.com/central-bank-rates-api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "currency-exchange",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Currency Exchange"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:allscreenshots",
       "name": "Allscreenshots",
       "kind": "dev",
@@ -1601,6 +1627,31 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "public-apis:alphagrowth",
+      "name": "AlphaGrowth",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Crypto project metrics, community growth, funding rounds, investors, chains, fees and DAO treasuries",
+      "url": "https://alphagrowth.io/openapi.json",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:amadeus-for-developers",
@@ -2712,6 +2763,32 @@
         "listCategory": "Geocoding"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:appgoat",
+      "name": "AppGoat",
+      "kind": "dev",
+      "category": "api",
+      "summary": "App Store and Google Play apps, reviews, keywords, rankings, top charts and competitors",
+      "url": "https://docs.appgoat.ai",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:application-environment-verification",
@@ -4101,6 +4178,31 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:barcode-lookup",
+      "name": "Barcode Lookup",
+      "kind": "payments",
+      "category": "api",
+      "summary": "Product name, brand, ingredients, Nutri-Score and nutrition for 4.3M EAN, UPC and GTIN barcodes",
+      "url": "https://dataandapis.com/apis/barcode-lookup",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:barter-vg",
@@ -6934,6 +7036,32 @@
       "fetchedAt": "2026-10-29"
     },
     {
+      "id": "public-apis:caliber",
+      "name": "Caliber",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Which red dot optics fit which pistols, each fit cited to a maker or retailer",
+      "url": "https://caliberapi.com/data/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:call-of-duty-mobile",
       "name": "Call of Duty Mobile",
       "kind": "entertainment",
@@ -8985,6 +9113,31 @@
       }
     },
     {
+      "id": "public-apis:close-knit",
+      "name": "Close Knit",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Neighbourhoods and homes in London and England: sale prices, rents, crime, schools, flood risk",
+      "url": "https://getcloseknit.com/openapi.json",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:cloudbet",
       "name": "Cloudbet",
       "kind": "life",
@@ -10396,6 +10549,31 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:company-enrichment",
+      "name": "Company Enrichment",
+      "kind": "business",
+      "category": "api",
+      "summary": "Domain, URL or email to company name, industry, size, HQ, tickers and socials, 125k companies",
+      "url": "https://dataandapis.com/apis/companies",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:compare-flight-prices",
@@ -13973,6 +14151,32 @@
       }
     },
     {
+      "id": "public-apis:discord-timestamp-generator",
+      "name": "Discord Timestamp Generator",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Discord timestamp codes in every style from an ISO 8601 datetime or a Unix time",
+      "url": "https://discordtimestampgen.com/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:disify",
       "name": "Disify",
       "kind": "messaging",
@@ -15441,6 +15645,32 @@
         "listCategory": "Text Analysis"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:ek-litre",
+      "name": "ek litre",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Pakistan's petrol, diesel and kerosene prices since 2006, with OGRA's line-by-line price build-up",
+      "url": "https://eklitre.pk/data/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:election",
@@ -17828,6 +18058,32 @@
       "fetchedAt": "2026-11-04"
     },
     {
+      "id": "public-apis:firmsapi",
+      "name": "FIRMSapi",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Look up, search and validate US CBP FIRMS facility codes for ports, warehouses and FTZs",
+      "url": "https://docs.firmsapi.com/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:fishwatch",
       "name": "FishWatch",
       "kind": "life",
@@ -18096,6 +18352,32 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:flyitalyadsb",
+      "name": "FlyItalyADSB",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Live and historical ADS-B and MLAT aircraft positions worldwide, from a community receiver network",
+      "url": "https://flyitalyadsb.com/en/data/api/docs/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:fmi-open-data",
@@ -18774,6 +19056,32 @@
         "listCategory": "URL Shorteners"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:freecurrency",
+      "name": "FreeCurrency",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Real-time and historical foreign exchange rates",
+      "url": "https://freecurrencyapi.com",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "currency-exchange",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Currency Exchange"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:freeforexapi",
@@ -21710,6 +22018,32 @@
         "listCategory": "Environment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:grizzly-bulls",
+      "name": "Grizzly Bulls",
+      "kind": "finance",
+      "category": "api",
+      "summary": "U.S. GDP, CPI, unemployment, and payroll history",
+      "url": "https://grizzlybulls.com/economic-data-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:grunstromindex",
@@ -29376,6 +29710,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:logoapi",
+      "name": "Logoapi",
+      "kind": "business",
+      "category": "api",
+      "summary": "Free SVG company logos by domain, plus search by name. No signup",
+      "url": "https://logoapi.sh/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:logs-to",
       "name": "Logs.to",
       "kind": "dev",
@@ -29723,6 +30083,32 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:lucyd",
+      "name": "Lucyd",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Bitcoin Up/Down prediction markets on testnet: markets, trades, positions, order books",
+      "url": "https://lucyd.trade/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:lumify",
@@ -34229,6 +34615,32 @@
       }
     },
     {
+      "id": "public-apis:nhtsa-edge-vin-decoder",
+      "name": "NHTSA Edge VIN Decoder",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Decode US VINs offline from the NHTSA vPIC dataset, served from edge locations",
+      "url": "https://data.ai-kit.net",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "vehicle"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Vehicle"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:nhtsa-vehicle-recalls",
       "name": "NHTSA Vehicle Recalls",
       "kind": "maps",
@@ -38470,6 +38882,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:optimistfi-perps",
+      "name": "OptimistFi Perps",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Funding, open interest, prices and leverage caps for perps on 40+ venues, in one schema",
+      "url": "https://optimistfi.com/perps/data",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:orb-intelligence",
       "name": "ORB Intelligence",
       "kind": "business",
@@ -38844,6 +39282,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:paint-color-hq",
+      "name": "Paint Color HQ",
+      "kind": "media",
+      "category": "api",
+      "summary": "Closest real paint colors across 13 brands for any hex value, scored with CIEDE2000",
+      "url": "https://www.paintcolorhq.com/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-none",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:pan-africa-data",
       "name": "Pan Africa Data",
       "kind": "open-data",
@@ -38922,6 +39386,31 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:pandlens",
+      "name": "Pandlens",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Dutch property, building, energy label, 3D roof/solar, parcel and neighbourhood data by postal code",
+      "url": "https://pandlens.nl/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "geocoding",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:pangolinfo-amazon-data",
@@ -39139,6 +39628,32 @@
       }
     },
     {
+      "id": "public-apis:patentref",
+      "name": "PatentRef",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "PatentsView-compatible API for US patent grants since 1976: claims, citations, CPC, fee status",
+      "url": "https://patentref.io/docs/?utm_source=publicapis",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "patent"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Patent"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:patentsview",
       "name": "PatentsView",
       "kind": "open-data",
@@ -39218,6 +39733,31 @@
         "listCategory": "Open Data"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:pdfdispatch",
+      "name": "PDFDispatch",
+      "kind": "business",
+      "category": "api",
+      "summary": "HTML, URLs, Markdown and Office files to PDF, plus merge, split and PDF/A. EU-hosted, free tier",
+      "url": "https://docs.pdfdispatch.com/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:pdffleet",
@@ -39793,6 +40333,31 @@
         "listCategory": "Art & Design"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:pictograph",
+      "name": "Pictograph",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Train custom vision models and run them as real-time detection endpoints, with a free tier",
+      "url": "https://pictograph.io/docs/api-reference",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "machine-learning"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Machine Learning"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:pinata",
@@ -43523,6 +44088,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:rebatehub",
+      "name": "RebateHub",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Canadian home energy rebate, grant and loan programs with status, deadlines and official sources",
+      "url": "https://rebatehub.ca/data",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:rebrandly",
       "name": "Rebrandly",
       "kind": "dev",
@@ -43976,6 +44567,32 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:rendlet",
+      "name": "Rendlet",
+      "kind": "dev",
+      "category": "api",
+      "summary": "HTML or JSON templates (invoice, itinerary) to PDF; free tier 100 docs/month",
+      "url": "https://rendlet.com/docs.md",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:rendobar",
@@ -45076,6 +45693,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:sanctions-screening",
+      "name": "Sanctions Screening",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Fuzzy name screening against OFAC, UN, EU and UK sanctions lists plus PEPs, with list versions",
+      "url": "https://dataandapis.com/apis/sanctions",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:satnogs",
       "name": "SatNOGS",
       "kind": "open-data",
@@ -46031,6 +46673,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:seller-fee",
+      "name": "Seller Fee",
+      "kind": "business",
+      "category": "api",
+      "summary": "Marketplace and payment fees for Gumroad, Etsy, Stripe and PayPal with net payout breakdowns",
+      "url": "https://seller-fee-api.narwhalapis.workers.dev",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:semantic-scholar",
       "name": "Semantic Scholar",
       "kind": "open-data",
@@ -46373,6 +47041,32 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:shelfwatch-cpsc-recalls",
+      "name": "ShelfWatch CPSC Recalls",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "US CPSC product recall notices, filterable by product category; no key required",
+      "url": "https://stxai.app/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:shibe-online",
@@ -54229,6 +54923,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:tryhired",
+      "name": "TryHired",
+      "kind": "business",
+      "category": "api",
+      "summary": "Read-only U.S. career data: pay, outlook, requirements and comparisons from BLS and O*NET",
+      "url": "https://tryhired.co/data/#api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:tubetotranscript",
       "name": "TubeToTranscript",
       "kind": "media",
@@ -54282,6 +55002,32 @@
       "metrics": {
         "siteRank": 5000
       }
+    },
+    {
+      "id": "public-apis:turkpidya",
+      "name": "Turkpidya",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Türkiye data: gold prices, lira rates, earthquakes, prayer times, fuel, duty pharmacies",
+      "url": "https://turkpidya.com/developers/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:tvdb",
@@ -55616,6 +56362,32 @@
       }
     },
     {
+      "id": "public-apis:us-freelancer-tax",
+      "name": "US Freelancer Tax",
+      "kind": "finance",
+      "category": "api",
+      "summary": "2026 US self-employment tax, quarterly estimates, QBI, mileage and home office deductions",
+      "url": "https://narwhalthepong.github.io/gumroad-license-check/free-tax-finance-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "public-apis:us-mortgage-calculator",
       "name": "US Mortgage Calculator",
       "kind": "finance",
@@ -55640,6 +56412,32 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:us-per-diem",
+      "name": "US Per Diem",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "GSA lodging and M&IE per diem rates for US cities by ZIP, state and fiscal year",
+      "url": "https://us-per-diem-api.narwhalapis.workers.dev",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:us-street-address",
@@ -59202,6 +60000,32 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:xrates",
+      "name": "XRates",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Latest and historical exchange rates aggregated from ECB, CBR and open data feeds, 300+ currencies",
+      "url": "https://xratesapi.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "currency-exchange",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Currency Exchange"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "public-apis:xrpl-to",

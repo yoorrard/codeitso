@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-04",
-  "count": 793,
+  "fetchedAt": "2026-11-05",
+  "count": 803,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -391,6 +391,29 @@
       "fetchedAt": "2026-10-25"
     },
     {
+      "id": "marcelscruz:agentseo",
+      "name": "AgentSEO",
+      "kind": "dev",
+      "category": "api",
+      "summary": "SEO API for AI agents: SERP analysis, keyword research, rank tracking, content gaps, and AI visibility workflows via REST and MCP",
+      "url": "https://www.agentseo.dev/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "marcelscruz:agingresearch",
       "name": "AgingResearch",
       "kind": "life",
@@ -559,6 +582,30 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "marcelscruz:ai-sense",
+      "name": "AI SENSE",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Utility endpoints: time, hashing, encoding, QR codes, HTML to PDF, JSON, images, webhooks and temporary storage",
+      "url": "https://aisense.no",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "marcelscruz:ai-text-moderation-toxicity-sentiment-analyzer",
@@ -1737,6 +1784,29 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "marcelscruz:bankconv",
+      "name": "BankConv",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Convert bank statement PDFs into JSON transactions, CSV, OFX, QFX, QBO and Xero CSV",
+      "url": "https://bankconv.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "marcelscruz:bankday",
@@ -5107,30 +5177,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "marcelscruz:ek-litre",
-      "name": "ek litre",
-      "kind": "open-data",
-      "category": "api",
-      "summary": "Pakistan's petrol, diesel and kerosene prices since 2006, with OGRA's line-by-line price build-up",
-      "url": "https://eklitre.pk/data/#h-api",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "open-data"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Open Data"
-      },
-      "fetchedAt": "2026-10-27"
-    },
-    {
       "id": "marcelscruz:el-mapa-del-agua",
       "name": "El mapa del agua",
       "kind": "weather",
@@ -5690,6 +5736,30 @@
         "listCategory": "Social"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:femtos",
+      "name": "Femtos",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Hyperliquid data across HyperCore, HyperEVM and Elysium: markets, order books, wallets, tokens",
+      "url": "https://femtos.xyz",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "marcelscruz:fidro",
@@ -11967,6 +12037,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:pdf-conversion-api",
+      "name": "PDF Conversion API",
+      "kind": "business",
+      "category": "api",
+      "summary": "556 file conversions in one REST call: Office, HTML, images, email and CAD to PDF and back, plus PDF tools. Free for 250 conversions a month",
+      "url": "https://pdfconversionapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "marcelscruz:pdfblocks",
       "name": "Pdfblocks",
       "kind": "business",
@@ -13219,6 +13312,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:readark",
+      "name": "Readark",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Dark romance books with separate spice and darkness ratings, subgenres, tropes and authors",
+      "url": "https://readark.app/developers/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "books",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Books"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "marcelscruz:readgzh",
       "name": "ReadGZH",
       "kind": "business",
@@ -13888,6 +14005,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:salahtable",
+      "name": "SalahTable",
+      "kind": "business",
+      "category": "api",
+      "summary": "Islamic prayer times for 400+ cities: today, the next 7 days or a whole month, six calculation methods, Hanafi or Shafi'i Asr",
+      "url": "https://salahtable.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "calendar",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Calendar"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "marcelscruz:salary-api-jobicy-com",
       "name": "Salary API",
       "kind": "finance",
@@ -14206,6 +14347,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:scribiz",
+      "name": "Scribiz",
+      "kind": "media",
+      "category": "api",
+      "summary": "Extract spoken transcripts, scene-deduped on-screen OCR text, summaries, and chapters from videos and URLs",
+      "url": "https://scribiz.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "marcelscruz:scrnify",
@@ -14836,6 +15001,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:signops",
+      "name": "SignOps",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Push notifications, login approval, passkeys, authenticator codes and email OTP on one API key",
+      "url": "https://signops.dev/docs/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "authentication-authorization",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Authentication & Authorization"
+      },
+      "fetchedAt": "2026-11-05"
+    },
+    {
       "id": "marcelscruz:silicon-floor",
       "name": "Silicon Floor",
       "kind": "finance",
@@ -14857,6 +15046,30 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:site-shot",
+      "name": "Site-Shot",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Website screenshot API: any URL to PNG, JPEG or WebP in one GET request, full page, ad and cookie-banner removal. Free plan: 100 captures a month, no card",
+      "url": "https://www.site-shot.com/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "marcelscruz:skipodds",
@@ -15718,6 +15931,29 @@
         "listCategory": "Environment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:string-web-access",
+      "name": "String Web Access",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Search the web, fetch any URL and map a site as clean, LLM-ready Markdown.",
+      "url": "https://usestring.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "marcelscruz:substack-api-wrapper",

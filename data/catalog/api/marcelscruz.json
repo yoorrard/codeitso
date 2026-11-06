@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-05",
-  "count": 803,
+  "fetchedAt": "2026-11-06",
+  "count": 810,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -1330,6 +1330,29 @@
       "fetchedAt": "2026-10-25"
     },
     {
+      "id": "marcelscruz:appy",
+      "name": "Appy",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Create device-aware app links and read click analytics through a REST API; API key with a Business or Enterprise plan required",
+      "url": "https://appy.to",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "url-shorteners"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "URL Shorteners"
+      },
+      "fetchedAt": "2026-11-06"
+    },
+    {
       "id": "marcelscruz:apyhub-a-complete-api-catalog",
       "name": "ApyHub: A Complete API Catalog",
       "kind": "dev",
@@ -2594,6 +2617,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:canjean",
+      "name": "Canjean",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Daily exchange rates for 150+ currencies in JSON, CSV and plain text",
+      "url": "https://canjean.com/exchange-rate-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "currency-exchange"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Currency Exchange"
+      },
+      "fetchedAt": "2026-11-06"
+    },
+    {
       "id": "marcelscruz:canopy",
       "name": "Canopy",
       "kind": "payments",
@@ -3120,6 +3167,30 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:cloro",
+      "name": "cloro",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Google results with the AI Overview, and ChatGPT, Google AI Mode and Gemini answers with their cited sources, by country",
+      "url": "https://cloro.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "marcelscruz:cnpj-aberto",
@@ -9755,6 +9826,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:mailveri",
+      "name": "MailVeri",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Email verification API: SMTP, catch-all, disposable and role detection for single and bulk checks",
+      "url": "https://mailveri.com/docs",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-06"
+    },
+    {
       "id": "marcelscruz:makeaivideo",
       "name": "MakeAIVideo",
       "kind": "media",
@@ -15646,6 +15741,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:sportstatsapi",
+      "name": "SportStatsAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "Live scores, fixtures, standings and historical data across 10 sports; free tier: 300 requests/day",
+      "url": "https://sportstatsapi.com/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-06"
+    },
+    {
       "id": "marcelscruz:spotify",
       "name": "Spotify",
       "kind": "media",
@@ -16450,6 +16568,30 @@
         "listCategory": "Jobs"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:the-river",
+      "name": "The River",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Tokenized US stocks on Base and Robinhood Chain: live prices across issuers, wallet holdings and P&L, and unsigned trade and limit-order transactions",
+      "url": "https://theriver.markets",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "marcelscruz:theaudiodb",
@@ -19021,6 +19163,30 @@
         "listCategory": "Food & Drink"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:yubhub",
+      "name": "YubHub",
+      "kind": "business",
+      "category": "api",
+      "summary": "Live job listings from employers' own careers pages, with salary, skills and hiring statistics; read endpoints need no key",
+      "url": "https://yubhub.co/api/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "marcelscruz:yungle",

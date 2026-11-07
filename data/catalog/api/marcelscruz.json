@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-06",
-  "count": 810,
+  "fetchedAt": "2026-11-07",
+  "count": 812,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -3173,7 +3173,7 @@
       "name": "cloro",
       "kind": "dev",
       "category": "api",
-      "summary": "Google results with the AI Overview, and ChatGPT, Google AI Mode and Gemini answers with their cited sources, by country",
+      "summary": "Google results with the AI Overview, and ChatGPT, Google AI Mode, Bing AI Mode and Gemini answers with their cited sources, by country",
       "url": "https://cloro.dev",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -3190,7 +3190,7 @@
         "cors": "yes",
         "listCategory": "Development"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "marcelscruz:cnpj-aberto",
@@ -3507,29 +3507,6 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-10-31"
-    },
-    {
-      "id": "marcelscruz:contratero",
-      "name": "Contratero",
-      "kind": "open-data",
-      "category": "api",
-      "summary": "Spanish public tenders and awards from the official PLACSP platform, updated hourly, with buyer and winner per contract",
-      "url": "https://contratero.es/docs",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "government"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "no",
-        "listCategory": "Government"
-      },
-      "fetchedAt": "2026-10-30"
     },
     {
       "id": "marcelscruz:conversor-iae-cnae",
@@ -5029,6 +5006,29 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:duceus",
+      "name": "Duceus",
+      "kind": "finance",
+      "category": "api",
+      "summary": "European insider (PDMR) transactions and major shareholding notifications from national registers, normalized into one JSON schema with links to each filing",
+      "url": "https://duceusapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "marcelscruz:duply",
@@ -11870,30 +11870,6 @@
       "fetchedAt": "2026-11-01"
     },
     {
-      "id": "marcelscruz:optiic",
-      "name": "Optiic",
-      "kind": "business",
-      "category": "api",
-      "summary": "OCR API that extracts text from images and PDFs, sent as a file or a URL, with optional translation of the result",
-      "url": "https://optiic.dev",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "cors",
-        "documents-productivity"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "yes",
-        "listCategory": "Documents & Productivity"
-      },
-      "fetchedAt": "2026-10-30"
-    },
-    {
       "id": "marcelscruz:orbitalwiki",
       "name": "OrbitalWiki",
       "kind": "open-data",
@@ -15167,6 +15143,30 @@
       "fetchedAt": "2026-11-05"
     },
     {
+      "id": "marcelscruz:skael",
+      "name": "Skael",
+      "kind": "business",
+      "category": "api",
+      "summary": "German commercial register data, new registrations, Google Maps businesses and job boards as B2B lead lists with verified work emails",
+      "url": "https://api.skael.de/en/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "marcelscruz:skipodds",
       "name": "SkipOdds",
       "kind": "life",
@@ -15836,6 +15836,30 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:standard-compute",
+      "name": "Standard Compute",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "OpenAI- and Anthropic-compatible LLM router for AI coding agents that sends each step to the cheapest capable model, on monthly plans from $19",
+      "url": "https://standardcompute.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "marcelscruz:star-wars-databank",
@@ -18707,6 +18731,29 @@
         "listCategory": "Data Validation"
       },
       "fetchedAt": "2026-11-03"
+    },
+    {
+      "id": "marcelscruz:wok",
+      "name": "WOK",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Steam inventories and item prices for eight games, plus public player profiles and bans",
+      "url": "https://woksteamapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "marcelscruz:woopsocial",

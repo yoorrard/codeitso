@@ -6,7 +6,7 @@
     "license": "MIT (models.dev data); each provider has its own terms",
     "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-06",
+  "fetchedAt": "2026-11-07",
   "count": 235,
   "items": [
     {
@@ -1648,7 +1648,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 77845
+        "downloads": 69151
       },
       "tags": [
         "ai",
@@ -1688,7 +1688,7 @@
         "snippet": "BASETEN_API_KEY=",
         "docs": "https://docs.baseten.co/inference/model-apis/overview"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "models-dev:bee",
@@ -4995,16 +4995,16 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 376,
+        "modelCount": 378,
         "models": [
+          "LiquidAI: LFM3-1.7B",
+          "LiquidAI: LFM3-1.7B (free)",
           "Google: Gemini Omni 1.2 Flash",
           "Ricursive: Ripple 65B Preview",
           "Tencent: Hy4",
           "Crouton Alpha",
           "Z.ai: GLM 5.3 FlashX Legal",
-          "Particle AI: Particle-1",
-          "OpenAI: GPT-6.1 Terra",
-          "OpenAI: GPT-6.1 Terra Pro"
+          "Particle AI: Particle-1"
         ],
         "openWeightModels": 140,
         "outputs": [
@@ -5020,7 +5020,7 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-11-06",
+      "fetchedAt": "2026-11-07",
       "metrics": {
         "siteRank": 500000
       }
@@ -5422,7 +5422,7 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 435,
+        "modelCount": 433,
         "models": [
           "DeepSeek V4.1 Flash Cyber (Inference.net)",
           "GPT-6.1 Terra (Azure)",
@@ -5444,7 +5444,7 @@
         "snippet": "LLMGATEWAY_API_KEY=",
         "docs": "https://llmgateway.io/docs"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "models-dev:llmtech",
@@ -6921,18 +6921,18 @@
           "NANO_GPT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 636,
+        "modelCount": 641,
         "models": [
+          "DeepSeek V4 Pro Qwen3.5 9B Uncensored Heretic",
+          "LFM3 1.7B",
+          "Ling 3.0 Tiny",
+          "Ling 3.0 Tiny Thinking",
+          "Artemis 31B v1.2",
           "OrcaCyber K3.1 Pro Uncensored",
           "Ripple 65B Preview",
-          "Tencent Hy4",
-          "Assistant Pepe 32B",
-          "GLM 5.3 FlashX Legal",
-          "OrcaCyber MiniMax M3.1 Flash Uncensored",
-          "OrcaCyber Qwen3.8 Flash Next Uncensored",
-          "DeepSeek V4.1 Flash Heretic"
+          "Tencent Hy4"
         ],
-        "openWeightModels": 374,
+        "openWeightModels": 377,
         "outputs": [
           "text"
         ],
@@ -6943,7 +6943,7 @@
         "snippet": "NANO_GPT_API_KEY=",
         "docs": "https://docs.nano-gpt.com"
       },
-      "fetchedAt": "2026-11-06",
+      "fetchedAt": "2026-11-07",
       "metrics": {
         "siteRank": 1000000
       }
@@ -7609,16 +7609,16 @@
           "OPENCODE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 132,
+        "modelCount": 134,
         "models": [
+          "Iceman Free",
+          "Inkling 2 Small Free",
           "Crouton Alpha Free",
           "Pulse Alpha Free",
           "Flint 40B Free",
           "MiniMax M3.1 Flash Free",
           "Beam Free",
-          "LL Alpha Free",
-          "Nemotron 3.5 Super VL Free",
-          "Gemini 4 Argon"
+          "LL Alpha Free"
         ],
         "openWeightModels": 54,
         "outputs": [
@@ -7631,7 +7631,7 @@
         "snippet": "OPENCODE_API_KEY=",
         "docs": "https://opencode.ai/v2/docs/console/models/"
       },
-      "fetchedAt": "2026-11-03",
+      "fetchedAt": "2026-11-07",
       "metrics": {
         "siteRank": 50000
       }
@@ -7748,7 +7748,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 4265682
+        "downloads": 4258351
       },
       "tags": [
         "ai",
@@ -7767,23 +7767,23 @@
         "env": [
           "OPENROUTER_API_KEY"
         ],
-        "freeTierCheckedAt": "2026-11-06",
+        "freeTierCheckedAt": "2026-11-07",
         "freeTierQuote": "Free models are capped at 20 requests per minute and 50 per day, rising to 1,000 per day once your account has bought at least $10 of credits.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://openrouter.ai/docs/api_reference/limits",
-        "modelCount": 375,
+        "modelCount": 377,
         "models": [
+          "LFM3-1.7B",
+          "LFM3-1.7B (free)",
           "Gemini Omni 1.2 Flash",
           "Hy4",
           "Ripple 65B Preview",
           "Crouton Alpha",
           "GLM 5.3 FlashX Legal",
-          "Particle-1",
-          "GPT-6.1 Terra",
-          "GPT-6.1 Terra Pro"
+          "Particle-1"
         ],
-        "openWeightModels": 164,
+        "openWeightModels": 166,
         "outputs": [
           "audio",
           "image",
@@ -7798,7 +7798,7 @@
         "snippet": "OPENROUTER_API_KEY=",
         "docs": "https://openrouter.ai/docs"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "models-dev:opper",
@@ -8061,7 +8061,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 1817291
+        "downloads": 1623896
       },
       "tags": [
         "ai",
@@ -8097,7 +8097,7 @@
         "snippet": "PERPLEXITY_API_KEY=",
         "docs": "https://docs.perplexity.ai"
       },
-      "fetchedAt": "2026-10-29"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "models-dev:perplexity-agent",
@@ -8519,7 +8519,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 3602
+        "downloads": 4012
       },
       "tags": [
         "ai",
@@ -8557,7 +8557,7 @@
         "snippet": "QVAC_API_KEY=",
         "docs": "https://www.npmjs.com/package/@qvac/ai-sdk-provider"
       },
-      "fetchedAt": "2026-11-05"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "models-dev:reflection",
@@ -10562,7 +10562,7 @@
       "name": "UnoRouter",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Every AI model in one place. GPT, Claude, Gemini, DeepSeek and more. Use them in your code or in any OpenAI-compatible AI chat client. Same pricing for both.",
+      "summary": "Every AI model in one place: GPT, Claude, Gemini, DeepSeek and more. Use them in your code or any OpenAI-compatible chat client, same pricing for both.",
       "url": "https://unorouter.com/models",
       "source": {
         "name": "models.dev",
@@ -10605,7 +10605,7 @@
         "snippet": "UNOROUTER_API_KEY=",
         "docs": "https://unorouter.com/models"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-07",
       "metrics": {
         "siteRank": 500000
       }
@@ -10724,7 +10724,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 132797
+        "downloads": 116569
       },
       "tags": [
         "ai",
@@ -10762,7 +10762,7 @@
         "snippet": "VENICE_API_KEY=",
         "docs": "https://docs.venice.ai"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "models-dev:vercel",
@@ -11802,7 +11802,7 @@
       "name": "Zenifra",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Official Zenifra documentation. Learn how to deploy, manage projects, and configure your applications.",
+      "summary": "Official Zenifra documentation: deploy from GitHub or Docker, managed databases, AI API, CLI, MCP and REST API, with guides, examples and per-plan limits.",
       "url": "https://docs.zenifra.com",
       "source": {
         "name": "models.dev",
@@ -11838,7 +11838,7 @@
         "snippet": "ZENIFRA_AI_KEY=",
         "docs": "https://docs.zenifra.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "models-dev:zenmux",

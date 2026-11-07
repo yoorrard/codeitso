@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-05",
-  "count": 2279,
+  "fetchedAt": "2026-11-07",
+  "count": 2307,
   "items": [
     {
       "id": "public-apis:0x",
@@ -8976,6 +8976,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:cleverutils",
+      "name": "CleverUtils",
+      "kind": "business",
+      "category": "api",
+      "summary": "Convert files between 200+ formats, free with no API key",
+      "url": "https://cleverutils.com/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:clickmeter",
       "name": "ClickMeter",
       "kind": "dev",
@@ -10705,6 +10731,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:compute-comparison",
+      "name": "Compute Comparison",
+      "kind": "dev",
+      "category": "api",
+      "summary": "GPU rental prices, providers, models and price history across cloud providers",
+      "url": "https://computecomparison.com/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:congressinvests",
       "name": "CongressInvests",
       "kind": "finance",
@@ -10914,6 +10965,31 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:contratero",
+      "name": "Contratero",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Spanish public tenders and awards from the official PLACSP platform, updated hourly",
+      "url": "https://contratero.es/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:conversor-iae-cnae",
@@ -12375,6 +12451,7 @@
       "kind": "dev",
       "category": "api",
       "summary": "Screenshots, PDFs and scrolling videos of any URL, HTML or Markdown; free tier",
+      "summaryKo": "GET 요청 하나로 URL·HTML·Markdown을 PNG/JPEG/WebP/PDF 스크린샷 또는 스크롤 영상(MP4/WebM/GIF)으로 변환하는 웹사이트 스크린샷 API. 전체 페이지·요소 캡처, 기기 프리셋, 다크 모드, 광고·쿠키 배너 차단 지원. 카드 없이 월 100회 무료",
       "url": "https://curlshot.com/docs",
       "source": {
         "name": "public-apis",
@@ -12393,7 +12470,7 @@
         "https": true,
         "listCategory": "Development"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:currency-api",
@@ -23122,6 +23199,32 @@
       }
     },
     {
+      "id": "public-apis:high-valyrian-translators",
+      "name": "High Valyrian Translators",
+      "kind": "text",
+      "category": "api",
+      "summary": "High Valyrian dictionary (400 words with IPA) and Dothraki phrases as free open JSON datasets",
+      "url": "https://github.com/HVTranslators/high-valyrian-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "dictionaries",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Dictionaries"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:hipsum",
       "name": "Hipsum",
       "kind": "dev",
@@ -25889,6 +25992,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:ip-intelligence",
+      "name": "IP Intelligence",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Country, ASN, datacenter, cloud and Tor detection with an explainable risk score for any IP",
+      "url": "https://dataandapis.com/apis/ip-intelligence",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:ip-vigilante",
       "name": "IP Vigilante",
       "kind": "maps",
@@ -26613,6 +26741,32 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:ironflow",
+      "name": "Ironflow",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Hyperliquid trades, liquidations, candles, funding and wallet data, plus SQL; no key to start",
+      "url": "https://docs.ironflow.sh",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:is-this-site-down",
@@ -29392,6 +29546,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:listenbrainz",
+      "name": "ListenBrainz",
+      "kind": "media",
+      "category": "api",
+      "summary": "Open music listening data: scrobble history, statistics and recommendations",
+      "url": "https://listenbrainz.readthedocs.io/en/latest/users/api/index.html",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "music"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Music"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:litport-free-proxy",
       "name": "Litport Free Proxy",
       "kind": "dev",
@@ -30883,6 +31063,32 @@
       }
     },
     {
+      "id": "public-apis:mapa-oswiatowa",
+      "name": "Mapa Oswiatowa",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Polish schools, preschools, nurseries and universities from public registers, with exam results",
+      "url": "https://mapaoswiatowa.pl/dla-deweloperow",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:mapbox-docs-mapbox-com",
       "name": "Mapbox",
       "kind": "maps",
@@ -32170,6 +32376,31 @@
         "listCategory": "URL Shorteners"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:miconvert",
+      "name": "MiConvert",
+      "kind": "business",
+      "category": "api",
+      "summary": "File conversion for 140+ formats incl. 3D/CAD (STEP, IGES, STL), OFD to PDF and WEM; free tier",
+      "url": "https://miconvert.com/en/api-docs#marketplace",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:micro-saas-ai-suite",
@@ -34059,6 +34290,32 @@
       }
     },
     {
+      "id": "public-apis:needaticket",
+      "name": "NeedATicket",
+      "kind": "life",
+      "category": "api",
+      "summary": "UK and US resale ticket prices from StubHub",
+      "url": "https://needaticket.co.uk/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "events",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Events"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:neetix-liveliness",
       "name": "Neetix Liveliness",
       "kind": "auth-security",
@@ -35250,6 +35507,31 @@
         "listCategory": "Blockchain"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:npi-lookup",
+      "name": "NPI Lookup",
+      "kind": "life",
+      "category": "api",
+      "summary": "Search 9.4M US healthcare providers by NPI, name, taxonomy or location from NPPES data",
+      "url": "https://dataandapis.com/apis/healthcare-providers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "health",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:npm-registry",
@@ -38882,6 +39164,58 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:opper",
+      "name": "Opper",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "EU-hosted OpenAI-compatible gateway to 700+ models from 50+ providers, with free models",
+      "url": "https://docs.opper.ai/build/gateway/drop-in-sdks",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "machine-learning"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Machine Learning"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
+      "id": "public-apis:optiic",
+      "name": "Optiic",
+      "kind": "business",
+      "category": "api",
+      "summary": "OCR that extracts text from images and PDFs, with optional translation of the result",
+      "url": "https://optiic.dev",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:optimistfi-perps",
       "name": "OptimistFi Perps",
       "kind": "finance",
@@ -39253,6 +39587,32 @@
         "listCategory": "Sports & Fitness"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:padelapi",
+      "name": "PadelAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "Query professional padel tournament data, player stats, and live match results",
+      "url": "https://padelapi.org/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:pagecdn",
@@ -41836,6 +42196,32 @@
       }
     },
     {
+      "id": "public-apis:probative-legal-marketing-data",
+      "name": "Probative Legal Marketing Data",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "US lawyer advertising rules, court filings, fees and legal-market statistics, sourced, with DOIs",
+      "url": "https://probativegrowth.com/resources/rules-api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:problemsbyvin",
       "name": "ProblemsByVin",
       "kind": "maps",
@@ -42017,6 +42403,32 @@
         "listCategory": "Sports & Fitness"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:proxifly",
+      "name": "Proxifly",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Rotating proxy API that returns tested HTTP, SOCKS4 and SOCKS5 proxies, filterable by country",
+      "url": "https://proxifly.dev",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:proxycrawl",
@@ -44620,6 +45032,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:rent-limits",
+      "name": "Rent Limits",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "HUD Fair Market Rents by US ZIP; paid tiers add tax-credit and Section 8 limits",
+      "url": "https://glazeddata.com/rent-limits/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:replynodes",
       "name": "ReplyNodes",
       "kind": "dev",
@@ -44721,6 +45159,32 @@
         "listCategory": "Machine Learning"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:requstory",
+      "name": "Requstory",
+      "kind": "business",
+      "category": "api",
+      "summary": "How companies work: teams, processes, ease scores and AI-readiness from public websites",
+      "url": "https://requstory.com/developers/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:rescuegroups",
@@ -46538,6 +47002,32 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "public-apis:security-startups",
+      "name": "Security Startups",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Curated directory of young security companies with proof-of-life signals",
+      "url": "https://securitystartups.com/for-agents",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:securitytrails",
@@ -48858,6 +49348,7 @@
       "kind": "life",
       "category": "api",
       "summary": "Live odds from 24 Kambi-powered sportsbooks incl. BetRivers & Unibet, best price per outcome",
+      "summaryKo": "BetRivers, Unibet 등 Kambi 기반 스포츠북 24곳의 실시간 배당률과 결과별 최고 배당",
       "url": "https://apify.com/publicrecords/sports-odds-api",
       "source": {
         "name": "public-apis",
@@ -48875,7 +49366,7 @@
         "https": true,
         "listCategory": "Sports & Fitness"
       },
-      "fetchedAt": "2026-11-04",
+      "fetchedAt": "2026-11-07",
       "metrics": {
         "siteRank": 100000
       }
@@ -49322,6 +49813,32 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:star-wars-images",
+      "name": "Star Wars Images",
+      "kind": "media",
+      "category": "api",
+      "summary": "Images for SWAPI people, planets, species, starships and vehicles by ID",
+      "url": "https://starwarsgallery.netlify.app/swapi-image-api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:statically",
@@ -51526,6 +52043,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:textkit",
+      "name": "TextKit",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Send and receive SMS, verify phones and buy US and Canada numbers; free sandbox",
+      "url": "https://jointextkit.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "phone"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Phone"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:thc-open-mindfulness-resources",
       "name": "THC Open Mindfulness Resources",
       "kind": "life",
@@ -53251,6 +53793,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:toolsfox-utils",
+      "name": "ToolsFox Utils",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Free developer utility API: UUID, timestamps, SHA-256, Base64, URL encode/decode, random strings",
+      "url": "https://cf-workers-demo.pianfox345.workers.dev",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:top-5-stocks",
       "name": "Top 5 Stocks",
       "kind": "finance",
@@ -53431,6 +53999,32 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:tradoshi",
+      "name": "Tradoshi",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Rankings of trading schools and prop firms, every criterion with its source",
+      "url": "https://tradoshi.com/en/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:traileraddict",
@@ -55412,6 +56006,35 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:ufcalendar-fight-data",
+      "name": "UFCalendar Fight Data",
+      "kind": "life",
+      "category": "api",
+      "summary": "UFC, PFL, OKTAGON, BKFC and RIZIN events, results, round stats, rankings history",
+      "url": "https://api.ufcalendar.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-07",
+      "metrics": {
+        "siteRank": 1000000
+      }
+    },
+    {
       "id": "public-apis:ugc-vz",
       "name": "UGC VZ",
       "kind": "business",
@@ -57124,6 +57747,32 @@
       }
     },
     {
+      "id": "public-apis:vergabeweiser",
+      "name": "Vergabeweiser",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "German public tenders and contract awards from open procurement data",
+      "url": "https://vergabeweiser.de/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:veridion",
       "name": "Veridion",
       "kind": "open-data",
@@ -57279,6 +57928,32 @@
         "listCategory": "Phone"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:veriport",
+      "name": "Veriport",
+      "kind": "dev",
+      "category": "api",
+      "summary": "EU VAT validation (VIES), VAT rates, IBAN validation, French company data",
+      "url": "https://veriport.io/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "data-validation",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Data Validation"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:veriroute-intel",
@@ -58399,6 +59074,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:wealthnow",
+      "name": "Wealthnow",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Real-time and historical stock and crypto prices, fundamentals, SEC filings, insider and 13F data",
+      "url": "https://app.wealthnow.io/docs/introduction",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis:weather-api",
       "name": "weather-api",
       "kind": "weather",
@@ -59034,6 +59734,32 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "public-apis:whatsapp-rate-cards",
+      "name": "WhatsApp Rate Cards",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Meta's WhatsApp Business API per-message rates per country in 16 currencies, checked weekly",
+      "url": "https://github.com/tobachat/whatsapp-api-rates#json",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "public-apis:wheelwise",

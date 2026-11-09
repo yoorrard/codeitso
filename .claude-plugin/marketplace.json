@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "codeitso",
+  "owner": { "name": "yoorrard", "url": "https://github.com/yoorrard" },
+  "description": "코드잇소(codeitso) — app-building materials for AI agents",
+  "plugins": [
+    {
+      "name": "codeitso",
+      "source": "./plugins/codeitso",
+      "description": "Read-only codeitso MCP server + a skill for picking app materials (fonts, APIs, MCP servers, libraries, templates, datasets).",
+      "category": "development"
+    }
+  ]
+}

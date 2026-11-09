@@ -18,6 +18,8 @@ import {
   runQuery,
   shardsFor,
   synonymMap,
+  termMatches,
+  termWeight,
   tokenShard,
 } from '../../src/lib/catalog/search.ts';
 import type { CatalogItem, CategoryMeta } from '../../src/lib/catalog/types.ts';
@@ -94,6 +96,21 @@ describe('질의 실행', () => {
       { doc: 1, score: 1 },
     ]);
     expect(runQuery(queryTerms('api'), get).hits.map((h) => h.doc)).toEqual([0, 3]);
+  });
+
+  it('MCP 선택지: 글자 순 낱말 목록(이분 탐색)은 같은 결과, only는 그 문서만, slack은 앞부분 길이를 묶는다', () => {
+    const [w] = queryTerms('weath');
+    if (!w) throw new Error('no term');
+    const plain = termMatches(w, get);
+    const sorted = termMatches(w, get, undefined, { tokens: (sh) => Object.keys(sh).sort() });
+    expect([...sorted].sort()).toEqual([...plain].sort());
+    expect([...termMatches(w, get, undefined, { only: (d) => d === 1 })]).toEqual([[1, 1]]);
+    // weath + 2글자까지: weather(7)는 맞고 weathered(9)는 넘는다
+    expect([...termMatches(w, get, undefined, { slack: 2 }).keys()]).toEqual([0]);
+    // 어림 무게: 맞는 목록이 많을수록 크고, 없는 낱말은 0
+    const [none] = queryTerms('zzqxj');
+    expect(termWeight(w, get)).toBeGreaterThan(0);
+    expect(none ? termWeight(none, get) : -1).toBe(0);
   });
 
   it('같은 뜻 낱말은 그대로만 찾는다 (weather → weathered를 찾지 않는다)', () => {

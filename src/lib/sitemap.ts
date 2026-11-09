@@ -17,6 +17,7 @@ export function sitemapPaths(categories: readonly SitemapCategory[]): string[] {
     ROUTES.models,
     ROUTES.terms,
     ROUTES.about,
+    ROUTES.connect,
     ROUTES.credits,
     ROUTES.legalTerms,
     ROUTES.privacy,

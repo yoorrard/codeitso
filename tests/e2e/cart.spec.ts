@@ -53,6 +53,8 @@ for (const vp of [
       await expect(drawer.getByRole('button', { name: ko.cart.checkout })).toBeVisible();
       await axeClean(page);
       await drawer.getByRole('button', { name: fill(ko.line.editMemoLabel, { name: mcp }) }).click();
+      // 메모 칸이 열려 초점을 받은 뒤에 고른다 (바쁜 기계에서 Control+A가 단추에 먼저 가지 않게)
+      await expect(page.locator(':focus')).toHaveValue('최신 문서 읽기');
       await page.keyboard.press('Control+A');
       await page.keyboard.type('MCP로 최신 문서 읽기');
       await page.keyboard.press('Enter');
@@ -143,6 +145,8 @@ test('공유 링크: 복사한 링크를 비운 장바구니에서 열면 같은
   await page.locator('.kit[data-kit-id="landing"] button[data-kit]').click();
   await page.goto('/cart');
   await islandsReady(page);
+  // 장바구니 줄이 그려진 뒤에 이름을 읽는다
+  await expect(page.locator('.cart-page .cart-line').first()).toBeVisible();
   const names = await page.locator('.cart-page .cart-name').allTextContents();
   await page.locator('.cart-page .cart-line').first().getByRole('button', { name: ko.line.addMemo }).click();
   await page.keyboard.type('비밀 메모');

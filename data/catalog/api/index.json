@@ -1,8 +1,8 @@
 {
   "category": "api",
   "nameKo": "API",
-  "fetchedAt": "2026-11-08",
-  "total": 12347,
+  "fetchedAt": "2026-11-09",
+  "total": 12350,
   "subcategories": [
     {
       "id": "ai-llm",
@@ -320,7 +320,7 @@
     {
       "id": "payments",
       "nameKo": "결제·쇼핑",
-      "count": 241,
+      "count": 242,
       "sources": [
         {
           "id": "apis-guru",
@@ -335,7 +335,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 15
+          "count": 16
         },
         {
           "id": "official",
@@ -357,7 +357,7 @@
     {
       "id": "messaging",
       "nameKo": "이메일·문자·메신저",
-      "count": 199,
+      "count": 200,
       "sources": [
         {
           "id": "apis-guru",
@@ -367,7 +367,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 34
+          "count": 35
         },
         {
           "id": "official",
@@ -453,7 +453,7 @@
     {
       "id": "business",
       "nameKo": "업무·생산성",
-      "count": 389,
+      "count": 390,
       "sources": [
         {
           "id": "apis-guru",
@@ -468,7 +468,7 @@
         {
           "id": "marcelscruz",
           "name": "Public APIs (marcelscruz)",
-          "count": 94
+          "count": 95
         },
         {
           "id": "public-api-lists",
@@ -683,8 +683,8 @@
       "license": "MIT (list text); each API has its own terms",
       "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "marcelscruz.json",
-      "count": 815,
-      "fetchedAt": "2026-11-08"
+      "count": 818,
+      "fetchedAt": "2026-11-09"
     },
     {
       "id": "models-dev",
@@ -694,7 +694,7 @@
       "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "models-dev.json",
       "count": 235,
-      "fetchedAt": "2026-11-08"
+      "fetchedAt": "2026-11-09"
     },
     {
       "id": "official",
@@ -704,7 +704,7 @@
       "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "official.json",
       "count": 225,
-      "fetchedAt": "2026-11-08"
+      "fetchedAt": "2026-11-09"
     },
     {
       "id": "openrouter",

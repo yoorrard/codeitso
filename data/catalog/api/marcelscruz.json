@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-08",
-  "count": 815,
+  "fetchedAt": "2026-11-09",
+  "count": 818,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -1687,6 +1687,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:autentify-verify",
+      "name": "Autentify Verify",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Brazilian email verification: deliverable, undeliverable, risky or unknown, with the reason",
+      "url": "https://www.autentify.com.br/verify/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-09"
+    },
+    {
       "id": "marcelscruz:auto-dev",
       "name": "Auto.dev",
       "kind": "maps",
@@ -3167,6 +3190,30 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:clockintoday",
+      "name": "ClockInToday",
+      "kind": "business",
+      "category": "api",
+      "summary": "US jobs and gig apps you can start without an interview, with minimum age, background check, vehicle and payout speed",
+      "url": "https://clockintoday.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-09"
     },
     {
       "id": "marcelscruz:cloro",
@@ -15575,6 +15622,29 @@
         "listCategory": "Shopping"
       },
       "fetchedAt": "2026-10-30"
+    },
+    {
+      "id": "marcelscruz:soldgraph",
+      "name": "Soldgraph",
+      "kind": "payments",
+      "category": "api",
+      "summary": "Sold prices and live resale listings from eBay, Poshmark, Mercari and more via REST and MCP; not affiliated with the marketplaces",
+      "url": "https://soldgraph.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-11-09"
     },
     {
       "id": "marcelscruz:sonto",

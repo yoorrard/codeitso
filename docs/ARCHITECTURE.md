@@ -51,7 +51,7 @@ code-chauffeur/
 ├─ src/copy/mcp.ts           MCP 서버 안내·도구 설명(영어, 모델이 읽는다)·프롬프트(한국어)
 ├─ plugins/codeitso/         Claude Code 플러그인: .mcp.json(원격 MCP) + skills/codeitso(Agent Skills 규격)
 ├─ .claude-plugin/marketplace.json  저장소 = 플러그인 장터 (/plugin marketplace add yoorrard/codeitso)
-├─ server.json               MCP 레지스트리 정보 (io.github.yoorrard/codeitso)
+├─ server.json               MCP 레지스트리 정보 (io.github.yoorrard/codeitso, 판이 바뀌면 .github/workflows/publish-mcp.yml이 등록, D159)
 └─ worker/                   index.ts(/api/event 집계·/api/stats 방문 수·/mcp로 보내기), mcp.ts(원격 MCP)
 ```
 

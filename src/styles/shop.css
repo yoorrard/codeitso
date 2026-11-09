@@ -348,6 +348,7 @@
 }
 
 .hd-search-link,
+.hd-mcp,
 .hd-help,
 .hd-wish,
 .hd-cart {
@@ -368,12 +369,20 @@
   margin-inline-start: auto;
 }
 .hd-search-link:hover,
+.hd-mcp:hover,
 .hd-help:hover,
 .hd-wish:hover,
 .hd-cart:hover {
   background: var(--fill);
 }
-/* 이용 가이드 [?] (O1): 휴대폰 머리줄은 자리가 없어 카테고리 메뉴 아래·바닥글에 둔다 */
+/* MCP 연결(D160)·이용 가이드 [?](O1): 휴대폰 머리줄은 자리가 없어 카테고리 메뉴 아래·바닥글에 둔다.
+   MCP 연결은 그림만으로 뜻이 서지 않아 600~1023px에는 그림 대신 짧은 이름 'MCP'만 보인다(검색창 폭을 지킨다) */
+.hd-mcp {
+  display: none;
+}
+.hd-mcp > svg {
+  display: none;
+}
 .hd-help {
   display: none;
   border: 0;
@@ -415,6 +424,7 @@
   .hd-search-link {
     display: none;
   }
+  .hd-mcp,
   .hd-help {
     display: inline-flex;
   }
@@ -422,6 +432,12 @@
 
 @media (min-width: 1024px) {
   .hd-cart-word {
+    display: inline;
+  }
+  .hd-mcp-short {
+    display: none;
+  }
+  .hd-mcp > svg {
     display: inline;
   }
   .hd-badge,

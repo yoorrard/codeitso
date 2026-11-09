@@ -31,6 +31,7 @@ const toolNames = Object.values(MCP_TOOLS).map((t) => t.name);
       <pre tabindex="0" aria-labelledby="mcp-url-label"><code>{url}</code></pre>
       <CopyButton client:visible text={url} label={C.copyUrl} done={C.copiedUrl} primary />
     </div>
+    {C.urlNote.map((t) => <p class="connect-note">{t}</p>)}
 
     <h2>{C.canTitle}</h2>
     <ul>
@@ -99,6 +100,9 @@ const toolNames = Object.values(MCP_TOOLS).map((t) => t.name);
   }
   .connect-url pre {
     font-size: var(--size-body-lg);
+  }
+  .connect-note {
+    color: var(--text-2);
   }
   .connect-client {
     margin-block-start: var(--space-5);

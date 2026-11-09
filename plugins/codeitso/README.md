@@ -2,7 +2,7 @@
 
 Adds two things to Claude Code:
 
-- **MCP server** `codeitso` (`https://codeitso.yoorrard.workers.dev/mcp`, read-only, no sign-in): search and browse 150,000+ public materials for building apps — fonts, colors, icons, UI kits, public APIs (incl. Korean public data), MCP servers, agent skills, open-source libraries, templates, datasets — with licenses, install commands and AI model prices.
+- **MCP server** `codeitso` (`https://codeitso.yoorrard.workers.dev/mcp`, read-only, no sign-in): search and browse 150,000+ public materials for building apps — fonts, colors, icons, UI kits, public APIs (incl. Korean public data), MCP servers, agent skills, open-source libraries, templates, datasets — with licenses and install commands; compare current AI models by price and context; and turn the picks into a cart link for the website.
 - **Skill** `codeitso`: a workflow for picking materials per feature, comparing licenses and auth, and confirming before installing anything.
 
 ```

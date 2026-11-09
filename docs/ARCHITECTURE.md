@@ -14,7 +14,7 @@
 | 진열대 계산 | `src/lib/catalog/core.ts` (순수 함수) | 정렬·인기 점수·쪽과 묶음·상세 조각 번호·카드 모양·관련 상품. 빌드와 섬이 같이 쓴다. |
 | 배포 | Cloudflare Workers 정적 파일 무료 플랜 | 한 판 2만 개·파일 하나 25MiB 한도. 진열대 자료는 5천 개 아래로 (4절). |
 | 집계 | Worker 함수 `/api/event` + D1 | 날짜별 이벤트 횟수만 (7절). |
-| AI 에이전트 연결 | Worker 함수 `/mcp` (원격 MCP, 공식 SDK `@modelcontextprotocol/server`) | 읽기 전용 도구 5·프롬프트 1. 진열대 정적 JSON만 읽는다 (7.1절, D154). 안내 쪽 `/connect`, Claude Code 플러그인 `plugins/codeitso`. |
+| AI 에이전트 연결 | Worker 함수 `/mcp` (원격 MCP, 공식 SDK `@modelcontextprotocol/server`) | 읽기 전용 도구 7·프롬프트 1. 진열대 정적 JSON만 읽는다 (7.1절, D154·D156). 안내 쪽 `/connect`, Claude Code 플러그인 `plugins/codeitso`. |
 | 방문 통계 | Cloudflare Web Analytics | 쿠키 없음. 장바구니·영수증 쪽은 싣지 않는다. |
 | 글꼴 | Pretendard(화면 글), `CC Receipt`(코드 조각·영수증, D2Coding 하위 집합) | `public/fonts/`에 직접 둔다 (`npm run fonts`). |
 | 아이콘·로고 | Phosphor(MIT, 빌드 때 인라인 SVG), 장바구니 로고 | 로고는 `assets-src/brand/logo-cart-source.webp`에서 `npm run logo`(`scripts/brand/make-logo.ts`)가 머리줄·밤 짝·OG·앱 아이콘·파비콘(장바구니만)을 만든다. |
@@ -149,10 +149,10 @@ public/catalog/models/p/<제공자>.json · direct.json · hosts.json   AI 모�
 
 `worker/index.ts`가 `/api/event`의 `{"t":종류,"b":구간}`만 받아 날짜별로 센다. 종류·구간은 `src/lib/event-spec.ts`가 화면과 Worker의 약속이다. S2부터 이벤트는 다섯: `cart_add`(구간 = 대분류), `checkout`(재료 수 구간 n01·n02-03·n04-06·n07-10·n11-20·n21+), `md_download`, `md_copy`, `bundle_add`(구간 = 스타터 키트 id). 재료 id·메모·검색어는 보내지 않는다. 개인 정보·쿠키·IP는 저장하지 않는다.
 
-### 7.1 원격 MCP (D154)
+### 7.1 원격 MCP (D154·D156)
 
-`worker/mcp.ts`가 `POST /mcp`를 공식 SDK의 무상태 Streamable HTTP(`createMcpHandler`, 요청마다 서버를 새로 만든다)로 받는다. 도구 계산은 `src/lib/mcp/tools.ts`(순수, Loader로 파일을 읽는다)이고, 파일은 진열대 빌드 결과를 `env.ASSETS`로 읽는다: `/catalog/agent.json`(대분류·소분류 이름·개수와 키트, 빌드가 `buildAgentSummary`로 만든다), 검색 `search/meta.json`·`t-<n>`·`b-<대분류>-<k>`·`s-<대분류>-<소분류>`, 상세 `item/<n>`, 목록 `list/…`, 모델 `models/p/<제공자>`. 검색은 사이트와 같은 색인·함수에 에이전트용 계산(`agentQuery`: 가장 드문 낱말로 좁혀 '그리고', 없는 낱말·흔한 낱말부터 빼며 다시 찾기, 친 꼴 가산·대분류 안 인기 순위, 영어 앞부분 3글자까지)만 더한다.
-앞단: CORS `*`(자격 증명 없음, 새 판 머리글 `Mcp-Method`·`Mcp-Name` 포함), `OPTIONS` 204, 본문 64KB(chunked도 끊어 읽기 `worker/body.ts`, 413), JSON 아님 400, 묶음(배열) 400, `subscriptions/listen`은 없는 메서드, 같은 접속 주소(IPv6은 앞 64비트) 1분 120번(429, isolate 메모리에만), 읽은 JSON은 isolate에 800만 글자까지(동시에 놓쳐도 한 번만 받는다). 집계는 `src/lib/mcp/count.ts`가 고른 도구 이름·앱 종류·프롬프트만, 성공한 단건 요청에서 isolate에 모았다가 1분에 한 번(또는 50건마다) `daily_events`에 `mcp_call`·`mcp_init`·`mcp_prompt`로 쓴다(검색어·id·IP 없음). 출처 글은 `src/lib/mcp/text.ts`가 숨은 글자·태그를 빼고 '제3자 글' 이름표·인용·울타리 안에 넣는다.
+`worker/mcp.ts`가 `POST /mcp`를 공식 SDK의 무상태 Streamable HTTP(`createMcpHandler`, 요청마다 서버를 새로 만든다)로 받는다. 도구 계산은 `src/lib/mcp/tools.ts`(순수, Loader로 파일을 읽는다)이고, 파일은 진열대 빌드 결과를 `env.ASSETS`로 읽는다: `/catalog/agent.json`(대분류·소분류 이름·개수, 키트 수, AI 모델 제공자 이름표, 빌드가 `buildAgentSummary`로 만든다. 거의 모든 도구가 읽으니 약 25KB로 작게)·`/catalog/agent-kits.json`(스타터 키트, 키트 도구만), 검색 `search/meta.json`·`t-<n>`·`b-<대분류>-<k>`·`s-<대분류>-<소분류>`, 상세 `item/<n>`, 목록 `list/…`, 모델 `models/p/<제공자>`·`models/direct.json`(AI 모델 찾기 `src/lib/mcp/models.ts`: 사이트 /models와 같은 `filterRows`·`sortRows`, 호스팅 묶음 `hosts.json` 1.7MB는 읽지 않는다). 장바구니 링크 만들기는 파일을 읽지 않는다(`shareUrl`). 장바구니 불러오기는 한 쪽 5개(상세 조각 평균 200KB를 한 번에 5개까지만 풀어 첫 요청 CPU를 묶는다). 검색은 사이트와 같은 색인·함수에 에이전트용 계산(`agentQuery`: 가장 드문 낱말로 좁혀 '그리고', 없는 낱말·흔한 낱말부터 빼며 다시 찾기, 친 꼴 가산·대분류 안 인기 순위, 영어 앞부분 3글자까지)만 더한다.
+앞단: `X-Content-Type-Options: nosniff`, CORS `*`(자격 증명 없음, 새 판 머리글 `Mcp-Method`·`Mcp-Name` 포함), `OPTIONS` 204, 본문 64KB(chunked도 끊어 읽기 `worker/body.ts`, 413), JSON 아님 400, 묶음(배열) 400, `subscriptions/listen`은 없는 메서드, 같은 접속 주소(IPv6은 앞 64비트) 1분 120번(429, isolate 메모리에만), 읽은 JSON은 isolate에 800만 글자까지(동시에 놓쳐도 한 번만 받는다). 집계는 `src/lib/mcp/count.ts`가 고른 도구 이름·앱 종류·프롬프트만, 성공한 단건 요청에서 isolate에 모았다가 1분에 한 번(또는 50건마다) `daily_events`에 `mcp_call`·`mcp_init`·`mcp_prompt`로 쓴다(검색어·id·IP 없음). 출처 글은 `src/lib/mcp/text.ts`가 숨은 글자·태그를 빼고 '제3자 글' 이름표·인용·울타리 안에 넣는다.
 
 ## 8. 배포
 

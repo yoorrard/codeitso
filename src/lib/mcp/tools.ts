@@ -12,9 +12,10 @@ import type { MatchOptions, QueryTerm, SearchMeta, SubDocsFile, TokenShard } fro
 import { blockOf, combineTerms, decodePostings, decodeSubDocs, matchSubs, queryTerms, shardsFor, synonymMap, termMatches, termWeight } from '../catalog/search.ts';
 import { FILES, itemDataPath, itemPath, kitPath, listDataPath, modelDataPath, searchBlockPath, searchShardPath, searchSubPath, shareUrl } from '../routes.ts';
 import { readShareEntries } from '../share.ts';
+import { MODEL_ID_MAX } from '../saved.ts';
 import { authOf, installLine } from '../use-lines.ts';
-import type { AgentCategory, AgentSummary } from './summary.ts';
-import { readAgentSummary } from './summary.ts';
+import type { AgentCategory, AgentKits, AgentSummary } from './summary.ts';
+import { readAgentKits, readAgentSummary } from './summary.ts';
 import { MCP_ERRORS } from '../../copy/mcp.ts';
 import { block, commas, fillText, line, webUrl } from './text.ts';
 
@@ -47,7 +48,13 @@ export const LIMITS = {
   searchOffset: 200,
   ids: 5,
   browsePage: 30,
-  cartPage: 10,
+  /** AI 모델 찾기 한 쪽 수와 건너뛸 수 상한 */
+  modelPage: 20,
+  modelOffset: 200,
+  /** 장바구니 링크에 넣을 재료 수 (사이트 장바구니는 300줄까지) */
+  cartLink: 30,
+  /** 장바구니 한 쪽 재료 수 = 한 번에 읽는 상세 조각 수 (조각 평균 200KB: 첫 요청 CPU를 자세히 도구와 같게 묶는다, D156) */
+  cartPage: 5,
   /** 질의 낱말 수 (에이전트는 문장을 통째로 넣기도 한다: 읽는 조각과 계산을 묶는다) */
   terms: 6,
   /** 친 꼴만으로 이만큼 넘게 맞은 낱말은 같은 뜻 낱말로 넓히지 않는다 (CPU, 맞는 묶음이 바뀌지 않을 때만, agentQuery) */
@@ -222,6 +229,12 @@ export async function summaryOf(ctx: ToolContext): Promise<AgentSummary> {
   const s = readAgentSummary(await ctx.load.json(FILES.agentSummary));
   if (!s) throw new ToolError('data', MCP_ERRORS.data);
   return s;
+}
+
+async function kitsOf(ctx: ToolContext): Promise<AgentKits> {
+  const k = readAgentKits(await ctx.load.json(FILES.agentKits));
+  if (!k) throw new ToolError('data', MCP_ERRORS.data);
+  return k;
 }
 
 async function searchMeta(ctx: ToolContext): Promise<SearchMeta> {
@@ -698,7 +711,7 @@ export async function browse(ctx: ToolContext, args: BrowseArgs): Promise<Catego
         total: summary.total,
         fetched: summary.fetched,
         categories: ordered.map((c) => ({ id: c.id, name: c.name, total: c.total, subcategories: c.subs.map((s) => ({ id: s.id, name: s.name, count: s.count })) })),
-        kits: summary.kits.length,
+        kits: summary.kits,
       };
     }
     const c = names.category(cat);
@@ -736,14 +749,14 @@ export async function browse(ctx: ToolContext, args: BrowseArgs): Promise<Catego
 // ── 4. 스타터 키트 ───────────────────────────────────────────────────
 
 export async function getKits(ctx: ToolContext, kitId: string | undefined): Promise<KitList | KitResult> {
-  const summary = await summaryOf(ctx);
+  const [summary, file] = await Promise.all([summaryOf(ctx), kitsOf(ctx)]);
   const names = namesOf(summary);
   if (kitId === undefined) {
     return {
-      kits: summary.kits.map((k) => ({ id: k.id, theme: k.theme, name: line(k.name, 80), desc: line(k.desc, 200), item_count: k.items.length, page_url: `${ctx.site}${kitPath(k.id)}` })),
+      kits: file.kits.map((k) => ({ id: k.id, theme: k.theme, name: line(k.name, 80), desc: line(k.desc, 200), item_count: k.items.length, page_url: `${ctx.site}${kitPath(k.id)}` })),
     };
   }
-  const kit = summary.kits.find((k) => k.id === kitId);
+  const kit = file.kits.find((k) => k.id === kitId);
   if (!kit) throw new ToolError('unknown_kit', fillText(MCP_ERRORS.unknownKit, { id: kitId }));
   return {
     id: kit.id,
@@ -813,4 +826,38 @@ export async function openCart(ctx: ToolContext, args: CartArgs): Promise<CartRe
     return out;
   });
   return { cart_url: shareUrl(entries, ctx.site), items, ...pageOf(entries.length, args.offset, items.length) };
+}
+
+// ── 6. 장바구니 링크 만들기 (D156) ───────────────────────────────────
+
+export interface CartLinkArgs {
+  items: { id: string; model?: string }[];
+}
+
+export interface CartLinkResult {
+  cart_url: string;
+  count: number;
+  /** 꼴이 맞지 않아 뺀 id */
+  skipped: string[];
+}
+
+/** 고른 재료(와 AI 모델) → 사이트 장바구니 공유 링크. 파일을 읽지 않는다: 없는 id는 사이트가 '없어진 재료'로 보인다 */
+export function makeCartLink(ctx: ToolContext, args: CartLinkArgs): CartLinkResult {
+  const seen = new Set<string>();
+  const entries: { id: string; model?: string }[] = [];
+  const skipped: string[] = [];
+  for (const it of args.items) {
+    const id = it.id.trim();
+    if (!SAFE_ID.test(id)) {
+      skipped.push(line(id, 80));
+      continue;
+    }
+    if (seen.has(id)) continue;
+    seen.add(id);
+    const model = it.model?.trim();
+    entries.push(model && model.length <= MODEL_ID_MAX && SAFE_ID.test(model) ? { id, model } : { id });
+    if (entries.length === LIMITS.cartLink) break;
+  }
+  if (entries.length === 0) throw new ToolError('bad_ids', MCP_ERRORS.badIds);
+  return { cart_url: shareUrl(entries, ctx.site), count: entries.length, skipped };
 }

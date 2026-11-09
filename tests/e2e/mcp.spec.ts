@@ -11,7 +11,7 @@ import { blockExternal, islandsReady } from './helpers.ts';
 const DIST = new URL('../../dist/', import.meta.url);
 
 test.describe('MCP 서버 (빌드한 진열대)', () => {
-  test('공식 클라이언트: 도구 다섯을 실제 자료로 부르면 오류 없이 답하고, 장바구니 링크의 재료를 가져온다', async () => {
+  test('공식 클라이언트: 도구 일곱을 실제 자료로 부르면 오류 없이 답하고, 장바구니 링크의 재료를 가져온다', async () => {
     const env = {
       ASSETS: {
         fetch: async (req: Request): Promise<Response> => {
@@ -44,6 +44,15 @@ test.describe('MCP 서버 (빌드한 진열대)', () => {
     expect(await text('codeitso_get_kits', {})).toContain('starter kits');
     const cart = await text('codeitso_open_cart', { share: 'https://codeitso.yoorrard.workers.dev/cart#s=google-fonts%3Aroboto' });
     expect(cart).toContain('Roboto');
+    // AI 모델 찾기: 실제 models.dev 자료로 이미지 입력·싼 순 (D156)
+    const models = await text('codeitso_find_models', { inputs: ['image'], sort: 'input_price', limit: 3 });
+    expect(models).toContain('models.dev');
+    expect(models).toContain('/models?in=image&sort=in');
+    expect(await text('codeitso_find_models', { provider: 'anthropic', limit: 2 })).toContain('models-dev:anthropic');
+    // 장바구니 링크 만들기 → 그 링크를 다시 불러오면 같은 재료
+    const link = await text('codeitso_make_cart_link', { items: [{ id: 'google-fonts:roboto' }] });
+    const url = /https:\/\/\S+\/cart#s=\S+/.exec(link)?.[0] ?? '';
+    expect(await text('codeitso_open_cart', { share: url })).toContain('Roboto');
     await client.close();
   });
 });

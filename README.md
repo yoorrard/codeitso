@@ -40,7 +40,7 @@ https://codeitso.yoorrard.workers.dev/mcp
 | Gemini CLI | `gemini mcp add --transport http -s user codeitso https://codeitso.yoorrard.workers.dev/mcp` |
 | claude.ai · ChatGPT · Cursor · VS Code · Windsurf | [/connect](https://codeitso.yoorrard.workers.dev/connect)의 순서대로 |
 
-도구는 모두 읽기 전용이에요: `codeitso_search`(재료 검색) · `codeitso_get_materials`(공식 주소·라이선스·설치 명령·API 키·AI 모델 가격) · `codeitso_browse`(진열대) · `codeitso_get_kits`(스타터 키트) · `codeitso_open_cart`(사이트 장바구니 공유 링크 불러오기). 스킬 `plugins/codeitso/skills/codeitso`는 [Agent Skills](https://agentskills.io) 규격이라 다른 에이전트에도 옮겨 쓸 수 있어요. 구조와 한도는 `docs/ARCHITECTURE.md` 7.1절, 결정 이유는 `docs/DECISIONS.md` D154.
+도구는 모두 읽기 전용이에요: `codeitso_search`(재료 검색) · `codeitso_get_materials`(공식 주소·라이선스·설치 명령·API 키·AI 모델 가격) · `codeitso_browse`(진열대) · `codeitso_get_kits`(스타터 키트) · `codeitso_open_cart`(사이트 장바구니 공유 링크 불러오기) · `codeitso_find_models`(AI 모델을 가격·컨텍스트·입력 종류로 비교, models.dev 매일 갱신) · `codeitso_make_cart_link`(AI가 고른 재료를 사이트 장바구니 링크로). 스킬 `plugins/codeitso/skills/codeitso`는 [Agent Skills](https://agentskills.io) 규격이라 다른 에이전트에도 옮겨 쓸 수 있어요. 구조와 한도는 `docs/ARCHITECTURE.md` 7.1절, 결정 이유는 `docs/DECISIONS.md` D154·D156.
 
 ## 어떻게 돌아가나
 

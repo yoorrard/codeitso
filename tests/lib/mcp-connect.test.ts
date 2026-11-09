@@ -1,5 +1,7 @@
 // 'AI에 연결' 쪽의 앱별 설정 글 (D154): 각 앱 공식 문서의 모양 그대로인지
 import { describe, expect, it } from 'vitest';
+import { ko } from '../../src/copy/ko.ts';
+import { MCP_TOOLS } from '../../src/copy/mcp.ts';
 import { CONNECT_CLIENTS, connectSetups, cursorLink, pluginCommands, vscodeLink } from '../../src/lib/mcp/connect.ts';
 
 const URL_ = 'https://codeitso.yoorrard.workers.dev/mcp';
@@ -30,5 +32,11 @@ describe('앱별 설정 글', () => {
 
   it('Claude Code 플러그인: 저장소를 장터로 더하고 codeitso@codeitso를 설치', () => {
     expect(pluginCommands('yoorrard/codeitso')).toBe('/plugin marketplace add yoorrard/codeitso\n/plugin install codeitso@codeitso');
+  });
+});
+
+describe("'AI가 할 수 있는 일' 목록", () => {
+  it('도구마다 한 줄 (쪽이 같은 차례로 도구 이름을 붙인다)', () => {
+    expect(ko.connect.can).toHaveLength(Object.keys(MCP_TOOLS).length);
   });
 });

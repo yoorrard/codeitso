@@ -104,8 +104,10 @@ export const FILES = based({
   sitemap: '/sitemap.xml',
   glossary: '/glossary.json',
   searchMeta: '/catalog/search/meta.json',
-  /** AI 에이전트용 진열대 요약 (대분류·소분류·키트, D154) */
+  /** AI 에이전트용 진열대 요약 (대분류·소분류·AI 모델 제공자, D154·D156) */
   agentSummary: '/catalog/agent.json',
+  /** AI 에이전트용 스타터 키트 (codeitso_get_kits만 읽는다, D156) */
+  agentKits: '/catalog/agent-kits.json',
   /** 원격 MCP 끝점 (Worker, D154) */
   mcp: MCP_PATH,
   event: '/api/event',

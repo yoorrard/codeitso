@@ -14,7 +14,7 @@ Claude Code가 대신할 수 없는 일만 모았다. 에이전트는 여기 적
 
 ## 선택 (막지 않음)
 
-- [ ] **H31 MCP 레지스트리에 올리기 (5분, D154)** — 공식 MCP 레지스트리(registry.modelcontextprotocol.io)에 올리면 여러 AI 앱의 MCP 찾기 화면에 코드잇소가 나온다. 저장소 루트 `server.json`(이름 `io.github.yoorrard/codeitso`, 공식 스키마 검사 통과)이 준비돼 있다. 컴퓨터에서 `mcp-publisher`를 설치하고(`brew install mcp-publisher` 또는 GitHub 릴리스 파일) 저장소 폴더에서 `mcp-publisher login github`(yoorrard 계정으로 브라우저 인증) → `mcp-publisher publish`. 레지스트리는 아직 미리 보기 단계라 자료가 지워질 수 있다 — 계정 — 알리기 — (2026-11-09)
+- [ ] **H31 MCP 레지스트리에 올리기 (5분, D154)** — 공식 MCP 레지스트리(registry.modelcontextprotocol.io)에 올리면 여러 AI 앱의 MCP 찾기 화면에 코드잇소가 나온다. 저장소 루트 `server.json`(이름 `io.github.yoorrard/codeitso`, 공식 스키마 검사 통과)이 준비돼 있다. 컴퓨터에서 `mcp-publisher`를 설치하고(`brew install mcp-publisher` 또는 GitHub 릴리스 파일) 저장소 폴더에서 `mcp-publisher login github`(yoorrard 계정으로 브라우저 인증) → `mcp-publisher publish`. 레지스트리는 아직 미리 보기 단계라 자료가 지워질 수 있다. `server.json`의 판(지금 1.1.0, D156)을 올릴 때마다 `mcp-publisher publish`를 다시 하면 된다 — 계정 — 알리기 — (2026-11-09)
 - [ ] **H32 개인정보 처리방침 5번 'AI 에이전트 연결(MCP)' 확인 (D154)** — MCP 요청(검색어·재료 id·공유 링크는 저장하지 않음, 도구 이름·앱 종류 횟수만, IP는 1분 요청 수 세기에만 메모리에서)을 5번에 더했고 변경 이력에 2026-11-09를 적었다. 처리방침 19번은 '시행 7일 전 알림'을 약속하므로, 시행일(지금 2026-10-23 그대로)과 알림 방식을 정해 주세요. 고칠 문장은 대화로 알려 주면 `src/copy/ko.ts` legal 묶음을 고친다 — 법 — (2026-11-09)
 - [ ] H33 Anthropic 커넥터 디렉터리 제출 (선택, D154) — claude.ai 커넥터 목록에 올리려면 claude.com/docs/connectors/building/submission의 개발자 포털에서 제출한다(도구 설명·주석·읽기 전용 구분은 심사 기준에 맞춰 두었다). 공개 설명 문서는 `/connect` 쪽을 쓰면 된다 — 계정 — 알리기 — (2026-11-09)
 

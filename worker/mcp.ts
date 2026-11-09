@@ -1,18 +1,22 @@
-// 원격 MCP 서버 (D154): POST /mcp, 공식 SDK(@modelcontextprotocol/server)의 무상태 Streamable HTTP.
-// 도구 다섯 개와 프롬프트 하나는 모두 읽기 전용이고, 진열대 빌드가 만든 정적 JSON(env.ASSETS)만 읽는다. 바깥 사이트에 묻지 않는다.
+// 원격 MCP 서버 (D154·D156): POST /mcp, 공식 SDK(@modelcontextprotocol/server)의 무상태 Streamable HTTP.
+// 도구 일곱 개와 프롬프트 하나는 모두 읽기 전용이고, 진열대 빌드가 만든 정적 JSON(env.ASSETS)만 읽는다. 바깥 사이트에 묻지 않는다.
 // 무료 Worker 한도 안에 두려고: 본문 64KB까지, 한 isolate 안에서 같은 접속 주소의 분당 요청 수를 묶고, 읽은 JSON은 isolate 메모리에 잠깐 둔다.
 // 세는 것은 도구 이름·앱 종류뿐(src/lib/mcp/count.ts). 검색어·재료 id·장바구니 링크·IP는 적지 않는다(observability도 꺼 둔다).
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import { MCP_ERRORS, MCP_INSTRUCTIONS, MCP_PROMPT, MCP_SERVER, MCP_TOOLS } from '../src/copy/mcp.ts';
+import { MODALITIES } from '../src/lib/catalog/models.ts';
+import { MODEL_ID_MAX } from '../src/lib/saved.ts';
 import { CATEGORY_ORDER, SORTS } from '../src/lib/catalog/types.ts';
 import { utcDay } from '../src/lib/event-spec.ts';
 import { readLimited } from './body.ts';
 import { countsOf } from '../src/lib/mcp/count.ts';
-import { renderCart, renderCategory, renderDetails, renderKit, renderKits, renderOverview, renderSearch, renderSubList } from '../src/lib/mcp/render.ts';
+import { renderCart, renderCartLink, renderCategory, renderDetails, renderKit, renderKits, renderModels, renderOverview, renderSearch, renderSubList } from '../src/lib/mcp/render.ts';
 import { fillText } from '../src/lib/mcp/text.ts';
 import type { Loader, ToolContext } from '../src/lib/mcp/tools.ts';
-import { LIMITS, SAFE_ID, ToolError, browse, getKits, getMaterials, openCart, searchMaterials } from '../src/lib/mcp/tools.ts';
+import { LIMITS, SAFE_ID, ToolError, browse, getKits, getMaterials, makeCartLink, openCart, searchMaterials } from '../src/lib/mcp/tools.ts';
+import type { FindModelsArgs } from '../src/lib/mcp/models.ts';
+import { MODEL_SORT_NAMES, findModels } from '../src/lib/mcp/models.ts';
 import { FILES, ROUTES } from '../src/lib/routes.ts';
 
 /** 요청 본문 상한 (바이트). 도구 인자는 장바구니 링크라도 이보다 훨씬 작다 */
@@ -230,6 +234,76 @@ export function createCodeitsoServer(ctx: ToolContext): McpServer {
     async (a) => guard(async () => reply(await openCart(ctx, { share: a.share, offset: a.offset, limit: a.limit }), a.response_format, renderCart)),
   );
 
+  server.registerTool(
+    t.models.name,
+    {
+      title: t.models.title,
+      description: t.models.description,
+      inputSchema: z.strictObject({
+        query: z.string().max(80).nullish().describe(t.models.query),
+        provider: z.string().regex(/^[a-z0-9][a-z0-9.-]{0,79}$/).nullish().describe(t.models.provider),
+        scope: z.enum(['major', 'direct']).default('major').describe(t.models.scope),
+        inputs: z.array(z.enum(MODALITIES)).max(MODALITIES.length).default([]).describe(t.models.inputs),
+        outputs: z.array(z.enum(MODALITIES)).max(MODALITIES.length).default([]).describe(t.models.outputs),
+        reasoning: z.boolean().default(false).describe(t.models.reasoning),
+        tool_calling: z.boolean().default(false).describe(t.models.toolCalling),
+        open_weights: z.boolean().default(false).describe(t.models.openWeights),
+        max_input_price: z.number().min(0).max(10_000).nullish().describe(t.models.maxInputPrice),
+        max_output_price: z.number().min(0).max(10_000).nullish().describe(t.models.maxOutputPrice),
+        min_context: z.number().int().min(0).max(100_000_000).nullish().describe(t.models.minContext),
+        include_deprecated: z.boolean().default(false).describe(t.models.deprecated),
+        sort: z.enum(MODEL_SORT_NAMES).default('newest').describe(t.models.sort),
+        limit: z.number().int().min(1).max(LIMITS.modelPage).default(10).describe(t.models.limit),
+        offset: z.number().int().min(0).max(LIMITS.modelOffset).default(0).describe(t.models.offset),
+        response_format: format.describe(t.models.format),
+      }),
+      annotations: { title: t.models.title, ...READ_ONLY },
+    },
+    async (a) =>
+      guard(async () => {
+        const args: FindModelsArgs = {
+          scope: a.scope,
+          inputs: a.inputs,
+          outputs: a.outputs,
+          reasoning: a.reasoning,
+          toolCalling: a.tool_calling,
+          openWeights: a.open_weights,
+          includeDeprecated: a.include_deprecated,
+          sort: a.sort,
+          limit: a.limit,
+          offset: a.offset,
+          ...(a.query ? { query: a.query } : {}),
+          ...(a.provider ? { provider: a.provider } : {}),
+          ...(a.max_input_price != null ? { maxInputPrice: a.max_input_price } : {}),
+          ...(a.max_output_price != null ? { maxOutputPrice: a.max_output_price } : {}),
+          ...(a.min_context != null ? { minContext: a.min_context } : {}),
+        };
+        return reply(await findModels(ctx, args), a.response_format, renderModels);
+      }),
+  );
+
+  server.registerTool(
+    t.cartLink.name,
+    {
+      title: t.cartLink.title,
+      description: fillText(t.cartLink.description, { site: ctx.site }),
+      inputSchema: z.strictObject({
+        items: z
+          .array(z.strictObject({ id: z.string().min(1).max(200), model: z.string().max(MODEL_ID_MAX).nullish() }))
+          .min(1)
+          .max(LIMITS.cartLink)
+          .describe(t.cartLink.items),
+        response_format: format.describe(t.cartLink.format),
+      }),
+      annotations: { title: t.cartLink.title, ...READ_ONLY },
+    },
+    async (a) =>
+      guard(async () => {
+        const items = a.items.map((it) => (it.model ? { id: it.id, model: it.model } : { id: it.id }));
+        return reply(makeCartLink(ctx, { items }), a.response_format, renderCartLink);
+      }),
+  );
+
   server.registerPrompt(
     MCP_PROMPT.name,
     {
@@ -251,6 +325,8 @@ export function createCodeitsoServer(ctx: ToolContext): McpServer {
 const ALLOW_HEADERS = 'Content-Type, Accept, Authorization, Mcp-Session-Id, Mcp-Protocol-Version, Mcp-Method, Mcp-Name, Mcp-Wire-Codec, Last-Event-ID';
 
 const CORS: Record<string, string> = {
+  // 응답 종류를 브라우저가 짐작하지 않게 (JSON·SSE를 다른 것으로 읽지 않는다)
+  'X-Content-Type-Options': 'nosniff',
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, GET, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': ALLOW_HEADERS,

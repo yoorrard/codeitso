@@ -1,9 +1,10 @@
-// 익명 집계 Worker (docs/ARCHITECTURE.md 8·9절, R-60). /api/*만 이 함수를 먼저 거치고, 나머지는 정적 파일이 바로 나간다.
+// 익명 집계 Worker (docs/ARCHITECTURE.md 8·9절, R-60)와 AI 에이전트용 원격 MCP(/mcp, D154). /api/*·/mcp만 이 함수를 먼저 거치고, 나머지는 정적 파일이 바로 나간다.
 // 받는 것은 POST /api/event: 같은 사이트에서 온 요청, 200바이트 이하 본문, 정해진 이벤트·구간만. 받으면 그날 횟수를 1 늘리고 204.
 // 주는 것은 GET /api/stats: 오늘(한국 날짜)과 누적 방문 수 두 숫자 (D134, 바닥글). 두 줄만 읽는다.
 // IP·기기 정보·쿠키는 읽지도 적지도 않는다. 저장이 실패해도(하루 한도 등) 204로 끝낸다 (사이트는 정적이라 영향 없음).
 // Env(DB·ASSETS 묶음)의 타입은 wrangler.jsonc에서 만든다: npm run typecheck:worker (worker-configuration.d.ts, 저장소에 두지 않음)
 import { BODY_MAX, VISIT_TOTAL, dayKey, kstDay, parseEvent } from '../src/lib/event-spec.ts';
+import { handleMcp } from './mcp.ts';
 
 const UPSERT =
   'INSERT INTO daily_events (day, type, bucket, count) VALUES (?1, ?2, ?3, 1) ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1';
@@ -93,8 +94,10 @@ export async function handleStats(request: Request, env: Pick<Env, 'DB'>, now: n
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const path = new URL(request.url).pathname;
+    // AI 에이전트용 원격 MCP (D154, worker/mcp.ts)
+    if (path === '/mcp') return handleMcp(request, env, (p) => ctx.waitUntil(p), Date.now());
     if (path === '/api/stats') return handleStats(request, env, Date.now());
     if (path.startsWith('/api/')) return handleEvent(request, env, Date.now());
     return env.ASSETS.fetch(request);

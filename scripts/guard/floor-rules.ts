@@ -36,7 +36,7 @@ const HEAVY_INK = /var\(\s*--(text|brand-navy|primary)\s*\)/;
 export const INTERNAL_PATHS = [
   'c', 'item', 'search', 'cart', 'prompts', 'receipts', 'receipt', 'terms', 'about', 'legal', 'kits', 'recent',
   'catalog', 'brand', 'fonts', 'og.png', '_astro', 'favicon.ico', 'icon-192.png', 'icon-512.png', 'apple-touch-icon', 'manifest.webmanifest',
-  'glossary', 'robots.txt', 'sitemap.xml', 'api',
+  'glossary', 'robots.txt', 'sitemap.xml', 'api', 'mcp', 'connect',
 ] as const;
 
 const esc = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

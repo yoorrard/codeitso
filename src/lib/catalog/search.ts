@@ -269,12 +269,22 @@ export function runQuery(
 ): SearchResult {
   if (terms.length === 0) return { hits: [], loose: false };
   // keep: 소분류 안에서 찾을 때 그 소분류 문서만 남긴다. 낱말마다 먼저 거르므로 '그리고'·넓히기(loose)도 그 안에서 정한다
-  const only = (m: Map<number, number>): Map<number, number> => {
-    if (!keep) return m;
-    for (const d of [...m.keys()]) if (!keep(d)) m.delete(d);
-    return m;
-  };
-  const per = terms.map((t) => ({ m: only(termMatches(t, get, shards)), optional: t.optional === true }));
+  return combineTerms(terms.map((t) => ({ m: keepOnly(termMatches(t, get, shards), keep), optional: t.optional === true })));
+}
+
+/** 낱말 하나의 맞은 문서에서 keep에 드는 것만 남긴다 (keep이 없으면 그대로) */
+export function keepOnly(m: Map<number, number>, keep?: (doc: number) => boolean): Map<number, number> {
+  if (!keep) return m;
+  for (const d of [...m.keys()]) if (!keep(d)) m.delete(d);
+  return m;
+}
+
+/**
+ * 낱말마다 맞은 문서(문서 → 점수)를 합친다: runQuery의 '그리고'·흔한 말·넓히기(loose) 규칙.
+ * MCP(src/lib/mcp/tools.ts)는 친 낱말 그대로의 점수와 같은 뜻 낱말 점수를 따로 구한 뒤 이 함수로 두 번 합친다 (D154).
+ */
+export function combineTerms(per: readonly { m: Map<number, number>; optional: boolean }[], sorted = true): SearchResult {
+  if (per.length === 0) return { hits: [], loose: false };
   const required = per.filter((p) => !p.optional).map((p) => p.m);
   const optional = per.filter((p) => p.optional).map((p) => p.m);
   const orAll = (lists: Map<number, number>[]): Hit[] => {
@@ -307,7 +317,8 @@ export function runQuery(
       hits = orAll(per.map((p) => p.m));
     }
   }
-  hits.sort((a, b) => b.score - a.score || a.doc - b.doc);
+  // sorted=false: 부르는 쪽이 자기 순서로 다시 줄 세운다 (같은 일을 두 번 하지 않게)
+  if (sorted) hits.sort((a, b) => b.score - a.score || a.doc - b.doc);
   return { hits, loose };
 }
 

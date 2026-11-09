@@ -73,6 +73,8 @@ export const PATHS = {
   about: '/about',
   credits: '/about/credits',
   /** 법 문서 (L, D136): 이용약관 · 개인정보 처리방침 · 이용 안내 · 저작권·게시 중단 요청 */
+  /** 내 AI 에이전트에 코드잇소 연결 (MCP·스킬·플러그인 안내, D154) */
+  connect: '/connect',
   legalTerms: '/legal/terms',
   privacy: '/legal/privacy',
   notice: '/legal/notice',
@@ -81,6 +83,9 @@ export const PATHS = {
 
 /** 화면 주소 (바탕을 붙인 것) */
 export const ROUTES = based(PATHS);
+
+/** 원격 MCP 끝점 (Worker, D154). 바탕 없는 꼴: 정적 호스트 쪽은 대표 주소의 끝점을 안내한다 */
+export const MCP_PATH = '/mcp';
 
 /** public/ 파일과 빌드가 만드는 끝점 (바탕을 붙인 것) */
 export const FILES = based({
@@ -99,6 +104,10 @@ export const FILES = based({
   sitemap: '/sitemap.xml',
   glossary: '/glossary.json',
   searchMeta: '/catalog/search/meta.json',
+  /** AI 에이전트용 진열대 요약 (대분류·소분류·키트, D154) */
+  agentSummary: '/catalog/agent.json',
+  /** 원격 MCP 끝점 (Worker, D154) */
+  mcp: MCP_PATH,
   event: '/api/event',
   stats: '/api/stats',
 });

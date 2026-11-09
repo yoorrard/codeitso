@@ -13,6 +13,7 @@
 - 끝난 것: **v5.1**(P1~P4: 해요체 화면 문구, 담기 창, 프롬프트 뽑기, 새 홈, README 그림·그린 장면, 모든 상품 한국어 설명 `data/catalog-ko/`, 매일 자료 새로 받기 `.github/workflows/daily-refresh.yml`, D119~D128).
 - 끝난 것: **이름 바꿈**(코드쇼퍼 → 코드잇소·codeitso, 새 글자 로고·투명 파비콘, D129), **R1 인기순·K1 키트·N1 찜·비교·O1 처음 방문 가이드**(D133~D138), **AI API 모델·요금 `/models`**(D141), **바닥글 방문 수**(D134).
 - 끝난 것 (2026-10-23): **한국어 설명** 보이는 앞쪽(소분류마다 인기순 첫 세 쪽)은 번역 `data/catalog-ko/agent.json`, 나머지는 빌드가 자료로 만드는 한 줄(`scripts/lib/ko-rule.ts`), 운영에 AI 없음(D142·D143) · **매일 갱신 R2**(바뀐 것만 쓰기·변동 문턱·출처마다 받는 날·MCP 바뀐 것만, D143) · **디자인 다듬기**(색 띠·옅은 색 판 걷기, D144) · **로딩·피드백**(내용 모양 뼈대·늦게 보이기·CLS 0.05 아래·누른 뒤 확인, D148) · **오픈소스 준비**(코드 MIT·운영자 글 CC BY 4.0·이름과 로고 제외, D145) · 출처가 깨뜨린 글자 되돌리기(D146) · 화면 용어 '필터'(D147).
+- 끝난 것 (2026-11-09): **AI 에이전트 연결**(D154) 원격 MCP `/mcp`(읽기 전용 도구 5·프롬프트 1, 공식 SDK, 진열대 정적 JSON만 읽음), 연결 안내 `/connect`, Claude Code 플러그인·스킬 `plugins/codeitso`(저장소가 장터), MCP 레지스트리 `server.json`, 처리방침 5번.
 - 정식 공개(2026-10-23, D149): 단계 `release`, `main`에 합쳐 매일 예약 실행이 돈다. 다음: 실제 사이트 점검을 이어 가며 버그를 고친다.
 - 배포 가지는 `main`(D151): 작업 브랜치에서 일하고 PR로 `main`에 합친다. 합칠 때마다 https://codeitso.yoorrard.workers.dev 에 배포되므로 검사(PR의 check, e2e까지)가 통과한 것만 합친다. 소유자가 Cloudflare Branch control을 `main`으로 바꾸기 전(H30)에는 작업 브랜치 푸시도 배포되니 검사가 통과한 것만 푸시한다.
 - 사람 몫은 `docs/HUMAN.md`(배포 가지 H30, 선택: 상표 H03·로고 권리 H28·실기기 H29). 저장소는 공개 `yoorrard/codeitso`(MIT, D145·D150).
@@ -29,7 +30,7 @@
 
 ## 꼭 지킬 것
 
-1. 사이트는 AI를 부르지 않는다. 화면에서 부르는 API는 자기 사이트의 `/api/event`(익명 집계)와 `/api/stats`(바닥글 방문 수, D134) 둘, 바깥 스크립트는 쿠키 없는 Cloudflare Web Analytics(장바구니·영수증 쪽 제외) 하나뿐이다. **예외(brief 5절):** 상품 미리 보기를 위해 출처의 공식 CDN에서 그림과 견본 글꼴을 지연 로드할 수 있다. 추적·광고 스크립트는 없다.
+1. 사이트는 AI를 부르지 않는다. 화면에서 부르는 API는 자기 사이트의 `/api/event`(익명 집계)와 `/api/stats`(바닥글 방문 수, D134) 둘이다. 이용자의 AI 앱이 부르는 원격 MCP `/mcp`(D154)는 읽기 전용이고 진열대 정적 JSON만 읽으며 검색어·재료 id를 저장하지 않는다(도구 이름·앱 종류 횟수만). 화면의 바깥 스크립트는 쿠키 없는 Cloudflare Web Analytics(장바구니·영수증 쪽 제외) 하나뿐이다. **예외(brief 5절):** 상품 미리 보기를 위해 출처의 공식 CDN에서 그림과 견본 글꼴을 지연 로드할 수 있다. 추적·광고 스크립트는 없다.
 2. 쿠키·광고·제휴 링크·추적·회원가입이 없다. 이용자 상태(장바구니·만들 앱 메모·지난 영수증·최근 본 재료·설정)는 localStorage에만 두고, 저장 코드는 `src/lib/store.ts` 한 곳에만 둔다. 공유 링크에는 재료 id와 고른 AI 모델 id만 싣는다(메모는 싣지 않는다, D141).
 3. **상품의 사실(설명·라이선스·인증·무료 여부·인기 지표)은 출처 자료 그대로만 쓴다.** 지어내지 않고, 출처가 없으면 비운다. 진열대 자료(`data/catalog/**`)는 손으로 고치지 않고 가져오기 스크립트를 고쳐 다시 받는다.
 4. 정렬·인기 점수·쪽 나누기·카드 모양 같은 진열대 계산은 `src/lib/catalog/core.ts`(순수 함수)에서만 한다. 빌드(`scripts/catalog/build.ts`)와 화면 섬이 같은 함수를 쓴다.
@@ -66,7 +67,9 @@ schemas/         자료 스키마
 scripts/import/  가져오기 · scripts/i18n/ 한국어 설명 · scripts/catalog/ 진열대 읽기·빌드 · scripts/brand/ 로고 · guard·qa·lib·fonts·deploy
 src/lib/catalog/ 진열대 모양(types)·순수 계산(core·search·facets·preview)·미리 보기 CDN 호스트(hosts)·Astro 요약 읽기(site)
 src/             components(머리줄·메뉴·카드·섬), pages(라우트), layouts/Base.astro, copy/ko.ts, styles/tokens.css
-public/catalog/  진열대 빌드 결과 (저장소에 올리지 않는다)
+public/catalog/  진열대 빌드 결과 (저장소에 올리지 않는다, agent.json = MCP용 요약)
+src/lib/mcp/     원격 MCP 도구 계산·마크다운·글 다듬기·집계 (worker/mcp.ts가 쓴다), src/copy/mcp.ts 도구 설명
+plugins/codeitso/  Claude Code 플러그인(MCP + 스킬), .claude-plugin/marketplace.json 장터, server.json MCP 레지스트리
 docs/            문서 (아래), docs/archive/v4/ 옛 문서·자료
 .claude/         규칙(rules), 스킬(skills), 전문가 에이전트(agents), 훅(hooks), 설정(settings.json)
 ```

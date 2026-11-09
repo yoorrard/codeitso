@@ -16,6 +16,8 @@ export interface SiteConfig {
   email: string;
   /** 저작권 표시의 첫해 */
   since: number;
+  /** 공개 GitHub 저장소 (owner/name): 플러그인 장터 설치 명령과 스킬 폴더 안내 (D154) */
+  repo: string;
 }
 
 export const SITE_CONFIG: SiteConfig = {
@@ -24,6 +26,7 @@ export const SITE_CONFIG: SiteConfig = {
   operator: '유영재',
   email: 'yyj19962004@gmail.com',
   since: 2026,
+  repo: 'yoorrard/codeitso',
 };
 
 /** 빌드 변수의 단계와 설정의 단계 중 하나라도 release면 정식 */

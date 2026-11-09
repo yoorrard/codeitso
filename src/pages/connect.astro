@@ -1,0 +1,117 @@
+---
+// AI에 연결 /connect (D154): 원격 MCP 주소 하나와 앱별 연결 순서, Claude Code 플러그인·스킬, 안전·개인정보 안내.
+// 정적 HTML이고 복사 단추만 섬이다. 정적 호스트(PUBLIC_HOST=static)에는 MCP 서버가 없어 대표 주소의 끝점을 안내한다.
+// 앱별 설정 글은 src/lib/mcp/connect.ts가 주소 하나로 만든다(각 앱 공식 문서를 2026-11-09에 확인한 모양).
+import Base from '../layouts/Base.astro';
+import CopyButton from '../components/CopyButton.tsx';
+import Icon from '../components/Icon.astro';
+import { ko } from '../copy/ko.ts';
+import { MCP_TOOLS } from '../copy/mcp.ts';
+import { connectSetups, pluginCommands } from '../lib/mcp/connect.ts';
+import { FILES, MCP_PATH, ROUTES } from '../lib/routes.ts';
+import { SITE_CONFIG } from '../lib/site-config.ts';
+import { HOST } from '../lib/stage.ts';
+import { fill } from '../lib/text.ts';
+
+const C = ko.connect;
+const url = HOST === 'static' || !Astro.site ? `${SITE_CONFIG.url}${MCP_PATH}` : new URL(FILES.mcp, Astro.site).href;
+const setups = connectSetups(url);
+const plugin = pluginCommands(SITE_CONFIG.repo);
+const repoUrl = `https://github.com/${SITE_CONFIG.repo}`;
+const toolNames = Object.values(MCP_TOOLS).map((t) => t.name);
+---
+
+<Base title={C.pageTitle} description={C.lead} read crumbs={[{ href: ROUTES.home, label: ko.site.name }]}>
+  <article class="prose connect">
+    <h1>{C.title}</h1>
+    <p class="connect-lead">{C.lead}</p>
+
+    <div class="code-block connect-url">
+      <p class="code-label" id="mcp-url-label">{C.urlLabel}</p>
+      <pre tabindex="0" aria-labelledby="mcp-url-label"><code>{url}</code></pre>
+      <CopyButton client:visible text={url} label={C.copyUrl} done={C.copiedUrl} primary />
+    </div>
+
+    <h2>{C.canTitle}</h2>
+    <ul>
+      {C.can.map((t, i) => <li>{t} <code class="connect-tool">{toolNames[i]}</code></li>)}
+    </ul>
+    <p>{C.promptNote}</p>
+
+    <h2>{C.howTitle}</h2>
+    {
+      setups.map((s) => {
+        const c = C.clients[s.id];
+        return (
+          <section class="connect-client" aria-labelledby={`client-${s.id}`}>
+            <h3 id={`client-${s.id}`}>{c.name}</h3>
+            <ol>
+              {c.steps.map((st) => (
+                <li>{st}</li>
+              ))}
+            </ol>
+            {s.link && (
+              <p>
+                <a class="btn" href={s.link}>
+                  {fill(C.oneClick, { name: c.name })}
+                </a>
+              </p>
+            )}
+            {s.code && (
+              <div class="code-block">
+                <p class="code-label">{s.file ? fill(C.fileLabel, { file: s.file }) : C.commandLabel}</p>
+                <pre tabindex="0"><code>{s.code}</code></pre>
+                <CopyButton client:visible text={s.code} srLabel={fill(C.copyLabel, { name: c.name })} done={C.copiedCode} />
+              </div>
+            )}
+          </section>
+        );
+      })
+    }
+
+    <h2>{C.pluginTitle}</h2>
+    <p>{C.pluginBody}</p>
+    <div class="code-block">
+      <p class="code-label">{C.pluginLabel}</p>
+      <pre tabindex="0"><code>{plugin}</code></pre>
+      <CopyButton client:visible text={plugin} srLabel={C.pluginLabel} done={C.copiedCode} />
+    </div>
+    <p>{C.skillBody}</p>
+    <p>
+      <a href={repoUrl} target="_blank" rel="noopener noreferrer">
+        {C.repoLink}
+        <Icon name="external" size="16px" label={ko.common.external} />
+      </a>
+    </p>
+
+    <h2>{C.safeTitle}</h2>
+    <ul>
+      {C.safe.map((t) => <li>{t}</li>)}
+    </ul>
+    <p><a href={`${ROUTES.privacy}#mcp`}>{C.privacyLink}</a></p>
+  </article>
+</Base>
+
+<style>
+  .connect-lead {
+    font-size: var(--size-body-lg);
+    color: var(--text-2);
+  }
+  .connect-url pre {
+    font-size: var(--size-body-lg);
+  }
+  .connect-client {
+    margin-block-start: var(--space-5);
+  }
+  .connect-client > * + * {
+    margin-block-start: var(--space-2);
+  }
+  .connect-client ol {
+    padding-inline-start: var(--space-5);
+  }
+  .connect-tool {
+    font-size: var(--size-caption);
+    color: var(--text-3);
+    overflow-wrap: anywhere;
+  }
+</style>

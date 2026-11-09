@@ -24,6 +24,24 @@ https://codeitso.yoorrard.workers.dev
 | 장바구니 | 쓸 곳 메모, 프롬프트 뽑기·복사·.md 받기, 설치 명령 한꺼번에 복사, 공유 링크, 지난 프롬프트, 찜, 최근 본 재료 |
 | 용어 사전 | 바이브코딩에 자주 나오는 말을 쉬운 한국어로 풀이 |
 
+## AI 에이전트로 쓰기 (MCP)
+
+AI 앱에 원격 MCP 주소 하나만 넣으면 AI가 코드잇소의 재료를 직접 찾아 고르고 설치 방법까지 확인해요. 무료이고 가입이 필요 없어요. 앱별 연결 순서는 [/connect](https://codeitso.yoorrard.workers.dev/connect)에 있어요.
+
+```text
+https://codeitso.yoorrard.workers.dev/mcp
+```
+
+| 앱 | 연결 |
+|---|---|
+| Claude Code | `claude mcp add --transport http codeitso https://codeitso.yoorrard.workers.dev/mcp` |
+| Claude Code 플러그인 (MCP + 스킬) | `/plugin marketplace add yoorrard/codeitso` → `/plugin install codeitso@codeitso` |
+| Codex | `codex mcp add codeitso --url https://codeitso.yoorrard.workers.dev/mcp` |
+| Gemini CLI | `gemini mcp add --transport http -s user codeitso https://codeitso.yoorrard.workers.dev/mcp` |
+| claude.ai · ChatGPT · Cursor · VS Code · Windsurf | [/connect](https://codeitso.yoorrard.workers.dev/connect)의 순서대로 |
+
+도구는 모두 읽기 전용이에요: `codeitso_search`(재료 검색) · `codeitso_get_materials`(공식 주소·라이선스·설치 명령·API 키·AI 모델 가격) · `codeitso_browse`(진열대) · `codeitso_get_kits`(스타터 키트) · `codeitso_open_cart`(사이트 장바구니 공유 링크 불러오기). 스킬 `plugins/codeitso/skills/codeitso`는 [Agent Skills](https://agentskills.io) 규격이라 다른 에이전트에도 옮겨 쓸 수 있어요. 구조와 한도는 `docs/ARCHITECTURE.md` 7.1절, 결정 이유는 `docs/DECISIONS.md` D154.
+
 ## 어떻게 돌아가나
 
 ```text

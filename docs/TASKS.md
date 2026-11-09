@@ -481,3 +481,4 @@ T35 기반 ──┬─▶ T36 직접 쓰기 자료·엔진 ─▶ T37 직접 �
 2026-10-23 e2e 도우미 textBox: 끌 글을 화면 가운데로 옮긴 뒤 자리가 멈추면 잰다. PR #4 CI에서 휠 스크롤로 글이 화면 맨 아래(y=808/844)에 남아 휴대폰 '맨 위로' 단추가 끌기를 가로챈 것이 원인(CI 트레이스로 확인). overlays 3번씩 54개·guide 통과.
 2026-10-23 정렬 점검(D152): 100개 소분류×3 정렬 어긋남 0 확인, 이름순 앞쪽 기호 빼기·숫자 크기순(cmpName), 인기 지표 없는 소분류 10개는 '기본순'(출처 차례), 갱신일 없는 28개는 최근 갱신순 숨김. 검사 738·e2e 31 통과.
 2026-10-23 서랍 단추 이름(D153): '장바구니 쪽에서 보기' → '장바구니로 가기'(서랍을 여는 '장바구니 보기'와 나눔, Shopify '카트 보기'·Vitals 'Go to cart' 참고), /c '모두 보기' 링크 이름을 화면 글과 맞춤('디자인 모두 보기').
+2026-11-09 AI 에이전트 연결(D154): 원격 MCP /mcp(공식 SDK v2 무상태, 읽기 전용 도구 codeitso_search·get_materials·browse·get_kits·open_cart + 프롬프트 plan_app), 진열대 요약 /catalog/agent.json, 에이전트용 검색 순서(친 꼴 가산·대분류 번갈아·CPU 묶기), 연결 안내 /connect(앱 8곳), 장바구니·바닥글·메뉴·소개 링크, 처리방침 5번, Claude Code 플러그인·스킬 plugins/codeitso + 장터, MCP 레지스트리 server.json. 공식 MCP 클라이언트·Inspector·wrangler dev(workerd)·claude plugin validate로 확인.

@@ -275,6 +275,9 @@ export default function CartPage({ nav }: Props) {
               <div class="share-row">
                 <CopyButton text={shareUrl(lines.map((l) => ({ id: l.id, ...(l.model ? { model: l.model.id } : {}) })))} label={ko.cart.share} done={ko.cart.shareCopied} />
                 <span class="field-hint">{ko.cart.shareNote}</span>
+                <span class="field-hint share-agent">
+                  {ko.connect.cartHint} <a href={ROUTES.connect}>{ko.connect.cartLink}</a>
+                </span>
               </div>
               <ClearAll n={lines.length} />
             </section>

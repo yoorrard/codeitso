@@ -17,6 +17,7 @@ const PAGES = [
   '/item?id=styles%3Aaurora',
   '/item?id=official%3Aamazon-comprehend',
   '/cart',
+  '/connect',
   '/prompts',
   '/search?q=font',
   '/search?q=weather&cat=api',

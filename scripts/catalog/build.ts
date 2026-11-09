@@ -6,6 +6,7 @@
 //   public/catalog/search/s-<대분류>-<소분류>.json                         소분류 안 검색 (N1 D137: 인기순 자리 → 문서 번호)
 //   public/catalog/facet/<대분류>/<소분류>.json · -name.json · -recent.json  거르기 (D115: 값마다 자리 목록 + 정렬 순서)
 //   public/catalog/models/p/<제공자>.json · direct.json · hosts.json      AI 모델·요금 (D141: 상세 표·담기 창 / 비교 쪽 /models)
+//   public/catalog/agent.json                                 AI 에이전트용 요약 (D154: MCP 서버가 읽는 대분류·소분류·키트)
 //   .cache/catalog/site.json                                  Astro 페이지 머리말이 읽는 요약 (메뉴·홈 기획전·스타터 키트·목록 1쪽·출처)
 // Cloudflare 정적 파일은 한 판 2만 개까지라(brief 5절) 쪽마다 HTML을 만들지 않고, 파일 수를 5천 개 아래로 지킨다.
 //   --if-stale  자료·빌드 코드가 지난번과 같고 결과가 있으면 건너뛴다
@@ -19,6 +20,7 @@ import { buildFacets, encodeOrder } from '../../src/lib/catalog/facets.ts';
 import type { BundleRow, ModelProvider, ModelsBundle, ModelsSummary, ProviderModels } from '../../src/lib/catalog/models.ts';
 import { MODEL_ITEM_PREFIX, isDeprecated, rowOf, slimRow, sortNewest } from '../../src/lib/catalog/models.ts';
 import { SITE_FILE } from '../../src/lib/catalog/site.ts';
+import { buildAgentSummary } from '../../src/lib/mcp/summary.ts';
 import type { ListChunk, SiteData } from '../../src/lib/catalog/types.ts';
 import { CHUNK_PAGES, MAX_CATALOG_FILES, PAGE_SIZE, SORTS } from '../../src/lib/catalog/types.ts';
 import { CATALOG_DIR, KITS_FILE, KO_DIR, MEDIA_DIR, MODELS_DIR, card, cards, catalog, categories, homeRows, kits, kitsFile, listOf, readModels, shards, topOf } from './load.ts';
@@ -48,7 +50,7 @@ function signature(): string {
   if (existsSync(MEDIA_DIR)) walk(MEDIA_DIR);
   if (existsSync(MODELS_DIR)) walk(MODELS_DIR);
   // 한국어 한 줄은 빌드 때 만든다 (D143): 그 규칙 파일이 바뀌어도 다시 만든다
-  for (const f of [KITS_FILE, WORDS_FILE, join(ROOT, 'scripts', 'lib', 'ko-rule.ts'), join(ROOT, 'scripts', 'lib', 'ko-template.ts'), join(ROOT, 'scripts', 'lib', 'text-repair.ts')]) {
+  for (const f of [KITS_FILE, WORDS_FILE, join(ROOT, 'scripts', 'lib', 'ko-rule.ts'), join(ROOT, 'scripts', 'lib', 'ko-template.ts'), join(ROOT, 'scripts', 'lib', 'text-repair.ts'), join(ROOT, 'src', 'lib', 'mcp', 'summary.ts')]) {
     const st = statSync(f);
     h.update(`${relative(ROOT, f)}:${st.size}:${st.mtimeMs}\n`);
   }
@@ -155,12 +157,16 @@ if (modelsData) {
 }
 const modelsSummary: ModelsSummary | undefined = modelsData ? { fetched: modelsData.fetchedAt, providers: modelProviders } : undefined;
 
+// 6. AI 에이전트용 요약 (D154): MCP 서버가 대분류·소분류·키트를 이 파일 하나로 안다
+const agentSummary = buildAgentSummary({ total, categories: cats, kits: kits() });
+write(join(OUT, 'agent.json'), agentSummary);
+
 if (files > MAX_CATALOG_FILES) {
   console.error(`진열대 자료 파일이 ${files}개라 한도 ${MAX_CATALOG_FILES}개를 넘는다. CHUNK_PAGES나 SHARDS(src/lib/catalog/types.ts)를 고친다.`);
   process.exit(1);
 }
 
-// 6. Astro 쪽 요약
+// 7. Astro 쪽 요약
 const site: SiteData = {
   v: 1,
   total,

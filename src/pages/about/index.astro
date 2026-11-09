@@ -16,6 +16,7 @@ const mailto = CONTACT_EMAIL ? mailtoFor({ email: CONTACT_EMAIL, subject: ko.fee
     <h1>{A.title}</h1>
     <h2>{A.what}</h2>
     {A.whatBody.map((t) => <p>{t}</p>)}
+    <p><a href={ROUTES.connect}>{A.connectLink}</a></p>
     <h2>{A.not}</h2>
     <ul>{notBody.map((t) => <li>{t}</li>)}</ul>
     <h2>{A.data}</h2>

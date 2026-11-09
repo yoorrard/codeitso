@@ -4,10 +4,10 @@
     "name": "public-apis-4Kr (한국 공개 API 목록)",
     "url": "https://github.com/yybmion/public-apis-4Kr",
     "license": "MIT (list text); each API has its own terms",
-    "note": "Every row of the Korean README tables. Rows that duplicate an entry of the hand-checked list (official.json) are skipped. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-10), set only when the item has no other metric. Used only for sorting."
+    "note": "Every row of the Korean README tables. Rows that duplicate an entry of the hand-checked list (official.json) are skipped. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-10-20",
-  "count": 296,
+  "fetchedAt": "2026-11-07",
+  "count": 299,
   "items": [
     {
       "id": "public-apis-4kr:adstat.kobaco.co.kr",
@@ -1694,6 +1694,52 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis-4kr:data.go.kr-data-15134735-openapi.do",
+      "name": "건축HUB 건축물대장정보",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "건축물대장 기본개요·총괄표제부·표제부·층별개요·전유공용면적 등 조회",
+      "url": "https://www.data.go.kr/data/15134735/openapi.do",
+      "source": {
+        "name": "public-apis-4Kr",
+        "url": "https://github.com/yybmion/public-apis-4Kr"
+      },
+      "tags": [
+        "auth-apikey",
+        "korea",
+        "부동산"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "listCategory": "부동산"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
+      "id": "public-apis-4kr:data.go.kr-data-15136560-openapi.do",
+      "name": "건축HUB 주택인허가정보",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "주택건설사업계획승인과 동·층·호별 개요, 주차장·부대복리시설 정보 조회",
+      "url": "https://www.data.go.kr/data/15136560/openapi.do",
+      "source": {
+        "name": "public-apis-4Kr",
+        "url": "https://github.com/yybmion/public-apis-4Kr"
+      },
+      "tags": [
+        "auth-apikey",
+        "korea",
+        "부동산"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "listCategory": "부동산"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
       "id": "public-apis-4kr:data.go.kr-data-3046254-openapi.do",
       "name": "한국교육학술정보원 학술연구정보",
       "kind": "kr-public",
@@ -1994,6 +2040,29 @@
         "listCategory": "정부 & 공공기관"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis-4kr:data.mafra.go.kr-majorpublicdata-indexmajorpublicdata.do",
+      "name": "안심식당 정보",
+      "kind": "kr-public",
+      "category": "api",
+      "summary": "지자체가 지정한 안심식당의 위치와 위생 관련 정보 제공",
+      "url": "https://data.mafra.go.kr/majorpublicdata/indexMajorPublicData.do",
+      "source": {
+        "name": "public-apis-4Kr",
+        "url": "https://github.com/yybmion/public-apis-4Kr"
+      },
+      "tags": [
+        "auth-apikey",
+        "korea",
+        "음식-음료"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "listCategory": "음식 & 음료"
+      },
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "public-apis-4kr:data.mfds.go.kr-opcaa01f01",

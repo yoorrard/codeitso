@@ -6,8 +6,8 @@
     "license": "Model names, descriptions, capability tags and pull counts as published on ollama.com/library; each model keeps the license of its original publisher (shown on the model page).",
     "note": "downloads는 Ollama가 보여 주는 누적 pull 수(반올림된 표시값)다."
   },
-  "fetchedAt": "2026-10-23",
-  "count": 260,
+  "fetchedAt": "2026-11-08",
+  "count": 270,
   "items": [
     {
       "id": "ollama:alfred",
@@ -21,7 +21,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 303400,
+        "downloads": 334500,
         "updatedAt": "2023-11-19"
       },
       "tags": [
@@ -37,7 +37,7 @@
         "install": "ollama run alfred",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:all-minilm",
@@ -98,6 +98,36 @@
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "ollama:autotrust-jev",
+      "name": "autotrust-jev",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "AutoTrust’s decision models return choices, yes/no probabilities, and ratings for the questions you supply",
+      "url": "https://ollama.com/library/autotrust-jev",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 15000,
+        "updatedAt": "2026-11-04"
+      },
+      "tags": [
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "host": "ollama",
+        "variants": 11
+      },
+      "use": {
+        "install": "ollama run autotrust-jev",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:aya",
@@ -201,7 +231,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 35000,
+        "downloads": 71000,
         "updatedAt": "2026-10-16"
       },
       "tags": [
@@ -220,7 +250,7 @@
         "install": "ollama run beam",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:bespoke-minicheck",
@@ -324,7 +354,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 45200,
+        "downloads": 128200,
         "updatedAt": "2026-10-16"
       },
       "tags": [
@@ -340,7 +370,7 @@
         "install": "ollama run bonsai-2",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:clef",
@@ -354,7 +384,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 35500,
+        "downloads": 78800,
         "updatedAt": "2026-10-14"
       },
       "tags": [
@@ -374,7 +404,7 @@
         "install": "ollama run clef",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:clef-flash",
@@ -388,7 +418,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 35900,
+        "downloads": 63300,
         "updatedAt": "2026-10-14"
       },
       "tags": [
@@ -404,7 +434,7 @@
         "install": "ollama run clef-flash",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:codebooga",
@@ -508,7 +538,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 7200000,
+        "downloads": 8000000,
         "updatedAt": "2024-07-18"
       },
       "tags": [
@@ -524,7 +554,7 @@
         "install": "ollama run codellama",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:codeqwen",
@@ -838,8 +868,8 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 18800,
-        "updatedAt": "2026-10-15"
+        "downloads": 48700,
+        "updatedAt": "2026-10-27"
       },
       "tags": [
         "local",
@@ -848,13 +878,13 @@
       "preview": {
         "type": "model",
         "host": "ollama",
-        "variants": 3
+        "variants": 7
       },
       "use": {
         "install": "ollama run d1",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:d1-omni",
@@ -868,8 +898,8 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 6348,
-        "updatedAt": "2026-10-17"
+        "downloads": 35800,
+        "updatedAt": "2026-10-27"
       },
       "tags": [
         "local",
@@ -878,13 +908,13 @@
       "preview": {
         "type": "model",
         "host": "ollama",
-        "variants": 4
+        "variants": 8
       },
       "use": {
         "install": "ollama run d1-omni",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:d3",
@@ -898,8 +928,8 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1362,
-        "updatedAt": "2026-10-22"
+        "downloads": 62100,
+        "updatedAt": "2026-10-30"
       },
       "tags": [
         "local",
@@ -914,7 +944,7 @@
         "install": "ollama run d3",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:dbrx",
@@ -1108,7 +1138,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 558300,
+        "downloads": 684900,
         "updatedAt": "2025-11-19"
       },
       "tags": [
@@ -1124,7 +1154,7 @@
         "install": "ollama run deepseek-ocr",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:deepseek-r1",
@@ -1322,7 +1352,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 156900,
+        "downloads": 211500,
         "updatedAt": "2026-10-17"
       },
       "tags": [
@@ -1342,7 +1372,7 @@
         "install": "ollama run deepseek-v4.1-flash",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:devstral",
@@ -1416,7 +1446,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 2000000,
+        "downloads": 2500000,
         "updatedAt": "2025-12-13"
       },
       "tags": [
@@ -1432,7 +1462,7 @@
         "install": "ollama run devstral-small-2",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "ollama:dolphin-llama3",
@@ -1596,7 +1626,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1000000,
+        "downloads": 1100000,
         "updatedAt": "2024-04-09"
       },
       "tags": [
@@ -1612,7 +1642,7 @@
         "install": "ollama run dolphincoder",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "ollama:duckdb-nsql",
@@ -1686,7 +1716,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 78700,
+        "downloads": 141200,
         "updatedAt": "2026-10-15"
       },
       "tags": [
@@ -1702,7 +1732,7 @@
         "install": "ollama run embeddinggemma-2",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:everythinglm",
@@ -1926,7 +1956,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 10200,
+        "downloads": 62200,
         "updatedAt": "2026-10-22"
       },
       "tags": [
@@ -1942,7 +1972,7 @@
         "install": "ollama run flint",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:functiongemma",
@@ -2203,7 +2233,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 128200,
+        "downloads": 228000,
         "updatedAt": "2026-08-28"
       },
       "tags": [
@@ -2222,7 +2252,7 @@
         "install": "ollama run glm-5.3",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:glm-5.3-flash",
@@ -2236,7 +2266,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 189600,
+        "downloads": 210300,
         "updatedAt": "2026-08-26"
       },
       "tags": [
@@ -2255,7 +2285,7 @@
         "install": "ollama run glm-5.3-flash",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:glm-ocr",
@@ -2753,7 +2783,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 561100,
+        "downloads": 618800,
         "updatedAt": "2026-05-19"
       },
       "tags": [
@@ -2769,7 +2799,7 @@
         "install": "ollama run granite4.1",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:granite4.1-guardian",
@@ -2783,7 +2813,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 40000,
+        "downloads": 44000,
         "updatedAt": "2026-06-10"
       },
       "tags": [
@@ -2799,7 +2829,7 @@
         "install": "ollama run granite4.1-guardian",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "ollama:granite4.2",
@@ -2813,7 +2843,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 163400,
+        "downloads": 259000,
         "updatedAt": "2026-08-27"
       },
       "tags": [
@@ -2829,7 +2859,7 @@
         "install": "ollama run granite4.2",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-04"
     },
     {
       "id": "ollama:hermes3",
@@ -2903,7 +2933,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 10300,
+        "downloads": 22900,
         "updatedAt": "2026-10-17"
       },
       "tags": [
@@ -2919,7 +2949,7 @@
         "install": "ollama run kev",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:kimi-k2.6",
@@ -2999,7 +3029,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 106500,
+        "downloads": 117600,
         "updatedAt": "2026-07-27"
       },
       "tags": [
@@ -3018,7 +3048,40 @@
         "install": "ollama run kimi-k3",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-06"
+    },
+    {
+      "id": "ollama:kimi-k3.1-pro",
+      "name": "kimi-k3.1-pro",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Kimi K3.1 Pro is an open-weight, natively multimodal agentic model and our most capable 3T-class model to date, with a 1M-token context window and major gains in coding, 3D creation, financial research, and factual accuracy.",
+      "url": "https://ollama.com/library/kimi-k3.1-pro",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 11000,
+        "updatedAt": "2026-11-04"
+      },
+      "tags": [
+        "cloud",
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "capabilities": [
+          "cloud"
+        ],
+        "host": "ollama"
+      },
+      "use": {
+        "install": "ollama run kimi-k3.1-pro",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:laguna-s-2.1",
@@ -3062,7 +3125,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 137400,
+        "downloads": 151500,
         "updatedAt": "2026-08-31"
       },
       "tags": [
@@ -3078,7 +3141,7 @@
         "install": "ollama run laguna-xs-2.1",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:laguna-xs.2",
@@ -3092,7 +3155,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 37900,
+        "downloads": 42000,
         "updatedAt": "2026-07-25"
       },
       "tags": [
@@ -3108,7 +3171,7 @@
         "install": "ollama run laguna-xs.2",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "ollama:laya",
@@ -3122,7 +3185,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 14000,
+        "downloads": 22100,
         "updatedAt": "2026-10-16"
       },
       "tags": [
@@ -3138,7 +3201,7 @@
         "install": "ollama run laya",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "ollama:lfm2",
@@ -3182,7 +3245,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 253100,
+        "downloads": 306800,
         "updatedAt": "2026-10-15"
       },
       "tags": [
@@ -3198,7 +3261,7 @@
         "install": "ollama run lfm2.5",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:lfm2.5-thinking",
@@ -3229,6 +3292,126 @@
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "ollama:lfm3",
+      "name": "lfm3",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "LFM3-1.7B is a tri-hybrid model for local agents and specialized applications.",
+      "url": "https://ollama.com/library/lfm3",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 55800,
+        "updatedAt": "2026-10-29"
+      },
+      "tags": [
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "host": "ollama",
+        "variants": 9
+      },
+      "use": {
+        "install": "ollama run lfm3",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-07"
+    },
+    {
+      "id": "ollama:lfm3-audio",
+      "name": "lfm3-audio",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "LFM3-Audio-2B is a compact, fully featured audio model.",
+      "url": "https://ollama.com/library/lfm3-audio",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 22400,
+        "updatedAt": "2026-10-29"
+      },
+      "tags": [
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "host": "ollama",
+        "variants": 8
+      },
+      "use": {
+        "install": "ollama run lfm3-audio",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
+    },
+    {
+      "id": "ollama:lfm3-omni",
+      "name": "lfm3-omni",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "a single end-to-end model that understands text, images, video and audio, and answers in text and speech",
+      "url": "https://ollama.com/library/lfm3-omni",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 42200,
+        "updatedAt": "2026-10-29"
+      },
+      "tags": [
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "host": "ollama",
+        "variants": 8
+      },
+      "use": {
+        "install": "ollama run lfm3-omni",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
+    },
+    {
+      "id": "ollama:lfm3-vl",
+      "name": "lfm3-vl",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "LFM3-VL-2B is a vision-language model for on-device visual understanding.",
+      "url": "https://ollama.com/library/lfm3-vl",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 26600,
+        "updatedAt": "2026-10-29"
+      },
+      "tags": [
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "host": "ollama",
+        "variants": 9
+      },
+      "use": {
+        "install": "ollama run lfm3-vl",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:llama-guard3",
@@ -3722,7 +3905,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 722400,
+        "downloads": 1100000,
         "updatedAt": "2024-05-07"
       },
       "tags": [
@@ -3738,7 +3921,7 @@
         "install": "ollama run llava-phi3",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:magicoder",
@@ -4011,6 +4194,102 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "ollama:mimo-v2.6",
+      "name": "mimo-v2.6",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "MiMo-V2.6-Distill-Qwen-9B is Xiaomi MiMo’s 9B model for code and agent workflows",
+      "url": "https://ollama.com/library/mimo-v2.6",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 36500,
+        "updatedAt": "2026-11-03"
+      },
+      "tags": [
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "host": "ollama",
+        "variants": 8
+      },
+      "use": {
+        "install": "ollama run mimo-v2.6",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
+    },
+    {
+      "id": "ollama:mimo-v2.6-flash",
+      "name": "mimo-v2.6-flash",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Xiaomi's efficiency-balanced MiMo-V2.6 checkpoint, with 309B total parameters, 15B active, omnimodal input, and a 1M token context.",
+      "url": "https://ollama.com/library/mimo-v2.6-flash",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 4289,
+        "updatedAt": "2026-09-22"
+      },
+      "tags": [
+        "cloud",
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "capabilities": [
+          "cloud"
+        ],
+        "host": "ollama"
+      },
+      "use": {
+        "install": "ollama run mimo-v2.6-flash",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
+    },
+    {
+      "id": "ollama:mimo-v2.6-pro",
+      "name": "mimo-v2.6-pro",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Xiaomi's flagship MiMo-V2.6 checkpoint, with 1.02T total parameters, 42B active, omnimodal input, and a 1M token context.",
+      "url": "https://ollama.com/library/mimo-v2.6-pro",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 4071,
+        "updatedAt": "2026-09-22"
+      },
+      "tags": [
+        "cloud",
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "capabilities": [
+          "cloud"
+        ],
+        "host": "ollama"
+      },
+      "use": {
+        "install": "ollama run mimo-v2.6-pro",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
+    },
+    {
       "id": "ollama:minicpm-v",
       "name": "minicpm-v",
       "kind": "models",
@@ -4052,7 +4331,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 58000,
+        "downloads": 70300,
         "updatedAt": "2026-06-02"
       },
       "tags": [
@@ -4068,7 +4347,7 @@
         "install": "ollama run minicpm-v4.5",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-04"
     },
     {
       "id": "ollama:minicpm-v4.6",
@@ -4082,7 +4361,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 73600,
+        "downloads": 90100,
         "updatedAt": "2026-06-02"
       },
       "tags": [
@@ -4098,7 +4377,7 @@
         "install": "ollama run minicpm-v4.6",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:minimax-m2.7",
@@ -4178,7 +4457,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 39400,
+        "downloads": 48200,
         "updatedAt": "2026-10-19"
       },
       "tags": [
@@ -4197,7 +4476,7 @@
         "install": "ollama run minimax-m3.1-flash",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "ollama:ministral-3",
@@ -4301,7 +4580,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 140500,
+        "downloads": 155000,
         "updatedAt": "2025-12-02"
       },
       "tags": [
@@ -4320,7 +4599,7 @@
         "install": "ollama run mistral-large-3",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-05"
     },
     {
       "id": "ollama:mistral-large-4",
@@ -4334,7 +4613,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 11900,
+        "downloads": 26200,
         "updatedAt": "2026-10-06"
       },
       "tags": [
@@ -4353,7 +4632,7 @@
         "install": "ollama run mistral-large-4",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:mistral-medium-3.5",
@@ -4427,7 +4706,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1100000,
+        "downloads": 1300000,
         "updatedAt": "2023-10-11"
       },
       "tags": [
@@ -4443,7 +4722,7 @@
         "install": "ollama run mistral-openorca",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "ollama:mistral-small",
@@ -4637,7 +4916,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 312500,
+        "downloads": 345800,
         "updatedAt": "2026-08-28"
       },
       "tags": [
@@ -4653,7 +4932,7 @@
         "install": "ollama run muse-glimmer",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-28"
     },
     {
       "id": "ollama:muse-spark-open",
@@ -4667,7 +4946,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 9921,
+        "downloads": 18300,
         "updatedAt": "2026-10-15"
       },
       "tags": [
@@ -4686,7 +4965,7 @@
         "install": "ollama run muse-spark-open",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-04"
     },
     {
       "id": "ollama:mxbai-embed-large",
@@ -4828,7 +5107,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 130900,
+        "downloads": 144500,
         "updatedAt": "2026-06-04"
       },
       "tags": [
@@ -4847,7 +5126,7 @@
         "install": "ollama run nemotron-3-ultra",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "ollama:nemotron-3.5-bolt",
@@ -4861,8 +5140,8 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 9245,
-        "updatedAt": "2026-10-15"
+        "downloads": 59700,
+        "updatedAt": "2026-10-23"
       },
       "tags": [
         "local",
@@ -4871,13 +5150,13 @@
       "preview": {
         "type": "model",
         "host": "ollama",
-        "variants": 3
+        "variants": 10
       },
       "use": {
         "install": "ollama run nemotron-3.5-bolt",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:nemotron-3.5-lightning",
@@ -4891,7 +5170,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 247900,
+        "downloads": 866800,
         "updatedAt": "2026-10-16"
       },
       "tags": [
@@ -4907,7 +5186,7 @@
         "install": "ollama run nemotron-3.5-lightning",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:nemotron-3.5-super",
@@ -4921,7 +5200,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 13000,
+        "downloads": 25100,
         "updatedAt": "2026-10-15"
       },
       "tags": [
@@ -4937,7 +5216,7 @@
         "install": "ollama run nemotron-3.5-super",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:nemotron-cascade-2",
@@ -5101,7 +5380,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 51700,
+        "downloads": 78900,
         "updatedAt": "2026-10-14"
       },
       "tags": [
@@ -5117,7 +5396,7 @@
         "install": "ollama run nimble",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:nimble-v3",
@@ -5131,7 +5410,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 16100,
+        "downloads": 25200,
         "updatedAt": "2026-10-13"
       },
       "tags": [
@@ -5147,7 +5426,7 @@
         "install": "ollama run nimble-v3",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:nomic-embed-text",
@@ -5191,7 +5470,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1100000,
+        "downloads": 1300000,
         "updatedAt": "2025-12-10"
       },
       "tags": [
@@ -5206,7 +5485,7 @@
         "install": "ollama run nomic-embed-text-v2-moe",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-03"
     },
     {
       "id": "ollama:north-mini-code-1.0",
@@ -5220,7 +5499,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 75700,
+        "downloads": 83700,
         "updatedAt": "2026-06-18"
       },
       "tags": [
@@ -5236,7 +5515,7 @@
         "install": "ollama run north-mini-code-1.0",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "ollama:notus",
@@ -5610,7 +5889,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1500000,
+        "downloads": 1700000,
         "updatedAt": "2023-12-29"
       },
       "tags": [
@@ -5626,7 +5905,7 @@
         "install": "ollama run openhermes",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-31"
     },
     {
       "id": "ollama:openthinker",
@@ -5730,7 +6009,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 648700,
+        "downloads": 716200,
         "updatedAt": "2026-06-27"
       },
       "tags": [
@@ -5746,7 +6025,7 @@
         "install": "ollama run ornith",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "ollama:ornith-1.5",
@@ -5760,7 +6039,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 416100,
+        "downloads": 457900,
         "updatedAt": "2026-10-20"
       },
       "tags": [
@@ -5776,7 +6055,7 @@
         "install": "ollama run ornith-1.5",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:paraphrase-multilingual",
@@ -5940,7 +6219,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1500000,
+        "downloads": 1700000,
         "updatedAt": "2025-02-28"
       },
       "tags": [
@@ -5956,7 +6235,7 @@
         "install": "ollama run phi4-mini",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:phi4-mini-reasoning",
@@ -6060,8 +6339,8 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 555,
-        "updatedAt": "2026-10-22"
+        "downloads": 83600,
+        "updatedAt": "2026-10-24"
       },
       "tags": [
         "local",
@@ -6076,7 +6355,7 @@
         "install": "ollama run phonon",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:pplx-decider",
@@ -6090,7 +6369,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 8755,
+        "downloads": 23600,
         "updatedAt": "2026-10-17"
       },
       "tags": [
@@ -6106,7 +6385,37 @@
         "install": "ollama run pplx-decider",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-07"
+    },
+    {
+      "id": "ollama:pplx-decider-flash",
+      "name": "pplx-decider-flash",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "pplx-decider-flash is a 4B decision model from Perplexity, built on Qwen3.5-4B",
+      "url": "https://ollama.com/library/pplx-decider-flash",
+      "source": {
+        "name": "Ollama Library",
+        "url": "https://ollama.com/library"
+      },
+      "metrics": {
+        "downloads": 11700,
+        "updatedAt": "2026-11-03"
+      },
+      "tags": [
+        "local",
+        "ollama"
+      ],
+      "preview": {
+        "type": "model",
+        "host": "ollama",
+        "variants": 5
+      },
+      "use": {
+        "install": "ollama run pplx-decider-flash",
+        "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
+      },
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:qwen",
@@ -6510,8 +6819,8 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 7200000,
-        "updatedAt": "2026-10-13"
+        "downloads": 7400000,
+        "updatedAt": "2026-10-30"
       },
       "tags": [
         "local",
@@ -6526,7 +6835,7 @@
         "install": "ollama run qwen3.6",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-30"
     },
     {
       "id": "ollama:qwen3.8",
@@ -6540,8 +6849,8 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 4400000,
-        "updatedAt": "2026-09-25"
+        "downloads": 6100000,
+        "updatedAt": "2026-11-08"
       },
       "tags": [
         "local",
@@ -6550,13 +6859,13 @@
       "preview": {
         "type": "model",
         "host": "ollama",
-        "variants": 12
+        "variants": 13
       },
       "use": {
         "install": "ollama run qwen3.8",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:qwen3.8-flash-next",
@@ -6780,7 +7089,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1000000,
+        "downloads": 1100000,
         "updatedAt": "2023-10-15"
       },
       "tags": [
@@ -6796,7 +7105,7 @@
         "install": "ollama run samantha-mistral",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-10-25"
     },
     {
       "id": "ollama:shieldgemma",
@@ -7200,7 +7509,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1700000,
+        "downloads": 1900000,
         "updatedAt": "2023-10-24"
       },
       "tags": [
@@ -7216,7 +7525,7 @@
         "install": "ollama run starcoder",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-01"
     },
     {
       "id": "ollama:starcoder2",
@@ -7290,7 +7599,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 6167,
+        "downloads": 59500,
         "updatedAt": "2026-10-13"
       },
       "tags": [
@@ -7306,7 +7615,7 @@
         "install": "ollama run strands-decider",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-08"
     },
     {
       "id": "ollama:tev1",
@@ -7320,7 +7629,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 104300,
+        "downloads": 141500,
         "updatedAt": "2026-10-14"
       },
       "tags": [
@@ -7336,7 +7645,7 @@
         "install": "ollama run tev1",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-07"
     },
     {
       "id": "ollama:tinydolphin",
@@ -7590,7 +7899,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1500000,
+        "downloads": 1900000,
         "updatedAt": "2024-01-05"
       },
       "tags": [
@@ -7606,7 +7915,7 @@
         "install": "ollama run wizardcoder",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:wizardlm",
@@ -7740,7 +8049,7 @@
         "url": "https://ollama.com/library"
       },
       "metrics": {
-        "downloads": 1000000,
+        "downloads": 1100000,
         "updatedAt": "2023-11-04"
       },
       "tags": [
@@ -7756,7 +8065,7 @@
         "install": "ollama run yarn-llama2",
         "docs": "https://github.com/ollama/ollama/blob/main/docs/api.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-06"
     },
     {
       "id": "ollama:yarn-mistral",

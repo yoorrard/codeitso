@@ -6,7 +6,7 @@ const B = '/code-chauffeur';
 
 describe('okUrl', () => {
   it('바탕 안 주소와 바깥 주소·#·mailto·data는 괜찮다', () => {
-    for (const u of [`${B}/`, `${B}/tools/a`, '#main', 'mailto:a@b.kr', 'https://x.org/a', 'data:image/png;base64,AA', '//cdn.x/a']) expect(okUrl(u, B)).toBe(true);
+    for (const u of [`${B}/`, `${B}/tools/a`, '#main', 'mailto:a@b.kr', 'https://x.org/a', 'data:image/png;base64,AA', '//cdn.x/a', 'cursor://anysphere.cursor-deeplink/mcp/install?name=a', 'vscode:mcp/install?%7B%7D']) expect(okUrl(u, B)).toBe(true);
   });
 
   it('바탕이 빠졌거나 비슷한 이름은 안 된다', () => {

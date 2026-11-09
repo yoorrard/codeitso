@@ -1,5 +1,5 @@
 // 주소 바탕 빌드 검사 (설계서 9.4절, D81): 하위 주소(/code-chauffeur) 빌드의 HTML·CSS에서 사이트 안 주소가 모두 바탕으로 시작하는지 본다.
-// 바깥 주소(http·https)·#·mailto:·data:·blob:·tel:은 뺀다. 순수 함수만 (파일 읽기는 scripts/qa/base-build.ts). 시험: tests/base-scan.test.ts.
+// 바깥 주소(http·https)·#·mailto:·data:·blob:·tel:과 앱을 여는 주소(cursor://·vscode:, D154)처럼 주소 꼴(scheme:)로 시작하는 것은 뺀다. 순수 함수만 (파일 읽기는 scripts/qa/base-build.ts). 시험: tests/base-scan.test.ts.
 
 export interface BadUrl {
   /** 어디서 (속성 이름, css url) */
@@ -10,7 +10,7 @@ export interface BadUrl {
 /** 주소를 보는 HTML 속성: 링크·그림·스크립트, 그림 후보(srcset), 섬 묶음 주소, 출발 장면이 견주는 앞 화면 주소(data-from) */
 const ATTRS = ['href', 'src', 'srcset', 'imagesrcset', 'action', 'poster', 'component-url', 'renderer-url', 'before-hydration-url', 'data-from'] as const;
 
-const SKIP = /^(#|mailto:|tel:|data:|blob:|https?:\/\/|\/\/)/i;
+const SKIP = /^(#|[a-z][a-z0-9+.-]*:|\/\/)/i;
 
 /** 바탕 안의 주소인가 (바깥 주소 등은 늘 괜찮다). base는 '/code-chauffeur' 꼴 */
 export function okUrl(value: string, base: string): boolean {

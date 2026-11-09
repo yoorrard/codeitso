@@ -72,9 +72,9 @@ export const PATHS = {
   terms: '/terms',
   about: '/about',
   credits: '/about/credits',
-  /** 법 문서 (L, D136): 이용약관 · 개인정보 처리방침 · 이용 안내 · 저작권·게시 중단 요청 */
   /** 내 AI 에이전트에 코드잇소 연결 (MCP·스킬·플러그인 안내, D154) */
   connect: '/connect',
+  /** 법 문서 (L, D136): 이용약관 · 개인정보 처리방침 · 이용 안내 · 저작권·게시 중단 요청 */
   legalTerms: '/legal/terms',
   privacy: '/legal/privacy',
   notice: '/legal/notice',

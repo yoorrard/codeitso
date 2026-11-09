@@ -25,7 +25,7 @@ export const MCP_TOOLS = {
     name: 'codeitso_search',
     title: '코드잇소 재료 검색',
     description:
-      "Search the codeitso catalog of public app-building materials (fonts, colors, icons, UI kits, MCP servers, agent skills, public APIs incl. Korean public data, open-source libraries, templates, datasets) by keyword in Korean or English, e.g. '급식 API', 'chart library', 'Korean font'. Returns ranked materials with id, one-line summary, license and popularity, plus matching subcategories. For a whole category use codeitso_browse; for install commands and full details use codeitso_get_materials.",
+      "Search the codeitso catalog of public app-building materials (fonts, colors, icons, UI kits, MCP servers, agent skills, public APIs incl. Korean public data, open-source libraries, templates, datasets) by keyword in Korean or English, e.g. '급식 API', 'chart library', 'Korean font'. Returns ranked materials with id, one-line summary, license and popularity, plus matching subcategories. Whole categories are listed by codeitso_browse; install commands and full details come from codeitso_get_materials.",
     query: 'Keywords in Korean or English (1-200 characters).',
     category: 'Only this top-level category.',
     subcategory: 'Only this subcategory id (see codeitso_browse), e.g. fonts-ko, icons, mcp, kr-public.',
@@ -79,6 +79,8 @@ export const MCP_CATEGORY_IDS_HINT = 'design, ai, api, opensource, templates, da
 export const MCP_TEXT = {
   searchHead: 'Search "{{q}}": {{total}} materials{{loose}}',
   looseNote: ' (no material matched every word; showing materials that match some words)',
+  ignored: 'Query too long: these words were not used: {{words}}.',
+  unmatched: ' (no material matched every word; showing materials without: {{words}})',
   showing: 'Showing {{from}}-{{to}}.',
   more: 'More: call again with offset={{next}}.',
   relatedSubs: 'Matching subcategories (use codeitso_browse with subcategory)',

@@ -15,6 +15,14 @@ describe('글 다듬기', () => {
     expect(line('가나다라마바사', 4)).toBe('가나다…');
   });
 
+  it('결합 문자 막기·한글 채움 문자·이체자 고르기·주석 고정 문자도 뺀다', () => {
+    const hidden = ['\u034F', '\u061C', '\u115F', '\u1160', '\u17B4', '\u180E', '\u3164', '\uFE0F', '\uFFA0', '\uFFF9', '\u{E0100}', '\u2066'];
+    expect(line(`a${hidden.join('b')}c`, 100)).toBe(`a${'b'.repeat(hidden.length - 1)}c`);
+    // 줄·문단 나눔 문자는 한 줄 글에서는 공백, 여러 줄 글에서는 줄바꿈
+    expect(line('a\u2028b', 10)).toBe('a b');
+    expect(block('a\u2029b', 10)).toBe('a\nb');
+  });
+
   it('여러 줄: 줄은 지키고 앞뒤 빈 줄·제어 문자를 빼고 줄 수를 묶는다', () => {
     expect(block('\n\nnpm i a\r\n\u0007npx a  \n\n', 100)).toBe('npm i a\nnpx a');
     expect(block('1\n2\n3\n4', 100, 2)).toBe('1\n2\n…');
@@ -24,6 +32,12 @@ describe('글 다듬기', () => {
     expect(inline('**a** [b](c) 1 < 2 `e` |f', 50)).toBe('\\*\\*a\\*\\* \\[b\\](c) 1 \\< 2 \\`e\\` \\|f');
     // HTML 태그 모양은 글에서 뺀다
     expect(inline('a <b>bold</b> c', 50)).toBe('a bold c');
+    // 줄 첫머리의 제목·목록·구분선 표시와 그림 기호
+    expect(inline('# 제목', 50)).toBe('\\# 제목');
+    expect(inline('- 목록', 50)).toBe('\\- 목록');
+    expect(inline('1. 첫째', 50)).toBe('1\\. 첫째');
+    expect(inline('2024년 판', 50)).toBe('2024년 판');
+    expect(inline('![x](y)', 50)).toBe('\\!\\[x\\](y)');
   });
 
   it('코드 울타리와 한 줄 코드는 글 안의 ` 보다 길게', () => {
@@ -61,10 +75,15 @@ describe('MCP 집계', () => {
     expect(countsOf({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'codeitso_search', arguments: { query: '비밀' } } })).toEqual([
       { type: 'mcp_call', bucket: 'codeitso_search' },
     ]);
-    expect(countsOf({ method: 'tools/call', params: { name: 'other_tool' } })).toEqual([]);
-    expect(countsOf({ method: 'initialize', params: { clientInfo: { name: 'claude-ai' } } })).toEqual([{ type: 'mcp_init', bucket: 'claude' }]);
-    expect(countsOf({ method: 'prompts/get', params: { name: 'plan_app' } })).toEqual([{ type: 'mcp_prompt', bucket: 'plan_app' }]);
-    expect(countsOf([{ method: 'tools/list' }, { method: 'tools/call', params: { name: 'codeitso_browse' } }])).toEqual([{ type: 'mcp_call', bucket: 'codeitso_browse' }]);
+    expect(countsOf({ id: 2, method: 'tools/call', params: { name: 'other_tool' } })).toEqual([]);
+    expect(countsOf({ id: 3, method: 'initialize', params: { clientInfo: { name: 'claude-ai' } } })).toEqual([{ type: 'mcp_init', bucket: 'claude' }]);
+    // 새 판(2026-07-28)은 server/discover의 _meta에 앱 정보를 싣는다
+    const meta = { 'io.modelcontextprotocol/clientInfo': { name: 'Visual Studio Code' } };
+    expect(countsOf({ id: 'a', method: 'server/discover', params: { _meta: meta } })).toEqual([{ type: 'mcp_init', bucket: 'vscode' }]);
+    expect(countsOf({ id: 4, method: 'prompts/get', params: { name: 'plan_app' } })).toEqual([{ type: 'mcp_prompt', bucket: 'plan_app' }]);
+    // 알림(id 없음)과 묶음(배열)은 세지 않는다 (Worker는 묶음을 받지도 않는다)
+    expect(countsOf({ method: 'tools/call', params: { name: 'codeitso_browse' } })).toEqual([]);
+    expect(countsOf([{ id: 5, method: 'tools/call', params: { name: 'codeitso_browse' } }])).toEqual([]);
     expect(countsOf('junk')).toEqual([]);
     expect(countsOf(null)).toEqual([]);
   });

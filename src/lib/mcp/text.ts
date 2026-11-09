@@ -2,8 +2,20 @@
 // 숨은 지시(보이지 않는 글자·방향 바꾸기 문자·HTML 주석)로 에이전트를 속이는 길을 줄이려는 것이다. 뜻은 바꾸지 않는다.
 // 순수 함수, 시험: tests/lib/mcp-text.test.ts
 
-/** 제어 문자(줄바꿈·탭 빼고), 보이지 않는 폭 0 글자, 방향 바꾸기 문자, BOM, 태그 글자(U+E0000대) */
-const HIDDEN = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F­​-‏‪-‮⁠-⁤⁦-⁯﻿]|[\u{E0000}-\u{E007F}]/gu;
+/**
+ * 보이지 않거나 글 모양을 몰래 바꾸는 글자 (소스에는 \u 꼴로만 적는다):
+ * 제어 문자(줄바꿈·탭 빼고) · 소프트 하이픈 · 결합 문자 막기(034F) · 아랍 글자 방향(061C) · 한글 채움 문자(115F·1160·3164·FFA0) ·
+ * 크메르 모음 숨김(17B4·17B5) · 몽골 글자 바꿈(180B~180E) · 폭 0 글자·방향 바꾸기(200B~200F·202A~202E·2060~206F) ·
+ * 이체자 고르기(FE00~FE0F, E0100~E01EF) · BOM(FEFF) · 주석 고정 문자(FFF9~FFFB) · 태그 글자(E0000~E007F, 숨은 ASCII)
+ */
+const HIDDEN = new RegExp(
+  '[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\u007F-\\u009F\\u00AD\\u034F\\u061C\\u115F\\u1160\\u17B4\\u17B5\\u180B-\\u180E' +
+    '\\u200B-\\u200F\\u202A-\\u202E\\u2060-\\u206F\\u3164\\uFE00-\\uFE0F\\uFEFF\\uFFA0\\uFFF9-\\uFFFB]|[\\u{E0000}-\\u{E007F}\\u{E0100}-\\u{E01EF}]',
+  'gu',
+);
+
+/** 줄·문단 나눔 문자 (2028·2029): 여러 줄 글에서는 줄바꿈으로 */
+const LINE_SEP = /[\u2028\u2029]/g;
 
 /** HTML 주석과 태그 (출처 설명에 섞여 오는 것) */
 const TAGS = /<!--[\s\S]*?-->|<\/?[a-zA-Z][^<>]{0,200}>/g;
@@ -25,6 +37,7 @@ export function block(raw: unknown, max: number, maxLines = 40): string {
   if (typeof raw !== 'string') return '';
   const rows = raw
     .replace(HIDDEN, '')
+    .replace(LINE_SEP, '\n')
     .replace(/\r\n?/g, '\n')
     .split('\n')
     .map((r) => r.replace(/\s+$/, ''));
@@ -34,9 +47,13 @@ export function block(raw: unknown, max: number, maxLines = 40): string {
   return cut(kept.join('\n'), max);
 }
 
-/** 이름처럼 마크다운 안에 넣는 짧은 글: 한 줄로 만들고 마크다운 강조·링크 기호가 글 모양을 깨지 않게 막는다 */
+/** 이름처럼 마크다운 안에 넣는 짧은 글: 한 줄로 만들고 마크다운 강조·링크·그림 기호와 줄 첫머리의 제목·목록·구분선 표시가 글 모양을 깨지 않게 막는다 */
 export function inline(raw: unknown, max: number): string {
-  return line(raw, max).replace(/([\\`*_[\]<>|])/g, '\\$1');
+  const t = line(raw, max).replace(/([\\`*_[\]<>|!])/g, '\\$1');
+  // 번호 목록(1. · 1))은 숫자 뒤 기호를 막는다 (숫자 앞 \ 는 마크다운에서 그대로 보인다)
+  const num = /^\d+(?=[.)])/.exec(t);
+  if (num) return `${num[0]}\\${t.slice(num[0].length)}`;
+  return /^[#+=-]/.test(t) ? `\\${t}` : t;
 }
 
 /** 코드 울타리: 글 안의 가장 긴 ` 줄보다 하나 길게 (최소 3개). 글이 울타리를 끊지 못한다 */

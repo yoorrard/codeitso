@@ -4,6 +4,7 @@
 // IP·기기 정보·쿠키는 읽지도 적지도 않는다. 저장이 실패해도(하루 한도 등) 204로 끝낸다 (사이트는 정적이라 영향 없음).
 // Env(DB·ASSETS 묶음)의 타입은 wrangler.jsonc에서 만든다: npm run typecheck:worker (worker-configuration.d.ts, 저장소에 두지 않음)
 import { BODY_MAX, VISIT_TOTAL, dayKey, kstDay, parseEvent } from '../src/lib/event-spec.ts';
+import { readLimited } from './body.ts';
 import { handleMcp } from './mcp.ts';
 
 const UPSERT =
@@ -19,31 +20,6 @@ function sameSite(request: Request): boolean {
   if (site !== null) return site === 'same-origin';
   const origin = request.headers.get('Origin');
   return origin !== null && origin === new URL(request.url).origin;
-}
-
-/** 본문을 limit 바이트까지만 읽는다. 넘으면 null (길이를 밝히지 않은 큰 본문도 끝까지 읽지 않는다) */
-async function readLimited(request: Request, limit: number): Promise<string | null> {
-  if (!request.body) return '';
-  const reader = request.body.getReader();
-  const chunks: Uint8Array[] = [];
-  let size = 0;
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    size += value.byteLength;
-    if (size > limit) {
-      await reader.cancel();
-      return null;
-    }
-    chunks.push(value);
-  }
-  const all = new Uint8Array(size);
-  let at = 0;
-  for (const c of chunks) {
-    all.set(c, at);
-    at += c.byteLength;
-  }
-  return new TextDecoder().decode(all);
 }
 
 export async function handleEvent(request: Request, env: Pick<Env, 'DB'>, now: number): Promise<Response> {

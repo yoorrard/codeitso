@@ -187,13 +187,49 @@ function bigramsOf(w: string): string[] {
 /** 이름 그대로 6 · 이름 앞부분 4 · 그 밖 그대로 2 · 그 밖 앞부분 1 */
 const W = { nameExact: 6, namePrefix: 4, otherExact: 2, otherPrefix: 1 } as const;
 
+/** 낱말 맞추기 선택. slack: 영문·숫자 꼴의 앞부분 맞추기를 꼴보다 이만큼 긴 낱말까지만 (MCP는 3: open → opens·opened·opening, openai는 뺀다). 없으면 끝까지 (사이트) */
+export interface MatchOptions {
+  slack?: number;
+  /** 목록 풀기 (같은 목록을 여러 꼴·같은 뜻 낱말이 다시 풀 때 한 번만 풀도록 MCP가 기억하는 함수를 넘긴다) */
+  decode?: (s: string) => number[];
+  /** 이 문서들만 점수를 적는다 (MCP: 가장 드문 낱말의 문서로 좁혀 '그리고' 계산을 줄인다) */
+  only?: (doc: number) => boolean;
+  /** 조각의 낱말을 UTF-16 글자 순으로 늘어놓은 목록. 주면 앞부분 찾기를 이분 탐색으로 한다 (MCP가 조각마다 한 번 만들어 기억한다) */
+  tokens?: (shard: TokenShard) => readonly string[];
+}
+
+/** 조각에서 앞부분이 form인 낱말(form 자신 빼고, slack 길이 안)의 목록마다 fn을 부른다 */
+function eachPrefixed(form: string, shard: TokenShard, opts: MatchOptions, fn: (lists: [string, string]) => void): void {
+  const maxLen = opts.slack !== undefined && ASCII.test(form) ? form.length + opts.slack : Number.POSITIVE_INFINITY;
+  const sorted = opts.tokens?.(shard);
+  if (!sorted) {
+    for (const [tok, lists] of Object.entries(shard)) if (tok !== form && tok.length <= maxLen && tok.startsWith(form)) fn(lists);
+    return;
+  }
+  let lo = 0;
+  let hi = sorted.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if ((sorted[mid] ?? '') < form) lo = mid + 1;
+    else hi = mid;
+  }
+  for (let i = lo; i < sorted.length; i++) {
+    const tok = sorted[i];
+    if (tok === undefined || !tok.startsWith(form)) break;
+    const lists = tok !== form && tok.length <= maxLen ? shard[tok] : undefined;
+    if (lists) fn(lists);
+  }
+}
+
 /** 꼴 하나가 어느 문서에 몇 점으로 맞는지. exactOnly면 낱말 그대로만 */
-function formScores(form: string, shard: TokenShard | undefined, out: Map<number, number>, exactOnly = false): void {
+function formScores(form: string, shard: TokenShard | undefined, out: Map<number, number>, exactOnly = false, opts: MatchOptions = {}): void {
   if (!shard) return;
   // 영문·숫자 두 글자 이하·한글 한 글자는 그대로만 (ai → air를 찾지 않는다), 그 밖은 앞부분도
   const prefixOk = !exactOnly && prefixable(form);
+  const decode = opts.decode ?? decodePostings;
+  const only = opts.only;
   const put = (ids: string, score: number): void => {
-    for (const d of decodePostings(ids)) if ((out.get(d) ?? 0) < score) out.set(d, score);
+    for (const d of decode(ids)) if ((only === undefined || only(d)) && (out.get(d) ?? 0) < score) out.set(d, score);
   };
   const exact = shard[form];
   if (exact) {
@@ -201,15 +237,14 @@ function formScores(form: string, shard: TokenShard | undefined, out: Map<number
     put(exact[1], W.otherExact);
   }
   if (!prefixOk) return;
-  for (const [tok, lists] of Object.entries(shard)) {
-    if (tok === form || !tok.startsWith(form)) continue;
+  eachPrefixed(form, shard, opts, (lists) => {
     put(lists[0], W.namePrefix);
     put(lists[1], W.otherPrefix);
-  }
+  });
 }
 
 /** 세 글자 넘는 한글 꼴: 두 글자 조각이 모두 든 문서 (색인에 낱말 그대로는 없어도 '변수설정' → 변수·수설·설정) */
-function bigramScores(form: string, get: (shard: number) => TokenShard | undefined, shards: number, out: Map<number, number>): void {
+function bigramScores(form: string, get: (shard: number) => TokenShard | undefined, shards: number, out: Map<number, number>, opts: MatchOptions = {}): void {
   const grams = bigramsOf(form);
   let acc: Map<number, number> | null = null;
   for (const g of grams) {
@@ -230,17 +265,36 @@ function bigramScores(form: string, get: (shard: number) => TokenShard | undefin
     }
     if (acc.size === 0) return;
   }
-  for (const [d, s] of acc ?? []) if ((out.get(d) ?? 0) < s) out.set(d, s);
+  for (const [d, s] of acc ?? []) if ((opts.only === undefined || opts.only(d)) && (out.get(d) ?? 0) < s) out.set(d, s);
+}
+
+/**
+ * 질의 낱말 하나가 맞을 문서 수의 어림 (목록 글자 길이의 합, 풀지 않는다). MCP가 가장 드문 낱말을 먼저 고를 때 쓴다.
+ * 꼴 그대로·앞부분(slack 안)·같은 뜻 낱말 그대로의 목록을 센다. 두 글자 조각은 세지 않는다(어림이라 차례만 맞으면 된다)
+ */
+export function termWeight(term: QueryTerm, get: (shard: number) => TokenShard | undefined, shards: number = SEARCH_SHARDS, opts: MatchOptions = {}): number {
+  let n = 0;
+  const add = (lists: [string, string] | undefined): void => {
+    if (lists) n += lists[0].length + lists[1].length;
+  };
+  for (const f of term.forms) {
+    const shard = get(tokenShard(f, shards));
+    if (!shard) continue;
+    add(shard[f]);
+    if (prefixable(f)) eachPrefixed(f, shard, opts, add);
+  }
+  for (const a of term.alts) add(get(tokenShard(a, shards))?.[a]);
+  return n;
 }
 
 /** 질의 낱말 하나에 맞는 문서 → 점수 (꼴 가운데 가장 높은 점수) */
-export function termMatches(term: QueryTerm, get: (shard: number) => TokenShard | undefined, shards: number = SEARCH_SHARDS): Map<number, number> {
+export function termMatches(term: QueryTerm, get: (shard: number) => TokenShard | undefined, shards: number = SEARCH_SHARDS, opts: MatchOptions = {}): Map<number, number> {
   const out = new Map<number, number>();
   for (const f of term.forms) {
-    formScores(f, get(tokenShard(f, shards)), out);
-    if (HANGUL.test(f) && f.length > 2) bigramScores(f, get, shards, out);
+    formScores(f, get(tokenShard(f, shards)), out, false, opts);
+    if (HANGUL.test(f) && f.length > 2) bigramScores(f, get, shards, out, opts);
   }
-  for (const a of term.alts) formScores(a, get(tokenShard(a, shards)), out, true);
+  for (const a of term.alts) formScores(a, get(tokenShard(a, shards)), out, true, opts);
   return out;
 }
 
@@ -283,7 +337,7 @@ export function keepOnly(m: Map<number, number>, keep?: (doc: number) => boolean
  * 낱말마다 맞은 문서(문서 → 점수)를 합친다: runQuery의 '그리고'·흔한 말·넓히기(loose) 규칙.
  * MCP(src/lib/mcp/tools.ts)는 친 낱말 그대로의 점수와 같은 뜻 낱말 점수를 따로 구한 뒤 이 함수로 두 번 합친다 (D154).
  */
-export function combineTerms(per: readonly { m: Map<number, number>; optional: boolean }[], sorted = true): SearchResult {
+export function combineTerms(per: readonly { m: Map<number, number>; optional: boolean }[], sorted = true, widen = true): SearchResult {
   if (per.length === 0) return { hits: [], loose: false };
   const required = per.filter((p) => !p.optional).map((p) => p.m);
   const optional = per.filter((p) => p.optional).map((p) => p.m);
@@ -312,7 +366,8 @@ export function combineTerms(per: readonly { m: Map<number, number>; optional: b
       for (const m of optional) score += m.get(doc) ?? 0;
       hits.push({ doc, score });
     }
-    if (hits.length === 0 && required.length > 1) {
+    // widen=false: 넓히지 않고 빈 결과를 돌려준다 (MCP는 흔한 낱말부터 하나씩 빼며 다시 찾는다)
+    if (hits.length === 0 && required.length > 1 && widen) {
       loose = true;
       hits = orAll(per.map((p) => p.m));
     }

@@ -3,7 +3,7 @@
 // 순수 함수, 시험: tests/lib/mcp-tools.test.ts
 import { MCP_TEXT } from '../../copy/mcp.ts';
 import { tokens, usd } from '../catalog/models.ts';
-import { commas, fenceFor, fillText, inline, inlineCode } from './text.ts';
+import { commas, fenceFor, fillText, inline, inlineCode, line } from './text.ts';
 import type {
   CartResult,
   CategoryOverview,
@@ -20,6 +20,9 @@ import type {
 
 const T = MCP_TEXT;
 
+/** id·모델 id 같은 짧은 값을 한 줄 코드로 (` 가 섞여도 코드 칸을 끊지 못한다) */
+const code = (v: string): string => inlineCode(line(v, 200));
+
 function pageLines(p: Page): string[] {
   if (p.count === 0) return [];
   const out = [fillText(T.showing, { from: p.offset + 1, to: p.offset + p.count })];
@@ -32,7 +35,7 @@ function itemLines(m: MaterialLine, n: number): string[] {
   const meta = [`${m.category_name} > ${m.subcategory_name}`, `${T.license}: ${m.license ? inline(m.license, 60) : T.licenseNone}`];
   if (m.popularity) meta.push(m.popularity);
   if (m.updated) meta.push(`${T.updated} ${m.updated}`);
-  const out = [`${n}. **${inline(m.name, 120)}** \`${m.id}\` · ${meta.join(' · ')}`];
+  const out = [`${n}. **${inline(m.name, 120)}** ${code(m.id)} · ${meta.join(' · ')}`];
   if (m.summary) out.push(`   ${inline(m.summary, 240)}`);
   if (m.source_summary) out.push(`   (${inline(m.source_summary, 200)})`);
   const extra = [`source: ${inline(m.source, 80)}`, ...(m.facts ?? []).map((f) => inline(f, 80))];
@@ -41,14 +44,16 @@ function itemLines(m: MaterialLine, n: number): string[] {
 }
 
 export function renderSearch(r: SearchResult): string {
-  const out = [`## ${fillText(T.searchHead, { q: inline(r.query, 200), total: commas(r.total), loose: r.loose ? T.looseNote : '' })}`];
+  const loose = r.unmatched_words && r.unmatched_words.length > 0 ? fillText(T.unmatched, { words: r.unmatched_words.map((w) => inline(w, 40)).join(', ') }) : r.loose ? T.looseNote : '';
+  const out = [`## ${fillText(T.searchHead, { q: inline(r.query, 200), total: commas(r.total), loose })}`];
+  if (r.ignored_words && r.ignored_words.length > 0) out.push(fillText(T.ignored, { words: r.ignored_words.map((w) => inline(w, 40)).join(', ') }));
   if (r.items.length === 0) out.push('', T.noResults);
   else {
     out.push('');
     r.items.forEach((m, i) => out.push(...itemLines(m, r.offset + i + 1)));
   }
   if (r.related_subcategories.length > 0) {
-    out.push('', `${T.relatedSubs}: ${r.related_subcategories.map((s) => `${inline(s.name, 40)} (\`${s.category}\`/\`${s.subcategory}\`, ${commas(s.count)})`).join(' · ')}`);
+    out.push('', `${T.relatedSubs}: ${r.related_subcategories.map((s) => `${inline(s.name, 40)} (${code(s.category)}/${code(s.subcategory)}, ${commas(s.count)})`).join(' · ')}`);
   }
   const p = pageLines(r);
   if (p.length > 0) out.push('', ...p);
@@ -64,7 +69,7 @@ function detailBlock(d: MaterialDetail): string[] {
     if (typeof v === 'number') meta.push(`${commas(v)} ${k}`);
   }
   if (typeof m['updated_at'] === 'string') meta.push(`${T.updated} ${m['updated_at']}`);
-  const out = [`## ${inline(d.name, 120)} \`${d.id}\``, meta.join(' · ')];
+  const out = [`## ${inline(d.name, 120)} ${code(d.id)}`, meta.join(' · ')];
   if (d.summary_ko) out.push(`${inline(d.summary_ko, 240)} _(${d.summary_ko_by === 'codeitso_rule' ? T.koRule : T.koWritten})_`);
   const links = [
     d.official_url ? `${T.official}: ${d.official_url}` : '',
@@ -72,7 +77,7 @@ function detailBlock(d: MaterialDetail): string[] {
     `${T.page}: ${d.page_url}`,
   ].filter(Boolean);
   out.push(links.join(' · '));
-  if (d.source_text) out.push('', `${T.sourceText} — ${inline(d.source.name, 80)}:`, `> ${d.source_text.replace(/\n/g, ' ')}`);
+  if (d.source_text) out.push('', `${T.sourceText} — ${inline(d.source.name, 80)}:`, `> ${inline(d.source_text, 1_200)}`);
   if (d.install) {
     const f = fenceFor(d.install);
     out.push('', `${T.install}:`, `${f}sh`, d.install, f);
@@ -83,7 +88,7 @@ function detailBlock(d: MaterialDetail): string[] {
   }
   if (d.facts) out.push('', `${T.facts}: ${Object.entries(d.facts).map(([k, v]) => `${inline(k, 40)}: ${inline(String(v), 120)}`).join(' · ')}`);
   if (d.tags) out.push(`${T.tags}: ${d.tags.map((t) => inline(t, 40)).join(', ')}`);
-  if (d.related) out.push(`${T.related}: ${d.related.map((r) => `${inline(r.name, 80)} \`${r.id}\``).join(' · ')}`);
+  if (d.related) out.push(`${T.related}: ${d.related.map((r) => `${inline(r.name, 80)} ${code(r.id)}`).join(' · ')}`);
   if (d.models && d.models.items.length > 0) {
     out.push('', `${fillText(T.models, { date: d.models.fetched })}:`);
     for (const x of d.models.items) {
@@ -92,7 +97,7 @@ function detailBlock(d: MaterialDetail): string[] {
         x.output_usd_per_mtok !== undefined ? `out ${usd(x.output_usd_per_mtok)}` : '',
         x.context_tokens !== undefined ? `ctx ${tokens(x.context_tokens)}` : '',
       ].filter(Boolean);
-      out.push(`- ${inline(x.name, 80)} \`${x.id}\`${parts.length > 0 ? ` · ${parts.join(' · ')}` : ''}`);
+      out.push(`- ${inline(x.name, 80)} ${code(x.id)}${parts.length > 0 ? ` · ${parts.join(' · ')}` : ''}`);
     }
   }
   return out;
@@ -100,14 +105,14 @@ function detailBlock(d: MaterialDetail): string[] {
 
 export function renderDetails(r: DetailsResult): string {
   const parts = r.items.map((d) => detailBlock(d).join('\n'));
-  if (r.not_found.length > 0) parts.push(fillText(T.notFound, { ids: r.not_found.map((x) => `\`${inline(x, 200)}\``).join(', ') }));
+  if (r.not_found.length > 0) parts.push(fillText(T.notFound, { ids: r.not_found.map((x) => `${code(x)}`).join(', ') }));
   return parts.join('\n\n---\n\n');
 }
 
 export function renderOverview(r: CategoryOverview): string {
   const out = [`## ${fillText(T.categories, { total: commas(r.total), date: r.fetched })}`, ''];
   for (const c of r.categories) {
-    out.push(`- **${inline(c.name, 40)}** \`${c.id}\` (${commas(c.total)}): ${c.subcategories.map((s) => `${inline(s.name, 40)} \`${s.id}\` ${commas(s.count)}`).join(' · ')}`);
+    out.push(`- **${inline(c.name, 40)}** ${code(c.id)} (${commas(c.total)}): ${c.subcategories.map((s) => `${inline(s.name, 40)} ${code(s.id)} ${commas(s.count)}`).join(' · ')}`);
   }
   out.push('', `Starter kits: ${r.kits} (codeitso_get_kits)`);
   return out.join('\n');
@@ -116,7 +121,7 @@ export function renderOverview(r: CategoryOverview): string {
 export function renderCategory(r: CategoryResult): string {
   const out = [`## ${fillText(T.categoryHead, { name: inline(r.name, 40), id: r.id, total: commas(r.total) })}`, ''];
   for (const s of r.subcategories) {
-    out.push(`- **${inline(s.name, 40)}** \`${s.id}\` (${commas(s.count)}; sort: ${s.sorts.join('/')})${s.desc ? `: ${inline(s.desc, 200)}` : ''}`);
+    out.push(`- **${inline(s.name, 40)}** ${code(s.id)} (${commas(s.count)}; sort: ${s.sorts.join('/')})${s.desc ? `: ${inline(s.desc, 200)}` : ''}`);
   }
   return out.join('\n');
 }
@@ -131,7 +136,7 @@ export function renderSubList(r: SubListResult): string {
 
 export function renderKits(r: KitList): string {
   const out = [`## ${fillText(T.kitsHead, { n: r.kits.length })}`, ''];
-  for (const k of r.kits) out.push(`- **${inline(k.name, 80)}** \`${k.id}\` (${k.theme}, ${k.item_count}): ${inline(k.desc, 200)}`);
+  for (const k of r.kits) out.push(`- **${inline(k.name, 80)}** ${code(k.id)} (${k.theme}, ${k.item_count}): ${inline(k.desc, 200)}`);
   return out.join('\n');
 }
 
@@ -140,7 +145,7 @@ export function renderKit(r: KitResult): string {
   r.outline.forEach((o, i) => out.push(`${i + 1}. ${inline(o, 300)}`));
   out.push('', `${T.materials}:`);
   for (const m of r.items) {
-    out.push(`- **${inline(m.name, 120)}** \`${m.id}\` · ${inline(m.subcategory_name, 40)} · ${T.license}: ${m.license ? inline(m.license, 60) : T.licenseNone}`, `  ${inline(m.summary, 240)}`);
+    out.push(`- **${inline(m.name, 120)}** ${code(m.id)} · ${inline(m.subcategory_name, 40)} · ${T.license}: ${m.license ? inline(m.license, 60) : T.licenseNone}`, `  ${inline(m.summary, 240)}`);
   }
   out.push('', T.detailsHint);
   return out.join('\n');
@@ -151,13 +156,13 @@ export function renderCart(r: CartResult): string {
   r.items.forEach((m, i) => {
     const n = r.offset + i + 1;
     if (m.missing) {
-      out.push(`${n}. \`${inline(m.id, 200)}\`: ${T.missingInCart}`);
+      out.push(`${n}. ${code(m.id)}: ${T.missingInCart}`);
       return;
     }
     const meta = [m.subcategory_name ? inline(m.subcategory_name, 40) : '', `${T.license}: ${m.license ? inline(m.license, 60) : T.licenseNone}`];
     if (m.requires) meta.push(`${T.requires}: ${m.requires === 'oauth' ? T.oauth : T.apiKey}`);
-    if (m.chosen_model) meta.push(`${T.model}: \`${inline(m.chosen_model, 160)}\``);
-    out.push(`${n}. **${inline(m.name, 120)}** \`${m.id}\` · ${meta.filter(Boolean).join(' · ')}`);
+    if (m.chosen_model) meta.push(`${T.model}: ${code(m.chosen_model)}`);
+    out.push(`${n}. **${inline(m.name, 120)}** ${code(m.id)} · ${meta.filter(Boolean).join(' · ')}`);
     if (m.official_url) out.push(`   ${T.official}: ${m.official_url}`);
     if (m.install) out.push(`   ${T.install}: ${inlineCode(m.install)}`);
   });

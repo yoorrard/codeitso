@@ -151,8 +151,8 @@ public/catalog/models/p/<제공자>.json · direct.json · hosts.json   AI 모�
 
 ### 7.1 원격 MCP (D154)
 
-`worker/mcp.ts`가 `POST /mcp`를 공식 SDK의 무상태 Streamable HTTP(`createMcpHandler`, 요청마다 서버를 새로 만든다)로 받는다. 도구 계산은 `src/lib/mcp/tools.ts`(순수, Loader로 파일을 읽는다)이고, 파일은 진열대 빌드 결과를 `env.ASSETS`로 읽는다: `/catalog/agent.json`(대분류·소분류 이름·개수와 키트, 빌드가 `buildAgentSummary`로 만든다), 검색 `search/meta.json`·`t-<n>`·`b-<대분류>-<k>`·`s-<대분류>-<소분류>`, 상세 `item/<n>`, 목록 `list/…`, 모델 `models/p/<제공자>`. 검색은 사이트와 같은 색인·함수에 에이전트용 순서(`agentQuery`: 친 꼴 가산·대분류 번갈아·흔한 낱말은 같은 뜻으로 넓히지 않음)만 더한다.
-앞단: CORS `*`(자격 증명 없음), `OPTIONS` 204, 본문 64KB(413), JSON 아님 400, 같은 IP 1분 120번(429, isolate 메모리에만), 읽은 JSON은 isolate에 800만 글자까지. 집계는 `src/lib/mcp/count.ts`가 고른 도구 이름·앱 종류·프롬프트만 `daily_events`에 `mcp_call`·`mcp_init`·`mcp_prompt`로 센다(검색어·id·IP 없음). 출처 글은 `src/lib/mcp/text.ts`가 숨은 글자·태그를 빼고 '제3자 글' 이름표·인용·울타리 안에 넣는다.
+`worker/mcp.ts`가 `POST /mcp`를 공식 SDK의 무상태 Streamable HTTP(`createMcpHandler`, 요청마다 서버를 새로 만든다)로 받는다. 도구 계산은 `src/lib/mcp/tools.ts`(순수, Loader로 파일을 읽는다)이고, 파일은 진열대 빌드 결과를 `env.ASSETS`로 읽는다: `/catalog/agent.json`(대분류·소분류 이름·개수와 키트, 빌드가 `buildAgentSummary`로 만든다), 검색 `search/meta.json`·`t-<n>`·`b-<대분류>-<k>`·`s-<대분류>-<소분류>`, 상세 `item/<n>`, 목록 `list/…`, 모델 `models/p/<제공자>`. 검색은 사이트와 같은 색인·함수에 에이전트용 계산(`agentQuery`: 가장 드문 낱말로 좁혀 '그리고', 없는 낱말·흔한 낱말부터 빼며 다시 찾기, 친 꼴 가산·대분류 안 인기 순위, 영어 앞부분 3글자까지)만 더한다.
+앞단: CORS `*`(자격 증명 없음, 새 판 머리글 `Mcp-Method`·`Mcp-Name` 포함), `OPTIONS` 204, 본문 64KB(chunked도 끊어 읽기 `worker/body.ts`, 413), JSON 아님 400, 묶음(배열) 400, `subscriptions/listen`은 없는 메서드, 같은 접속 주소(IPv6은 앞 64비트) 1분 120번(429, isolate 메모리에만), 읽은 JSON은 isolate에 800만 글자까지(동시에 놓쳐도 한 번만 받는다). 집계는 `src/lib/mcp/count.ts`가 고른 도구 이름·앱 종류·프롬프트만, 성공한 단건 요청에서 isolate에 모았다가 1분에 한 번(또는 50건마다) `daily_events`에 `mcp_call`·`mcp_init`·`mcp_prompt`로 쓴다(검색어·id·IP 없음). 출처 글은 `src/lib/mcp/text.ts`가 숨은 글자·태그를 빼고 '제3자 글' 이름표·인용·울타리 안에 넣는다.
 
 ## 8. 배포
 

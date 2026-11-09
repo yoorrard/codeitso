@@ -1,5 +1,5 @@
 // MCP 시험용 작은 진열대 (D154): 진짜 빌드와 같은 함수(buildSearch·cardOf·buildAgentSummary)로 만든 정적 JSON을 주소 → 값 표로 둔다.
-// 도구 시험(tests/lib/mcp-tools.test.ts)과 Worker 시험(tests/worker/mcp.test.ts)이 같이 쓴다.
+// 도구 시험(tests/lib/mcp-tools.test.ts)과 Worker 시험(tests/lib/mcp-worker.test.ts)이 같이 쓴다.
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import { cardOf, shardOf } from '../../src/lib/catalog/core.ts';
 import type { ProviderModels } from '../../src/lib/catalog/models.ts';

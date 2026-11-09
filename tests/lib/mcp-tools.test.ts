@@ -2,7 +2,10 @@
 import { describe, expect, it } from 'vitest';
 import { renderCart, renderDetails, renderKit, renderKits, renderOverview, renderSearch, renderSubList, renderCategory } from '../../src/lib/mcp/render.ts';
 import type { CategoryOverview, CategoryResult, KitList, KitResult, SubListResult, ToolContext } from '../../src/lib/mcp/tools.ts';
-import { LIMITS, ToolError, browse, getKits, getMaterials, openCart, searchMaterials, shareFragmentOf } from '../../src/lib/mcp/tools.ts';
+import { LIMITS, SAFE_ID, ToolError, agentQuery, agentTerms, browse, getKits, getMaterials, openCart, pageOf, searchMaterials, shareFragmentOf } from '../../src/lib/mcp/tools.ts';
+import type { SearchMeta, TokenShard } from '../../src/lib/catalog/search.ts';
+import { runQuery } from '../../src/lib/catalog/search.ts';
+import { FILES, searchShardPath } from '../../src/lib/routes.ts';
 import { SITE, fixtureFiles, fixtureLoader } from './mcp-fixture.ts';
 
 function ctx(files = fixtureFiles()): ToolContext & { reads: string[] } {
@@ -60,10 +63,57 @@ describe('codeitso_search', () => {
     expect(await code(searchMaterials(c, { query: 'weather', limit: 5, offset: 50 }))).toBe('offset');
   });
 
+  it(`쪽 정보는 ${LIMITS.searchOffset}번째 뒤로는 '더 있음'을 알리지 않는다 (도구 인자가 그 뒤를 받지 않는다)`, () => {
+    expect(pageOf(1_000, 180, 20, LIMITS.searchOffset)).toMatchObject({ has_more: true, next_offset: 200 });
+    expect(pageOf(1_000, 200, 20, LIMITS.searchOffset)).toEqual({ total: 1_000, offset: 200, count: 20, has_more: false });
+    expect(pageOf(30, 20, 10)).toMatchObject({ has_more: false });
+  });
+
+  it('아무 재료에도 없는 낱말은 빼고 남은 낱말로 찾고, 빼낸 낱말을 알린다', async () => {
+    const r = await searchMaterials(ctx(), { query: 'weather overlay zzqxj', limit: 10, offset: 0 });
+    expect(r.items.map((i) => i.id)).toEqual(['a:maps']);
+    expect(r).toMatchObject({ loose: true, unmatched_words: ['zzqxj'] });
+  });
+
+  it('모두 든 재료가 없으면 흔한 낱말부터 빼고, 둘 남아도 없으면 하나라도 든 재료로 넓힌다', async () => {
+    const r = await searchMaterials(ctx(), { query: 'overlay forecast weather', limit: 10, offset: 0 });
+    expect(r.unmatched_words).toEqual(['weather']);
+    expect(r.loose).toBe(true);
+    expect(r.items.map((i) => i.id).sort()).toEqual(['a:maps', 'a:weather']);
+  });
+
   it('자료 파일이 없으면 data 오류', async () => {
     const files = fixtureFiles();
     files.clear();
     expect(await code(searchMaterials(ctx(files), { query: 'weather', limit: 5, offset: 0 }))).toBe('data');
+  });
+});
+
+describe('검색 계산', () => {
+  const files = fixtureFiles();
+  const meta = files.get(FILES.searchMeta) as SearchMeta;
+  const get = (n: number): TokenShard | undefined => files.get(searchShardPath(n)) as TokenShard | undefined;
+  it('모든 낱말이 든 재료는 사이트 검색의 \'그리고\'와 같다 (가장 드문 낱말로 좁혀 세도)', () => {
+    for (const q of ['weather overlay', 'free weather', 'weather maps', '날씨 weather', 'claude api', 'weather']) {
+      const { terms } = agentTerms(q, meta);
+      const site = runQuery(terms, get, meta.shards);
+      const agent = agentQuery(terms, get, meta);
+      expect(site.loose, q).toBe(false);
+      expect(agent.loose, q).toBe(false);
+      expect(agent.hits.map((h) => h.doc).sort(), q).toEqual(site.hits.map((h) => h.doc).sort());
+    }
+  });
+
+  it('소분류 거르기(keep)를 지킨다', () => {
+    const { terms } = agentTerms('weather', meta);
+    const all = agentQuery(terms, get, meta).hits.map((h) => h.doc);
+    const first = all[0] ?? -1;
+    expect(agentQuery(terms, get, meta, (d) => d === first).hits.map((h) => h.doc)).toEqual([first]);
+  });
+
+  it('재료 id 꼴', () => {
+    for (const id of ['google-fonts:roboto', 'github:chartjs--chart.js', 'npm:@scope/pkg', 'models-dev:anthropic', 'data-go-kr:15139198']) expect(SAFE_ID.test(id), id).toBe(true);
+    for (const id of ['<script>', 'a b', 'a\nb', '', 'x'.repeat(201), 'a"b']) expect(SAFE_ID.test(id), id).toBe(false);
   });
 });
 
@@ -152,6 +202,13 @@ describe('codeitso_open_cart', () => {
     expect(r.items[2]).toMatchObject({ id: 'gone:x', missing: true });
     const page = await openCart(ctx(), { share, offset: 2, limit: 1 });
     expect(page).toMatchObject({ offset: 2, count: 1, has_more: false });
+  });
+
+  it('id 꼴이 아닌 재료와 모델은 버린다 (링크의 글자가 결과에 실리지 않는다)', async () => {
+    const r = await openCart(ctx(), { share: '#s=a%3Aweather@%3Cb%3Ex,%3Cscript%3E', offset: 0, limit: 10 });
+    expect(r.items.map((i) => i.id)).toEqual(['a:weather']);
+    expect(r.items[0]?.chosen_model).toBeUndefined();
+    expect(r.cart_url).not.toContain('script');
   });
 
   it('재료가 없는 링크는 오류', async () => {

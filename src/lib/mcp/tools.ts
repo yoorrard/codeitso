@@ -1,14 +1,15 @@
 // AI 에이전트용 MCP 도구의 계산 (D154): 진열대 빌드가 만든 정적 JSON만 읽어 답을 만든다. 상품 사실은 출처 자료 그대로.
 // 읽기 전용이고 바깥 사이트에 아무것도 묻지 않는다(장바구니 링크도 # 뒤만 읽는다). 파일 읽기는 Loader가 맡는다:
-// Worker는 정적 파일 묶음(env.ASSETS), 시험은 디스크. 한 번 부를 때 읽는 파일 수를 묶어 무료 Worker의 CPU 10ms 안에 든다.
+// Worker는 정적 파일 묶음(env.ASSETS), 시험은 디스크. 한 번 부를 때 읽는 파일 수와 계산을 묶어 무료 Worker의 CPU 10ms 안을 목표로 한다
+// (따뜻한 isolate 기준 측정은 D154, 차가운 isolate는 JSON 읽기가 더해진다).
 // 시험: tests/lib/mcp-tools.test.ts
 import type { ModelRow, ProviderModels } from '../catalog/models.ts';
 import { modelProviderOf, pickList } from '../catalog/models.ts';
 import type { Card, CategoryId, DetailRecord, Fact, ListChunk, Shard, SortKey } from '../catalog/types.ts';
 import { CATEGORY_ORDER, CHUNK_PAGES, PAGE_SIZE, isCategoryId } from '../catalog/types.ts';
 import { shardOf } from '../catalog/core.ts';
-import type { QueryTerm, SearchMeta, SubDocsFile, TokenShard } from '../catalog/search.ts';
-import { blockOf, combineTerms, decodeSubDocs, keepOnly, matchSubs, queryTerms, shardsFor, synonymMap, termMatches } from '../catalog/search.ts';
+import type { MatchOptions, QueryTerm, SearchMeta, SubDocsFile, TokenShard } from '../catalog/search.ts';
+import { blockOf, combineTerms, decodePostings, decodeSubDocs, matchSubs, queryTerms, shardsFor, synonymMap, termMatches, termWeight } from '../catalog/search.ts';
 import { FILES, itemDataPath, itemPath, kitPath, listDataPath, modelDataPath, searchBlockPath, searchShardPath, searchSubPath, shareUrl } from '../routes.ts';
 import { readShareEntries } from '../share.ts';
 import { authOf, installLine } from '../use-lines.ts';
@@ -37,6 +38,9 @@ export class ToolError extends Error {
   }
 }
 
+/** 재료 id·모델 id 꼴: 진열대의 모든 id가 이 글자만 쓴다. 밖에서 온 id(도구 인자·공유 링크)는 이 꼴만 받아 숨은 글자가 결과로 되돌아가지 않게 한다 */
+export const SAFE_ID = /^[A-Za-z0-9._:/@+~%-]{1,200}$/;
+
 export const LIMITS = {
   query: 200,
   searchPage: 20,
@@ -46,10 +50,12 @@ export const LIMITS = {
   cartPage: 10,
   /** 질의 낱말 수 (에이전트는 문장을 통째로 넣기도 한다: 읽는 조각과 계산을 묶는다) */
   terms: 6,
-  /** 친 꼴만으로 이만큼 넘게 맞은 낱말은 같은 뜻 낱말로 넓히지 않는다 (CPU) */
+  /** 친 꼴만으로 이만큼 넘게 맞은 낱말은 같은 뜻 낱말로 넓히지 않는다 (CPU, 맞는 묶음이 바뀌지 않을 때만, agentQuery) */
   altSkip: 300,
-  /** 검색 한 번에 읽는 낱말 조각 수 (질의 낱말 × 꼴·같은 뜻·두 글자 조각) */
-  shards: 24,
+  /** 검색 한 쪽이 읽는 결과 카드 블록 수 (블록 하나 평균 80KB) */
+  blocks: 6,
+  /** 검색 한 번에 읽는 낱말 조각 수 (질의 낱말 × 꼴·같은 뜻·두 글자 조각). 넘치면 뒤 낱말을 통째로 뺀다 */
+  shards: 20,
   share: 12_000,
   summary: 240,
   sourceText: 1_200,
@@ -94,6 +100,10 @@ export interface SearchResult extends Page {
   subcategory?: string;
   /** 모든 낱말이 든 재료가 없어 낱말 하나라도 든 재료를 보인다 */
   loose: boolean;
+  /** 질의가 길어 쓰지 않은 뒤쪽 낱말 */
+  ignored_words?: string[];
+  /** 모든 낱말이 든 재료가 없어 빼고 찾은 흔한 낱말 */
+  unmatched_words?: string[];
   related_subcategories: { category: string; subcategory: string; name: string; count: number }[];
   items: MaterialLine[];
 }
@@ -271,9 +281,10 @@ export function cardLine(ctx: ToolContext, c: Card, names: Names): MaterialLine 
   return out;
 }
 
-function pageOf(total: number, offset: number, count: number): Page {
+/** 쪽 정보. maxOffset이 있으면 그보다 뒤 쪽은 '더 있음'으로 알리지 않는다 (도구 인자가 그 뒤를 받지 않는다) */
+export function pageOf(total: number, offset: number, count: number, maxOffset = Number.POSITIVE_INFINITY): Page {
   const next = offset + count;
-  const has = next < total;
+  const has = next < total && next <= maxOffset;
   return { total, offset, count, has_more: has, ...(has ? { next_offset: next } : {}) };
 }
 
@@ -302,39 +313,157 @@ function checkCategory(cat: string | undefined): CategoryId | undefined {
 // ── 1. 검색 ──────────────────────────────────────────────────────────
 
 /**
- * 에이전트용 질의 (사이트 검색은 대분류마다 따로 보이므로 이 순서를 쓰지 않는다). 맞는 재료는 runQuery와 같고 순서만 다르다:
+ * 에이전트는 낱말을 끝까지 쳐서 보낸다: 영문 앞부분 맞추기는 꼴보다 3글자 긴 낱말까지만(복수형·-ed·-ing), 한글은 사이트와 같다(합성어).
+ * 짧은 영어 낱말(open·app)이 수백 개 낱말로 퍼져 목록 수만 개를 푸는 것(CPU)과 openai 같은 엉뚱한 결과를 막는다.
+ */
+const AGENT_MATCH: MatchOptions = { slack: 3 };
+
+/** 조각마다 낱말을 글자 순으로 한 번만 늘어놓는다 (조각 객체는 isolate 캐시에 남으므로 다음 요청도 같은 목록을 쓴다) */
+const tokenLists = new WeakMap<TokenShard, string[]>();
+function sortedTokens(shard: TokenShard): readonly string[] {
+  let v = tokenLists.get(shard);
+  if (!v) {
+    // 기본 정렬 = UTF-16 글자 순 (eachPrefixed의 이분 탐색이 쓰는 `<` 비교와 같은 순서)
+    v = Object.keys(shard).sort();
+    tokenLists.set(shard, v);
+  }
+  return v;
+}
+
+/**
+ * 에이전트용 질의 (사이트 검색은 대분류마다 따로 보이므로 이 순서를 쓰지 않는다). 맞는 재료는 runQuery와 거의 같고(영문 앞부분 맞추기 폭만 좁다) 순서가 다르다:
  * ① 꼭 드는 낱말을 친 꼴 그대로 맞힌 점수를 두 번 더 더한다 → 같은 뜻 낱말(급식 → meal, api → server)로만 맞은 재료가 뒤로 간다.
  * ② 같은 점수면 대분류 안 인기 순위(문서 번호 - 대분류 시작)로 → 대분류가 번갈아 나온다 (번호 그대로면 AI 확장이 늘 먼저다).
- * 낱말마다 '친 꼴'과 '같은 뜻'을 따로 한 번씩만 풀어(목록 풀기가 가장 비싸다) 두 점수를 함께 얻는다. 무료 Worker의 CPU 10ms 안에 들게.
+ * CPU(무료 Worker 10ms): 낱말마다 '친 꼴'과 '같은 뜻'을 한 번씩만 풀고, 줄 세우기는 점수 통으로 나눠 앞의 need개만 정렬한다.
+ * 같은 뜻 낱말은 맞는 묶음이 바뀌지 않을 때만 건너뛴다: 흔한 말(점수만 더한다)이거나, 꼭 드는 낱말이 하나뿐인데 친 꼴로 이미 많이 맞을 때.
  */
 export function agentQuery(
   terms: readonly QueryTerm[],
   get: (n: number) => TokenShard | undefined,
   meta: Pick<SearchMeta, 'cats' | 'shards'>,
   keep?: (doc: number) => boolean,
-): { hits: { doc: number; score: number }[]; loose: boolean } {
-  const strict = terms.map((t) => ({ m: keepOnly(termMatches({ ...t, alts: [] }, get, meta.shards), keep), optional: t.optional === true }));
-  const full = terms.map((t, i) => {
-    const own = strict[i]?.m ?? new Map<number, number>();
-    // 친 꼴만으로 이미 많이 맞으면 같은 뜻 낱말은 풀지 않는다: 앞쪽 결과는 거의 같고 목록 풀기가 가장 비싸다
-    if (t.alts.length === 0 || own.size >= LIMITS.altSkip) return { m: own, optional: t.optional === true };
-    const m = new Map(own);
-    for (const [d, sc] of keepOnly(termMatches({ text: t.text, forms: [], alts: t.alts }, get, meta.shards), keep)) if ((m.get(d) ?? 0) < sc) m.set(d, sc);
-    return { m, optional: t.optional === true };
-  });
-  const res = combineTerms(full, false);
-  // 정렬 열쇠를 한 번씩만 만든다: 점수 + 꼭 드는 낱말을 친 꼴 그대로 맞힌 점수 × 2, 대분류 안 순위 (비교마다 찾으면 결과 수천 개에서 느리다).
+  need = Number.POSITIVE_INFINITY,
+): { hits: { doc: number; score: number }[]; loose: boolean; dropped: string[] } {
+  const requiredCount = terms.filter((t) => t.optional !== true).length;
+  // 이 질의 안에서는 같은 목록을 한 번만 푼다 (login ↔ auth처럼 서로 같은 뜻이면 같은 목록을 두 번 푼다)
+  const memo = new Map<string, number[]>();
+  const opts: MatchOptions = {
+    ...AGENT_MATCH,
+    tokens: sortedTokens,
+    ...(keep ? { only: keep } : {}),
+    decode: (str) => {
+      let v = memo.get(str);
+      if (!v) {
+        v = decodePostings(str);
+        memo.set(str, v);
+      }
+      return v;
+    },
+  };
+  // 소분류 거르기(keep)는 opts.only로 목록을 풀 때 바로 건다
+  const match = (t: QueryTerm, o: MatchOptions): { own: Map<number, number>; m: Map<number, number>; optional: boolean } => {
+    const own = termMatches({ ...t, alts: [] }, get, meta.shards, o);
+    const optional = t.optional === true;
+    const skip = t.alts.length === 0 || (own.size >= LIMITS.altSkip && (optional || requiredCount <= 1));
+    if (skip) return { own, m: own, optional };
+    // 작은 쪽을 큰 쪽에 합친다 (own은 순위 계산에 그대로 남겨 둔다)
+    const alt = termMatches({ text: t.text, forms: [], alts: t.alts }, get, meta.shards, o);
+    const [m, add] = alt.size >= own.size ? [alt, own] : [new Map(own), alt];
+    for (const [d, sc] of add) if ((m.get(d) ?? 0) < sc) m.set(d, sc);
+    return { own, m, optional };
+  };
+  // 꼭 드는 낱말이 둘 이상이면 가장 드물어 보이는 낱말(목록 길이로 어림)을 먼저 찾고, 다른 낱말은 그 재료 안에서만 센다.
+  // '그리고' 결과는 좁히지 않을 때와 같다(모든 낱말이 든 재료는 그 낱말의 재료 안에 있다).
+  // 아무 재료에도 없는 낱말(오타 같은 것)은 먼저 빼고 알린다: 남은 낱말로 '그리고'를 찾는다
+  type Matched = ReturnType<typeof match>;
+  const req = terms.flatMap((t, i) => (t.optional === true ? [] : [i]));
+  const weight = new Map<number, number>();
+  const missing = new Set<number>();
+  let rarest = -1;
+  let per: Matched[];
+  if (req.length >= 2) {
+    for (const i of req) weight.set(i, termWeight(terms[i] as QueryTerm, get, meta.shards, opts));
+    const byRare = [...req].sort((a, b) => (weight.get(a) ?? 0) - (weight.get(b) ?? 0) || a - b);
+    let first: Matched | undefined;
+    for (const i of byRare) {
+      const r = match(terms[i] as QueryTerm, opts);
+      if (r.m.size > 0 || missing.size === req.length - 1) {
+        rarest = i;
+        first = r;
+        break;
+      }
+      missing.add(i);
+    }
+    const r = first ?? match(terms[rarest] as QueryTerm, opts);
+    const narrow: MatchOptions = { ...opts, only: (d) => r.m.has(d) };
+    const none: Matched = { own: new Map(), m: new Map(), optional: false };
+    per = terms.map((t, j) => (j === rarest ? r : missing.has(j) ? none : match(t, narrow)));
+  } else per = terms.map((t) => match(t, opts));
+  // 모든 낱말이 든 재료가 없으면, 꼭 드는 낱말 가운데 가장 흔해 보이는 것부터 하나씩 빼고 다시 '그리고'로 찾는다(넓은 '또는'은 결과 수만 개·CPU).
+  // 가장 드문 낱말은 빼지 않으므로 좁힌 목록을 그대로 쓴다. 꼭 드는 낱말이 둘 남을 때까지도 없으면 그때만 사이트처럼 하나라도 든 재료로 넓힌다
+  const dropped: string[] = [...missing].sort((a, b) => a - b).map((i) => terms[i]?.text ?? '');
+  let active = per.map((p, i) => ({ ...p, i })).filter((p) => !missing.has(p.i));
+  let res = combineTerms(active, false, false);
+  while (res.hits.length === 0) {
+    const left = active.filter((p) => !p.optional);
+    if (left.length <= 2) {
+      // '또는'은 좁히지 않은 목록이 필요하다
+      if (rarest >= 0) {
+        active = active.map((p) => (p.i === rarest ? p : { ...match(terms[p.i] as QueryTerm, opts), i: p.i }));
+        for (const p of active) per[p.i] = p;
+      }
+      res = combineTerms(active, false, true);
+      break;
+    }
+    const widest = left.filter((p) => p.i !== rarest).reduce((a, b) => ((weight.get(b.i) ?? 0) > (weight.get(a.i) ?? 0) ? b : a));
+    dropped.push(terms[widest.i]?.text ?? '');
+    active = active.filter((p) => p !== widest);
+    res = combineTerms(active, false, false);
+  }
   // 흔한 말(api 같은 optional)은 친 꼴 점수에 넣지 않는다: 'API'가 이름에 있다는 것만으로 앞서지 않게
-  const required = strict.filter((p) => !p.optional);
-  const keyed = res.hits.map((h) => {
-    let own = 0;
-    for (const p of required) own += (p.m.get(h.doc) ?? 0) * 2;
-    const c = meta.cats.find((x) => h.doc >= x.start && h.doc < x.start + x.count);
-    return { h, k: h.score + own, l: c ? h.doc - c.start : h.doc };
-  });
-  keyed.sort((a, b) => b.k - a.k || a.l - b.l || a.h.doc - b.h.doc);
-  res.hits = keyed.map((x) => x.h);
-  return res;
+  const required = per.filter((p) => !p.optional).map((p) => p.own);
+  const buckets = new Map<number, number[]>();
+  for (const h of res.hits) {
+    let k = h.score;
+    for (const m of required) k += (m.get(h.doc) ?? 0) * 2;
+    const list = buckets.get(k);
+    if (list) list.push(h.doc);
+    else buckets.set(k, [h.doc]);
+  }
+  const local = (doc: number): number => {
+    const c = meta.cats.find((x) => doc >= x.start && doc < x.start + x.count);
+    return c ? doc - c.start : doc;
+  };
+  const hits: { doc: number; score: number }[] = [];
+  for (const k of [...buckets.keys()].sort((x, y) => y - x)) {
+    const docs = buckets.get(k) ?? [];
+    // 보일 자리(need)에 드는 통만 정렬한다. 뒤쪽 통은 개수만 센다(차례가 화면에 나오지 않는다)
+    if (hits.length < need) {
+      const keyed = docs.map((d) => ({ d, l: local(d) }));
+      keyed.sort((x, y) => x.l - y.l || x.d - y.d);
+      for (const x of keyed) hits.push({ doc: x.d, score: k });
+    } else for (const d of docs) hits.push({ doc: d, score: k });
+  }
+  return { hits, loose: res.loose || dropped.length > 0, dropped };
+}
+
+/** 같은 뜻 묶음·흔한 말 표는 isolate에서 한 번만 만든다 (meta는 캐시에 남는 같은 객체) */
+const wordTables = new WeakMap<object, { syn: Map<string, string[]>; common: Set<string> }>();
+
+/** 질의 낱말: 앞에서부터, 읽을 낱말 조각이 LIMITS.shards를 넘기 전까지만 (넘치는 뒤 낱말은 통째로 빼고 알린다) */
+export function agentTerms(query: string, meta: SearchMeta): { terms: QueryTerm[]; ignored: string[] } {
+  let t = wordTables.get(meta);
+  if (!t) {
+    t = { syn: synonymMap(meta.syn), common: new Set(meta.common) };
+    wordTables.set(meta, t);
+  }
+  const all = queryTerms(query, t.syn, t.common);
+  const terms: QueryTerm[] = [];
+  for (const term of all) {
+    if (terms.length >= LIMITS.terms || shardsFor([...terms, term], meta.shards).length > LIMITS.shards) break;
+    terms.push(term);
+  }
+  return { terms, ignored: all.slice(terms.length).map((x) => x.text) };
 }
 
 export interface SearchArgs {
@@ -350,7 +479,7 @@ export async function searchMaterials(ctx: ToolContext, args: SearchArgs): Promi
   const cat = checkCategory(args.category);
   const [meta, summary] = await Promise.all([searchMeta(ctx), summaryOf(ctx)]);
   const names = namesOf(summary);
-  const terms = queryTerms(query, synonymMap(meta.syn), new Set(meta.common)).slice(0, LIMITS.terms);
+  const { terms, ignored } = agentTerms(query, meta);
   if (terms.length === 0) throw new ToolError('empty_query', MCP_ERRORS.emptyQuery);
 
   // 소분류 안에서만: 그 소분류의 문서 번호 목록으로 거른다
@@ -367,26 +496,33 @@ export async function searchMaterials(ctx: ToolContext, args: SearchArgs): Promi
     keep = range ? (d) => d >= range.start && d < range.start + range.count : () => false;
   }
 
-  const ids = shardsFor(terms, meta.shards).slice(0, LIMITS.shards);
+  const ids = shardsFor(terms, meta.shards);
   const loaded = await Promise.all(ids.map((n) => ctx.load.json(searchShardPath(n))));
   const shards = new Map<number, TokenShard>();
   ids.forEach((n, i) => {
     const s = loaded[i];
     if (isObj(s)) shards.set(n, s as TokenShard);
   });
-  const { hits, loose } = agentQuery(terms, (n) => shards.get(n), meta, keep);
+  const offset = Math.min(args.offset, LIMITS.searchOffset);
+  const { hits, loose, dropped } = agentQuery(terms, (n) => shards.get(n), meta, keep, offset + args.limit);
 
   const total = hits.length;
-  const offset = Math.min(args.offset, LIMITS.searchOffset);
   if (offset > 0 && offset >= total) throw new ToolError('offset', fillText(MCP_ERRORS.offsetTooLarge, { offset: String(offset), total: String(total) }));
-  const pageHits = hits.slice(offset, offset + args.limit);
 
-  // 결과 카드 블록: 필요한 블록만 한 번씩
-  const places = pageHits.map((h) => blockOf(h.doc, meta.cats, meta.block));
-  const keys = [...new Set(places.filter((p) => p !== null).map((p) => `${p.cat}|${p.k}`))];
+  // 결과 카드 블록: 필요한 블록만 한 번씩, 한 쪽에 LIMITS.blocks개까지 (넘으면 그 앞에서 쪽을 끊고 다음 쪽으로 넘긴다)
+  const places: { cat: string; k: number; at: number }[] = [];
+  const keys = new Set<string>();
+  for (const h of hits.slice(offset, offset + args.limit)) {
+    const p = blockOf(h.doc, meta.cats, meta.block);
+    if (!p) continue;
+    const key = `${p.cat}|${p.k}`;
+    if (!keys.has(key) && keys.size >= LIMITS.blocks) break;
+    keys.add(key);
+    places.push(p);
+  }
   const blocks = new Map<string, Card[]>();
   await Promise.all(
-    keys.map(async (key) => {
+    [...keys].map(async (key) => {
       const [c, k] = key.split('|');
       const b = await ctx.load.json(searchBlockPath(c ?? '', Number(k)));
       if (Array.isArray(b)) blocks.set(key, b as Card[]);
@@ -394,7 +530,7 @@ export async function searchMaterials(ctx: ToolContext, args: SearchArgs): Promi
   );
   const items: MaterialLine[] = [];
   for (const p of places) {
-    const card = p ? blocks.get(`${p.cat}|${p.k}`)?.[p.at] : undefined;
+    const card = blocks.get(`${p.cat}|${p.k}`)?.[p.at];
     if (card) items.push(cardLine(ctx, card, names));
   }
 
@@ -405,7 +541,9 @@ export async function searchMaterials(ctx: ToolContext, args: SearchArgs): Promi
           .slice(0, 5)
           .map(([c, s, name, count]) => ({ category: c, subcategory: s, name, count }))
       : [];
-  const out: SearchResult = { query, loose, related_subcategories: related, items, ...pageOf(total, offset, items.length) };
+  const out: SearchResult = { query, loose, related_subcategories: related, items, ...pageOf(total, offset, places.length, LIMITS.searchOffset) };
+  if (ignored.length > 0) out.ignored_words = ignored;
+  if (dropped.length > 0) out.unmatched_words = dropped;
   if (cat !== undefined || subCat !== undefined) out.category = subCat ?? cat;
   if (args.subcategory !== undefined) out.subcategory = args.subcategory;
   return out;
@@ -514,7 +652,7 @@ async function recordsOf(ctx: ToolContext, ids: readonly string[]): Promise<Map<
 }
 
 export async function getMaterials(ctx: ToolContext, ids: readonly string[]): Promise<DetailsResult> {
-  const unique = [...new Set(ids.map((x) => x.trim()).filter((x) => x !== ''))].slice(0, LIMITS.ids);
+  const unique = [...new Set(ids.map((x) => x.trim()).filter((x) => SAFE_ID.test(x)))].slice(0, LIMITS.ids);
   const [summary, recs] = await Promise.all([summaryOf(ctx), recordsOf(ctx, unique)]);
   const names = namesOf(summary);
   const items: MaterialDetail[] = [];
@@ -644,7 +782,10 @@ export interface CartArgs {
 }
 
 export async function openCart(ctx: ToolContext, args: CartArgs): Promise<CartResult> {
-  const entries = readShareEntries(shareFragmentOf(args.share));
+  // 남이 만든 링크일 수 있다: id·모델 id가 진열대 꼴이 아니면 버린다(모델만 틀리면 모델만)
+  const entries = readShareEntries(shareFragmentOf(args.share))
+    .filter((e) => SAFE_ID.test(e.id))
+    .map((e) => (e.model !== undefined && !SAFE_ID.test(e.model) ? { id: e.id } : e));
   if (entries.length === 0) throw new ToolError('bad_share', fillText(MCP_ERRORS.badShare, { site: ctx.site }));
   if (args.offset > 0 && args.offset >= entries.length) throw new ToolError('offset', fillText(MCP_ERRORS.offsetTooLarge, { offset: String(args.offset), total: String(entries.length) }));
   const page = entries.slice(args.offset, args.offset + args.limit);

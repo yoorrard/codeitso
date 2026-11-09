@@ -1,6 +1,6 @@
 // MCP 익명 집계 (D154): 날짜별로 어느 도구가 몇 번 불렸는지, 어느 종류의 AI 앱이 연결했는지만 센다.
 // 검색어·재료 id·장바구니 링크·IP는 세지도 적지도 않는다. 브라우저의 /api/event(event-spec.ts)와 따로 두어 화면에서는 보낼 수 없다.
-// 순수 함수: JSON-RPC 본문을 보고 셀 것만 고른다. 시험: tests/lib/mcp-count.test.ts
+// 순수 함수: JSON-RPC 본문을 보고 셀 것만 고른다. 시험: tests/lib/mcp-text.test.ts ('MCP 집계')
 import { MCP_PROMPT, MCP_TOOLS } from '../../copy/mcp.ts';
 
 export const MCP_EVENT = { call: 'mcp_call', init: 'mcp_init', prompt: 'mcp_prompt' } as const;
@@ -29,22 +29,27 @@ export interface McpCount {
   bucket: string;
 }
 
-/** JSON-RPC 본문(한 건 또는 묶음) → 셀 것. 도구 이름은 우리 도구일 때만, 처음 인사는 앱 종류만 */
+/** 2026-07-28 판은 initialize 대신 server/discover에 앱 정보를 _meta로 싣는다 */
+const CLIENT_INFO_META = 'io.modelcontextprotocol/clientInfo';
+
+const obj = (x: unknown): Record<string, unknown> => (typeof x === 'object' && x !== null && !Array.isArray(x) ? (x as Record<string, unknown>) : {});
+
+/**
+ * JSON-RPC 요청 한 건 → 셀 것(0~1개). 묶음(배열)·알림(id 없음)은 세지 않는다. 도구 이름은 우리 도구일 때만,
+ * 처음 인사(initialize·server/discover)는 앱 종류만, 프롬프트는 우리 프롬프트만. Worker는 처리가 성공(2xx)한 뒤에만 센다.
+ */
 export function countsOf(body: unknown): McpCount[] {
-  const msgs = Array.isArray(body) ? body.slice(0, 20) : [body];
-  const out: McpCount[] = [];
-  for (const m of msgs) {
-    if (typeof m !== 'object' || m === null) continue;
-    const o = m as Record<string, unknown>;
-    const params = typeof o['params'] === 'object' && o['params'] !== null ? (o['params'] as Record<string, unknown>) : {};
-    if (o['method'] === 'tools/call' && typeof params['name'] === 'string' && TOOL_NAMES.has(params['name'])) {
-      out.push({ type: MCP_EVENT.call, bucket: params['name'] });
-    } else if (o['method'] === 'initialize') {
-      const info = typeof params['clientInfo'] === 'object' && params['clientInfo'] !== null ? (params['clientInfo'] as Record<string, unknown>) : {};
-      out.push({ type: MCP_EVENT.init, bucket: clientFamily(info['name']) });
-    } else if (o['method'] === 'prompts/get' && params['name'] === MCP_PROMPT.name) {
-      out.push({ type: MCP_EVENT.prompt, bucket: MCP_PROMPT.name });
-    }
+  if (Array.isArray(body)) return [];
+  const o = obj(body);
+  if (o['id'] === undefined || o['id'] === null) return [];
+  const params = obj(o['params']);
+  if (o['method'] === 'tools/call' && typeof params['name'] === 'string' && TOOL_NAMES.has(params['name'])) {
+    return [{ type: MCP_EVENT.call, bucket: params['name'] }];
   }
-  return out;
+  if (o['method'] === 'initialize') return [{ type: MCP_EVENT.init, bucket: clientFamily(obj(params['clientInfo'])['name']) }];
+  if (o['method'] === 'server/discover') {
+    return [{ type: MCP_EVENT.init, bucket: clientFamily(obj(obj(params['_meta'])[CLIENT_INFO_META])['name']) }];
+  }
+  if (o['method'] === 'prompts/get' && params['name'] === MCP_PROMPT.name) return [{ type: MCP_EVENT.prompt, bucket: MCP_PROMPT.name }];
+  return [];
 }

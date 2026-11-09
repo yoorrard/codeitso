@@ -4,7 +4,9 @@
 import { MCP_TEXT } from '../../copy/mcp.ts';
 import { tokens, usd } from '../catalog/models.ts';
 import { commas, fenceFor, fillText, inline, inlineCode, line } from './text.ts';
+import type { ModelOut, ModelsResult } from './models.ts';
 import type {
+  CartLinkResult,
   CartResult,
   CategoryOverview,
   CategoryResult,
@@ -169,5 +171,37 @@ export function renderCart(r: CartResult): string {
   const p = pageLines(r);
   if (p.length > 0) out.push('', ...p);
   out.push('', T.detailsHint);
+  return out.join('\n');
+}
+
+/** AI 모델 한 줄: 이름·id·제공자 → 가격·컨텍스트·입출력·기능·출시 */
+function modelLines(m: ModelOut, n: number): string[] {
+  const price = [m.input_price !== undefined ? `${T.input} ${usd(m.input_price)}` : '', m.output_price !== undefined ? `${T.output} ${usd(m.output_price)}` : '', m.cache_read_price !== undefined ? `${T.cacheRead} ${usd(m.cache_read_price)}` : ''].filter(Boolean);
+  const meta = [`${inline(m.provider_name, 80)} ${code(m.material_id)}`];
+  if (price.length > 0) meta.push(price.join(' / '));
+  if (m.context !== undefined) meta.push(`${T.context} ${tokens(m.context)}`);
+  if (m.max_output !== undefined) meta.push(`${T.maxOutput} ${tokens(m.max_output)}`);
+  const feats = [m.reasoning ? 'reasoning' : '', m.tool_calling ? 'tools' : '', m.open_weights ? 'open weights' : '', m.status ?? ''].filter(Boolean);
+  const second = [`${T.inputs}: ${m.inputs.map((x) => inline(x, 20)).join(', ')}`, `${T.outputs}: ${m.outputs.map((x) => inline(x, 20)).join(', ')}`];
+  if (feats.length > 0) second.push(feats.join(', '));
+  if (m.release) second.push(`${T.released} ${m.release}`);
+  if (m.knowledge) second.push(`${T.knowledge} ${m.knowledge}`);
+  return [`${n}. **${inline(m.name, 120)}** ${code(m.id)} · ${meta.join(' · ')}`, `   ${second.join(' · ')}`];
+}
+
+export function renderModels(r: ModelsResult): string {
+  const out = [`## ${fillText(T.modelsHead, { total: commas(r.total), scope: r.scope, sort: r.sort, date: r.fetched })}`, ''];
+  if (r.items.length === 0) out.push(T.modelsNone);
+  r.items.forEach((m, i) => out.push(...modelLines(m, r.offset + i + 1)));
+  const p = pageLines(r);
+  if (p.length > 0) out.push('', ...p);
+  if (r.items.some((m) => m.input_price === 0 || m.output_price === 0)) out.push('', T.zeroPrice);
+  out.push('', `${T.compare}: ${r.compare_url}`, T.material);
+  return out.join('\n');
+}
+
+export function renderCartLink(r: CartLinkResult): string {
+  const out = [`## ${fillText(T.cartLinkHead, { n: r.count })}`, '', r.cart_url, '', T.cartLinkNote];
+  if (r.skipped.length > 0) out.push('', fillText(T.skipped, { ids: r.skipped.map((x) => code(x)).join(', ') }));
   return out.join('\n');
 }

@@ -20,7 +20,7 @@ import { buildFacets, encodeOrder } from '../../src/lib/catalog/facets.ts';
 import type { BundleRow, ModelProvider, ModelsBundle, ModelsSummary, ProviderModels } from '../../src/lib/catalog/models.ts';
 import { MODEL_ITEM_PREFIX, isDeprecated, rowOf, slimRow, sortNewest } from '../../src/lib/catalog/models.ts';
 import { SITE_FILE } from '../../src/lib/catalog/site.ts';
-import { buildAgentSummary } from '../../src/lib/mcp/summary.ts';
+import { buildAgentKits, buildAgentSummary } from '../../src/lib/mcp/summary.ts';
 import type { ListChunk, SiteData } from '../../src/lib/catalog/types.ts';
 import { CHUNK_PAGES, MAX_CATALOG_FILES, PAGE_SIZE, SORTS } from '../../src/lib/catalog/types.ts';
 import { CATALOG_DIR, KITS_FILE, KO_DIR, MEDIA_DIR, MODELS_DIR, card, cards, catalog, categories, homeRows, kits, kitsFile, listOf, readModels, shards, topOf } from './load.ts';
@@ -157,9 +157,10 @@ if (modelsData) {
 }
 const modelsSummary: ModelsSummary | undefined = modelsData ? { fetched: modelsData.fetchedAt, providers: modelProviders } : undefined;
 
-// 6. AI 에이전트용 요약 (D154): MCP 서버가 대분류·소분류·키트를 이 파일 하나로 안다
-const agentSummary = buildAgentSummary({ total, categories: cats, kits: kits() });
-write(join(OUT, 'agent.json'), agentSummary);
+// 6. AI 에이전트용 요약 (D154·D156): MCP 서버가 거의 모든 도구에서 읽는 작은 요약과, 키트 도구만 읽는 키트 파일
+const kitList = kits();
+write(join(OUT, 'agent.json'), buildAgentSummary({ total, categories: cats, kits: kitList.length, ...(modelsSummary ? { models: modelsSummary } : {}) }));
+write(join(OUT, 'agent-kits.json'), buildAgentKits(kitList));
 
 if (files > MAX_CATALOG_FILES) {
   console.error(`진열대 자료 파일이 ${files}개라 한도 ${MAX_CATALOG_FILES}개를 넘는다. CHUNK_PAGES나 SHARDS(src/lib/catalog/types.ts)를 고친다.`);

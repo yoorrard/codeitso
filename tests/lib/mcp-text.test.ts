@@ -3,9 +3,9 @@ import { describe, expect, it } from 'vitest';
 import { cardOf } from '../../src/lib/catalog/core.ts';
 import type { CatalogItem } from '../../src/lib/catalog/types.ts';
 import { clientFamily, countsOf } from '../../src/lib/mcp/count.ts';
-import { AGENT_LINE_MAX, agentCard, buildAgentSummary, clip, readAgentSummary } from '../../src/lib/mcp/summary.ts';
+import { AGENT_LINE_MAX, agentCard, buildAgentKits, buildAgentSummary, clip, readAgentKits, readAgentSummary } from '../../src/lib/mcp/summary.ts';
 import { block, commas, fenceFor, fillText, inline, inlineCode, line, webUrl } from '../../src/lib/mcp/text.ts';
-import { CATS, ITEMS, KIT } from './mcp-fixture.ts';
+import { CATS, ITEMS, KIT, MODELS } from './mcp-fixture.ts';
 
 describe('글 다듬기', () => {
   it('한 줄: 숨은 글자·방향 바꾸기·태그 글자·HTML 주석과 태그를 빼고 공백을 한 칸으로', () => {
@@ -90,16 +90,24 @@ describe('MCP 집계', () => {
 });
 
 describe('에이전트용 요약 파일', () => {
-  it('대분류·소분류 이름·개수와 키트(재료 짧은 줄·구현안)만 담는다', () => {
-    const s = buildAgentSummary({ total: 5, categories: CATS, kits: [KIT] });
-    expect(s.v).toBe(1);
+  it('요약은 대분류·소분류 이름·개수, 키트 수, AI 모델 제공자 이름표만 담는다 (키트는 따로)', () => {
+    const s = buildAgentSummary({ total: 5, categories: CATS, kits: 1, models: MODELS });
+    expect(s.v).toBe(2);
     expect(s.fetched).toBe('2026-11-08');
+    expect(s.kits).toBe(1);
     expect(s.categories.map((c) => c.id)).toEqual(['design', 'api', 'datasets']);
     expect(s.categories[1]?.subs.find((x) => x.id === 'maps')).toEqual({ id: 'maps', name: '지도', count: 1, measured: true, dated: false });
-    expect(s.kits[0]?.items.map((i) => i.id)).toEqual(['a:weather', 'd:font']);
+    expect(s.models.providers[0]).toEqual({ id: 'anthropic', name: 'Anthropic', direct: true, live: 1 });
+    expect(JSON.stringify(s)).not.toContain('a:weather');
     expect(readAgentSummary(s)).toEqual(s);
-    expect(readAgentSummary({ ...s, v: 2 })).toBeNull();
+    expect(readAgentSummary({ ...s, v: 1 })).toBeNull();
     expect(readAgentSummary(null)).toBeNull();
+    // 모델 자료가 없는 빌드도 읽힌다
+    expect(readAgentSummary(buildAgentSummary({ total: 5, categories: CATS, kits: 0 }))?.models.providers).toEqual([]);
+    const k = buildAgentKits([KIT]);
+    expect(k.kits[0]?.items.map((i) => i.id)).toEqual(['a:weather', 'd:font']);
+    expect(readAgentKits(k)).toEqual(k);
+    expect(readAgentKits({ v: 2, kits: [] })).toBeNull();
   });
 
   it('키트 재료 한 줄은 짧게 자른다', () => {

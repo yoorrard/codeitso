@@ -1,0 +1,141 @@
+// MCP 새 도구 (D156): AI 모델 찾기(codeitso_find_models)와 장바구니 링크 만들기(codeitso_make_cart_link), 그리고 요약·키트 파일 나누기.
+import { describe, expect, it } from 'vitest';
+import type { FindModelsArgs } from '../../src/lib/mcp/models.ts';
+import { compareQuery, findModels } from '../../src/lib/mcp/models.ts';
+import { renderCartLink, renderModels } from '../../src/lib/mcp/render.ts';
+import type { ToolContext } from '../../src/lib/mcp/tools.ts';
+import { LIMITS, ToolError, getKits, makeCartLink, searchMaterials } from '../../src/lib/mcp/tools.ts';
+import { readShareEntries } from '../../src/lib/share.ts';
+import { FILES } from '../../src/lib/routes.ts';
+import { SITE, fixtureFiles, fixtureLoader } from './mcp-fixture.ts';
+
+function ctx(files = fixtureFiles()): ToolContext & { reads: string[] } {
+  const load = fixtureLoader(files);
+  return { load, site: SITE, reads: load.reads };
+}
+
+const BASE: FindModelsArgs = { scope: 'major', inputs: [], outputs: [], reasoning: false, toolCalling: false, openWeights: false, includeDeprecated: false, sort: 'newest', limit: 10, offset: 0 };
+const ids = async (args: Partial<FindModelsArgs>): Promise<string[]> => (await findModels(ctx(), { ...BASE, ...args })).items.map((m) => m.id);
+
+async function code(p: Promise<unknown>): Promise<string> {
+  try {
+    await p;
+  } catch (e) {
+    if (e instanceof ToolError) return e.code;
+    throw e;
+  }
+  return 'ok';
+}
+
+describe('codeitso_find_models', () => {
+  it('기본은 주요 회사의 지원 중인 모델을 새것부터, 직접 만든 회사 모두(direct)는 주요가 아닌 회사도', async () => {
+    expect(await ids({})).toEqual(['claude-new', 'gpt-mini', 'gpt-image']);
+    expect(await ids({ scope: 'direct' })).toEqual(['tiny-1', 'claude-new', 'gpt-mini', 'gpt-image']);
+    expect(await ids({ includeDeprecated: true })).toContain('claude-old');
+  });
+
+  it('입력·출력 종류, 추론·도구 호출·공개 가중치, 가격·컨텍스트로 거른다', async () => {
+    expect(await ids({ inputs: ['pdf'] })).toEqual(['claude-new']);
+    expect(await ids({ outputs: ['image'] })).toEqual(['gpt-image']);
+    expect(await ids({ reasoning: true })).toEqual(['claude-new']);
+    expect(await ids({ toolCalling: true })).toEqual(['claude-new', 'gpt-mini']);
+    expect(await ids({ scope: 'direct', openWeights: true })).toEqual(['tiny-1']);
+    expect(await ids({ maxInputPrice: 1 })).toEqual(['gpt-mini']);
+    expect(await ids({ maxOutputPrice: 15 })).toEqual(['claude-new', 'gpt-mini']);
+    expect(await ids({ minContext: 150_000 })).toEqual(['claude-new']);
+    expect(await ids({ query: 'gpt mini' })).toEqual(['gpt-mini']);
+  });
+
+  it('가격은 싼 것부터, 컨텍스트는 큰 것부터 (값이 없는 모델은 끝에)', async () => {
+    expect(await ids({ sort: 'input_price' })).toEqual(['gpt-mini', 'claude-new', 'gpt-image']);
+    expect(await ids({ sort: 'context' })).toEqual(['claude-new', 'gpt-mini', 'gpt-image']);
+  });
+
+  it('회사 하나: 그 회사 파일만 읽는다 (호스팅·라우터 포함), 모르는 회사는 오류', async () => {
+    const c = ctx();
+    const r = await findModels(c, { ...BASE, provider: 'openrouter' });
+    expect(r.items.map((m) => [m.id, m.provider, m.material_id])).toEqual([['anthropic/claude-new', 'openrouter', 'models-dev:openrouter']]);
+    expect(c.reads.some((p) => p.endsWith('/direct.json'))).toBe(false);
+    expect(await code(findModels(ctx(), { ...BASE, provider: 'nope' }))).toBe('unknown_provider');
+  });
+
+  it('결과 한 줄: 가격·컨텍스트·입출력·기능·출시, 제공자 재료 id, 같은 조건의 비교 쪽 주소', async () => {
+    const r = await findModels(ctx(), { ...BASE, inputs: ['image'], maxInputPrice: 3, minContext: 128_000, sort: 'input_price', limit: 1 });
+    expect(r.items[0]).toEqual({
+      id: 'gpt-mini',
+      name: 'GPT Mini',
+      provider: 'openai',
+      provider_name: 'OpenAI',
+      material_id: 'models-dev:openai',
+      input_price: 0.15,
+      output_price: 0.6,
+      context: 128_000,
+      inputs: ['text', 'image'],
+      outputs: ['text'],
+      tool_calling: true,
+      release: '2026-05-01',
+    });
+    expect(r).toMatchObject({ source: 'models.dev', fetched: '2026-11-08', total: 2, has_more: true, next_offset: 1 });
+    expect(r.compare_url).toBe(`${SITE}/models?in=image&max=3&ctx=128000&sort=in`);
+    const md = renderModels(r);
+    expect(md).toContain('**GPT Mini** `gpt-mini` · OpenAI `models-dev:openai` · in $0.15 / out $0.6 · context 128K');
+    expect(md).toContain(`Compare on codeitso: ${r.compare_url}`);
+    expect(md).not.toContain('$0 means');
+  });
+
+  it('사이트 주소가 받지 않는 값(단계 밖 가격·컨텍스트, 출력 종류)은 비교 쪽 주소에 싣지 않는다', () => {
+    const q = compareQuery({ ...BASE, maxInputPrice: 2, minContext: 100_000, outputs: ['image'], provider: 'anthropic', query: 'claude' });
+    expect(q.maxIn).toBeUndefined();
+    expect(q.minCtx).toBeUndefined();
+    expect(q.scope).toEqual({ one: 'anthropic' });
+    expect(q.q).toBe('claude');
+  });
+
+  it('0달러 모델이 보이면 그 뜻(무료 등급·미리 보기·구독 요금제)을 함께 적는다', async () => {
+    const files = fixtureFiles();
+    const direct = structuredClone(files.get('/catalog/models/direct.json')) as { rows: { id: string; in?: number }[] };
+    const tiny = direct.rows.find((r) => r.id === 'tiny-1');
+    if (tiny) tiny.in = 0;
+    files.set('/catalog/models/direct.json', direct);
+    expect(renderModels(await findModels(ctx(files), { ...BASE, scope: 'direct', sort: 'input_price', limit: 1 }))).toContain('$0 means');
+  });
+
+  it('맞는 모델이 없으면 안내, 끝을 넘는 offset은 오류', async () => {
+    const r = await findModels(ctx(), { ...BASE, minContext: 10_000_000 });
+    expect(r.total).toBe(0);
+    expect(renderModels(r)).toContain('No models matched');
+    expect(await code(findModels(ctx(), { ...BASE, offset: 5 }))).toBe('offset');
+  });
+});
+
+describe('codeitso_make_cart_link', () => {
+  it('고른 재료와 모델로 사이트 장바구니 링크를 만든다 (같은 id는 한 번, 꼴이 틀린 id는 빼고 알린다)', () => {
+    const r = makeCartLink(ctx(), { items: [{ id: 'a:weather' }, { id: 'models-dev:anthropic', model: 'claude-new' }, { id: 'a:weather' }, { id: '<b>x' }, { id: 'd:font', model: 'bad model' }] });
+    expect(r.count).toBe(3);
+    expect(r.skipped).toEqual(['x']);
+    expect(r.cart_url.startsWith(`${SITE}/cart#s=`)).toBe(true);
+    expect(readShareEntries(r.cart_url.slice(r.cart_url.indexOf('#') + 1))).toEqual([{ id: 'a:weather' }, { id: 'models-dev:anthropic', model: 'claude-new' }, { id: 'd:font' }]);
+    const md = renderCartLink(r);
+    expect(md).toContain('Cart link with 3 materials');
+    expect(md).toContain(r.cart_url);
+    expect(md).toContain('Skipped');
+  });
+
+  it(`${LIMITS.cartLink}개까지, 쓸 수 있는 id가 없으면 오류`, () => {
+    const many = Array.from({ length: 40 }, (_, i) => ({ id: `npm:p${i}` }));
+    expect(makeCartLink(ctx(), { items: many }).count).toBe(LIMITS.cartLink);
+    expect(() => makeCartLink(ctx(), { items: [{ id: '<x>' }] })).toThrow(ToolError);
+  });
+});
+
+describe('요약·키트 파일 나누기 (첫 요청 CPU)', () => {
+  it('검색은 키트 파일을 읽지 않고, 키트 도구만 읽는다', async () => {
+    const c = ctx();
+    await searchMaterials(c, { query: 'weather', limit: 5, offset: 0 });
+    expect(c.reads).toContain(FILES.agentSummary);
+    expect(c.reads).not.toContain(FILES.agentKits);
+    const k = ctx();
+    expect(await getKits(k, 'weather-app')).toMatchObject({ id: 'weather-app' });
+    expect(k.reads).toContain(FILES.agentKits);
+  });
+});

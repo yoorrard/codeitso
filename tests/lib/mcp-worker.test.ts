@@ -47,7 +47,7 @@ afterEach(() => {
 const counted = (rows: Row[]): Record<string, number> => Object.fromEntries(rows.map((r) => [`${String(r.args[1])}:${String(r.args[2])}`, Number(r.args[3])]));
 
 describe('공식 MCP 클라이언트로', () => {
-  it('처음 인사 → 도구 다섯·프롬프트 하나 (모두 읽기 전용) → 검색·자세히·장바구니', async () => {
+  it('처음 인사 → 도구 일곱·프롬프트 하나 (모두 읽기 전용) → 검색·자세히·장바구니', async () => {
     const { env, rows, waits } = makeEnv();
     let clock = NOW;
     const fetchLike = async (input: string | URL | Request, init?: RequestInit): Promise<Response> =>

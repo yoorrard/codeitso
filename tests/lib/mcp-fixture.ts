@@ -2,11 +2,11 @@
 // 도구 시험(tests/lib/mcp-tools.test.ts)과 Worker 시험(tests/lib/mcp-worker.test.ts)이 같이 쓴다.
 import type { Ranked } from '../../src/lib/catalog/core.ts';
 import { cardOf, shardOf } from '../../src/lib/catalog/core.ts';
-import type { ProviderModels } from '../../src/lib/catalog/models.ts';
+import type { ModelsBundle, ModelsSummary, ProviderModels } from '../../src/lib/catalog/models.ts';
 import type { CatalogItem, CategoryMeta, DetailRecord, KitData, ListChunk } from '../../src/lib/catalog/types.ts';
 import type { Loader } from '../../src/lib/mcp/tools.ts';
-import { buildAgentSummary } from '../../src/lib/mcp/summary.ts';
-import { FILES, itemDataPath, listDataPath, modelDataPath, searchBlockPath, searchShardPath, searchSubPath } from '../../src/lib/routes.ts';
+import { buildAgentKits, buildAgentSummary } from '../../src/lib/mcp/summary.ts';
+import { FILES, itemDataPath, listDataPath, modelDataPath, modelsBundlePath, searchBlockPath, searchShardPath, searchSubPath } from '../../src/lib/routes.ts';
 import { buildSearch } from '../../scripts/catalog/search-index.ts';
 
 export const SITE = 'https://codeitso.example';
@@ -78,6 +78,30 @@ export const KIT: KitData = {
   outline: ['API 키 받기', '오늘 날씨 보이기'],
 };
 
+/** AI 모델 비교 자료 (models.dev 모양, D141): 주요 회사 둘(anthropic·openai), 주요가 아닌 직접 회사 하나(tinyco), 라우터 하나(openrouter) */
+const provider = (id: string, name: string, direct: boolean, live: number): ModelsSummary['providers'][number] => ({ id, item: `models-dev:${id}`, name, sub: direct ? 'ai-llm' : 'ai-inference', direct, n: live, live });
+export const MODELS: ModelsSummary = {
+  fetched: '2026-11-08',
+  providers: [provider('anthropic', 'Anthropic', true, 1), provider('openai', 'OpenAI', true, 2), provider('tinyco', 'TinyCo', true, 1), provider('openrouter', 'OpenRouter', false, 1)],
+};
+export const DIRECT: ModelsBundle = {
+  v: 1,
+  fetched: '2026-11-08',
+  rows: [
+    { p: 'anthropic', id: 'claude-new', name: 'Claude New', in: 3, out: 15, cr: 0.3, ctx: 200_000, max: 64_000, mi: ['text', 'image', 'pdf'], mo: ['text'], reason: true, tools: true, release: '2026-09-01' },
+    { p: 'anthropic', id: 'claude-old', name: 'Claude Old', in: 1, out: 5, mi: ['text'], mo: ['text'], status: 'deprecated', release: '2024-01-01' },
+    { p: 'openai', id: 'gpt-mini', name: 'GPT Mini', in: 0.15, out: 0.6, ctx: 128_000, mi: ['text', 'image'], mo: ['text'], tools: true, release: '2026-05-01' },
+    { p: 'openai', id: 'gpt-image', name: 'GPT Image', in: 5, out: 40, mi: ['text', 'image'], mo: ['image'], release: '2026-03-01' },
+    { p: 'tinyco', id: 'tiny-1', name: 'Tiny 1', in: 0.01, out: 0.02, ctx: 8_000, mi: ['text'], mo: ['text'], open: true, release: '2026-10-01' },
+  ],
+};
+const ROUTER: ProviderModels = {
+  v: 1,
+  fetched: '2026-11-08',
+  provider: 'openrouter',
+  rows: [{ id: 'anthropic/claude-new', name: 'Claude New (router)', in: 3.3, out: 16.5, ctx: 200_000, mi: ['text', 'image'], mo: ['text'], release: '2026-09-02' }],
+};
+
 /** 주소 → JSON 값. 없으면 null (Worker에서는 404) */
 export function fixtureFiles(): Map<string, unknown> {
   const files = new Map<string, unknown>();
@@ -92,7 +116,8 @@ export function fixtureFiles(): Map<string, unknown> {
     const [cat, ...rest] = key.split('-');
     files.set(searchSubPath(cat ?? '', rest.join('-')), f);
   }
-  files.set(FILES.agentSummary, buildAgentSummary({ total: ITEMS.length, categories: CATS, kits: [KIT] }));
+  files.set(FILES.agentSummary, buildAgentSummary({ total: ITEMS.length, categories: CATS, kits: 1, models: MODELS }));
+  files.set(FILES.agentKits, buildAgentKits([KIT]));
   for (const it of ITEMS) {
     const path = itemDataPath(shardOf(it.id));
     const shard = (files.get(path) as Record<string, DetailRecord> | undefined) ?? {};
@@ -115,6 +140,8 @@ export function fixtureFiles(): Map<string, unknown> {
     ],
   };
   files.set(modelDataPath('anthropic'), models);
+  files.set(modelDataPath('openrouter'), ROUTER);
+  files.set(modelsBundlePath('direct'), DIRECT);
   return files;
 }
 

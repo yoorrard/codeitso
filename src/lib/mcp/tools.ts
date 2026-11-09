@@ -8,6 +8,7 @@ import { modelProviderOf, pickList } from '../catalog/models.ts';
 import type { Card, CategoryId, DetailRecord, Fact, ListChunk, Shard, SortKey } from '../catalog/types.ts';
 import { CATEGORY_ORDER, CHUNK_PAGES, PAGE_SIZE, isCategoryId } from '../catalog/types.ts';
 import { shardOf } from '../catalog/core.ts';
+import { apiInfo, fontInfo, mcpInfo } from '../catalog/preview.ts';
 import type { MatchOptions, QueryTerm, SearchMeta, SubDocsFile, TokenShard } from '../catalog/search.ts';
 import { blockOf, combineTerms, decodePostings, decodeSubDocs, matchSubs, queryTerms, shardsFor, synonymMap, termMatches, termWeight } from '../catalog/search.ts';
 import { FILES, itemDataPath, itemPath, kitPath, listDataPath, modelDataPath, searchBlockPath, searchShardPath, searchSubPath, shareUrl } from '../routes.ts';
@@ -147,8 +148,48 @@ export interface MaterialDetail {
   tags?: string[];
   related?: { id: string; name: string }[];
   models?: { fetched: string; total: number; items: ModelLine[] };
+  /** MCP 서버 연결 정보 (원격 주소·패키지·전송 방식, 사이트 상세의 '연결 정보'와 같은 자료) */
+  connection?: McpConnection;
+  /** API 정보 (기본 주소·환경 변수 이름·OpenAPI 명세·무료 한도 원문 등, 사이트 상세의 API 칸과 같은 자료) */
+  api?: ApiFacts;
+  /** 폰트 정보 (굵기·가변 축·글자 묶음) */
+  font?: FontFacts;
   fetched_at?: string;
   page_url: string;
+}
+
+export interface McpConnection {
+  transports?: string[];
+  remote_urls?: string[];
+  packages?: string[];
+  registry_name?: string;
+  requires_key?: true;
+}
+
+export interface ApiFacts {
+  base_url?: string;
+  auth?: string;
+  env_vars?: string[];
+  key_server_side?: true;
+  formats?: string[];
+  https?: boolean;
+  cors?: 'yes' | 'no' | 'unknown';
+  openapi_url?: string;
+  sdk?: string;
+  /** 출처 가격 쪽의 무료 한도 원문 (제3자 글) */
+  free_tier?: { quote: string; checked_at?: string };
+  pricing_url?: string;
+  provider?: string;
+  category?: string;
+}
+
+export interface FontFacts {
+  weights?: number[];
+  variable_axes?: string[];
+  italic?: true;
+  subsets?: string[];
+  korean: boolean;
+  designers?: string[];
 }
 
 export interface DetailsResult {
@@ -206,6 +247,8 @@ export interface CartLineOut {
   install?: string;
   requires?: 'api_key' | 'oauth';
   license?: string;
+  /** MCP 서버의 첫 원격 주소 */
+  mcp_remote_url?: string;
   missing?: true;
   page_url: string;
 }
@@ -565,11 +608,88 @@ export async function searchMaterials(ctx: ToolContext, args: SearchArgs): Promi
 // ── 2. 자세히 ────────────────────────────────────────────────────────
 
 /** 미리 보기 칸 가운데 글·숫자·참거짓인 짧은 사실만 (인증·HTTPS·CORS·전송 방식·형식 같은 것). 그림 주소는 뺀다 */
+/** 출처가 준 주소: http·https 꼴이고 숨은 글자가 없을 때만 (있으면 버린다) */
+function safeUrl(raw: unknown): string {
+  const u = webUrl(raw);
+  return u !== '' && line(u, 500) === u ? u : '';
+}
+
+const lines = (xs: readonly string[], max: number): string[] => xs.map((x) => line(x, max)).filter((x) => x !== '');
+
+/** 종류별 칸이 따로 옮기는 미리 보기 열쇠 (기타 사실 칸에 두 번 싣지 않는다) */
+const TYPED_KEYS: Record<string, ReadonlySet<string>> = {
+  mcp: new Set(['transports', 'remotes', 'packages', 'registryName', 'requiresKey']),
+  api: new Set(['auth', 'https', 'cors', 'freeTierQuote', 'freeTierCheckedAt', 'pricingUrl', 'keyServerSide', 'apiBase', 'env', 'modelCount', 'models', 'openapi', 'sdk', 'formats', 'provider', 'portalCategory', 'listCategory']),
+  font: new Set(['weights', 'axes', 'italic', 'subsets', 'designers']),
+};
+
+/** MCP 서버 연결 정보 (사이트 상세와 같은 mcpInfo) */
+export function connectionOf(d: DetailRecord): McpConnection | undefined {
+  const m = mcpInfo(d);
+  if (!m) return undefined;
+  const out: McpConnection = {};
+  const transports = lines(m.transports, 30);
+  if (transports.length > 0) out.transports = transports;
+  const remotes = m.remotes.map(safeUrl).filter((u) => u !== '');
+  if (remotes.length > 0) out.remote_urls = remotes;
+  const packages = lines(m.packages, 140);
+  if (packages.length > 0) out.packages = packages;
+  if (m.registry) out.registry_name = line(m.registry, 120);
+  if (m.requiresKey) out.requires_key = true;
+  return Object.keys(out).length > 0 ? out : undefined;
+}
+
+/** API 정보 (사이트 상세와 같은 apiInfo) */
+export function apiFactsOf(d: DetailRecord): ApiFacts | undefined {
+  const a = apiInfo(d);
+  if (!a) return undefined;
+  const out: ApiFacts = {};
+  const base = safeUrl(a.apiBase);
+  if (base) out.base_url = base;
+  if (a.auth) out.auth = line(a.auth, 60);
+  const env = a.env.filter((x) => /^[A-Za-z_][A-Za-z0-9_]{0,63}$/.test(x));
+  if (env.length > 0) out.env_vars = env;
+  if (a.keyServerSide) out.key_server_side = true;
+  const formats = lines(a.formats, 20);
+  if (formats.length > 0) out.formats = formats;
+  if (a.https !== undefined) out.https = a.https;
+  if (a.cors) out.cors = a.cors;
+  const spec = safeUrl(a.openapi);
+  if (spec) out.openapi_url = spec;
+  if (a.sdk) out.sdk = line(a.sdk, 80);
+  if (a.freeQuote) {
+    const quote = line(a.freeQuote, 400);
+    if (quote) out.free_tier = { quote, ...(a.freeCheckedAt ? { checked_at: line(a.freeCheckedAt, 10) } : {}) };
+  }
+  const pricing = safeUrl(a.pricingUrl);
+  if (pricing) out.pricing_url = pricing;
+  if (a.provider) out.provider = line(a.provider, 80);
+  if (a.category) out.category = line(a.category, 40);
+  return Object.keys(out).length > 0 ? out : undefined;
+}
+
+/** 폰트 정보 (사이트 상세와 같은 fontInfo). korean = 한글 글자 묶음이 있는가 */
+export function fontFactsOf(d: DetailRecord): FontFacts | undefined {
+  const f = fontInfo(d);
+  if (!f) return undefined;
+  const subsets = lines(f.subsets, 30);
+  const out: FontFacts = { korean: subsets.includes('korean') || d.kind === 'fonts-ko' };
+  if (f.weights.length > 0) out.weights = [...f.weights].sort((x, y) => x - y);
+  const axes = f.axes.map((x) => `${line(x.tag, 8)} ${x.min}–${x.max}`).filter((x) => !x.startsWith(' '));
+  if (axes.length > 0) out.variable_axes = axes;
+  if (f.italic) out.italic = true;
+  if (subsets.length > 0) out.subsets = subsets;
+  const designers = lines(f.designers, 60);
+  if (designers.length > 0) out.designers = designers;
+  return out;
+}
+
 function previewFacts(p: DetailRecord['preview']): Record<string, string | number | boolean> | undefined {
   const out: Record<string, string | number | boolean> = {};
+  const typed = TYPED_KEYS[p.type];
   let n = 0;
   for (const [k, v] of Object.entries(p)) {
-    if (n >= LIMITS.previewFacts || k === 'type') continue;
+    if (n >= LIMITS.previewFacts || k === 'type' || typed?.has(k)) continue;
     // 그림·글꼴 파일 주소와 진열대가 쓰는 장부 칸(…Of·…Source·…CheckedAt·견본)은 뺀다
     if (/(^|_)(src|img|image|images|dark|css|file|thumb|logo|icon|url|svg|body|bodies|sample)$/i.test(k) || /(Of|Source|CheckedAt)$/.test(k)) continue;
     if (typeof v === 'string') {
@@ -636,6 +756,12 @@ export function detailOf(ctx: ToolContext, d: DetailRecord, names: Names): Mater
   }
   const facts = previewFacts(d.preview);
   if (facts) out.facts = facts;
+  const connection = connectionOf(d);
+  if (connection) out.connection = connection;
+  const api = apiFactsOf(d);
+  if (api) out.api = api;
+  const font = fontFactsOf(d);
+  if (font) out.font = font;
   const tags = d.tags.map((t) => line(t, 40)).filter((t) => t !== '').slice(0, LIMITS.tags);
   if (tags.length > 0) out.tags = tags;
   if (d.rel.length > 0) out.related = d.rel.slice(0, 6).map(([id, name]) => ({ id, name: line(name, 80) }));
@@ -823,6 +949,8 @@ export async function openCart(ctx: ToolContext, args: CartArgs): Promise<CartRe
     const auth = authOf(d);
     if (auth) out.requires = auth === 'oauth' ? 'oauth' : 'api_key';
     if (d.license) out.license = line(d.license, 60);
+    const remote = connectionOf(d)?.remote_urls?.[0];
+    if (remote) out.mcp_remote_url = remote;
     return out;
   });
   return { cart_url: shareUrl(entries, ctx.site), items, ...pageOf(entries.length, args.offset, items.length) };

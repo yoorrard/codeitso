@@ -2,12 +2,13 @@
 import { describe, expect, it } from 'vitest';
 import type { FindModelsArgs } from '../../src/lib/mcp/models.ts';
 import { compareQuery, findModels } from '../../src/lib/mcp/models.ts';
-import { renderCartLink, renderModels } from '../../src/lib/mcp/render.ts';
+import { renderCartLink, renderDetails, renderModels } from '../../src/lib/mcp/render.ts';
+import type { CatalogItem } from '../../src/lib/catalog/types.ts';
 import type { ToolContext } from '../../src/lib/mcp/tools.ts';
-import { LIMITS, ToolError, getKits, makeCartLink, searchMaterials } from '../../src/lib/mcp/tools.ts';
+import { LIMITS, ToolError, apiFactsOf, connectionOf, fontFactsOf, getKits, getMaterials, makeCartLink, searchMaterials } from '../../src/lib/mcp/tools.ts';
 import { readShareEntries } from '../../src/lib/share.ts';
 import { FILES } from '../../src/lib/routes.ts';
-import { SITE, fixtureFiles, fixtureLoader } from './mcp-fixture.ts';
+import { ITEMS, SITE, fixtureFiles, fixtureLoader } from './mcp-fixture.ts';
 
 function ctx(files = fixtureFiles()): ToolContext & { reads: string[] } {
   const load = fixtureLoader(files);
@@ -148,5 +149,32 @@ describe('요약·키트 파일 나누기 (첫 요청 CPU)', () => {
     const k = ctx();
     expect(await getKits(k, 'weather-app')).toMatchObject({ id: 'weather-app' });
     expect(k.reads).toContain(FILES.agentKits);
+  });
+});
+
+describe('자세히: 연결·API·폰트 정보 (사이트 상세와 같은 자료, D157)', () => {
+  const base = { ...(ITEMS[0] as CatalogItem), rel: [] as [string, string][] };
+  it('MCP 서버: 원격 주소(https·숨은 글자 없음만)·패키지·전송 방식·레지스트리 이름', () => {
+    const d = { ...base, kind: 'mcp', category: 'ai' as const, preview: { type: 'mcp', remotes: [{ type: 'streamable-http', url: 'https://x.example/mcp' }, { url: 'https://bad​.example' }, { url: 'http://plain.example' }], packages: [{ registryType: 'npm', identifier: '@x/server' }], transports: ['stdio'], registryName: 'io.x/server', requiresKey: true } };
+    expect(connectionOf(d)).toEqual({ transports: ['stdio'], remote_urls: ['https://x.example/mcp'], packages: ['npm: @x/server'], registry_name: 'io.x/server', requires_key: true });
+    expect(connectionOf(base)).toBeUndefined();
+  });
+
+  it('API: 기본 주소·환경 변수 이름(꼴이 맞는 것만)·OpenAPI·무료 한도 원문', () => {
+    const d = { ...base, preview: { type: 'api', apiBase: 'https://api.x.example/v1', env: ['X_API_KEY', 'bad name'], openapi: 'https://x.example/openapi.json', freeTierQuote: '1,000 calls / day free', freeTierCheckedAt: '2026-10-01', formats: ['JSON'], auth: 'apiKey', keyServerSide: true } };
+    expect(apiFactsOf(d)).toEqual({ base_url: 'https://api.x.example/v1', auth: 'apiKey', env_vars: ['X_API_KEY'], key_server_side: true, formats: ['JSON'], openapi_url: 'https://x.example/openapi.json', free_tier: { quote: '1,000 calls / day free', checked_at: '2026-10-01' } });
+  });
+
+  it('폰트: 굵기 순서대로, 가변 축, 한글 글자 묶음이 있는가', () => {
+    const d = { ...base, kind: 'fonts', category: 'design' as const, preview: { type: 'font', weights: [700, 400], axes: [{ tag: 'wght', min: 100, max: 900 }], subsets: ['latin', 'korean'], designers: ['A'] } };
+    expect(fontFactsOf(d)).toEqual({ korean: true, weights: [400, 700], variable_axes: ['wght 100–900'], subsets: ['latin', 'korean'], designers: ['A'] });
+  });
+
+  it('마크다운: 연결·API·무료 한도(제3자 글 인용)·폰트 줄, 같은 열쇠는 기타 사실에 두 번 싣지 않는다', async () => {
+    const files = fixtureFiles();
+    const r = await getMaterials(ctx(files), ['a:weather']);
+    const md = renderDetails(r);
+    expect(md).toContain('API: auth: apiKey · HTTPS yes · CORS yes');
+    expect(md).not.toMatch(/Facts:.*auth:/);
   });
 });

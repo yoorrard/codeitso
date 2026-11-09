@@ -2,7 +2,8 @@
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 import { afterEach, describe, expect, it } from 'vitest';
 import { MCP_TOOLS } from '../../src/copy/mcp.ts';
-import { MCP_BODY_MAX, RATE_PER_MINUTE, allowRequest, assetsLoader, cachedChars, clearMcpCache, handleMcp, rateKey, rateWindowCount, resetCounts, resetRateWindows } from '../../worker/mcp.ts';
+import { MCP_BODY_MAX, RATE_PER_MINUTE, allowRequest, assetsLoader, cachedChars, clearMcpCache, handleMcp, rateKey, rateWindowCount, resetCounts, resetRateWindows, stripNulls } from '../../worker/mcp.ts';
+import { mcpFront } from '../../worker/mcp-http.ts';
 import { fixtureFiles } from './mcp-fixture.ts';
 
 const ORIGIN = 'https://codeitso.example';
@@ -226,6 +227,28 @@ describe('HTTP 앞단', () => {
     // 1분이 지나면 지난 창은 지운다
     allowRequest('later', NOW + 61_000);
     expect(rateWindowCount()).toBe(1);
+  });
+
+  it('앞단: SDK 없이 답할 요청과 도구 POST를 가른다', () => {
+    expect(mcpFront(new Request(`${ORIGIN}/mcp`, { method: 'POST' }))).toBeNull();
+    expect(mcpFront(new Request(`${ORIGIN}/mcp`, { method: 'DELETE' }))?.status).toBe(405);
+    expect(mcpFront(new Request(`${ORIGIN}/mcp/x`))?.status).toBe(404);
+  });
+
+  it('2025 판 POST도 JSON 한 덩어리로 답한다 (압축되고 SSE 틀이 없다)', async () => {
+    const { env } = makeEnv();
+    const res = await handleMcp(post({ jsonrpc: '2.0', id: 1, method: 'tools/list' }, { 'MCP-Protocol-Version': '2025-11-25' }), env, () => {}, NOW);
+    expect(res.headers.get('Content-Type')).toContain('application/json');
+    expect(((await res.json()) as { result: { tools: unknown[] } }).result.tools).toHaveLength(7);
+  });
+
+  it('도구 인자의 null 칸은 지운다 (한 겹 아래 배열 안 객체까지), 도구 호출이 아니면 그대로', () => {
+    const m = { method: 'tools/call', params: { name: 'x', arguments: { a: null, b: 1, items: [{ id: 'x', model: null }] } } };
+    stripNulls(m);
+    expect(m.params.arguments).toEqual({ b: 1, items: [{ id: 'x' }] });
+    const other = { method: 'tools/list', params: { arguments: { a: null } } };
+    stripNulls(other);
+    expect(other.params.arguments).toEqual({ a: null });
   });
 
   it('다른 주소는 404', async () => {

@@ -1,10 +1,11 @@
-// 원격 MCP 서버 (D154·D156): POST /mcp, 공식 SDK(@modelcontextprotocol/server)의 무상태 Streamable HTTP.
+// 원격 MCP 서버 (D154·D156·D157): POST /mcp, 공식 SDK(@modelcontextprotocol/server)의 무상태 Streamable HTTP.
+// 2025 판 클라이언트에도 SSE 흐름 대신 JSON 한 덩어리로 답한다(압축되고 짧다). 새 판(2026-07-28)은 SDK가 원래 JSON으로 답한다.
 // 도구 일곱 개와 프롬프트 하나는 모두 읽기 전용이고, 진열대 빌드가 만든 정적 JSON(env.ASSETS)만 읽는다. 바깥 사이트에 묻지 않는다.
 // 무료 Worker 한도 안에 두려고: 본문 64KB까지, 한 isolate 안에서 같은 접속 주소의 분당 요청 수를 묶고, 읽은 JSON은 isolate 메모리에 잠깐 둔다.
 // 세는 것은 도구 이름·앱 종류뿐(src/lib/mcp/count.ts). 검색어·재료 id·장바구니 링크·IP는 적지 않는다(observability도 꺼 둔다).
-import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
+import { createMcpHandler, isLegacyRequest, McpServer, WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
-import { MCP_ERRORS, MCP_INSTRUCTIONS, MCP_PROMPT, MCP_SERVER, MCP_TOOLS } from '../src/copy/mcp.ts';
+import { MCP_ERRORS, MCP_FORMAT, MCP_INSTRUCTIONS, MCP_PROMPT, MCP_SERVER, MCP_TOOLS } from '../src/copy/mcp.ts';
 import { MODALITIES } from '../src/lib/catalog/models.ts';
 import { MODEL_ID_MAX } from '../src/lib/saved.ts';
 import { CATEGORY_ORDER, SORTS } from '../src/lib/catalog/types.ts';
@@ -17,7 +18,7 @@ import type { Loader, ToolContext } from '../src/lib/mcp/tools.ts';
 import { LIMITS, SAFE_ID, ToolError, browse, getKits, getMaterials, makeCartLink, openCart, searchMaterials } from '../src/lib/mcp/tools.ts';
 import type { FindModelsArgs } from '../src/lib/mcp/models.ts';
 import { MODEL_SORT_NAMES, findModels } from '../src/lib/mcp/models.ts';
-import { FILES, ROUTES } from '../src/lib/routes.ts';
+import { jsonRpcError, mcpFront, withCors } from './mcp-http.ts';
 
 /** 요청 본문 상한 (바이트). 도구 인자는 장바구니 링크라도 이보다 훨씬 작다 */
 export const MCP_BODY_MAX = 64 * 1024;
@@ -106,10 +107,69 @@ export function clearMcpCache(): void {
 
 const FORMATS = ['markdown', 'json'] as const;
 type Format = (typeof FORMATS)[number];
-const format = z.enum(FORMATS).default('markdown');
 const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false } as const;
+
+// 도구 인자 모양은 isolate에서 한 번만 만든다 (요청마다 서버를 새로 만들어도 스키마는 다시 만들지 않는다).
+// 고르지 않은 칸에 null을 보내는 앱이 있어 null은 앞단(stripNulls)에서 지우고, 스키마는 optional로 짧게 둔다(도구 목록 토큰)
+const t = MCP_TOOLS;
+const format = z.enum(FORMATS).default('markdown').describe(MCP_FORMAT);
 const ID = z.string().min(1).max(200).regex(SAFE_ID);
 const SUB_ID = z.string().min(1).max(40).regex(/^[a-z0-9][a-z0-9-]*$/);
+const page = (max: number, dflt: number, desc: string) => z.number().int().min(1).max(max).default(dflt).describe(desc);
+const skip = (max: number, desc: string) => z.number().int().min(0).max(max).default(0).describe(desc);
+const SCHEMA = {
+  search: z.strictObject({
+    query: z.string().min(1).max(LIMITS.query).describe(t.search.query),
+    category: z.enum(CATEGORY_ORDER).optional().describe(t.search.category),
+    subcategory: SUB_ID.optional().describe(t.search.subcategory),
+    limit: page(LIMITS.searchPage, 10, t.search.limit),
+    offset: skip(LIMITS.searchOffset, t.search.offset),
+    response_format: format,
+  }),
+  get: z.strictObject({ ids: z.array(ID).min(1).max(LIMITS.ids).describe(t.get.ids), response_format: format }),
+  browse: z.strictObject({
+    category: z.enum(CATEGORY_ORDER).optional().describe(t.browse.category),
+    subcategory: SUB_ID.optional().describe(t.browse.subcategory),
+    sort: z.enum(SORTS).default('popular').describe(t.browse.sort),
+    limit: page(LIMITS.browsePage, 15, t.browse.limit),
+    offset: skip(100_000, t.browse.offset),
+    response_format: format,
+  }),
+  kits: z.strictObject({ kit_id: z.string().min(1).max(60).regex(/^[a-z0-9-]+$/).optional().describe(t.kits.kitId), response_format: format }),
+  cart: z.strictObject({
+    share: z.string().min(3).max(LIMITS.share).describe(t.cart.share),
+    offset: skip(300, t.cart.offset),
+    limit: page(LIMITS.cartPage, LIMITS.cartPage, t.cart.limit),
+    response_format: format,
+  }),
+  models: z.strictObject({
+    query: z.string().max(80).optional().describe(t.models.query),
+    provider: z.string().regex(/^[a-z0-9][a-z0-9.-]{0,79}$/).optional().describe(t.models.provider),
+    scope: z.enum(['major', 'direct']).default('major').describe(t.models.scope),
+    inputs: z.array(z.enum(MODALITIES)).max(MODALITIES.length).default([]).describe(t.models.inputs),
+    outputs: z.array(z.enum(MODALITIES)).max(MODALITIES.length).default([]).describe(t.models.outputs),
+    reasoning: z.boolean().default(false).describe(t.models.reasoning),
+    tool_calling: z.boolean().default(false).describe(t.models.toolCalling),
+    open_weights: z.boolean().default(false).describe(t.models.openWeights),
+    max_input_price: z.number().min(0).max(10_000).optional().describe(t.models.maxInputPrice),
+    max_output_price: z.number().min(0).max(10_000).optional().describe(t.models.maxOutputPrice),
+    min_context: z.number().int().min(0).max(100_000_000).optional().describe(t.models.minContext),
+    include_deprecated: z.boolean().default(false).describe(t.models.deprecated),
+    sort: z.enum(MODEL_SORT_NAMES).default('newest').describe(t.models.sort),
+    limit: page(LIMITS.modelPage, 10, t.models.limit),
+    offset: skip(LIMITS.modelOffset, t.models.offset),
+    response_format: format,
+  }),
+  cartLink: z.strictObject({
+    items: z
+      .array(z.strictObject({ id: z.string().min(1).max(200), model: z.string().max(MODEL_ID_MAX).optional() }))
+      .min(1)
+      .max(LIMITS.cartLink)
+      .describe(t.cartLink.items),
+    response_format: format,
+  }),
+  prompt: z.object({ app: z.string().min(1).max(500).describe(MCP_PROMPT.arg) }),
+};
 
 interface TextResult {
   [key: string]: unknown;
@@ -134,225 +194,83 @@ async function guard(run: () => Promise<TextResult>): Promise<TextResult> {
 }
 
 export function createCodeitsoServer(ctx: ToolContext): McpServer {
-  const t = MCP_TOOLS;
   const server = new McpServer(
     { name: MCP_SERVER.name, title: MCP_SERVER.title, version: MCP_SERVER.version, websiteUrl: ctx.site },
     { instructions: fillText(MCP_INSTRUCTIONS, { site: ctx.site }) },
   );
+  const meta = (tool: { title: string; description: string }, description = tool.description) => ({
+    title: tool.title,
+    description,
+    annotations: { title: tool.title, ...READ_ONLY },
+  });
 
-  server.registerTool(
-    t.search.name,
-    {
-      title: t.search.title,
-      description: t.search.description,
-      inputSchema: z.strictObject({
-        query: z.string().min(1).max(LIMITS.query).describe(t.search.query),
-        category: z.enum(CATEGORY_ORDER).nullish().describe(t.search.category),
-        subcategory: SUB_ID.nullish().describe(t.search.subcategory),
-        limit: z.number().int().min(1).max(LIMITS.searchPage).default(10).describe(t.search.limit),
-        offset: z.number().int().min(0).max(LIMITS.searchOffset).default(0).describe(t.search.offset),
-        response_format: format.describe(t.search.format),
-      }),
-      annotations: { title: t.search.title, ...READ_ONLY },
-    },
-    async (a) =>
-      guard(async () => {
-        const args = { query: a.query, limit: a.limit, offset: a.offset, ...(a.category ? { category: a.category } : {}), ...(a.subcategory ? { subcategory: a.subcategory } : {}) };
-        return reply(await searchMaterials(ctx, args), a.response_format, renderSearch);
-      }),
-  );
-
-  server.registerTool(
-    t.get.name,
-    {
-      title: t.get.title,
-      description: t.get.description,
-      inputSchema: z.strictObject({
-        ids: z.array(ID).min(1).max(LIMITS.ids).describe(t.get.ids),
-        response_format: format.describe(t.get.format),
-      }),
-      annotations: { title: t.get.title, ...READ_ONLY },
-    },
-    async (a) => guard(async () => reply(await getMaterials(ctx, a.ids), a.response_format, renderDetails)),
-  );
-
-  server.registerTool(
-    t.browse.name,
-    {
-      title: t.browse.title,
-      description: t.browse.description,
-      inputSchema: z.strictObject({
-        category: z.enum(CATEGORY_ORDER).nullish().describe(t.browse.category),
-        subcategory: SUB_ID.nullish().describe(t.browse.subcategory),
-        sort: z.enum(SORTS).default('popular').describe(t.browse.sort),
-        limit: z.number().int().min(1).max(LIMITS.browsePage).default(15).describe(t.browse.limit),
-        offset: z.number().int().min(0).max(100_000).default(0).describe(t.browse.offset),
-        response_format: format.describe(t.browse.format),
-      }),
-      annotations: { title: t.browse.title, ...READ_ONLY },
-    },
-    async (a) =>
-      guard(async () => {
-        const r = await browse(ctx, { sort: a.sort, limit: a.limit, offset: a.offset, ...(a.category ? { category: a.category } : {}), ...(a.subcategory ? { subcategory: a.subcategory } : {}) });
-        if ('categories' in r) return reply(r, a.response_format, renderOverview);
-        if ('subcategories' in r) return reply(r, a.response_format, renderCategory);
-        return reply(r, a.response_format, renderSubList);
-      }),
-  );
-
-  server.registerTool(
-    t.kits.name,
-    {
-      title: t.kits.title,
-      description: t.kits.description,
-      inputSchema: z.strictObject({
-        kit_id: z.string().min(1).max(60).regex(/^[a-z0-9-]+$/).nullish().describe(t.kits.kitId),
-        response_format: format.describe(t.kits.format),
-      }),
-      annotations: { title: t.kits.title, ...READ_ONLY },
-    },
-    async (a) =>
-      guard(async () => {
-        const r = await getKits(ctx, a.kit_id ?? undefined);
-        return 'kits' in r ? reply(r, a.response_format, renderKits) : reply(r, a.response_format, renderKit);
-      }),
-  );
-
-  server.registerTool(
-    t.cart.name,
-    {
-      title: t.cart.title,
-      description: fillText(t.cart.description, { site: ctx.site }),
-      inputSchema: z.strictObject({
-        share: z.string().min(3).max(LIMITS.share).describe(t.cart.share),
-        offset: z.number().int().min(0).max(300).default(0).describe(t.cart.offset),
-        limit: z.number().int().min(1).max(LIMITS.cartPage).default(LIMITS.cartPage).describe(t.cart.limit),
-        response_format: format.describe(t.cart.format),
-      }),
-      annotations: { title: t.cart.title, ...READ_ONLY },
-    },
-    async (a) => guard(async () => reply(await openCart(ctx, { share: a.share, offset: a.offset, limit: a.limit }), a.response_format, renderCart)),
-  );
-
-  server.registerTool(
-    t.models.name,
-    {
-      title: t.models.title,
-      description: t.models.description,
-      inputSchema: z.strictObject({
-        query: z.string().max(80).nullish().describe(t.models.query),
-        provider: z.string().regex(/^[a-z0-9][a-z0-9.-]{0,79}$/).nullish().describe(t.models.provider),
-        scope: z.enum(['major', 'direct']).default('major').describe(t.models.scope),
-        inputs: z.array(z.enum(MODALITIES)).max(MODALITIES.length).default([]).describe(t.models.inputs),
-        outputs: z.array(z.enum(MODALITIES)).max(MODALITIES.length).default([]).describe(t.models.outputs),
-        reasoning: z.boolean().default(false).describe(t.models.reasoning),
-        tool_calling: z.boolean().default(false).describe(t.models.toolCalling),
-        open_weights: z.boolean().default(false).describe(t.models.openWeights),
-        max_input_price: z.number().min(0).max(10_000).nullish().describe(t.models.maxInputPrice),
-        max_output_price: z.number().min(0).max(10_000).nullish().describe(t.models.maxOutputPrice),
-        min_context: z.number().int().min(0).max(100_000_000).nullish().describe(t.models.minContext),
-        include_deprecated: z.boolean().default(false).describe(t.models.deprecated),
-        sort: z.enum(MODEL_SORT_NAMES).default('newest').describe(t.models.sort),
-        limit: z.number().int().min(1).max(LIMITS.modelPage).default(10).describe(t.models.limit),
-        offset: z.number().int().min(0).max(LIMITS.modelOffset).default(0).describe(t.models.offset),
-        response_format: format.describe(t.models.format),
-      }),
-      annotations: { title: t.models.title, ...READ_ONLY },
-    },
-    async (a) =>
-      guard(async () => {
-        const args: FindModelsArgs = {
-          scope: a.scope,
-          inputs: a.inputs,
-          outputs: a.outputs,
-          reasoning: a.reasoning,
-          toolCalling: a.tool_calling,
-          openWeights: a.open_weights,
-          includeDeprecated: a.include_deprecated,
-          sort: a.sort,
-          limit: a.limit,
-          offset: a.offset,
-          ...(a.query ? { query: a.query } : {}),
-          ...(a.provider ? { provider: a.provider } : {}),
-          ...(a.max_input_price != null ? { maxInputPrice: a.max_input_price } : {}),
-          ...(a.max_output_price != null ? { maxOutputPrice: a.max_output_price } : {}),
-          ...(a.min_context != null ? { minContext: a.min_context } : {}),
-        };
-        return reply(await findModels(ctx, args), a.response_format, renderModels);
-      }),
-  );
-
-  server.registerTool(
-    t.cartLink.name,
-    {
-      title: t.cartLink.title,
-      description: fillText(t.cartLink.description, { site: ctx.site }),
-      inputSchema: z.strictObject({
-        items: z
-          .array(z.strictObject({ id: z.string().min(1).max(200), model: z.string().max(MODEL_ID_MAX).nullish() }))
-          .min(1)
-          .max(LIMITS.cartLink)
-          .describe(t.cartLink.items),
-        response_format: format.describe(t.cartLink.format),
-      }),
-      annotations: { title: t.cartLink.title, ...READ_ONLY },
-    },
-    async (a) =>
-      guard(async () => {
-        const items = a.items.map((it) => (it.model ? { id: it.id, model: it.model } : { id: it.id }));
-        return reply(makeCartLink(ctx, { items }), a.response_format, renderCartLink);
-      }),
-  );
-
-  server.registerPrompt(
-    MCP_PROMPT.name,
-    {
-      title: MCP_PROMPT.title,
-      description: MCP_PROMPT.description,
-      argsSchema: z.object({ app: z.string().min(1).max(500).describe(MCP_PROMPT.arg) }),
-    },
-    ({ app }) => ({
-      messages: [{ role: 'user', content: { type: 'text', text: fillText(MCP_PROMPT.text, { app: app.replace(/\s+/g, ' ').trim() }) } }],
+  server.registerTool(t.search.name, { ...meta(t.search), inputSchema: SCHEMA.search }, async (a) =>
+    guard(async () => {
+      const args = { query: a.query, limit: a.limit, offset: a.offset, ...(a.category ? { category: a.category } : {}), ...(a.subcategory ? { subcategory: a.subcategory } : {}) };
+      return reply(await searchMaterials(ctx, args), a.response_format, renderSearch);
     }),
   );
+
+  server.registerTool(t.get.name, { ...meta(t.get), inputSchema: SCHEMA.get }, async (a) => guard(async () => reply(await getMaterials(ctx, a.ids), a.response_format, renderDetails)));
+
+  server.registerTool(t.browse.name, { ...meta(t.browse), inputSchema: SCHEMA.browse }, async (a) =>
+    guard(async () => {
+      const r = await browse(ctx, { sort: a.sort, limit: a.limit, offset: a.offset, ...(a.category ? { category: a.category } : {}), ...(a.subcategory ? { subcategory: a.subcategory } : {}) });
+      if ('categories' in r) return reply(r, a.response_format, renderOverview);
+      if ('subcategories' in r) return reply(r, a.response_format, renderCategory);
+      return reply(r, a.response_format, renderSubList);
+    }),
+  );
+
+  server.registerTool(t.kits.name, { ...meta(t.kits), inputSchema: SCHEMA.kits }, async (a) =>
+    guard(async () => {
+      const r = await getKits(ctx, a.kit_id);
+      return 'kits' in r ? reply(r, a.response_format, renderKits) : reply(r, a.response_format, renderKit);
+    }),
+  );
+
+  server.registerTool(t.cart.name, { ...meta(t.cart, fillText(t.cart.description, { site: ctx.site })), inputSchema: SCHEMA.cart }, async (a) =>
+    guard(async () => reply(await openCart(ctx, { share: a.share, offset: a.offset, limit: a.limit }), a.response_format, renderCart)),
+  );
+
+  server.registerTool(t.models.name, { ...meta(t.models), inputSchema: SCHEMA.models }, async (a) =>
+    guard(async () => {
+      const args: FindModelsArgs = {
+        scope: a.scope,
+        inputs: a.inputs,
+        outputs: a.outputs,
+        reasoning: a.reasoning,
+        toolCalling: a.tool_calling,
+        openWeights: a.open_weights,
+        includeDeprecated: a.include_deprecated,
+        sort: a.sort,
+        limit: a.limit,
+        offset: a.offset,
+        ...(a.query ? { query: a.query } : {}),
+        ...(a.provider ? { provider: a.provider } : {}),
+        ...(a.max_input_price !== undefined ? { maxInputPrice: a.max_input_price } : {}),
+        ...(a.max_output_price !== undefined ? { maxOutputPrice: a.max_output_price } : {}),
+        ...(a.min_context !== undefined ? { minContext: a.min_context } : {}),
+      };
+      return reply(await findModels(ctx, args), a.response_format, renderModels);
+    }),
+  );
+
+  server.registerTool(t.cartLink.name, { ...meta(t.cartLink, fillText(t.cartLink.description, { site: ctx.site })), inputSchema: SCHEMA.cartLink }, async (a) =>
+    guard(async () => {
+      const items = a.items.map((it) => (it.model ? { id: it.id, model: it.model } : { id: it.id }));
+      return reply(makeCartLink(ctx, { items }), a.response_format, renderCartLink);
+    }),
+  );
+
+  server.registerPrompt(MCP_PROMPT.name, { title: MCP_PROMPT.title, description: MCP_PROMPT.description, argsSchema: SCHEMA.prompt }, ({ app }) => ({
+    messages: [{ role: 'user', content: { type: 'text', text: fillText(MCP_PROMPT.text, { app: app.replace(/\s+/g, ' ').trim() }) } }],
+  }));
 
   return server;
 }
 
-// ── HTTP 앞단: CORS·본문 크기·요청 수·집계 ──────────────────────────────
-
-/** 브라우저 MCP 도구가 미리 묻는 머리글. 새 판(2026-07-28)은 Mcp-Method·Mcp-Name·Mcp-Wire-Codec도 보낸다 */
-const ALLOW_HEADERS = 'Content-Type, Accept, Authorization, Mcp-Session-Id, Mcp-Protocol-Version, Mcp-Method, Mcp-Name, Mcp-Wire-Codec, Last-Event-ID';
-
-const CORS: Record<string, string> = {
-  // 응답 종류를 브라우저가 짐작하지 않게 (JSON·SSE를 다른 것으로 읽지 않는다)
-  'X-Content-Type-Options': 'nosniff',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, GET, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': ALLOW_HEADERS,
-  'Access-Control-Expose-Headers': 'Mcp-Session-Id, Mcp-Protocol-Version',
-  'Access-Control-Max-Age': '86400',
-};
-
-function withCors(res: Response, allowHeaders?: string): Response {
-  const out = new Response(res.body, res);
-  for (const [k, v] of Object.entries(CORS)) out.headers.set(k, v);
-  if (allowHeaders) out.headers.set('Access-Control-Allow-Headers', allowHeaders);
-  // 흐름 응답(SSE)은 SDK가 정한 no-cache·no-transform을 지킨다
-  if (!out.headers.has('Cache-Control')) out.headers.set('Cache-Control', 'no-store');
-  return out;
-}
-
-function jsonRpcError(status: number, code: number, message: string, id: unknown = null, extra: Record<string, string> = {}): Response {
-  const safeId = typeof id === 'string' || typeof id === 'number' ? id : null;
-  return withCors(new Response(JSON.stringify({ jsonrpc: '2.0', id: safeId, error: { code, message } }), { status, headers: { 'Content-Type': 'application/json', ...extra } }));
-}
-
-/** 미리 묻는 머리글 이름 목록을 그대로 돌려준다 (글자 꼴이 맞을 때만, 아니면 정해 둔 목록) */
-function preflightHeaders(request: Request): string {
-  const asked = request.headers.get('Access-Control-Request-Headers') ?? '';
-  return /^[A-Za-z0-9-]+(\s*,\s*[A-Za-z0-9-]+)*$/.test(asked) && asked.length <= 1_000 ? asked : ALLOW_HEADERS;
-}
+// ── HTTP 앞단: 요청 수·본문 크기·집계 (CORS·미리 묻기·브라우저 이동은 mcp-http.ts) ──────
 
 /**
  * 요청 수 열쇠: IPv6은 앞 64비트(한 집·한 회선이 뒤 64비트를 바꿔 가며 피하지 못하게), IPv4는 그대로.
@@ -447,42 +365,68 @@ export function resetCounts(): void {
   flushed = 0;
 }
 
-/** 사람이 브라우저로 /mcp를 열면 연결 안내 쪽으로 보낸다 */
-function wantsPage(request: Request): boolean {
-  const accept = request.headers.get('Accept') ?? '';
-  return request.method === 'GET' && accept.includes('text/html') && !accept.includes('text/event-stream');
-}
-
 /** 이 서버는 알림을 보내지 않는다: 바뀜 구독(subscriptions/listen)을 열면 쓸모없는 흐름이 isolate에 남는다 */
 const REFUSED_METHODS = new Set(['subscriptions/listen']);
 
 const handlers = new WeakMap<object, ReturnType<typeof createMcpHandler>>();
 
+function serverFor(env: McpEnv, origin: string): McpServer {
+  return createCodeitsoServer({ load: assetsLoader(env, origin), site: origin });
+}
+
+/** 새 판(2026-07-28) 요청: SDK의 무상태 처리기 (알림을 보내지 않으니 auto = JSON 한 덩어리) */
 function handlerFor(env: McpEnv): ReturnType<typeof createMcpHandler> {
   let h = handlers.get(env);
   if (!h) {
-    h = createMcpHandler(
-      ({ requestInfo }) => {
-        const origin = requestInfo ? new URL(requestInfo.url).origin : '';
-        return createCodeitsoServer({ load: assetsLoader(env, origin), site: origin });
-      },
-      { maxRequestBodySize: MCP_BODY_MAX, maxSubscriptions: 1 },
-    );
+    h = createMcpHandler(({ requestInfo }) => serverFor(env, requestInfo ? new URL(requestInfo.url).origin : ''), {
+      maxRequestBodySize: MCP_BODY_MAX,
+      maxSubscriptions: 1,
+      responseMode: 'json',
+    });
     handlers.set(env, h);
   }
   return h;
 }
 
+/**
+ * 2025 판 요청: SDK가 하는 무상태 처리와 같되 SSE 흐름 대신 JSON 한 덩어리로 답한다 (enableJsonResponse).
+ * 이 서버는 진행 알림을 보내지 않아 흐름이 필요 없고, JSON은 Cloudflare가 압축한다(SSE는 no-transform이라 압축하지 않는다)
+ */
+async function legacyJson(request: Request, body: unknown, env: McpEnv): Promise<Response> {
+  const server = serverFor(env, new URL(request.url).origin);
+  const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
+  await server.connect(transport);
+  try {
+    return await transport.handleRequest(request, { parsedBody: body });
+  } finally {
+    void transport.close().catch(() => {});
+    void server.close().catch(() => {});
+  }
+}
+
+/** 도구 인자의 null 칸을 지운다 (고르지 않은 칸을 null로 보내는 앱. 스키마는 optional이라 null을 받지 않는다). 한 겹 아래 배열 안 객체까지 */
+export function stripNulls(msg: Record<string, unknown>): void {
+  if (msg['method'] !== 'tools/call' && msg['method'] !== 'prompts/get') return;
+  const params = msg['params'];
+  if (typeof params !== 'object' || params === null) return;
+  const args = (params as Record<string, unknown>)['arguments'];
+  if (typeof args !== 'object' || args === null || Array.isArray(args)) return;
+  const drop = (o: Record<string, unknown>): void => {
+    for (const [k, v] of Object.entries(o)) {
+      if (v === null) delete o[k];
+      else if (Array.isArray(v)) for (const x of v) if (typeof x === 'object' && x !== null && !Array.isArray(x)) for (const [k2, v2] of Object.entries(x)) if (v2 === null) delete (x as Record<string, unknown>)[k2];
+    }
+  };
+  drop(args as Record<string, unknown>);
+}
+
 export async function handleMcp(request: Request, env: McpEnv, waitUntil: (p: Promise<unknown>) => void, now: number): Promise<Response> {
-  const url = new URL(request.url);
-  if (url.pathname !== FILES.mcp) return withCors(new Response(null, { status: 404 }));
-  if (request.method === 'OPTIONS') return withCors(new Response(null, { status: 204 }), preflightHeaders(request));
-  if (wantsPage(request)) return Response.redirect(`${url.origin}${ROUTES.connect}`, 302);
+  const quick = mcpFront(request);
+  if (quick) return quick;
 
   const who = rateKey(request.headers.get('CF-Connecting-IP') ?? 'local');
   if (!allowRequest(who, now)) return jsonRpcError(429, -32000, MCP_ERRORS.rate, null, { 'Retry-After': '60' });
 
-  if (request.method !== 'POST') return withCors(await handlerFor(env).fetch(request));
   const text = await readLimited(request, MCP_BODY_MAX);
   if (text === null) return jsonRpcError(413, -32600, 'Request body too large.');
   let body: unknown;
@@ -497,7 +441,8 @@ export async function handleMcp(request: Request, env: McpEnv, waitUntil: (p: Pr
   if (typeof msg['method'] === 'string' && REFUSED_METHODS.has(msg['method'])) {
     return jsonRpcError(200, -32601, `Method not supported by this server: ${msg['method']}`, msg['id']);
   }
-  const res = withCors(await handlerFor(env).fetch(request, { parsedBody: body }));
+  stripNulls(msg);
+  const res = withCors((await isLegacyRequest(request, body)) ? await legacyJson(request, body, env) : await handlerFor(env).fetch(request, { parsedBody: body }));
   // 처리가 성공한 단건 요청만 센다 (SDK가 거절한 요청·알림은 세지 않는다)
   const isJson = (request.headers.get('Content-Type') ?? '').includes('application/json');
   if (res.ok && isJson && addCounts(body, now)) {

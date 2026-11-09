@@ -6,7 +6,7 @@
 export const MCP_SERVER = {
   name: 'codeitso',
   title: '코드잇소',
-  version: '1.1.0',
+  version: '1.2.0',
   websiteLabel: 'codeitso website',
 } as const;
 
@@ -18,88 +18,82 @@ export const MCP_INSTRUCTIONS = [
   'Website (Korean): {{site}}',
 ].join('\n\n');
 
-const FORMAT = "Output format: 'markdown' (default, compact) or 'json' (structured).";
+/** 모든 도구의 response_format 설명 (짧게: 도구 목록은 대화마다 모델이 읽는다) */
+export const MCP_FORMAT = "'json' for structured output; default compact markdown.";
 
 export const MCP_TOOLS = {
   search: {
     name: 'codeitso_search',
     title: '코드잇소 재료 검색',
     description:
-      "Search the codeitso catalog of public app-building materials (fonts, colors, icons, UI kits, MCP servers, agent skills, public APIs incl. Korean public data, open-source libraries, templates, datasets) by keyword in Korean or English, e.g. '급식 API', 'chart library', 'Korean font'. Returns ranked materials with id, one-line summary, license and popularity, plus matching subcategories. Whole categories are listed by codeitso_browse; install commands and full details come from codeitso_get_materials.",
-    query: 'Keywords in Korean or English (1-200 characters).',
+      "Search codeitso's catalog of public app-building materials (fonts, colors, icons, UI kits, MCP servers, agent skills, public APIs incl. Korean public data, open-source libraries, templates, datasets) by keywords in Korean or English, e.g. '급식 API', 'chart library'. Returns ranked materials with id, one-line summary, license, popularity and key facts, plus matching subcategories. Install commands and full details: codeitso_get_materials.",
+    query: 'Keywords in Korean or English.',
     category: 'Only this top-level category.',
-    subcategory: 'Only this subcategory id (see codeitso_browse), e.g. fonts-ko, icons, mcp, kr-public.',
-    limit: 'Results per page (1-20).',
-    offset: 'Results to skip, for the next page (0-200).',
-    format: FORMAT,
+    subcategory: 'Only this subcategory id from codeitso_browse, e.g. fonts-ko, icons, mcp, kr-public.',
+    limit: 'Results per page.',
+    offset: 'Results to skip (next page).',
   },
   get: {
     name: 'codeitso_get_materials',
     title: '코드잇소 재료 자세히',
     description:
-      'Get full details for 1-5 materials by id (ids come from codeitso_search, codeitso_browse, codeitso_get_kits or codeitso_open_cart): official URL, license, source description, install command and code snippet given by the source, required auth (API key or OAuth), popularity, related materials, and for AI API providers the current models with prices per 1M tokens.',
-    ids: 'Material ids such as "google-fonts:roboto" (1-5).',
-    format: FORMAT,
+      'Full details for 1-5 materials by id: official URL, license, source description, install command and snippet from the source, required auth, popularity, related materials, plus how to connect an MCP server (remote URLs, packages), API facts (base URL, env var names, OpenAPI spec, free tier) and font facts (weights, Korean subset). AI API providers include current models with prices per 1M tokens.',
+    ids: 'Material ids, e.g. "google-fonts:roboto".',
   },
   browse: {
     name: 'codeitso_browse',
     title: '코드잇소 진열대 둘러보기',
     description:
-      'Browse the catalog tree. With no arguments: the 6 categories and their subcategories with item counts. With category: its subcategories and what each holds. With subcategory: its materials sorted by popularity (default), name or most recent update, paginated.',
+      'Browse the catalog tree: no arguments lists the 6 categories and subcategories with counts; category lists its subcategories; subcategory lists its materials by popularity (default), name or recent update.',
     category: 'Top-level category id.',
-    subcategory: 'Subcategory id to list materials of (category is optional).',
-    sort: "Order of materials: 'popular', 'name' or 'recent'.",
-    limit: 'Materials per page (1-30).',
-    offset: 'Materials to skip, for the next page.',
-    format: FORMAT,
+    subcategory: 'Subcategory id to list.',
+    sort: 'Order of materials.',
+    limit: 'Materials per page.',
+    offset: 'Materials to skip (next page).',
   },
   kits: {
     name: 'codeitso_get_kits',
     title: '코드잇소 스타터 키트',
     description:
-      "List codeitso starter kits (curated sets of materials for app types such as school info apps, games, admin and office tools) or, with kit_id, get one kit's materials and its suggested build outline.",
+      "List codeitso starter kits (curated material sets for app types such as school info apps, games, office tools) or, with kit_id, one kit's materials and suggested build outline.",
     kitId: 'Kit id from the kit list.',
-    format: FORMAT,
   },
   cart: {
     name: 'codeitso_open_cart',
     title: '코드잇소 장바구니 불러오기',
     description:
-      'Read a codeitso cart share link that a person made on the website ({{site}}/cart#s=…) and return its materials with the chosen AI model, official URL, install command and required auth. Only the part after # is read; no other site is contacted.',
-    share: 'The share link, or just its fragment starting with s=.',
-    offset: 'Materials to skip, for the next page.',
-    limit: 'Materials per page (1-5).',
-    format: FORMAT,
+      'Read a codeitso cart share link a person made on the website ({{site}}/cart#s=…): its materials with chosen AI model, official URL, install command, MCP remote URL and required auth. Only the part after # is read.',
+    share: 'The share link, or its fragment starting with s=.',
+    offset: 'Materials to skip (next page).',
+    limit: 'Materials per page.',
   },
   models: {
     name: 'codeitso_find_models',
     title: '코드잇소 AI 모델 찾기',
     description:
-      'Find and compare AI models (LLMs) by price per 1M tokens, context window, input and output types and features, using models.dev data refreshed daily. Covers major model makers by default (OpenAI, Anthropic, Google, xAI, DeepSeek, Mistral, Alibaba and others), every model maker with scope=direct, or one provider (including hosting services and routers such as openrouter). Returns model ids, prices, context, release date, the provider material id for codeitso_get_materials, and a link to the comparison page on the codeitso website.',
-    query: "Words in the model name or id, e.g. 'claude sonnet', 'gpt-5 mini', 'gemini flash'.",
-    provider: "One provider id, e.g. 'anthropic', 'openai', 'google', 'openrouter'.",
-    scope: "Without provider: 'major' (major model makers, default) or 'direct' (every company that makes its own models).",
-    inputs: 'Input types every result must accept besides text: image, audio, video, pdf.',
-    outputs: 'Output types every result must produce, e.g. image or audio.',
+      'Find and compare AI models (LLMs) by price per 1M tokens, context window, input/output types and features, from models.dev data refreshed daily. Default: major model makers (OpenAI, Anthropic, Google, xAI, DeepSeek, Mistral and others); scope=direct: every model maker; provider: one provider incl. hosts and routers such as openrouter. Returns model ids, prices, context, release date, the provider material id, and a link to the comparison page on the codeitso website.',
+    query: "Words in the model name or id, e.g. 'claude sonnet', 'gemini flash'.",
+    provider: "One provider id, e.g. 'anthropic', 'openai', 'openrouter'.",
+    scope: "Without provider: 'major' or 'direct' (every company that makes its own models).",
+    inputs: 'Input types every result must accept besides text.',
+    outputs: 'Output types every result must produce, e.g. image.',
     reasoning: 'Only reasoning models.',
     toolCalling: 'Only models with tool calling.',
     openWeights: 'Only open-weight models.',
-    maxInputPrice: 'Highest input price in USD per 1M tokens.',
-    maxOutputPrice: 'Highest output price in USD per 1M tokens.',
-    minContext: 'Smallest context window in tokens, e.g. 128000.',
+    maxInputPrice: 'Max input price, USD per 1M tokens.',
+    maxOutputPrice: 'Max output price, USD per 1M tokens.',
+    minContext: 'Min context window in tokens.',
     deprecated: 'Include models whose support has ended.',
-    sort: "'newest' (default), 'input_price', 'output_price' (cheapest first) or 'context' (largest first).",
-    limit: 'Models per page (1-20).',
-    offset: 'Models to skip, for the next page (0-200).',
-    format: FORMAT,
+    sort: "'newest', cheapest first by 'input_price' or 'output_price', or largest 'context'.",
+    limit: 'Models per page.',
+    offset: 'Models to skip (next page).',
   },
   cartLink: {
     name: 'codeitso_make_cart_link',
     title: '코드잇소 장바구니 링크 만들기',
     description:
-      "Make a codeitso cart link ({{site}}/cart#s=…) from chosen material ids, optionally with a chosen AI model for AI API providers. Opening the link shows the materials in the person's cart on the website, with previews, licenses, install commands and a prompt builder. Ids are not looked up; ones that are not in the catalog show as missing on the page.",
-    items: 'Materials in order (1-30): id from other codeitso tools, and optional model id for AI API providers (from codeitso_find_models or codeitso_get_materials).',
-    format: FORMAT,
+      "Make a codeitso cart link ({{site}}/cart#s=…) from chosen material ids, optionally with a chosen AI model per AI API provider. Opening it puts the materials in the person's cart on the website, with previews, licenses, install commands and a prompt builder. Ids are not looked up; unknown ones show as missing there.",
+    items: 'Materials in order: id from other codeitso tools, optional model id for AI API providers.',
   },
 } as const;
 
@@ -167,6 +161,29 @@ export const MCP_TEXT = {
   cartLinkNote: 'Opening it puts these materials in the cart on the codeitso website, with previews, licenses and install commands.',
   skipped: 'Skipped (not material ids): {{ids}}',
   missingInCart: 'no longer in the catalog',
+  connect: 'Connect (MCP server)',
+  remote: 'remote URL',
+  packages: 'packages',
+  transports: 'transports',
+  registry: 'registry name',
+  needsKey: 'needs an API key',
+  apiHead: 'API',
+  baseUrl: 'base URL',
+  envVars: 'env vars',
+  keyServer: 'keep the key on a server',
+  formats: 'formats',
+  openapi: 'OpenAPI spec',
+  sdk: 'SDK',
+  freeTier: 'Free tier (third-party text from the provider, checked {{date}})',
+  freeTierNoDate: 'Free tier (third-party text from the provider)',
+  pricing: 'pricing',
+  provider: 'provider',
+  fontHead: 'Font',
+  weights: 'weights',
+  axes: 'variable axes',
+  subsets: 'subsets',
+  korean: 'Korean glyphs',
+  designers: 'designers',
 } as const;
 
 /** 도구 오류 (모델이 읽고 다시 부를 수 있게 다음 할 일을 함께 쓴다) */

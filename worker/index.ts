@@ -5,7 +5,7 @@
 // Env(DB·ASSETS 묶음)의 타입은 wrangler.jsonc에서 만든다: npm run typecheck:worker (worker-configuration.d.ts, 저장소에 두지 않음)
 import { BODY_MAX, VISIT_TOTAL, dayKey, kstDay, parseEvent } from '../src/lib/event-spec.ts';
 import { readLimited } from './body.ts';
-import { handleMcp } from './mcp.ts';
+import { mcpFront } from './mcp-http.ts';
 
 const UPSERT =
   'INSERT INTO daily_events (day, type, bucket, count) VALUES (?1, ?2, ?3, 1) ON CONFLICT (day, type, bucket) DO UPDATE SET count = count + 1';
@@ -72,8 +72,14 @@ export async function handleStats(request: Request, env: Pick<Env, 'DB'>, now: n
 export default {
   async fetch(request, env, ctx) {
     const path = new URL(request.url).pathname;
-    // AI 에이전트용 원격 MCP (D154, worker/mcp.ts)
-    if (path === '/mcp') return handleMcp(request, env, (p) => ctx.waitUntil(p), Date.now());
+    // AI 에이전트용 원격 MCP (D154). 미리 묻기·브라우저 이동·POST가 아닌 요청은 가벼운 앞단이 바로 답하고,
+    // 도구를 부르는 POST 때만 SDK가 든 worker/mcp.ts를 불러온다 (사이트 집계·방문 수 요청이 SDK를 읽는 비용을 내지 않게, D157)
+    if (path === '/mcp') {
+      const quick = mcpFront(request);
+      if (quick) return quick;
+      const { handleMcp } = await import('./mcp.ts');
+      return handleMcp(request, env, (p) => ctx.waitUntil(p), Date.now());
+    }
     if (path === '/api/stats') return handleStats(request, env, Date.now());
     if (path.startsWith('/api/')) return handleEvent(request, env, Date.now());
     return env.ASSETS.fetch(request);

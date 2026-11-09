@@ -931,13 +931,8 @@ export const ko = {
   connect: {
     pageTitle: 'AI에 연결 (MCP)',
     title: '내 AI에 코드잇소 연결하기',
-    lead: 'AI 앱의 연결 설정에 주소 하나만 넣으면 AI가 코드잇소에서 재료를 직접 찾아 고르고, 설치 방법까지 확인해요. 무료이고 가입이 필요 없어요.',
+    lead: 'AI 앱에 주소 하나만 넣으면 AI가 코드잇소에서 재료를 직접 찾아 고르고, 설치 방법까지 확인해요. 무료이고 가입이 필요 없어요.',
     urlLabel: 'MCP 주소',
-    /** 주소 상자 아래 (D160): 주소와 아래 앱별 안내의 관계 */
-    urlNote: [
-      '이 주소는 대화창이 아니라 AI 앱의 커넥터(MCP 서버) 설정에 넣어요. 대화창에 붙여 넣기만 하면 연결되지 않아요.',
-      '넣는 곳은 앱마다 달라서 아래에 앱별로 적어 두었어요. Cursor·VS Code는 단추 하나로, Claude Code·Codex·Gemini CLI는 명령 한 줄로 주소까지 들어가요.',
-    ],
     copyUrl: '주소 복사',
     copiedUrl: 'MCP 주소를 복사했어요.',
     canTitle: 'AI가 할 수 있는 일',

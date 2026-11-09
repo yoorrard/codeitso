@@ -40,8 +40,10 @@ interface Props {
   lead: string;
   sections: readonly LegalSection[];
   action?: LegalAction;
+  /** 개정 알림 한 줄 (알린 날·시행일·바뀐 곳). 있으면 시행일 아래에 보인다 */
+  revision?: string;
 }
-const { doc, pageTitle, title, lead, sections, action } = Astro.props;
+const { doc, pageTitle, title, lead, sections, action, revision } = Astro.props;
 
 const vars = {
   name: SITE_CONFIG.operator,
@@ -65,6 +67,7 @@ const related = [
   <article class="prose legal">
     <h1>{title}</h1>
     <p class="legal-meta">{fill(L.effective, { date: L.effectiveDate })}</p>
+    {revision && <p class="legal-meta">{revision}</p>}
     <p class="page-lead">{t(lead)}</p>
     <nav class="legal-toc" aria-labelledby="legal-toc-title">
       <p id="legal-toc-title" class="legal-toc-title">{L.toc}</p>

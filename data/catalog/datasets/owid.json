@@ -6,8 +6,8 @@
     "license": "Chart metadata from the official OWID Chart API. OWID-produced data and charts are CC BY 4.0; data from third-party providers keeps the provider terms named in each chart citation.",
     "note": "사이트맵의 모든 차트를 싣는다. snippet은 공식 Chart API의 CSV 주소다."
   },
-  "fetchedAt": "2026-11-08",
-  "count": 4295,
+  "fetchedAt": "2026-11-09",
+  "count": 4296,
   "items": [
     {
       "id": "owid:above-ground-biomass-in-forest-per-hectare",
@@ -106626,6 +106626,40 @@
         "docs": "https://docs.owid.io/projects/etl/api/chart-api/"
       },
       "fetchedAt": "2026-10-14"
+    },
+    {
+      "id": "owid:rate-confirmed-cases-vs-rate-confirmed-deaths",
+      "name": "Total confirmed COVID-19 cases vs. deaths per million",
+      "kind": "world-stats",
+      "category": "datasets",
+      "summary": "Total confirmed cases of COVID-19 per 1,000,000 people. Counts can include probable cases, where reported.",
+      "url": "https://ourworldindata.org/grapher/rate-confirmed-cases-vs-rate-confirmed-deaths",
+      "source": {
+        "name": "Our World in Data",
+        "url": "https://ourworldindata.org"
+      },
+      "metrics": {
+        "updatedAt": "2026-11-08"
+      },
+      "tags": [
+        "csv",
+        "multi-indicator",
+        "owid"
+      ],
+      "preview": {
+        "type": "dataset",
+        "chart": "https://ourworldindata.org/grapher/rate-confirmed-cases-vs-rate-confirmed-deaths",
+        "citation": "World Health Organization (2026); Population based on various sources (2024)",
+        "columns": 3,
+        "csv": "https://ourworldindata.org/grapher/rate-confirmed-cases-vs-rate-confirmed-deaths.csv",
+        "host": "owid",
+        "unit": "cases per million people"
+      },
+      "use": {
+        "snippet": "https://ourworldindata.org/grapher/rate-confirmed-cases-vs-rate-confirmed-deaths.csv?v=1&csvType=full&useColumnShortNames=true",
+        "docs": "https://docs.owid.io/projects/etl/api/chart-api/"
+      },
+      "fetchedAt": "2026-11-09"
     },
     {
       "id": "owid:rate-disease-burden-lead",

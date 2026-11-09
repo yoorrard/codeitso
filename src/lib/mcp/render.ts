@@ -88,6 +88,47 @@ function detailBlock(d: MaterialDetail): string[] {
     const f = fenceFor(d.snippet);
     out.push('', `${T.snippet}:`, f, d.snippet, f);
   }
+  if (d.connection) {
+    const c = d.connection;
+    const parts = [
+      ...(c.remote_urls ?? []).map((u) => `${T.remote} ${code(u)}`),
+      c.packages ? `${T.packages}: ${c.packages.map((x) => code(x)).join(', ')}` : '',
+      c.transports ? `${T.transports}: ${c.transports.map((x) => inline(x, 30)).join(', ')}` : '',
+      c.registry_name ? `${T.registry} ${code(c.registry_name)}` : '',
+      c.requires_key ? T.needsKey : '',
+    ].filter(Boolean);
+    out.push('', `${T.connect}: ${parts.join(' · ')}`);
+  }
+  if (d.api) {
+    const a = d.api;
+    const parts = [
+      a.base_url ? `${T.baseUrl} ${code(a.base_url)}` : '',
+      a.auth ? `auth: ${inline(a.auth, 60)}` : '',
+      a.env_vars ? `${T.envVars}: ${a.env_vars.map((x) => code(x)).join(', ')}` : '',
+      a.key_server_side ? T.keyServer : '',
+      a.formats ? `${T.formats}: ${a.formats.map((x) => inline(x, 20)).join(', ')}` : '',
+      a.https !== undefined ? `HTTPS ${a.https ? 'yes' : 'no'}` : '',
+      a.cors ? `CORS ${a.cors}` : '',
+      a.openapi_url ? `${T.openapi}: ${a.openapi_url}` : '',
+      a.sdk ? `${T.sdk}: ${inline(a.sdk, 80)}` : '',
+      a.pricing_url ? `${T.pricing}: ${a.pricing_url}` : '',
+      a.provider ? `${T.provider}: ${inline(a.provider, 80)}` : '',
+    ].filter(Boolean);
+    if (parts.length > 0) out.push('', `${T.apiHead}: ${parts.join(' · ')}`);
+    if (a.free_tier) out.push(`${a.free_tier.checked_at ? fillText(T.freeTier, { date: a.free_tier.checked_at }) : T.freeTierNoDate}:`, `> ${inline(a.free_tier.quote, 400)}`);
+  }
+  if (d.font) {
+    const f = d.font;
+    const parts = [
+      f.weights ? `${T.weights} ${f.weights.join(', ')}` : '',
+      f.variable_axes ? `${T.axes}: ${f.variable_axes.map((x) => inline(x, 30)).join(', ')}` : '',
+      `${T.korean}: ${f.korean ? 'yes' : 'no'}`,
+      f.subsets ? `${T.subsets}: ${f.subsets.map((x) => inline(x, 30)).join(', ')}` : '',
+      f.italic ? 'italic' : '',
+      f.designers ? `${T.designers}: ${f.designers.map((x) => inline(x, 60)).join(', ')}` : '',
+    ].filter(Boolean);
+    out.push('', `${T.fontHead}: ${parts.join(' · ')}`);
+  }
   if (d.facts) out.push('', `${T.facts}: ${Object.entries(d.facts).map(([k, v]) => `${inline(k, 40)}: ${inline(String(v), 120)}`).join(' · ')}`);
   if (d.tags) out.push(`${T.tags}: ${d.tags.map((t) => inline(t, 40)).join(', ')}`);
   if (d.related) out.push(`${T.related}: ${d.related.map((r) => `${inline(r.name, 80)} ${code(r.id)}`).join(' · ')}`);
@@ -166,6 +207,8 @@ export function renderCart(r: CartResult): string {
     if (m.chosen_model) meta.push(`${T.model}: ${code(m.chosen_model)}`);
     out.push(`${n}. **${inline(m.name, 120)}** ${code(m.id)} · ${meta.filter(Boolean).join(' · ')}`);
     if (m.official_url) out.push(`   ${T.official}: ${m.official_url}`);
+    // 출처의 설치 줄이 원격 주소 그대로면 한 번만 싣는다
+    if (m.mcp_remote_url && m.install !== m.mcp_remote_url) out.push(`   ${T.connect}: ${T.remote} ${code(m.mcp_remote_url)}`);
     if (m.install) out.push(`   ${T.install}: ${inlineCode(m.install)}`);
   });
   const p = pageLines(r);

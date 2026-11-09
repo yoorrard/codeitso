@@ -130,7 +130,9 @@ describe('codeitso_get_materials', () => {
     expect(d?.install).toBe('# 설치\nnpm i weather-now\nnpx weather-now init');
     expect(d?.install_one_line).toBe('npm i weather-now && npx weather-now init');
     expect(d?.docs_url).toBe('https://example.org/docs');
-    expect(d?.facts).toEqual({ auth: 'apiKey', https: true, cors: 'yes' });
+    // API 사실은 종류별 칸(api)으로 옮기고 기타 사실 칸에 두 번 싣지 않는다 (D157)
+    expect(d?.api).toEqual({ auth: 'apiKey', https: true, cors: 'yes' });
+    expect(d?.facts).toBeUndefined();
     expect(d?.related).toEqual([{ id: 'a:maps', name: 'Map Tiles' }]);
     expect(d?.metrics).toEqual({ stars: 1200, updated_at: '2026-10-01' });
   });

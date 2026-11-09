@@ -7,6 +7,8 @@
   "name": "codeitso",
   "main": "worker/index.ts",
   "compatibility_date": "2026-09-20",
+  // 묶음을 줄여(약 830KB → 400KB) 새 isolate가 읽는 코드를 줄인다. 함수 이름은 wrangler 기본(keep_names)대로 지킨다 (D157)
+  "minify": true,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

@@ -16,7 +16,7 @@ codeitso (코드잇소) is a free, read-only catalog of 150,000+ public material
 | `codeitso_get_kits` | list starter kits (school apps, games, office tools…) or open one: materials + build outline |
 | `codeitso_browse` | see the 6 categories → subcategories, or list a subcategory by popularity / name / recent update |
 | `codeitso_search` | find materials by keyword, Korean or English, optionally inside a category or subcategory |
-| `codeitso_get_materials` | details for up to 5 ids: official URL, license, install command, snippet, required API key/OAuth, AI model prices |
+| `codeitso_get_materials` | details for up to 5 ids: official URL, license, install command, snippet, required API key/OAuth; MCP servers: remote URL and packages; APIs: base URL, env var names, OpenAPI spec, free tier; fonts: weights and Korean support |
 | `codeitso_open_cart` | read a cart share link a person made on the website |
 | `codeitso_find_models` | compare current AI models by price per 1M tokens, context, input/output types, reasoning, tool calling (models.dev, daily) |
 | `codeitso_make_cart_link` | turn the chosen material ids (and AI model) into a cart link the person can open on the website |
@@ -30,6 +30,7 @@ If these tools are not available, tell the person how to connect: add the MCP UR
 3. **Search per feature.** Call `codeitso_search` with short keywords, in Korean and English when the topic is local (e.g. `급식 API`, then `school meal`). Use `category`/`subcategory` to narrow, and the "matching subcategories" in results to browse further. Several searches can run in parallel.
 4. **Compare 1–3 candidates per feature** in a table: name (id), what it does, license, popularity, needs API key?, Korean support if relevant. Prefer permissive licenses (MIT, Apache-2.0, OFL) for anything that ships; flag "license not stated".
 5. **Get details for the picks** with `codeitso_get_materials` (max 5 ids per call): official URL, docs, install command, snippet, auth. If the app calls an AI model, pick it with `codeitso_find_models` (filter by inputs such as `image`, `min_context`, `max_input_price`; sort by `input_price` for the cheapest) instead of quoting prices from memory.
+   For an MCP server the person wants to add, use its `connection` (remote URL for HTTP servers, package for local ones) to write the exact setup line for their AI app. For APIs, use `env_vars` for the variable names and keep keys server-side when `key_server_side` is set.
 6. **Confirm before installing.** Show the exact install commands and what each adds, and wait for the person's OK before running anything. Put API keys in environment variables, never in code or chat.
 7. **Hand over.** Summarize the chosen materials with links, licenses and next steps, and give a cart link from `codeitso_make_cart_link` (include the chosen AI model) so the person can see previews, licenses and install commands on the website.
 

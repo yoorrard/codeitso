@@ -38,7 +38,11 @@ test.describe('MCP 서버 (빌드한 진열대)', () => {
     };
     expect(await text('codeitso_search', { query: '급식 API', limit: 3 })).toContain('급식');
     expect(await text('codeitso_search', { query: 'weather', category: 'api', limit: 3 })).toContain('API >');
-    expect(await text('codeitso_get_materials', { ids: ['google-fonts:roboto'] })).toContain('fonts.google.com');
+    const roboto = await text('codeitso_get_materials', { ids: ['google-fonts:roboto'] });
+    expect(roboto).toContain('fonts.google.com');
+    // 폰트 정보 (굵기·한글 글자 묶음, D157)
+    expect(roboto).toContain('Font: weights 100, 200');
+    expect(roboto).toContain('Korean glyphs: no');
     expect(await text('codeitso_browse', {})).toContain('`design`');
     expect(await text('codeitso_browse', { category: 'ai', subcategory: 'mcp', limit: 3 })).toContain('sorted by popular');
     expect(await text('codeitso_get_kits', {})).toContain('starter kits');

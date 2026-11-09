@@ -22,7 +22,8 @@ env:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # Playwright 1.56.1(컨테이너의 Chromium과 맞춘 판)은 ubuntu-latest가 된 26.04에 브라우저를 깔지 못한다 (D155)
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4

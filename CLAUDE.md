@@ -16,7 +16,7 @@
 - 끝난 것 (2026-11-09): **AI 에이전트 연결**(D154) 원격 MCP `/mcp`(읽기 전용 도구 7·프롬프트 1, 공식 SDK, 진열대 정적 JSON만 읽음, AI 모델 찾기·장바구니 링크 만들기는 D156, 늦은 불러오기·JSON 응답·연결·API·폰트 정보는 D157), 연결 안내 `/connect`(머리줄 'MCP 연결' 링크, D160), Claude Code 플러그인·스킬 `plugins/codeitso`(저장소가 장터), MCP 레지스트리 `server.json`(`main`에서 판이 바뀌면 `publish-mcp.yml`이 자동 등록, D159), 처리방침 5번.
 - 정식 공개(2026-10-23, D149): 단계 `release`, `main`에 합쳐 매일 예약 실행이 돈다. 다음: 실제 사이트 점검을 이어 가며 버그를 고친다.
 - 배포 가지는 `main`(D151): 작업 브랜치에서 일하고 PR로 `main`에 합친다. 합칠 때마다 https://codeitso.yoorrard.workers.dev 에 배포되므로 검사(PR의 check, e2e까지)가 통과한 것만 합친다. 작업 브랜치 푸시는 배포되지 않는다(2026-11-09 확인, H30 끝, D158).
-- 사람 몫은 `docs/HUMAN.md`(선택만 남음: 커넥터 목록 제출 H33 답안지 `docs/submission/claude-connector.md`, 상표 H03, 로고 권리 H28, 아이폰 사파리 H29). 저장소는 공개 `yoorrard/codeitso`(MIT, D145·D150).
+- 사람 몫은 `docs/HUMAN.md`(선택만 남음: 상표 H03, 로고 권리 H28, 아이폰 사파리 H29). 저장소는 공개 `yoorrard/codeitso`(MIT, D145·D150).
 
 ## 일하는 방식 (사람 개입 최소)
 

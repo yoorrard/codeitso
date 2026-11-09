@@ -5,7 +5,7 @@ claude.ai의 '커넥터 목록(Connectors Directory)'에 코드잇소를 올리�
 아래 답을 개발자 포털 칸에 순서대로 붙여 넣으면 된다(약 10분).
 공식 안내: https://claude.com/docs/connectors/building/submission
 
-준비물: 유료 Claude 계정(Pro 이상), 아이콘 파일 `public/brand/icon-512.5c045f3a.png`(저장소에 있음, 512×512 PNG).
+준비물: 유료 Claude 계정(Pro 이상). 아이콘은 포털이 주소(URL)로 받는다: `https://codeitso.yoorrard.workers.dev/brand/icon-512.5c045f3a.png`(512×512 PNG, 사이트 로고와 같다).
 
 1. https://claude.ai/directory/manage 에 들어가 **Submit new** → **MCP connector**를 고른다.
 2. 아래 단계마다 답을 붙여 넣는다. 영어 칸은 그대로 복사한다.
@@ -45,7 +45,9 @@ All tools are read-only. No sign-in, no account, no cookies. Search words, mater
 - **Documentation URL**: `https://codeitso.yoorrard.workers.dev/connect`
 - **Privacy policy URL**: `https://codeitso.yoorrard.workers.dev/legal/privacy#mcp`
 - **Support contact**: `yyj19962004@gmail.com` (사이트 바닥글에 공개된 운영자 메일)
-- **Icon**: `public/brand/icon-512.5c045f3a.png`
+- **Icon** (주소로 넣는다): `https://codeitso.yoorrard.workers.dev/brand/icon-512.5c045f3a.png`
+  - 로고를 다시 만들면(`npm run logo`) 파일 이름의 해시가 바뀐다. 그때는 포털의 아이콘 주소도 새 주소로 고친다.
+  - 등록한 뒤에도 포털의 목록 편집에서 아이콘·설명·링크를 고칠 수 있다(고친 것은 검토 뒤 반영).
 - **URL slug**: `codeitso` (한 번 정하면 바꿀 수 없다)
 
 ## 4. Use cases

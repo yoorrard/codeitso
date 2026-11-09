@@ -1,5 +1,5 @@
 // AI 에이전트 연결 (D154): ① 공식 MCP 클라이언트로 빌드한 진짜 진열대(dist/)를 Worker 처리기에 물려 도구를 모두 불러 본다.
-// ② /connect 쪽: MCP 주소·복사·앱별 설정·한 번에 설치 링크·처리방침 항목, 장바구니의 연결 안내, 바닥글 링크.
+// ② /connect 쪽: MCP 주소·복사·주소를 넣는 곳 안내·앱별 설정·한 번에 설치 링크·처리방침 항목, 장바구니의 연결 안내, 바닥글·메뉴·머리줄 링크(D160).
 import { readFile } from 'node:fs/promises';
 import { Client, StreamableHTTPClientTransport } from '@modelcontextprotocol/client';
 import { expect, test } from '@playwright/test';
@@ -84,5 +84,26 @@ test.describe('AI에 연결 쪽', () => {
   test('바닥글과 메뉴에서 연결 쪽으로 간다', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('.site-footer').getByRole('link', { name: ko.footer.connect })).toHaveAttribute('href', /\/connect$/);
+  });
+
+  test('머리줄 MCP 연결 (D160): 휴대폰은 메뉴 아래, 600~1023px은 짧은 이름, 1024px 이상은 긴 이름으로 연결 쪽에 간다', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await expect(page.locator('.hd-mcp')).toBeHidden();
+    await page.locator('.catmenu > summary').click();
+    await expect(page.locator('.catmenu-help').getByRole('link', { name: ko.footer.connect })).toHaveAttribute('href', /\/connect$/);
+
+    await page.setViewportSize({ width: 768, height: 900 });
+    await page.goto('/');
+    const short = page.locator('.site-header').getByRole('link', { name: ko.layout.connectShort, exact: true });
+    await expect(short).toBeVisible();
+    await expect(short).toHaveAttribute('href', /\/connect$/);
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await page.locator('.site-header').getByRole('link', { name: ko.layout.connect, exact: true }).click();
+    await expect(page).toHaveURL(/\/connect$/);
+    await expect(page.getByRole('heading', { level: 1, name: ko.connect.title })).toBeVisible();
+    for (const t of ko.connect.urlNote) await expect(page.getByText(t)).toBeVisible();
   });
 });

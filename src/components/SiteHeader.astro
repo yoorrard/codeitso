@@ -1,6 +1,6 @@
 ---
-// 머리줄 (brief 3절): 로고 · 카테고리 메뉴 · 전체 검색창 · 이용 가이드 [?](O1, 600px 이상) · 찜(N1, 개수 배지는 src/lib/wish-buttons.ts) · 장바구니(담은 개수 배지, 누르면 오른쪽 서랍).
-// 휴대폰(<600)은 메뉴 · 로고 · 검색 아이콘 · 찜 · 장바구니, 검색창은 /search 쪽에서 연다(이용 가이드는 카테고리 메뉴 아래와 바닥글에). 위에 붙어 따라온다.
+// 머리줄 (brief 3절): 로고 · 카테고리 메뉴 · 전체 검색창 · MCP 연결(D160, 600px 이상) · 이용 가이드 [?](O1, 600px 이상) · 찜(N1, 개수 배지는 src/lib/wish-buttons.ts) · 장바구니(담은 개수 배지, 누르면 오른쪽 서랍).
+// 휴대폰(<600)은 메뉴 · 로고 · 검색 아이콘 · 찜 · 장바구니, 검색창은 /search 쪽에서 연다(MCP 연결·이용 가이드는 카테고리 메뉴 아래와 바닥글에). 위에 붙어 따라온다.
 // U (D148): 장바구니 링크도 정적 HTML이다(서랍 섬은 <dialog>만 그리고 이 링크를 붙잡는다). 두 배지는 Base.astro 머리의 작은 스크립트가
 // 저장된 개수로 첫 그림 전에 채운다: 섬이 깨어날 때 배지가 나타나며 머리줄이 밀리지 않게.
 import CartDrawer from './CartDrawer.tsx';
@@ -35,6 +35,11 @@ const { nav, query = '' } = Astro.props;
     </form>
     <a class="hd-search-link" href={ROUTES.search} aria-label={ko.layout.searchLabel}>
       <Icon name="search" size="24px" />
+    </a>
+    <a class="hd-mcp" href={ROUTES.connect}>
+      <Icon name="plugs" size="24px" />
+      <span class="hd-mcp-short">{ko.layout.connectShort}</span>
+      <span class="hd-cart-word">{ko.layout.connect}</span>
     </a>
     <button type="button" class="hd-help" data-tour-open aria-label={ko.layout.guide} title={ko.layout.guide}>
       <Icon name="help" size="24px" />

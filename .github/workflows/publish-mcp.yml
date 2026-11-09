@@ -1,0 +1,94 @@
+# MCP 레지스트리 등록 (D159): server.json의 판이 공식 MCP 레지스트리에 없으면 올린다. 같은 판이 있으면 건너뛴다.
+# GitHub 신원 확인(OIDC)으로 로그인해 비밀 값이 없다. 이름 io.github.yoorrard/…는 이 저장소 주인으로 확인된다.
+# 공식 안내: https://github.com/modelcontextprotocol/registry/blob/main/docs/modelcontextprotocol-io/github-actions.mdx
+# mcp-publisher는 판을 고정하고 Sigstore 서명을 확인한 뒤 푼다. 새 판으로 올릴 때는 MCP_PUBLISHER_VERSION을 직접 바꾼다.
+# 새 판을 등록하려면 server.json의 version을 올려 main에 합친다 (플러그인 plugin.json과 같은 판으로).
+name: publish-mcp
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - server.json
+      - .github/workflows/publish-mcp.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-mcp
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      # 레지스트리 로그인(GitHub OIDC)에만 쓴다
+      id-token: write
+    env:
+      MCP_PUBLISHER_VERSION: v1.8.8
+      REGISTRY: https://registry.modelcontextprotocol.io
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: 이미 올라간 판인지 보기
+        id: need
+        run: |
+          set -euo pipefail
+          name=$(jq -r .name server.json)
+          version=$(jq -r .version server.json)
+          enc=$(jq -rn --arg s "$name" '$s|@uri')
+          echo "url=$REGISTRY/v0/servers/$enc/versions/$version" >> "$GITHUB_OUTPUT"
+          code=$(curl -s -o /dev/null -w '%{http_code}' "$REGISTRY/v0/servers/$enc/versions/$version")
+          case "$code" in
+            200) echo "publish=false" >> "$GITHUB_OUTPUT"; echo "$name $version 판은 이미 레지스트리에 있다. 건너뛴다." ;;
+            404) echo "publish=true" >> "$GITHUB_OUTPUT"; echo "$name $version 판을 올린다." ;;
+            *) echo "::error::레지스트리가 $code로 답했다. 잠시 뒤 Actions에서 다시 돌린다."; exit 1 ;;
+          esac
+
+      - name: cosign 설치
+        if: steps.need.outputs.publish == 'true'
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+
+      - name: mcp-publisher 받고 서명 확인
+        if: steps.need.outputs.publish == 'true'
+        run: |
+          set -euo pipefail
+          archive="mcp-publisher_linux_amd64.tar.gz"
+          base_url="https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}"
+          curl --fail --location --silent --show-error --output "$archive" "$base_url/$archive"
+          curl --fail --location --silent --show-error --output "$archive.sigstore.json" "$base_url/$archive.sigstore.json"
+          cosign verify-blob \
+            --bundle "$archive.sigstore.json" \
+            --certificate-identity "https://github.com/modelcontextprotocol/registry/.github/workflows/release.yml@refs/tags/${MCP_PUBLISHER_VERSION}" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            "$archive"
+          tar xzf "$archive" mcp-publisher
+          rm -f "$archive" "$archive.sigstore.json"
+
+      - name: 레지스트리 로그인 (GitHub OIDC)
+        if: steps.need.outputs.publish == 'true'
+        run: ./mcp-publisher login github-oidc
+
+      - name: 올리기
+        if: steps.need.outputs.publish == 'true'
+        run: ./mcp-publisher publish
+
+      - name: 올라갔는지 확인
+        if: steps.need.outputs.publish == 'true'
+        env:
+          URL: ${{ steps.need.outputs.url }}
+        run: |
+          for i in 1 2 3 4 5 6; do
+            if [ "$(curl -s -o /dev/null -w '%{http_code}' "$URL")" = 200 ]; then
+              echo "레지스트리에서 보인다: $URL"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::올렸지만 레지스트리 목록에서 아직 보이지 않는다: $URL"
+          exit 1

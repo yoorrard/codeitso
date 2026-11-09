@@ -75,7 +75,7 @@ export const MCP_TOOLS = {
     name: 'codeitso_find_models',
     title: '코드잇소 AI 모델 찾기',
     description:
-      'Find and compare AI models (LLMs) by price per 1M tokens, context window, input and output types and features, using models.dev data refreshed daily. Covers major model makers by default (OpenAI, Anthropic, Google, xAI, DeepSeek, Mistral, Alibaba and others), every model maker with scope=direct, or one provider (including hosting services and routers such as openrouter). Returns model ids, prices, context, release date, the provider material id for codeitso_get_materials, and a link to the same comparison on the codeitso website.',
+      'Find and compare AI models (LLMs) by price per 1M tokens, context window, input and output types and features, using models.dev data refreshed daily. Covers major model makers by default (OpenAI, Anthropic, Google, xAI, DeepSeek, Mistral, Alibaba and others), every model maker with scope=direct, or one provider (including hosting services and routers such as openrouter). Returns model ids, prices, context, release date, the provider material id for codeitso_get_materials, and a link to the comparison page on the codeitso website.',
     query: "Words in the model name or id, e.g. 'claude sonnet', 'gpt-5 mini', 'gemini flash'.",
     provider: "One provider id, e.g. 'anthropic', 'openai', 'google', 'openrouter'.",
     scope: "Without provider: 'major' (major model makers, default) or 'direct' (every company that makes its own models).",
@@ -158,7 +158,11 @@ export const MCP_TEXT = {
   released: 'released',
   knowledge: 'knowledge',
   material: 'Provider details and API setup: codeitso_get_materials with the provider id (models-dev:…).',
-  zeroPrice: '$0 means models.dev lists no per-token charge: a free tier, a preview, or a subscription plan (plan names say so). Check the provider before relying on it.',
+  zeroPrice: 'An input price of $0 is the value models.dev lists. Check the provider pricing page before relying on it.',
+  compareOmits: 'The website link does not carry these filters: {{list}}',
+  reasoning: 'reasoning',
+  tools: 'tool calling',
+  openWeights: 'open weights',
   cartLinkHead: 'Cart link with {{n}} materials',
   cartLinkNote: 'Opening it puts these materials in the cart on the codeitso website, with previews, licenses and install commands.',
   skipped: 'Skipped (not material ids): {{ids}}',
@@ -178,7 +182,7 @@ export const MCP_ERRORS = {
   badShare: 'No materials found in that share link. Expected a link like {{site}}/cart#s=<id>,<id> (made with the cart\'s share button).',
   data: 'The catalog data could not be read right now. Try again in a minute.',
   rate: 'Too many requests from this client. Wait a minute and try again.',
-  unknownProvider: 'Unknown model provider "{{id}}". Major providers: {{major}}. Leave provider out to search all model makers.',
+  unknownProvider: 'Unknown model provider "{{id}}". Major providers: {{major}}. Leave provider out, or use scope=direct for every model maker.',
   badIds: 'No material ids given. Ids look like "google-fonts:roboto" and come from other codeitso tools.',
 } as const;
 

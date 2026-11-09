@@ -1,11 +1,12 @@
-// 원격 MCP 서버 (D154): POST /mcp, 공식 SDK(@modelcontextprotocol/server)의 무상태 Streamable HTTP.
-// 도구 다섯 개와 프롬프트 하나는 모두 읽기 전용이고, 진열대 빌드가 만든 정적 JSON(env.ASSETS)만 읽는다. 바깥 사이트에 묻지 않는다.
+// 원격 MCP 서버 (D154·D156): POST /mcp, 공식 SDK(@modelcontextprotocol/server)의 무상태 Streamable HTTP.
+// 도구 일곱 개와 프롬프트 하나는 모두 읽기 전용이고, 진열대 빌드가 만든 정적 JSON(env.ASSETS)만 읽는다. 바깥 사이트에 묻지 않는다.
 // 무료 Worker 한도 안에 두려고: 본문 64KB까지, 한 isolate 안에서 같은 접속 주소의 분당 요청 수를 묶고, 읽은 JSON은 isolate 메모리에 잠깐 둔다.
 // 세는 것은 도구 이름·앱 종류뿐(src/lib/mcp/count.ts). 검색어·재료 id·장바구니 링크·IP는 적지 않는다(observability도 꺼 둔다).
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 import { MCP_ERRORS, MCP_INSTRUCTIONS, MCP_PROMPT, MCP_SERVER, MCP_TOOLS } from '../src/copy/mcp.ts';
 import { MODALITIES } from '../src/lib/catalog/models.ts';
+import { MODEL_ID_MAX } from '../src/lib/saved.ts';
 import { CATEGORY_ORDER, SORTS } from '../src/lib/catalog/types.ts';
 import { utcDay } from '../src/lib/event-spec.ts';
 import { readLimited } from './body.ts';
@@ -288,7 +289,7 @@ export function createCodeitsoServer(ctx: ToolContext): McpServer {
       description: fillText(t.cartLink.description, { site: ctx.site }),
       inputSchema: z.strictObject({
         items: z
-          .array(z.strictObject({ id: z.string().min(1).max(200), model: z.string().max(200).nullish() }))
+          .array(z.strictObject({ id: z.string().min(1).max(200), model: z.string().max(MODEL_ID_MAX).nullish() }))
           .min(1)
           .max(LIMITS.cartLink)
           .describe(t.cartLink.items),

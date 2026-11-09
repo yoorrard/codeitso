@@ -74,8 +74,8 @@ test.describe('PC 1440', () => {
     await expect(page).toHaveURL(/\?license=MIT$/);
     await expect(page.locator('.facet-chosen')).toContainText('MIT');
     const lic = page.locator('.listing-grid .card-lic');
-    await expect(lic.first()).toHaveText('MIT');
-    for (const t of await lic.allTextContents()) expect(t).toBe('MIT');
+    // 거른 목록이 다시 그려질 때까지 기다린다 (첫 HTML은 거르기 전 목록)
+    await expect.poll(async () => (await lic.allTextContents()).every((t) => t === 'MIT')).toBe(true);
     const filtered = Number(((await page.locator('.list-total').textContent()) ?? '').replace(/[^\d]/g, '').slice(0, 3));
     expect(filtered).toBeLessThan(total);
     await page.locator('.sort-nav').getByRole('link', { name: ko.list.sorts.name }).click();
@@ -83,7 +83,7 @@ test.describe('PC 1440', () => {
     await page.reload();
     await islandsReady(page);
     await expect(side.getByRole('checkbox', { name: /^MIT/ })).toBeChecked();
-    for (const t of await page.locator('.listing-grid .card-lic').allTextContents()) expect(t).toBe('MIT');
+    await expect.poll(async () => (await lic.allTextContents()).every((t) => t === 'MIT')).toBe(true);
     const names = (await page.locator('.listing-grid .card-name').allTextContents()).map((x) => x.trim().toLowerCase());
     expect(names.slice(0, 5)).toEqual([...names.slice(0, 5)].sort());
     await page.locator('.facet-chosen').getByRole('button', { name: ko.facets.clear }).click();

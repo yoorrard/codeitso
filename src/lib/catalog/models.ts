@@ -119,7 +119,7 @@ export interface ModelsSummary {
 }
 
 /** 비교 쪽 처음 보이는 주요 회사 (자기 모델을 직접 여는 큰 회사, 이 순서로 고르기 목록 맨 위) */
-export const MAJOR_PROVIDERS = ['openai', 'anthropic', 'google', 'xai', 'deepseek', 'mistral', 'alibaba', 'moonshotai', 'zai', 'minimax', 'cohere', 'llama', 'perplexity', 'upstage'] as const;
+export const MAJOR_PROVIDERS = ['openai', 'anthropic', 'google', 'xai', 'deepseek', 'mistral', 'alibaba', 'moonshotai', 'zai', 'minimax', 'cohere', 'meta', 'perplexity', 'upstage'] as const;
 
 /** 입력 종류 (화면 이름표 순서) */
 export const MODALITIES = ['text', 'image', 'audio', 'video', 'pdf'] as const;

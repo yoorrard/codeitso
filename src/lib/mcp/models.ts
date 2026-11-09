@@ -63,8 +63,10 @@ export interface ModelsResult extends Page {
   fetched: string;
   scope: string;
   sort: ModelSortArg;
-  /** 같은 조건의 코드잇소 비교 쪽 (사이트가 받는 거르기만 싣는다) */
+  /** 코드잇소 비교 쪽 (사이트 주소가 받는 거르기만 싣는다) */
   compare_url: string;
+  /** 비교 쪽 주소에 싣지 못한 거르기 (사이트 화면에 그 칸이 없거나 값 단계가 다르다) */
+  compare_omits?: string[];
   items: ModelOut[];
 }
 
@@ -95,8 +97,8 @@ function modelOut(r: BundleRow, providerName: string): ModelOut {
   return out;
 }
 
-/** 같은 조건의 /models 주소. 사이트 주소가 받는 값(가격·컨텍스트 단계, 입력 종류, 기능)만 싣는다 */
-export function compareQuery(args: FindModelsArgs): ModelQuery {
+/** 같은 조건의 /models 주소. 사이트 주소가 받는 값(가격·컨텍스트 단계, 입력 종류, 기능)만 싣고, 싣지 못한 거르기 이름을 함께 돌려준다 */
+export function compareQuery(args: FindModelsArgs): { query: ModelQuery; omitted: string[] } {
   const sort = MODEL_SORT_ARGS[args.sort];
   const q: ModelQuery = {
     ...DEFAULT_QUERY,
@@ -110,9 +112,18 @@ export function compareQuery(args: FindModelsArgs): ModelQuery {
     sort,
     dir: defaultDir(sort),
   };
-  if (args.maxInputPrice !== undefined && (PRICE_STEPS as readonly number[]).includes(args.maxInputPrice)) q.maxIn = args.maxInputPrice;
-  if (args.minContext !== undefined && (CONTEXT_STEPS as readonly number[]).includes(args.minContext)) q.minCtx = args.minContext;
-  return q;
+  const omitted: string[] = [];
+  if (args.maxInputPrice !== undefined) {
+    if ((PRICE_STEPS as readonly number[]).includes(args.maxInputPrice)) q.maxIn = args.maxInputPrice;
+    else omitted.push(`max_input_price=${args.maxInputPrice}`);
+  }
+  if (args.minContext !== undefined) {
+    if ((CONTEXT_STEPS as readonly number[]).includes(args.minContext)) q.minCtx = args.minContext;
+    else omitted.push(`min_context=${args.minContext}`);
+  }
+  if (args.maxOutputPrice !== undefined) omitted.push(`max_output_price=${args.maxOutputPrice}`);
+  if (args.outputs.length > 0) omitted.push(`outputs=${args.outputs.join(',')}`);
+  return { query: q, omitted };
 }
 
 export async function findModels(ctx: ToolContext, args: FindModelsArgs): Promise<ModelsResult> {
@@ -121,7 +132,10 @@ export async function findModels(ctx: ToolContext, args: FindModelsArgs): Promis
   let rows: BundleRow[];
   let fetched = summary.models.fetched;
   if (args.provider !== undefined) {
-    if (!names.has(args.provider)) throw new ToolError('unknown_provider', fillText(MCP_ERRORS.unknownProvider, { id: args.provider, major: MAJOR_PROVIDERS.join(', ') }));
+    if (!names.has(args.provider)) {
+      const major = MAJOR_PROVIDERS.filter((id) => names.has(id)).join(', ');
+      throw new ToolError('unknown_provider', fillText(MCP_ERRORS.unknownProvider, { id: args.provider, major }));
+    }
     const file = await ctx.load.json(modelDataPath(args.provider));
     if (!isObj(file) || !Array.isArray(file['rows'])) throw new ToolError('data', MCP_ERRORS.data);
     const pm = file as unknown as ProviderModels;
@@ -148,6 +162,7 @@ export async function findModels(ctx: ToolContext, args: FindModelsArgs): Promis
   }).filter((r) => (args.maxOutputPrice === undefined || (r.out !== undefined && r.out <= args.maxOutputPrice)) && args.outputs.every((m) => r.mo.includes(m)));
   const sort = MODEL_SORT_ARGS[args.sort];
   const sorted = sortRows(filtered, sort, defaultDir(sort));
+  const compare = compareQuery(args);
   if (args.offset > 0 && args.offset >= sorted.length) throw new ToolError('offset', fillText(MCP_ERRORS.offsetTooLarge, { offset: String(args.offset), total: String(sorted.length) }));
   const page = sorted.slice(args.offset, args.offset + args.limit);
   return {
@@ -155,7 +170,8 @@ export async function findModels(ctx: ToolContext, args: FindModelsArgs): Promis
     fetched,
     scope: args.provider ?? args.scope,
     sort: args.sort,
-    compare_url: `${ctx.site}${modelsPath(writeModelQuery(compareQuery(args)))}`,
+    compare_url: `${ctx.site}${modelsPath(writeModelQuery(compare.query))}`,
+    ...(compare.omitted.length > 0 ? { compare_omits: compare.omitted } : {}),
     items: page.map((r) => modelOut(r, names.get(r.p) ?? r.p)),
     ...pageOf(sorted.length, args.offset, page.length, LIMITS.modelOffset),
   };

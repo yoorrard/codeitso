@@ -6,7 +6,7 @@
 //   public/catalog/search/s-<대분류>-<소분류>.json                         소분류 안 검색 (N1 D137: 인기순 자리 → 문서 번호)
 //   public/catalog/facet/<대분류>/<소분류>.json · -name.json · -recent.json  거르기 (D115: 값마다 자리 목록 + 정렬 순서)
 //   public/catalog/models/p/<제공자>.json · direct.json · hosts.json      AI 모델·요금 (D141: 상세 표·담기 창 / 비교 쪽 /models)
-//   public/catalog/agent.json                                 AI 에이전트용 요약 (D154: MCP 서버가 읽는 대분류·소분류·키트)
+//   public/catalog/agent.json · agent-kits.json               AI 에이전트용 요약 (D154·D156: MCP 서버가 읽는 대분류·소분류·모델 제공자 / 키트)
 //   .cache/catalog/site.json                                  Astro 페이지 머리말이 읽는 요약 (메뉴·홈 기획전·스타터 키트·목록 1쪽·출처)
 // Cloudflare 정적 파일은 한 판 2만 개까지라(brief 5절) 쪽마다 HTML을 만들지 않고, 파일 수를 5천 개 아래로 지킨다.
 //   --if-stale  자료·빌드 코드가 지난번과 같고 결과가 있으면 건너뛴다

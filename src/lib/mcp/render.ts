@@ -181,7 +181,7 @@ function modelLines(m: ModelOut, n: number): string[] {
   if (price.length > 0) meta.push(price.join(' / '));
   if (m.context !== undefined) meta.push(`${T.context} ${tokens(m.context)}`);
   if (m.max_output !== undefined) meta.push(`${T.maxOutput} ${tokens(m.max_output)}`);
-  const feats = [m.reasoning ? 'reasoning' : '', m.tool_calling ? 'tools' : '', m.open_weights ? 'open weights' : '', m.status ?? ''].filter(Boolean);
+  const feats = [m.reasoning ? T.reasoning : '', m.tool_calling ? T.tools : '', m.open_weights ? T.openWeights : '', m.status ?? ''].filter(Boolean);
   const second = [`${T.inputs}: ${m.inputs.map((x) => inline(x, 20)).join(', ')}`, `${T.outputs}: ${m.outputs.map((x) => inline(x, 20)).join(', ')}`];
   if (feats.length > 0) second.push(feats.join(', '));
   if (m.release) second.push(`${T.released} ${m.release}`);
@@ -195,8 +195,10 @@ export function renderModels(r: ModelsResult): string {
   r.items.forEach((m, i) => out.push(...modelLines(m, r.offset + i + 1)));
   const p = pageLines(r);
   if (p.length > 0) out.push('', ...p);
-  if (r.items.some((m) => m.input_price === 0 || m.output_price === 0)) out.push('', T.zeroPrice);
-  out.push('', `${T.compare}: ${r.compare_url}`, T.material);
+  if (r.items.some((m) => m.input_price === 0)) out.push('', T.zeroPrice);
+  out.push('', `${T.compare}: ${r.compare_url}`);
+  if (r.compare_omits) out.push(fillText(T.compareOmits, { list: r.compare_omits.join(', ') }));
+  out.push(T.material);
   return out.join('\n');
 }
 

@@ -12,6 +12,7 @@ import type { MatchOptions, QueryTerm, SearchMeta, SubDocsFile, TokenShard } fro
 import { blockOf, combineTerms, decodePostings, decodeSubDocs, matchSubs, queryTerms, shardsFor, synonymMap, termMatches, termWeight } from '../catalog/search.ts';
 import { FILES, itemDataPath, itemPath, kitPath, listDataPath, modelDataPath, searchBlockPath, searchShardPath, searchSubPath, shareUrl } from '../routes.ts';
 import { readShareEntries } from '../share.ts';
+import { MODEL_ID_MAX } from '../saved.ts';
 import { authOf, installLine } from '../use-lines.ts';
 import type { AgentCategory, AgentKits, AgentSummary } from './summary.ts';
 import { readAgentKits, readAgentSummary } from './summary.ts';
@@ -854,7 +855,7 @@ export function makeCartLink(ctx: ToolContext, args: CartLinkArgs): CartLinkResu
     if (seen.has(id)) continue;
     seen.add(id);
     const model = it.model?.trim();
-    entries.push(model && SAFE_ID.test(model) ? { id, model } : { id });
+    entries.push(model && model.length <= MODEL_ID_MAX && SAFE_ID.test(model) ? { id, model } : { id });
     if (entries.length === LIMITS.cartLink) break;
   }
   if (entries.length === 0) throw new ToolError('bad_ids', MCP_ERRORS.badIds);

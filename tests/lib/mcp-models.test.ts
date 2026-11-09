@@ -56,7 +56,11 @@ describe('codeitso_find_models', () => {
     const r = await findModels(c, { ...BASE, provider: 'openrouter' });
     expect(r.items.map((m) => [m.id, m.provider, m.material_id])).toEqual([['anthropic/claude-new', 'openrouter', 'models-dev:openrouter']]);
     expect(c.reads.some((p) => p.endsWith('/direct.json'))).toBe(false);
-    expect(await code(findModels(ctx(), { ...BASE, provider: 'nope' }))).toBe('unknown_provider');
+    const err = await findModels(ctx(), { ...BASE, provider: 'nope' }).catch((e: unknown) => e);
+    expect(err).toBeInstanceOf(ToolError);
+    // 자료에 있는 주요 회사만 권하고, 모든 회사는 scope=direct라고 알린다
+    expect((err as ToolError).message).toContain('Major providers: openai, anthropic.');
+    expect((err as ToolError).message).toContain('scope=direct');
   });
 
   it('결과 한 줄: 가격·컨텍스트·입출력·기능·출시, 제공자 재료 id, 같은 조건의 비교 쪽 주소', async () => {
@@ -80,24 +84,31 @@ describe('codeitso_find_models', () => {
     const md = renderModels(r);
     expect(md).toContain('**GPT Mini** `gpt-mini` · OpenAI `models-dev:openai` · in $0.15 / out $0.6 · context 128K');
     expect(md).toContain(`Compare on codeitso: ${r.compare_url}`);
-    expect(md).not.toContain('$0 means');
+    expect(md).not.toContain('price of $0');
+    expect(r.compare_omits).toBeUndefined();
   });
 
-  it('사이트 주소가 받지 않는 값(단계 밖 가격·컨텍스트, 출력 종류)은 비교 쪽 주소에 싣지 않는다', () => {
-    const q = compareQuery({ ...BASE, maxInputPrice: 2, minContext: 100_000, outputs: ['image'], provider: 'anthropic', query: 'claude' });
+  it('사이트 주소가 받지 않는 값(단계 밖 가격·컨텍스트, 출력 종류·가격)은 비교 쪽 주소에 싣지 않고 알린다', async () => {
+    const { query: q, omitted } = compareQuery({ ...BASE, maxInputPrice: 2, maxOutputPrice: 5, minContext: 100_000, outputs: ['image'], provider: 'anthropic', query: 'claude' });
     expect(q.maxIn).toBeUndefined();
     expect(q.minCtx).toBeUndefined();
     expect(q.scope).toEqual({ one: 'anthropic' });
     expect(q.q).toBe('claude');
+    // 싣지 못한 거르기는 이름을 돌려주고, 결과 글에 알린다
+    expect(omitted).toEqual(['max_input_price=2', 'min_context=100000', 'max_output_price=5', 'outputs=image']);
+    expect(compareQuery({ ...BASE, maxInputPrice: 3 }).omitted).toEqual([]);
+    const r = await findModels(ctx(), { ...BASE, outputs: ['image'] });
+    expect(r.compare_omits).toEqual(['outputs=image']);
+    expect(renderModels(r)).toContain('The website link does not carry these filters: outputs=image');
   });
 
-  it('0달러 모델이 보이면 그 뜻(무료 등급·미리 보기·구독 요금제)을 함께 적는다', async () => {
+  it('입력 가격 0달러 모델이 보이면 출처 값임을 알리고 확인하라고 적는다 (출력만 0인 임베딩은 아니다)', async () => {
     const files = fixtureFiles();
     const direct = structuredClone(files.get('/catalog/models/direct.json')) as { rows: { id: string; in?: number }[] };
     const tiny = direct.rows.find((r) => r.id === 'tiny-1');
     if (tiny) tiny.in = 0;
     files.set('/catalog/models/direct.json', direct);
-    expect(renderModels(await findModels(ctx(files), { ...BASE, scope: 'direct', sort: 'input_price', limit: 1 }))).toContain('$0 means');
+    expect(renderModels(await findModels(ctx(files), { ...BASE, scope: 'direct', sort: 'input_price', limit: 1 }))).toContain('price of $0 is the value models.dev lists');
   });
 
   it('맞는 모델이 없으면 안내, 끝을 넘는 offset은 오류', async () => {
@@ -110,13 +121,13 @@ describe('codeitso_find_models', () => {
 
 describe('codeitso_make_cart_link', () => {
   it('고른 재료와 모델로 사이트 장바구니 링크를 만든다 (같은 id는 한 번, 꼴이 틀린 id는 빼고 알린다)', () => {
-    const r = makeCartLink(ctx(), { items: [{ id: 'a:weather' }, { id: 'models-dev:anthropic', model: 'claude-new' }, { id: 'a:weather' }, { id: '<b>x' }, { id: 'd:font', model: 'bad model' }] });
-    expect(r.count).toBe(3);
+    const r = makeCartLink(ctx(), { items: [{ id: 'a:weather' }, { id: 'models-dev:anthropic', model: 'claude-new' }, { id: 'a:weather' }, { id: '<b>x' }, { id: 'd:font', model: 'bad model' }, { id: 'npm:y', model: 'm'.repeat(161) }] });
+    expect(r.count).toBe(4);
     expect(r.skipped).toEqual(['x']);
     expect(r.cart_url.startsWith(`${SITE}/cart#s=`)).toBe(true);
-    expect(readShareEntries(r.cart_url.slice(r.cart_url.indexOf('#') + 1))).toEqual([{ id: 'a:weather' }, { id: 'models-dev:anthropic', model: 'claude-new' }, { id: 'd:font' }]);
+    expect(readShareEntries(r.cart_url.slice(r.cart_url.indexOf('#') + 1))).toEqual([{ id: 'a:weather' }, { id: 'models-dev:anthropic', model: 'claude-new' }, { id: 'd:font' }, { id: 'npm:y' }]);
     const md = renderCartLink(r);
-    expect(md).toContain('Cart link with 3 materials');
+    expect(md).toContain('Cart link with 4 materials');
     expect(md).toContain(r.cart_url);
     expect(md).toContain('Skipped');
   });

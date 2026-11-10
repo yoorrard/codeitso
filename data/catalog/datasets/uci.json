@@ -4,10 +4,10 @@
     "name": "UCI Machine Learning Repository",
     "url": "https://archive.ics.uci.edu/",
     "license": "Dataset metadata from the public UCI ML Repository API. UCI states its donated datasets are licensed CC BY 4.0 unless noted on the dataset page.",
-    "total": 689
+    "total": 690
   },
-  "fetchedAt": "2026-10-20",
-  "count": 689,
+  "fetchedAt": "2026-11-10",
+  "count": 690,
   "items": [
     {
       "id": "uci:1-abalone",
@@ -2001,6 +2001,42 @@
         "snippet": "from ucimlrepo import fetch_ucirepo\ndataset = fetch_ucirepo(id=1276)"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "uci:1277-human-activity-recognition-using-9-axis-accelerometer",
+      "name": "Human Activity Recognition Using 9-axis Accelerometer",
+      "kind": "ml-classic",
+      "category": "datasets",
+      "summary": "Time-series human activity dataset from the study: “Application of Nine-Axis Accelerometer-Based Recognition of Daily Activities in Clinical Examination” (Physical Activity and Health, 2024). - Study Population: 30 healthy young adults (ages 19–23; 13M/17F).",
+      "url": "https://archive.ics.uci.edu/dataset/1277/human+activity+recognition+using+9-axis+accelerometer",
+      "source": {
+        "name": "UCI Machine Learning Repository",
+        "url": "https://archive.ics.uci.edu/"
+      },
+      "metrics": {
+        "updatedAt": "2026-02-27"
+      },
+      "tags": [
+        "classification",
+        "health-and-medicine",
+        "time-series",
+        "uci"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Health and Medicine",
+        "host": "uci",
+        "rows": 10,
+        "tasks": [
+          "Classification"
+        ],
+        "year": 2024
+      },
+      "use": {
+        "install": "pip install ucimlrepo",
+        "snippet": "from ucimlrepo import fetch_ucirepo\ndataset = fetch_ucirepo(id=1277)"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "uci:128-japanese-vowels",

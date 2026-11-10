@@ -6,8 +6,8 @@
     "license": "Dataset list from awesomedata/apd-core (GPL-3.0 list repository; names, links and one-line descriptions). Each dataset keeps its own terms.",
     "note": "원본 저장소가 깨진 링크로 표시한 항목은 뺀다."
   },
-  "fetchedAt": "2026-11-03",
-  "count": 1109,
+  "fetchedAt": "2026-11-10",
+  "count": 1148,
   "items": [
     {
       "id": "awesome-public-datasets:agriculture-chinese-tea-dataset",
@@ -94,6 +94,28 @@
         "host": "doi.org"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:agriculture-india-agri-export-price-index",
+      "name": "India Agri Export Price Index",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Weekly reference prices for 18 Indian agri exports (moringa, ashwagandha, turmeric, jaggery, millets, cold-pressed oils, vetiver and more). Combines UN Comtrade monthly India export unit values (USD/kg) by HS code, Agmarknet all-India mandi prices (INR/quintal) and clearly labelled estimates;…",
+      "url": "https://nidhi-bhai.github.io/india-agri-export-prices/",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "agriculture"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Agriculture",
+        "host": "nidhi-bhai.github.io"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:agriculture-india-label-index",
@@ -1468,10 +1490,10 @@
     },
     {
       "id": "awesome-public-datasets:biology-world-bird-species-ioc",
-      "name": "World Bird Species (IOC 15.2) with multilingual names and cross-database IDs",
+      "name": "World Bird Species (AviList v2026) with multilingual names and cross-database IDs",
       "kind": "open-data",
       "category": "datasets",
-      "summary": "One record for each of the 11,064 living bird species in the IOC World Bird List v15.2 (44 orders, 250 families). Taxonomy, common names in 43 languages from the IOC multilingual list, Wikidata/eBird/GBIF/iNaturalist IDs, breeding and non-breeding ranges, subspecies, AVONET morphological and…",
+      "summary": "One record for each of 11,011 bird species following the AviList v2026 global checklist (45 orders, 249 families); every species not flagged as extinct or possibly extinct is included, plus 43 flagged species kept from the earlier collection.",
       "url": "https://huggingface.co/datasets/yunfeichen/world-bird-species",
       "source": {
         "name": "awesome-public-datasets",
@@ -1485,7 +1507,7 @@
         "field": "Biology",
         "host": "huggingface.co"
       },
-      "fetchedAt": "2026-11-03"
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:chemistry-ionicliquids",
@@ -1529,6 +1551,28 @@
         "host": "data.libertyces.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:chemistry-moleculefinder-molecules-in-everyday-products",
+      "name": "MoleculeFinder: the molecules in everyday foods, drinks and products",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "915 molecules from everyday life (coffee, chili, chocolate, sweeteners, medicines, cleaning products, PFAS) and the 405 foods, drinks and consumer products whose labels or recipes list them, as ten CSV tables plus one JSON file.",
+      "url": "https://doi.org/10.5281/zenodo.23605767",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC0-1.0",
+      "tags": [
+        "chemistry"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Chemistry",
+        "host": "doi.org"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:chemistry-state-of-peptides-2026",
@@ -1807,6 +1851,28 @@
         "host": "dataplatform.knmi.nl"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:climate-weather-eu-cbam-default-values",
+      "name": "EU CBAM Default Values",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Machine-readable copy of the European Commission's CBAM default values (Implementing Regulation (EU) 2025/2621 Annex I and IV, as corrected by (EU) 2026/1740).",
+      "url": "https://github.com/vedacta/cbam-default-values",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "climate-weather"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Climate+Weather",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:climate-weather-european-climate-assessment-dataset",
@@ -2129,6 +2195,28 @@
         "host": "zenodo.org"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:climate-weather-us-severe-weather-warning-counts",
+      "name": "US Severe Weather Warning Counts by State, County and City",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Yearly counts of tornado, severe thunderstorm and flash flood warnings issued by the US National Weather Service for every state, county, DC, Puerto Rico and 3,614 cities since 2008, with tornado counts since 1950.",
+      "url": "https://github.com/kanevu93/us-severe-weather-warning-counts",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "climate-weather"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Climate+Weather",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:climate-weather-washington-post-climate-change",
@@ -2877,6 +2965,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:computernetworks-gl-mt6000-wifi-csi",
+      "name": "GL-MT6000 Wi-Fi CSI 10-minute capture (80 MHz, 256 subcarriers)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "A 10-minute raw IEEE 802.11ax channel-state-information capture from a GL.iNet GL-MT6000 (MediaTek MT7986A + MT7976) running OpenWrt and mt76. The 5 GHz HE80 capture at channel 44 contains 57,293 chain records grouped into 7,609 closed measurements, with 256 complex subcarriers across 2 Tx x 4 Rx…",
+      "url": "https://doi.org/10.5281/zenodo.23434789",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "computernetworks"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "ComputerNetworks",
+        "host": "doi.org"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:computernetworks-internet-wide-scan-data-repository",
       "name": "Internet-Wide Scan Data Repository",
       "kind": "open-data",
@@ -3134,6 +3244,28 @@
         "host": "huggingface.co"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:computernetworks-wordpress-in-europe-2026-09",
+      "name": "WordPress in Europe 2026-09 (4.1M ccTLD homepages from Common Crawl)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Per-country aggregates for 4,096,194 homepages on the country domains of 32 European countries in Common Crawl CC-MAIN-2026-39. WordPress share, hosting companies from DNS and network records, WordPress and PHP versions, WooCommerce and cookie consent plugins.",
+      "url": "https://nettingale.com/reports/",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "computernetworks"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "ComputerNetworks",
+        "host": "nettingale.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:cybersecurity-agent-index-grc-ai-agents-and-auditors",
@@ -4654,7 +4786,7 @@
       "kind": "open-data",
       "category": "datasets",
       "summary": "Economic Freedom of the World Data",
-      "url": "https://www.fraserinstitute.org/economic-freedom/dataset",
+      "url": "https://efotw.org/economic-freedom/dataset?geozone=world&page=dataset&min-year=2&max-year=0&filter=0",
       "source": {
         "name": "awesome-public-datasets",
         "url": "https://github.com/awesomedata/awesome-public-datasets"
@@ -4665,9 +4797,9 @@
       "preview": {
         "type": "dataset",
         "field": "Economics",
-        "host": "fraserinstitute.org"
+        "host": "efotw.org"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:economics-equipment-financing-rate-data",
@@ -5322,6 +5454,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:economics-metro-colo-advisory-open-data",
+      "name": "Metro Colo Advisory Open Data (US Data Center Power, Cost and Copper Landline Retirement)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "A collection of sourced US infrastructure datasets, one folder per dataset, each with CSV files, a data dictionary and a versioned Zenodo DOI. Data Center Electric Rates covers 105 utility filings and proceedings across 45 states on how data centers and other very large customers pay for power…",
+      "url": "https://github.com/metrocoloadvisory/metro-colo-data/tree/main",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "economics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Economics",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:economics-most-expensive-watches-auction-records",
       "name": "Most Expensive Watches Auction Records",
       "kind": "open-data",
@@ -5766,6 +5920,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:economics-regional-price-index",
+      "name": "Regional Price Index - Digital Subscription Prices by Country",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Local list prices of digital subscriptions, games and devices (AI, streaming, productivity, cloud, Steam, Apple hardware) observed across 18 country storefronts and four checkout channels (iOS App Store, Google Play, direct web, Steam).",
+      "url": "https://github.com/vidneat/regional-price-index-data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC-BY-4.0",
+      "tags": [
+        "economics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Economics",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:economics-restoreradar-restoration-market-data",
       "name": "RestoreRadar U.S. Emergency Restoration Provider Market Data (10-Metro Aggregates)",
       "kind": "open-data",
@@ -5921,28 +6097,6 @@
         "host": "mycoffeeexplorer.com"
       },
       "fetchedAt": "2026-11-03"
-    },
-    {
-      "id": "awesome-public-datasets:economics-spinhire-igaming-job-market",
-      "name": "SpinHire iGaming Job Market",
-      "kind": "open-data",
-      "category": "datasets",
-      "summary": "Live index of open iGaming job postings (online casino, sports betting, game studios, affiliates) with salary ranges, countries, work formats and languages, plus daily and monthly market statistics (openings by role, country and salary).",
-      "url": "https://huggingface.co/datasets/Spinhire/igaming-job-market",
-      "source": {
-        "name": "awesome-public-datasets",
-        "url": "https://github.com/awesomedata/awesome-public-datasets"
-      },
-      "license": "CC BY 4.0",
-      "tags": [
-        "economics"
-      ],
-      "preview": {
-        "type": "dataset",
-        "field": "Economics",
-        "host": "huggingface.co"
-      },
-      "fetchedAt": "2026-10-20"
     },
     {
       "id": "awesome-public-datasets:economics-startupperks-startup-benefits",
@@ -6357,6 +6511,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:economics-upwork-jobs-data",
+      "name": "Upwork Jobs Data",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Monthly aggregates of new job posts on the Upwork freelance marketplace. The October 2026 release covers 133,568 posts from 14 September to 25 October 2026 - hourly rates and fixed budgets offered by clients for 685 skills (P25, median, P75), posting volume by weekday and hour in US Eastern and…",
+      "url": "https://github.com/droopboop/upwork-jobs-data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "economics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Economics",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:economics-upwork-market-index",
       "name": "Upwork Market Index - Weekly Freelance Job Market Statistics",
       "kind": "open-data",
@@ -6399,6 +6575,28 @@
         "host": "github.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:economics-us-employer-cost-dataset-2026-2027",
+      "name": "US Employer Cost Dataset 2026-2027 (Hiring Cost Atlas)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Every official input behind the cost of a US employee on top of wages, for all 50 states, DC, 12 cities and the federal level. Covers Social Security, Medicare and FUTA (incl.",
+      "url": "https://github.com/onyx-digital-holdings/us-employer-cost-dataset",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC-BY-4.0",
+      "tags": [
+        "economics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Economics",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:economics-us-enforcement-actions-crypto-signal-fraud",
@@ -6836,6 +7034,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:education-ai-certifications-dataset",
+      "name": "AI Certifications Dataset",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "JSON records of AI certifications from technology vendors and professional bodies: price rows as the issuer shows them, exam format, length, question count, passing score, validity, renewal, eligibility, languages and status, each with the issuer's source URLs and a last-checked date.",
+      "url": "https://github.com/jakeboland/ai-certifications-dataset",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "education"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Education",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:education-backpr-us-youth-program-data",
       "name": "BackPR Open Data for US Youth Programs",
       "kind": "open-data",
@@ -7078,6 +7298,28 @@
         "host": "makedatacount.org"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:education-melolingua-cefr-graded-multilingual-stories",
+      "name": "MeloLingua CEFR-Graded Multilingual Stories",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "118 A1-B2 graded reading stories in German, Spanish, French, Italian, Korean and Russian with sentence-aligned English translations, contextual vocabulary, multiple-choice comprehension questions and CEFR level labels.",
+      "url": "https://github.com/MeloLingua/melolingua-language-stories-dataset",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC-BY-NC-4.0",
+      "tags": [
+        "education"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Education",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:education-new-york-state-education-department",
@@ -7531,6 +7773,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:energy-pakistan-fuel-prices",
+      "name": "Pakistan Fuel Prices",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Pakistan's notified petrol, diesel and kerosene prices since 2006, and OGRA's daily per-litre price build-up since July 2026, each figure traced to an archived source document. CSV, JSON and a keyless API.",
+      "url": "https://eklitre.pk/data/",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "energy"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Energy",
+        "host": "eklitre.pk"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:energy-pakistanfuelprices",
       "name": "Pakistan Fuel Prices",
       "kind": "open-data",
@@ -7636,6 +7900,27 @@
         "host": "github.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:energy-smrmap-small-modular-reactor-projects",
+      "name": "Small Modular Reactor Projects (SMRMap)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Source-linked small modular reactor project, design, organization and programme records in CSV and JSON, with recorded regulatory actions, schedule revisions and dated events. Published records preserve evidence and date precision; announced projects are distinct from operating reactors.",
+      "url": "https://smrmap.com/downloads.html",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "tags": [
+        "energy"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Energy",
+        "host": "smrmap.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:energy-synd",
@@ -7787,6 +8072,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:entertainment-anime-filler-episodes",
+      "name": "Anime Filler Episodes: 13 Long Anime",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Every episode of 13 long-running anime (One Piece, Naruto, Naruto Shippuden, Bleach, Dragon Ball, Dragon Ball Z, Fairy Tail, Black Clover, Boruto, My Hero Academia, Inuyasha, Hunter x Hunter 2011 and Jujutsu Kaisen), 4,076 episodes in all, each labelled filler, mixed, anime canon or canon.",
+      "url": "https://huggingface.co/datasets/FillerLists/anime-filler-episodes",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY-SA 4.0",
+      "tags": [
+        "entertainment"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Entertainment",
+        "host": "huggingface.co"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:entertainment-antics-party-data",
       "name": "Antics Party Data: How Groups Play Party Games",
       "kind": "open-data",
@@ -7828,6 +8135,28 @@
         "host": "github.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:entertainment-boltshorts-mobile-games-data",
+      "name": "Boltshorts Mobile Games Data (App Store and Google Play)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Store facts for about 8,000 iPhone and Android games, every game in the US App Store top charts (free, paid and top grossing, overall and per game genre) plus other games with 1,000+ US App Store ratings from the same studios and the games on Boltshorts lists.",
+      "url": "https://github.com/phescobbar/mobile-games-data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "entertainment"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Entertainment",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:entertainment-deckaura-tarot-card-meanings",
@@ -7894,6 +8223,28 @@
         "host": "doi.org"
       },
       "fetchedAt": "2026-11-03"
+    },
+    {
+      "id": "awesome-public-datasets:entertainment-my-kids-tv-age-graded-catalog",
+      "name": "My Kids TV: Age-Graded Children's Film & Series Catalog (Ages 4-6, 7-10, 11-13)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Curated, human-verified dataset of 800 age-graded film and TV series recommendations across three developmental age bands (4-6, 7-10, and 11-13). Filtered from 3,072 TMDB candidates with explicit rubric scores for age_fit (0-1), lasting value (0-3), must_watch (0-1), fun (0-3), composite ranking…",
+      "url": "https://github.com/suboss87/my-kids-tv/tree/main/data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "entertainment"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Entertainment",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:entertainment-ostdb-video-game-soundtracks",
@@ -8381,6 +8732,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:finance-central-bank-exchange-rates",
+      "name": "Central Bank Exchange Rates - Daily official rates from 121 central banks and tax authorities",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Daily official exchange rates exactly as published by 121 central banks and 3 tax authorities (ECB euro reference rates, Federal Reserve H.10, Bank of England, RBI, PBoC central parity, HMRC monthly rates, US Treasury quarterly rates and more), one CSV and JSON file per institution with the full…",
+      "url": "https://github.com/AllRates-Today/central-bank-exchange-rates",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC-BY-NC-4.0",
+      "tags": [
+        "finance"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Finance",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:finance-chaincosts-exchange-fees",
       "name": "ChainCosts Exchange Withdrawal Fees",
       "kind": "open-data",
@@ -8622,6 +8995,28 @@
         "host": "heliumtrades.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:finance-hey-research-lab-robinhood-chain-builders",
+      "name": "HEY Research Lab - Robinhood Chain Builder Records",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Daily snapshots of the public builder record of Robinhood Chain (chain id 4663): published projects, their ships (GitHub releases, weekly code activity, contract deployments, changelog entries) and change events, each record with its public source and evidence id.",
+      "url": "https://heyresearch.xyz/data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC-BY-4.0",
+      "tags": [
+        "finance"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Finance",
+        "host": "heyresearch.xyz"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:finance-hostdefi-safety-snapshot",
@@ -9425,6 +9820,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:gis-casas-es-malaga-buildings",
+      "name": "CASAS.ES open data - Buildings, dwellings and year of construction of the municipalities of Malaga (Spain)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Buildings, dwellings, population and year of construction (median and share by period) for the 103 municipalities of the province of Malaga, Spain, plus the 958 streets with the most dwellings in each municipality. Aggregated from the Spanish cadastre (Direccion General del Catastro), INE and IGN.",
+      "url": "https://github.com/casas-es/datos",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "gis"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "GIS",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:gis-castles-of-the-world",
       "name": "Castles of the World",
       "kind": "open-data",
@@ -9489,6 +9906,27 @@
         "host": "back4app.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:gis-datacenterdata-us-facility-register",
+      "name": "U.S. Data Center Facility Register (DataCenterData)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "U.S. data center facility-register records downloadable as CSV, JSON and GeoJSON, with a field dictionary, evidence labels, source links and per-field reuse terms. Records include campuses, buildings, suites and unresolved presences, not a census of unique sites.",
+      "url": "https://datacenterdata.com/data/",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "tags": [
+        "gis"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "GIS",
+        "host": "datacenterdata.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:gis-filming-locations-of-the-world",
@@ -9833,28 +10271,6 @@
         "field": "GIS",
         "host": "github.com",
         "publisher": "Postali"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "awesome-public-datasets:gis-mideafind-germany-diy-store-locations",
-      "name": "MideaFind Germany DIY Store Locations",
-      "kind": "open-data",
-      "category": "datasets",
-      "summary": "Versioned JSON dataset of 1,314 known DIY-store locations across six retail groups in Germany, derived from an OpenStreetMap Overpass snapshot dated 2 July 2026.",
-      "url": "https://mideafind.com/marktabdeckung-karte.html#datenqualitaet",
-      "source": {
-        "name": "awesome-public-datasets",
-        "url": "https://github.com/awesomedata/awesome-public-datasets"
-      },
-      "license": "Open Data Commons Open Database License 1.0",
-      "tags": [
-        "gis"
-      ],
-      "preview": {
-        "type": "dataset",
-        "field": "GIS",
-        "host": "mideafind.com"
       },
       "fetchedAt": "2026-10-20"
     },
@@ -10696,6 +11112,27 @@
         "host": "data.charitysense.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:government-cheltenham-open-data-uk",
+      "name": "Cheltenham Open Data, UK",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Local public data for Cheltenham, Gloucestershire, collected automatically from public sources, including fuel prices, crime, flood warnings, house prices, planning, schools, care homes and bus routes. Published as a static website, with the underlying JSON files in the GitHub repository.",
+      "url": "https://cheltenham-od.uk/",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "tags": [
+        "government"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Government",
+        "host": "cheltenham-od.uk"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:government-chicago",
@@ -12662,6 +13099,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:government-pass2port-cbi-rbi-programmes",
+      "name": "Pass2port Open Citizenship- and Residency-by-Investment (CBI/RBI) Programme Dataset",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Source-linked dataset of government citizenship-by-investment (CBI) and residency-by-investment (RBI) programmes. One row per programme, covering host country, programme type, status (active/closed/suspended), minimum investment in USD and local currency, the official government source URL,…",
+      "url": "https://doi.org/10.5281/zenodo.23689530",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY-SA 4.0",
+      "tags": [
+        "government"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Government",
+        "host": "doi.org"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:government-passport-visa-photo-specifications",
       "name": "Passport & Visa Photo Specifications (21 documents, 15+ countries)",
       "kind": "open-data",
@@ -12883,6 +13342,28 @@
         "host": "doi.org"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:government-project-blue-book-case-files",
+      "name": "Project Blue Book UFO Case Files (Geocoded)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "All 10,622 US Air Force Project Blue Book case files from the US National Archives (series 597821, 1947-1969), with place, state or country, year and month parsed from each folder title and 9,758 matched to coordinates via GeoNames.",
+      "url": "https://encounteratlas.com/datasets/",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "government"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Government",
+        "host": "encounteratlas.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:government-puerto-rico-government",
@@ -13417,6 +13898,27 @@
         "host": "data.gov.tw"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:government-tally-la-los-angeles",
+      "name": "Tally LA - Los Angeles Taxes, Budgets, Programs and Votes",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Free CSVs of City of Los Angeles and LA County tax rates, monthly tax receipts (Metro's four sales taxes, Measure ULA, Measure A), City and County budgets, County spending by department, public programs and grants with their stated goals and reported results, State of California payments to LA…",
+      "url": "https://huggingface.co/datasets/tallyla/tally-la-los-angeles-taxes-budgets-votes",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "tags": [
+        "government"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Government",
+        "host": "huggingface.co"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:government-tel-aviv",
@@ -15033,6 +15535,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:healthcare-morvs-organwatch-us-organ-procurement-oversight",
+      "name": "OrganWatch - US Organ Procurement Organization Oversight Data",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Dossiers for all 57 US organ procurement organizations (OPOs) built from federal records - CMS performance tiers for program years 2021 and 2023, UNOS/OPTN membership and oversight actions, HRSA notices, and 513 dated, source-cited findings. Institution-level only; no patient or donor data.",
+      "url": "https://morvs.ai/voidly/organwatch/",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "healthcare"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Healthcare",
+        "host": "morvs.ai"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:healthcare-nightingale",
       "name": "Nightingale Open Science",
       "kind": "open-data",
@@ -15680,6 +16204,28 @@
         "host": "attributes.kyb.tuebingen.mpg.de"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:imageprocessing-browser-image-encoder-target-size-benchmarks",
+      "name": "Browser Image Encoder Target-Size Benchmarks",
+      "kind": "ml-classic",
+      "category": "datasets",
+      "summary": "108 measured runs of the browser's own JPEG and WebP encoders at fixed target byte sizes from 20 KB to 1 MB, across synthetic photo, screenshot and flat-colour sources at three resolutions.",
+      "url": "https://github.com/mingyuetutu0527-glitch/exact-size-benchmarks",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "MIT",
+      "tags": [
+        "imageprocessing"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "ImageProcessing",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:imageprocessing-caddy-underwater-stereo-vision-dataset-of-hand-gestures",
@@ -16388,6 +16934,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:interdisciplinary-longze-fastener-standards-data",
+      "name": "Longze Fastener Standards Data",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Open dimensional data for 16 DIN, ISO and ASME fastener standards (872 records for bolts, screws, nuts and washers), covering nominal sizes, grades, finishes and tolerance notes in CSV and JSON. CC BY 4.0; archived on Zenodo with DOI 10.5281/zenodo.23610421.",
+      "url": "https://github.com/w1372068887-pixel/longze-fastener-data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "interdisciplinary"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "InterDisciplinary",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:interdisciplinary-placeholder",
       "name": "A Placeholder",
       "kind": "open-data",
@@ -16429,6 +16997,28 @@
         "host": "github.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:machinelearning-ai-timeline-dataset",
+      "name": "AI Timeline Dataset",
+      "kind": "ml-classic",
+      "category": "datasets",
+      "summary": "4,024 dated, source-linked real-world AI events from July 2025 to today, one row per event, covering model releases, research, policy, funding and robotics. Each row has a date, headline, category, a one-sentence summary, the primary source URL and publisher. 1,061 distinct publishers cited.",
+      "url": "https://github.com/techa-ai/ai-timeline-dataset",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "machinelearning"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "MachineLearning",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:machinelearning-ai-video-model-free-tier-observations",
@@ -17139,6 +17729,28 @@
       "fetchedAt": "2026-10-26"
     },
     {
+      "id": "awesome-public-datasets:machinelearning-what-agents-pick",
+      "name": "What Agents Pick, default tool choices of AI coding agents",
+      "kind": "ml-classic",
+      "category": "datasets",
+      "summary": "360 Claude Code runs on hint free starter repos (Next.js and FastAPI), recording which database, ORM, auth, payments, email, storage, jobs, caching, observability and deployment tools the agent installed when the prompt named none. Opus 5.5, Sonnet 5.5 and Haiku 5.5.",
+      "url": "https://github.com/nmbrthirteen/what-agents-pick-data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "machinelearning"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "MachineLearning",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:machinelearning-yambda-5b-music-interaction-dataset",
       "name": "Yambda-5B — A Large-Scale Multi-modal Dataset for Ranking And Retrieval",
       "kind": "ml-classic",
@@ -17222,6 +17834,28 @@
         "host": "github.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:museums-culturetechlens-black-cultural-knowledge-graph",
+      "name": "CultureTechLens Black Cultural Knowledge Graph",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "An open, evidence-graded knowledge graph of Black cultural history, Chicago first: people, works, places, institutions, events, and practices, every entity carrying an evidence grade and named sources.",
+      "url": "https://doi.org/10.5281/zenodo.23403147",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "museums"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Museums",
+        "host": "doi.org"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:museums-metropolitan-museum-of-art-collection-api",
@@ -18094,27 +18728,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "awesome-public-datasets:naturallanguage-usenet-postings-corpus-of-2005-2011",
-      "name": "USENET postings corpus of 2005~2011",
-      "kind": "ml-classic",
-      "category": "datasets",
-      "summary": "USENET postings corpus of 2005~2011",
-      "url": "http://www.psych.ualberta.ca/~westburylab/downloads/usenetcorpus.download.html",
-      "source": {
-        "name": "awesome-public-datasets",
-        "url": "https://github.com/awesomedata/awesome-public-datasets"
-      },
-      "tags": [
-        "naturallanguage"
-      ],
-      "preview": {
-        "type": "dataset",
-        "field": "NaturalLanguage",
-        "host": "psych.ualberta.ca"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "awesome-public-datasets:naturallanguage-webhose",
       "name": "Webhose - News/Blogs in multiple languages",
       "kind": "ml-classic",
@@ -18557,6 +19170,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:physics-agentfem-material-loading-memory",
+      "name": "AgentFEM Material Loading Memory",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "3,788 synthetic elastoplastic loading histories for path-dependent constitutive modeling. Includes multiaxial paths, cyclic loading, material-parameter variation, long-horizon tests, explicit training and evaluation roles, and 128 prospectively sealed test trajectories.",
+      "url": "https://huggingface.co/datasets/HaomingLuo/AgentFEM-Material-Loading-Memory",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "physics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Physics",
+        "host": "huggingface.co"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:physics-cern-open-data-portal",
       "name": "CERN Open Data Portal",
       "kind": "open-data",
@@ -18724,6 +19359,49 @@
         "host": "sdss.org"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:physics-solar-and-lunar-eclipses-1950-2050",
+      "name": "Solar and Lunar Eclipses 1950-2050",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "453 computed solar and lunar eclipses whose greatest-eclipse time falls in 1950-2050 UTC. CSV and JSON include peak time, apparent geocentric tropical longitude, nearest lunar node, lunar stage durations and local circumstances for 15 representative cities.",
+      "url": "https://huggingface.co/datasets/eatfreshapple/solar-lunar-eclipses-1950-2050",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "physics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Physics",
+        "host": "huggingface.co"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
+      "id": "awesome-public-datasets:physics-spaceminingdata-space-resources",
+      "name": "Space Resources Organizations and Missions (SpaceMiningData)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Source-linked records of organizations, missions, authorizations, legal frameworks and dated events concerning lunar, asteroid and Mars resources. CSV and JSON downloads include evidence levels distinguishing demonstrated work from plans and claims; lunar-site data also have a GeoJSON export.",
+      "url": "https://spaceminingdata.com/data.html",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "tags": [
+        "physics"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Physics",
+        "host": "spaceminingdata.com"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:prostatecancer-cbioportal",
@@ -20506,6 +21184,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:socialsciences-agency-ai-policies",
+      "name": "Agency AI Policies (marketing, PR and creative agencies)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "One row per AI policy that a marketing, PR, creative, web, SEO or social agency publishes about its own work: 68 policies read in full in October 2026, each coded yes/blank on eight commitments (a person reviews AI-assisted work, tells clients, a rule for client data in AI tools, work it never…",
+      "url": "https://github.com/bigpipe-agency/agency-ai-terms/tree/main/research",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "socialsciences"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "SocialSciences",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:socialsciences-authoritarian-ruling-elites",
       "name": "Authoritarian Ruling Elites Database",
       "kind": "open-data",
@@ -20701,6 +21401,33 @@
         "host": "cryptome.org"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:socialsciences-daily-prayer-times-2027",
+      "name": "Future daily prayer times for 300+ cities",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Calculated Islamic prayer times (Fajr, sunrise, Dhuhr, Shafi and Hanafi Asr, Maghrib, Isha) for every date of 2027 in 307 cities across Pakistan, the United States, the United Kingdom, Canada, Australia, India and Bangladesh, with local and UTC timestamps and daily intervals.",
+      "url": "https://huggingface.co/datasets/eatfreshapple/daily-prayer-times-2027",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "astronomy",
+        "islamic-calendar",
+        "prayer-times",
+        "religion",
+        "socialsciences",
+        "time-zones"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "SocialSciences",
+        "host": "huggingface.co"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:socialsciences-daopath-taoist-metaphysics-dataset",
@@ -21823,6 +22550,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:software-apple-device-screen-specs",
+      "name": "Apple Device Screen Specs",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Screen specs for 175 Apple devices released 2007-2026: 55 iPhone, 46 iPad, 36 Apple Watch and 7 iPod touch models, plus partial records for 29 Mac and 2 Apple Vision Pro models.",
+      "url": "https://github.com/aryansbtloe/apple-device-screen-specs",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "software"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Software",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:software-awesome-reverse-engineered",
       "name": "Awesome Reverse-Engineered - 16,844 open-source projects built by reverse engineering closed products",
       "kind": "open-data",
@@ -21931,6 +22680,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:software-lowdown-mcp-registry-daily-observations",
+      "name": "Lowdown MCP Registry daily observations (fixed sample of 10,000 remote servers, from 2026-10-06)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Daily time series of what the official Model Context Protocol (MCP) Registry declares about servers and what is observed when they are contacted. Once a day a scanner sends exactly two JSON-RPC requests, initialize and tools/list, to the Streamable HTTP remotes of a fixed sample of Registry…",
+      "url": "https://github.com/PetShopBros/lowdown-data",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "software"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Software",
+        "host": "github.com"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:software-mcp-registry-servers",
       "name": "MCP Registry servers",
       "kind": "open-data",
@@ -21996,6 +22767,28 @@
         "host": "github.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:software-protocolprobe-mcp-registry-facts",
+      "name": "ProtocolProbe MCP registry facts",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "One record per server in the official Model Context Protocol (MCP) registry, with registry listing, npm/PyPI package and GitHub repository facts, dependency advisories, version-pin status, version history and groups of servers with identical tool lists. Same records as the ProtocolProbe API.",
+      "url": "https://huggingface.co/datasets/sultan57/mcp-registry-facts",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC BY 4.0",
+      "tags": [
+        "software"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Software",
+        "host": "huggingface.co"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:software-rightaichoice-ai-tools-mortality-and-product-hunt-graveyard-2026",
@@ -22979,6 +23772,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:transportation-atlas-zbe-low-emission-zones-spain",
+      "name": "Atlas ZBE - Low Emission Zones of Spain",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Open dataset of Spain's low emission zones (121 zones in 99 municipalities). Perimeters, status, restricted vehicle labels, schedules, start dates of restrictions and fines, exceptions and the official source of each record, checked against municipal ordinances.",
+      "url": "https://github.com/marcc992/atlaszbe-datos",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "ODbL-1.0",
+      "tags": [
+        "transportation"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Transportation",
+        "host": "github.com",
+        "publisher": "Atlas ZBE"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:transportation-bike-share-systems-bss-collection",
       "name": "Bike Share Systems (BSS) collection",
       "kind": "open-data",
@@ -23042,6 +23858,29 @@
         "host": "github.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:transportation-european-train-timetable-summaries",
+      "name": "European Train Timetable Summaries",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Station-to-station summaries of the official open railway timetables (GTFS) of Switzerland, Austria, Norway, Sweden, Finland and Spain. One CSV per country with first train, last train, number of direct trains per day, fastest and median journey time, for a weekday, Saturday and Sunday.",
+      "url": "https://zenodo.org/records/23827431",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC-BY-4.0",
+      "tags": [
+        "transportation"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Transportation",
+        "host": "zenodo.org",
+        "publisher": "WoW Train (glosx.app)"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "awesome-public-datasets:transportation-ev-model-compare-specifications",
@@ -23478,6 +24317,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:transportation-praticidade-index",
+      "name": "Praticidade Index 2026.1 (Brazil and Portugal)",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Walkable convenience rankings for neighbourhood-level areas in 10 cities in Brazil and Portugal (São Paulo, Rio de Janeiro, Belo Horizonte, Curitiba, Porto Alegre, Fortaleza, Brasília, Salvador, Lisboa, Porto).",
+      "url": "https://doi.org/10.5281/zenodo.23850105",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "tags": [
+        "transportation"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Transportation",
+        "host": "doi.org"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:transportation-problemsbyvin-nhtsa-vehicle-reliability",
       "name": "US Vehicle Failure-Mileage & Reliability Datasets (NHTSA-derived)",
       "kind": "open-data",
@@ -23890,6 +24751,28 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "awesome-public-datasets:transportation-us-vehicle-owner-complaints-by-model-component-2010-2025",
+      "name": "US Vehicle Owner Complaints by Model and Component 2010-2025",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "NHTSA owner complaints for model years 2010 to 2025, counted per make, model, model year and the component owners named (24,365 rows, 4,087 vehicles, 84 makes).",
+      "url": "https://doi.org/10.5281/zenodo.23662820",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC-BY-4.0",
+      "tags": [
+        "transportation"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Transportation",
+        "host": "doi.org"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "awesome-public-datasets:transportation-us-vehicle-reliability-nhtsa-problemsbyvin",
       "name": "US Vehicle Reliability - NHTSA Owner Complaints & Recalls",
       "kind": "open-data",
@@ -23908,29 +24791,6 @@
         "type": "dataset",
         "field": "Transportation",
         "host": "huggingface.co"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "awesome-public-datasets:transportation-wheel-fitment-bolt-pattern-centre-bore-6436-vehicles",
-      "name": "ANKUSI Wheel Fitment Dataset - Bolt Pattern, Centre Bore and OE Wheel Specs for 7,603 Vehicles",
-      "kind": "open-data",
-      "category": "datasets",
-      "summary": "Factory wheel-fitment specifications for 7,603 vehicle variants across 130 makes and 46 bolt patterns, model years 1940-2027. Each record carries bolt pattern (PCD), centre bore, lug count, OE wheel size and offset, plus reference aftermarket flush and maximum sizes, with a source URL per row.",
-      "url": "https://github.com/david025445/ankusi-wheel-fitment-data",
-      "source": {
-        "name": "awesome-public-datasets",
-        "url": "https://github.com/awesomedata/awesome-public-datasets"
-      },
-      "license": "CC-BY-4.0",
-      "tags": [
-        "transportation"
-      ],
-      "preview": {
-        "type": "dataset",
-        "field": "Transportation",
-        "host": "github.com",
-        "publisher": "ANKUSI Wheels engineering team"
       },
       "fetchedAt": "2026-10-20"
     },

@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-09",
-  "count": 818,
+  "fetchedAt": "2026-11-10",
+  "count": 825,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -3382,6 +3382,33 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:coinlobster",
+      "name": "CoinLobster",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Live executed whale trades across 15 exchanges and on-chain DEX with an unusualness radar",
+      "url": "https://coinlobster.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-10",
+      "metrics": {
+        "siteRank": 1000000
+      }
+    },
+    {
       "id": "marcelscruz:coinstats",
       "name": "CoinStats",
       "kind": "finance",
@@ -4792,6 +4819,29 @@
         "listCategory": "Food & Drink"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:dievio",
+      "name": "Dievio",
+      "kind": "business",
+      "category": "api",
+      "summary": "B2B contact search and LinkedIn profile URL lookup using prepaid API credits",
+      "url": "https://dievio.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "marcelscruz:digidates",
@@ -7267,7 +7317,7 @@
       "kind": "ai-other",
       "category": "api",
       "summary": "Run coding agent harnesses (Codex, Claude Code, Hermes) behind your product through one API",
-      "url": "https://harnessrouter.ai/docs",
+      "url": "https://harnessrouter.ai",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -7282,7 +7332,7 @@
         "cors": "unknown",
         "listCategory": "AI"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "marcelscruz:harry-potter-characters",
@@ -9311,6 +9361,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:liftradar",
+      "name": "LiftRadar",
+      "kind": "life",
+      "category": "api",
+      "summary": "Ski resorts across Europe: open lifts and slopes, snow depth and avalanche level, as free JSON with no key",
+      "url": "https://liftradar.eu",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "marcelscruz:linkedin",
       "name": "LinkedIn",
       "kind": "news-social",
@@ -10481,7 +10555,7 @@
       "kind": "open-data",
       "category": "api",
       "summary": "Moon phases, illumination, moon signs, full/new moon dates (1900–2100), moonrise/moonset by coordinates",
-      "url": "https://moonlora.com/developers",
+      "url": "https://moonlora.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -10497,7 +10571,7 @@
         "cors": "yes",
         "listCategory": "Science & Math"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "marcelscruz:motomarks",
@@ -13268,6 +13342,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:publora",
+      "name": "Publora",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Schedule and publish posts to 10 social networks through one REST API",
+      "url": "https://publora.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-10"
+    },
+    {
       "id": "marcelscruz:pusher-channels",
       "name": "Pusher Channels",
       "kind": "dev",
@@ -14027,6 +14124,29 @@
         "listCategory": "AI"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "marcelscruz:rowatcher",
+      "name": "RoWatcher",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Roblox game stats: live player counts every 5 minutes, daily history, charts and genre trends. Free, no key needed",
+      "url": "https://rowatcher.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "marcelscruz:rrm-academy-research-library",
@@ -15908,6 +16028,30 @@
       "metrics": {
         "siteRank": 1000
       }
+    },
+    {
+      "id": "marcelscruz:spotwatts",
+      "name": "Spotwatts",
+      "kind": "weather",
+      "category": "api",
+      "summary": "Day-ahead electricity prices for the 15 Nordic and Baltic price areas, 15-minute and hourly, with and without VAT, history since 2023",
+      "url": "https://spotwatts.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "environment"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Environment"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "marcelscruz:sqlable",
@@ -19209,6 +19353,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "marcelscruz:xmrlist",
+      "name": "XMRList",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Directory of businesses that accept Monero (XMR): listings, KYC policy, grades and stats",
+      "url": "https://xmrlist.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-10"
     },
     {
       "id": "marcelscruz:xquik-api",

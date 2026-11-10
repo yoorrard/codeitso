@@ -4,10 +4,10 @@
     "name": "shadcn/ui registry directory",
     "url": "https://ui.shadcn.com/docs/directory",
     "license": "Directory data from ui.shadcn.com/r/registries.json (shadcn/ui, MIT). Each registry's components keep their own license — check the registry site.",
-    "note": "548 registries listed; 50 marked unavailable by the directory's health check were skipped. Individual components of community registries (134371 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "548 registries listed; 51 marked unavailable by the directory's health check were skipped. Individual components of community registries (135044 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-11-10",
-  "count": 498,
+  "count": 497,
   "items": [
     {
       "id": "shadcn-registry:000h-cojeev",
@@ -63,9 +63,9 @@
         "type": "site",
         "url": "https://01orbital.dev",
         "registryUrl": "https://01orbital.dev/r/{name}.json",
-        "itemCount": 206,
-        "healthScore": 98.222,
-        "rankingScore": 95.734,
+        "itemCount": 535,
+        "healthScore": 98.269,
+        "rankingScore": 98.615,
         "health": "healthy"
       },
       "use": {
@@ -747,17 +747,17 @@
         "url": "https://ai-sdk.dev/elements",
         "registryUrl": "https://ai-sdk.dev/elements/api/registry/{name}.json",
         "itemCount": 141,
-        "healthScore": 88.852,
-        "rankingScore": 87.025,
+        "healthScore": 88.84,
+        "rankingScore": 87.016,
         "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @ai-elements/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-01",
+      "fetchedAt": "2026-11-10",
       "metrics": {
-        "siteRank": 1000000
+        "siteRank": 500000
       }
     },
     {
@@ -3029,17 +3029,17 @@
         "url": "https://clerk.com/docs/guides/development/shadcn-cli",
         "registryUrl": "https://clerk.com/r/{name}.json",
         "itemCount": 12,
-        "healthScore": 98.311,
-        "rankingScore": 86.901,
+        "healthScore": 98.446,
+        "rankingScore": 87.009,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @clerk/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-10",
       "metrics": {
-        "siteRank": 500000
+        "siteRank": 1000000
       }
     },
     {
@@ -3436,9 +3436,9 @@
         "type": "site",
         "url": "https://coolicons.cool",
         "registryUrl": "https://coolicons.cool/r/{name}.json",
-        "itemCount": 1324,
-        "healthScore": 98.469,
-        "rankingScore": 98.775,
+        "itemCount": 1550,
+        "healthScore": 98.476,
+        "rankingScore": 98.781,
         "health": "healthy"
       },
       "use": {
@@ -4425,16 +4425,16 @@
         "type": "site",
         "url": "https://diklein.com/components",
         "registryUrl": "https://diklein.com/r/{name}.json",
-        "itemCount": 3,
-        "healthScore": 98.311,
-        "rankingScore": 83.109,
+        "itemCount": 1,
+        "healthScore": 95.946,
+        "rankingScore": 78.987,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @diklein/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-10",
       "metrics": {
         "siteRank": 500000
       }
@@ -5991,16 +5991,16 @@
         "type": "site",
         "url": "https://frame12.dev",
         "registryUrl": "https://frame12.dev/r/{name}.json",
-        "itemCount": 41,
-        "healthScore": 94.946,
-        "rankingScore": 87.982,
+        "itemCount": 52,
+        "healthScore": 96.728,
+        "rankingScore": 90.156,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @frame12/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-07",
+      "fetchedAt": "2026-11-10",
       "metrics": {
         "siteRank": 500000
       }
@@ -7366,41 +7366,6 @@
       }
     },
     {
-      "id": "shadcn-registry:inferencesh",
-      "name": "@inferencesh",
-      "kind": "ui-registries",
-      "category": "design",
-      "summary": "batteries-included agent components by inference.sh. chat interfaces with streaming, tool invocation rendering, syntax-highlighted code blocks, markdown renderer, and more.",
-      "url": "https://ui.inference.sh",
-      "source": {
-        "name": "shadcn/ui registry directory",
-        "url": "https://ui.shadcn.com/docs/directory"
-      },
-      "tags": [
-        "degraded",
-        "react",
-        "registry",
-        "shadcn"
-      ],
-      "preview": {
-        "type": "site",
-        "url": "https://ui.inference.sh",
-        "registryUrl": "https://ui.inference.sh/r/{name}.json",
-        "itemCount": 14,
-        "healthScore": 95.845,
-        "rankingScore": 85.388,
-        "health": "degraded"
-      },
-      "use": {
-        "install": "npx shadcn@latest add @inferencesh/<component>",
-        "docs": "https://ui.shadcn.com/docs/directory"
-      },
-      "fetchedAt": "2026-11-10",
-      "metrics": {
-        "siteRank": 500000
-      }
-    },
-    {
       "id": "shadcn-registry:initium",
       "name": "@initium",
       "kind": "ui-registries",
@@ -8238,16 +8203,16 @@
         "type": "site",
         "url": "https://kokonutui.com",
         "registryUrl": "https://kokonutui.com/r/{name}.json",
-        "itemCount": 107,
-        "healthScore": 96.18,
-        "rankingScore": 92.007,
+        "itemCount": 121,
+        "healthScore": 96.293,
+        "rankingScore": 92.49,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @kokonutui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-23",
+      "fetchedAt": "2026-11-10",
       "metrics": {
         "siteRank": 500000
       }
@@ -10104,6 +10069,7 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
+        "degraded",
         "react",
         "registry",
         "shadcn"
@@ -10113,15 +10079,15 @@
         "url": "https://design.helpmarq.com",
         "registryUrl": "https://design.helpmarq.com/r/{name}.json",
         "itemCount": 542,
-        "healthScore": 98.855,
-        "rankingScore": 99.084,
-        "health": "healthy"
+        "healthScore": 97.473,
+        "rankingScore": 97.978,
+        "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @ns-ui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-10",
       "metrics": {
         "siteRank": 500000
       }

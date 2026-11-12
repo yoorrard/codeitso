@@ -577,7 +577,7 @@
       "name": "ainetcafe",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Kimi K3 in Claude Code, Cline, Kilo Code, OpenCode, pi, Hermes Agent and OpenHands.",
+      "summary": "ainetcafe: 1 model listed on models.dev (newest: Kimi K3).",
       "url": "https://ainetcafe.com/k3/guides/",
       "source": {
         "name": "models.dev",
@@ -606,14 +606,14 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "official page meta description"
+        "summarySource": "models.dev data"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "AINETCAFE_API_KEY=",
         "docs": "https://ainetcafe.com/k3/guides/"
       },
-      "fetchedAt": "2026-10-28"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:aixy",
@@ -2504,7 +2504,7 @@
       "name": "Cortecs",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Cortecs: 105 models listed on models.dev (newest: Gemini 4 Carbon, GPT-6.1 Terra, Kimi K3.1 Pro).",
+      "summary": "Cortecs: 104 models listed on models.dev (newest: Gemini 4 Carbon, GPT-6.1 Terra, Kimi K3.1 Pro).",
       "url": "https://api.cortecs.ai/v1/models",
       "source": {
         "name": "models.dev",
@@ -2525,7 +2525,7 @@
           "CORTECS_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 105,
+        "modelCount": 104,
         "models": [
           "Gemini 4 Carbon",
           "GPT-6.1 Terra",
@@ -2536,7 +2536,7 @@
           "Claude Haiku 5.5",
           "Mistral Large 4"
         ],
-        "openWeightModels": 53,
+        "openWeightModels": 52,
         "outputs": [
           "text"
         ],
@@ -2575,16 +2575,16 @@
           "CROSSMODEL_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 72,
+        "modelCount": 73,
         "models": [
+          "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "Hy4",
           "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
-          "GPT-6.1 Sol",
-          "Claude Sonnet 5.5"
+          "GPT-6.1 Sol"
         ],
         "openWeightModels": 20,
         "outputs": [
@@ -2597,7 +2597,7 @@
         "snippet": "CROSSMODEL_API_KEY=",
         "docs": "https://www.crossmodel.ai/docs"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:crusoe",
@@ -2766,6 +2766,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 228871
+      },
       "tags": [
         "ai",
         "inference",
@@ -2775,6 +2778,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/deepinfra",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/deepinfra",
         "env": [
           "DEEPINFRA_API_KEY"
         ],
@@ -2804,10 +2808,7 @@
         "snippet": "DEEPINFRA_API_KEY=",
         "docs": "https://deepinfra.com/docs"
       },
-      "fetchedAt": "2026-11-12",
-      "metrics": {
-        "siteRank": 1000000
-      }
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:deepseek",
@@ -3132,7 +3133,7 @@
           "EDENAI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 387,
+        "modelCount": 388,
         "models": [
           "Gemini 4 Carbon",
           "Gemini 4 Carbon (Vertex AI)",
@@ -3143,7 +3144,7 @@
           "Hy4 (Tencent)",
           "GPT-6.1 Terra"
         ],
-        "openWeightModels": 220,
+        "openWeightModels": 221,
         "outputs": [
           "image",
           "text"
@@ -3155,7 +3156,7 @@
         "snippet": "EDENAI_API_KEY=",
         "docs": "https://docs.edenai.co"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:empiriolabs",
@@ -3548,18 +3549,18 @@
           "FROGBOT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 26,
+        "modelCount": 51,
         "models": [
-          "DeepSeek v4 Pro",
-          "GPT-5.5",
-          "Kimi-K2.6",
-          "Grok 4.3",
-          "Claude Opus 4.7",
-          "Z.AI GLM-5.1",
-          "Qwen 3.6 Plus",
-          "MiniMax-M2.7"
+          "DeepSeek V4.1 Flash",
+          "Gemini 4 Argon",
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "GPT-6 Sol"
         ],
-        "openWeightModels": 8,
+        "openWeightModels": 13,
         "outputs": [
           "text"
         ],
@@ -3570,7 +3571,7 @@
         "snippet": "FROGBOT_API_KEY=",
         "docs": "https://docs.frogbot.ai"
       },
-      "fetchedAt": "2026-11-03"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:github-copilot",
@@ -3734,7 +3735,7 @@
       "name": "Google",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Google: 37 models listed on models.dev (newest: Gemini 4 Carbon, Gemini 4 Argon, Gemini 3.8 Flash).",
+      "summary": "Google: 37 models listed on models.dev (newest: Gemini 4 Hydrogen, Gemini 4 Carbon, Gemini 4 Argon).",
       "summaryKo": "Gemini 모델을 부르는 Google AI Studio의 Gemini API",
       "written": "codeshopper",
       "url": "https://ai.google.dev",
@@ -3743,14 +3744,13 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 31302371
+        "downloads": 30303311
       },
       "tags": [
         "ai",
         "llm",
         "output-audio",
         "output-image",
-        "output-video",
         "server-key"
       ],
       "preview": {
@@ -3768,21 +3768,20 @@
         "limitsUrl": "https://ai.google.dev/gemini-api/docs/rate-limits",
         "modelCount": 37,
         "models": [
+          "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
           "Gemini 4 Argon",
           "Gemini 3.8 Flash",
           "Gemini 3.7 Flash",
           "Gemini Flash Latest",
           "Gemini 3.5 Flash Lite",
-          "Gemini 3.6 Flash",
-          "Gemini Flash-Lite Latest"
+          "Gemini 3.6 Flash"
         ],
         "openWeightModels": 2,
         "outputs": [
           "audio",
           "image",
-          "text",
-          "video"
+          "text"
         ],
         "pricingUrl": "https://ai.google.dev/gemini-api/docs/pricing",
         "sdk": "@google/genai",
@@ -3793,7 +3792,7 @@
         "snippet": "GOOGLE_API_KEY=\nGOOGLE_GENERATIVE_AI_API_KEY=\nGEMINI_API_KEY=",
         "docs": "https://ai.google.dev/gemini-api/docs"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:google-vertex",
@@ -3809,7 +3808,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 5623710
+        "downloads": 5592710
       },
       "tags": [
         "ai",
@@ -3828,21 +3827,21 @@
           "GOOGLE_VERTEX_LOCATION",
           "GOOGLE_APPLICATION_CREDENTIALS"
         ],
-        "freeTierCheckedAt": "2026-11-10",
+        "freeTierCheckedAt": "2026-11-12",
         "freeTierQuote": "$0.00 (Free) / 1,000 count, per 1 month / account.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/quotas",
-        "modelCount": 63,
+        "modelCount": 64,
         "models": [
+          "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
           "Nano Banana 2.1",
           "Claude Sonnet 5.5",
-          "Claude Opus 5.5",
-          "Grok 4.7"
+          "Claude Opus 5.5"
         ],
         "openWeightModels": 14,
         "outputs": [
@@ -3858,7 +3857,7 @@
         "snippet": "GOOGLE_VERTEX_PROJECT=\nGOOGLE_VERTEX_LOCATION=\nGOOGLE_APPLICATION_CREDENTIALS=",
         "docs": "https://cloud.google.com/vertex-ai/generative-ai/docs"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:google-vertex-anthropic",
@@ -4559,7 +4558,7 @@
       "name": "Inference",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Explore and experiment with today's leading models. Use our model documentation to setup your model of choice in minutes.",
+      "summary": "Production-ready open and frontier models through one OpenAI-compatible API. Compare input, cached-read, and output token pricing.",
       "url": "https://inference.net/models",
       "source": {
         "name": "models.dev",
@@ -4602,7 +4601,7 @@
         "snippet": "INFERENCE_API_KEY=",
         "docs": "https://inference.net/models"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:inferx",
@@ -4994,18 +4993,18 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 377,
+        "modelCount": 472,
         "models": [
+          "Google: Gemini 4 Hydrogen",
           "Baidu: ERNIE-5.5-Flash-Preview (free)",
           "Baidu: ERNIE-Light-DT-1.0",
           "Google: Gemini 4 Carbon",
           "Nex AGI: Nex-N2.6",
           "Anthropic: Claude Fable 5.2",
           "Meta: Muse Ember",
-          "LiquidAI: LFM3-1.7B",
-          "LiquidAI: LFM3-1.7B (free)"
+          "Ampersand v0.1"
         ],
-        "openWeightModels": 141,
+        "openWeightModels": 160,
         "outputs": [
           "audio",
           "image",
@@ -5371,7 +5370,7 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 200,
+        "modelCount": 201,
         "models": [
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
@@ -5421,7 +5420,7 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 443,
+        "modelCount": 460,
         "models": [
           "Gemini 4 Carbon (Google AI Studio)",
           "Gemini 4 Carbon (Google Vertex AI)",
@@ -5432,7 +5431,7 @@
           "DeepSeek V4.1 Flash Cyber (Inference.net)",
           "GPT-6.1 Terra (Azure)"
         ],
-        "openWeightModels": 233,
+        "openWeightModels": 235,
         "outputs": [
           "text"
         ],
@@ -5641,7 +5640,7 @@
       "name": "LowRouter",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "How the model catalogue is structured and what to look at on each model card.",
+      "summary": "LowRouter: 32 models listed on models.dev (newest: GPT-6.1 Terra, Mistral Large 4, GPT-6.1 Sol).",
       "url": "https://lowrouter.ai/docs/models/available",
       "source": {
         "name": "models.dev",
@@ -5677,14 +5676,14 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "official page meta description"
+        "summarySource": "models.dev data"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "LOWROUTER_API_KEY=",
         "docs": "https://lowrouter.ai/docs/models/available"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:lucidquery",
@@ -6611,6 +6610,9 @@
         "name": "models.dev",
         "url": "https://models.dev"
       },
+      "metrics": {
+        "downloads": 153545
+      },
       "tags": [
         "ai",
         "llm",
@@ -6622,6 +6624,7 @@
         "aiSdk": "@ai-sdk/openai-compatible",
         "apiBase": "https://api.moonshot.ai/v1",
         "auth": "apiKey",
+        "downloadsOf": "npm:@ai-sdk/moonshotai",
         "env": [
           "MOONSHOT_API_KEY"
         ],
@@ -6648,10 +6651,7 @@
         "snippet": "MOONSHOT_API_KEY=",
         "docs": "https://platform.moonshot.ai/docs"
       },
-      "fetchedAt": "2026-11-12",
-      "metrics": {
-        "siteRank": 1000000
-      }
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:moonshotai-cn",
@@ -6923,7 +6923,7 @@
           "NANO_GPT_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 640,
+        "modelCount": 617,
         "models": [
           "ERNIE Light DT 1.0 (Intl)",
           "Muse Ember",
@@ -6934,7 +6934,7 @@
           "OrcaCyber DeepSeek V4.1 Flash Thinking",
           "OrcaCyber GLM 5.3 Flash"
         ],
-        "openWeightModels": 376,
+        "openWeightModels": 370,
         "outputs": [
           "text"
         ],
@@ -7030,18 +7030,18 @@
           "NEBIUS_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 26,
+        "modelCount": 21,
         "models": [
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Beam 1.0 501B A23B",
           "Muse Spark Open",
           "Nemotron 3.5 Super VL 120B A12B",
-          "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash",
-          "DeepSeek V4 Pro 0813"
+          "DeepSeek V4 Pro 0813",
+          "GLM-5.3"
         ],
-        "openWeightModels": 26,
+        "openWeightModels": 21,
         "outputs": [
           "text"
         ],
@@ -7052,7 +7052,7 @@
         "snippet": "NEBIUS_API_KEY=",
         "docs": "https://docs.tokenfactory.nebius.com/"
       },
-      "fetchedAt": "2026-11-03"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:neon",
@@ -7608,16 +7608,16 @@
           "OPENCODE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 138,
+        "modelCount": 139,
         "models": [
+          "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "Muse Ember 1.0",
           "Iceman Free",
           "Inkling 2 Small Free",
           "Crouton Alpha Free",
-          "LongCat 2.5 Free",
-          "Pulse Alpha Free"
+          "LongCat 2.5 Free"
         ],
         "openWeightModels": 54,
         "outputs": [
@@ -7630,7 +7630,7 @@
         "snippet": "OPENCODE_API_KEY=",
         "docs": "https://opencode.ai/v2/docs/console/models/"
       },
-      "fetchedAt": "2026-11-10",
+      "fetchedAt": "2026-11-12",
       "metrics": {
         "siteRank": 50000
       }
@@ -7747,7 +7747,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 4356322
+        "downloads": 4328982
       },
       "tags": [
         "ai",
@@ -7771,16 +7771,16 @@
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://openrouter.ai/docs/api_reference/limits",
-        "modelCount": 376,
+        "modelCount": 378,
         "models": [
+          "Gemini 4 Hydrogen",
           "ERNIE-5.5-Flash-Preview (free)",
           "ERNIE-Light-DT-1.0",
           "Gemini 4 Carbon",
           "Nex-N2.6",
           "Claude Fable 5.2",
           "Muse Ember",
-          "LFM3-1.7B",
-          "LFM3-1.7B (free)"
+          "LFM3-1.7B"
         ],
         "openWeightModels": 170,
         "outputs": [
@@ -10720,7 +10720,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 101769
+        "downloads": 117288
       },
       "tags": [
         "ai",
@@ -10758,7 +10758,7 @@
         "snippet": "VENICE_API_KEY=",
         "docs": "https://docs.venice.ai"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "models-dev:vercel",
@@ -10774,7 +10774,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 229032
+        "downloads": 235318
       },
       "tags": [
         "ai",
@@ -10793,16 +10793,16 @@
           "AI_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 418,
+        "modelCount": 419,
         "models": [
+          "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "Claude Fable 5.2 (Fast)",
           "Muse Ember",
           "Ampersand v0.1",
           "DeepSeek V4.1 Flash 1017 Ultrafast",
-          "Gemini Omni 1.2 Flash",
-          "Tencent Hy4"
+          "Gemini Omni 1.2 Flash"
         ],
         "openWeightModels": 107,
         "outputs": [

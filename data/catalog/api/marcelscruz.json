@@ -7,7 +7,7 @@
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
   "fetchedAt": "2026-11-12",
-  "count": 853,
+  "count": 860,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -1733,6 +1733,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:audo",
+      "name": "Audo",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Audio/video toolkit: speech generation, voice cloning, cleanup, transcription and editing",
+      "url": "https://audo.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-none"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-12",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "marcelscruz:auregistre",
       "name": "Auregistre",
       "kind": "business",
@@ -2824,6 +2850,29 @@
         "listCategory": "Vehicle"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:carbonsutra-carbon-footprint-estimation-for-organizations",
+      "name": "CarbonSutra - Carbon Footprint Estimation for Organizations",
+      "kind": "business",
+      "category": "api",
+      "summary": "Carbon footprint for business travel, hotel stays, vehicles, freight, shipments, fuel and electricity with supplementary APIs on airports and locations",
+      "url": "https://www.carbonsutra.com/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "marcelscruz:cardz-marketcap",
@@ -4310,6 +4359,30 @@
         "listCategory": "Cryptocurrency"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:crystal-ball-markets",
+      "name": "Crystal Ball Markets",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Free exchange rates for 60 currencies, gold prices in 69 countries and 212 market quotes",
+      "url": "https://crystalballmarkets.com/markets/rates-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "currency-exchange"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Currency Exchange"
+      },
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "marcelscruz:csgo",
@@ -11763,6 +11836,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:nrouter",
+      "name": "nRouter",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "LLM gateway API — one OpenAI-compatible API key for every model, with smart routing, automatic fallbacks, per-key budgets and guardrails.",
+      "url": "https://nrouter.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-12"
+    },
+    {
       "id": "marcelscruz:nutrient-data-extraction-api",
       "name": "Nutrient Data Extraction API",
       "kind": "business",
@@ -12697,6 +12793,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:pdata",
+      "name": "pdata",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Prediction-market prices, 24h volume, price history and resolved results from Polymarket, Kalshi and 6 more venues in one schema",
+      "url": "https://pdata.world",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "marcelscruz:pdf-conversion-api",
@@ -18159,6 +18279,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:trustedmcp",
+      "name": "TrustedMCP",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "A-D grades for MCP servers from public signals: look up a server, check an MCP config, find graded alternatives",
+      "url": "https://trustedmcp.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-12"
+    },
+    {
       "id": "marcelscruz:tweetapi",
       "name": "TweetAPI",
       "kind": "news-social",
@@ -18382,7 +18526,7 @@
       "name": "UnoRouter",
       "kind": "ai-other",
       "category": "api",
-      "summary": "OpenAI-compatible gateway routing chat/completions across 500+ models with a free tier",
+      "summary": "OpenAI compatible gateway with one key for every major model provider, automatic failover and a free tier",
       "url": "https://unorouter.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -18399,7 +18543,7 @@
         "cors": "yes",
         "listCategory": "AI"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-12",
       "metrics": {
         "siteRank": 500000
       }
@@ -19077,6 +19221,29 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-11-03"
+    },
+    {
+      "id": "marcelscruz:vidmoat",
+      "name": "Vidmoat",
+      "kind": "media",
+      "category": "api",
+      "summary": "Video editing API on the same engine as the Vidmoat editor, with free test keys",
+      "url": "https://www.vidmoat.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-12"
     },
     {
       "id": "marcelscruz:virus-and-malware-scan-api-by-attachmentav",

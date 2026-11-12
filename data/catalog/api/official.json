@@ -716,7 +716,7 @@
       "name": "Baidu Qianfan (ERNIE)",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "百度智能云千帆大模型平台是百度智能云推出的一站式企业级大模型平台，是支持客户做好真实AI应用的“企业级”平台，提供全面易用的模型开发、应用开发全流程工具链，同时融合千帆数据智能平台",
+      "summary": "基于文心大模型，对文本内容深度理解，提供领先的语言大模型定制能力与在线推理服务",
       "summaryKo": "Baidu ERNIE 모델을 부르는 Qianfan 플랫폼 (중국)",
       "written": "codeshopper",
       "url": "https://cloud.baidu.com/product/wenxinworkshop",
@@ -814,7 +814,7 @@
       "name": "Braintree",
       "kind": "payments",
       "category": "api",
-      "summary": "Our mission is to empower developers with the tools, resources, and simple-to-use SDKs and APIs to build on one platform, so they can serve merchants from around the world.",
+      "summary": "Explore PayPal Braintree and how our end-to-end payment platform can help drive growth. Learn more about PayPal Braintree on the PayPal website.",
       "summaryKo": "PayPal의 카드 결제 API (Braintree)",
       "written": "codeshopper",
       "url": "https://www.braintreepayments.com",
@@ -831,7 +831,7 @@
         "auth": "apiKey",
         "keyServerSide": true,
         "sdk": "braintree",
-        "summarySource": "https://developer.paypal.com/braintree/docs"
+        "summarySource": "https://www.braintreepayments.com"
       },
       "use": {
         "install": "npm install braintree",
@@ -1052,7 +1052,7 @@
       "name": "BytePlus ModelArk",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "All-in-one AI model service platform, offering top-rated models to empower diverse scenarios",
+      "summary": "Build, deploy, and scale AI with BytePlus — cutting-edge models, tools, and infrastructure proven on global platforms.",
       "summaryKo": "ByteDance의 Seed 모델(글·이미지·영상)을 쓰는 BytePlus ModelArk",
       "written": "codeshopper",
       "url": "https://www.byteplus.com/en/product/modelark",
@@ -1845,6 +1845,9 @@
         "name": "docs.exa.ai",
         "url": "https://docs.exa.ai"
       },
+      "metrics": {
+        "downloads": 1336137
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -1853,7 +1856,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "freeTierCheckedAt": "2026-11-10",
+        "downloadsOf": "npm:exa-js",
+        "freeTierCheckedAt": "2026-11-12",
         "freeTierQuote": "Start for free with over $120 in credits per year.",
         "keyServerSide": true,
         "pricingUrl": "https://exa.ai/pricing",
@@ -1864,10 +1868,7 @@
         "install": "npm install exa-js",
         "docs": "https://docs.exa.ai"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 500000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:face-plus-plus",
@@ -2632,7 +2633,7 @@
         "url": "https://cloud.google.com/text-to-speech/docs"
       },
       "metrics": {
-        "downloads": 456485
+        "downloads": 405936
       },
       "tags": [
         "ai",
@@ -3218,7 +3219,7 @@
       "name": "Kling AI API",
       "kind": "ai-image",
       "category": "api",
-      "summary": "Create professional videos and images with Kling AI",
+      "summary": "Integrate Kling AI API into your product or workflow for scalable AI image and video generation with secure, enterprise-ready developer tools.",
       "summaryKo": "Kuaishou Kling 모델로 영상을 만드는 API",
       "written": "codeshopper",
       "url": "https://klingai.com/global/dev",
@@ -3647,7 +3648,7 @@
         "url": "https://mailchimp.com/developer/transactional/docs/fundamentals/"
       },
       "metrics": {
-        "downloads": 260661
+        "downloads": 230060
       },
       "tags": [
         "auth-apikey",
@@ -3922,9 +3923,6 @@
         "name": "docs.mindee.com",
         "url": "https://docs.mindee.com"
       },
-      "metrics": {
-        "downloads": 47268
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -3934,7 +3932,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:mindee",
         "keyServerSide": true,
         "pricingUrl": "https://www.mindee.com/pricing",
         "sdk": "mindee",
@@ -5002,9 +4999,6 @@
         "name": "portkey.ai",
         "url": "https://portkey.ai/docs"
       },
-      "metrics": {
-        "downloads": 309642
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5013,7 +5007,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:portkey-ai",
         "keyServerSide": true,
         "pricingUrl": "https://portkey.ai/pricing",
         "sdk": "portkey-ai",
@@ -5073,9 +5066,6 @@
         "name": "postmarkapp.com",
         "url": "https://postmarkapp.com/developer"
       },
-      "metrics": {
-        "downloads": 1657506
-      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5084,8 +5074,7 @@
       "preview": {
         "type": "api",
         "auth": "server token",
-        "downloadsOf": "npm:postmark",
-        "freeTierCheckedAt": "2026-11-08",
+        "freeTierCheckedAt": "2026-11-12",
         "freeTierQuote": "Start Free Trial No Credit Card Required.",
         "keyServerSide": true,
         "pricingUrl": "https://postmarkapp.com/pricing",
@@ -5096,7 +5085,10 @@
         "install": "npm install postmark",
         "docs": "https://postmarkapp.com/developer"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "official:publicai",
@@ -5171,9 +5163,6 @@
         "name": "razorpay.com",
         "url": "https://razorpay.com/docs/api/"
       },
-      "metrics": {
-        "downloads": 410064
-      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -5181,7 +5170,6 @@
       "preview": {
         "type": "api",
         "auth": "key id / secret",
-        "downloadsOf": "npm:razorpay",
         "keyServerSide": true,
         "sdk": "razorpay",
         "summarySource": "https://razorpay.com"
@@ -5190,7 +5178,10 @@
         "install": "npm install razorpay",
         "docs": "https://razorpay.com/docs/api/"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "official:recaptcha",
@@ -5367,9 +5358,6 @@
         "name": "replicate.com",
         "url": "https://replicate.com/docs"
       },
-      "metrics": {
-        "downloads": 831597
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5378,7 +5366,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:replicate",
         "keyServerSide": true,
         "pricingUrl": "https://replicate.com/pricing",
         "sdk": "replicate",
@@ -5388,7 +5375,10 @@
         "install": "npm install replicate",
         "docs": "https://replicate.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 100000
+      }
     },
     {
       "id": "official:resemble",
@@ -5433,9 +5423,6 @@
         "name": "resend.com",
         "url": "https://resend.com/docs"
       },
-      "metrics": {
-        "downloads": 17835775
-      },
       "tags": [
         "auth-apikey",
         "email",
@@ -5444,7 +5431,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:resend",
         "keyServerSide": true,
         "pricingUrl": "https://resend.com/pricing",
         "sdk": "resend",
@@ -5454,7 +5440,10 @@
         "install": "npm install resend",
         "docs": "https://resend.com/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 50000
+      }
     },
     {
       "id": "official:retell",
@@ -6570,9 +6559,6 @@
         "name": "docs.tavily.com",
         "url": "https://docs.tavily.com"
       },
-      "metrics": {
-        "downloads": 454372
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -6581,7 +6567,6 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@tavily/core",
         "freeTierCheckedAt": "2026-11-12",
         "freeTierQuote": "Get 100k free API credits, hands-on support from our team, and help bringing your product to market.",
         "keyServerSide": true,
@@ -6593,7 +6578,10 @@
         "install": "npm install @tavily/core",
         "docs": "https://docs.tavily.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:tavus",
@@ -7199,7 +7187,7 @@
         "url": "https://docs.voyageai.com"
       },
       "metrics": {
-        "downloads": 339079
+        "downloads": 377886
       },
       "tags": [
         "ai",
@@ -7210,7 +7198,7 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:voyageai",
-        "freeTierCheckedAt": "2026-11-04",
+        "freeTierCheckedAt": "2026-11-12",
         "freeTierQuote": "The first 200M text tokens and 150B pixels for voyage-multimodal-3.5 and voyage-multimodal-3 are free for every account.",
         "keyServerSide": true,
         "pricingUrl": "https://docs.voyageai.com/docs/pricing",
@@ -7363,7 +7351,7 @@
         "url": "https://dev.writer.com"
       },
       "metrics": {
-        "downloads": 5321
+        "downloads": 5525
       },
       "tags": [
         "ai",
@@ -7374,6 +7362,8 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:writer-sdk",
+        "freeTierCheckedAt": "2026-11-12",
+        "freeTierQuote": "WRITER plans Skip to content Try for free Product Updated playbook hub The AI playbooks 10x marketers run Explore the hub →.",
         "keyServerSide": true,
         "pricingUrl": "https://writer.com/pricing/",
         "sdk": "writer-sdk",

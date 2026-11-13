@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-12",
-  "count": 860,
+  "fetchedAt": "2026-11-13",
+  "count": 868,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -2829,6 +2829,30 @@
       "fetchedAt": "2026-11-10"
     },
     {
+      "id": "marcelscruz:car-list-api",
+      "name": "Car List API",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Vehicle data API for year, make, model, trim, engine specs, powersports, make logos and VIN decoding, built for developers and automotive apps",
+      "url": "https://carlistapi.com/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "vehicle"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Vehicle"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "marcelscruz:carapi",
       "name": "CarAPI",
       "kind": "maps",
@@ -3792,6 +3816,30 @@
       "fetchedAt": "2026-10-31"
     },
     {
+      "id": "marcelscruz:contashare",
+      "name": "ContaShare",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Contact details a customer chose to share, read over OAuth, with a signed webhook when they change",
+      "url": "https://contashare.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-oauth",
+        "authentication-authorization",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "OAuth",
+        "cors": "yes",
+        "listCategory": "Authentication & Authorization"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "marcelscruz:conversor-iae-cnae",
       "name": "Conversor IAE CNAE",
       "kind": "open-data",
@@ -4004,6 +4052,29 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:cookin",
+      "name": "Cookin",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Pump.fun and Solana memecoin quality scores, bundle detection, trader stats and live trades over REST and WebSocket",
+      "url": "https://cookin.fun/api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "marcelscruz:corbado",
@@ -7588,6 +7659,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:gustoqr",
+      "name": "GustoQR",
+      "kind": "life",
+      "category": "api",
+      "summary": "QR code menus for restaurants and cafés: read and change menus, items and prices, read orders, tables and the activity log",
+      "url": "https://www.gustoqr.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "food-drink"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Food & Drink"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "marcelscruz:hackernews-node",
       "name": "HackerNews Node",
       "kind": "news-social",
@@ -9315,6 +9410,30 @@
       "fetchedAt": "2026-11-03"
     },
     {
+      "id": "marcelscruz:kardinal",
+      "name": "Kardinal",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Route optimization API for delivery fleets: multi-vehicle routing with time windows and vehicle capacities, self-serve with a free tier",
+      "url": "https://kardinal.ai/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "marcelscruz:kashrock",
       "name": "KashRock",
       "kind": "life",
@@ -10185,6 +10304,33 @@
         "listCategory": "Sports & Fitness"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:luw",
+      "name": "Luw",
+      "kind": "media",
+      "category": "api",
+      "summary": "AI design for architecture and interiors: redesign rooms, exteriors and gardens from a photo, render sketches, edit images, make video and 3D",
+      "url": "https://luw.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-11-13",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "marcelscruz:madeonsol",
@@ -15681,6 +15827,30 @@
       "fetchedAt": "2026-10-25"
     },
     {
+      "id": "marcelscruz:sfw",
+      "name": "SFW",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Nudity detection for images, GIFs and videos with four content levels and an optional blocking policy, 500 free credits a month",
+      "url": "https://sfwapi.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "marcelscruz:sfxmint",
       "name": "SFXMint",
       "kind": "entertainment",
@@ -16180,6 +16350,30 @@
         "listCategory": "Environment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:smarterdividends",
+      "name": "SmarterDividends",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Free dividend data for U.S. stocks and ETFs: yield, payment history, ex-dividend calendar, raises and cuts, safety grades. JSON or CSV",
+      "url": "https://smarterdividends.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "marcelscruz:smash",
@@ -17563,6 +17757,30 @@
       "fetchedAt": "2026-11-06"
     },
     {
+      "id": "marcelscruz:the-trivia",
+      "name": "The Trivia",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Random multiple choice trivia questions in 10 categories, filterable by difficulty, tag and region",
+      "url": "https://the-trivia-api.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "marcelscruz:theaudiodb",
       "name": "TheAudioDB",
       "kind": "media",
@@ -17704,30 +17922,6 @@
         "listCategory": "Social"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "marcelscruz:timefoo",
-      "name": "TimeFoo",
-      "kind": "dev",
-      "category": "api",
-      "summary": "Current time, timestamp format conversion and IANA time zone conversion, no key needed",
-      "url": "https://time.foo/api/",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "development"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Development"
-      },
-      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:timelogic",
@@ -19317,30 +19511,6 @@
       "fetchedAt": "2026-10-23"
     },
     {
-      "id": "marcelscruz:vocaflare-clips",
-      "name": "VocaFlare Clips",
-      "kind": "text",
-      "category": "api",
-      "summary": "YouTube clips where a word is spoken, with the exact second and transcript line",
-      "url": "https://clips.vocaflare.com/",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "cors",
-        "dictionaries"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "yes",
-        "listCategory": "Dictionaries"
-      },
-      "fetchedAt": "2026-11-03"
-    },
-    {
       "id": "marcelscruz:voxell-forge",
       "name": "Voxell Forge",
       "kind": "ai-other",
@@ -19653,6 +19823,29 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:wavegrain",
+      "name": "Wavegrain",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Upload images and videos, post them to connected social accounts now or at a set time, and read each post's state",
+      "url": "https://wavegrain.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "marcelscruz:wealthville",

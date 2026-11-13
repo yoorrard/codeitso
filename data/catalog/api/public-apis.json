@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-12",
-  "count": 2329,
+  "fetchedAt": "2026-11-13",
+  "count": 2358,
   "items": [
     {
       "id": "public-apis:0x",
@@ -1095,6 +1095,32 @@
         "listCategory": "Machine Learning"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:ai-form",
+      "name": "AI Form",
+      "kind": "business",
+      "category": "api",
+      "summary": "Create forms, share a link and read responses as JSON or CSV",
+      "url": "https://aiformapi.com/docs/quickstart",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:ai-law-tracker",
@@ -3854,6 +3880,32 @@
         "listCategory": "Email"
       },
       "fetchedAt": "2026-10-29"
+    },
+    {
+      "id": "public-apis:babydata",
+      "name": "BabyData",
+      "kind": "life",
+      "category": "api",
+      "summary": "UK pregnancy due date, ovulation and Statutory Maternity Pay calculators",
+      "url": "https://babydata.co.uk/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:bacon-ipsum",
@@ -7749,6 +7801,34 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:central-bank-of-uzbekistan",
+      "name": "Central Bank of Uzbekistan",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Official exchange rates and currency conversion",
+      "url": "https://cbu.uz/uz/arkhiv-kursov-valyut/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "currency-exchange",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Currency Exchange"
+      },
+      "fetchedAt": "2026-11-13",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "public-apis:cep-la",
       "name": "Cep.la",
       "kind": "maps",
@@ -9488,6 +9568,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:clutch",
+      "name": "Clutch",
+      "kind": "life",
+      "category": "api",
+      "summary": "Pregame NBA win probabilities for every game, graded after the final, as JSON and CSV",
+      "url": "https://clutchledger.com/data/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:cms-gov",
       "name": "CMS.gov",
       "kind": "life",
@@ -10696,6 +10802,32 @@
         "listCategory": "Security"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:compliance-assessment-tool",
+      "name": "Compliance Assessment Tool",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "PCI DSS self-assessment for merchants: picks the SAQ type, returns filled SAQ + AoC PDFs",
+      "url": "https://banks.complianceassessmenttool.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:compliapi",
@@ -15204,6 +15336,31 @@
       }
     },
     {
+      "id": "public-apis:duceus",
+      "name": "Duceus",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Insider (PDMR) trades and major shareholdings from EU, EEA and UK registers, in one schema",
+      "url": "https://duceusapi.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:ducks-unlimited",
       "name": "Ducks Unlimited",
       "kind": "maps",
@@ -17506,6 +17663,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:fax-for-agents",
+      "name": "Fax for Agents",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Fax API, hosted MCP server and SDKs so AI agents send and receive faxes, free sandbox",
+      "url": "https://faxforagents.com/docs/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "phone"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Phone"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:fbi-wanted",
       "name": "FBI Wanted",
       "kind": "open-data",
@@ -18439,6 +18621,32 @@
         "listCategory": "Currency Exchange"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:fixragent",
+      "name": "fixRAgent",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Triage a building maintenance photo: asset, urgency, trade to call and a line for the resident",
+      "url": "https://fixragent.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "machine-learning"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Machine Learning"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:flaky",
@@ -23398,6 +23606,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:hexplace",
+      "name": "hexplace",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Climate by month, rents, home prices, amenities and rankings for 800 towns in Portugal",
+      "url": "https://hexplace.org/developers/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:hey-research-lab",
       "name": "HEY Research Lab",
       "kind": "finance",
@@ -23659,6 +23893,32 @@
         "listCategory": "Jobs"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:holidayexplore",
+      "name": "HolidayExplore",
+      "kind": "business",
+      "category": "api",
+      "summary": "Global public holidays and bank closures",
+      "url": "https://holidayexplore.com/api-docs/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "calendar",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Calendar"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:holidays",
@@ -25110,6 +25370,31 @@
         "listCategory": "Photography"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:immoanalyse",
+      "name": "ImmoAnalyse",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "German property valuations (ImmoWertV), address geocoding and asking rents for all municipalities",
+      "url": "https://immoanalyse.pro/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:impala-hotel-bookings",
@@ -33804,6 +34089,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:musedin",
+      "name": "MusedIn",
+      "kind": "business",
+      "category": "api",
+      "summary": "Job network for AI agents: open jobs, agent profiles, hire records and a feed",
+      "url": "https://musedin.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:musicbrainz",
       "name": "MusicBrainz",
       "kind": "media",
@@ -34725,6 +35036,32 @@
         "listCategory": "Anime"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:neosatoshi-card-recognition",
+      "name": "NeoSatoshi Card Recognition",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Recognize Pokémon, One Piece, Lorcana, Yu-Gi-Oh! and Magic cards from photos",
+      "url": "https://neosatoshi.com/developers/detection-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "games-comics",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:neotimo-dgfip-mirror",
@@ -36001,6 +36338,31 @@
         "listCategory": "Government"
       },
       "fetchedAt": "2026-11-01"
+    },
+    {
+      "id": "public-apis:nubra",
+      "name": "Nubra",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Indian broker API: orders, quotes, historical data, option chains with Greeks and live feeds",
+      "url": "https://nubra.io/products/api/docs/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:nuget",
@@ -47798,6 +48160,31 @@
       "fetchedAt": "2026-10-29"
     },
     {
+      "id": "public-apis:sequenzy",
+      "name": "Sequenzy",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Email campaigns, subscribers and transactional email with 2,500 free emails/month",
+      "url": "https://docs.sequenzy.com",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:serialif-color",
       "name": "Serialif Color",
       "kind": "dev",
@@ -47927,6 +48314,31 @@
         "listCategory": "Science & Math"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:shareglint",
+      "name": "Shareglint",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Open Graph and social images from HTML/CSS templates, page screenshots, GIF and MP4; free tier",
+      "url": "https://shareglint.com/en/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:sheetsu",
@@ -48169,6 +48581,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:shortsintel",
+      "name": "ShortsIntel",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "TikTok, Instagram Reels, YouTube Shorts and Meta ad data, plus AI video analysis",
+      "url": "https://www.shortsintel.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:shotanvil",
       "name": "Shotanvil",
       "kind": "dev",
@@ -48218,6 +48655,31 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-29"
+    },
+    {
+      "id": "public-apis:shotlane",
+      "name": "Shotlane",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Screenshots, PDFs and Markdown of any web page in Chrome, with a free tier",
+      "url": "https://shotlane.dev/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:shotstack",
@@ -48481,6 +48943,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:site-shot",
+      "name": "Site-Shot",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Website screenshots in real Chromium: full-page, country proxies, ad and cookie removal; free plan",
+      "url": "https://www.site-shot.com/start/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:siteintel",
       "name": "SiteIntel",
       "kind": "dev",
@@ -48583,6 +49070,32 @@
         "listCategory": "Geocoding"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:slipkiln",
+      "name": "SlipKiln",
+      "kind": "business",
+      "category": "api",
+      "summary": "Render HTML or JSON templates (invoice, receipt, certificate) to PDF",
+      "url": "https://slipkiln.com/docs/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:smart-image-enhancement",
@@ -49898,6 +50411,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:spotwatts",
+      "name": "Spotwatts",
+      "kind": "weather",
+      "category": "api",
+      "summary": "Nordic and Baltic day-ahead electricity prices, 15-minute and hourly, with VAT, for 15 price areas",
+      "url": "https://spotwatts.com/en/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "environment",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Environment"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:spotwave",
       "name": "SpotWave",
       "kind": "weather",
@@ -50747,6 +51286,31 @@
         "listCategory": "Personality"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:stophy",
+      "name": "Stophy",
+      "kind": "dev",
+      "category": "api",
+      "summary": "One API to search the web, read what people say, and look up products, places, jobs and homes",
+      "url": "https://docs.stophy.dev",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:stopmailing",
@@ -53756,6 +54320,32 @@
         "listCategory": "Machine Learning"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:timefoo",
+      "name": "TimeFoo",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Current time, timestamp format conversion and IANA time zone conversion, no key needed",
+      "url": "https://time.foo/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:times-adder",
@@ -56957,6 +57547,31 @@
       "fetchedAt": "2026-11-04"
     },
     {
+      "id": "public-apis:unitpost",
+      "name": "Unitpost",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Send transactional email, campaigns and SMS; free for 5,000 emails a month",
+      "url": "https://www.unitpost.com/docs/email",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:universalis",
       "name": "Universalis",
       "kind": "entertainment",
@@ -57641,6 +58256,35 @@
       "fetchedAt": "2026-11-05"
     },
     {
+      "id": "public-apis:us-state-government-jobs",
+      "name": "US State Government Jobs",
+      "kind": "business",
+      "category": "api",
+      "summary": "State civil service job postings for California, New York, Wisconsin and North Dakota in one schema",
+      "url": "https://apify.com/founder-experiment/us-state-government-jobs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-13",
+      "metrics": {
+        "siteRank": 100000
+      }
+    },
+    {
       "id": "public-apis:us-street-address",
       "name": "US Street Address",
       "kind": "dev",
@@ -58218,6 +58862,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:vaultx",
+      "name": "VaultX",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Token scam/rug risk checks, whale trades, exchange rates for 3,000+ coins, AI outlook",
+      "url": "https://vaultx.llc/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:veabird",
       "name": "Veabird",
       "kind": "weather",
@@ -58640,6 +59310,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:vettedhome",
+      "name": "VettedHome",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "UK guides to property problems and home energy decisions, each with its primary sources",
+      "url": "https://vettedhome.co.uk/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-13"
+    },
+    {
       "id": "public-apis:vetto",
       "name": "Vetto",
       "kind": "messaging",
@@ -58935,6 +59631,32 @@
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "public-apis:vocaflare-clips",
+      "name": "VocaFlare Clips",
+      "kind": "text",
+      "category": "api",
+      "summary": "YouTube clips where a word is spoken, with the exact second and transcript line",
+      "url": "https://clips.vocaflare.com/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "dictionaries",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Dictionaries"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:voidly",
@@ -61072,6 +61794,32 @@
         "listCategory": "Weather"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:xaxios",
+      "name": "xAxios",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Live Solana and Robinhood Chain token prices, trades and launches over a public WebSocket",
+      "url": "https://xaxios.com/docs/stream",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-13"
     },
     {
       "id": "public-apis:xeno-canto",

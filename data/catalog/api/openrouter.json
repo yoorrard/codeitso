@@ -4,10 +4,10 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 122 providers; kept the 37 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "OpenRouter lists 123 providers; kept the 34 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-12",
-  "count": 37,
+  "fetchedAt": "2026-11-14",
+  "count": 34,
   "items": [
     {
       "id": "openrouter:aion-labs",
@@ -722,37 +722,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "openrouter:phala",
-      "name": "Phala",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "Run private AI through verified GPU TEE providers, an attested gateway, signed response receipts, and audit sessions you can independently check.",
-      "url": "https://redpill.ai",
-      "source": {
-        "name": "OpenRouter providers",
-        "url": "https://openrouter.ai/api/v1/providers"
-      },
-      "tags": [
-        "ai",
-        "hq-us",
-        "inference",
-        "server-key",
-        "via-openrouter"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "headquarters": "US",
-        "keyServerSide": true,
-        "privacyPolicy": "https://redpill.ai/privacy",
-        "statusPage": "https://status.phala.network/",
-        "summarySource": "official page meta description",
-        "terms": "https://redpill.ai/terms",
-        "viaOpenRouter": "https://openrouter.ai/provider/phala"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "openrouter:primalabs",
       "name": "PrimaLabs",
       "kind": "ai-inference",
@@ -1056,40 +1025,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "openrouter:tenstorrent",
-      "name": "Tenstorrent",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "Tenstorrent is a next-generation computing company that builds computers for AI. Headquartered in the U.S. with offices in Austin, Texas, and Silicon Valley, and global offices in Toronto, Belgrade, Seoul, Tokyo, and Bangalore, Tenstorrent brings together experts in the field of computer…",
-      "url": "https://tenstorrent.com",
-      "source": {
-        "name": "OpenRouter providers",
-        "url": "https://openrouter.ai/api/v1/providers"
-      },
-      "tags": [
-        "ai",
-        "hq-us",
-        "inference",
-        "server-key",
-        "via-openrouter"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "datacenters": [
-          "US"
-        ],
-        "headquarters": "US",
-        "keyServerSide": true,
-        "privacyPolicy": "https://tenstorrent.com/privacy",
-        "statusPage": "https://status.tenstorrent.com/",
-        "summarySource": "official page meta description",
-        "terms": "https://console.tenstorrent.com/terms",
-        "viaOpenRouter": "https://openrouter.ai/provider/tenstorrent"
-      },
-      "fetchedAt": "2026-10-20"
-    },
-    {
       "id": "openrouter:typesafe",
       "name": "TypeSafe",
       "kind": "ai-inference",
@@ -1119,34 +1054,6 @@
       "metrics": {
         "siteRank": 500000
       }
-    },
-    {
-      "id": "openrouter:unbiased",
-      "name": "Unbiased",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "Frontier answers at open-source prices. Zero data retention available on request for Team plans. Plans from $10/month.",
-      "url": "https://unbiased.ai",
-      "source": {
-        "name": "OpenRouter providers",
-        "url": "https://openrouter.ai/api/v1/providers"
-      },
-      "tags": [
-        "ai",
-        "inference",
-        "server-key",
-        "via-openrouter"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "keyServerSide": true,
-        "privacyPolicy": "https://unbiased.ai/terms/#privacy-policy",
-        "summarySource": "official page meta description",
-        "terms": "https://unbiased.ai/terms/",
-        "viaOpenRouter": "https://openrouter.ai/provider/unbiased"
-      },
-      "fetchedAt": "2026-11-05"
     }
   ]
 }

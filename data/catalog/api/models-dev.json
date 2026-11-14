@@ -6,8 +6,8 @@
     "license": "MIT (models.dev data); each provider has its own terms",
     "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-13",
-  "count": 236,
+  "fetchedAt": "2026-11-14",
+  "count": 328,
   "items": [
     {
       "id": "models-dev:302ai",
@@ -36,18 +36,18 @@
           "302AI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 126,
+        "modelCount": 127,
         "models": [
           "Kimi K3.1 Pro",
+          "MiniMax-M3.1-Flash",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
           "Claude Sonnet 5.5",
           "Claude Opus 5.5",
-          "GPT-6 Luna",
-          "GPT-6 Sol"
+          "GPT-6 Luna"
         ],
-        "openWeightModels": 33,
+        "openWeightModels": 34,
         "outputs": [
           "image",
           "text"
@@ -59,7 +59,7 @@
         "snippet": "302AI_API_KEY=",
         "docs": "https://doc.302.ai"
       },
-      "fetchedAt": "2026-11-10",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 1000000
       }
@@ -120,6 +120,56 @@
       }
     },
     {
+      "id": "models-dev:abliteratedllm",
+      "name": "AbliteratedLLM",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "List models with their type, input types, capabilities, prices per 1M tokens, context length, max output and precision, and how requests are billed.",
+      "url": "https://abliteratedllm.dev/docs/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.abliteratedllm.dev/v1",
+        "auth": "apiKey",
+        "env": [
+          "ABLITERATEDLLM_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 15,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash 1017 Ultrafast",
+          "Muse Spark Open",
+          "Ember-1",
+          "DeepSeek V4.1 Flash (original)",
+          "GLM-5.3 Flash Abliterated",
+          "GLM-5.3-Flash"
+        ],
+        "openWeightModels": 13,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ABLITERATEDLLM_API_KEY=",
+        "docs": "https://abliteratedllm.dev/docs/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:abliteration-ai",
       "name": "abliteration.ai",
       "kind": "ai-inference",
@@ -145,8 +195,9 @@
           "ABLIT_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 3,
+        "modelCount": 4,
         "models": [
+          "Abliterated Model Large Flash",
           "Abliterated Model Large V2",
           "Abliterated Model",
           "Abliterated Model Large"
@@ -162,7 +213,7 @@
         "snippet": "ABLIT_KEY=",
         "docs": "https://docs.abliteration.ai/models"
       },
-      "fetchedAt": "2026-10-25",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 500000
       }
@@ -216,6 +267,105 @@
         "docs": "https://above.dev/docs"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "models-dev:adaption",
+      "name": "Adaption",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Start with Adaptive Data, AutoScientist, and the Adaption API.",
+      "url": "https://docs.adaptionlabs.ai",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.prod.adaptionlabs.ai/api/v1",
+        "auth": "apiKey",
+        "env": [
+          "ADAPTION_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 7,
+        "models": [
+          "GLM-5.3-Flash",
+          "Qwen3.8 27B",
+          "DeepSeek V4 Flash 0731",
+          "GLM-5.2",
+          "Gemma 4 26B A4B IT",
+          "Gemma 4 31B IT",
+          "Qwen3.5 397B-A17B"
+        ],
+        "openWeightModels": 7,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ADAPTION_API_KEY=",
+        "docs": "https://docs.adaptionlabs.ai"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:adzuki",
+      "name": "Adzuki AI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "OpenAI-compatible API reference for every model served by Adzuki AI. Base URL, authentication, endpoints and error codes.",
+      "url": "https://adzukiai.com/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://adzukiai.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "ADZUKI_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 12,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 Max",
+          "Kimi K3",
+          "Seed 2.1 Pro",
+          "MiniMax-M3"
+        ],
+        "openWeightModels": 9,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ADZUKI_API_KEY=",
+        "docs": "https://adzukiai.com/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:agentrouter",
@@ -464,6 +614,55 @@
       "fetchedAt": "2026-11-09"
     },
     {
+      "id": "models-dev:aigrow",
+      "name": "AIGROW",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Connect Claude Code, Cline, Aider, OpenCode, Zed and the OpenAI or Anthropic SDKs to AIGROW credit: base URL, key, model.",
+      "url": "https://aigrow.gg/ai-api/guide",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://aigrow.gg/v1",
+        "auth": "apiKey",
+        "env": [
+          "AIGROW_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 9,
+        "models": [
+          "Claude Fable 5.2",
+          "GPT-6.1 Terra",
+          "Gemini 4 Argon",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "Grok 4.7",
+          "GPT-6 Astra"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "AIGROW_API_KEY=",
+        "docs": "https://aigrow.gg/ai-api/guide"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:aihubmix",
       "name": "AIHubMix",
       "kind": "ai-inference",
@@ -475,7 +674,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 24748
+        "downloads": 25450
       },
       "tags": [
         "ai",
@@ -492,7 +691,7 @@
           "AIHUBMIX_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 154,
+        "modelCount": 160,
         "models": [
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
@@ -503,7 +702,7 @@
           "GPT-6 Sol",
           "MiMo-V2.6-Flash"
         ],
-        "openWeightModels": 63,
+        "openWeightModels": 66,
         "outputs": [
           "image",
           "text"
@@ -515,7 +714,7 @@
         "snippet": "AIHUBMIX_API_KEY=",
         "docs": "https://docs.aihubmix.com"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:aimlapi",
@@ -616,6 +815,99 @@
       "fetchedAt": "2026-11-13"
     },
     {
+      "id": "models-dev:aipg",
+      "name": "AI Power Grid",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Copy-paste setup for using AI Power Grid from OpenAI clients, LiteLLM, Open WebUI, Cline, Continue, LangChain, Vercel AI SDK, ElizaOS, n8n, the Grid CLI, and MCP.",
+      "url": "https://aipowergrid.io/docs/integrations",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.aipowergrid.io/v1",
+        "auth": "apiKey",
+        "env": [
+          "AIPG_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "Qwen3.8 Flash Next",
+          "GPT OSS 120B"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "AIPG_API_KEY=",
+        "docs": "https://aipowergrid.io/docs/integrations"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:aistupidlevel",
+      "name": "AI Stupid Level",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Smart Router API reference: OpenAI-compatible /v1/chat/completions, Anthropic /v1/messages passthrough, /v1/embeddings, 14 auto-* routing modes and SDKs.",
+      "url": "https://aistupidlevel.info/router/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://aistupidlevel.info/v1",
+        "auth": "apiKey",
+        "env": [
+          "AISTUPIDLEVEL_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 10,
+        "models": [
+          "Auto Fastest Quality",
+          "Auto Value",
+          "Auto Value Coding",
+          "Auto Value Reasoning",
+          "Auto Value Tool Use",
+          "Auto Tool Use",
+          "Auto Best",
+          "Auto (account strategy)"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "AISTUPIDLEVEL_API_KEY=",
+        "docs": "https://aistupidlevel.info/router/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:aixy",
       "name": "Aixy",
       "kind": "ai-inference",
@@ -684,23 +976,24 @@
       "preview": {
         "type": "api",
         "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://aki.io/v1",
+        "apiBase": "https://aki.io/openai/v1",
         "auth": "apiKey",
         "env": [
           "AKI_IO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 7,
+        "modelCount": 8,
         "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "Kolibri 1",
           "DeepSeek V4.1 Flash",
           "GLM-5.3",
           "Qwen3.8 27B",
-          "Qwen3.6 35B-A3B",
           "Gemma 4 26B A4B IT",
           "Mistral Small 4",
           "GPT OSS 120B"
         ],
-        "openWeightModels": 7,
+        "openWeightModels": 8,
         "outputs": [
           "text"
         ],
@@ -711,7 +1004,7 @@
         "snippet": "AKI_IO_API_KEY=",
         "docs": "https://aki.io/docs/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:alibaba",
@@ -727,7 +1020,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 220394
+        "downloads": 258864
       },
       "tags": [
         "ai",
@@ -772,7 +1065,7 @@
         "snippet": "DASHSCOPE_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:alibaba-cn",
@@ -1221,6 +1514,51 @@
       }
     },
     {
+      "id": "models-dev:anonrouter",
+      "name": "AnonRouter",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Browse the catalog, read model capabilities, and understand the privacy label on each route.",
+      "url": "https://docs.anonrouter.ai/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.anonrouter.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "ANONROUTER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "Gemma 3 12B IT",
+          "Gemma 3 27B IT",
+          "DeepSeek-V3"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ANONROUTER_API_KEY=",
+        "docs": "https://docs.anonrouter.ai/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:anthropic",
       "name": "Anthropic",
       "kind": "ai-llm",
@@ -1328,6 +1666,51 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:apiko",
+      "name": "APIKO",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "APIKO gives your application one gateway for the text, image and video models available to your account.",
+      "url": "https://apiko.app/docs/introduction",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.apiko.app/v1",
+        "auth": "apiKey",
+        "env": [
+          "APIKO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "DeepSeek V4 Pro"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "APIKO_API_KEY=",
+        "docs": "https://apiko.app/docs/introduction"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:arcee",
       "name": "Arcee",
       "kind": "ai-llm",
@@ -1428,6 +1811,54 @@
       }
     },
     {
+      "id": "models-dev:augure",
+      "name": "Augure",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Augure API reference. OpenAI-compatible chat completions API with Canadian data residency. Inference is never routed through US providers.",
+      "url": "https://augureai.ca/docs/api",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.augureai.ca/v1",
+        "auth": "apiKey",
+        "env": [
+          "AUGURE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 6,
+        "models": [
+          "Qwen3.8 Flash Next",
+          "Tofino 3",
+          "GLM-5.3",
+          "Ossington 5",
+          "Ossington 4.1",
+          "Rosedale One"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "AUGURE_API_KEY=",
+        "docs": "https://augureai.ca/docs/api"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:auriko",
       "name": "Auriko",
       "kind": "ai-inference",
@@ -1476,6 +1907,49 @@
         "docs": "https://docs.auriko.ai"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "models-dev:autarcho",
+      "name": "Autarcho",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Chat with open GGUF models and pay only for the tokens you generate. Metered per token, no subscription. Top up with USDC on Solana.",
+      "url": "https://autarcho.com/use/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.autarcho.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "AUTARCHO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Llama 3.2 3B Uncensored"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "AUTARCHO_API_KEY=",
+        "docs": "https://autarcho.com/use/"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:azure",
@@ -1598,8 +2072,8 @@
       "name": "Bailing",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "什么是安诊儿医疗大模型蚂蚁·安诊儿医疗大模型（AntA...",
-      "url": "https://alipaytbox.yuque.com/sxs0ba/ling/intro",
+      "summary": "了解蚂蚁百灵（Ant Ling）的 Ling、Ming 模型家族，快速开始构建 AI 应用。支持通用对话、深度推理与全模态能力。",
+      "url": "https://developer.ant-ling.com/zh-CN/docs",
       "source": {
         "name": "models.dev",
         "url": "https://models.dev"
@@ -1613,18 +2087,21 @@
       "preview": {
         "type": "api",
         "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://api.tbox.cn/api/llm/v1",
+        "apiBase": "https://api.ant-ling.com/v1",
         "auth": "apiKey",
         "env": [
           "BAILING_API_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 2,
+        "modelCount": 5,
         "models": [
-          "Ling-1T",
-          "Ring-1T"
+          "Ling 3.2 Flash",
+          "Ling 3.1 Flash",
+          "Ling 3.0 Flash VL",
+          "Ling 3.0 Tiny",
+          "Ling 3.0 Flash"
         ],
-        "openWeightModels": 2,
+        "openWeightModels": 4,
         "outputs": [
           "text"
         ],
@@ -1633,9 +2110,9 @@
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "BAILING_API_TOKEN=",
-        "docs": "https://alipaytbox.yuque.com/sxs0ba/ling/intro"
+        "docs": "https://developer.ant-ling.com/zh-CN/docs"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:baseten",
@@ -1935,6 +2412,55 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:bumo",
+      "name": "Bumo Router",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Bumo Router: 20 models listed on models.dev (newest: Claude Haiku 5.5, GPT-6.1 Sol, Claude Sonnet 5.5).",
+      "url": "https://bumo.ai/docs/api",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://router.bumo.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "BUMO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 20,
+        "models": [
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "GPT-6 Astra",
+          "Gemini 3.8 Flash",
+          "Claude Fable 5.1"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "BUMO_API_KEY=",
+        "docs": "https://bumo.ai/docs/api"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:byteplus",
       "name": "BytePlus ModelArk",
       "kind": "ai-inference",
@@ -1988,6 +2514,49 @@
       }
     },
     {
+      "id": "models-dev:cedarllm",
+      "name": "CedarLLM",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Quickstart for the CedarLLM OpenAI-compatible API: base URL, keys, examples, pricing and limits.",
+      "url": "https://cedarllm.com/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.cedarllm.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "CEDARLLM_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Qwen3.8 27B"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "CEDARLLM_API_KEY=",
+        "docs": "https://cedarllm.com/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:cerebras",
       "name": "Cerebras",
       "kind": "ai-inference",
@@ -2038,6 +2607,146 @@
         "docs": "https://inference-docs.cerebras.ai"
       },
       "fetchedAt": "2026-10-29"
+    },
+    {
+      "id": "models-dev:cheapaimodel",
+      "name": "cheapaimodel",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "One API key for every model in the catalog, billed per token from a prepaid US-dollar balance.",
+      "url": "https://cheapaimodel.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.cheapaimodel.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "CHEAPAIMODEL_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 5,
+        "models": [
+          "Grok 4.7",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Kimi K3"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "CHEAPAIMODEL_API_KEY=",
+        "docs": "https://cheapaimodel.ai/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:cheapest-token",
+      "name": "CheapestToken",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Connect CheapestToken in OpenCode like any catalog provider — search for it, connect your key, and pick any model. Manual config only for the pre-merge window.",
+      "url": "https://cheapest-token.com/docs/opencode",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.cheapest-token.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "CHEAPEST_TOKEN_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 19,
+        "models": [
+          "GPT-6.1 Terra",
+          "MiniMax M3.1-Flash",
+          "DeepSeek V4.1 Flash 1017",
+          "NVIDIA Nemotron 3.5 Super VL",
+          "GPT-6.1 Sol",
+          "GPT-6 Luna",
+          "GPT-6 Sol",
+          "Grok 4.7"
+        ],
+        "openWeightModels": 7,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "CHEAPEST_TOKEN_API_KEY=",
+        "docs": "https://cheapest-token.com/docs/opencode"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:cheapllm",
+      "name": "cheapllm.shop",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "How to call DeepSeek V4.1 Flash on cheapllm.shop: base URL, auth, streaming, errors, and settings for popular tools.",
+      "url": "https://cheapllm.shop/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://cheapllm.shop/v1",
+        "auth": "apiKey",
+        "env": [
+          "CHEAPLLM_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "DeepSeek V4.1 Flash 1017"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "CHEAPLLM_API_KEY=",
+        "docs": "https://cheapllm.shop/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:chutes",
@@ -2208,18 +2917,18 @@
           "CLINE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 18,
+        "modelCount": 21,
         "models": [
+          "Kimi K3.1 Pro",
+          "MiniMax-M3.1-Flash",
+          "DeepSeek V4.1 Flash 1017",
           "MiMo-V2.6-Flash",
           "MiMo-V2.6-Pro",
           "DeepSeek V4.1 Flash",
           "Muse Spark 1.3 Contributor",
-          "cline-pass/glm-5.3-flash",
-          "GLM-5.3",
-          "Qwen3.8 Max",
-          "Kimi K3"
+          "cline-pass/glm-5.3-flash"
         ],
-        "openWeightModels": 14,
+        "openWeightModels": 17,
         "outputs": [
           "text"
         ],
@@ -2230,10 +2939,58 @@
         "snippet": "CLINE_API_KEY=",
         "docs": "https://docs.cline.bot/getting-started/clinepass"
       },
-      "fetchedAt": "2026-10-29",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "models-dev:cloudcode",
+      "name": "CloudCode.ONE",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Pay-as-you-go agentic coding powered by GLM-5.3 with a 1M-token context window. Top up credit and use it with Claude Code, Cline, Roo Code, or any OpenAI- or Anthropic-compatible client.",
+      "url": "https://cloudcode.one",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.cloudcode.one/v1",
+        "auth": "apiKey",
+        "env": [
+          "CLOUDCODE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 6,
+        "models": [
+          "Mistral Large 4",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro",
+          "GLM-5.3",
+          "GLM-5V-Turbo"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "CLOUDCODE_API_KEY=",
+        "docs": "https://cloudcode.one"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:cloudferro-sherlock",
@@ -2482,18 +3239,18 @@
           "CMD_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 72,
+        "modelCount": 93,
         "models": [
           "GPT-6.1 Terra",
-          "Gemini 4 Argon",
-          "Muse Wonder",
-          "Claude Haiku 5.5",
-          "Mistral Large 4",
-          "GPT-6.1 Sol",
-          "Ling 3.1 Flash",
-          "Claude Sonnet 5.5"
+          "Kimi K3.1 Pro",
+          "Ornith 1.5 122B",
+          "MiniMax-M3.1-Flash",
+          "Beam 1.0",
+          "Muse Spark Open",
+          "Nemotron 3.5 Super VL 120B A12B",
+          "Gemini 4 Argon"
         ],
-        "openWeightModels": 27,
+        "openWeightModels": 42,
         "outputs": [
           "text"
         ],
@@ -2504,10 +3261,53 @@
         "snippet": "CMD_API_KEY=",
         "docs": "https://commandcode.ai/docs/provider"
       },
-      "fetchedAt": "2026-10-26",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 100000
       }
+    },
+    {
+      "id": "models-dev:confidential-ai",
+      "name": "Confidential AI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Get an API key, call the OpenAI-compatible endpoint, and verify connections with TEErminator.",
+      "url": "https://confidential.ai/docs/inference-api/get-started",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.confidential.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "CONFIDENTIAL_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "DeepSeek V4 Flash 0731"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "CONFIDENTIAL_API_KEY=",
+        "docs": "https://confidential.ai/docs/inference-api/get-started"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:coralbricks",
@@ -2557,7 +3357,7 @@
       "name": "Cortecs",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Cortecs: 104 models listed on models.dev (newest: Gemini 4 Carbon, GPT-6.1 Terra, Kimi K3.1 Pro).",
+      "summary": "Cortecs: 106 models listed on models.dev (newest: Gemini 4 Hydrogen, Inkling 2 Small, Gemini 4 Carbon).",
       "url": "https://api.cortecs.ai/v1/models",
       "source": {
         "name": "models.dev",
@@ -2578,18 +3378,18 @@
           "CORTECS_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 104,
+        "modelCount": 106,
         "models": [
+          "Gemini 4 Hydrogen",
+          "Inkling 2 Small",
           "Gemini 4 Carbon",
           "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
-          "Gemini 4 Argon",
-          "Claude Haiku 5.5",
-          "Mistral Large 4"
+          "Gemini 4 Argon"
         ],
-        "openWeightModels": 52,
+        "openWeightModels": 53,
         "outputs": [
           "text"
         ],
@@ -2600,7 +3400,7 @@
         "snippet": "CORTECS_API_KEY=",
         "docs": "https://api.cortecs.ai/v1/models"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:crossmodel",
@@ -2820,7 +3620,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 228871
+        "downloads": 242961
       },
       "tags": [
         "ai",
@@ -2838,18 +3638,18 @@
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://docs.deepinfra.com/account/rate-limits",
-        "modelCount": 78,
+        "modelCount": 79,
         "models": [
+          "Inkling 2 Small",
           "Kimi K3.1 Pro",
           "DeepSeek V4.1 Flash 1017",
           "MiMo-V2.6-Flash",
           "MiMo-V2.6-Pro",
           "Step 5 Preview",
           "DeepSeek V4.1 Flash",
-          "DeepSeek V4 Flash Vision Exp",
-          "Hy4 preview"
+          "DeepSeek V4 Flash Vision Exp"
         ],
-        "openWeightModels": 70,
+        "openWeightModels": 71,
         "outputs": [
           "text"
         ],
@@ -2861,7 +3661,7 @@
         "snippet": "DEEPINFRA_API_KEY=",
         "docs": "https://deepinfra.com/docs"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:deepseek",
@@ -3024,6 +3824,106 @@
         "docs": "https://dinference.com"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "models-dev:dothoosh",
+      "name": "DotHoosh",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "مستندات API دات‌هوش برای توسعه‌دهندگان: شروع سریع، احراز هویت، سازگاری با OpenAI و Anthropic، استریم، مدل‌ها، محدودیت‌ها و خطاها برای اولین درخواست موفق.",
+      "url": "https://gateway.dothoosh.com/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://gateway.dothoosh.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "DOTHOOSH_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 16,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "Gemini 4 Argon",
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna"
+        ],
+        "openWeightModels": 6,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "DOTHOOSH_API_KEY=",
+        "docs": "https://gateway.dothoosh.com/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:doubleword",
+      "name": "Doubleword",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Browse available Doubleword models and pricing.",
+      "url": "https://docs.doubleword.ai/inference-api/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.doubleword.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "DOUBLEWORD_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 18,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "Muse Spark Open",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro 0813",
+          "GLM-5.3",
+          "Qwen3.8 27B"
+        ],
+        "openWeightModels": 18,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "DOUBLEWORD_API_KEY=",
+        "docs": "https://docs.doubleword.ai/inference-api/models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:drun",
@@ -3192,12 +4092,12 @@
           "Gemini 4 Hydrogen (Vertex AI)",
           "Gemini 4 Hydrogen (Vertex AI, EU)",
           "Gemini 4 Hydrogen (Vertex AI, US)",
-          "Gemini 4 Carbon",
-          "Gemini 4 Carbon (Vertex AI)",
-          "Gemini 4 Carbon (Vertex AI, EU)",
-          "Gemini 4 Carbon (Vertex AI, US)"
+          "Inkling 2 Small (Cloudflare)",
+          "Inkling 2 Small (Deep Infra)",
+          "Inkling 2 Small (Nebius)",
+          "Inkling 2 Small (Together AI)"
         ],
-        "openWeightModels": 221,
+        "openWeightModels": 225,
         "outputs": [
           "image",
           "text"
@@ -3209,7 +4109,7 @@
         "snippet": "EDENAI_API_KEY=",
         "docs": "https://docs.edenai.co"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:empiriolabs",
@@ -3312,6 +4212,52 @@
       "fetchedAt": "2026-11-12"
     },
     {
+      "id": "models-dev:entrim",
+      "name": "Entrim",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Use open-source models on Entrim through an OpenAI-compatible API.",
+      "url": "https://docs.entrim.ai/model-api/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.entrim.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "ENTRIM_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 4,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ENTRIM_API_KEY=",
+        "docs": "https://docs.entrim.ai/model-api/"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:evroc",
       "name": "evroc",
       "kind": "ai-inference",
@@ -3362,6 +4308,53 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:ezkielyna",
+      "name": "Ezkielyna",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Every model on Ezkielyna API with its price per 1M tokens in USD and IDR, key group, code examples and live status.",
+      "url": "https://ezkielyna.store/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.ezkielyna.store/v1",
+        "auth": "apiKey",
+        "env": [
+          "EZKIELYNA_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 5,
+        "models": [
+          "Step 5 Preview",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "DeepSeek V4 Pro"
+        ],
+        "openWeightModels": 5,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "EZKIELYNA_API_KEY=",
+        "docs": "https://ezkielyna.store/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:fastrouter",
       "name": "FastRouter",
       "kind": "ai-inference",
@@ -3389,18 +4382,18 @@
           "FASTROUTER_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 39,
+        "modelCount": 48,
         "models": [
           "Seedance 2",
-          "Claude Opus 4.8",
-          "Gemini 3.5 Flash",
-          "DeepSeek V4 Pro",
-          "GPT-5.5",
-          "GPT-5.5 Pro",
-          "GPT Image 2",
-          "Kimi K2.6"
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "GPT-6 Sol",
+          "Grok 4.7",
+          "GLM-5.3-Flash",
+          "Grok 4.6",
+          "Claude Opus 5"
         ],
-        "openWeightModels": 10,
+        "openWeightModels": 11,
         "outputs": [
           "image",
           "text",
@@ -3413,7 +4406,50 @@
         "snippet": "FASTROUTER_API_KEY=",
         "docs": "https://fastrouter.ai/models"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:fiftyx",
+      "name": "50X",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "50X: 1 model listed on models.dev (newest: DeepSeek V4.1 Flash 1017).",
+      "url": "https://ai.50x.energy/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.ai.50x.energy/v1",
+        "auth": "apiKey",
+        "env": [
+          "FIFTYX_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "DeepSeek V4.1 Flash 1017"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "FIFTYX_API_KEY=",
+        "docs": "https://ai.50x.energy/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:fireworks-ai",
@@ -3476,6 +4512,49 @@
       }
     },
     {
+      "id": "models-dev:fortytwo",
+      "name": "Fortytwo",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Each model's ID, capabilities, limits and licence, and how models are retired.",
+      "url": "https://docs.fortytwo.network/docs/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.fortytwo.network/v1",
+        "auth": "apiKey",
+        "env": [
+          "FORTYTWO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Qwen3.8 27B"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "FORTYTWO_API_KEY=",
+        "docs": "https://docs.fortytwo.network/docs/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:freemodel",
       "name": "FreeModel",
       "kind": "ai-inference",
@@ -3525,6 +4604,49 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "models-dev:frequency",
+      "name": "Frequency",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Call mira-llm on the OpenAI-compatible POST /v2/chat/completions: one request, streaming, tool calls, Python, Pipecat, the Vercel AI SDK, the phone rules for your prompt, limits and the request log. ₹15 input, ₹9.30 cached input and ₹55 output per million tokens.",
+      "url": "https://docs.miraiminds.co/v2/llm",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://llm.scalefrequency.com/v2",
+        "auth": "apiKey",
+        "env": [
+          "FREQUENCY_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Gemma 4 26B A4B IT"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "FREQUENCY_API_KEY=",
+        "docs": "https://docs.miraiminds.co/v2/llm"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:friendli",
@@ -3627,6 +4749,56 @@
       "fetchedAt": "2026-11-12"
     },
     {
+      "id": "models-dev:gisoo",
+      "name": "Gisoo",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "شناسهٔ مدل‌ها در وب‌سرویس گیسو، گرفتن فهرست زنده با GET /models، مدل‌هایی که از OpenRouter می‌آیند و این‌که برای هر کار کدام مدل را انتخاب کنید.",
+      "url": "https://gisoo.pro/docs/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://gisoo.pro/api/v1",
+        "auth": "apiKey",
+        "env": [
+          "GISOO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 16,
+        "models": [
+          "Gemini 4 Argon",
+          "Claude Haiku 5.5",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Astra",
+          "Gemini 3.8 Flash",
+          "Claude Fable 5.1",
+          "GLM-5.3"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "GISOO_API_KEY=",
+        "docs": "https://gisoo.pro/docs/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:github-copilot",
       "name": "GitHub Copilot",
       "kind": "ai-inference",
@@ -3654,16 +4826,16 @@
           "GITHUB_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 38,
+        "modelCount": 39,
         "models": [
+          "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "GPT-6.1 Terra",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
           "GPT-6.1 Sol",
-          "Claude Sonnet 5.5",
-          "Claude Opus 5.5"
+          "Claude Sonnet 5.5"
         ],
         "openWeightModels": 2,
         "outputs": [
@@ -3676,7 +4848,7 @@
         "snippet": "GITHUB_TOKEN=",
         "docs": "https://docs.github.com/en/copilot"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:gitlab",
@@ -3788,7 +4960,7 @@
       "name": "Google",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Google: 37 models listed on models.dev (newest: Gemini 4 Hydrogen, Gemini 4 Carbon, Gemini 4 Argon).",
+      "summary": "Google: 38 models listed on models.dev (newest: Gemini 4 Hydrogen, Gemini 4 Carbon, Gemini 4 Argon).",
       "summaryKo": "Gemini 모델을 부르는 Google AI Studio의 Gemini API",
       "written": "codeshopper",
       "url": "https://ai.google.dev",
@@ -3797,13 +4969,14 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 30303311
+        "downloads": 30111900
       },
       "tags": [
         "ai",
         "llm",
         "output-audio",
         "output-image",
+        "output-video",
         "server-key"
       ],
       "preview": {
@@ -3819,7 +4992,7 @@
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
         "limitsUrl": "https://ai.google.dev/gemini-api/docs/rate-limits",
-        "modelCount": 37,
+        "modelCount": 38,
         "models": [
           "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
@@ -3834,7 +5007,8 @@
         "outputs": [
           "audio",
           "image",
-          "text"
+          "text",
+          "video"
         ],
         "pricingUrl": "https://ai.google.dev/gemini-api/docs/pricing",
         "sdk": "@google/genai",
@@ -3845,7 +5019,7 @@
         "snippet": "GOOGLE_API_KEY=\nGOOGLE_GENERATIVE_AI_API_KEY=\nGEMINI_API_KEY=",
         "docs": "https://ai.google.dev/gemini-api/docs"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:google-vertex",
@@ -3965,6 +5139,55 @@
       "metrics": {
         "siteRank": 5000
       }
+    },
+    {
+      "id": "models-dev:graphn",
+      "name": "GraphN",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Build and deploy your first production AI agent workflow in GraphN with a pre-built support routing blueprint.",
+      "url": "https://graphn.ai/docs/getting-started",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://model.graphn.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "GRAPHN_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 7,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B",
+          "Gemma 4 E4B",
+          "Qwen3 VL",
+          "Qwen3 80B",
+          "GPT OSS 120B"
+        ],
+        "openWeightModels": 7,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "GRAPHN_API_KEY=",
+        "docs": "https://graphn.ai/docs/getting-started"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:greenpt",
@@ -4146,7 +5369,7 @@
       "preview": {
         "type": "api",
         "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://inference.hetzner.com/api/v1",
+        "apiBase": "https://inference.hetzner.com/v1",
         "auth": "apiKey",
         "env": [
           "HETZNER_API_KEY"
@@ -4168,7 +5391,7 @@
         "snippet": "HETZNER_API_KEY=",
         "docs": "https://experiments.hetzner.com/docs/inference"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:hopper",
@@ -4213,6 +5436,59 @@
         "docs": "https://withhopper.com/agents/deepseek-v4.1-flash-1017"
       },
       "fetchedAt": "2026-11-06"
+    },
+    {
+      "id": "models-dev:hostinger-router",
+      "name": "Hostinger Router",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Connect your apps and AI agents to leading LLMs through Hostinger AI Router — one API key, built-in fallback, and credit-based billing with no separate provider accounts.",
+      "url": "https://www.hostinger.com/ai-router",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://router.hostinger.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "HOSTINGER_ROUTER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 9,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "Claude Opus 5",
+          "Kimi K3",
+          "Claude Sonnet 5",
+          "GLM-5.2",
+          "Claude Fable 5",
+          "Claude Sonnet 4.6",
+          "Claude Haiku 4.5 (latest)"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "HOSTINGER_ROUTER_API_KEY=",
+        "docs": "https://www.hostinger.com/ai-router"
+      },
+      "fetchedAt": "2026-11-14",
+      "metrics": {
+        "siteRank": 10000
+      }
     },
     {
       "id": "models-dev:hpc-ai",
@@ -4265,6 +5541,108 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "models-dev:huawei-maas",
+      "name": "Huawei Cloud MAAS",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "该功能仅支持“西南-贵阳一”区域。您可以登录MaaS控制台，在模型广场页面的模型详情页面，查看模型的详细信息。",
+      "url": "https://support.huaweicloud.com/model-call-maas/model-call-021.html",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.modelarts-maas.com/openai/v1",
+        "auth": "apiKey",
+        "env": [
+          "MAAS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 8,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3",
+          "openPangu 2.0 Pro",
+          "openPangu 2.0 Flash",
+          "GLM-5.2",
+          "DeepSeek V4 Flash",
+          "GLM-5.1"
+        ],
+        "openWeightModels": 8,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "MAAS_API_KEY=",
+        "docs": "https://support.huaweicloud.com/model-call-maas/model-call-021.html"
+      },
+      "fetchedAt": "2026-11-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
+    },
+    {
+      "id": "models-dev:hubris",
+      "name": "Hubris",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "600+ LLM через единый OpenAI-совместимый API. Цены в рублях.",
+      "url": "https://hubris.pw/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.hubris.pw/v1",
+        "auth": "apiKey",
+        "env": [
+          "HUBRIS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 16,
+        "models": [
+          "Claude Fable 5.2",
+          "Claude Haiku 5.5",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "Claude Fable 5.1",
+          "Claude Opus 5",
+          "Claude Sonnet 5",
+          "Claude Fable 5"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "HUBRIS_API_KEY=",
+        "docs": "https://hubris.pw/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:huggingface",
       "name": "Hugging Face",
       "kind": "ai-inference",
@@ -4278,7 +5656,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 452467
+        "downloads": 455606
       },
       "tags": [
         "ai",
@@ -4296,18 +5674,18 @@
           "HF_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 82,
+        "modelCount": 84,
         "models": [
+          "Inkling 2 Small",
+          "Kimi K3.1 Pro",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "DeepSeek V4.1 Flash",
           "DeepSeek V4 Flash Vision Exp",
           "Hy4 preview",
-          "GLM-5.3-Flash",
-          "DeepSeek V4 Pro 0813",
-          "GLM-5.3"
+          "GLM-5.3-Flash"
         ],
-        "openWeightModels": 82,
+        "openWeightModels": 84,
         "outputs": [
           "text"
         ],
@@ -4320,7 +5698,51 @@
         "snippet": "HF_TOKEN=",
         "docs": "https://huggingface.co/docs/inference-providers"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:humain",
+      "name": "HUMAIN",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "HUMAIN: 2 models listed on models.dev (newest: HUMAIN M3 Preview, HUMAIN M3 Research Preview).",
+      "url": "https://platform.node.humain.com",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.node.humainaic.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "HUMAIN_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "HUMAIN M3 Preview",
+          "HUMAIN M3 Research Preview"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "HUMAIN_API_KEY=",
+        "docs": "https://platform.node.humain.com"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:hyper",
@@ -4350,7 +5772,7 @@
         "keyServerSide": true,
         "modelCount": 19,
         "models": [
-          "DeepSeek V4.1 Flash 1017 (Basic)",
+          "DeepSeek V4.1 Flash 1017 (Economy)",
           "Prism Flash",
           "Prism Core",
           "Kimi K3.1 Pro",
@@ -4370,7 +5792,7 @@
         "snippet": "HYPER_API_KEY=",
         "docs": "https://hyper.charm.land"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:impossibl",
@@ -4434,7 +5856,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 262
+        "downloads": 303
       },
       "tags": [
         "ai",
@@ -4469,7 +5891,7 @@
         "snippet": "INCEPTION_API_KEY=",
         "docs": "https://docs.inceptionlabs.ai/get-started/models"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:inceptron",
@@ -4593,10 +6015,16 @@
           "INFER_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 2,
+        "modelCount": 10,
         "models": [
+          "GPT-6.1 Sol (Low cost)",
+          "Claude Sonnet 5.5 (Low cost)",
+          "Claude Opus 5.5 (Low cost)",
+          "Grok 4.7 (Low cost)",
+          "GPT-6 Astra (Low cost)",
           "GPT-6 Astra (Official API)",
-          "GPT-5.6 Sol (Official API)"
+          "Gemini 3.8 Flash (Low cost)",
+          "Claude Fable 5.1 (Low cost)"
         ],
         "outputs": [
           "text"
@@ -4608,7 +6036,55 @@
         "snippet": "INFER_API_KEY=",
         "docs": "https://infer.flow7.org/opencode"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:inferall",
+      "name": "InferAll",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "InferAll developer docs: REST endpoints, Python (inferall-ai) and TypeScript (@inferall/sdk) SDKs, Claude Code integration, and the live model list. One base URL, one ifu_ key.",
+      "url": "https://inferall.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.inferall.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "INFERALL_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 6,
+        "models": [
+          "Nemotron 3.5 Super VL 120B A12B",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Nemotron 3.5 Lightning 30B A3B",
+          "Nemotron 3 Ultra 550B A55B",
+          "GPT OSS 20B"
+        ],
+        "openWeightModels": 6,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "INFERALL_API_KEY=",
+        "docs": "https://inferall.ai/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:inference",
@@ -4659,6 +6135,200 @@
         "docs": "https://inference.net/models"
       },
       "fetchedAt": "2026-11-12"
+    },
+    {
+      "id": "models-dev:inference-coop",
+      "name": "Inference Cooperative",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "A member-governed cooperative for AI inference. Direct the models, the values, and the direction — together.",
+      "url": "https://inference.coop",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://gateway.inference.coop/v1",
+        "auth": "apiKey",
+        "env": [
+          "INFERENCE_COOP_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 8,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "GLM-5.3",
+          "Apertus 1.5 70B",
+          "Qwen3.5-122B",
+          "GPT OSS 120B"
+        ],
+        "openWeightModels": 8,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "INFERENCE_COOP_API_KEY=",
+        "docs": "https://inference.coop"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:inferenceapis",
+      "name": "Inference APIs",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Browse AI models available through Inference APIs: context windows, capabilities and API docs.",
+      "url": "https://inferenceapis.com/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.inferenceapis.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "INFERENCEAPIS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 11,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "Qwen3.8 Flash",
+          "GLM-5.3",
+          "Kimi K2.7 Code",
+          "MiniMax-M3",
+          "DeepSeek V4 Flash",
+          "DeepSeek V4 Pro"
+        ],
+        "openWeightModels": 10,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "INFERENCEAPIS_API_KEY=",
+        "docs": "https://inferenceapis.com/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:inferris",
+      "name": "Inferris",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Inferris: 4 models listed on models.dev (newest: Kimi K3.1 Pro, GLM-5.3-Flash, GLM-5.3).",
+      "url": "https://inferris.ai/developers.md",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.inferris.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "INFERRIS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 4,
+        "models": [
+          "Kimi K3.1 Pro",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Kimi K3"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "INFERRIS_API_KEY=",
+        "docs": "https://inferris.ai/developers.md"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:infersia",
+      "name": "Infersia",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Every model we serve, with the precision it is served at, live latency, 30-day uptime and per-token pricing.",
+      "url": "https://infersia.com/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.infersia.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "INFERSIA_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 6,
+        "models": [
+          "MiniMax-M3.1-Flash",
+          "DeepSeek V4.1 Flash 1017",
+          "Beam 1.0 501B A23B",
+          "MiMo-V2.6-Flash",
+          "MiMo-V2.6-Pro",
+          "Hy4 preview"
+        ],
+        "openWeightModels": 6,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "INFERSIA_API_KEY=",
+        "docs": "https://infersia.com/models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:inferx",
@@ -4815,6 +6485,50 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "models-dev:isoquant",
+      "name": "Isoquant",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Connect, make requests, and handle responses.",
+      "url": "https://isoquant.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.isoquant.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "ISOQUANT_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "DeepSeek V4.1 Flash 1017 Fast",
+          "GLM-5.3-Flash"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ISOQUANT_API_KEY=",
+        "docs": "https://isoquant.ai/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:iteracompute",
       "name": "IteraCompute",
       "kind": "ai-inference",
@@ -4840,18 +6554,18 @@
           "ITERACOMPUTE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 10,
+        "modelCount": 27,
         "models": [
-          "DeepSeek V4 Flash 0731 (legacy alias)",
-          "DeepSeek V4.1 Flash",
-          "GLM-5.3-Flash",
-          "DeepSeek V4 Pro 0813",
-          "GLM-5.3",
-          "Qwen3.8 27B",
-          "Qwen3.8 2.4T A95B",
-          "Kimi K3"
+          "DeepSeek V4.1 Flash 1017",
+          "Gemini 4 Argon",
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "DeepSeek V4 Flash 0731 (legacy alias)"
         ],
-        "openWeightModels": 10,
+        "openWeightModels": 16,
         "outputs": [
           "text"
         ],
@@ -4862,7 +6576,51 @@
         "snippet": "ITERACOMPUTE_API_KEY=",
         "docs": "https://iteracompute.com/docs.html"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:jad-ai",
+      "name": "Jad AI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Jad AI: 3 models listed on models.dev (newest: Jad CoWork, Jad Code, Jad Go).",
+      "url": "https://jadai.freesrv.com/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://jadai.freesrv.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "JAD_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "Jad CoWork",
+          "Jad Code",
+          "Jad Go"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "JAD_API_KEY=",
+        "docs": "https://jadai.freesrv.com/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:jalapeno",
@@ -4965,6 +6723,151 @@
       "fetchedAt": "2026-11-05"
     },
     {
+      "id": "models-dev:joingonka",
+      "name": "JoinGonka",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Gonka network models in a single API: id for the model field, context, output limit, pricing, and status. The same open models at a fraction of the cost.",
+      "url": "https://gate.joingonka.ai/docs/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://gate.joingonka.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "JOINGONKA_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Flash 0731",
+          "MiniMax-M2.7"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "JOINGONKA_API_KEY=",
+        "docs": "https://gate.joingonka.ai/docs/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:jzstoken",
+      "name": "JZSTOKEN",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "JZSTOKEN: 22 models listed on models.dev (newest: GPT-6.1 Terra, Kimi K3.1 Pro, GPT-6.1 Sol).",
+      "url": "https://jzstoken.com",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://jzstoken.com/api/v1",
+        "auth": "apiKey",
+        "env": [
+          "JZSTOKEN_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 22,
+        "models": [
+          "GPT-6.1 Terra",
+          "Kimi K3.1 Pro",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "Grok 4.7",
+          "DeepSeek V4.1 Flash",
+          "GPT-6 Astra"
+        ],
+        "openWeightModels": 7,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "JZSTOKEN_API_KEY=",
+        "docs": "https://jzstoken.com"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:keln",
+      "name": "Keln",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Every model on Keln with its context window and price per million tokens for input, cached input, and output, plus web search pricing and the model lifecycle.",
+      "url": "https://docs.keln.ai/models-pricing/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.keln.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "KELN_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 14,
+        "models": [
+          "Kimi K3.1 Pro",
+          "MiniMax-M3.1-Flash",
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro 0813",
+          "GLM-5.3",
+          "Qwen3.8 27B"
+        ],
+        "openWeightModels": 14,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "KELN_API_KEY=",
+        "docs": "https://docs.keln.ai/models-pricing/"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:kenari",
       "name": "Kenari",
       "kind": "ai-inference",
@@ -5050,18 +6953,18 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 467,
+        "modelCount": 468,
         "models": [
+          "inclusionAI: Ling 3.2 Flash (free)",
           "Google: Gemini 4 Hydrogen",
+          "Thinking Machines: Inkling 2 Small",
           "Ultramarine 1 Flash",
           "Baidu: ERNIE-5.5-Flash-Preview (free)",
           "Baidu: ERNIE-Light-DT-1.0",
           "Google: Gemini 4 Carbon",
-          "Nex AGI: Nex-N2.6",
-          "Anthropic: Claude Fable 5.2",
-          "Meta: Muse Ember"
+          "Nex AGI: Nex-N2.6"
         ],
-        "openWeightModels": 159,
+        "openWeightModels": 160,
         "outputs": [
           "audio",
           "image",
@@ -5075,7 +6978,7 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-11-13",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 500000
       }
@@ -5183,6 +7086,106 @@
       }
     },
     {
+      "id": "models-dev:kitani",
+      "name": "Kitani",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Integrate Kitani's OpenAI-compatible inference API, configure routing, and connect provider hardware.",
+      "url": "https://kitani.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.kitani.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "KITANI_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 9,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash 1017",
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro 0813",
+          "GLM-5.3",
+          "Gemma 4 12B IT",
+          "Ministral 3 8B 2512",
+          "Llama-3.1-8B-Instruct"
+        ],
+        "openWeightModels": 9,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "KITANI_API_KEY=",
+        "docs": "https://kitani.ai/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:klavo",
+      "name": "Klavo AI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Как подключиться к API Klavo AI: ключ, base_url api.klavo.ru/v1, эндпоинты в формате OpenAI и Anthropic, режимы обработки данных, баланс и ошибки.",
+      "url": "https://ai.klavo.ru/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.klavo.ru/v1",
+        "auth": "apiKey",
+        "env": [
+          "KLAVO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 10,
+        "models": [
+          "MiniMax-M3.1-Flash",
+          "DeepSeek V4.1 Flash 1017",
+          "MiMo-V2.6-Pro",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B",
+          "DeepSeek V4 Flash 0731"
+        ],
+        "openWeightModels": 10,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "KLAVO_API_KEY=",
+        "docs": "https://ai.klavo.ru/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:klokintegration",
       "name": "klokintegration.se",
       "kind": "ai-inference",
@@ -5225,6 +7228,56 @@
         "docs": "https://klokintegration.se/docs/ai-api"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "models-dev:korouter",
+      "name": "KoRouter",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Connect to a growing catalog of leading models with KoRouter. Runnable quickstart, OpenAI and Anthropic API guidance, model capabilities, production behavior, billing, privacy, and errors.",
+      "url": "https://korouter.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://korouter.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "KOROUTER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 19,
+        "models": [
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Sol",
+          "DeepSeek V4.1 Flash",
+          "GPT-6 Astra",
+          "Claude Fable 5.1",
+          "GLM-5.3-Flash"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "KOROUTER_API_KEY=",
+        "docs": "https://korouter.ai/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:kosmik",
@@ -5314,12 +7367,12 @@
       "fetchedAt": "2026-11-12"
     },
     {
-      "id": "models-dev:lilac",
-      "name": "Lilac",
+      "id": "models-dev:kunavo",
+      "name": "Kunavo",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Lilac is the operations platform for GPU providers: provisioning, burn-in and validation, monitoring, repair, usage records and white-label consoles.",
-      "url": "https://docs.getlilac.com/inference/models",
+      "summary": "Sign up, fund your account, and make your first Kunavo API call in under five minutes. OpenAI-compatible — one base_url change.",
+      "url": "https://kunavo.com/docs/quickstart?utm_source=models.dev&utm_medium=directory",
       "source": {
         "name": "models.dev",
         "url": "https://models.dev"
@@ -5333,20 +7386,23 @@
       "preview": {
         "type": "api",
         "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://api.getlilac.com/v1",
+        "apiBase": "https://api.kunavo.com/v1",
         "auth": "apiKey",
         "env": [
-          "LILAC_API_KEY"
+          "KUNAVO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 4,
+        "modelCount": 16,
         "models": [
-          "GLM 5.2",
-          "MiniMax M3",
-          "Kimi K2.6",
-          "Gemma 4 31B IT"
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "GPT-6 Sol",
+          "GPT-6 Astra",
+          "Claude Fable 5.1",
+          "Claude Opus 5",
+          "GPT-5.6 Sol",
+          "GPT-5.6 Terra"
         ],
-        "openWeightModels": 4,
         "outputs": [
           "text"
         ],
@@ -5354,10 +7410,10 @@
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
-        "snippet": "LILAC_API_KEY=",
-        "docs": "https://docs.getlilac.com/inference/models"
+        "snippet": "KUNAVO_API_KEY=",
+        "docs": "https://kunavo.com/docs/quickstart?utm_source=models.dev&utm_medium=directory"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:liquid",
@@ -5385,10 +7441,18 @@
           "LIQUID_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 1,
+        "modelCount": 8,
         "models": [
-          "Liquid Auto"
+          "Kimi K3.1 Pro",
+          "Liquid Auto",
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B",
+          "Kimi K3"
         ],
+        "openWeightModels": 7,
         "outputs": [
           "text"
         ],
@@ -5399,7 +7463,52 @@
         "snippet": "LIQUID_API_KEY=",
         "docs": "https://inference.ai.exchange/docs"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:lithosai",
+      "name": "LithosAI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "LithosAI: 3 models listed on models.dev (newest: DeepSeek V4.1 Flash 1017, DeepSeek V4.1 Flash 1017 Fast, DeepSeek V4.1 Flash 1017 Ultra).",
+      "url": "https://docs.lithosai.com",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.lithosai.cloud/v1",
+        "auth": "apiKey",
+        "env": [
+          "LITHOSAI_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash 1017 Fast",
+          "DeepSeek V4.1 Flash 1017 Ultra"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "LITHOSAI_API_KEY=",
+        "docs": "https://docs.lithosai.com"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:llmgateway",
@@ -5646,6 +7755,50 @@
       }
     },
     {
+      "id": "models-dev:logits",
+      "name": "Logits",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Point any OpenAI SDK at https://api.logits.com/v1 with your API key as a bearer token. Use the model catalog and status endpoint to inspect current availability.",
+      "url": "https://logits.com/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.logits.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "LOGITS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "LOGITS_API_KEY=",
+        "docs": "https://logits.com/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:longcat",
       "name": "LongCat",
       "kind": "ai-llm",
@@ -5718,16 +7871,16 @@
           "LOWROUTER_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 32,
+        "modelCount": 45,
         "models": [
           "GPT-6.1 Terra",
+          "Claude Haiku 5.5",
           "Mistral Large 4",
           "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
           "GPT-6 Luna",
-          "GPT-6 Sol",
-          "GPT-6 Astra",
-          "GPT-5.6 Luna",
-          "GPT-5.6 Sol"
+          "GPT-6 Sol"
         ],
         "openWeightModels": 10,
         "outputs": [
@@ -5740,7 +7893,7 @@
         "snippet": "LOWROUTER_API_KEY=",
         "docs": "https://lowrouter.ai/docs/models/available"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:lucidquery",
@@ -5788,6 +7941,56 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:lyceum",
+      "name": "Lyceum",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Pay-per-request, OpenAI-compatible inference endpoints",
+      "url": "https://docs.lyceum.technology/docs/inference/serverless",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.lyceum.technology/openai/v1",
+        "auth": "apiKey",
+        "env": [
+          "LYCEUM_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 8,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B",
+          "Qwen3.8 2.4T A95B",
+          "DeepSeek V4 Flash 0731",
+          "Kimi K2.7 Code"
+        ],
+        "openWeightModels": 8,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "LYCEUM_API_KEY=",
+        "docs": "https://docs.lyceum.technology/docs/inference/serverless"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:lynkr",
       "name": "Lynkr",
       "kind": "ai-inference",
@@ -5828,6 +8031,49 @@
         "docs": "https://github.com/Fast-Editor/Lynkr"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "models-dev:mallard",
+      "name": "Mallard AI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Create an API key, set the base URL and make your first request to Qwen3.6 35B A3B from curl, Python or JavaScript.",
+      "url": "https://mallardai.co.uk/docs/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.mallardai.co.uk/v1",
+        "auth": "apiKey",
+        "env": [
+          "MALLARD_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Qwen3.6 35B-A3B"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "MALLARD_API_KEY=",
+        "docs": "https://mallardai.co.uk/docs/"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:meganova",
@@ -5931,6 +8177,48 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "models-dev:meragpt",
+      "name": "meraGPT",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "The meraGPT model catalogue: ids, context windows, per-token pricing and availability.",
+      "url": "https://meragpt.com/docs/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://meragpt.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "MERAGPT_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Restyler 1"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "MERAGPT_API_KEY=",
+        "docs": "https://meragpt.com/docs/models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:merge-gateway",
@@ -6655,6 +8943,56 @@
       "fetchedAt": "2026-11-03"
     },
     {
+      "id": "models-dev:moneo",
+      "name": "Moneo",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Документация OpenAI-compatible API Moneo: Base URL, авторизация, список моделей, Chat Completions, streaming, баланс и подключение OpenCode.",
+      "url": "https://moneo.one/api.html",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.moneo.one/v1",
+        "auth": "apiKey",
+        "env": [
+          "MONEO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 11,
+        "models": [
+          "DeepSeek V4.1 Flash 1017 Uncensored",
+          "Nemotron 3.5 Super VL 120B",
+          "Claude Haiku 5.5",
+          "GLM 5.3 Flash",
+          "Kimi K2.7 Code (Web)",
+          "DeepSeek V4 Flash (Web)",
+          "Gemma 4 31B (Web)",
+          "MiniMax M2.7 (Web)"
+        ],
+        "openWeightModels": 10,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "MONEO_API_KEY=",
+        "docs": "https://moneo.one/api.html"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:moonshotai",
       "name": "Moonshot AI",
       "kind": "ai-llm",
@@ -6917,7 +9255,6 @@
         "ai",
         "inference",
         "openai-compatible",
-        "output-image",
         "server-key"
       ],
       "preview": {
@@ -6929,20 +9266,19 @@
           "NAN_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 8,
+        "modelCount": 11,
         "models": [
+          "Hy4",
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
           "MiMo-V2.6-Flash",
-          "Qwen-Image-2.1",
-          "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash",
           "Qwen3.8 Flash",
-          "GLM-5.3",
-          "Qwen3.6 35B-A3B",
-          "Gemma 4 26B A4B IT"
+          "DeepSeek V4 Pro 0813",
+          "GLM-5.3"
         ],
-        "openWeightModels": 7,
+        "openWeightModels": 8,
         "outputs": [
-          "image",
           "text"
         ],
         "summarySource": "official page meta description"
@@ -6952,7 +9288,7 @@
         "snippet": "NAN_API_KEY=",
         "docs": "https://nan.builders/docs/models"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:nano-gpt",
@@ -7087,18 +9423,18 @@
           "NEBIUS_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 21,
+        "modelCount": 23,
         "models": [
+          "Inkling 2 Small",
+          "Kimi K3.1 Pro",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Beam 1.0 501B A23B",
           "Muse Spark Open",
           "Nemotron 3.5 Super VL 120B A12B",
-          "GLM-5.3-Flash",
-          "DeepSeek V4 Pro 0813",
-          "GLM-5.3"
+          "GLM-5.3-Flash"
         ],
-        "openWeightModels": 21,
+        "openWeightModels": 23,
         "outputs": [
           "text"
         ],
@@ -7109,7 +9445,7 @@
         "snippet": "NEBIUS_API_KEY=",
         "docs": "https://docs.tokenfactory.nebius.com/"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:neon",
@@ -7138,7 +9474,7 @@
           "NEON_AI_GATEWAY_TOKEN"
         ],
         "keyServerSide": true,
-        "modelCount": 58,
+        "modelCount": 57,
         "models": [
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
@@ -7149,7 +9485,7 @@
           "GPT-6 Sol",
           "Grok 4.7"
         ],
-        "openWeightModels": 14,
+        "openWeightModels": 13,
         "outputs": [
           "text"
         ],
@@ -7160,7 +9496,7 @@
         "snippet": "NEON_AI_GATEWAY_BASE_URL=\nNEON_AI_GATEWAY_TOKEN=",
         "docs": "https://neon.com/docs"
       },
-      "fetchedAt": "2026-10-28",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 500000
       }
@@ -7237,14 +9573,14 @@
         "keyServerSide": true,
         "modelCount": 23,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro (flex)",
+          "Neuralwatt Large",
+          "Neuralwatt Large (flex)",
           "DeepSeek V4.1 Flash",
+          "DeepSeek V4.1 Flash (Speed)",
           "DeepSeek V4.1 Flash Flex",
-          "MiMo-V2.6-Pro",
-          "MiMo-V2.6-Pro Flex",
-          "GLM-5.3 Flash",
-          "GLM-5.3 Flash Flex",
-          "GLM 5.3",
-          "GLM 5.3 Flex"
+          "Neuralwatt Flash"
         ],
         "openWeightModels": 23,
         "outputs": [
@@ -7257,7 +9593,98 @@
         "snippet": "NEURALWATT_API_KEY=",
         "docs": "https://portal.neuralwatt.com/docs"
       },
-      "fetchedAt": "2026-10-23",
+      "fetchedAt": "2026-11-14",
+      "metrics": {
+        "siteRank": 1000000
+      }
+    },
+    {
+      "id": "models-dev:nodecode",
+      "name": "Nodecode",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Providers, wire dialects, key lookup, Nodecode's own models, default and auxiliary model, effort, retries and the failover chain.",
+      "url": "https://nodecode.ai/docs/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.nodecode.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "NODECODE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Cyber v1"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "NODECODE_API_KEY=",
+        "docs": "https://nodecode.ai/docs/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:nokeep",
+      "name": "nokeep",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Docs for the nokeep API: OpenAI-compatible, for uncensored chat, images and video. Quickstart, app setup, every field and error, prices and what we keep.",
+      "url": "https://nokeep.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://nokeep.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "NOKEEP_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "DeepSeek V4.1 Flash 1017 Uncensored",
+          "DeepSeek V4.1 Flash Uncensored",
+          "GLM 5.3 Flash Uncensored"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "NOKEEP_API_KEY=",
+        "docs": "https://nokeep.ai/docs"
+      },
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 1000000
       }
@@ -7419,6 +9846,99 @@
       }
     },
     {
+      "id": "models-dev:oathbreaker",
+      "name": "Oathbreaker AI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Connect to Oathbreaker: model limits, streaming, tool calling, token pricing and API examples.",
+      "url": "https://oathbreaker.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://oathbreaker.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "OATHBREAKER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "Oathbreaker GLM-5.3 Flash Abliterated",
+          "Oathbreaker GLM-5.3 Abliterated"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "OATHBREAKER_API_KEY=",
+        "docs": "https://oathbreaker.ai/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:obscurify",
+      "name": "Obscurify.ai",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Obscurify.ai API documentation — privacy-first AI chat platform.",
+      "url": "https://obscurify.ai/api-docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://obscurify.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "OBSCURIFY_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 15,
+        "models": [
+          "MiniMax-M3.1-Flash",
+          "Claude Haiku 5.5",
+          "Claude Sonnet 5.5",
+          "GPT-6 Luna",
+          "Grok 4.7",
+          "Gemini 3.8 Flash",
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro 0813"
+        ],
+        "openWeightModels": 9,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "OBSCURIFY_API_KEY=",
+        "docs": "https://obscurify.ai/api-docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:oci",
       "name": "OCI Generative AI",
       "kind": "ai-inference",
@@ -7499,16 +10019,16 @@
           "OFOX_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 151,
+        "modelCount": 152,
         "models": [
+          "Gemini 4 Hydrogen",
           "Claude Fable 5.2",
           "GPT-6.1 Terra",
           "Kimi K3.1 Pro",
           "DeepSeek V4.1 Flash 1017",
           "Gemini 4 Argon",
           "Claude Haiku 5.5",
-          "GPT-6.1 Sol",
-          "Claude Sonnet 5.5"
+          "GPT-6.1 Sol"
         ],
         "openWeightModels": 45,
         "outputs": [
@@ -7521,14 +10041,14 @@
         "snippet": "OFOX_API_KEY=",
         "docs": "https://ofox.ai/docs"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:ollama-cloud",
       "name": "Ollama Cloud",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Ollama Cloud: 26 models listed on models.dev (newest: Kimi K3.1 Pro, MiniMax-M3.1-Flash, DeepSeek V4.1 Flash 1017).",
+      "summary": "Ollama Cloud: 27 models listed on models.dev (newest: Inkling 2 Small, Kimi K3.1 Pro, MiniMax-M3.1-Flash).",
       "summaryKo": "Ollama 모델을 클라우드에서 돌리는 Ollama Cloud",
       "written": "codeshopper",
       "url": "https://docs.ollama.com/cloud",
@@ -7551,18 +10071,18 @@
           "OLLAMA_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 26,
+        "modelCount": 27,
         "models": [
+          "Inkling 2 Small",
           "Kimi K3.1 Pro",
           "MiniMax-M3.1-Flash",
           "DeepSeek V4.1 Flash 1017",
           "Beam 1.0 501B A23B",
           "Muse Spark Open",
           "Mistral Large 4",
-          "MiMo-V2.6-Flash",
-          "MiMo-V2.6-Pro"
+          "MiMo-V2.6-Flash"
         ],
-        "openWeightModels": 25,
+        "openWeightModels": 26,
         "outputs": [
           "text"
         ],
@@ -7573,7 +10093,7 @@
         "snippet": "OLLAMA_API_KEY=",
         "docs": "https://docs.ollama.com/cloud"
       },
-      "fetchedAt": "2026-11-09",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 50000
       }
@@ -7592,7 +10112,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 22823582
+        "downloads": 58304855
       },
       "tags": [
         "ai",
@@ -7605,7 +10125,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/openai",
         "auth": "apiKey",
-        "downloadsOf": "npm:@ai-sdk/openai",
+        "downloadsOf": "npm:openai",
         "env": [
           "OPENAI_API_KEY"
         ],
@@ -7637,7 +10157,57 @@
         "snippet": "OPENAI_API_KEY=",
         "docs": "https://platform.openai.com/docs"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:opencheap",
+      "name": "OpenCheap",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Point any OpenAI SDK at one base URL: quickstart, routing and fallbacks, the gateway, MCP for agents, paying with x402, and guides for Cline, LangChain, aider and more.",
+      "url": "https://docs.opencheap.si",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.opencheap.si/v1",
+        "auth": "apiKey",
+        "env": [
+          "OPENCHEAP_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 17,
+        "models": [
+          "Kimi K3",
+          "Qwen3 Coder Next",
+          "Devstral 2",
+          "Kimi K2 Instruct 0905",
+          "Qwen3-Next 80B-A3B Instruct",
+          "Qwen3-Coder 30B-A3B Instruct",
+          "Qwen3 235B-A22B Instruct 2507",
+          "Mistral Small 3.2 24B"
+        ],
+        "openWeightModels": 12,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "OPENCHEAP_API_KEY=",
+        "docs": "https://docs.opencheap.si"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:opencode",
@@ -7668,15 +10238,15 @@
         "modelCount": 139,
         "models": [
           "Gemini 4 Hydrogen",
+          "Inkling 2 Small Free",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "Muse Ember 1.0",
           "Iceman Free",
-          "Inkling 2 Small Free",
           "Crouton Alpha Free",
           "LongCat 2.5 Free"
         ],
-        "openWeightModels": 54,
+        "openWeightModels": 55,
         "outputs": [
           "text"
         ],
@@ -7687,7 +10257,7 @@
         "snippet": "OPENCODE_API_KEY=",
         "docs": "https://opencode.ai/v2/docs/console/models/"
       },
-      "fetchedAt": "2026-11-12",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 50000
       }
@@ -7804,7 +10374,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 4351015
+        "downloads": 4434893
       },
       "tags": [
         "ai",
@@ -7823,7 +10393,7 @@
         "env": [
           "OPENROUTER_API_KEY"
         ],
-        "freeTierCheckedAt": "2026-11-13",
+        "freeTierCheckedAt": "2026-11-14",
         "freeTierQuote": "Free models are capped at 20 requests per minute and 50 per day, rising to 1,000 per day once your account has bought at least $10 of credits.",
         "keyServerSide": true,
         "limitsCheckedAt": "2026-10-20",
@@ -7831,15 +10401,15 @@
         "modelCount": 378,
         "models": [
           "Gemini 4 Hydrogen",
+          "Inkling 2 Small",
+          "Inkling 2 Small (free)",
           "ERNIE-5.5-Flash-Preview (free)",
           "ERNIE-Light-DT-1.0",
           "Gemini 4 Carbon",
           "Nex-N2.6",
-          "Claude Fable 5.2",
-          "Muse Ember",
-          "LFM3-1.7B"
+          "Claude Fable 5.2"
         ],
-        "openWeightModels": 168,
+        "openWeightModels": 170,
         "outputs": [
           "audio",
           "image",
@@ -7854,7 +10424,7 @@
         "snippet": "OPENROUTER_API_KEY=",
         "docs": "https://openrouter.ai/docs"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:opper",
@@ -7882,16 +10452,16 @@
           "OPPER_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 55,
+        "modelCount": 56,
         "models": [
+          "GPT-6 Luna",
           "GPT-6 Astra",
           "Gemini 3.8 Flash",
           "Muse Spark 1.3",
           "Claude Fable 5.1",
           "GLM-5.3-Flash",
           "GLM-5.3",
-          "Qwen3.8 27B",
-          "Gemini 3.7 Flash"
+          "Qwen3.8 27B"
         ],
         "openWeightModels": 17,
         "outputs": [
@@ -7904,7 +10474,7 @@
         "snippet": "OPPER_API_KEY=",
         "docs": "https://opper.ai/models"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:orcarouter",
@@ -7960,6 +10530,55 @@
       }
     },
     {
+      "id": "models-dev:outerlabs",
+      "name": "Outer Labs",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Base URL, keys, the Chat API, models, billing and errors. The whole Outer Labs API on one page, with copyable requests.",
+      "url": "https://outerlabs.ai/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.outerlabs.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "OUTERLABS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 18,
+        "models": [
+          "Claude Fable 5.2",
+          "GPT-6.1 Terra",
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "GPT-6 Sol"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "OUTERLABS_API_KEY=",
+        "docs": "https://outerlabs.ai/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:ovhcloud",
       "name": "OVHcloud AI Endpoints",
       "kind": "ai-inference",
@@ -8013,6 +10632,49 @@
       }
     },
     {
+      "id": "models-dev:paraloncloud",
+      "name": "ParalonCloud",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Run open LLMs through ParalonCloud's OpenAI-compatible inference API. Point your existing OpenAI SDK at https://paraloncloud.com/v1 and change two lines.",
+      "url": "https://paraloncloud.com/docs/inference-api",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://paraloncloud.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "PARALONCLOUD_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Qwen3.8 27B"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "PARALONCLOUD_API_KEY=",
+        "docs": "https://paraloncloud.com/docs/inference-api"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:pareto",
       "name": "Pareto Inference",
       "kind": "ai-inference",
@@ -8038,11 +10700,13 @@
           "PARETO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 1,
+        "modelCount": 3,
         "models": [
+          "MiMo-V2.6-Flash",
+          "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash"
         ],
-        "openWeightModels": 1,
+        "openWeightModels": 3,
         "outputs": [
           "text"
         ],
@@ -8053,7 +10717,7 @@
         "snippet": "PARETO_API_KEY=",
         "docs": "https://docs.paretoinference.com/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:pendra",
@@ -8206,6 +10870,100 @@
       "metrics": {
         "siteRank": 5000
       }
+    },
+    {
+      "id": "models-dev:phala",
+      "name": "Phala",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Make your first OpenAI-compatible Private AI request through Phala, then confirm it was served through an attested gateway.",
+      "url": "https://docs.phala.com/phala-cloud/confidential-ai/confidential-model/confidential-ai-api",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://inference.phala.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "PHALA_AI_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 19,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B",
+          "DeepSeek V4 Flash 0731",
+          "Kimi K3",
+          "GLM-5.2",
+          "Qwen3.6 27B"
+        ],
+        "openWeightModels": 19,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "PHALA_AI_API_KEY=",
+        "docs": "https://docs.phala.com/phala-cloud/confidential-ai/confidential-model/confidential-ai-api"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:phase",
+      "name": "Phase Router",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Phase Router: an OpenAI-compatible API. Pay with an API key, or per request with USDT (x402 on Phase L1). Model catalog, prices and a chat.",
+      "url": "https://router.phase.xyz/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://router.phase.xyz/v1",
+        "auth": "apiKey",
+        "env": [
+          "PHASE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "GPT OSS 120B",
+          "Qwen3-Coder 480B-A35B Instruct"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "PHASE_API_KEY=",
+        "docs": "https://router.phase.xyz/models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:pioneer",
@@ -8361,6 +11119,55 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:powerspring",
+      "name": "Powerspring",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Popular open AI models run on EU infrastructure owned by EU companies, with prices per million tokens.",
+      "url": "https://powerspring.eu/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.powerspring.eu/v1",
+        "auth": "apiKey",
+        "env": [
+          "POWERSPRING_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 7,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "Qwen3.8 27B",
+          "Gemma 4 26B A4B IT",
+          "Gemma 4 31B IT",
+          "GPT OSS 120B",
+          "GPT OSS 20B"
+        ],
+        "openWeightModels": 7,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "POWERSPRING_API_KEY=",
+        "docs": "https://powerspring.eu/models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:prime",
       "name": "Prime Inference",
       "kind": "ai-inference",
@@ -8388,16 +11195,16 @@
         "keyServerSide": true,
         "modelCount": 70,
         "models": [
+          "Inkling 2 Small",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
-          "Inkling 2 Small",
           "Kimi K3.1 Pro",
           "DeepSeek V4.1 Flash 1017",
           "Muse Spark Open",
           "Gemini 4 Argon",
           "GPT-6.1 Sol"
         ],
-        "openWeightModels": 22,
+        "openWeightModels": 23,
         "outputs": [
           "text"
         ],
@@ -8408,7 +11215,7 @@
         "snippet": "PRIME_API_KEY=",
         "docs": "https://docs.primeintellect.ai/inference/overview"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:privatemode-ai",
@@ -8459,6 +11266,52 @@
         "docs": "https://docs.privatemode.ai/api/overview"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "models-dev:proxystacks",
+      "name": "ProxyStacks Relay",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Connect OpenCode to ProxyStacks Relay: opencode.json provider setup via @ai-sdk/openai-compatible and model selection.",
+      "url": "https://proxystacks.com/en/docs/opencode",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://proxystacks.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "RELAY_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 4,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "GLM-5.3-Flash",
+          "GLM-5.3"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "RELAY_API_KEY=",
+        "docs": "https://proxystacks.com/en/docs/opencode"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:qihang-ai",
@@ -8616,6 +11469,48 @@
       "fetchedAt": "2026-11-10"
     },
     {
+      "id": "models-dev:rayline",
+      "name": "Rayline",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Start OpenCode on ARC with Rayline CLI, or configure your existing setup manually.",
+      "url": "https://docs.rayline.ai/tools/opencode",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/anthropic",
+        "apiBase": "https://api.rayline.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "RAYLINE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "ARC Sage",
+          "ARC Swift"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/anthropic",
+        "snippet": "RAYLINE_API_KEY=",
+        "docs": "https://docs.rayline.ai/tools/opencode"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:reflection",
       "name": "Reflection",
       "kind": "ai-inference",
@@ -8660,6 +11555,54 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "models-dev:refuseless",
+      "name": "Refuseless",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "The named Refuseless lineup.",
+      "url": "https://docs.refuseless.com/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.refuseless.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "REFUSELESS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 6,
+        "models": [
+          "MiniMax M3.1 Flash",
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash 1017 Abliterated",
+          "DeepSeek V4.1 Flash 1017 Abliterated Free",
+          "GLM 5.3 Flash Abliterated",
+          "GLM 5.3 Abliterated"
+        ],
+        "openWeightModels": 6,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "REFUSELESS_API_KEY=",
+        "docs": "https://docs.refuseless.com/models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:regolo-ai",
@@ -8816,6 +11759,106 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:ruapi",
+      "name": "RuAPI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Live pricing for Claude, GPT, Gemini, DeepSeek, Qwen and 50+ models. Transparent pay-as-you-go billing in USDT / USDC, no foreign card needed, no subscription.",
+      "url": "https://www.ruapi.ai/pricing?lng=en",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://www.ruapi.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "RUAPI_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 9,
+        "models": [
+          "DeepSeek Flash",
+          "Claude Haiku 5.5",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "DeepSeek V4 Pro",
+          "GPT-5.6 Terra",
+          "GPT-5.5",
+          "GPT-5.4 mini"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "RUAPI_API_KEY=",
+        "docs": "https://www.ruapi.ai/pricing?lng=en"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:runcrate",
+      "name": "Runcrate",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Access open and frontier models through a single, OpenAI-compatible API.",
+      "url": "https://www.runcrate.ai/docs/models/overview",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.runcrate.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "RUNCRATE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 11,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "Qwen3.8 Flash",
+          "GLM-5.3",
+          "Kimi K2.6",
+          "DeepSeek V3.2",
+          "GPT OSS 120B"
+        ],
+        "openWeightModels": 10,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "RUNCRATE_API_KEY=",
+        "docs": "https://www.runcrate.ai/docs/models/overview"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:runinfra",
       "name": "RunInfra",
       "kind": "ai-inference",
@@ -8841,18 +11884,18 @@
           "RUNINFRA_GATEWAY_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 8,
+        "modelCount": 9,
         "models": [
+          "Step 5 Preview",
           "GLM-5.3-Flash",
           "Ornith 1.5 35B A3B",
           "DeepSeek V4 Pro 0813",
           "GLM-5.3",
           "Qwen3.8 27B",
           "Qwen3.8 2.4T A95B (NVFP4)",
-          "Nemotron 3.5 Lightning 30B A3B",
-          "DeepSeek V4 Flash 0731"
+          "Nemotron 3.5 Lightning 30B A3B"
         ],
-        "openWeightModels": 8,
+        "openWeightModels": 9,
         "outputs": [
           "text"
         ],
@@ -8863,7 +11906,50 @@
         "snippet": "RUNINFRA_GATEWAY_KEY=",
         "docs": "https://runinfra.ai/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:sagg",
+      "name": "SAGG",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "OpenAI-compatible API: quick start, models, errors, stream behaviour, billing rules and tariffs of the SAGG gateway.",
+      "url": "https://api.privatedeskai.com/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.privatedeskai.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "SAGG_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "DeepSeek V4 Flash 0731"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "SAGG_API_KEY=",
+        "docs": "https://api.privatedeskai.com/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:sakana",
@@ -9004,6 +12090,56 @@
         "docs": "https://docs.sambanova.ai"
       },
       "fetchedAt": "2026-11-13"
+    },
+    {
+      "id": "models-dev:sandbase",
+      "name": "SandBase",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Compare language models by token pricing, context windows, reasoning, and tool support. Find the right API for coding agents, chat, and text processing.",
+      "url": "https://www.sandbase.ai/docs/model-api-reference/llm-models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.sandbase.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "SANDBASE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 10,
+        "models": [
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Kimi K3",
+          "GPT-5.6 Luna",
+          "GPT-5.6 Sol",
+          "GPT-5.6 Terra",
+          "Qwen3.7 Plus",
+          "Qwen3.7 Max"
+        ],
+        "openWeightModels": 5,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "SANDBASE_API_KEY=",
+        "docs": "https://www.sandbase.ai/docs/model-api-reference/llm-models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:sap-ai-core",
@@ -9215,7 +12351,7 @@
       "name": "SCX.ai",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "SCX.ai: 4 models listed on models.dev (newest: Qwen3.8 Max, GLM-5.2, MiniMax-M2.7).",
+      "summary": "SCX.ai: 14 models listed on models.dev (newest: Kimi K3.1 Pro, DeepSeek V4.1 Flash 1017, DeepSeek V4.1 Flash).",
       "url": "https://platform.scx.ai/docs",
       "source": {
         "name": "models.dev",
@@ -9236,14 +12372,18 @@
           "SCX_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 4,
+        "modelCount": 14,
         "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
           "Qwen3.8 Max",
-          "GLM-5.2",
-          "MiniMax-M2.7",
-          "GPT OSS 120B"
+          "Kimi K3",
+          "GLM-5.2"
         ],
-        "openWeightModels": 3,
+        "openWeightModels": 13,
         "outputs": [
           "text"
         ],
@@ -9254,7 +12394,7 @@
         "snippet": "SCX_API_KEY=",
         "docs": "https://platform.scx.ai/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:sensenova",
@@ -9360,7 +12500,7 @@
       "name": "SiliconFlow (China)",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "SiliconFlow (China): 45 models listed on models.dev (newest: GLM-5.3-Flash, GLM-5.3, Qwen3.8 27B).",
+      "summary": "SiliconFlow (China): 46 models listed on models.dev (newest: DeepSeek V4.1 Flash, GLM-5.3-Flash, GLM-5.3).",
       "url": "https://cloud.siliconflow.com/models",
       "source": {
         "name": "models.dev",
@@ -9382,18 +12522,18 @@
           "SILICONFLOW_CN_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 45,
+        "modelCount": 46,
         "models": [
+          "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash",
           "GLM-5.3",
           "Qwen3.8 27B",
           "GLM-5.2",
           "DeepSeek V4 Flash",
           "deepseek-ai/DeepSeek-V4-Pro",
-          "Qwen3.6 27B",
-          "Pro/moonshotai/Kimi-K2.6"
+          "Qwen3.6 27B"
         ],
-        "openWeightModels": 45,
+        "openWeightModels": 46,
         "outputs": [
           "text"
         ],
@@ -9404,7 +12544,7 @@
         "snippet": "SILICONFLOW_CN_API_KEY=",
         "docs": "https://cloud.siliconflow.com/models"
       },
-      "fetchedAt": "2026-11-01"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:snowflake-cortex",
@@ -9459,6 +12599,103 @@
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "models-dev:sokkan",
+      "name": "SOKKAN Router",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Base URL, authentication, curl / Python / JavaScript examples, streaming, data location, response headers and error codes.",
+      "url": "https://router.sokkan.ch/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://router.sokkan.ch/v1",
+        "auth": "apiKey",
+        "env": [
+          "SOKKAN_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 5,
+        "models": [
+          "Qwen3.8 27B",
+          "Qwen3.6 35B-A3B (EU)",
+          "Qwen3.5 397B-A17B",
+          "GPT OSS 120B",
+          "GPT OSS 20B"
+        ],
+        "openWeightModels": 5,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "SOKKAN_API_KEY=",
+        "docs": "https://router.sokkan.ch/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:sparrowcodes",
+      "name": "SparrowCodes",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Every model on SparrowCodes with its price, context window and official benchmarks: Claude, GPT, Gemini, Grok, DeepSeek, Qwen, FLUX, Seedream and more.",
+      "url": "https://sparrowcodes.com/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.sparrowcodes.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "SPARROWCODES_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 19,
+        "models": [
+          "Sparrow Auto",
+          "GPT-6.1 Terra",
+          "Gemini 4 Argon",
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "SPARROWCODES_API_KEY=",
+        "docs": "https://sparrowcodes.com/models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:stackit",
@@ -9559,6 +12796,58 @@
         "docs": "https://docs.standardcompute.com/models"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "models-dev:steadyrouter",
+      "name": "SteadyRouter",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "SteadyRouter API docs: quick start, the OpenAI, Anthropic and Gemini API formats, common clients, billing, rate limits and errors, image generation, top-ups and refunds.",
+      "url": "https://www.steadyrouter.com/site/docs.html",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "output-image",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.steadyrouter.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "STEADYROUTER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 21,
+        "models": [
+          "Gemini 4 Argon",
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "Grok 4.7",
+          "DeepSeek V4.1 Flash",
+          "GPT-6 Astra"
+        ],
+        "openWeightModels": 7,
+        "outputs": [
+          "image",
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "STEADYROUTER_API_KEY=",
+        "docs": "https://www.steadyrouter.com/site/docs.html"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:stepfun",
@@ -9766,6 +13055,56 @@
       }
     },
     {
+      "id": "models-dev:stepping-stone",
+      "name": "stepping stone AG",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Use AI models directly on Swiss infrastructure — without sending data abroad. stepping stone offers leading open-source models as a managed service: ready to use, with data sovereignty and personalised support.",
+      "url": "https://www.stepping-stone.ch/en/products/artificial-intelligence",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://llm.stoney-cloud.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "STONEY_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 15,
+        "models": [
+          "Apertus v1.5 8B",
+          "GLM-5.3-Flash",
+          "Qwen3.8 27B",
+          "DeepSeek V4 Flash 0731",
+          "Gemma 4 31B IT",
+          "Nemotron 3 Super 120B A12B",
+          "Qwen3.5 35B-A3B FP8",
+          "MiniMax-M2.5"
+        ],
+        "openWeightModels": 15,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "STONEY_API_KEY=",
+        "docs": "https://www.stepping-stone.ch/en/products/artificial-intelligence"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:subconscious",
       "name": "Subconscious",
       "kind": "ai-inference",
@@ -9859,6 +13198,50 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "models-dev:superbot-gg",
+      "name": "superbot",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "every model on your account answers at one URL in the OpenAI or Anthropic format: your subscriptions, API keys and custom endpoints, one key.",
+      "url": "https://superbot.gg/api",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.superbot.gg/v1",
+        "auth": "apiKey",
+        "env": [
+          "SUPERBOT_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 2,
+        "models": [
+          "superbot",
+          "superbot-fast"
+        ],
+        "openWeightModels": 2,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "SUPERBOT_API_KEY=",
+        "docs": "https://superbot.gg/api"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:synthetic",
       "name": "Synthetic",
       "kind": "ai-inference",
@@ -9884,18 +13267,18 @@
           "SYNTHETIC_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 12,
+        "modelCount": 8,
         "models": [
+          "Kimi K3.1 Pro",
           "DeepSeek V4.1 Flash 1017",
-          "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash",
           "GLM-5.3",
+          "Qwen3.8 27B",
           "Kimi K3",
-          "GLM-5.2",
-          "Kimi K2.7 Code",
-          "MiniMax-M3"
+          "GLM-4.7-Flash",
+          "GPT OSS 120B"
         ],
-        "openWeightModels": 12,
+        "openWeightModels": 8,
         "outputs": [
           "text"
         ],
@@ -9906,14 +13289,165 @@
         "snippet": "SYNTHETIC_API_KEY=",
         "docs": "https://synthetic.new/pricing"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:synthorai",
+      "name": "Synthorai",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Overview of Synthorai, the OpenAI-compatible AI gateway: one API key for GPT, Claude, Gemini, Qwen and DeepSeek via Chat Completions, Responses and Messages. Free trial credit included - no card required.",
+      "url": "https://synthorai.io/docs/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://synthorai.io/v1",
+        "auth": "apiKey",
+        "env": [
+          "SYNTHORAI_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 12,
+        "models": [
+          "Claude Haiku 5.5",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "GPT-6 Sol",
+          "DeepSeek V4.1 Flash",
+          "DeepSeek V4 Pro 0813"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "SYNTHORAI_API_KEY=",
+        "docs": "https://synthorai.io/docs/"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:teamorouter",
+      "name": "TeamoRouter",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "TeamoRouter supports OpenAI, Google Gemini, and Anthropic compatible API formats, so official SDKs can call Claude, Gemini, GPT, and other models through one gateway.",
+      "url": "https://teamorouter.com/docs/api-integration",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.teamorouter.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "TEAMOROUTER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 10,
+        "models": [
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Astra",
+          "DeepSeek V4 Pro",
+          "GLM-5.3"
+        ],
+        "openWeightModels": 5,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TEAMOROUTER_API_KEY=",
+        "docs": "https://teamorouter.com/docs/api-integration"
+      },
+      "fetchedAt": "2026-11-14",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "models-dev:teapot-router",
+      "name": "Teapot Router",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Follow the same order as the product. Each guide shows where to click, how to verify success, and which features depend on platform setup.",
+      "url": "https://teapotrouter.com/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.teapotrouter.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "TEAPOT_ROUTER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 7,
+        "models": [
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Astra",
+          "Claude Opus 5",
+          "Claude Sonnet 5",
+          "Claude Haiku 4.5 (latest)"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TEAPOT_ROUTER_API_KEY=",
+        "docs": "https://teapotrouter.com/docs"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:tempr",
       "name": "Tempr Gateway",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Tempr Gateway: 82 models listed on models.dev (newest: MiMo-V2.6-Flash, MiMo-V2.6-Pro, Grok 4.7).",
+      "summary": "Tempr Gateway: 99 models listed on models.dev (newest: MiMo-V2.6-Flash, MiMo-V2.6-Pro, Grok 4.7).",
       "url": "https://temprhq.io/docs/gateway-reference.html",
       "source": {
         "name": "models.dev",
@@ -9934,7 +13468,7 @@
           "TEMPR_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 82,
+        "modelCount": 99,
         "models": [
           "MiMo-V2.6-Flash",
           "MiMo-V2.6-Pro",
@@ -9942,10 +13476,10 @@
           "MiMo-V2.6-Pro-UltraSpeed",
           "GLM-5.3-FlashX",
           "DeepSeek V4.1 Flash",
-          "Gemini 3.8 Flash",
-          "Claude Fable 5.1"
+          "Mercury 2.5",
+          "Gemini 3.8 Flash"
         ],
-        "openWeightModels": 44,
+        "openWeightModels": 57,
         "outputs": [
           "text"
         ],
@@ -9956,7 +13490,7 @@
         "snippet": "TEMPR_API_KEY=",
         "docs": "https://temprhq.io/docs/gateway-reference.html"
       },
-      "fetchedAt": "2026-10-25"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:tencent-coding-plan",
@@ -10034,19 +13568,24 @@
       "preview": {
         "type": "api",
         "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://api.lkeap.cloud.tencent.com/plan/v3",
+        "apiBase": "https://tokenhub.tencentmaas.com/plan/v3",
         "auth": "apiKey",
         "env": [
           "TENCENT_TOKEN_PLAN_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 3,
+        "modelCount": 15,
         "models": [
           "Hy4",
+          "DeepSeek V4.1 Flash 1017",
+          "MiMo-V2.6-Flash",
           "Hy4 preview",
-          "Hy3"
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro 0813",
+          "GLM-5.3",
+          "GLM-5.3"
         ],
-        "openWeightModels": 2,
+        "openWeightModels": 14,
         "outputs": [
           "text"
         ],
@@ -10057,7 +13596,7 @@
         "snippet": "TENCENT_TOKEN_PLAN_API_KEY=",
         "docs": "https://cloud.tencent.com/document/product/1823/130060"
       },
-      "fetchedAt": "2026-11-04",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 50000
       }
@@ -10162,6 +13701,52 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:tenstorrent",
+      "name": "Tenstorrent",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Build with Tenstorrent. Intelligence accessible at unmatched speed and cost.",
+      "url": "https://console.tenstorrent.com",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://console.tenstorrent.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "TENSTORRENT_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 4,
+        "models": [
+          "MiniMax-M3.1-Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TENSTORRENT_API_KEY=",
+        "docs": "https://console.tenstorrent.com"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:the-grid-ai",
       "name": "The Grid AI",
       "kind": "ai-inference",
@@ -10209,6 +13794,48 @@
         "docs": "https://thegrid.ai/docs"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "models-dev:therouter",
+      "name": "TheRouter",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Get started with TheRouter.ai's unified API. Send your first request using the OpenAI SDK, Python, or cURL.",
+      "url": "https://therouter.ai/docs/quickstart/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.therouter.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "THEROUTER_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "GPT-4o mini"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "THEROUTER_API_KEY=",
+        "docs": "https://therouter.ai/docs/quickstart/"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:thinkingmachines",
@@ -10308,6 +13935,50 @@
         "docs": "https://docs.tinfoil.sh"
       },
       "fetchedAt": "2026-11-13"
+    },
+    {
+      "id": "models-dev:toapis",
+      "name": "ToAPIs",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Call text, image, and video models through ToAPIs",
+      "url": "https://docs.toapis.com",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://toapis.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "TOAPIS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "GPT-5.6 Luna",
+          "GPT-5.6 Sol",
+          "GPT-5.6 Terra"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TOAPIS_API_KEY=",
+        "docs": "https://docs.toapis.com"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:togetherai",
@@ -10418,6 +14089,95 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:tokenify",
+      "name": "Tokenify",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Wholesale LLM inference behind an OpenAI-compatible API. Change one line, keep your SDK, pay per token.",
+      "url": "https://www.tokenify.dev/docs/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.tokenify.dev/v1",
+        "auth": "apiKey",
+        "env": [
+          "TOKENIFY_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 5,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro 0813",
+          "DeepSeek V4 Flash 0731",
+          "GLM-5.2"
+        ],
+        "openWeightModels": 5,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TOKENIFY_API_KEY=",
+        "docs": "https://www.tokenify.dev/docs/"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:tokenlab",
+      "name": "TokenLab",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "One API for chat, images, video, audio, and more",
+      "url": "https://tokenlab.sh/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.tokenlab.sh/v1",
+        "auth": "apiKey",
+        "env": [
+          "TOKENLAB_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Grok 4.20 (Non-Reasoning)"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TOKENLAB_API_KEY=",
+        "docs": "https://tokenlab.sh/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:tokenrouter",
       "name": "TokenRouter",
       "kind": "ai-inference",
@@ -10459,6 +14219,49 @@
         "docs": "https://www.tokenrouter.com/docs/tokenrouter-feature-guide/"
       },
       "fetchedAt": "2026-11-10"
+    },
+    {
+      "id": "models-dev:tokenwatt",
+      "name": "TokenWatt",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "An OpenAI-compatible API for open-weight models, sized from our published benchmarks: Qwen3-30B-A3B-Instruct-2507 at $0.08 per million input ($0.02 cached)…",
+      "url": "https://www.tokenwatt.io/api.html",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.tokenwatt.io/v1",
+        "auth": "apiKey",
+        "env": [
+          "TOKENWATT_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Qwen3-Coder 30B-A3B Instruct"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TOKENWATT_API_KEY=",
+        "docs": "https://www.tokenwatt.io/api.html"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:trustedrouter",
@@ -10509,6 +14312,106 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "models-dev:trustedtokens",
+      "name": "TrustedTokens",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "TrustedTokens API documentation: base URL, authentication, endpoints, and code examples.",
+      "url": "https://trustedtokens.eu/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.trustedtokens.eu/v1",
+        "auth": "apiKey",
+        "env": [
+          "TRUSTEDTOKENS_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 10,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "Nemotron 3.5 Super VL 120B A12B",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "Qwen3.8 27B",
+          "DiffusionGemma 26B A4B IT",
+          "GLM-5.2",
+          "Qwen3.6 35B-A3B"
+        ],
+        "openWeightModels": 10,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "TRUSTEDTOKENS_API_KEY=",
+        "docs": "https://trustedtokens.eu/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:uberllm",
+      "name": "UberLLM",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "OpenAI- and Anthropic-compatible API for text, image, video, music and speech models served by third-party providers.",
+      "url": "https://uberllm.dev/docs",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.uberllm.dev/v1",
+        "auth": "apiKey",
+        "env": [
+          "UBERLLM_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 15,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3",
+          "Kimi K3",
+          "Gemini 3.5 Flash",
+          "DeepSeek V4 Pro",
+          "GPT-5.5",
+          "Grok 4.3",
+          "GLM-5.1"
+        ],
+        "openWeightModels": 8,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "UBERLLM_API_KEY=",
+        "docs": "https://uberllm.dev/docs"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:umans-ai",
       "name": "Umans AI",
       "kind": "ai-inference",
@@ -10534,18 +14437,18 @@
           "UMANS_AI_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 8,
+        "modelCount": 9,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro",
           "DeepSeek V4.1 Flash",
           "DeepSeek V4.1 Flash 1017",
-          "GLM 5.3 Flash",
           "Umans Coder",
-          "GLM 5.3",
-          "DeepSeek V4 Flash",
-          "Kimi K3",
-          "Umans Flash"
+          "Umans Flash",
+          "GLM 5.3 Flash",
+          "GLM 5.3"
         ],
-        "openWeightModels": 8,
+        "openWeightModels": 9,
         "outputs": [
           "text"
         ],
@@ -10556,7 +14459,7 @@
         "snippet": "UMANS_AI_API_KEY=",
         "docs": "https://app.umans.ai/offers/code/docs/orgs"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:umans-ai-coding-plan",
@@ -10585,18 +14488,18 @@
           "UMANS_AI_CODING_PLAN_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 9,
+        "modelCount": 10,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro",
           "DeepSeek V4.1 Flash",
           "DeepSeek V4.1 Flash 1017",
-          "GLM 5.3 Flash",
           "Umans Coder",
-          "GLM 5.3",
-          "DeepSeek V4 Flash",
-          "Kimi K3",
-          "Qwen3.6 35B A3B"
+          "Umans Flash",
+          "GLM 5.3 Flash",
+          "GLM 5.3"
         ],
-        "openWeightModels": 9,
+        "openWeightModels": 10,
         "outputs": [
           "text"
         ],
@@ -10607,7 +14510,94 @@
         "snippet": "UMANS_AI_CODING_PLAN_API_KEY=",
         "docs": "https://app.umans.ai/offers/code/docs"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:unbiased",
+      "name": "Pareto by Unbiased",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Pareto API docs: base URL, authentication, OpenAI and Anthropic compatible endpoints, rate limits by plan, errors, and the OpenAPI spec.",
+      "url": "https://unbiased.ai/developers/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.unbiased.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "UNBIASED_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Pareto 26.10"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "UNBIASED_API_KEY=",
+        "docs": "https://unbiased.ai/developers/"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:uncensuredai",
+      "name": "UncensuredAI",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "UncensuredAI endpoints, authentication, model IDs, request examples and streaming. Use the API reference to connect your applications.",
+      "url": "https://uncensuredai.com/en/api/reference",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://uncensuredai.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "UNCENSURED_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 3,
+        "models": [
+          "DeepSeek V4.1 Flash Abliterated",
+          "GLM 5.3 Flash Abliterated",
+          "GLM 5.3 Abliterated"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "UNCENSURED_API_KEY=",
+        "docs": "https://uncensuredai.com/en/api/reference"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:unorouter",
@@ -10661,6 +14651,102 @@
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "models-dev:unrestricted",
+      "name": "Unrestricted",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Endpoints, SDK examples, limits and errors for an OpenAI- and Anthropic-compatible API serving Qwen3.8 27B Uncensored, MiMo V2.6 Flash Uncensored, GLM-5.3 Flash Uncensored and DeepSeek V4.1 Flash 1017 Uncensored for coding and chat, with up to 1M context.",
+      "url": "https://unrestricted.sh/reference",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.unrestricted.sh/v1",
+        "auth": "apiKey",
+        "env": [
+          "UNRESTRICTED_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 4,
+        "models": [
+          "Qwen3.8 27B Uncensored",
+          "MiMo V2.6 Flash Uncensored",
+          "DeepSeek V4.1 Flash 1017 Uncensored",
+          "GLM-5.3 Flash Uncensored"
+        ],
+        "openWeightModels": 4,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "UNRESTRICTED_API_KEY=",
+        "docs": "https://unrestricted.sh/reference"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:uplinkswitch",
+      "name": "UplinkSwitch",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Every model UplinkSwitch serves, from Claude, GPT and Gemini to DeepSeek, Kimi and GLM, with its model id, rate per million tokens and SDK formats.",
+      "url": "https://uplinkswitch.ai/models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.uplinkswitch.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "UPLINKSWITCH_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 12,
+        "models": [
+          "Gemini 4 Argon",
+          "GPT-6.1 Sol",
+          "GPT-6 Luna",
+          "GPT-6 Sol",
+          "GPT-6 Astra",
+          "Gemini 3.8 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "UPLINKSWITCH_API_KEY=",
+        "docs": "https://uplinkswitch.ai/models"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:upstage",
@@ -10776,7 +14862,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 116864
+        "downloads": 126012
       },
       "tags": [
         "ai",
@@ -10792,16 +14878,16 @@
           "VENICE_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 127,
+        "modelCount": 128,
         "models": [
+          "Qwen 3.6 Plus Uncensored",
+          "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "DeepSeek V4.1 Flash 1017 Ultrafast",
           "DeepSeek V4.1 Flash 1017 Uncensored",
           "GPT-6.1 Terra",
-          "Abliterated Large Flash",
-          "DeepSeek V4.1 Flash Uncensored",
-          "Kimi K3.1 Pro"
+          "Abliterated Large Flash"
         ],
         "openWeightModels": 57,
         "outputs": [
@@ -10814,7 +14900,7 @@
         "snippet": "VENICE_API_KEY=",
         "docs": "https://docs.venice.ai"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:vercel",
@@ -10830,7 +14916,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 232225
+        "downloads": 245332
       },
       "tags": [
         "ai",
@@ -10849,16 +14935,16 @@
           "AI_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 420,
+        "modelCount": 419,
         "models": [
           "Gemini 4 Hydrogen",
+          "Inkling 2 Small",
           "Ultramarine 1 Flash",
           "Gemini 4 Carbon",
           "Claude Fable 5.2",
           "Claude Fable 5.2 (Fast)",
           "Muse Ember",
-          "Ampersand v0.1",
-          "DeepSeek V4.1 Flash 1017 Ultrafast"
+          "Ampersand v0.1"
         ],
         "openWeightModels": 106,
         "outputs": [
@@ -10874,7 +14960,50 @@
         "snippet": "AI_GATEWAY_API_KEY=",
         "docs": "https://vercel.com/docs/ai-gateway"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:verda",
+      "name": "Verda",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Make your first Verda Inference call: enable a model in the Console, save your API key, and send a chat completion with cURL, Python or Node.",
+      "url": "https://docs.verda.com/inference/quickstart/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://inference.verda.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "VERDA_INFERENCE_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 1,
+        "models": [
+          "Kimi K3.1 Pro"
+        ],
+        "openWeightModels": 1,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "VERDA_INFERENCE_API_KEY=",
+        "docs": "https://docs.verda.com/inference/quickstart/"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:vispark",
@@ -10970,6 +15099,55 @@
       "fetchedAt": "2026-10-28"
     },
     {
+      "id": "models-dev:void-api",
+      "name": "Void API",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Build with the Void API LLM gateway. Explore authentication, GPT and Claude model IDs, Chat Completions, Responses API, streaming and curl examples.",
+      "url": "https://void-api.tech/docs#models",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://void-api.tech/v1",
+        "auth": "apiKey",
+        "env": [
+          "VOID_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 13,
+        "models": [
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Luna",
+          "GPT-6 Sol",
+          "GPT-6 Astra",
+          "Claude Fable 5.1",
+          "Claude Opus 5"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "VOID_API_KEY=",
+        "docs": "https://void-api.tech/docs#models"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:volcengine",
       "name": "Volcengine Ark",
       "kind": "ai-llm",
@@ -11029,7 +15207,7 @@
       "name": "Volcengine Ark Coding Plan",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "Volcengine Ark Coding Plan: 10 models listed on models.dev (newest: GLM-5.3-Flash, GLM-5.3, Kimi K3).",
+      "summary": "Volcengine Ark Coding Plan: 17 models listed on models.dev (newest: Kimi K3.1 Pro, Seed 2.1 Lite, Kimi K2.8 Preview).",
       "url": "https://www.volcengine.com/docs/82379/1928261",
       "source": {
         "name": "models.dev",
@@ -11051,18 +15229,18 @@
           "ARK_CODING_PLAN_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 10,
+        "modelCount": 17,
         "models": [
+          "Kimi K3.1 Pro",
+          "Seed 2.1 Lite",
+          "Kimi K2.8 Preview",
+          "DeepSeek V4.1 Flash",
+          "DeepSeek V4.1 Flash",
           "GLM-5.3-Flash",
           "GLM-5.3",
-          "Kimi K3",
-          "Seed 2.1 Turbo",
-          "Seed Evolving",
-          "Kimi K2.7 Code",
-          "MiniMax-M3",
-          "DeepSeek V4 Flash"
+          "Kimi K3"
         ],
-        "openWeightModels": 7,
+        "openWeightModels": 10,
         "outputs": [
           "text"
         ],
@@ -11073,7 +15251,7 @@
         "snippet": "ARK_CODING_PLAN_API_KEY=",
         "docs": "https://www.volcengine.com/docs/82379/1928261"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-14",
       "metrics": {
         "siteRank": 500000
       }
@@ -11133,8 +15311,8 @@
       "name": "Wafer",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Wafer: 5 models listed on models.dev (newest: GLM-5.2, GLM5.2-Fast, MiniMax-M3).",
-      "url": "https://docs.wafer.ai/wafer-pass",
+      "summary": "Discover models, context and output limits, per-API capability flags, reasoning efforts, and pricing from the model catalog.",
+      "url": "https://docs.wafer.ai/serverless/models",
       "source": {
         "name": "models.dev",
         "url": "https://models.dev"
@@ -11154,26 +15332,29 @@
           "WAFER_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 5,
+        "modelCount": 11,
         "models": [
-          "GLM-5.2",
-          "GLM5.2-Fast",
-          "MiniMax-M3",
-          "Kimi K2.6",
-          "GLM-5.1"
+          "Kimi K3.1 Pro",
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "DeepSeek V4 Pro 0813",
+          "GLM-5.3",
+          "Qwen3.8 27B",
+          "DeepSeek V4 Flash 0731 Fast"
         ],
-        "openWeightModels": 5,
+        "openWeightModels": 11,
         "outputs": [
           "text"
         ],
-        "summarySource": "models.dev data"
+        "summarySource": "official page meta description"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "WAFER_API_KEY=",
-        "docs": "https://docs.wafer.ai/wafer-pass"
+        "docs": "https://docs.wafer.ai/serverless/models"
       },
-      "fetchedAt": "2026-10-23"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:wallaby",
@@ -11201,11 +15382,13 @@
           "WALLABY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 1,
+        "modelCount": 3,
         "models": [
+          "Kimi K3.1 Pro",
+          "Kimi K3.1 Pro Highspeed",
           "Kimi K3"
         ],
-        "openWeightModels": 1,
+        "openWeightModels": 3,
         "outputs": [
           "text"
         ],
@@ -11216,7 +15399,7 @@
         "snippet": "WALLABY_API_KEY=",
         "docs": "https://wallabytoken.com/docs"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:wally",
@@ -11244,18 +15427,18 @@
           "WALLY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 8,
+        "modelCount": 9,
         "models": [
+          "DeepSeek V4.1 Flash 1017",
           "DeepSeek V4.1 Flash",
           "DeepSeek V4.1 Flash Fast",
           "GLM-5.3-Flash",
           "GLM-5.3 Fast",
           "DeepSeek V4 Flash 0731",
           "Kimi K3",
-          "MiniMax-M3",
-          "DeepSeek V4 Pro Fast"
+          "MiniMax-M3"
         ],
-        "openWeightModels": 8,
+        "openWeightModels": 9,
         "outputs": [
           "text"
         ],
@@ -11266,7 +15449,7 @@
         "snippet": "WALLY_API_KEY=",
         "docs": "https://docs.runanywhere.ai/wally-cloud/api"
       },
-      "fetchedAt": "2026-10-31"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:wandb",
@@ -11335,7 +15518,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 1575
+        "downloads": 1416
       },
       "tags": [
         "ai",
@@ -11371,7 +15554,57 @@
         "snippet": "WATSONX_AI_APIKEY=\nWATSONX_AI_PROJECT_ID=",
         "docs": "https://www.ibm.com/docs/en/watsonx/saas?topic=solutions-supported-foundation-models"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "models-dev:watt",
+      "name": "Watt Cloud",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Watt Cloud: 18 models listed on models.dev (newest: DeepSeek V4.1 Flash 1017, DeepSeek V4.1 Flash, Hy4 preview).",
+      "url": "https://www.watt-cloud.com/docs/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.watt-cloud.com/v1",
+        "auth": "apiKey",
+        "env": [
+          "WATT_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 18,
+        "models": [
+          "DeepSeek V4.1 Flash 1017",
+          "DeepSeek V4.1 Flash",
+          "Hy4 preview",
+          "GLM-5.3-Flash",
+          "GLM-5.3",
+          "DeepSeek V4 Flash 0731",
+          "Kimi K3",
+          "GLM-5.2"
+        ],
+        "openWeightModels": 18,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "models.dev data"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "WATT_API_KEY=",
+        "docs": "https://www.watt-cloud.com/docs/"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:xai",
@@ -11699,6 +15932,55 @@
       "fetchedAt": "2026-11-10"
     },
     {
+      "id": "models-dev:xxapi",
+      "name": "xxapi",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "OpenCode 接入 xxapi：用 /connect 保存 API 密钥，在 opencode.json 里添加 xxapi 地址和模型，再用 /models 选中模型。",
+      "url": "https://docs.xxapi.ai/opencode",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://xxapi.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "XXAPI_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 16,
+        "models": [
+          "GPT-6.1 Sol",
+          "Claude Sonnet 5.5",
+          "Claude Opus 5.5",
+          "GPT-6 Sol",
+          "GPT-6 Astra",
+          "Claude Fable 5.1",
+          "Claude Opus 5",
+          "GPT-5.6 Luna"
+        ],
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "XXAPI_API_KEY=",
+        "docs": "https://docs.xxapi.ai/opencode"
+      },
+      "fetchedAt": "2026-11-14"
+    },
+    {
       "id": "models-dev:zai",
       "name": "Z.AI",
       "kind": "ai-llm",
@@ -11872,14 +16154,22 @@
         "apiBase": "https://ai.zenifra.com/v1",
         "auth": "apiKey",
         "env": [
+          "ZENIFRA_AI_API_KEY",
           "ZENIFRA_AI_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 1,
+        "modelCount": 13,
         "models": [
-          "Qwen3.6 35B-A3B"
+          "Qwen3.8 Flash",
+          "DeepSeek V4 Pro",
+          "Qwen3.8 Max",
+          "DeepSeek V4 Flash 0731",
+          "Kimi K3",
+          "GLM-5.2",
+          "Kimi K2.7 Code",
+          "Qwen3.7 Plus"
         ],
-        "openWeightModels": 1,
+        "openWeightModels": 7,
         "outputs": [
           "text"
         ],
@@ -11887,10 +16177,10 @@
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
-        "snippet": "ZENIFRA_AI_KEY=",
+        "snippet": "ZENIFRA_AI_API_KEY=\nZENIFRA_AI_KEY=",
         "docs": "https://docs.zenifra.com"
       },
-      "fetchedAt": "2026-11-07"
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:zenmux",
@@ -11948,6 +16238,56 @@
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "models-dev:zerogpu",
+      "name": "ZeroGPU",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Browse ZeroGPU models, compare pricing, and pick the model ID to call.",
+      "url": "https://docs.zerogpu.ai/docs/model-catalog",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://api.zerogpu.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "ZEROGPU_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 9,
+        "models": [
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GPT-5.6 Luna",
+          "Qwen3.6 35B-A3B",
+          "GPT-5.4 nano",
+          "GPT OSS 120B",
+          "Qwen3 30B A3B",
+          "GPT-4.1 mini"
+        ],
+        "openWeightModels": 6,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ZEROGPU_API_KEY=",
+        "docs": "https://docs.zerogpu.ai/docs/model-catalog"
+      },
+      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:zhipuai",
@@ -12053,6 +16393,53 @@
       "metrics": {
         "siteRank": 100000
       }
+    },
+    {
+      "id": "models-dev:zro",
+      "name": "Zro",
+      "kind": "ai-inference",
+      "category": "api",
+      "summary": "Zro by MoonMath.ai serves GLM and DeepSeek coding models across multiple regions, with zero request retention and no training on customer data.",
+      "url": "https://zro.moonmath.ai/",
+      "source": {
+        "name": "models.dev",
+        "url": "https://models.dev"
+      },
+      "tags": [
+        "ai",
+        "inference",
+        "openai-compatible",
+        "server-key"
+      ],
+      "preview": {
+        "type": "api",
+        "aiSdk": "@ai-sdk/openai-compatible",
+        "apiBase": "https://zro.moonmath.ai/v1",
+        "auth": "apiKey",
+        "env": [
+          "ZRO_API_KEY"
+        ],
+        "keyServerSide": true,
+        "modelCount": 5,
+        "models": [
+          "Dolly 2 Security",
+          "Dolly 1 Security",
+          "DeepSeek V4.1 Flash",
+          "GLM-5.3-Flash",
+          "GLM-5.3"
+        ],
+        "openWeightModels": 3,
+        "outputs": [
+          "text"
+        ],
+        "summarySource": "official page meta description"
+      },
+      "use": {
+        "install": "npm install @ai-sdk/openai-compatible",
+        "snippet": "ZRO_API_KEY=",
+        "docs": "https://zro.moonmath.ai/"
+      },
+      "fetchedAt": "2026-11-14"
     }
   ]
 }

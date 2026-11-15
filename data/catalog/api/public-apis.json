@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-13",
-  "count": 2358,
+  "fetchedAt": "2026-11-15",
+  "count": 2385,
   "items": [
     {
       "id": "public-apis:0x",
@@ -1175,6 +1175,58 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:ai-rate-card",
+      "name": "AI Rate Card",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Daily-checked AI model API prices from 120+ providers, price history and cost estimates",
+      "url": "https://airatecard.com/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "machine-learning"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Machine Learning"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
+      "id": "public-apis:ai-sense",
+      "name": "AI SENSE",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Utility endpoints: time, hashing, encoding, QR, JSON, images, webhooks, temporary storage",
+      "url": "https://aisense.no/free-public-apis",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:ai-stupid-level",
       "name": "AI Stupid Level",
       "kind": "ai-other",
@@ -1224,6 +1276,31 @@
         "listCategory": "Jobs"
       },
       "fetchedAt": "2026-10-24"
+    },
+    {
+      "id": "public-apis:air-stock-discovery",
+      "name": "AIR Stock Discovery",
+      "kind": "finance",
+      "category": "api",
+      "summary": "AI-scored SEC filing events for small and mid-cap US companies",
+      "url": "https://www.aistockradars.com/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:airnow",
@@ -4602,6 +4679,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:bewary",
+      "name": "Bewary",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Scam checks for links, domains, phone numbers, emails, crypto wallets and IBANs",
+      "url": "https://bewary.app/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "anti-malware",
+        "auth-apikey",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Anti-Malware"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:bhagavad-gita",
       "name": "Bhagavad Gita",
       "kind": "entertainment",
@@ -6193,26 +6295,26 @@
       "name": "Boxerbook",
       "kind": "life",
       "category": "api",
-      "summary": "Professional boxing: boxers, bouts, schedule, results, world titles and rankings, ODbL",
+      "summary": "Professional boxing: boxers, bouts, schedule, results, world titles and rankings",
       "url": "https://boxerbook.com/developers",
       "source": {
         "name": "public-apis",
         "url": "https://github.com/public-apis/public-apis"
       },
       "tags": [
-        "auth-none",
+        "auth-apikey",
         "cors",
         "https",
         "sports-fitness"
       ],
       "preview": {
         "type": "api",
-        "auth": "none",
+        "auth": "apiKey",
         "cors": "yes",
         "https": true,
         "listCategory": "Sports & Fitness"
       },
-      "fetchedAt": "2026-11-04"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:brainiall",
@@ -11487,6 +11589,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:cosmos-pay",
+      "name": "Cosmos Pay",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Stablecoin payment links, checkout and swaps on Stellar, Solana and Monad",
+      "url": "https://dev.cosmospay.lat/docs/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:cosmyday-astrology",
       "name": "CosmyDay Astrology",
       "kind": "entertainment",
@@ -12486,6 +12613,31 @@
       "metrics": {
         "siteRank": 500000
       }
+    },
+    {
+      "id": "public-apis:cryptodataapi",
+      "name": "CryptoDataAPI",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Prices, derivatives, funding, liquidations, Hyperliquid, ETF flows, volatility index and regimes",
+      "url": "https://cryptodataapi.com/api/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:cryptokeyhole",
@@ -16132,6 +16284,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:election-night-results",
+      "name": "Election Night Results",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Live US election results from official state feeds, statewide and by county; free tier",
+      "url": "https://pushbuild.com/apis/election-night-results.html",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "government",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:eli",
       "name": "ELI",
       "kind": "text",
@@ -18143,6 +18320,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:fillerlists",
+      "name": "FillerLists",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Filler, mixed and canon labels for every episode of 13 long anime (JSON and CSV)",
+      "url": "https://fillerlists.com/data",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "anime",
+        "auth-none",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Anime"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:filterlists",
       "name": "FilterLists",
       "kind": "auth-security",
@@ -20149,6 +20352,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:galaxy-movies",
+      "name": "Galaxy Movies",
+      "kind": "media",
+      "category": "api",
+      "summary": "Daily arrivals and departures per US streaming service",
+      "url": "https://galaxymovies.app/api/streaming-changes?provider=netflix",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:game-of-thrones-quotes",
       "name": "Game of Thrones Quotes",
       "kind": "media",
@@ -20259,6 +20488,32 @@
         "listCategory": "Government"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:gasrent",
+      "name": "Gasrent",
+      "kind": "finance",
+      "category": "api",
+      "summary": "TRON energy and bandwidth rental aggregator with public price and health endpoints",
+      "url": "https://gasrent.click/api.html",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:gateio",
@@ -21125,6 +21380,32 @@
         "listCategory": "Authentication & Authorization"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:getparceldata",
+      "name": "GetParcelData",
+      "kind": "maps",
+      "category": "api",
+      "summary": "US parcel boundaries, owners and assessor values by APN, point or polygon",
+      "url": "https://getparceldata.com/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "geocoding",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:getping",
@@ -22455,6 +22736,31 @@
         "listCategory": "News"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:green-screen-memes",
+      "name": "Green Screen Memes",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Search 2,000+ green screen meme video clips, most with sound, new clips daily",
+      "url": "https://api.greenscreenmemes.app/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "entertainment",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Entertainment"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:greenlit-books",
@@ -24703,9 +25009,8 @@
       "name": "IBANforge",
       "kind": "finance",
       "category": "api",
-      "summary": "IBAN validation and BIC/SWIFT lookup for 89 countries with 121k+ BIC entries",
-      "summaryKo": "121,000개 이상의 은행 항목이 있는 75개 이상의 국가에 대한 IBAN 검증 및 BIC/SWIFT 조회",
-      "url": "https://api.ibanforge.com",
+      "summary": "IBAN checks and sourced bank/BIC references; free format checks and a keyless validation trial",
+      "url": "https://ibanforge.com/docs",
       "source": {
         "name": "public-apis",
         "url": "https://github.com/public-apis/public-apis"
@@ -24722,7 +25027,7 @@
         "https": true,
         "listCategory": "Finance"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:ibge",
@@ -28348,6 +28653,32 @@
       }
     },
     {
+      "id": "public-apis:kaijuconverter",
+      "name": "KaijuConverter",
+      "kind": "business",
+      "category": "api",
+      "summary": "Convert 201+ file formats, OCR, PDF/A & exact KB compression",
+      "url": "https://kaijuconverter.com/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:kakao",
       "name": "Kakao",
       "kind": "news-social",
@@ -28404,6 +28735,32 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "public-apis:kalenderblick",
+      "name": "Kalenderblick",
+      "kind": "business",
+      "category": "api",
+      "summary": "Public holidays and school holidays for Germany, Austria and Switzerland as static JSON",
+      "url": "https://kalenderblick.de/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "calendar",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Calendar"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:kanari",
@@ -31461,6 +31818,35 @@
         "listCategory": "Email"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:mailtester-ninja",
+      "name": "MailTester Ninja",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Verify email addresses live with the mail server, catch-all and disposable detection, free tier",
+      "url": "https://mailtester.ninja/api/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "email",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-15",
+      "metrics": {
+        "siteRank": 1000000
+      }
     },
     {
       "id": "public-apis:mailtrap",
@@ -36637,6 +37023,31 @@
       }
     },
     {
+      "id": "public-apis:octocrawl",
+      "name": "Octocrawl",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Web pages as Markdown or JSON with an Evidence Record: final URL, HTTP status, robots.txt, hashes",
+      "url": "https://octocrawl.dev/docs/reference/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:octopart",
       "name": "Octopart",
       "kind": "payments",
@@ -38705,6 +39116,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:open-guitar-chords",
+      "name": "Open Guitar Chords",
+      "kind": "media",
+      "category": "api",
+      "summary": "Free JSON data for guitar chords, scales and fretboard positions",
+      "url": "https://openguitarchords.com/data",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "music"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Music"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:open-library",
       "name": "Open Library",
       "kind": "entertainment",
@@ -39570,6 +40007,31 @@
         "listCategory": "Weather"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:openshield",
+      "name": "openshield",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Image and text moderation, plus fraud scoring for sign-ups, logins and payments",
+      "url": "https://www.openshield.dev/docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:openshopgraph",
@@ -43864,6 +44326,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:qr-kept",
+      "name": "QR Kept",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Free QR code API: one GET request returns an SVG, no key or account",
+      "url": "https://qrkept.com/free-qr-code-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:qrcode-monkey",
       "name": "Qrcode Monkey",
       "kind": "dev",
@@ -45152,6 +45640,32 @@
         "listCategory": "Science & Math"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:readark",
+      "name": "Readark",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Dark romance books with spice and darkness ratings, subgenres, tropes and authors",
+      "url": "https://readark.app/developers/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "books",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Books"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:readme-typing-svg",
@@ -46859,6 +47373,32 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:salahtable",
+      "name": "SalahTable",
+      "kind": "business",
+      "category": "api",
+      "summary": "Islamic prayer times for 400+ cities, by day or month, with six calculation methods",
+      "url": "https://salahtable.com/prayer-times-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "calendar",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Calendar"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:sales-tax-calculator",
@@ -51839,6 +52379,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:suprsend",
+      "name": "SuprSend",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Multi-channel notifications: workflows, templates and preferences for email, SMS, push and in-app",
+      "url": "https://docs.suprsend.com/reference/overview",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:suprsonic",
       "name": "Suprsonic",
       "kind": "dev",
@@ -54087,7 +54653,7 @@
       "name": "TickerMint",
       "kind": "entertainment",
       "category": "api",
-      "summary": "Daily market prices and price history for Pokémon, One Piece, Lorcana and Yu-Gi-Oh cards",
+      "summary": "Daily card prices and history for Pokémon, One Piece, Lorcana, Riftbound, Yu-Gi-Oh and Gundam",
       "url": "https://tickermint.cards/developers",
       "source": {
         "name": "public-apis",
@@ -54105,7 +54671,7 @@
         "https": true,
         "listCategory": "Games & Comics"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:tickerz",
@@ -55114,6 +55680,31 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:tradingcalendars",
+      "name": "TradingCalendars",
+      "kind": "business",
+      "category": "api",
+      "summary": "Market holidays and business days for FX, banks, payment systems and exchanges, with early closes",
+      "url": "https://tradingcalendars.com/documentation",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "calendar",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Calendar"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:tradoshi",
@@ -58701,6 +59292,58 @@
       }
     },
     {
+      "id": "public-apis:vakaymood",
+      "name": "VakayMood",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Live timeshare resort rental inventory: stay dates, nightly rates, resort fees and booking URLs",
+      "url": "https://vakaymood.com/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
+      "id": "public-apis:valo-data",
+      "name": "Valo.Data",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Pokémon TCG cards in EN/FR/JA/ZH, Cardmarket, US market and eBay prices, PSA populations, 14 TCGs",
+      "url": "https://valotcg.com/developers/api/pokemon",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "games-comics",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:valorant-non-official",
       "name": "Valorant (non-official)",
       "kind": "entertainment",
@@ -59151,6 +59794,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:verifyum",
+      "name": "Verifyum",
+      "kind": "finance",
+      "category": "api",
+      "summary": "File timestamp proofs anchored on Solana from a locally computed commitment, no file upload",
+      "url": "https://verifyum.com/agents",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "blockchain",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Blockchain"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "public-apis:veriphone",
       "name": "Veriphone",
       "kind": "messaging",
@@ -59437,6 +60105,32 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:vidsmaller",
+      "name": "VidSmaller",
+      "kind": "media",
+      "category": "api",
+      "summary": "Compress videos to an exact target file size, with estimates and async jobs",
+      "url": "https://vidsmaller.com/api-docs",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "https",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "public-apis:vidwords",

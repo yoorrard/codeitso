@@ -6,8 +6,8 @@
     "license": "MIT (models.dev data); each provider has its own terms",
     "note": "Every provider in api.json. summary = the provider page's own meta description when readable, otherwise a line built from models.dev data. Korean lines (summaryKo) for the big providers are written by 코드잇소. Per-model facts (prices per 1M tokens, limits, modalities, dates) are copied as-is into data/catalog-models/models-dev.json with the collection date (D141); freeTierQuote is a sentence copied as-is from the official pricing page; limitsUrl is the official rate-limit / usage-tier page, hand-checked on limitsCheckedAt and checked alive on every import. metrics.downloads = npm weekly downloads of the official SDK or of the provider's own AI SDK package (named by models.dev, or @ai-sdk/<provider id> when that package exists), whichever is larger (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-14",
-  "count": 328,
+  "fetchedAt": "2026-11-15",
+  "count": 324,
   "items": [
     {
       "id": "models-dev:302ai",
@@ -912,7 +912,7 @@
       "name": "Aixy",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Aixy: 13 models listed on models.dev (newest: Gemini 4 Argon, Claude Haiku 5.5, GPT-6.1 Sol).",
+      "summary": "Connect editors and coding agents to Aixy's OpenAI and Anthropic APIs.",
       "url": "https://docs.aixy-gateway.com/integrations/overview",
       "source": {
         "name": "models.dev",
@@ -947,14 +947,14 @@
         "outputs": [
           "text"
         ],
-        "summarySource": "models.dev data"
+        "summarySource": "official page meta description"
       },
       "use": {
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "AIXY_API_KEY=",
         "docs": "https://docs.aixy-gateway.com/integrations/overview"
       },
-      "fetchedAt": "2026-11-03"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:aki-io",
@@ -1020,7 +1020,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 258864
+        "downloads": 288080
       },
       "tags": [
         "ai",
@@ -1065,7 +1065,7 @@
         "snippet": "DASHSCOPE_API_KEY=",
         "docs": "https://www.alibabacloud.com/help/en/model-studio/"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:alibaba-cn",
@@ -3620,7 +3620,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 242961
+        "downloads": 275450
       },
       "tags": [
         "ai",
@@ -3661,7 +3661,7 @@
         "snippet": "DEEPINFRA_API_KEY=",
         "docs": "https://deepinfra.com/docs"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:deepseek",
@@ -4862,7 +4862,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 282221
+        "downloads": 345625
       },
       "tags": [
         "ai",
@@ -4899,7 +4899,7 @@
         "snippet": "GITLAB_TOKEN=",
         "docs": "https://docs.gitlab.com/user/duo_agent_platform/"
       },
-      "fetchedAt": "2026-11-04"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:gmicloud",
@@ -5463,18 +5463,18 @@
           "HOSTINGER_ROUTER_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 9,
+        "modelCount": 8,
         "models": [
           "DeepSeek V4.1 Flash",
           "Claude Opus 5",
           "Kimi K3",
           "Claude Sonnet 5",
-          "GLM-5.2",
           "Claude Fable 5",
           "Claude Sonnet 4.6",
-          "Claude Haiku 4.5 (latest)"
+          "Claude Haiku 4.5 (latest)",
+          "Claude Sonnet 4.5 (latest)"
         ],
-        "openWeightModels": 3,
+        "openWeightModels": 2,
         "outputs": [
           "text"
         ],
@@ -5485,7 +5485,7 @@
         "snippet": "HOSTINGER_ROUTER_API_KEY=",
         "docs": "https://www.hostinger.com/ai-router"
       },
-      "fetchedAt": "2026-11-14",
+      "fetchedAt": "2026-11-15",
       "metrics": {
         "siteRank": 10000
       }
@@ -6953,7 +6953,7 @@
           "KILO_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 468,
+        "modelCount": 462,
         "models": [
           "inclusionAI: Ling 3.2 Flash (free)",
           "Google: Gemini 4 Hydrogen",
@@ -6964,7 +6964,7 @@
           "Google: Gemini 4 Carbon",
           "Nex AGI: Nex-N2.6"
         ],
-        "openWeightModels": 160,
+        "openWeightModels": 159,
         "outputs": [
           "audio",
           "image",
@@ -6978,7 +6978,7 @@
         "snippet": "KILO_API_KEY=",
         "docs": "https://kilo.ai"
       },
-      "fetchedAt": "2026-11-14",
+      "fetchedAt": "2026-11-15",
       "metrics": {
         "siteRank": 500000
       }
@@ -7536,7 +7536,7 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 202,
+        "modelCount": 203,
         "models": [
           "Gemini 4 Hydrogen",
           "Gemini 4 Carbon",
@@ -7558,7 +7558,7 @@
         "snippet": "LLMGATEWAY_API_KEY=",
         "docs": "https://llmgateway.io/docs"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:llmgateway-providers",
@@ -7586,7 +7586,7 @@
           "LLMGATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 467,
+        "modelCount": 468,
         "models": [
           "Gemini 4 Hydrogen (Google AI Studio)",
           "Gemini 4 Hydrogen (Google Vertex AI)",
@@ -7608,7 +7608,7 @@
         "snippet": "LLMGATEWAY_API_KEY=",
         "docs": "https://llmgateway.io/docs"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:llmtech",
@@ -9327,7 +9327,7 @@
           "OrcaCyber DeepSeek V4.1 Flash",
           "OrcaCyber DeepSeek V4.1 Flash Thinking"
         ],
-        "openWeightModels": 369,
+        "openWeightModels": 371,
         "outputs": [
           "text"
         ],
@@ -9338,7 +9338,7 @@
         "snippet": "NANO_GPT_API_KEY=",
         "docs": "https://docs.nano-gpt.com"
       },
-      "fetchedAt": "2026-11-13",
+      "fetchedAt": "2026-11-15",
       "metrics": {
         "siteRank": 500000
       }
@@ -10156,56 +10156,6 @@
         "install": "npm install openai",
         "snippet": "OPENAI_API_KEY=",
         "docs": "https://platform.openai.com/docs"
-      },
-      "fetchedAt": "2026-11-14"
-    },
-    {
-      "id": "models-dev:opencheap",
-      "name": "OpenCheap",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "Point any OpenAI SDK at one base URL: quickstart, routing and fallbacks, the gateway, MCP for agents, paying with x402, and guides for Cline, LangChain, aider and more.",
-      "url": "https://docs.opencheap.si",
-      "source": {
-        "name": "models.dev",
-        "url": "https://models.dev"
-      },
-      "tags": [
-        "ai",
-        "inference",
-        "openai-compatible",
-        "server-key"
-      ],
-      "preview": {
-        "type": "api",
-        "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://api.opencheap.si/v1",
-        "auth": "apiKey",
-        "env": [
-          "OPENCHEAP_API_KEY"
-        ],
-        "keyServerSide": true,
-        "modelCount": 17,
-        "models": [
-          "Kimi K3",
-          "Qwen3 Coder Next",
-          "Devstral 2",
-          "Kimi K2 Instruct 0905",
-          "Qwen3-Next 80B-A3B Instruct",
-          "Qwen3-Coder 30B-A3B Instruct",
-          "Qwen3 235B-A22B Instruct 2507",
-          "Mistral Small 3.2 24B"
-        ],
-        "openWeightModels": 12,
-        "outputs": [
-          "text"
-        ],
-        "summarySource": "official page meta description"
-      },
-      "use": {
-        "install": "npm install @ai-sdk/openai-compatible",
-        "snippet": "OPENCHEAP_API_KEY=",
-        "docs": "https://docs.opencheap.si"
       },
       "fetchedAt": "2026-11-14"
     },
@@ -11863,7 +11813,7 @@
       "name": "RunInfra",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Call hosted open-weight models through OpenAI-compatible and Anthropic-compatible Model APIs.",
+      "summary": "Call hosted open-weight models through chat-completions-compatible and Messages-compatible APIs, with workspace keys and credits.",
       "url": "https://runinfra.ai/docs",
       "source": {
         "name": "models.dev",
@@ -11906,7 +11856,7 @@
         "snippet": "RUNINFRA_GATEWAY_KEY=",
         "docs": "https://runinfra.ai/docs"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:sagg",
@@ -13346,7 +13296,7 @@
       "name": "TeamoRouter",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "TeamoRouter supports OpenAI, Google Gemini, and Anthropic compatible API formats, so official SDKs can call Claude, Gemini, GPT, and other models through one gateway.",
+      "summary": "Connect your SDK or coding tool to TeamoRouter with one API key, then use OpenAI, Gemini or Anthropic-compatible endpoints to call Claude, GPT and other models.",
       "url": "https://teamorouter.com/docs/api-integration",
       "source": {
         "name": "models.dev",
@@ -13389,7 +13339,7 @@
         "snippet": "TEAMOROUTER_API_KEY=",
         "docs": "https://teamorouter.com/docs/api-integration"
       },
-      "fetchedAt": "2026-11-14",
+      "fetchedAt": "2026-11-15",
       "metrics": {
         "siteRank": 500000
       }
@@ -13439,56 +13389,6 @@
         "install": "npm install @ai-sdk/openai-compatible",
         "snippet": "TEAPOT_ROUTER_API_KEY=",
         "docs": "https://teapotrouter.com/docs"
-      },
-      "fetchedAt": "2026-11-14"
-    },
-    {
-      "id": "models-dev:tempr",
-      "name": "Tempr Gateway",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "Tempr Gateway: 99 models listed on models.dev (newest: MiMo-V2.6-Flash, MiMo-V2.6-Pro, Grok 4.7).",
-      "url": "https://temprhq.io/docs/gateway-reference.html",
-      "source": {
-        "name": "models.dev",
-        "url": "https://models.dev"
-      },
-      "tags": [
-        "ai",
-        "inference",
-        "openai-compatible",
-        "server-key"
-      ],
-      "preview": {
-        "type": "api",
-        "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://api.temprhq.io/v1",
-        "auth": "apiKey",
-        "env": [
-          "TEMPR_API_KEY"
-        ],
-        "keyServerSide": true,
-        "modelCount": 99,
-        "models": [
-          "MiMo-V2.6-Flash",
-          "MiMo-V2.6-Pro",
-          "Grok 4.7",
-          "MiMo-V2.6-Pro-UltraSpeed",
-          "GLM-5.3-FlashX",
-          "DeepSeek V4.1 Flash",
-          "Mercury 2.5",
-          "Gemini 3.8 Flash"
-        ],
-        "openWeightModels": 57,
-        "outputs": [
-          "text"
-        ],
-        "summarySource": "models.dev data"
-      },
-      "use": {
-        "install": "npm install @ai-sdk/openai-compatible",
-        "snippet": "TEMPR_API_KEY=",
-        "docs": "https://temprhq.io/docs/gateway-reference.html"
       },
       "fetchedAt": "2026-11-14"
     },
@@ -13994,7 +13894,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 1134527
+        "downloads": 90799
       },
       "tags": [
         "ai",
@@ -14005,7 +13905,7 @@
         "type": "api",
         "aiSdk": "@ai-sdk/togetherai",
         "auth": "apiKey",
-        "downloadsOf": "npm:@ai-sdk/togetherai",
+        "downloadsOf": "npm:together-ai",
         "env": [
           "TOGETHER_API_KEY"
         ],
@@ -14036,7 +13936,7 @@
         "snippet": "TOGETHER_API_KEY=",
         "docs": "https://docs.together.ai"
       },
-      "fetchedAt": "2026-11-09"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:tokengo",
@@ -14362,56 +14262,6 @@
       "fetchedAt": "2026-11-14"
     },
     {
-      "id": "models-dev:uberllm",
-      "name": "UberLLM",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "OpenAI- and Anthropic-compatible API for text, image, video, music and speech models served by third-party providers.",
-      "url": "https://uberllm.dev/docs",
-      "source": {
-        "name": "models.dev",
-        "url": "https://models.dev"
-      },
-      "tags": [
-        "ai",
-        "inference",
-        "openai-compatible",
-        "server-key"
-      ],
-      "preview": {
-        "type": "api",
-        "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://api.uberllm.dev/v1",
-        "auth": "apiKey",
-        "env": [
-          "UBERLLM_API_KEY"
-        ],
-        "keyServerSide": true,
-        "modelCount": 15,
-        "models": [
-          "DeepSeek V4.1 Flash",
-          "GLM-5.3",
-          "Kimi K3",
-          "Gemini 3.5 Flash",
-          "DeepSeek V4 Pro",
-          "GPT-5.5",
-          "Grok 4.3",
-          "GLM-5.1"
-        ],
-        "openWeightModels": 8,
-        "outputs": [
-          "text"
-        ],
-        "summarySource": "official page meta description"
-      },
-      "use": {
-        "install": "npm install @ai-sdk/openai-compatible",
-        "snippet": "UBERLLM_API_KEY=",
-        "docs": "https://uberllm.dev/docs"
-      },
-      "fetchedAt": "2026-11-14"
-    },
-    {
       "id": "models-dev:umans-ai",
       "name": "Umans AI",
       "kind": "ai-inference",
@@ -14657,7 +14507,7 @@
       "name": "Unrestricted",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Endpoints, SDK examples, limits and errors for an OpenAI- and Anthropic-compatible API serving Qwen3.8 27B Uncensored, MiMo V2.6 Flash Uncensored, GLM-5.3 Flash Uncensored and DeepSeek V4.1 Flash 1017 Uncensored for coding and chat, with up to 1M context.",
+      "summary": "Endpoints, SDK examples, limits and errors for an OpenAI- and Anthropic-compatible API serving Qwen3.8 27B Uncensored, GLM-5.3 Flash Uncensored and DeepSeek V4.1 Flash 1017 Uncensored for coding and chat, with up to 1M context.",
       "url": "https://unrestricted.sh/reference",
       "source": {
         "name": "models.dev",
@@ -14696,7 +14546,7 @@
         "snippet": "UNRESTRICTED_API_KEY=",
         "docs": "https://unrestricted.sh/reference"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:uplinkswitch",
@@ -14862,7 +14712,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 126012
+        "downloads": 155712
       },
       "tags": [
         "ai",
@@ -14900,7 +14750,7 @@
         "snippet": "VENICE_API_KEY=",
         "docs": "https://docs.venice.ai"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:vercel",
@@ -14916,7 +14766,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 245332
+        "downloads": 276962
       },
       "tags": [
         "ai",
@@ -14935,7 +14785,7 @@
           "AI_GATEWAY_API_KEY"
         ],
         "keyServerSide": true,
-        "modelCount": 419,
+        "modelCount": 416,
         "models": [
           "Gemini 4 Hydrogen",
           "Inkling 2 Small",
@@ -14960,7 +14810,7 @@
         "snippet": "AI_GATEWAY_API_KEY=",
         "docs": "https://vercel.com/docs/ai-gateway"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:verda",
@@ -15097,55 +14947,6 @@
         "docs": "https://docs.vivgrid.com/models"
       },
       "fetchedAt": "2026-10-28"
-    },
-    {
-      "id": "models-dev:void-api",
-      "name": "Void API",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "Build with the Void API LLM gateway. Explore authentication, GPT and Claude model IDs, Chat Completions, Responses API, streaming and curl examples.",
-      "url": "https://void-api.tech/docs#models",
-      "source": {
-        "name": "models.dev",
-        "url": "https://models.dev"
-      },
-      "tags": [
-        "ai",
-        "inference",
-        "openai-compatible",
-        "server-key"
-      ],
-      "preview": {
-        "type": "api",
-        "aiSdk": "@ai-sdk/openai-compatible",
-        "apiBase": "https://void-api.tech/v1",
-        "auth": "apiKey",
-        "env": [
-          "VOID_API_KEY"
-        ],
-        "keyServerSide": true,
-        "modelCount": 13,
-        "models": [
-          "GPT-6.1 Sol",
-          "Claude Sonnet 5.5",
-          "Claude Opus 5.5",
-          "GPT-6 Luna",
-          "GPT-6 Sol",
-          "GPT-6 Astra",
-          "Claude Fable 5.1",
-          "Claude Opus 5"
-        ],
-        "outputs": [
-          "text"
-        ],
-        "summarySource": "official page meta description"
-      },
-      "use": {
-        "install": "npm install @ai-sdk/openai-compatible",
-        "snippet": "VOID_API_KEY=",
-        "docs": "https://void-api.tech/docs#models"
-      },
-      "fetchedAt": "2026-11-14"
     },
     {
       "id": "models-dev:volcengine",
@@ -15518,7 +15319,7 @@
         "url": "https://models.dev"
       },
       "metrics": {
-        "downloads": 1416
+        "downloads": 1769
       },
       "tags": [
         "ai",
@@ -15554,7 +15355,7 @@
         "snippet": "WATSONX_AI_APIKEY=\nWATSONX_AI_PROJECT_ID=",
         "docs": "https://www.ibm.com/docs/en/watsonx/saas?topic=solutions-supported-foundation-models"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "models-dev:watt",

@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-14",
-  "count": 881,
+  "fetchedAt": "2026-11-15",
+  "count": 887,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -3186,6 +3186,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:chave-movel-digital",
+      "name": "Chave Móvel Digital",
+      "kind": "business",
+      "category": "api",
+      "summary": "Remote MCP server that stores a PDF and returns a page to sign it with Portugal's Chave Móvel Digital. No account.",
+      "url": "https://chavemovel.digital",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "marcelscruz:cheaper-inference",
       "name": "Cheaper Inference",
       "kind": "ai-other",
@@ -5546,6 +5569,30 @@
       "fetchedAt": "2026-11-07"
     },
     {
+      "id": "marcelscruz:dunkapi",
+      "name": "DunkAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "NBA, WNBA and NCAA basketball: play-by-play with shot locations, box scores, player props and sportsbook odds",
+      "url": "https://dunkapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "marcelscruz:duply",
       "name": "Duply",
       "kind": "media",
@@ -6228,6 +6275,30 @@
         "listCategory": "Sports & Fitness"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:fast-food-index",
+      "name": "Fast Food Index",
+      "kind": "life",
+      "category": "api",
+      "summary": "US fast food menu prices: chain medians, Big Mac Index by state and verified price changes",
+      "url": "https://fastfoodindex.com/api/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "food-drink"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Food & Drink"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "marcelscruz:fastapi-simple-calculator",
@@ -7537,6 +7608,29 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "marcelscruz:getyoutubetranscript",
+      "name": "GetYouTubeTranscript",
+      "kind": "media",
+      "category": "api",
+      "summary": "YouTube transcripts in any caption language as JSON, plus search, channel, playlist and batch endpoints. Credit-based, free credits on signup",
+      "url": "https://getyoutubetranscript.com/youtube-transcript-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "marcelscruz:gif-from-video-api",
@@ -9480,30 +9574,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "marcelscruz:kaijuconverter",
-      "name": "KaijuConverter",
-      "kind": "business",
-      "category": "api",
-      "summary": "Convert 201+ file formats (HEIC, WebP, AVIF, PDF, DOCX, CSV, ODS, RAW, CAD, EPUB, MP4, MP3), 54 Studio tools & MCP Server",
-      "url": "https://kaijuconverter.com/api-docs",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "cors",
-        "documents-productivity"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "yes",
-        "listCategory": "Documents & Productivity"
-      },
-      "fetchedAt": "2026-11-03"
-    },
-    {
       "id": "marcelscruz:kardinal",
       "name": "Kardinal",
       "kind": "maps",
@@ -11107,6 +11177,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:microworker",
+      "name": "Microworker",
+      "kind": "business",
+      "category": "api",
+      "summary": "Micro-task marketplace: post and fund small online tasks, track automatic payments and review workers' submissions",
+      "url": "https://microworker.app",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "marcelscruz:minecraft-serverhub",
       "name": "Minecraft ServerHub",
       "kind": "entertainment",
@@ -11591,6 +11684,30 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-10-26"
+    },
+    {
+      "id": "marcelscruz:mylastwill",
+      "name": "MyLastWill",
+      "kind": "business",
+      "category": "api",
+      "summary": "Drafts U.S. wills, codicils and charity beneficiary wording, and returns each state's will-signing rules and estate tax estimates",
+      "url": "https://mylastwill.org",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "marcelscruz:mysql-visual-explain",
@@ -14594,30 +14711,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "marcelscruz:readark",
-      "name": "Readark",
-      "kind": "entertainment",
-      "category": "api",
-      "summary": "Dark romance books with separate spice and darkness ratings, subgenres, tropes and authors",
-      "url": "https://readark.app/developers/",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "books",
-        "cors"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Books"
-      },
-      "fetchedAt": "2026-11-05"
-    },
-    {
       "id": "marcelscruz:readgzh",
       "name": "ReadGZH",
       "kind": "business",
@@ -16761,6 +16854,30 @@
       }
     },
     {
+      "id": "marcelscruz:social-fetch",
+      "name": "Social Fetch",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Public posts, profiles, comments, transcripts and search from TikTok, Instagram, LinkedIn, X, YouTube, Reddit and more",
+      "url": "https://www.socialfetch.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "marcelscruz:social-media-management-api",
       "name": "Social Media Management API",
       "kind": "news-social",
@@ -17259,6 +17376,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:stackrates",
+      "name": "StackRates",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "VPS and cloud server prices from 98 providers, read daily from their own pricing pages and APIs, each with its read date and source link",
+      "url": "https://stackrates.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-15"
+    },
+    {
       "id": "marcelscruz:stackscan",
       "name": "StackScan",
       "kind": "business",
@@ -17518,6 +17659,30 @@
         "listCategory": "Environment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:strikerapi",
+      "name": "StrikerAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "Soccer data for 17 leagues: lineups, match events with shot locations and xG, standings and sportsbook odds",
+      "url": "https://strikerapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-15"
     },
     {
       "id": "marcelscruz:string-web-access",
@@ -19383,30 +19548,6 @@
         "listCategory": "Data Validation"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "marcelscruz:valo-data",
-      "name": "Valo.Data",
-      "kind": "entertainment",
-      "category": "api",
-      "summary": "Pokémon TCG cards in EN, FR, JA and ZH with Cardmarket, US market and eBay prices, graded sales and PSA populations; 14 TCGs, free Sandbox",
-      "url": "https://valotcg.com/developers/api/pokemon",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "cors",
-        "games-comics"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "yes",
-        "listCategory": "Games & Comics"
-      },
-      "fetchedAt": "2026-11-03"
     },
     {
       "id": "marcelscruz:vaneform",

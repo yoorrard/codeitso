@@ -4,11 +4,11 @@
     "name": "Registry of Open Data on AWS",
     "url": "https://registry.opendata.aws/",
     "license": "Registry entries from awslabs/open-data-registry (Apache-2.0 registry repository); each dataset keeps the license named by its provider.",
-    "total": 1497,
+    "total": 1503,
     "cut": "폐기(Deprecated) 0개 제외"
   },
-  "fetchedAt": "2026-11-10",
-  "count": 1490,
+  "fetchedAt": "2026-11-17",
+  "count": 1496,
   "items": [
     {
       "id": "aws-open-data:1000-genomes",
@@ -1097,9 +1097,9 @@
         "updateFrequency": "Weekly"
       },
       "use": {
-        "docs": "https://allenneuraldynamics.github.io/data.html#aind-open-data"
+        "docs": "https://docs.allenneuraldynamics.org/en/latest/policies_practices/data_organization.html"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "aws-open-data:allen-sea-ad-atlas",
@@ -3830,13 +3830,13 @@
         "type": "dataset",
         "host": "aws",
         "licenseText": "Creative Commons Attribution-ShareAlike 4.0 International (CC-BY-SA 4.0). https://creativecommons.org/licenses/by-sa/4.0/",
-        "managedBy": "Alliance of Bioversity International and CIAT",
+        "managedBy": "Alliance of Bioversity International and CIAT, Quantitative Engineering Design (QED), CIMMYT, International Potato Center (CIP), AfricaRice, Google Research Africa, IITA, and Gates Foundation",
         "updateFrequency": "New imagery collected during annual field campaigns is reviewed, annotated, and added to the dataset approximately once per year. Annotation updates and quality corrections are versioned and documented in CHANGELOG.md."
       },
       "use": {
         "docs": "https://github.com/CIAT-Artemis/imagesafari-artemis-crop-images/blob/main/README.md"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "aws-open-data:asem-project",
@@ -11841,12 +11841,12 @@
         "type": "dataset",
         "host": "aws",
         "managedBy": "dynamical.org",
-        "updateFrequency": "ECMWF IFS ENS forecast, 15 day, 0.25 degree: Forecasts initialized every 24 hours; ECMWF IFS ENS forecast, 46 day, daily, 1.5 degree: Forecasts initialized every 24 hours; ECMWF IFS ENS forecast, 46 day, 6 hourly, 1.5 degree: Forecasts initialized every 24 hours"
+        "updateFrequency": "ECMWF IFS ENS forecast, 15 day, 0.25 degree: Forecasts initialized every 24 hours; ECMWF IFS ENS forecast, 46 day, daily, 1.5 degree: Forecasts initialized every 24 hours; ECMWF IFS ENS forecast, 46 day, 6 hourly, 1.5 degree: Forecasts initialized every 24 hours; ECMWF IFS ENS forecast, 6 day, 0.25 degree, virtual: Forecasts initialized every 6 hours; ECMWF IFS ENS forecast, 6 day, 0.1 degree, virtual: Forecasts initialized every 6 hours; ECMWF IFS ENS forecast, 15 day, 0.25 degree, virtual: Forecasts initialized every 12 hours; ECMWF IFS ENS forecast, 15 day, 0.1 degree, virtual: Forecasts initialized every 12 hours"
       },
       "use": {
         "docs": "https://dynamical.org/catalog/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "aws-open-data:dynamical-nasa-imerg",
@@ -12014,6 +12014,105 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "aws-open-data:dynamical-noaa-refs",
+      "name": "NOAA REFS - dynamical.org Icechunk Zarr",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "The RRFS Ensemble Forecast System (REFS) is a National Oceanic and Atmospheric Administration (NOAA) National Centers for Environmental Prediction (NCEP) ensemble product system.",
+      "url": "https://registry.opendata.aws/dynamical-noaa-refs/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "license": "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)",
+      "tags": [
+        "atmosphere",
+        "aws",
+        "aws-pds",
+        "climate",
+        "forecast",
+        "meteorological",
+        "weather",
+        "zarr"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "managedBy": "dynamical.org",
+        "updateFrequency": "NOAA REFS forecast, hourly, virtual: Forecasts initialized every 6 hours; NOAA REFS forecast, 3 hourly, virtual: Forecasts initialized every 6 hours"
+      },
+      "use": {
+        "docs": "https://dynamical.org/catalog/"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
+      "id": "aws-open-data:dynamical-noaa-rrfs",
+      "name": "NOAA RRFS - dynamical.org Icechunk Zarr",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "The Rapid Refresh Forecast System (RRFS) is a National Oceanic and Atmospheric Administration (NOAA) National Centers for Environmental Prediction (NCEP) convection-allowing weather forecast model with a 3 km grid, built on the Unified Forecast System.",
+      "url": "https://registry.opendata.aws/dynamical-noaa-rrfs/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "license": "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)",
+      "tags": [
+        "atmosphere",
+        "aws",
+        "aws-pds",
+        "climate",
+        "forecast",
+        "meteorological",
+        "weather",
+        "zarr"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "managedBy": "dynamical.org",
+        "updateFrequency": "NOAA RRFS forecast, sub-hourly, virtual: Forecasts initialized every hour; NOAA RRFS forecast, 18 hour, virtual: Forecasts initialized every 3 hours; NOAA RRFS forecast, 84 hour, virtual: Forecasts initialized every 6 hours"
+      },
+      "use": {
+        "docs": "https://dynamical.org/catalog/"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
+      "id": "aws-open-data:dynamical-noaa-rrfs-ens",
+      "name": "NOAA RRFS ENS - dynamical.org Icechunk Zarr",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "The Rapid Refresh Forecast System ensemble (RRFS ENS) is a National Oceanic and Atmospheric Administration (NOAA) National Centers for Environmental Prediction (NCEP) convection-allowing ensemble with a 3 km grid.",
+      "url": "https://registry.opendata.aws/dynamical-noaa-rrfs-ens/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "license": "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)",
+      "tags": [
+        "atmosphere",
+        "aws",
+        "aws-pds",
+        "climate",
+        "forecast",
+        "meteorological",
+        "weather",
+        "zarr"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "managedBy": "dynamical.org",
+        "updateFrequency": "NOAA RRFS ENS forecast, virtual: Forecasts initialized every 6 hours"
+      },
+      "use": {
+        "docs": "https://dynamical.org/catalog/"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "aws-open-data:dynamical-tj-nwp",
       "name": "TJweather Global-Regional Integrated Numerical Weather Prediction System Dataset (SD3)",
       "kind": "open-data",
@@ -12045,6 +12144,39 @@
         "docs": "https://github.com/Tianji-Weather/aws-opendata-docs/blob/main/tj-nwp-descriptive-documentation.md"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "aws-open-data:dynamical-ucsb-chc-chirps",
+      "name": "UCSB CHC CHIRPS - dynamical.org Icechunk Zarr",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "The Climate Hazards Center Infrared Precipitation with Stations (CHIRPS) version 3 combines satellite estimates and station observations into a precipitation record over land. These datasets have been translated to cloud-optimized Icechunk Zarr format by dynamical.org.",
+      "url": "https://registry.opendata.aws/dynamical-ucsb-chc-chirps/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "license": "[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)",
+      "tags": [
+        "atmosphere",
+        "aws",
+        "aws-pds",
+        "climate",
+        "forecast",
+        "meteorological",
+        "weather",
+        "zarr"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "managedBy": "dynamical.org",
+        "updateFrequency": "UCSB CHC CHIRPS analysis, final: 1 day; UCSB CHC CHIRPS analysis, preliminary: 1 day"
+      },
+      "use": {
+        "docs": "https://dynamical.org/catalog/"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "aws-open-data:e11bio-prism",
@@ -14014,6 +14146,40 @@
         "docs": "http://course.fast.ai/datasets"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "aws-open-data:fathomnet",
+      "name": "FathomNet",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "FathomNet is a global, open-source database of ocean imagery and AI-ready annotations. It aggregates more than three decades of imagery from remotely operated vehicles, autonomous underwater vehicles, drop cameras, divers, and citizen scientists using the FathomVerse apps.",
+      "url": "https://registry.opendata.aws/fathomnet/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "tags": [
+        "aws",
+        "aws-pds",
+        "biodiversity",
+        "classification",
+        "computer-vision",
+        "ecosystems",
+        "marine",
+        "object-detection",
+        "oceans"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "licenseText": "There is no single license for FathomNet. Each contributor chooses the licenses for their own images and annotations, and that license is attached to every record: image_license on each image and annotation_license on each bounding box in the metadata tables.",
+        "managedBy": "Monterey Bay Aquarium Research Institute",
+        "updateFrequency": "Ad hoc, as new imagery and annotations are contributed and reviewed."
+      },
+      "use": {
+        "docs": "https://github.com/fathomnet/fathomnet-open-data"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "aws-open-data:fcp-indi",
@@ -39039,11 +39205,11 @@
       },
       "tags": [
         "aws",
-        "bam",
-        "fastq",
+        "epigenomics",
         "genetic",
         "genomic",
         "life-sciences",
+        "spatial-transcriptomics",
         "transcriptomics",
         "whole-exome-sequencing",
         "whole-genome-sequencing"
@@ -39058,7 +39224,41 @@
       "use": {
         "docs": "https://doi.org/10.1101/2025.04.21.648266"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-17"
+    },
+    {
+      "id": "aws-open-data:salk-human-brain-snm3c-seq",
+      "name": "Human Brain snm3C-seq",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "The human brain comprises hundreds of epigenomically distinct cell types whose identity is governed by DNA methylation and the three-dimensional folding of the genome, yet these two regulatory layers have rarely been measured jointly across its full anatomical breadth.",
+      "url": "https://registry.opendata.aws/salk-human-brain-snm3c-seq/",
+      "source": {
+        "name": "Registry of Open Data on AWS",
+        "url": "https://registry.opendata.aws/"
+      },
+      "tags": [
+        "aws",
+        "bam",
+        "cram",
+        "fastq",
+        "genetic",
+        "genomic",
+        "life-sciences",
+        "transcriptomics",
+        "whole-genome-sequencing"
+      ],
+      "preview": {
+        "type": "dataset",
+        "host": "aws",
+        "licenseText": "NCBI Policy and NIH Genomic Data Sharing Policy",
+        "managedBy": "Salk Institute",
+        "updateFrequency": "New data is added as soon as it is available."
+      },
+      "use": {
+        "docs": "https://github.com/DingWB/human_brain_snm3C-seq"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "aws-open-data:sampen",

@@ -1,47 +1,47 @@
 {
   "category": "datasets",
   "nameKo": "데이터셋",
-  "fetchedAt": "2026-11-15",
-  "total": 19633,
+  "fetchedAt": "2026-11-17",
+  "total": 19672,
   "subcategories": [
     {
       "id": "ai-training",
       "nameKo": "AI 학습 데이터셋",
-      "count": 3298,
+      "count": 3323,
       "sources": [
         {
           "id": "hf-datasets",
           "name": "Hugging Face 데이터셋",
-          "count": 3298
+          "count": 3323
         }
       ]
     },
     {
       "id": "kaggle",
       "nameKo": "Kaggle 데이터셋",
-      "count": 3035,
+      "count": 3050,
       "sources": [
         {
           "id": "kaggle",
           "name": "Kaggle 데이터셋",
-          "count": 3035
+          "count": 3050
         }
       ]
     },
     {
       "id": "ml-classic",
       "nameKo": "머신러닝 기본 데이터셋",
-      "count": 820,
+      "count": 839,
       "sources": [
         {
           "id": "awesome-public-datasets",
           "name": "Awesome Public Datasets (분야별)",
-          "count": 130
+          "count": 131
         },
         {
           "id": "uci",
           "name": "UCI Machine Learning Repository",
-          "count": 690
+          "count": 708
         }
       ]
     },
@@ -89,29 +89,29 @@
     {
       "id": "open-data",
       "nameKo": "분야별 공개 데이터",
-      "count": 2508,
+      "count": 2487,
       "sources": [
         {
           "id": "awesome-public-datasets",
           "name": "Awesome Public Datasets (분야별)",
-          "count": 1018
+          "count": 991
         },
         {
           "id": "aws-open-data",
           "name": "Registry of Open Data on AWS",
-          "count": 1490
+          "count": 1496
         }
       ]
     },
     {
       "id": "sample-data",
       "nameKo": "앱에 넣는 기본 데이터 (국가·통화·지도)",
-      "count": 120,
+      "count": 121,
       "sources": [
         {
           "id": "reference-data",
           "name": "앱에 넣는 기본 데이터 (국가·통화·도시·지도 경계)",
-          "count": 120
+          "count": 121
         }
       ]
     }
@@ -122,7 +122,7 @@
       "name": "Awesome Public Datasets (분야별)",
       "url": "https://github.com/awesomedata/awesome-public-datasets",
       "license": "Dataset list from awesomedata/apd-core (GPL-3.0 list repository; names, links and one-line descriptions). Each dataset keeps its own terms.",
-      "count": 1148,
+      "count": 1122,
       "note": "원본 저장소가 깨진 링크로 표시한 항목은 뺀다."
     },
     {
@@ -130,8 +130,8 @@
       "name": "Registry of Open Data on AWS",
       "url": "https://registry.opendata.aws/",
       "license": "Registry entries from awslabs/open-data-registry (Apache-2.0 registry repository); each dataset keeps the license named by its provider.",
-      "count": 1490,
-      "total": 1497,
+      "count": 1496,
+      "total": 1503,
       "cut": "폐기(Deprecated) 0개 제외"
     },
     {
@@ -148,7 +148,7 @@
       "name": "Hugging Face 데이터셋",
       "url": "https://huggingface.co/datasets",
       "license": "Hugging Face Hub public API metadata (dataset id, card description, tasks, downloads, likes, license tag); each dataset keeps its own license (field license).",
-      "count": 3298,
+      "count": 3323,
       "cut": "최근 30일 내려받기 10,000회 이상 또는 좋아요 100개 이상 또는 요즘 뜨는 순 상위 300개. 카드 설명이 없으면 좋아요 20개 이상만",
       "note": "Hub에는 공개 데이터셋이 50만 개 넘게 있다. 설명이 없는 데이터셋은 이름과 만든 곳으로 짧게 적는다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다)."
     },
@@ -157,7 +157,7 @@
       "name": "Kaggle 데이터셋",
       "url": "https://www.kaggle.com/datasets",
       "license": "Kaggle public API listing metadata (title, subtitle, owner, license name, votes, downloads); each dataset keeps its own license (field license). Downloading needs a Kaggle account.",
-      "count": 3035,
+      "count": 3050,
       "cut": "투표 100개 이상 (투표 많은 순으로 넘겨 받다가 기준 밑에서 멈춘다)",
       "note": "Kaggle에는 공개 데이터셋이 50만 개 넘게 있고, 목록 API는 깊은 쪽을 주지 않는다. 설치 명령은 Kaggle 공식 명령줄 도구(kaggle) 형식이다."
     },
@@ -181,7 +181,7 @@
       "name": "앱에 넣는 기본 데이터 (국가·통화·도시·지도 경계)",
       "url": "https://github.com/datasets",
       "license": "Repository metadata via repos.ecosyste.ms (CC BY-SA 4.0). DataHub core datasets are mostly ODC-PDDL; each repository keeps its own license (field license).",
-      "count": 120,
+      "count": 121,
       "note": "GitHub 'datasets' 조직(DataHub core datasets) 전체(별 5개 이상) + 널리 쓰는 참조 데이터 저장소: dr5hn/countries-states-cities-database, mledoze/countries, umpirsky/country-list, annexare/Countries, lukes/ISO-3166-Countries-with-Regional-Codes, datasets/country-codes, southkorea/southkorea-maps, vuski/admdongkor, johan/world.geo.json, nvkelso/natural-earth-vector, unicode-org/cldr-json, samayo/country-json (고른 목록은 코드잇소)."
     },
     {
@@ -189,8 +189,8 @@
       "name": "UCI Machine Learning Repository",
       "url": "https://archive.ics.uci.edu/",
       "license": "Dataset metadata from the public UCI ML Repository API. UCI states its donated datasets are licensed CC BY 4.0 unless noted on the dataset page.",
-      "count": 690,
-      "total": 690
+      "count": 708,
+      "total": 708
     },
     {
       "id": "worldbank-wdi",

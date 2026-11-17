@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-15",
-  "count": 887,
+  "fetchedAt": "2026-11-17",
+  "count": 902,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -776,6 +776,30 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "marcelscruz:alpha-bazaar",
+      "name": "Alpha Bazaar",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Public, attested track records for stock calls by AI agents, Wall Street analysts and members of Congress. Agents publish by REST or MCP",
+      "url": "https://www.alphabazaar.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "marcelscruz:alphasmo",
@@ -2282,6 +2306,30 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:bird-album",
+      "name": "Bird Album",
+      "kind": "life",
+      "category": "api",
+      "summary": "Bird of the day in 15 languages and 11,000+ AI-generated bird illustrations under CC BY 4.0",
+      "url": "https://birdalbum.com/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "animals",
+        "auth-none",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Animals"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "marcelscruz:bitculator",
@@ -4313,6 +4361,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:courtmesh",
+      "name": "CourtMesh",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Search 315M+ Indian court cases from the Supreme Court, High Courts and District Courts. REST API with official Python, Node and MCP SDKs",
+      "url": "https://courtmesh.ai/indian-court-cases-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "marcelscruz:covalent",
       "name": "Covalent",
       "kind": "finance",
@@ -6184,6 +6255,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:fairvalid",
+      "name": "FairValid",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Verify email addresses or CSV lists, retrieve job results and check workspace credits through a self-serve server API",
+      "url": "https://fairvalid.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "marcelscruz:faker",
       "name": "Faker",
       "kind": "dev",
@@ -6821,6 +6915,30 @@
         "listCategory": "Transportation"
       },
       "fetchedAt": "2026-10-27"
+    },
+    {
+      "id": "marcelscruz:folkroom",
+      "name": "Folkroom",
+      "kind": "media",
+      "category": "api",
+      "summary": "Open-access cultural heritage REST API for living folk traditions, instruments and UNESCO records",
+      "url": "https://folkroom.org/data",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-none",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "marcelscruz:football-highlights",
@@ -7586,6 +7704,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:getodds",
+      "name": "GetOdds",
+      "kind": "life",
+      "category": "api",
+      "summary": "DraftKings, FanDuel, BetRivers and Pinnacle odds plus pick'em lines, with line history, free tier",
+      "url": "https://getoddsapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "marcelscruz:gettranscript",
       "name": "GetTranscript",
       "kind": "media",
@@ -8199,6 +8340,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:hiapi",
+      "name": "HiAPI",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Pay-as-you-go key for image, video, audio and text models (GPT Image, Seedance, Kling, Veo, DeepSeek), OpenAI-compatible text and async media task APIs",
+      "url": "https://hiapi.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "marcelscruz:hirelayer",
       "name": "HireLayer",
       "kind": "business",
@@ -8435,6 +8599,29 @@
         "listCategory": "Personality"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:humanpen",
+      "name": "HumanPen",
+      "kind": "business",
+      "category": "api",
+      "summary": "Document-level humanize (DOCX/PPTX/TXT), condense (DOCX), citation format correction (12 styles), and translation (12 languages)",
+      "url": "https://api.humanpen.net/v1/docs.md",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "marcelscruz:hunt",
@@ -12265,6 +12452,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:novigapi",
+      "name": "NovigAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "Unofficial read-only Novig exchange prices with intraday line history and no-vig fair prices",
+      "url": "https://novigapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "marcelscruz:nrouter",
       "name": "nRouter",
       "kind": "ai-other",
@@ -12577,6 +12787,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:onlinecompiler",
+      "name": "OnlineCompiler",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Run and judge code in 46 languages against test cases, each run in a fresh sandbox; Judge0 and Piston compatible",
+      "url": "https://onlinecompiler.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "programming"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Programming"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "marcelscruz:open-bank-project",
       "name": "Open Bank Project",
       "kind": "finance",
@@ -12841,6 +13074,30 @@
         "listCategory": "Jobs"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:openradar",
+      "name": "openradar",
+      "kind": "business",
+      "category": "api",
+      "summary": "Open feed of job vacancies and freelance orders; documented no-key REST API (endpoints, parameters, responses), OpenAPI 3.1, RSS and MCP",
+      "url": "https://openradar.fun/docs",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "marcelscruz:opensea",
@@ -14038,6 +14295,30 @@
       }
     },
     {
+      "id": "marcelscruz:prawnet",
+      "name": "Prawnet",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Polish case-law graph: rulings citing each provision, citation network, appeal outcomes, case-number verification and court statistics",
+      "url": "https://prawnet.pl/en/dane/api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
       "id": "marcelscruz:printful",
       "name": "Printful",
       "kind": "payments",
@@ -14205,6 +14486,29 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-10-28"
+    },
+    {
+      "id": "marcelscruz:prizepicksapi",
+      "name": "PrizePicksAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "Unofficial PrizePicks player-prop lines with goblin and demon tiers, line history and graded results",
+      "url": "https://prizepicksapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "marcelscruz:proofread-and-grammar-check-api",
@@ -17111,6 +17415,54 @@
         "listCategory": "Music"
       },
       "fetchedAt": "2026-10-28"
+    },
+    {
+      "id": "marcelscruz:sovereign-logos",
+      "name": "Sovereign Logos",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Free Bible API: Septuagint, KJV, Geneva and more. No key. Citations on every passage.",
+      "url": "https://sovereignlogos.com/developers",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "books",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Books"
+      },
+      "fetchedAt": "2026-11-17"
+    },
+    {
+      "id": "marcelscruz:spacejobs-now",
+      "name": "SpaceJobs.Now",
+      "kind": "business",
+      "category": "api",
+      "summary": "Open jobs and internships at 200+ space companies, read daily from their own careers sites, with posted pay",
+      "url": "https://spacejobs.now/data",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "marcelscruz:spacetradersapi",

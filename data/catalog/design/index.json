@@ -1,8 +1,8 @@
 {
   "category": "design",
   "nameKo": "디자인",
-  "fetchedAt": "2026-11-15",
-  "total": 11836,
+  "fetchedAt": "2026-11-17",
+  "total": 11846,
   "subcategories": [
     {
       "id": "fonts-ko",
@@ -29,7 +29,7 @@
     {
       "id": "fonts",
       "nameKo": "폰트",
-      "count": 2133,
+      "count": 2135,
       "sources": [
         {
           "id": "fontshare",
@@ -44,7 +44,7 @@
         {
           "id": "google-fonts",
           "name": "Google Fonts",
-          "count": 1921
+          "count": 1923
         }
       ]
     },
@@ -316,12 +316,12 @@
     {
       "id": "3d",
       "nameKo": "3D·재질·HDRI",
-      "count": 5281,
+      "count": 5288,
       "sources": [
         {
           "id": "ambientcg",
           "name": "ambientCG (PBR materials, HDRIs, 3D models)",
-          "count": 2885
+          "count": 2890
         },
         {
           "id": "asset-sources",
@@ -331,19 +331,19 @@
         {
           "id": "polyhaven",
           "name": "Poly Haven (HDRIs, textures, 3D models)",
-          "count": 2387
+          "count": 2389
         }
       ]
     },
     {
       "id": "game-assets",
       "nameKo": "게임 에셋",
-      "count": 217,
+      "count": 218,
       "sources": [
         {
           "id": "kenney",
           "name": "Kenney game asset packs",
-          "count": 217
+          "count": 218
         }
       ]
     },
@@ -390,10 +390,10 @@
       "name": "ambientCG (PBR materials, HDRIs, 3D models)",
       "url": "https://ambientcg.com",
       "license": "All assets CC0 1.0 (ambientcg.com/license). Listing from the public ambientCG API v2, paginated to the end.",
-      "note": "numberOfResults reported by the API: 2885. metrics.downloads = downloadCount from the API.",
+      "note": "numberOfResults reported by the API: 2890. metrics.downloads = downloadCount from the API.",
       "file": "ambientcg.json",
-      "count": 2885,
-      "fetchedAt": "2026-11-10"
+      "count": 2890,
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "asset-sources",
@@ -422,7 +422,7 @@
       "note": "metrics.downloads = npm downloads last month of the package (for big UI kits this counts the whole kit, not just colors). Tailwind v4 values are OKLCH (kept in value) with an sRGB hex approximation.",
       "file": "color-systems.json",
       "count": 13,
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "design-md",
@@ -472,7 +472,7 @@
       "note": "metrics.downloads = npm downloads in the last month (api.fontsource.org/v1/stats). Summaries come from the font's source repository description when available.",
       "file": "fontsource.json",
       "count": 118,
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "github-animation",
@@ -521,8 +521,8 @@
       "license": "Fonts: OFL-1.1 / Apache-2.0 / UFL-1.0 per family. Catalog metadata from the public metadata endpoints (fonts.google.com/metadata/fonts, /metadata/stats); descriptions © their authors, quoted.",
       "note": "metrics.downloads = Google Fonts API views in the last 30 days (fonts.google.com/metadata/stats). preview.popularityRank = Google Fonts popularity order (1 = most popular).",
       "file": "google-fonts.json",
-      "count": 1959,
-      "fetchedAt": "2026-11-10"
+      "count": 1961,
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "hero-patterns",
@@ -559,8 +559,8 @@
       "url": "https://kenney.nl/assets",
       "license": "All Kenney asset packs are public domain (CC0) per kenney.nl/support. Listing read from the public asset pages (title, og:description, og:image).",
       "file": "kenney.json",
-      "count": 217,
-      "fetchedAt": "2026-11-10"
+      "count": 218,
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "korean-fonts",
@@ -570,7 +570,7 @@
       "note": "summary = official source wording; summaryKo written by 코드잇소 where marked written:codeshopper. metrics.downloads = jsDelivr requests in the last month (data.jsdelivr.com, package in preview.downloadsOf), the same unit as Google Fonts 30-day views; metrics.stars = stars of the source repository.",
       "file": "korean-fonts.json",
       "count": 24,
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "pattern-monster",
@@ -588,8 +588,8 @@
       "license": "All assets CC0. Listing from the public Poly Haven API (api.polyhaven.com, free for any use; requires a unique User-Agent and naming Poly Haven where the data is shown — keep the source badge).",
       "note": "metrics.downloads = all-time download count reported by the API.",
       "file": "polyhaven.json",
-      "count": 2387,
-      "fetchedAt": "2026-11-10"
+      "count": 2389,
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "references",
@@ -615,10 +615,10 @@
       "name": "shadcn/ui registry directory",
       "url": "https://ui.shadcn.com/docs/directory",
       "license": "Directory data from ui.shadcn.com/r/registries.json (shadcn/ui, MIT). Each registry's components keep their own license — check the registry site.",
-      "note": "565 registries listed; 55 marked unavailable by the directory's health check were skipped. Individual components of community registries (141281 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
+      "note": "565 registries listed; 55 marked unavailable by the directory's health check were skipped. Individual components of community registries (141892 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting.",
       "file": "shadcn-registries.json",
       "count": 510,
-      "fetchedAt": "2026-11-15"
+      "fetchedAt": "2026-11-17"
     },
     {
       "id": "styles",

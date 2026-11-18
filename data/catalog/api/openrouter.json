@@ -6,7 +6,7 @@
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
     "note": "OpenRouter lists 123 providers; kept the 34 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-17",
+  "fetchedAt": "2026-11-18",
   "count": 34,
   "items": [
     {
@@ -676,6 +676,7 @@
       },
       "tags": [
         "ai",
+        "hq-il",
         "inference",
         "server-key",
         "via-openrouter"
@@ -683,13 +684,24 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "datacenters": [
+          "US",
+          "DE",
+          "CZ",
+          "ES",
+          "SE",
+          "AU",
+          "IL"
+        ],
+        "headquarters": "IL",
         "keyServerSide": true,
         "privacyPolicy": "https://pearlresearch.ai/legal/privacy",
+        "statusPage": "https://status.pearlresearch.ai/",
         "summarySource": "official page meta description",
         "terms": "https://pearlresearch.ai/legal/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/pearl-research"
       },
-      "fetchedAt": "2026-11-03"
+      "fetchedAt": "2026-11-18"
     },
     {
       "id": "openrouter:perceptron",

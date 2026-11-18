@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-17",
-  "count": 902,
+  "fetchedAt": "2026-11-18",
+  "count": 909,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -2971,6 +2971,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:carbonmark-x402",
+      "name": "Carbonmark x402",
+      "kind": "weather",
+      "category": "api",
+      "summary": "Retire verified carbon credits from an AI agent or any HTTP client: free live quotes, pay per retirement in USDC over x402, public certificate",
+      "url": "https://www.carbonmark.com/ai-agents",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "environment"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Environment"
+      },
+      "fetchedAt": "2026-11-18"
+    },
+    {
       "id": "marcelscruz:carbonsutra-carbon-footprint-estimation-for-organizations",
       "name": "CarbonSutra - Carbon Footprint Estimation for Organizations",
       "kind": "business",
@@ -3161,6 +3184,30 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "marcelscruz:census-ev",
+      "name": "Census EV",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Electric and plug-in hybrid cars for sale in the US, with price, mileage, range and price history",
+      "url": "https://censusev.com/api/v1",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "vehicle"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Vehicle"
+      },
+      "fetchedAt": "2026-11-18"
     },
     {
       "id": "marcelscruz:change-image-background-api",
@@ -4170,6 +4217,29 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:convertintomp4",
+      "name": "ConvertIntoMP4",
+      "kind": "business",
+      "category": "api",
+      "summary": "Convert video, audio, image, document, ebook, archive and font files over REST, with async jobs, webhooks, Node.js and Python SDKs and a free tier",
+      "url": "https://convertintomp4.com/developers",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-18"
     },
     {
       "id": "marcelscruz:cookin",
@@ -6779,7 +6849,7 @@
       "name": "FlashData",
       "kind": "dev",
       "category": "api",
-      "summary": "Google search results, YouTube search, metadata, existing captions and async media delivery to customer storage; paid credits",
+      "summary": "YouTube video and audio downloads, YouTube search, metadata and captions, plus Google Search results. Free trial available.",
       "url": "https://flashdata.dev",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -6795,7 +6865,7 @@
         "cors": "no",
         "listCategory": "Development"
       },
-      "fetchedAt": "2026-11-10"
+      "fetchedAt": "2026-11-18"
     },
     {
       "id": "marcelscruz:flatmark",
@@ -9332,6 +9402,30 @@
         "listCategory": "AI"
       },
       "fetchedAt": "2026-10-26"
+    },
+    {
+      "id": "marcelscruz:islam-museum",
+      "name": "Islam Museum",
+      "kind": "media",
+      "category": "api",
+      "summary": "Islamic history knowledge graph — people, places, events and texts in Arabic, English and Urdu",
+      "url": "https://islam.museum/en/developers/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-none",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-11-18"
     },
     {
       "id": "marcelscruz:ismalicious",
@@ -11921,6 +12015,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:narkis-avatars",
+      "name": "Narkis Avatars",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Seedable placeholder avatars: realistic AI faces of people who don't exist, any size",
+      "url": "https://narkis.ai/developers/avatars",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "test-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Test Data"
+      },
+      "fetchedAt": "2026-11-18"
+    },
+    {
       "id": "marcelscruz:nasdaq-data-link",
       "name": "Nasdaq Data Link",
       "kind": "finance",
@@ -12735,6 +12853,29 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:okdata",
+      "name": "okdata",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Public posts, comments, accounts, hot lists and transcripts from TikTok, YouTube, X, Reddit, Douyin, Xiaohongshu and WeChat, pay per call",
+      "url": "https://okdata.online",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-18"
     },
     {
       "id": "marcelscruz:okex",
@@ -14025,6 +14166,29 @@
         "listCategory": "Shopping"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:plaxswap",
+      "name": "Plaxswap",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Crypto swap quotes and orders across many networks, plus a payment gateway API with hosted checkout, payment links and signed webhooks",
+      "url": "https://plaxswap.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-18"
     },
     {
       "id": "marcelscruz:podcastindex",
@@ -16841,6 +17005,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:simpleverifier",
+      "name": "SimpleVerifier",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Email verification API with a live SMTP mailbox check, catch-all grading and the mail server's reason on every result",
+      "url": "https://simpleverifier.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-18"
+    },
+    {
       "id": "marcelscruz:site-shot",
       "name": "Site-Shot",
       "kind": "dev",
@@ -17437,30 +17624,6 @@
         "auth": "none",
         "cors": "yes",
         "listCategory": "Books"
-      },
-      "fetchedAt": "2026-11-17"
-    },
-    {
-      "id": "marcelscruz:spacejobs-now",
-      "name": "SpaceJobs.Now",
-      "kind": "business",
-      "category": "api",
-      "summary": "Open jobs and internships at 200+ space companies, read daily from their own careers sites, with posted pay",
-      "url": "https://spacejobs.now/data",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "jobs"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Jobs"
       },
       "fetchedAt": "2026-11-17"
     },

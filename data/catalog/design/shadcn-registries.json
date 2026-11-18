@@ -4,10 +4,10 @@
     "name": "shadcn/ui registry directory",
     "url": "https://ui.shadcn.com/docs/directory",
     "license": "Directory data from ui.shadcn.com/r/registries.json (shadcn/ui, MIT). Each registry's components keep their own license — check the registry site.",
-    "note": "565 registries listed; 55 marked unavailable by the directory's health check were skipped. Individual components of community registries (141892 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "588 registries listed; 56 marked unavailable by the directory's health check were skipped. Individual components of community registries (143120 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-17",
-  "count": 510,
+  "fetchedAt": "2026-11-18",
+  "count": 532,
   "items": [
     {
       "id": "shadcn-registry:000h-cojeev",
@@ -15,7 +15,7 @@
       "kind": "ui-registries",
       "category": "design",
       "summary": "Expressive React components with organic shapes, purposeful motion, and source you can make your own.",
-      "url": "https://000h.cojeev.com",
+      "url": "https://cojeev.com/ui",
       "source": {
         "name": "shadcn/ui registry directory",
         "url": "https://ui.shadcn.com/docs/directory"
@@ -27,18 +27,18 @@
       ],
       "preview": {
         "type": "site",
-        "url": "https://000h.cojeev.com",
-        "registryUrl": "https://000h.cojeev.com/r/{name}.json",
+        "url": "https://cojeev.com/ui",
+        "registryUrl": "https://cojeev.com/ui/r/{name}.json",
         "itemCount": 1876,
-        "healthScore": 98.876,
-        "rankingScore": 99.101,
+        "healthScore": 98.878,
+        "rankingScore": 99.102,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @000h-cojeev/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -327,6 +327,7 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
+        "degraded",
         "react",
         "registry",
         "shadcn"
@@ -336,15 +337,15 @@
         "url": "https://8848.aayurtshrestha.com.np",
         "registryUrl": "https://8848.aayurtshrestha.com.np/r/{name}.json",
         "itemCount": 39,
-        "healthScore": 95.749,
-        "rankingScore": 88.467,
-        "health": "healthy"
+        "healthScore": 94.847,
+        "rankingScore": 87.745,
+        "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @aayurt/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -551,40 +552,6 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-11-03",
-      "metrics": {
-        "siteRank": 500000
-      }
-    },
-    {
-      "id": "shadcn-registry:agent-ui-kit",
-      "name": "@agent-ui-kit",
-      "kind": "ui-registries",
-      "category": "design",
-      "summary": "Accessible React components for agent runs: tool call timeline, human-in-the-loop approvals, per-hunk diff review and run telemetry, typed against AI SDK message parts.",
-      "url": "https://agent-ui-kit-demo.vercel.app",
-      "source": {
-        "name": "shadcn/ui registry directory",
-        "url": "https://ui.shadcn.com/docs/directory"
-      },
-      "tags": [
-        "react",
-        "registry",
-        "shadcn"
-      ],
-      "preview": {
-        "type": "site",
-        "url": "https://agent-ui-kit-demo.vercel.app",
-        "registryUrl": "https://agent-ui-kit-demo.vercel.app/r/{name}.json",
-        "itemCount": 13,
-        "healthScore": 93.255,
-        "rankingScore": 83.094,
-        "health": "healthy"
-      },
-      "use": {
-        "install": "npx shadcn@latest add @agent-ui-kit/<component>",
-        "docs": "https://ui.shadcn.com/docs/directory"
-      },
-      "fetchedAt": "2026-10-20",
       "metrics": {
         "siteRank": 500000
       }
@@ -1851,6 +1818,41 @@
       }
     },
     {
+      "id": "shadcn-registry:beamline",
+      "name": "@beamline",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Free MIT React components from Beamline UI, with the base styles and looks they need. The complete system of components and app screens for coding agents is at beamline.io.",
+      "url": "https://beamline.io",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://beamline.io",
+        "registryUrl": "https://beamline.io/registry/open/{name}.json",
+        "itemCount": 130,
+        "healthScore": 93.86,
+        "rankingScore": 90.772,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @beamline/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:benday",
       "name": "@benday",
       "kind": "ui-registries",
@@ -2800,41 +2802,6 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
-      "metrics": {
-        "siteRank": 500000
-      }
-    },
-    {
-      "id": "shadcn-registry:catalogs",
-      "name": "@catalogs",
-      "kind": "ui-registries",
-      "category": "design",
-      "summary": "Discover components, blocks, and more from independent teams. Browse previews and bring the source into your project.",
-      "url": "https://catalogs.dev",
-      "source": {
-        "name": "shadcn/ui registry directory",
-        "url": "https://ui.shadcn.com/docs/directory"
-      },
-      "tags": [
-        "degraded",
-        "react",
-        "registry",
-        "shadcn"
-      ],
-      "preview": {
-        "type": "site",
-        "url": "https://catalogs.dev",
-        "registryUrl": "https://api.catalogs.dev/shadcn/{name}.json",
-        "itemCount": 2213,
-        "healthScore": 97.072,
-        "rankingScore": 97.658,
-        "health": "degraded"
-      },
-      "use": {
-        "install": "npx shadcn@latest add @catalogs/<component>",
-        "docs": "https://ui.shadcn.com/docs/directory"
-      },
-      "fetchedAt": "2026-11-17",
       "metrics": {
         "siteRank": 500000
       }
@@ -5224,6 +5191,41 @@
       }
     },
     {
+      "id": "shadcn-registry:emoji-components",
+      "name": "@emoji-components",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Emoji picker, shortcode suggestions, and reactions for React.",
+      "url": "https://emoji.brianhung.me",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://emoji.brianhung.me",
+        "registryUrl": "https://emoji.brianhung.me/r/{name}.json",
+        "itemCount": 9,
+        "healthScore": 93.313,
+        "rankingScore": 82.058,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @emoji-components/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:emstein-ui",
       "name": "@emstein-ui",
       "kind": "ui-registries",
@@ -5973,6 +5975,39 @@
       }
     },
     {
+      "id": "shadcn-registry:formdef",
+      "name": "@formdef",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Form widgets for TanStack Form on Base UI: text, select, combobox, multi-select, dates, tags and arrays, wired for labels, descriptions and accessible errors, and rendered from a typed formdef config.",
+      "url": "https://formdef.mauricereim.de",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://formdef.mauricereim.de",
+        "registryUrl": "https://formdef.mauricereim.de/r/{style}/{name}.json",
+        "healthScore": 71.241,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @formdef/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:formscn",
       "name": "@formscn",
       "kind": "ui-registries",
@@ -6580,6 +6615,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:goodui",
+      "name": "@goodui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Animated components and app blocks for shadcn: scheduling, dashboards, AI chat and more. 132 components and 39 blocks free under MIT, with an optional Pro tier.",
+      "url": "https://goodui.dev",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://goodui.dev",
+        "registryUrl": "https://goodui.dev/r/{name}.json",
+        "itemCount": 195,
+        "healthScore": 94.124,
+        "rankingScore": 92.28,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @goodui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -7260,6 +7330,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:ibiui",
+      "name": "@ibiui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Motion-first React, Tailwind CSS, and AI UI components with MCP connectors and spring physics.",
+      "url": "https://ui.ibidi.dev",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://ui.ibidi.dev",
+        "registryUrl": "https://ui.ibidi.dev/r/{name}.json",
+        "itemCount": 41,
+        "healthScore": 93.504,
+        "rankingScore": 86.828,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @ibiui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -8015,6 +8120,41 @@
       }
     },
     {
+      "id": "shadcn-registry:kavynui",
+      "name": "@kavynui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Monochrome animated React components and page sections that follow your theme: buttons, navigation, maps, scroll scenes and shader backgrounds. Each one is a single file you own.",
+      "url": "https://www.kavynui.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://www.kavynui.com",
+        "registryUrl": "https://www.kavynui.com/r/{name}.json",
+        "itemCount": 101,
+        "healthScore": 93.805,
+        "rankingScore": 89.923,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @kavynui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:keyframery",
       "name": "@keyframery",
       "kind": "ui-registries",
@@ -8034,16 +8174,16 @@
         "type": "site",
         "url": "https://keyframery.com",
         "registryUrl": "https://keyframery.com/r/{name}.json",
-        "itemCount": 63,
-        "healthScore": 98.372,
-        "rankingScore": 92.078,
+        "itemCount": 87,
+        "healthScore": 98.405,
+        "rankingScore": 93.128,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @keyframery/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-15",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -8068,16 +8208,16 @@
         "type": "site",
         "url": "https://keyframeui.com",
         "registryUrl": "https://keyframeui.com/r/{name}.json",
-        "itemCount": 258,
-        "healthScore": 98.711,
-        "rankingScore": 96.846,
+        "itemCount": 292,
+        "healthScore": 98.812,
+        "rankingScore": 97.324,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @keyframeui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-03",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -8112,6 +8252,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-11-17",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:keyline-ui",
+      "name": "@keyline-ui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "React components for dense, work-heavy interfaces: toolbars, data tables, menus, inspectors and app shells. Built on Base UI, installed as source. Free under MIT.",
+      "url": "https://keyline-ui.dev",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://keyline-ui.dev",
+        "registryUrl": "https://keyline-ui.dev/r/{name}.json",
+        "itemCount": 189,
+        "healthScore": 91.624,
+        "rankingScore": 90.18,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @keyline-ui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -8170,16 +8345,16 @@
         "type": "site",
         "url": "https://kindui.dev/charts/",
         "registryUrl": "https://kindui.dev/r/{name}.json",
-        "itemCount": 101,
-        "healthScore": 98.011,
-        "rankingScore": 93.288,
+        "itemCount": 139,
+        "healthScore": 98.022,
+        "rankingScore": 94.316,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @kind-ui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-17",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -8248,6 +8423,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:klarhimmel",
+      "name": "@klarhimmel",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Free landing page blocks and sections for marketing sites: heroes, pricing, features, FAQs, testimonials and CTAs for React 19 and Tailwind 4 on one design system, plus page templates, app screens, a design skill and an MCP server for agents.",
+      "url": "https://ui.klarhimmel.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://ui.klarhimmel.com",
+        "registryUrl": "https://ui.klarhimmel.com/r/{name}.json",
+        "itemCount": 420,
+        "healthScore": 94.493,
+        "rankingScore": 95.035,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @klarhimmel/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -8967,41 +9177,6 @@
       }
     },
     {
-      "id": "shadcn-registry:lumiui",
-      "name": "@lumiui",
-      "kind": "ui-registries",
-      "category": "design",
-      "summary": "Composable React components powered by Base UI and Tailwind CSS — Build fast, customize everything.",
-      "url": "https://www.lumiui.dev",
-      "source": {
-        "name": "shadcn/ui registry directory",
-        "url": "https://ui.shadcn.com/docs/directory"
-      },
-      "tags": [
-        "degraded",
-        "react",
-        "registry",
-        "shadcn"
-      ],
-      "preview": {
-        "type": "site",
-        "url": "https://www.lumiui.dev",
-        "registryUrl": "https://www.lumiui.dev/r/{name}.json",
-        "itemCount": 67,
-        "healthScore": 87.802,
-        "rankingScore": 83.817,
-        "health": "degraded"
-      },
-      "use": {
-        "install": "npx shadcn@latest add @lumiui/<component>",
-        "docs": "https://ui.shadcn.com/docs/directory"
-      },
-      "fetchedAt": "2026-11-17",
-      "metrics": {
-        "siteRank": 500000
-      }
-    },
-    {
       "id": "shadcn-registry:lytenyte",
       "name": "@lytenyte",
       "kind": "ui-registries",
@@ -9279,7 +9454,7 @@
       "kind": "ui-registries",
       "category": "design",
       "summary": "Animated React components and page sections built on Tailwind CSS v4, powered by Motion and GSAP. Every item respects prefers-reduced-motion and installs only the dependency it needs.",
-      "url": "https://mewo-ui.vercel.app",
+      "url": "https://www.mewo-ui.com",
       "source": {
         "name": "shadcn/ui registry directory",
         "url": "https://ui.shadcn.com/docs/directory"
@@ -9291,18 +9466,18 @@
       ],
       "preview": {
         "type": "site",
-        "url": "https://mewo-ui.vercel.app",
-        "registryUrl": "https://mewo-ui.vercel.app/r/{name}.json",
-        "itemCount": 41,
-        "healthScore": 98.406,
-        "rankingScore": 90.75,
+        "url": "https://www.mewo-ui.com",
+        "registryUrl": "https://www.mewo-ui.com/r/{name}.json",
+        "itemCount": 42,
+        "healthScore": 98.545,
+        "rankingScore": 90.936,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @mewo/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-27",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -9805,16 +9980,16 @@
         "type": "site",
         "url": "https://movin.design/components/",
         "registryUrl": "https://movin.design/r/{name}.json",
-        "itemCount": 1100,
-        "healthScore": 96.649,
-        "rankingScore": 97.319,
+        "itemCount": 1270,
+        "healthScore": 88.708,
+        "rankingScore": 90.966,
         "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @movin/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-10",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -10128,6 +10303,41 @@
       }
     },
     {
+      "id": "shadcn-registry:nested-motion",
+      "name": "@nested-motion",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Beautiful, composable React animation components built with Motion.",
+      "url": "https://nested-motion.vercel.app",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://nested-motion.vercel.app",
+        "registryUrl": "https://nested-motion.vercel.app/r/{name}.json",
+        "itemCount": 2,
+        "healthScore": 90.813,
+        "rankingScore": 76.185,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @nested-motion/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:neumorphism-ui",
       "name": "@neumorphism-ui",
       "kind": "ui-registries",
@@ -10157,6 +10367,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-11-03",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:newtui",
+      "name": "@newtui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Discord-inspired components built on a shared --newt-* token system. Copy-paste React components, with Vue and plain HTML/CSS versions.",
+      "url": "https://newtui.dev",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://newtui.dev",
+        "registryUrl": "https://newtui.dev/r/{name}.json",
+        "itemCount": 99,
+        "healthScore": 91.305,
+        "rankingScore": 87.86,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @newtui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -10878,6 +11123,41 @@
       }
     },
     {
+      "id": "shadcn-registry:ouro",
+      "name": "@ouro",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Human-facing React components built on Base UI and Tailwind CSS, with agent-readable contracts and optional tests.",
+      "url": "https://ui.ouroboros.bot",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://ui.ouroboros.bot",
+        "registryUrl": "https://ui.ouroboros.bot/r/{name}.json",
+        "itemCount": 424,
+        "healthScore": 94.558,
+        "rankingScore": 95.117,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @ouro/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:pacekit",
       "name": "@pacekit",
       "kind": "ui-registries",
@@ -11422,6 +11702,41 @@
       }
     },
     {
+      "id": "shadcn-registry:pinfold",
+      "name": "@pinfold",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Accessible React components from one typed config: data grid, date picker, command palette and more.",
+      "url": "https://pinfold.indranildev.in",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://pinfold.indranildev.in",
+        "registryUrl": "https://pinfold.indranildev.in/r/{name}.json",
+        "itemCount": 51,
+        "healthScore": 93.439,
+        "rankingScore": 87.463,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @pinfold/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:pipecat",
       "name": "@pipecat",
       "kind": "ui-registries",
@@ -11933,6 +12248,41 @@
       }
     },
     {
+      "id": "shadcn-registry:qrdx",
+      "name": "@qrdx",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "QR code components built on the qrdx library: a styled QR code with download buttons, a card, a share dialog, a generator, a scanner, and Wi-Fi and vCard codes.",
+      "url": "https://qrdx.dev/docs/developers/shadcn",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://qrdx.dev/docs/developers/shadcn",
+        "registryUrl": "https://qrdx.dev/r/{name}.json",
+        "itemCount": 8,
+        "healthScore": 93.313,
+        "rankingScore": 81.719,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @qrdx/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:quill",
       "name": "@quill",
       "kind": "ui-registries",
@@ -12413,7 +12763,7 @@
       "name": "@reui",
       "kind": "ui-registries",
       "category": "design",
-      "summary": "Free & open-source library of 1,000+ components and patterns to 10x your productivity in shadcn projects.",
+      "summary": "Free shadcn/ui components and copy-paste examples, plus custom ReUI primitives, forever.",
       "url": "https://reui.io",
       "source": {
         "name": "shadcn/ui registry directory",
@@ -12429,15 +12779,15 @@
         "url": "https://reui.io",
         "registryUrl": "https://reui.io/r/{style}/{name}.json",
         "itemCount": 82,
-        "healthScore": 98.166,
-        "rankingScore": 92.749,
+        "healthScore": 98.51,
+        "rankingScore": 93.024,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @reui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -12472,6 +12822,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:rowpine",
+      "name": "@rowpine",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Pivot tables, a pivot designer, and Excel and PDF export for TanStack Table. Exports match the screen: groups as Excel outlines with SUBTOTAL formulas, filters, pinned columns and formats.",
+      "url": "https://rowpine.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://rowpine.com",
+        "registryUrl": "https://rowpine.com/r/{name}.json",
+        "itemCount": 2,
+        "healthScore": 93.313,
+        "rankingScore": 78.185,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @rowpine/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -12647,6 +13032,41 @@
       }
     },
     {
+      "id": "shadcn-registry:scrollfx",
+      "name": "@scrollfx",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Scroll-drawn sections for React and Tailwind: a hero, chart, features, steps, changelog and pricing, each with a pen-plotter drawing that draws itself as the reader scrolls.",
+      "url": "https://scrollfx-ui.vercel.app",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://scrollfx-ui.vercel.app",
+        "registryUrl": "https://scrollfx-ui.vercel.app/r/{name}.json",
+        "itemCount": 33,
+        "healthScore": 93.504,
+        "rankingScore": 86.148,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @scrollfx/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:scrollxui",
       "name": "@scrollxui",
       "kind": "ui-registries",
@@ -12804,16 +13224,16 @@
         "type": "site",
         "url": "https://shadcndashboard.dev",
         "registryUrl": "https://shadcndashboard.dev/r/{name}.json",
-        "itemCount": 649,
-        "healthScore": 80.989,
-        "rankingScore": 84.791,
+        "itemCount": 756,
+        "healthScore": 86.581,
+        "rankingScore": 89.265,
         "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @shadcn-dashboard/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-27",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -12922,6 +13342,41 @@
       }
     },
     {
+      "id": "shadcn-registry:shadcn-table",
+      "name": "@shadcn-table",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Open-source React data table for shadcn/ui, built on TanStack Table. Sorting, filtering, pagination, grouping, pinning. Installs as source via shadcn CLI.",
+      "url": "https://www.shadcn-table.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://www.shadcn-table.com",
+        "registryUrl": "https://www.shadcn-table.com/r/{style}/{name}.json",
+        "itemCount": 162,
+        "healthScore": 91.531,
+        "rankingScore": 89.612,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @shadcn-table/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:shadcn-ui-blocks",
       "name": "@shadcn-ui-blocks",
       "kind": "ui-registries",
@@ -13012,16 +13467,16 @@
         "type": "site",
         "url": "https://shadcncraft.com",
         "registryUrl": "https://shadcncraft.com/r/{name}.json",
-        "itemCount": 418,
-        "healthScore": 72.805,
-        "rankingScore": 77.669,
+        "itemCount": 568,
+        "healthScore": 72.368,
+        "rankingScore": 77.894,
         "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @shadcncraft/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-03",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -13038,6 +13493,7 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
+        "degraded",
         "react",
         "registry",
         "shadcn"
@@ -13045,17 +13501,17 @@
       "preview": {
         "type": "site",
         "url": "https://www.shadcndesign.com",
-        "registryUrl": "https://shadcndesign-free.vercel.app/r/{name}.json",
-        "itemCount": 44,
-        "healthScore": 98.566,
-        "rankingScore": 91.1,
-        "health": "healthy"
+        "registryUrl": "https://www.shadcndesign.com/r/{style}/{name}.json",
+        "itemCount": 524,
+        "healthScore": 96.089,
+        "rankingScore": 96.871,
+        "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @shadcndesign/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -13301,6 +13757,41 @@
       }
     },
     {
+      "id": "shadcn-registry:shitui",
+      "name": "@shitui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "An open-source React component library crafted with Tailwind CSS and Motion — interactive by nature, beautiful by default.",
+      "url": "https://shitui.in",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://shitui.in",
+        "registryUrl": "https://shitui.in/r/{name}.json",
+        "itemCount": 17,
+        "healthScore": 93.313,
+        "rankingScore": 83.949,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @shitui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:shivraj-roy",
       "name": "@shivraj-roy",
       "kind": "ui-registries",
@@ -13432,6 +13923,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:signoff-ui",
+      "name": "@signoff-ui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Review what your agent changed and approve what it may do: multi-file diff review, tool approvals with rules, tool call timeline and run telemetry, for AI SDK and AG-UI agents.",
+      "url": "https://signoff-ui.vercel.app",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://signoff-ui.vercel.app",
+        "registryUrl": "https://signoff-ui.vercel.app/r/{name}.json",
+        "itemCount": 13,
+        "healthScore": 93.247,
+        "rankingScore": 83.088,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @signoff-ui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -14223,7 +14749,7 @@
       "name": "@ssych",
       "kind": "ui-registries",
       "category": "design",
-      "summary": "Dark, data-dense React components for high-stakes decision surfaces: trading books, screeners, clinical dashboards. Hand-drawn SVG charts, no chart runtime.",
+      "summary": "Dark, data-dense React components for high-stakes decision surfaces: trading books, screeners, agent screens. Hand-drawn SVG charts, no chart runtime.",
       "url": "https://ui.ssych.com",
       "source": {
         "name": "shadcn/ui registry directory",
@@ -14239,15 +14765,15 @@
         "url": "https://ui.ssych.com",
         "registryUrl": "https://ui.ssych.com/r/{name}.json",
         "itemCount": 133,
-        "healthScore": 96.227,
-        "rankingScore": 92.739,
+        "healthScore": 96.271,
+        "rankingScore": 92.774,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @ssych/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -14697,6 +15223,41 @@
       }
     },
     {
+      "id": "shadcn-registry:svg-scroll-draw",
+      "name": "@svg-scroll-draw",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Scroll animation blocks for React and Tailwind: a signature that draws itself, reveal cards, counters, sticky and pinned features, text reveals, a horizontal strip, video scrubbing and reading progress. Built on svg-scroll-draw, a scroll animation library with no dependencies.",
+      "url": "https://svg-scroll-draw.vercel.app/blocks",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://svg-scroll-draw.vercel.app/blocks",
+        "registryUrl": "https://svg-scroll-draw.vercel.app/r/{name}.json",
+        "itemCount": 9,
+        "healthScore": 93.313,
+        "rankingScore": 82.058,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @svg-scroll-draw/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:svgl",
       "name": "@svgl",
       "kind": "ui-registries",
@@ -15001,6 +15562,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-11-03",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:tentui",
+      "name": "@tentui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Animated React components and copy-paste blocks for shadcn/ui: pricing, CTA, FAQ, footer and 404 sections, plus interactive pieces like OTP fields, wheel pickers and star ratings.",
+      "url": "https://tentui.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://tentui.com",
+        "registryUrl": "https://tentui.com/r/{name}.json",
+        "itemCount": 54,
+        "healthScore": 93.439,
+        "rankingScore": 87.644,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @tentui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -15443,6 +16039,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-11-12",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:tonic",
+      "name": "@tonic",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Tonic UI. Chat composer and thinking indicator adapted from Pearl.",
+      "url": "https://tonic-ui-alpha.vercel.app",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://tonic-ui-alpha.vercel.app",
+        "registryUrl": "https://tonic-ui-alpha.vercel.app/r/{name}.json",
+        "itemCount": 25,
+        "healthScore": 93.313,
+        "rankingScore": 85.132,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @tonic/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -16021,6 +16652,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:uiset",
+      "name": "@uiset",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Components, kits, templates and themes for Vercel's UI SDK: its 55 components styled, plus a data grid, chat, rich text, charts and five skins.",
+      "url": "https://uiset.dev",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://uiset.dev",
+        "registryUrl": "https://uiset.dev/r/{name}.json",
+        "itemCount": 115,
+        "healthScore": 93.805,
+        "rankingScore": 90.337,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @uiset/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }
@@ -16638,6 +17304,41 @@
       }
     },
     {
+      "id": "shadcn-registry:vip-ui",
+      "name": "@vip-ui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Accessible, motion-rich React components, blocks, and charts built on React Aria and Tailwind CSS v4.",
+      "url": "https://vip-ui.dev",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://vip-ui.dev",
+        "registryUrl": "https://vip-ui.dev/r/{name}.json",
+        "itemCount": 263,
+        "healthScore": 94.281,
+        "rankingScore": 93.364,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @vip-ui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:visant",
       "name": "@visant",
       "kind": "ui-registries",
@@ -17115,6 +17816,41 @@
       }
     },
     {
+      "id": "shadcn-registry:wideset",
+      "name": "@wideset",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Wideset, the Widelab design system: React components, tokens and stylesheets.",
+      "url": "https://wideset.co",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://wideset.co",
+        "registryUrl": "https://wideset.co/r/{name}.json",
+        "itemCount": 65,
+        "healthScore": 93.601,
+        "rankingScore": 88.36,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @wideset/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:wigggle-ui",
       "name": "@wigggle-ui",
       "kind": "ui-registries",
@@ -17382,6 +18118,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-20",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:zriz",
+      "name": "@zriz",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "An image cropper for React with the feel of the crop tool in iOS Photos.",
+      "url": "https://zriz.dev",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "observing",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://zriz.dev",
+        "registryUrl": "https://zriz.dev/r/{name}.json",
+        "itemCount": 6,
+        "healthScore": 93.313,
+        "rankingScore": 80.911,
+        "health": "observing"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @zriz/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-18",
       "metrics": {
         "siteRank": 500000
       }

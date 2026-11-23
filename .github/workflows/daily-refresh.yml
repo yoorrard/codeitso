@@ -102,6 +102,9 @@ jobs:
       - name: 단위 시험 (자료 개수·스키마·진열대 계산)
         if: steps.summary.outputs.changed == 'true'
         run: npm test
+        env:
+          # 출처가 뺀 스타터 키트 재료는 알리기만 하고 갱신은 계속한다 (D163). PR 검사에서는 실패해 data/kits.json을 고치게 한다
+          KITS_MISSING_OK: '1'
       - name: 진열대 빌드 확인
         if: steps.summary.outputs.changed == 'true'
         run: npm run catalog

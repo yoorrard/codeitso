@@ -319,8 +319,18 @@ export function kitsFile(file: string = KITS_FILE): KitsFile {
   return readJson<KitsFile>(file);
 }
 
-/** 스타터 키트 (data/kits.json): id마다 진열대 카드로. 없는 id나 모르는 주제가 있으면 빌드를 멈춘다 (자료를 다시 받아 빠진 재료) */
-export function kits(file: string = KITS_FILE): KitData[] {
+/** 키트 재료 중 진열대에 없는 것 (매일 갱신에서 출처가 뺀 재료) */
+export interface KitMissing {
+  kit: string;
+  id: string;
+}
+
+/**
+ * 스타터 키트 (data/kits.json): id마다 진열대 카드로. 모르는 주제는 빌드를 멈춘다.
+ * 진열대에 없는 재료(출처가 뺀 재료)는 카드에서 빼고 missing에 담는다 (D163):
+ * 키트 재료 하나 때문에 매일 갱신·배포가 멈추지 않게 하고, PR 검사(tests/lib/kits.test.ts)가 data/kits.json을 고치게 한다.
+ */
+export function kits(file: string = KITS_FILE, missing: KitMissing[] = []): KitData[] {
   const { byId } = catalog();
   return kitsFile(file).kits.map((k) => {
     if (!isKitTheme(k.theme)) throw new Error(`data/kits.json: 키트 ${k.id}의 주제 ${k.theme}를 모른다 (src/lib/kits.ts KIT_THEMES)`);
@@ -330,10 +340,13 @@ export function kits(file: string = KITS_FILE): KitData[] {
       name: k.nameKo,
       desc: k.descKo,
       outline: k.outlineKo,
-      cards: k.items.map((id) => {
+      cards: k.items.flatMap((id) => {
         const r = byId.get(id);
-        if (!r) throw new Error(`data/kits.json: 키트 ${k.id}의 ${id}가 진열대에 없다`);
-        return card(r.item);
+        if (!r) {
+          missing.push({ kit: k.id, id });
+          return [];
+        }
+        return [card(r.item)];
       }),
     };
   });

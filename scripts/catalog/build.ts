@@ -23,6 +23,7 @@ import { SITE_FILE } from '../../src/lib/catalog/site.ts';
 import { buildAgentKits, buildAgentSummary } from '../../src/lib/mcp/summary.ts';
 import type { ListChunk, SiteData } from '../../src/lib/catalog/types.ts';
 import { CHUNK_PAGES, MAX_CATALOG_FILES, PAGE_SIZE, SORTS } from '../../src/lib/catalog/types.ts';
+import type { KitMissing } from './load.ts';
 import { CATALOG_DIR, KITS_FILE, KO_DIR, MEDIA_DIR, MODELS_DIR, card, cards, catalog, categories, homeRows, kits, kitsFile, listOf, readModels, shards, topOf } from './load.ts';
 import { WORDS_FILE, buildSearch, readWords } from './search-index.ts';
 
@@ -158,7 +159,13 @@ if (modelsData) {
 const modelsSummary: ModelsSummary | undefined = modelsData ? { fetched: modelsData.fetchedAt, providers: modelProviders } : undefined;
 
 // 6. AI 에이전트용 요약 (D154·D156): MCP 서버가 거의 모든 도구에서 읽는 작은 요약과, 키트 도구만 읽는 키트 파일
-const kitList = kits();
+const kitMissing: KitMissing[] = [];
+const kitList = kits(KITS_FILE, kitMissing);
+// 출처가 뺀 키트 재료는 빼고 계속 빌드한다 (D163). 실행 기록에 남기고, PR 검사가 data/kits.json을 고치게 한다
+for (const m of kitMissing) {
+  const msg = `스타터 키트 ${m.kit}의 재료 ${m.id}가 진열대에 없어 빼고 빌드한다. data/kits.json에서 바꾼다.`;
+  console.warn(process.env['GITHUB_ACTIONS'] === 'true' ? `::warning title=스타터 키트::${msg}` : msg);
+}
 write(join(OUT, 'agent.json'), buildAgentSummary({ total, categories: cats, kits: kitList.length, ...(modelsSummary ? { models: modelsSummary } : {}) }));
 write(join(OUT, 'agent-kits.json'), buildAgentKits(kitList));
 
@@ -174,7 +181,7 @@ const site: SiteData = {
   fetched: cats.reduce((d, c) => (c.fetchedAt > d ? c.fetchedAt : d), ''),
   categories: cats,
   rows: homeRows(),
-  kits: kits(),
+  kits: kitList,
   kitHome: kitsFile().home,
   tops: Object.fromEntries(cats.map((c) => [c.id, c.subcategories.flatMap((s) => topOf(c.id, s.id, 1)).slice(0, 10)])),
   first: Object.fromEntries(cats.flatMap((c) => c.subcategories.map((s) => [`${c.id}/${s.id}`, listOf(c.id, s.id, 'popular').slice(0, PAGE_SIZE).map((r) => card(r.item))]))),

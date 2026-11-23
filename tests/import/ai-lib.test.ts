@@ -1,7 +1,7 @@
 // AI 확장 가져오기 도우미 시험: 머리말·CSV 읽기, 글 자르기, 주소 다루기, 상품 모양, 중복 정리, 목록 파싱.
 import { describe, expect, it } from 'vitest';
 import {
-  clip, dedupeAcross, dedupeKey, githubSlug, makeItem, normalizeLicense, parseCsv, parseYaml, splitFrontMatter, textKey, uniqTags, uniqueIds,
+  clip, dedupeAcross, dedupeKey, fetchOrKeep, freshFiles, githubSlug, makeItem, normalizeLicense, parseCsv, parseYaml, readCatalog, splitFrontMatter, textKey, uniqTags, uniqueIds,
 } from '../../scripts/import/ai-lib.ts';
 import { dockerItem, installFor, officialItem, parseAwesomeMcp, sinceAvailable, snippetFor } from '../../scripts/import/ai-mcp.ts';
 import { licenseFromText, parseAwesomeSkills } from '../../scripts/import/ai-skills.ts';
@@ -234,5 +234,23 @@ describe('MCP 등록소 바뀐 것만 받기 (D143)', () => {
     expect(sinceAvailable(46858, 1848, 47512)).toBe(48706);
     expect(sinceAvailable(100, 0, 120)).toBe(120);
     expect(sinceAvailable(100, 0, 90)).toBe(100);
+  });
+});
+
+describe('출처 하나가 막혀도 나머지는 받는다 (D164)', () => {
+  it('받기에 실패하면 그 출처의 지난 자료로 채우고 fresh: false, 성공하면 fresh: true', async () => {
+    const prev = readCatalog('skill-cpd');
+    const kept = await fetchOrKeep('skill-cpd', () => Promise.reject(new Error('HTTP 402 https://claude-plugins.dev/api/skills')));
+    expect(kept.fresh).toBe(false);
+    expect(kept.items.length).toBe(prev?.items.length ?? 0);
+    expect(kept.available).toBe(prev?.available ?? 0);
+    const got = await fetchOrKeep('skill-cpd', () => Promise.resolve({ items: [], available: 3 }));
+    expect(got).toEqual({ items: [], available: 3, keys: new Map(), fresh: true });
+  });
+
+  it('새로 받은 출처 파일만 쓴다: 받지 못한 출처는 지난 파일 그대로', () => {
+    const files = [{ source: { id: 'a' } }, { source: { id: 'b' } }, { source: { id: 'c' } }];
+    const fresh = freshFiles(files, { a: { fresh: true }, b: { fresh: false } });
+    expect(fresh.map((f) => f.source.id)).toEqual(['a', 'c']);
   });
 });

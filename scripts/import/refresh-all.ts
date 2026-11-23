@@ -14,7 +14,7 @@
 import { spawn } from 'node:child_process';
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { INDEX, LANES, kstDay, planLane, type Group, type Lane, type Step } from '../lib/refresh-plan.ts';
+import { INDEX, KEPT_MARK, LANES, kstDay, planLane, type Group, type Lane, type Step } from '../lib/refresh-plan.ts';
 import { ROOT } from './oss-lib.ts';
 
 interface StepResult {
@@ -117,6 +117,10 @@ const show = (r: StepResult) => [r.file, ...(r.args ?? [])].join(' ');
 for (const r of results) console.log(`${r.code === 0 ? '✓' : '✗'} ${r.lane.padEnd(12)} ${show(r).padEnd(44)} ${String(r.seconds).padStart(5)}초`);
 const failed = results.filter((r) => r.code !== 0);
 for (const r of failed) console.log(`${inActions ? '::warning::' : ''}${show(r)} 실패 (코드 ${r.code}). 그 출처는 지난 자료 그대로다 (.cache/refresh/${r.lane}.log).`);
+// 스크립트는 끝까지 돌았지만 출처 하나를 지난 자료로 둔 경우도 알린다 (ai-lib fetchOrKeep, D164)
+for (const name of lanes.map((p) => p.name)) {
+  for (const line of readFileSync(join(logDir, `${name}.log`), 'utf8').split('\n')) if (line.startsWith(KEPT_MARK)) console.log(`${inActions ? '::warning::' : ''}${line}`);
+}
 const seconds = Math.round((Date.now() - started) / 1000);
 console.log(`모두 ${seconds}초`);
 writeFileSync(join(logDir, 'results.json'), `${JSON.stringify({ seconds, kstDay: day, steps: results, resting }, null, 2)}\n`);

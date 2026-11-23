@@ -27,6 +27,9 @@ export interface Lane {
   token?: boolean;
 }
 
+/** 가져오기 스크립트가 출처 하나를 지난 자료로 둘 때 실행 기록에 남기는 줄 머리 (scripts/import/ai-lib.ts fetchOrKeep → refresh-all이 경고로 올린다, D164) */
+export const KEPT_MARK = '⚠ 지난 자료로 둔 출처:';
+
 export const SUN = 0;
 export const MON = 1;
 export const TUE = 2;

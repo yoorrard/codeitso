@@ -4,10 +4,10 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 123 providers; kept the 34 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "OpenRouter lists 123 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-18",
-  "count": 34,
+  "fetchedAt": "2026-11-23",
+  "count": 33,
   "items": [
     {
       "id": "openrouter:aion-labs",
@@ -75,7 +75,7 @@
       "name": "AtlasCloud",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Atlas Cloud gives developers one AI API for AI models across chat, image, video & audio. Seedance, Seedream, GPT-image, DeepSeek, Kling, 400+ models. Start free.",
+      "summary": "The Atlas Cloud catalog includes 600+ AI models for text, image, video and audio. Check model availability and pricing before integrating.",
       "url": "https://www.atlascloud.ai",
       "source": {
         "name": "OpenRouter providers",
@@ -97,7 +97,7 @@
         "summarySource": "official page meta description",
         "viaOpenRouter": "https://openrouter.ai/provider/atlas-cloud"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-23",
       "metrics": {
         "siteRank": 500000
       }
@@ -708,7 +708,7 @@
       "name": "Perceptron",
       "kind": "ai-llm",
       "category": "api",
-      "summary": "A layer of intelligence for the physical world. We are a research company building the future of Physical AGI.",
+      "summary": "Perceptron builds physical AI models that help machines perceive, reason & act. Explore visual intelligence for robotics, infrastructure, & more.",
       "url": "https://www.perceptron.inc",
       "source": {
         "name": "OpenRouter providers",
@@ -731,38 +731,7 @@
         "terms": "https://www.perceptron.inc/terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/perceptron"
       },
-      "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "openrouter:primalabs",
-      "name": "PrimaLabs",
-      "kind": "ai-inference",
-      "category": "api",
-      "summary": "Built for agentic workloads. PrimaLabs adapts end to end to how your application runs, so you get top speed at the limits you need. OpenAI-compatible, pay per token.",
-      "url": "https://www.primalabs.ai",
-      "source": {
-        "name": "OpenRouter providers",
-        "url": "https://openrouter.ai/api/v1/providers"
-      },
-      "tags": [
-        "ai",
-        "hq-us",
-        "inference",
-        "server-key",
-        "via-openrouter"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "headquarters": "US",
-        "keyServerSide": true,
-        "privacyPolicy": "https://www.primalabs.ai/privacy",
-        "statusPage": "https://status.primalabs.ai/",
-        "summarySource": "official page meta description",
-        "terms": "https://www.primalabs.ai/terms",
-        "viaOpenRouter": "https://openrouter.ai/provider/primalabs"
-      },
-      "fetchedAt": "2026-10-30"
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "openrouter:recursive",
@@ -828,7 +797,7 @@
       "name": "Respan",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Respan is an open-source AI gateway with built-in observability and evals.",
+      "summary": "Respan is an open-source AI gateway with built-in observability and evals. The gateway is open source (MIT or Apache-2.0); observability and evals run on Respan's cloud.",
       "url": "https://respan.ai",
       "source": {
         "name": "OpenRouter providers",
@@ -849,7 +818,7 @@
         "terms": "https://respan.ai/legal/terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/respan"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "openrouter:river",

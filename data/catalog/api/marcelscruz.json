@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-18",
-  "count": 909,
+  "fetchedAt": "2026-11-23",
+  "count": 956,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -199,6 +199,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:acesapi",
+      "name": "AcesAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "ATP and WTA tennis since 2007: match results, draws, rankings, head to head, surface Elo and odds",
+      "url": "https://acesapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:adanos",
       "name": "Adanos",
       "kind": "finance",
@@ -388,6 +412,30 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-25"
+    },
+    {
+      "id": "marcelscruz:agentik",
+      "name": "Agentik",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Pay-per-call tools for AI agents over MCP and REST: one API key and one prepaid balance for 3,500+ tools from 165 providers",
+      "url": "https://www.agentik.cc",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:agentsandboxes",
@@ -703,6 +751,54 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:aicharts",
+      "name": "aicharts",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Terminal-Bench scores, cost per task, Epoch AI scores and API prices for Claude, GPT and Gemini models, with each source's license",
+      "url": "https://aicharts.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-none",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "marcelscruz:aigrow",
+      "name": "AIGROW",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "OpenAI-compatible API for genuine Claude, GPT, Gemini, Grok, Qwen and Kimi models on one prepaid key; models and per-token prices listed without a key",
+      "url": "https://aigrow.gg/ai-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:aikount",
       "name": "Aikount",
       "kind": "finance",
@@ -748,6 +844,30 @@
         "listCategory": "Personality"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:akta-pro",
+      "name": "akta.pro",
+      "kind": "business",
+      "category": "api",
+      "summary": "Private company data, news signals and alternative data on 20M+ companies via one API",
+      "url": "https://akta.pro/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:alchemy-ethereum",
@@ -1329,6 +1449,30 @@
       "fetchedAt": "2026-10-27"
     },
     {
+      "id": "marcelscruz:apiwren-amazon-data",
+      "name": "Apiwren Amazon Data",
+      "kind": "payments",
+      "category": "api",
+      "summary": "Third-party Amazon product search, details, reviews, seller offers and best sellers across 23 marketplaces",
+      "url": "https://apiwren.com/amazon-product-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:apostille-finder",
       "name": "Apostille Finder",
       "kind": "open-data",
@@ -1572,6 +1716,30 @@
       }
     },
     {
+      "id": "marcelscruz:asianscore",
+      "name": "AsianScore",
+      "kind": "life",
+      "category": "api",
+      "summary": "Free keyless JSON API for live football & NBA scores, Dixon-Coles xG probabilities, and SHA-256 verifiable prediction ledger",
+      "url": "https://asianscore.com/api-docs.html",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:asin",
       "name": "Asin",
       "kind": "payments",
@@ -1616,30 +1784,6 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "marcelscruz:astroletra",
-      "name": "Astroletra",
-      "kind": "open-data",
-      "category": "api",
-      "summary": "Moon phase and sign, aspects, retrogrades and next lunation by time zone",
-      "url": "https://astroletra.com/datos/api/",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "science-math"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Science & Math"
-      },
-      "fetchedAt": "2026-11-10"
     },
     {
       "id": "marcelscruz:asyntai",
@@ -2117,6 +2261,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:bet-better",
+      "name": "Bet Better",
+      "kind": "life",
+      "category": "api",
+      "summary": "Free open JSON API for sports model win probabilities and fair odds across 13 leagues. No key required, CC BY 4.0",
+      "url": "https://betbetter.world",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:bewary",
       "name": "Bewary",
       "kind": "auth-security",
@@ -2332,6 +2500,30 @@
       "fetchedAt": "2026-11-17"
     },
     {
+      "id": "marcelscruz:birdieapi",
+      "name": "BirdieAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "PGA Tour golf since 2001: leaderboards, hole-by-hole scores, courses, ratings and major winner odds",
+      "url": "https://birdieapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:bitculator",
       "name": "Bitculator",
       "kind": "finance",
@@ -2354,6 +2546,30 @@
         "listCategory": "Cryptocurrency"
       },
       "fetchedAt": "2026-10-31"
+    },
+    {
+      "id": "marcelscruz:bizstats-me",
+      "name": "BizStats.me",
+      "kind": "business",
+      "category": "api",
+      "summary": "Montenegro company financials, CRPS registry, public tenders and state treasury payments",
+      "url": "https://bizstats.me",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:blackforge",
@@ -2474,6 +2690,30 @@
       "fetchedAt": "2026-10-24"
     },
     {
+      "id": "marcelscruz:bluesky-bot-directory",
+      "name": "Bluesky Bot Directory",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Find Bluesky bot accounts and check the availability of bot handles",
+      "url": "https://bluesky.bot",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:bly-to",
       "name": "Bly.to",
       "kind": "dev",
@@ -2496,6 +2736,29 @@
         "listCategory": "URL Shorteners"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:bolagskvarnen",
+      "name": "Bolagskvarnen",
+      "kind": "business",
+      "category": "api",
+      "summary": "Swedish company data: profile, board, signatories, history and financials; free sandbox",
+      "url": "https://bolagskvarnen.se",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:bookfolio-fixer",
@@ -2852,6 +3115,30 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:callforme",
+      "name": "CallForMe",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Phone US and Canada businesses from an AI agent: REST API and MCP server, handles hold and phone menus, returns answers and a transcript. Pay per call",
+      "url": "https://callforme.tel",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "phone"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Phone"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:canjean",
@@ -3621,7 +3908,7 @@
       "name": "cloro",
       "kind": "dev",
       "category": "api",
-      "summary": "Google results with the AI Overview, and ChatGPT, Google AI Mode, Bing AI Mode and Gemini answers with their cited sources, by country",
+      "summary": "Google and Bing results with the AI Overview, and ChatGPT, Google AI Mode, Bing AI Mode and Gemini answers with their cited sources, by country",
       "url": "https://cloro.dev",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -3638,7 +3925,7 @@
         "cors": "yes",
         "listCategory": "Development"
       },
-      "fetchedAt": "2026-11-07"
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:cnpj-aberto",
@@ -5025,6 +5312,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:dataxapi",
+      "name": "DataXAPI",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Public posts, comments, creators, ads and search trends from Douyin, Xiaohongshu, WeChat, TikTok, X, YouTube and more, pay per call",
+      "url": "https://dataxapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:datpaq",
       "name": "DATPAQ",
       "kind": "dev",
@@ -5473,6 +5783,30 @@
       "fetchedAt": "2026-10-27"
     },
     {
+      "id": "marcelscruz:disdex",
+      "name": "disdex",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Search millions of public Discord servers by name, language, guild tag and size, with member history and invite checks",
+      "url": "https://disdex.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:dish-directory",
       "name": "Dish Directory",
       "kind": "life",
@@ -5567,6 +5901,30 @@
         "listCategory": "Documents & Productivity"
       },
       "fetchedAt": "2026-11-01"
+    },
+    {
+      "id": "marcelscruz:dog-image",
+      "name": "Dog Image",
+      "kind": "life",
+      "category": "api",
+      "summary": "AI-generated dog breed images: the same nine views of nearly 300 breeds, transparent background. Free previews need no key, full-size PNG is paid",
+      "url": "https://dogimage.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "animals",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Animals"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:dogs",
@@ -6069,6 +6427,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:endzoneapi",
+      "name": "EndzoneAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "NFL data since 1999: play-by-play with EPA, stats, schedules, injuries and sportsbook odds; also college football",
+      "url": "https://endzoneapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:enrichgrid",
       "name": "EnrichGrid",
       "kind": "business",
@@ -6137,6 +6519,30 @@
         "listCategory": "Finance"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:eurojobs",
+      "name": "EuroJobs",
+      "kind": "business",
+      "category": "api",
+      "summary": "Live IT jobs in the EU, EEA, UK and Switzerland, read hourly from employers' own job boards, with visa, remote and salary filters",
+      "url": "https://eurojobs.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:eurorates",
@@ -6348,6 +6754,32 @@
       "fetchedAt": "2026-11-17"
     },
     {
+      "id": "marcelscruz:fake-email",
+      "name": "Fake Email",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Disposable inboxes for automated email tests: long-poll for the email and get its OTP code and confirmation link, free key, npm and PyPI SDKs",
+      "url": "https://fake-email.pro/api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-23",
+      "metrics": {
+        "siteRank": 1000000
+      }
+    },
+    {
       "id": "marcelscruz:faker",
       "name": "Faker",
       "kind": "dev",
@@ -6392,6 +6824,30 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:fantastic-forms-api",
+      "name": "Fantastic Forms API",
+      "kind": "business",
+      "category": "api",
+      "summary": "REST API for Fantastic Forms — a modern form builder SaaS. Programmatically create forms, list submissions, export data, and manage workspaces / team members",
+      "url": "https://fantasticforms.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "business",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:fantastic-jobs",
@@ -6488,6 +6944,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:fastballapi",
+      "name": "FastballAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "MLB since 2015 plus college baseball: pitches, plate appearances, box scores and sportsbook odds",
+      "url": "https://fastballapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:favicondl",
       "name": "Favicondl",
       "kind": "media",
@@ -6510,6 +6990,30 @@
         "listCategory": "Art & Design"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:favicons",
+      "name": "favicons",
+      "kind": "media",
+      "category": "api",
+      "summary": "Any website's icon as a sanitized 128x128 SVG, with light/dark theme colors in response headers, plus 17 icon packs. Open source and self-hostable",
+      "url": "https://favicons.page",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-none",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:fax-for-agents",
@@ -7009,6 +7513,29 @@
         "listCategory": "Art & Design"
       },
       "fetchedAt": "2026-11-17"
+    },
+    {
+      "id": "marcelscruz:footalytics",
+      "name": "Footalytics",
+      "kind": "life",
+      "category": "api",
+      "summary": "AI football match predictions: win/draw/loss probabilities, confidence tiers, over/under 2.5 goals, BTTS and graded past results for the top leagues",
+      "url": "https://footalytics.farvor.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:football-highlights",
@@ -7941,29 +8468,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "marcelscruz:global-law",
-      "name": "Global law",
-      "kind": "open-data",
-      "category": "api",
-      "summary": "Legislation of 200+ countries as a dated history: find a provision by citation, read it as it stood on a given date, and search a country's law",
-      "url": "https://lexifina.com/api/global-law",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "government"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "no",
-        "listCategory": "Government"
-      },
-      "fetchedAt": "2026-11-12"
-    },
-    {
       "id": "marcelscruz:greynoise",
       "name": "GreyNoise",
       "kind": "auth-security",
@@ -8266,6 +8770,29 @@
         "listCategory": "Transportation"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "marcelscruz:hermoso",
+      "name": "Hermoso",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Make ads, publish to social channels and run ad campaigns from one API",
+      "url": "https://hermoso.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:hexloom-file",
@@ -9072,6 +9599,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:internetdata",
+      "name": "InternetData",
+      "kind": "maps",
+      "category": "api",
+      "summary": "IP geolocation, ASN and company data for any IP address, AS or domain, free with no key; city, coordinates and VPN and proxy detection on paid plans",
+      "url": "https://internetdata.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "geocoding"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:invoice-parsing-api",
       "name": "Invoice Parsing API",
       "kind": "business",
@@ -9665,6 +10216,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:jobs-every-hour",
+      "name": "Jobs Every Hour",
+      "kind": "business",
+      "category": "api",
+      "summary": "Open jobs read every hour from employers' own career pages, as keyless JSON by skill, category, place and company, plus an MCP server",
+      "url": "https://jobseveryhour.com/api/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "jobs"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Jobs"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:jobven",
       "name": "Jobven",
       "kind": "business",
@@ -9782,6 +10357,30 @@
         "listCategory": "Entertainment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:jour-tempo",
+      "name": "Jour Tempo",
+      "kind": "weather",
+      "category": "api",
+      "summary": "French EDF Tempo electricity tariff colour for today and tomorrow, EJP and PP peak days, daily history since 2014 (RTE open data)",
+      "url": "https://jourtempo.fr",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "environment"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Environment"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:jsonsilo-com",
@@ -10242,6 +10841,30 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "marcelscruz:lantern-works",
+      "name": "Lantern Works",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "GPU cloud rental prices, price changes and deals as keyless JSON feeds under CC BY 4.0, plus a read-only MCP server",
+      "url": "https://thelanternworks.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:lastscanned",
@@ -11552,6 +12175,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:mockupanda",
+      "name": "Mockupanda",
+      "kind": "media",
+      "category": "api",
+      "summary": "Put artwork into realistic mockups: framed wall art and posters in rooms, tees, hoodies, mugs and tote bags. Your own templates work too",
+      "url": "https://www.mockupanda.com/mockup-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "art-design",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Art & Design"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:moltnode",
       "name": "MoltNode",
       "kind": "finance",
@@ -12718,7 +13364,7 @@
       "name": "OddsRelay",
       "kind": "life",
       "category": "api",
-      "summary": "Pre-match odds from UK and Irish bookmakers, bet365 included, with Betfair, Smarkets, Matchbook and BETDAQ lay prices",
+      "summary": "Bookmaker odds for the UK & Ireland and more regions, with UK exchange lay prices",
       "url": "https://oddsrelay.io",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -12734,7 +13380,7 @@
         "cors": "no",
         "listCategory": "Sports & Fitness"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:offendersearch",
@@ -13528,6 +14174,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:pagespool",
+      "name": "pagespool",
+      "kind": "business",
+      "category": "api",
+      "summary": "Hosted Docling, MarkItDown, WeasyPrint, Gotenberg, OCRmyPDF, veraPDF and EPUBCheck; free tier",
+      "url": "https://pagespool.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:paraphrase-text-api",
       "name": "Paraphrase Text API",
       "kind": "business",
@@ -13833,6 +14502,29 @@
       "fetchedAt": "2026-11-14"
     },
     {
+      "id": "marcelscruz:pennycompute",
+      "name": "PennyCompute",
+      "kind": "media",
+      "category": "api",
+      "summary": "Pay-per-job API for FFmpeg, Remotion rendering and MiniMax H3 video",
+      "url": "https://pennycompute.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "video"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Video"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:peptide-library",
       "name": "Peptide Library",
       "kind": "life",
@@ -14048,6 +14740,30 @@
         "listCategory": "Sports & Fitness"
       },
       "fetchedAt": "2026-11-12"
+    },
+    {
+      "id": "marcelscruz:pinnradar",
+      "name": "PinnRadar",
+      "kind": "life",
+      "category": "api",
+      "summary": "Real-time Pinnacle odds, live and prematch, over REST, WebSocket and SSE with dropping-odds alerts",
+      "url": "https://pinnradar.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:pipedream",
@@ -14943,6 +15659,30 @@
       "fetchedAt": "2026-11-10"
     },
     {
+      "id": "marcelscruz:puckapi",
+      "name": "PuckAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "NHL games, stats, play-by-play with shot locations, standings and sportsbook odds; also AHL, PWHL and junior leagues",
+      "url": "https://puckapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:pusher-channels",
       "name": "Pusher Channels",
       "kind": "dev",
@@ -15034,6 +15774,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-11-03"
+    },
+    {
+      "id": "marcelscruz:qrdx",
+      "name": "QRdx",
+      "kind": "dev",
+      "category": "api",
+      "summary": "QR code images as SVG, PNG, WebP or EPS from one GET request with no key; dynamic codes and scan data need an API key",
+      "url": "https://qrdx.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:quizbase",
@@ -15153,6 +15917,30 @@
         "listCategory": "Test Data"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:ratedeed-city-home-facts",
+      "name": "RateDeed City Home Facts",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Housing age, heating fuel, climate normals, trade wages, licensing boards and permit offices for 724 US cities from Census, NOAA and BLS under CC BY 4.0",
+      "url": "https://www.ratedeed.com/developers/city-data",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:rba-exchange-rates-api",
@@ -16648,6 +17436,30 @@
       "fetchedAt": "2026-10-25"
     },
     {
+      "id": "marcelscruz:serverroam",
+      "name": "ServerRoam",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Live player counts, votes and tags of Minecraft, FiveM and RedM servers. Free, no key needed",
+      "url": "https://serverroam.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "games-comics"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Games & Comics"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:sfw",
       "name": "SFW",
       "kind": "ai-other",
@@ -16694,6 +17506,30 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:shager",
+      "name": "Shager",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Publish and schedule posts to YouTube, TikTok, X, LinkedIn, Pinterest and more, with comments, auto-replies and per-post stats",
+      "url": "https://shager.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:shapelessai",
@@ -16763,6 +17599,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:shipmenttrackingapi",
+      "name": "ShipmentTrackingAPI",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Free USPS, UPS, FedEx and DHL package tracking, normalized to nine statuses",
+      "url": "https://shipmenttrackingapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "tracking"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Tracking"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:shopee",
@@ -16935,6 +17795,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:signal-lab",
+      "name": "Signal Lab",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Free data source catalog, updated daily, with licence, sign-up and reachability notes, as a keyless JSON/CSV feed and remote MCP server",
+      "url": "https://signal-lab.qdt.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:signals",
       "name": "Signals",
       "kind": "news-social",
@@ -16956,30 +17840,6 @@
         "listCategory": "Social"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "marcelscruz:signops",
-      "name": "SignOps",
-      "kind": "auth-security",
-      "category": "api",
-      "summary": "Push notifications, login approval, passkeys, authenticator codes and email OTP on one API key",
-      "url": "https://signops.dev/docs/",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-apikey",
-        "authentication-authorization",
-        "cors"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "apiKey",
-        "cors": "yes",
-        "listCategory": "Authentication & Authorization"
-      },
-      "fetchedAt": "2026-11-05"
     },
     {
       "id": "marcelscruz:silicon-floor",
@@ -17247,6 +18107,29 @@
       }
     },
     {
+      "id": "marcelscruz:smstunnel",
+      "name": "SMSTunnel",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "REST API that sends texts from your own Android phone and number. Needs the SMSTunnel app on that phone. Free plan, paid plans from $9 a month",
+      "url": "https://smstunnel.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "phone"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Phone"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:smtp-senpai",
       "name": "SMTP Senpai",
       "kind": "messaging",
@@ -17437,6 +18320,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "marcelscruz:sodax",
+      "name": "SODAX",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Cross-network swap quotes, intents, oracle prices and protocol stats",
+      "url": "https://sodax.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:sofiaplan",
@@ -17650,6 +18557,30 @@
         "listCategory": "Games & Comics"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:spare-mailbox",
+      "name": "Spare Mailbox",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Disposable inboxes, verification code extraction and email deliverability checks for automated testing",
+      "url": "https://apiwren.com/temp-mail-api",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:sparetext",
@@ -18128,6 +19059,30 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:stickerbyvin",
+      "name": "StickerByVIN",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Original window sticker (Monroney label) PDFs and structured option and MSRP data by VIN, plus decode and availability checks. Free tier",
+      "url": "https://stickerbyvin.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "vehicle"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Vehicle"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:stopmailing",
       "name": "StopMailing",
       "kind": "messaging",
@@ -18315,6 +19270,29 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:supwriter",
+      "name": "SupWriter",
+      "kind": "text",
+      "category": "api",
+      "summary": "Humanize, paraphrase and grammar-check text, and score AI likelihood per sentence, in 50+ languages (API keys on Pro and Ultra plans)",
+      "url": "https://supwriter.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "text-analysis"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Text Analysis"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:svensk-skatte-api",
@@ -19459,6 +20437,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:trustcomponent-vat-checker",
+      "name": "TrustComponent VAT Checker",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Look up EU VAT numbers in bulk, up to 1,000 per request",
+      "url": "https://www.trustcomponent.com/en/products/vat-checker",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "data-validation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Data Validation"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:trustedmcp",
       "name": "TrustedMCP",
       "kind": "auth-security",
@@ -19481,6 +20482,30 @@
         "listCategory": "Security"
       },
       "fetchedAt": "2026-11-12"
+    },
+    {
+      "id": "marcelscruz:trustedrouter",
+      "name": "TrustedRouter",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "OpenAI-compatible LLM API gateway that routes requests to models from many vendors through one API key",
+      "url": "https://trustedrouter.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:tweetapi",
@@ -20496,6 +21521,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:vpndetection",
+      "name": "VPNDetection",
+      "kind": "maps",
+      "category": "api",
+      "summary": "VPN, Tor and relay detection for any IP address, with country and ASN; proxy and hosting flags on paid plans",
+      "url": "https://vpndetection.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "geocoding"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:vuldb",
       "name": "VulDB",
       "kind": "auth-security",
@@ -20954,6 +22003,30 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:who-got-hacked",
+      "name": "Who Got Hacked",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Data breach records, each linked to a US regulator filing or Have I Been Pwned. Search organizations, check a domain or name, list recent incidents",
+      "url": "https://whogothacked.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:wikidata",
       "name": "Wikidata",
       "kind": "open-data",
@@ -21267,6 +22340,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:xcrop",
+      "name": "XCROP",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "X/Twitter data API: profiles, tweets, search, followers, plus one-call follow, retweet, reply and quote checks",
+      "url": "https://xcrop.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-23"
+    },
+    {
       "id": "marcelscruz:xdataapi-io",
       "name": "xdataapi.io",
       "kind": "news-social",
@@ -21457,6 +22553,30 @@
         "listCategory": "Entertainment"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:yorkerapi",
+      "name": "YorkerAPI",
+      "kind": "life",
+      "category": "api",
+      "summary": "Cricket ball by ball in every format, men's and women's, with players, ratings and match odds",
+      "url": "https://yorkerapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "sports-fitness"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Sports & Fitness"
+      },
+      "fetchedAt": "2026-11-23"
     },
     {
       "id": "marcelscruz:your-move-exercise-api",

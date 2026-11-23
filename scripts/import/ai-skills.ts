@@ -3,8 +3,8 @@
 // 우선순위: anthropics/skills → github/awesome-copilot → ToolHive 스킬 등록소 → awesome-agent-skills(공식 팀 스킬 모음) → claude-plugins.dev
 // 실행: node scripts/import/ai-skills.ts
 import {
-  type Item, type CatalogFile, type Repo, checkout, cloneRepo, dedupeAcross, ensureProxy, fetchJson, githubSlug, isMain, isoDate, log, makeItem,
-  readRepoFile, repoTreeUrl, splitFrontMatter, str, strList, textKey, writeCatalog,
+  type Item, type CatalogFile, type Repo, checkout, cloneRepo, dedupeAcross, ensureProxy, fetchJson, fetchOrKeep, freshFiles, githubSlug, isMain, isoDate, log,
+  makeItem, readRepoFile, repoTreeUrl, splitFrontMatter, str, strList, textKey, writeCatalog,
 } from './ai-lib.ts';
 import { AITMPL_LICENSE, aitmplItems } from './ai-aitmpl.ts';
 
@@ -238,12 +238,13 @@ export async function fromClaudePluginsDev(): Promise<{ items: Item[]; available
 }
 
 export async function main(): Promise<void> {
-  const a = await fromAnthropic();
-  const c = await fromCopilot();
-  const t = await fromToolhive();
-  const v = await fromAwesomeAgentSkills();
-  const m = await aitmplItems('skills', KIND, 'skill-aitmpl', 'skill');
-  const p = await fromClaudePluginsDev();
+  // 출처마다 따로 받는다: 하나가 막혀도(예: claude-plugins.dev 402) 나머지는 새로 받고, 막힌 출처는 지난 자료 그대로 (D164)
+  const a = await fetchOrKeep('skill-anthropic', fromAnthropic);
+  const c = await fetchOrKeep('skill-copilot', fromCopilot);
+  const t = await fetchOrKeep('skill-toolhive', fromToolhive);
+  const v = await fetchOrKeep('skill-awesome-agent', fromAwesomeAgentSkills);
+  const m = await fetchOrKeep('skill-aitmpl', () => aitmplItems('skills', KIND, 'skill-aitmpl', 'skill'));
+  const p = await fetchOrKeep('skill-cpd', fromClaudePluginsDev);
   // (저장소 + 스킬 이름)과 설명 첫머리 둘 다 열쇠로 쓴다. 모음들이 같은 SKILL.md를 옮겨 싣는 일이 많다.
   const by = (keys?: Map<string, string>) => (it: Item) => [keys?.get(it.id), textKey(it)];
   const [ra, rc, rt, rv, rm, rp] = dedupeAcross([
@@ -262,7 +263,8 @@ export async function main(): Promise<void> {
     { source: { id: 'skill-aitmpl', name: 'Claude Code Templates (skills)', url: 'https://www.aitmpl.com', kind: KIND, license: AITMPL_LICENSE }, available: m.available, items: rm ?? [] },
     { source: { id: 'skill-cpd', name: 'Claude Plugins (claude-plugins.dev)', url: 'https://claude-plugins.dev/skills', kind: KIND, license: '공개 API 메타데이터 (각 스킬은 원 저장소 라이선스)', note: 'GitHub 공개 저장소의 SKILL.md를 모은 등록소' }, available: p.available, cut: `설치 ${INSTALL_CUT}회 이상 또는 저장소 별 ${STAR_CUT}개 이상`, items: rp ?? [] },
   ];
-  for (const f of files) writeCatalog(f);
+  const got = { 'skill-anthropic': a, 'skill-copilot': c, 'skill-toolhive': t, 'skill-awesome-agent': v, 'skill-aitmpl': m, 'skill-cpd': p };
+  for (const f of freshFiles(files, got)) writeCatalog(f);
   log(`스킬 합계: ${files.reduce((n, f) => n + f.items.length, 0)}`);
 }
 

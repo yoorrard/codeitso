@@ -7,6 +7,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, wri
 import { tmpdir } from 'node:os';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { KEPT_MARK } from '../lib/refresh-plan.ts';
 import { stabilizeFile, stableLine, writeIfChanged } from './stable-write.ts';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -846,6 +847,35 @@ export function readCatalog(id: string): CatalogFile | undefined {
   const path = join(OUT_DIR, `${id}.json`);
   if (!existsSync(path)) return undefined;
   return JSON.parse(readFileSync(path, 'utf8')) as CatalogFile;
+}
+
+/** 출처 하나에서 받은 것. 받지 못했으면 지난 자료로 채우고 fresh: false (D164) */
+export interface SourceResult {
+  items: Item[];
+  available: number;
+  keys: Map<string, string>;
+  fresh: boolean;
+}
+
+/**
+ * 출처 하나를 받는다. 실패하면(예: 2026-11 claude-plugins.dev가 402로 막힘) 그 출처의 지난 자료(data/catalog/ai/<id>.json)로 채우고
+ * 실행 기록에 KEPT_MARK 줄을 남긴다(refresh-all이 경고로 올린다). 같은 스크립트의 다른 출처는 그대로 새로 받는다.
+ * 지난 자료는 출처 사이 겹침 빼기에만 쓰고, 그 출처 파일은 다시 쓰지 않는다(freshFiles).
+ */
+export async function fetchOrKeep(id: string, fetcher: () => Promise<{ items: Item[]; available: number; keys?: Map<string, string> }>): Promise<SourceResult> {
+  try {
+    const r = await fetcher();
+    return { items: r.items, available: r.available, keys: r.keys ?? new Map(), fresh: true };
+  } catch (err) {
+    const prev = readCatalog(id);
+    log(`${KEPT_MARK} ${id} (지난 자료 ${prev?.items.length ?? 0}개) — ${err instanceof Error ? err.message : String(err)}`);
+    return { items: prev?.items ?? [], available: prev?.available ?? 0, keys: new Map(), fresh: false };
+  }
+}
+
+/** 새로 받은 출처의 파일만 남긴다. 받지 못한 출처(fresh: false)의 파일은 지난 그대로 둔다 */
+export function freshFiles<F extends { source: { id: string } }>(files: F[], got: Record<string, { fresh: boolean } | undefined>): F[] {
+  return files.filter((f) => got[f.source.id]?.fresh !== false);
 }
 
 // 어느 스크립트를 직접 실행했는지 (import될 때는 main을 돌리지 않으려고)

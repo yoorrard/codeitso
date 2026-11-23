@@ -3,8 +3,8 @@
 //          → claude-plugins.dev (커뮤니티 마켓 모음, 인기 기준)
 // 실행: node scripts/import/ai-plugins.ts
 import {
-  type Item, type CatalogFile, checkout, cloneRepo, dedupeAcross, dedupeKey, ensureProxy, fetchJson, githubSlug, isMain, isoDate,
-  log, makeItem, readRepoFile, slugify, writeCatalog,
+  type Item, type CatalogFile, checkout, cloneRepo, dedupeAcross, dedupeKey, ensureProxy, fetchJson, fetchOrKeep, freshFiles, githubSlug, isMain,
+  isoDate, log, makeItem, readRepoFile, slugify, writeCatalog,
 } from './ai-lib.ts';
 
 const KIND = 'plugin';
@@ -225,15 +225,16 @@ export async function fromClaudePluginsDev(): Promise<{ items: Item[]; available
 }
 
 export async function main(): Promise<void> {
-  const off = await fromClaudeMarket('anthropics/claude-plugins-official', 'plugin-claude-official', 'Claude Plugins Official', ['claude-code', 'official-marketplace']);
-  const cc = await fromClaudeMarket('anthropics/claude-code', 'plugin-claude-code', 'Claude Code Plugins (Anthropic)', ['claude-code', 'anthropic']);
-  const com = await fromClaudeMarket('anthropics/claude-plugins-community', 'plugin-claude-community', 'Claude Plugins Community (Anthropic)', ['claude-code', 'community-marketplace']);
-  const kw = await fromClaudeMarket('anthropics/knowledge-work-plugins', 'plugin-knowledge-work', 'Knowledge Work Plugins (Anthropic)', ['claude', 'cowork', 'anthropic']);
-  const codex = await fromCodex();
-  const cop = await fromCopilot();
-  const gem = await fromGemini();
-  const dify = await fromDify();
-  const cpd = await fromClaudePluginsDev();
+  // 출처마다 따로 받는다: 하나가 막혀도(예: claude-plugins.dev 402) 나머지는 새로 받고, 막힌 출처는 지난 자료 그대로 (D164)
+  const off = await fetchOrKeep('plugin-claude-official', () => fromClaudeMarket('anthropics/claude-plugins-official', 'plugin-claude-official', 'Claude Plugins Official', ['claude-code', 'official-marketplace']));
+  const cc = await fetchOrKeep('plugin-claude-code', () => fromClaudeMarket('anthropics/claude-code', 'plugin-claude-code', 'Claude Code Plugins (Anthropic)', ['claude-code', 'anthropic']));
+  const com = await fetchOrKeep('plugin-claude-community', () => fromClaudeMarket('anthropics/claude-plugins-community', 'plugin-claude-community', 'Claude Plugins Community (Anthropic)', ['claude-code', 'community-marketplace']));
+  const kw = await fetchOrKeep('plugin-knowledge-work', () => fromClaudeMarket('anthropics/knowledge-work-plugins', 'plugin-knowledge-work', 'Knowledge Work Plugins (Anthropic)', ['claude', 'cowork', 'anthropic']));
+  const codex = await fetchOrKeep('plugin-codex', fromCodex);
+  const cop = await fetchOrKeep('plugin-copilot', fromCopilot);
+  const gem = await fetchOrKeep('plugin-gemini', fromGemini);
+  const dify = await fetchOrKeep('plugin-dify', fromDify);
+  const cpd = await fetchOrKeep('plugin-cpd', fromClaudePluginsDev);
 
   // Claude 마켓끼리는 (저장소 + 플러그인 이름)으로 겹침을 본다.
   const ccKey = (slug: string) => (it: Item) => `cc:${slug}#${it.id.split(':').pop() ?? ''}`;
@@ -259,7 +260,11 @@ export async function main(): Promise<void> {
     { source: { id: 'plugin-dify', name: 'Dify Marketplace', url: 'https://marketplace.dify.ai', kind: KIND, license: '공개 마켓 API (marketplace.dify.ai) 메타데이터와 링크만 싣는다', note: 'Dify 앱 플랫폼용 모델·도구·에이전트 전략 플러그인' }, available: dify.available, items: r6b ?? [] },
     { source: { id: 'plugin-cpd', name: 'Claude Plugins (claude-plugins.dev)', url: 'https://claude-plugins.dev/plugins', kind: KIND, license: '공개 API 메타데이터 (각 플러그인은 원 저장소 라이선스)', note: '공개 GitHub 마켓(marketplace.json)을 모은 커뮤니티 등록소' }, available: cpd.available, cut: `내려받기 ${DOWNLOAD_CUT}회 이상 또는 저장소 별 ${STAR_CUT}개 이상`, items: r7 ?? [] },
   ];
-  for (const f of files) writeCatalog(f);
+  const got = {
+    'plugin-claude-official': off, 'plugin-claude-code': cc, 'plugin-claude-community': com, 'plugin-knowledge-work': kw,
+    'plugin-codex': codex, 'plugin-copilot': cop, 'plugin-gemini': gem, 'plugin-dify': dify, 'plugin-cpd': cpd,
+  };
+  for (const f of freshFiles(files, got)) writeCatalog(f);
   log(`플러그인 합계: ${files.reduce((n, f) => n + f.items.length, 0)}`);
 }
 

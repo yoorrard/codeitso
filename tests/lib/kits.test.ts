@@ -1,7 +1,12 @@
 // 스타터 키트 (data/kits.json, K1 D131): 키트 id는 KIT_IDS(집계 구간)와 같은 순서이고, 주제는 KIT_THEMES 안에서 끼리끼리 붙어 있고,
 // 재료 id는 모두 진열대에 있고(키트마다 3~12개), 구현안은 3~6줄, 홈 다섯 장은 주제마다 하나.
-import { readFileSync } from 'node:fs';
+// 출처가 뺀 재료는 빌드가 빼고 계속한다(D163). PR 검사에서는 빠진 재료가 있으면 실패해 data/kits.json을 고치게 하고,
+// 매일 갱신(daily-refresh.yml, KITS_MISSING_OK=1)에서는 알리기만 한다 (재료 하나 때문에 자료 갱신 전체가 멈추지 않게).
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import type { KitMissing } from '../../scripts/catalog/load.ts';
 import { KITS_FILE, kits } from '../../scripts/catalog/load.ts';
 import { KIT_IDS, KIT_THEMES, isKitId, isKitTheme } from '../../src/lib/kits.ts';
 
@@ -54,9 +59,32 @@ describe('스타터 키트 자료', () => {
   });
 
   it('재료 id는 모두 진열대에 있다 (진열대 빌드가 카드로 바꾼다)', { timeout: 120_000 }, () => {
-    const built = kits();
-    expect(built.map((k) => k.cards.length)).toEqual(file.kits.map((k) => k.items.length));
+    const missing: KitMissing[] = [];
+    const built = kits(KITS_FILE, missing);
+    if (process.env['KITS_MISSING_OK'] === '1') {
+      for (const m of missing) console.warn(`스타터 키트 ${m.kit}의 재료 ${m.id}가 진열대에 없다 (data/kits.json에서 바꾼다)`);
+    } else {
+      expect(missing, '출처가 뺀 재료: data/kits.json에서 진열대에 있는 id로 바꾼다').toEqual([]);
+    }
+    const lost = (kit: string): number => missing.filter((m) => m.kit === kit).length;
+    expect(built.map((k) => k.cards.length)).toEqual(file.kits.map((k) => k.items.length - lost(k.id)));
     for (const k of built) for (const c of k.cards) expect(c.name.length).toBeGreaterThan(0);
     expect(built.map((k) => k.outline)).toEqual(file.kits.map((k) => k.outlineKo));
+  });
+
+  it('진열대에 없는 재료는 빌드를 멈추지 않고 빼고 알린다 (D163)', { timeout: 120_000 }, () => {
+    const dir = mkdtempSync(join(tmpdir(), 'kits-'));
+    try {
+      const real = file.kits[0];
+      if (!real) throw new Error('data/kits.json에 키트가 없다');
+      const path = join(dir, 'kits.json');
+      writeFileSync(path, JSON.stringify({ home: [], kits: [{ ...real, id: 'test-kit', items: [...real.items.slice(0, 2), 'nope:gone-from-source'] }] }));
+      const missing: KitMissing[] = [];
+      const built = kits(path, missing);
+      expect(missing).toEqual([{ kit: 'test-kit', id: 'nope:gone-from-source' }]);
+      expect(built[0]?.cards).toHaveLength(2);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

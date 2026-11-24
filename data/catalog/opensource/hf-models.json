@@ -7,8 +7,8 @@
     "note": "Hub에는 공개 모델이 200만 개 넘게 있다. 카드를 읽을 수 없는 모델(동의가 필요한 모델 등)은 허브 정보(작업·라이브러리·만든 곳)로 설명을 짧게 만든다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다).",
     "cut": "작업(47개)마다 최근 30일 내려받기 10,000회 이상 + 작업마다 상위 20개 + 좋아요 300개 이상 + 요즘 뜨는 순 상위 500개"
   },
-  "fetchedAt": "2026-11-23",
-  "count": 7856,
+  "fetchedAt": "2026-11-24",
+  "count": 7884,
   "items": [
     {
       "id": "hf-models:01-ai--yi-1.5-34b",
@@ -1360,10 +1360,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 0,
-        "likes": 15,
-        "trend": 14,
-        "updatedAt": "2026-11-22"
+        "downloads": 2394,
+        "likes": 25,
+        "trend": 23,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "gguf",
@@ -1377,7 +1377,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:abenzerps--lfm2.5-24b-a2b-uncensored-gsq-rco-gguf",
@@ -1444,37 +1444,6 @@
         "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-11-12"
-    },
-    {
-      "id": "hf-models:abenzerps--nemotron-3.5-bolt-e4b-gsq-rco-gguf",
-      "name": "abenzerps/Nemotron-3.5-Bolt-E4B-GSQ-RCO-GGUF",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Mixed-precision GSQ-RCO GGUF quantizations of nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16, optimized for efficient, high-fidelity local inference in llama.cpp. The model supports a context length of up to 65,536 tokens (64K).",
-      "url": "https://huggingface.co/abenzerps/Nemotron-3.5-Bolt-E4B-GSQ-RCO-GGUF",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 10416,
-        "likes": 18,
-        "updatedAt": "2026-10-25"
-      },
-      "tags": [
-        "en",
-        "gguf",
-        "text-generation"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "abenzerps",
-        "host": "huggingface",
-        "library": "gguf",
-        "task": "text-generation",
-        "taskLabel": "Text Generation"
-      },
-      "fetchedAt": "2026-11-23"
     },
     {
       "id": "hf-models:abenzerps--ornith-1.5-9b-gsq-rco-gguf",
@@ -1833,9 +1802,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 17978,
-        "likes": 29,
-        "trend": 15.399999999999999,
+        "downloads": 46531,
+        "likes": 34,
+        "trend": 18.9,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -1846,7 +1815,7 @@
         "author": "Abiray",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:abiray--ltx-2.5-distilled-gguf",
@@ -2353,7 +2322,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 12045,
+        "downloads": 13288,
         "likes": 1,
         "trend": 0.7,
         "updatedAt": "2026-11-06"
@@ -2370,7 +2339,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:abliterant--qwen3.8-27b-rana-abliterated-gguf",
@@ -2641,7 +2610,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 31081,
+        "downloads": 34643,
         "likes": 7,
         "trend": 1.4,
         "updatedAt": "2026-11-01"
@@ -2657,7 +2626,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:adolphsson--deepseek-v4.1-flash-uncensored-gguf",
@@ -2702,13 +2671,13 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 719,
-        "likes": 20,
-        "trend": 19,
-        "updatedAt": "2026-11-18"
+        "downloads": 846,
+        "likes": 21,
+        "trend": 12,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
-        "any-to-any",
+        "audio-to-audio",
         "en",
         "vllm",
         "zh"
@@ -2718,10 +2687,10 @@
         "author": "adventists-ai",
         "host": "huggingface",
         "library": "vllm",
-        "task": "any-to-any",
-        "taskLabel": "Any-to-Any"
+        "task": "audio-to-audio",
+        "taskLabel": "Audio-to-Audio"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:aeon-7--aeon-dflash-qwen3.6-35b-a3b",
@@ -3797,9 +3766,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 11612,
-        "likes": 89,
-        "updatedAt": "2026-10-11"
+        "downloads": 12555,
+        "likes": 90,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "gguf",
@@ -3813,7 +3782,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:agentionai--signal-2-flash-next-gyro-gguf",
@@ -3827,10 +3796,10 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 3988,
-        "likes": 23,
-        "trend": 19,
-        "updatedAt": "2026-11-22"
+        "downloads": 10228,
+        "likes": 24,
+        "trend": 20,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "gguf",
@@ -3844,7 +3813,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:agentionai--signal-3.8-27b",
@@ -3859,10 +3828,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 14683,
+        "downloads": 13516,
         "likes": 19,
-        "trend": 1,
-        "updatedAt": "2026-09-15"
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "image-text-to-text",
@@ -3876,7 +3844,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:agentionai--signal-3.8-27b-gguf",
@@ -3891,9 +3859,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 19220,
+        "downloads": 20809,
         "likes": 105,
-        "updatedAt": "2026-09-15"
+        "trend": 1,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "gguf",
@@ -3907,7 +3876,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:agentionai--signal-3.8-flash-next-gguf",
@@ -3924,7 +3893,7 @@
         "downloads": 39357,
         "likes": 44,
         "trend": 1,
-        "updatedAt": "2026-10-30"
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "gguf",
@@ -3938,7 +3907,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:agents-course--notebooks",
@@ -4196,9 +4165,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 3475616,
-        "likes": 17,
-        "trend": 16,
+        "downloads": 3980363,
+        "likes": 19,
+        "trend": 18,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -4213,7 +4182,7 @@
         "task": "audio-to-audio",
         "taskLabel": "Audio-to-Audio"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ai-coustics--rook-multi-speaker",
@@ -4227,7 +4196,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 2154,
+        "downloads": 2651,
         "likes": 16,
         "trend": 13,
         "updatedAt": "2026-11-18"
@@ -4244,7 +4213,7 @@
         "task": "audio-to-audio",
         "taskLabel": "Audio-to-Audio"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ai-coustics--tyto",
@@ -4258,7 +4227,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 5319,
+        "downloads": 6829,
         "likes": 15,
         "trend": 14,
         "updatedAt": "2026-11-18"
@@ -4272,7 +4241,7 @@
         "host": "huggingface",
         "library": "aic-sdk"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ai-coustics--vad-multi-speaker",
@@ -4286,7 +4255,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 1645,
+        "downloads": 2059,
         "likes": 15,
         "trend": 14,
         "updatedAt": "2026-11-18"
@@ -4303,7 +4272,7 @@
         "task": "voice-activity-detection",
         "taskLabel": "voice-activity-detection"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ai-coustics--vad-voice-focus",
@@ -4317,7 +4286,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 9788,
+        "downloads": 10789,
         "likes": 15,
         "trend": 15,
         "updatedAt": "2026-11-18"
@@ -4334,7 +4303,7 @@
         "task": "voice-activity-detection",
         "taskLabel": "voice-activity-detection"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ai-forever--frida",
@@ -5351,9 +5320,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 15847,
-        "likes": 16,
-        "trend": 15,
+        "downloads": 17848,
+        "likes": 17,
+        "trend": 11,
         "updatedAt": "2026-11-16"
       },
       "tags": [
@@ -5365,7 +5334,7 @@
         "host": "huggingface",
         "library": "mlx"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:aj9o9--qwen3.8-27b-dspine-b16-gguf",
@@ -5472,9 +5441,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 348,
+        "downloads": 399,
         "likes": 31,
-        "trend": 30,
+        "trend": 15,
         "updatedAt": "2026-11-14"
       },
       "tags": [],
@@ -5483,7 +5452,7 @@
         "author": "Akahsizrr",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:akasharidas--ddpm-cifar10-32-dot.in.name",
@@ -5560,9 +5529,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 631,
-        "likes": 56,
-        "trend": 43,
+        "downloads": 1336,
+        "likes": 78,
+        "trend": 24.5,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -5578,7 +5547,7 @@
         "task": "image-to-image",
         "taskLabel": "Image-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:akdeniz27--bert-base-turkish-cased-ner",
@@ -6112,6 +6081,40 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:aleph-alpha--kolibri-1.1",
+      "name": "Aleph-Alpha/Kolibri-1.1",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Blog post | GGUF quantisations | Tech report (Kolibri 1)",
+      "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1.1",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 4,
+        "likes": 49,
+        "trend": 48,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "de",
+        "en",
+        "text-generation",
+        "vllm"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "Aleph-Alpha",
+        "host": "huggingface",
+        "library": "vllm",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:ales--wav2vec2-cv-be",
       "name": "ales/wav2vec2-cv-be",
       "kind": "models",
@@ -6186,9 +6189,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 69520,
-        "likes": 19,
-        "trend": 11.2,
+        "downloads": 107971,
+        "likes": 23,
+        "trend": 14,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -6203,7 +6206,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:alesha-pro--qwen3.8-flash-next-abliterated-gsq-rco-coder-strata-gguf",
@@ -7633,9 +7636,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 18398,
+        "downloads": 19428,
         "likes": 25,
-        "trend": 3,
         "updatedAt": "2026-11-10"
       },
       "tags": [
@@ -7650,7 +7652,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:allegro--herbert-base-cased",
@@ -8583,36 +8585,6 @@
       "fetchedAt": "2026-11-12"
     },
     {
-      "id": "hf-models:allenai--sage-mm-molmo2-8b-sft",
-      "name": "allenai/SAGE-MM-Molmo2-8B-SFT",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "The model is trained to generate JSON-formatted actions to invoke the following tools: * web-search: Search the internet for external knowledge (e.g., sports standings, cast lists). * transcribe-speech: Perform ASR on specific timestamped segments of the video.",
-      "url": "https://huggingface.co/allenai/SAGE-MM-Molmo2-8B-SFT",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 1739,
-        "likes": 5,
-        "updatedAt": "2025-12-17"
-      },
-      "tags": [
-        "en",
-        "video-text-to-text"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "allenai",
-        "host": "huggingface",
-        "task": "video-text-to-text",
-        "taskLabel": "Video-Text-to-Text"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-models:allenai--sage-mm-qwen2.5-vl-7b-sft",
       "name": "allenai/SAGE-MM-Qwen2.5-VL-7B-SFT",
       "kind": "models",
@@ -9306,18 +9278,18 @@
     },
     {
       "id": "hf-models:amphion--maskgct",
-      "name": "amphion/MaskGCT",
+      "name": "Amphion/MaskGCT",
       "kind": "models",
       "category": "opensource",
       "summary": "You can download all pretrained checkpoints from HuggingFace or use huggingface api.",
-      "url": "https://huggingface.co/amphion/MaskGCT",
+      "url": "https://huggingface.co/Amphion/MaskGCT",
       "source": {
         "name": "Hugging Face",
         "url": "https://huggingface.co/models"
       },
       "license": "CC-BY-NC-4.0",
       "metrics": {
-        "downloads": 472,
+        "downloads": 489,
         "likes": 309,
         "updatedAt": "2025-04-13"
       },
@@ -9332,12 +9304,12 @@
       ],
       "preview": {
         "type": "model",
-        "author": "amphion",
+        "author": "Amphion",
         "host": "huggingface",
         "task": "text-to-speech",
         "taskLabel": "Text-to-Speech"
       },
-      "fetchedAt": "2026-11-07"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ampixa--sanotts",
@@ -9662,8 +9634,8 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 109018,
-        "likes": 207,
+        "downloads": 130690,
+        "likes": 217,
         "trend": 41,
         "updatedAt": "2026-11-23"
       },
@@ -9676,7 +9648,7 @@
         "author": "AngelSlim",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:angelslim--hy4-gguf",
@@ -10108,6 +10080,33 @@
         "taskLabel": "Fill-Mask"
       },
       "fetchedAt": "2026-11-08"
+    },
+    {
+      "id": "hf-models:ant-intl--antom-3-in-1-transformer",
+      "name": "ant-intl/Antom-3-in-1-Transformer",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "In production, Antom 3-in-1 Transformer reduces overall loss rate by 37.88% relative to XGB-Online at the same 0.5% intervention budget.",
+      "url": "https://huggingface.co/ant-intl/Antom-3-in-1-Transformer",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 0,
+        "likes": 20,
+        "trend": 16,
+        "updatedAt": "2026-11-20"
+      },
+      "tags": [
+        "en"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "ant-intl",
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:antirez--deepseek-v4-gguf",
@@ -10747,7 +10746,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 252,
+        "downloads": 349,
         "likes": 12,
         "trend": 11,
         "updatedAt": "2026-11-20"
@@ -10764,7 +10763,7 @@
         "task": "depth-estimation",
         "taskLabel": "Depth Estimation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:apple--depthpro2-focal",
@@ -10778,9 +10777,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 370,
-        "likes": 22,
-        "trend": 22,
+        "downloads": 550,
+        "likes": 24,
+        "trend": 24,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -10795,7 +10794,7 @@
         "task": "depth-estimation",
         "taskLabel": "Depth Estimation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:apple--depthpro2-h",
@@ -10809,9 +10808,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 770,
-        "likes": 19,
-        "trend": 19,
+        "downloads": 1216,
+        "likes": 25,
+        "trend": 25,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -10826,7 +10825,7 @@
         "task": "depth-estimation",
         "taskLabel": "Depth Estimation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:apple--depthpro2-s",
@@ -10840,7 +10839,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 971,
+        "downloads": 1869,
         "likes": 12,
         "trend": 10,
         "updatedAt": "2026-11-20"
@@ -10857,7 +10856,7 @@
         "task": "depth-estimation",
         "taskLabel": "Depth Estimation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:apple--diffucoder-7b-cpgrpo",
@@ -11812,6 +11811,38 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:arxhr007--lxask",
+      "name": "arxhr007/lxask",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "A 1.5B model fine-tuned to turn plain-English requests into Linux commands. Runs on CPU in about 1.3 GB of memory — no GPU, no cloud, no API key — and ships with two small LoRA adapters it routes between per request.",
+      "url": "https://huggingface.co/arxhr007/lxask",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 490,
+        "likes": 13,
+        "trend": 12,
+        "updatedAt": "2026-11-18"
+      },
+      "tags": [
+        "peft",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "arxhr007",
+        "host": "huggingface",
+        "library": "peft",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:asahi417--tner-xlm-roberta-base-ontonotes5",
       "name": "asahi417/tner-xlm-roberta-base-ontonotes5",
       "kind": "models",
@@ -12112,8 +12143,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 13908,
-        "likes": 12,
+        "downloads": 15323,
+        "likes": 14,
         "updatedAt": "2026-11-04"
       },
       "tags": [
@@ -12128,7 +12159,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:atomicchat--deepseek-v4.1-flash-1017-uncensored-dwarfstar-gguf",
@@ -12521,9 +12552,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 47421,
-        "likes": 93,
-        "trend": 29.5,
+        "downloads": 86695,
+        "likes": 101,
+        "trend": 33.5,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -12536,7 +12567,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:atomicchat--inkling-2-mini-uncensored-gguf",
@@ -12551,9 +12582,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 129693,
-        "likes": 556,
-        "trend": 335.29999999999995,
+        "downloads": 329497,
+        "likes": 664,
+        "trend": 394.79999999999995,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -12566,7 +12597,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:atomicchat--lfm2.5-24b-a2b-uncensored-gguf",
@@ -14272,7 +14303,7 @@
       },
       "license": "CC-BY-NC-4.0",
       "metrics": {
-        "downloads": 185,
+        "downloads": 206,
         "likes": 17,
         "trend": 14,
         "updatedAt": "2026-11-18"
@@ -14286,7 +14317,7 @@
         "author": "aurateam",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:auroraai-research--aurora2-400m-a20m",
@@ -14301,7 +14332,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1032,
+        "downloads": 1158,
         "likes": 57,
         "trend": 19,
         "updatedAt": "2026-11-18"
@@ -14319,7 +14350,40 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:auroraai-research--aurora2-400m-a20m-qat",
+      "name": "AuroraAI-Research/Aurora2-400M-A20M-QAT",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Aurora2-400M-A20M-QAT is a quantization-aware-trained version of Aurora2-400M-A20M, our sparse Mixture-of-Experts language model. For this release it was compressed with LittleBit-2, a binary low-rank quantization method, and recovered quality with knowledge distillation from the original model.",
+      "url": "https://huggingface.co/AuroraAI-Research/Aurora2-400M-A20M-QAT",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 30,
+        "likes": 11,
+        "trend": 11,
+        "updatedAt": "2026-11-22"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "AuroraAI-Research",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:auto7x--orcarouter-qwen3.8-flash-next-uncensored-modelopt-nvfp4-gguf",
@@ -16650,6 +16714,108 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:baidu--ernie-5.5-flash-preview",
+      "name": "baidu/ERNIE-5.5-Flash-Preview",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "ERNIE 5.5 Flash Preview is the first post-trained model built on ERNIE 5.5 Flash Base, which we released earlier. It is a Mixture-of-Experts (MoE) language model with 280B total parameters, 14B of them active per token, and a 1M-token context window.",
+      "url": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Preview",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 105,
+        "trend": 32.5,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "transformers",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "baidu",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:baidu--ernie-5.5-flash-preview-bf16",
+      "name": "baidu/ERNIE-5.5-Flash-Preview-BF16",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "ERNIE 5.5 Flash Preview is the first post-trained model built on ERNIE 5.5 Flash Base, which we released earlier. It is a Mixture-of-Experts (MoE) language model with 280B total parameters, 14B of them active per token, and a 1M-token context window.",
+      "url": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Preview-BF16",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 18,
+        "trend": 15,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "transformers",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "baidu",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:baidu--ernie-5.5-flash-preview-fp8",
+      "name": "baidu/ERNIE-5.5-Flash-Preview-FP8",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "ERNIE 5.5 Flash Preview is the first post-trained model built on ERNIE 5.5 Flash Base, which we released earlier. It is a Mixture-of-Experts (MoE) language model with 280B total parameters, 14B of them active per token, and a 1M-token context window.",
+      "url": "https://huggingface.co/baidu/ERNIE-5.5-Flash-Preview-FP8",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 22,
+        "trend": 18,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "transformers",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "baidu",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:baidu--ernie-image",
       "name": "baidu/ERNIE-Image",
       "kind": "models",
@@ -17709,7 +17875,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 24000,
+        "downloads": 26584,
         "likes": 1,
         "updatedAt": "2026-11-07"
       },
@@ -17724,7 +17890,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bartowski--gemma-2-27b-it-gguf",
@@ -18247,7 +18413,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 18786,
+        "downloads": 34897,
         "likes": 19,
         "trend": 1,
         "updatedAt": "2026-10-25"
@@ -18262,7 +18428,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bartowski--gryphe-gemma-4-31b-styletune-gguf",
@@ -18562,6 +18728,36 @@
         "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:bartowski--inkling-2-mini-gguf",
+      "name": "bartowski/Inkling-2-Mini-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Using llama.cpp release b12600 for quantization.",
+      "url": "https://huggingface.co/bartowski/Inkling-2-Mini-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 51864,
+        "likes": 21,
+        "trend": 19,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "image-text-to-text"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "bartowski",
+        "host": "huggingface",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bartowski--kai-os-grug-12b-gguf",
@@ -20009,7 +20205,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 12686,
+        "downloads": 10630,
         "likes": 0,
         "updatedAt": "2026-10-24"
       },
@@ -20023,7 +20219,7 @@
         "task": "any-to-any",
         "taskLabel": "Any-to-Any"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bartowski--nvidia-nemotron-3.5-lightning-30b-a3b-gguf",
@@ -22028,9 +22224,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 19679,
-        "likes": 27,
-        "trend": 26,
+        "downloads": 21812,
+        "likes": 31,
+        "trend": 30,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -22043,7 +22239,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bartowski--recursivesi-flint-gguf",
@@ -22302,7 +22498,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 14880,
+        "downloads": 12980,
         "likes": 4,
         "updatedAt": "2026-10-24"
       },
@@ -22318,7 +22514,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bartowski--thedrummer-artemis-31b-v1.2-gguf",
@@ -22332,9 +22528,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 84641,
-        "likes": 33,
-        "trend": 3,
+        "downloads": 88270,
+        "likes": 38,
+        "trend": 4,
         "updatedAt": "2026-09-25"
       },
       "tags": [
@@ -22347,7 +22543,7 @@
         "task": "any-to-any",
         "taskLabel": "Any-to-Any"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bartowski--thedrummer-cydonia-24b-v4.3-gguf",
@@ -22492,36 +22688,6 @@
         "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-11-12"
-    },
-    {
-      "id": "hf-models:bartowski--thinkingmachines-inkling-2-mini-gguf",
-      "name": "bartowski/thinkingmachines_Inkling-2-Mini-GGUF",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Using llama.cpp release b12600 for quantization.",
-      "url": "https://huggingface.co/bartowski/thinkingmachines_Inkling-2-Mini-GGUF",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 23693,
-        "likes": 17,
-        "trend": 15,
-        "updatedAt": "2026-11-21"
-      },
-      "tags": [
-        "image-text-to-text"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "bartowski",
-        "host": "huggingface",
-        "task": "image-text-to-text",
-        "taskLabel": "Image-Text-to-Text"
-      },
-      "fetchedAt": "2026-11-23"
     },
     {
       "id": "hf-models:bartowski--thomsonreuters-thomson-1.0-small-gguf",
@@ -22704,6 +22870,38 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:bartowski--xtools-at-qwensploit-v2-9b-cybersecurity-qwen3.5-gguf",
+      "name": "bartowski/xtools-at_Qwensploit-V2-9B-CyberSecurity-Qwen3.5-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Using llama.cpp release b12180 for quantization.",
+      "url": "https://huggingface.co/bartowski/xtools-at_Qwensploit-V2-9B-CyberSecurity-Qwen3.5-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 10069,
+        "likes": 6,
+        "trend": 0.5,
+        "updatedAt": "2026-11-14"
+      },
+      "tags": [
+        "en",
+        "image-text-to-text",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "bartowski",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:bartowski--xyzailab-xyz-aquila-mini-gguf",
       "name": "bartowski/XYZAILab_XYZ-Aquila-mini-GGUF",
       "kind": "models",
@@ -22775,9 +22973,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 201,
-        "likes": 31,
-        "trend": 27,
+        "downloads": 305,
+        "likes": 36,
+        "trend": 32,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -22793,7 +22991,7 @@
         "task": "text-classification",
         "taskLabel": "Text Classification"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:baselabs--elephant-1",
@@ -22839,9 +23037,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 180,
-        "likes": 15,
-        "trend": 14,
+        "downloads": 253,
+        "likes": 17,
+        "trend": 16,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -22857,7 +23055,7 @@
         "task": "text-classification",
         "taskLabel": "Text Classification"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:baselabs--mammoth-1",
@@ -25322,9 +25520,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 70,
-        "likes": 55,
-        "trend": 40,
+        "downloads": 243,
+        "likes": 74,
+        "trend": 23,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -25336,7 +25534,7 @@
         "host": "huggingface",
         "library": "vllm"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:blackfrost-ai--qwen3.8-27b-abliterated-gguf",
@@ -25577,7 +25775,7 @@
       "metrics": {
         "downloads": 33330,
         "likes": 27,
-        "updatedAt": "2026-11-17"
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "llama.cpp",
@@ -25591,7 +25789,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bloomer010--ling-3.0-tiny-gguf",
@@ -25606,9 +25804,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 242493,
+        "downloads": 241881,
         "likes": 122,
-        "updatedAt": "2026-11-17"
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "llama.cpp",
@@ -25622,7 +25820,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:blueflame749--z-image-lora",
@@ -26303,7 +26501,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 14346,
+        "downloads": 12435,
         "likes": 16,
         "updatedAt": "2026-10-23"
       },
@@ -26319,7 +26517,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:bottlecapai--thinkingcap-nvidia-nemotron-3.5-lightning-30b-a3b-gguf",
@@ -26832,9 +27030,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 225,
-        "likes": 544,
-        "trend": 80,
+        "downloads": 350,
+        "likes": 567,
+        "trend": 69.5,
         "updatedAt": "2026-11-17"
       },
       "tags": [
@@ -26852,7 +27050,7 @@
         "task": "image-segmentation",
         "taskLabel": "Image Segmentation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:briaai--rmbg-3.0-comfy",
@@ -26867,9 +27065,9 @@
       },
       "license": "CC-BY-NC-4.0",
       "metrics": {
-        "downloads": 4867,
-        "likes": 31,
-        "trend": 31,
+        "downloads": 6630,
+        "likes": 34,
+        "trend": 34,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -26884,7 +27082,7 @@
         "task": "image-segmentation",
         "taskLabel": "Image Segmentation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:brunobarreto--sdss-dr12-stars-regression",
@@ -29554,9 +29752,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 4394,
-        "likes": 48,
-        "trend": 47,
+        "downloads": 7312,
+        "likes": 69,
+        "trend": 62,
         "updatedAt": "2026-11-22"
       },
       "tags": [],
@@ -29565,7 +29763,7 @@
         "author": "CaryPalmer",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:casperhansen--llama-3-8b-instruct-awq",
@@ -29768,7 +29966,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 33794,
+        "downloads": 27585,
         "likes": 4,
         "trend": 1.4,
         "updatedAt": "2026-10-22"
@@ -29785,7 +29983,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:cc1244578151--qwen3.8-flash-next-gyro-abliterated-huihui-gguf",
@@ -29822,7 +30020,7 @@
       "name": "ccore/CCORE-Web-Coder-4B",
       "kind": "models",
       "category": "opensource",
-      "summary": "CCORE Web Coder 4B turns a brief into a single React HTML document for a website, slide deck, or informational page. CCORE fine-tuned the model from Qwen3.5-4B-Base.",
+      "summary": "CCORE Web Coder 4B turns a single brief into a website, slide deck, or web infographic. It returns one HTML file with the React components, styles, and interactions, ready to open in a browser and edit.",
       "url": "https://huggingface.co/ccore/CCORE-Web-Coder-4B",
       "source": {
         "name": "Hugging Face",
@@ -29830,9 +30028,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1124,
-        "likes": 55,
-        "trend": 40,
+        "downloads": 1881,
+        "likes": 77,
+        "trend": 24,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -29846,7 +30044,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ccore--qwen3.5-4b-3d-coder",
@@ -30420,9 +30618,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 381769,
-        "likes": 826,
-        "trend": 159,
+        "downloads": 427005,
+        "likes": 862,
+        "trend": 150,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -30437,7 +30635,43 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:chechen123--duopra",
+      "name": "Chechen123/Duopra",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Any-to-Any model (transformers) by Chechen123 on Hugging Face.",
+      "url": "https://huggingface.co/Chechen123/Duopra",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 22,
+        "likes": 14,
+        "trend": 11,
+        "updatedAt": "2026-11-20"
+      },
+      "tags": [
+        "any-to-any",
+        "en",
+        "gated",
+        "transformers",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "Chechen123",
+        "gated": true,
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "any-to-any",
+        "taskLabel": "Any-to-Any"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:chendy--nitrofusion2",
@@ -32303,7 +32537,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 638,
+        "downloads": 727,
         "likes": 79,
         "trend": 27,
         "updatedAt": "2026-11-18"
@@ -32320,7 +32554,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:cloudflare--clef",
@@ -33437,9 +33671,9 @@
       "license": "CC-BY-NC-4.0",
       "metrics": {
         "downloads": 35893,
-        "likes": 215,
+        "likes": 216,
         "trend": 1,
-        "updatedAt": "2026-09-30"
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "gated",
@@ -33457,7 +33691,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:cointegrated--labse-en-ru",
@@ -33631,9 +33865,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 1561421,
+        "downloads": 1425871,
         "likes": 382,
-        "trend": 3,
         "updatedAt": "2024-04-05"
       },
       "tags": [
@@ -33646,7 +33879,7 @@
         "host": "huggingface",
         "library": "transformers"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:comfy-org--anima-lllite",
@@ -34407,7 +34640,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 9948,
+        "downloads": 16508,
         "likes": 26,
         "trend": 23,
         "updatedAt": "2026-11-18"
@@ -34424,7 +34657,7 @@
         "task": "image-to-video",
         "taskLabel": "Image-to-Video"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:comfy-org--minimax-h3",
@@ -35245,9 +35478,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 4219,
+        "downloads": 4856,
         "likes": 38,
-        "trend": 12,
+        "trend": 11,
         "updatedAt": "2026-11-12"
       },
       "tags": [
@@ -35262,7 +35495,7 @@
         "task": "time-series-forecasting",
         "taskLabel": "time-series-forecasting"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:contrastive-lm--clm-v0.1-8b",
@@ -35310,10 +35543,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 16804,
-        "likes": 5969,
-        "trend": 44,
-        "updatedAt": "2026-11-15"
+        "downloads": 15180,
+        "likes": 6013,
+        "trend": 13,
+        "updatedAt": "2026-11-19"
       },
       "tags": [
         "text-classification",
@@ -35327,7 +35560,7 @@
         "task": "text-classification",
         "taskLabel": "Text Classification"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:convaiinnovations--laya-multilingual",
@@ -38395,10 +38628,10 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 83,
-        "likes": 20,
-        "trend": 19,
-        "updatedAt": "2026-11-21"
+        "downloads": 108,
+        "likes": 25,
+        "trend": 24,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "dflow",
@@ -38412,7 +38645,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:dataautogpt3--opendallev1.1",
@@ -38903,8 +39136,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 10998,
-        "likes": 30,
+        "downloads": 12354,
+        "likes": 31,
         "trend": 27,
         "updatedAt": "2026-11-19"
       },
@@ -38920,7 +39153,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:davidau--glm-4.7-flash-uncensored-heretic-neo-code-imatrix-max-gguf",
@@ -38967,10 +39200,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 0,
-        "likes": 19,
-        "trend": 10.5,
-        "updatedAt": "2026-11-23"
+        "downloads": 1,
+        "likes": 25,
+        "trend": 14,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "en",
@@ -38984,7 +39217,39 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:davidau--inkling-2-mini-26b-heretic-uncensored-turbo-brilliance-50x-v2-agi-neo-gguf",
+      "name": "DavidAU/Inkling-2-Mini-26B-Heretic-Uncensored-Turbo-Brilliance-50X-V2-AGI-NEO-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "[DavidAU] FOLLOW | ALL MODELS | COLLECTIONS | TRENDING | FAQs | SUPPORT | Buy Me A Coffee ( )",
+      "url": "https://huggingface.co/DavidAU/Inkling-2-Mini-26B-Heretic-Uncensored-Turbo-Brilliance-50X-V2-AGI-NEO-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 51,
+        "likes": 19,
+        "trend": 13.299999999999999,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "en",
+        "image-text-to-text",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "DavidAU",
+        "host": "huggingface",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:davidau--lfm2.5-2.6b-qwen3.8-turbo-brilliance-power-x12-neo-max-gguf",
@@ -39652,7 +39917,7 @@
       "name": "DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
       "kind": "models",
       "category": "opensource",
-      "summary": "[DavidAU] FOLLOW | ALL MODELS | COLLECTIONS | TRENDING | FAQs | SUPPORT | Buy Me A Coffee ( )",
+      "summary": "[ uploading: Turbo Brilliance 50x-V2-AGI quants ... ]",
       "url": "https://huggingface.co/DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
       "source": {
         "name": "Hugging Face",
@@ -39661,9 +39926,9 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 1833410,
-        "likes": 4244,
-        "trend": 106,
-        "updatedAt": "2026-11-13"
+        "likes": 4282,
+        "trend": 98,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "image-text-to-text",
@@ -39677,7 +39942,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:davidau--qwen3.8-27b-twin-turbo-fable-cold-fusion-709-l-uncensored-nm-dau-neo-mtp-gguf",
@@ -40379,9 +40644,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 89,
-        "likes": 12,
-        "trend": 11,
+        "downloads": 1754,
+        "likes": 15,
+        "trend": 14,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -40396,7 +40661,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:deadbydawn101--ravenx-cyberagent-qwen3.6-35b-a3b-opus-4.7-openmythos-pentester-bughunter-rath-gguf",
@@ -40794,9 +41059,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 47506,
-        "likes": 299,
-        "trend": 12,
+        "downloads": 57483,
+        "likes": 305,
+        "trend": 6,
         "updatedAt": "2026-11-02"
       },
       "tags": [
@@ -40811,7 +41076,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:deep-principle--hydrogen-1.0-mxfp4",
@@ -40826,7 +41091,7 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 14890,
+        "downloads": 17657,
         "likes": 16,
         "updatedAt": "2026-11-02"
       },
@@ -40840,7 +41105,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:deep-principle--hydrogen-1.0-nvfp4",
@@ -40855,9 +41120,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 12724,
+        "downloads": 14536,
         "likes": 13,
-        "trend": 2,
         "updatedAt": "2026-11-02"
       },
       "tags": [
@@ -40870,7 +41134,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:deepchem--chemberta-100m-mlm",
@@ -42683,9 +42947,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 322162,
-        "likes": 5702,
-        "trend": 4,
+        "downloads": 293160,
+        "likes": 5737,
+        "trend": 15,
         "updatedAt": "2026-06-22"
       },
       "tags": [
@@ -42700,7 +42964,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:deepseek-ai--deepseek-v4-pro-0813",
@@ -43839,7 +44103,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 12397,
+        "downloads": 13774,
         "likes": 0,
         "updatedAt": "2026-11-10"
       },
@@ -43855,7 +44119,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-15"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:dendriteholdings--ingot-xxxii-27b-q2",
@@ -44634,6 +44898,35 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:desert-ant-labs--clear",
+      "name": "desert-ant-labs/clear",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "On-device speech enhancement: denoise, dereverb, and loudness-normalize.",
+      "url": "https://huggingface.co/desert-ant-labs/clear",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 1662,
+        "likes": 60,
+        "trend": 10,
+        "updatedAt": "2026-11-20"
+      },
+      "tags": [
+        "audio-to-audio"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "desert-ant-labs",
+        "host": "huggingface",
+        "task": "audio-to-audio",
+        "taskLabel": "Audio-to-Audio"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:desert-ant-labs--emo",
       "name": "desert-ant-labs/emo",
       "kind": "models",
@@ -45172,6 +45465,38 @@
         "taskLabel": "Text-to-Image"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:diffuspace--clover-35b-a3b-preview",
+      "name": "Diffuspace/Clover-35B-A3B-Preview",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Clover-35B-A3B-Preview is the first model released by DiffuSpace, delivering state-of-the-art performance among open-source diffusion language models at release on the benchmarks reported in our launch blog.",
+      "url": "https://huggingface.co/Diffuspace/Clover-35B-A3B-Preview",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 6310,
+        "likes": 279,
+        "trend": 10,
+        "updatedAt": "2026-10-28"
+      },
+      "tags": [
+        "text-generation",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "Diffuspace",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:diffuspace--clover-35b-a3b-preview-gguf",
@@ -49494,7 +49819,7 @@
       "name": "eltokh7/inkling-2-mini-decision",
       "kind": "models",
       "category": "opensource",
-      "summary": "Note: I am currently in the process of scaling up this training significantly. Stay tuned for the next version and DM me on twitter if you have any questions: @eltokh7",
+      "summary": "A System 1.5 adaptive-depth decision model built on thinkingmachines/Inkling-2-Mini (26.4B total / 3.4B–5.4B active MoE).",
       "url": "https://huggingface.co/eltokh7/inkling-2-mini-decision",
       "source": {
         "name": "Hugging Face",
@@ -49502,10 +49827,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 26,
-        "likes": 96,
-        "trend": 24.5,
-        "updatedAt": "2026-11-22"
+        "downloads": 109,
+        "likes": 103,
+        "trend": 28,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "feature-extraction",
@@ -49519,7 +49844,7 @@
         "task": "feature-extraction",
         "taskLabel": "Feature Extraction"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:elyza--elyza-shortcut-1.0-qwen-7b",
@@ -50996,9 +51321,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 1073148,
-        "likes": 1652,
-        "trend": 3,
+        "downloads": 1042418,
+        "likes": 1657,
         "updatedAt": "2024-02-13"
       },
       "tags": [
@@ -51014,7 +51338,7 @@
         "task": "summarization",
         "taskLabel": "Summarization"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:facebook--bart-large-mnli",
@@ -52109,9 +52433,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 46525,
-        "likes": 52,
-        "trend": 3,
+        "downloads": 43315,
+        "likes": 58,
+        "trend": 2,
         "updatedAt": "2025-08-19"
       },
       "tags": [
@@ -52129,7 +52453,7 @@
         "task": "image-feature-extraction",
         "taskLabel": "Image Feature Extraction"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:facebook--dpr-question-encoder-single-nq-base",
@@ -58647,9 +58971,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 243,
-        "likes": 46,
-        "trend": 15.5,
+        "downloads": 291,
+        "likes": 47,
+        "trend": 16,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -58665,7 +58989,7 @@
         "task": "fill-mask",
         "taskLabel": "Fill-Mask"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:frontiersmind--nandibert-450m",
@@ -58680,7 +59004,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 193,
+        "downloads": 241,
         "likes": 31,
         "trend": 27,
         "updatedAt": "2026-11-22"
@@ -58698,7 +59022,7 @@
         "task": "fill-mask",
         "taskLabel": "Fill-Mask"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:frostwolfai--frost-cyber-mini-uncensored-v1.1-gguf",
@@ -59384,36 +59708,6 @@
       "fetchedAt": "2026-11-18"
     },
     {
-      "id": "hf-models:garlic-llm--garlic-llm-ps4",
-      "name": "garlic-llm/garlic-llm-ps4",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "A 9-billion-parameter language model running on a PS4. Offline.",
-      "url": "https://huggingface.co/garlic-llm/garlic-llm-ps4",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 0,
-        "likes": 22,
-        "trend": 10,
-        "updatedAt": "2026-11-22"
-      },
-      "tags": [
-        "multilingual",
-        "text-generation"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "garlic-llm",
-        "host": "huggingface",
-        "task": "text-generation",
-        "taskLabel": "Text Generation"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-models:gaunernst--bert-l6-h768-uncased",
       "name": "gaunernst/bert-L6-H768-uncased",
       "kind": "models",
@@ -59649,7 +59943,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 14576,
+        "downloads": 12790,
         "likes": 0,
         "updatedAt": "2026-10-28"
       },
@@ -59663,7 +59957,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:gchhablani--wav2vec2-large-xlsr-gu",
@@ -60557,9 +60851,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 209096,
-        "likes": 63,
-        "trend": 21.5,
+        "downloads": 497658,
+        "likes": 69,
+        "trend": 49,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -60572,7 +60866,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ggml-org--julia-1-gguf",
@@ -61147,8 +61441,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 90195,
-        "likes": 6,
+        "downloads": 102163,
+        "likes": 7,
         "trend": 1.5,
         "updatedAt": "2026-11-12"
       },
@@ -61162,7 +61456,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ggml-org--qwen3.6-27b-gguf",
@@ -62689,9 +62983,9 @@
       },
       "license": "Gemma Terms of Use",
       "metrics": {
-        "downloads": 82442,
-        "likes": 758,
-        "trend": 5,
+        "downloads": 84909,
+        "likes": 776,
+        "trend": 0.5,
         "updatedAt": "2024-08-07"
       },
       "tags": [
@@ -62708,7 +63002,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-05"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:google--gemma-2-2b-it",
@@ -66867,8 +67161,9 @@
       },
       "license": "Gemma Terms of Use",
       "metrics": {
-        "downloads": 6350,
-        "likes": 370,
+        "downloads": 6386,
+        "likes": 376,
+        "trend": 3,
         "updatedAt": "2026-01-28"
       },
       "tags": [
@@ -66885,7 +67180,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:google--translategemma-27b-it",
@@ -69143,9 +69438,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 335,
-        "likes": 20,
-        "trend": 17,
+        "downloads": 433,
+        "likes": 26,
+        "trend": 23,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -69161,7 +69456,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:gustavosta--magicprompt-stable-diffusion",
@@ -69460,9 +69755,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 4384,
-        "likes": 16,
-        "trend": 14,
+        "downloads": 5310,
+        "likes": 20,
+        "trend": 18,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -69477,7 +69772,7 @@
         "task": "text-to-video",
         "taskLabel": "Text-to-Video"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:h94--ip-adapter",
@@ -71187,9 +71482,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 318,
-        "likes": 86,
-        "trend": 24.5,
+        "downloads": 399,
+        "likes": 91,
+        "trend": 27,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -71204,7 +71499,36 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:harness-hub--qwen3.8-27b-hermes-adapted-gguf",
+      "name": "harness-hub/Qwen3.8-27B-hermes-adapted-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "The GGUF version of harness-hub/Qwen3.8-27B-hermes-adapted, a LoRA adapter trained with reinforcement learning inside Hermes Agent, on Qwen/Qwen3.8-27B, for llama.cpp.",
+      "url": "https://huggingface.co/harness-hub/Qwen3.8-27B-hermes-adapted-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 1010,
+        "likes": 13,
+        "trend": 11,
+        "updatedAt": "2026-11-19"
+      },
+      "tags": [
+        "hermes"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "harness-hub",
+        "host": "huggingface",
+        "library": "hermes"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:harness-hub--qwen3.8-27b-opencode-adapted",
@@ -71219,9 +71543,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 726,
-        "likes": 257,
-        "trend": 60,
+        "downloads": 838,
+        "likes": 279,
+        "trend": 64,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -71236,7 +71560,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:harness-hub--qwen3.8-27b-opencode-adapted-gguf",
@@ -71251,9 +71575,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1751,
-        "likes": 23,
-        "trend": 23,
+        "downloads": 2154,
+        "likes": 26,
+        "trend": 26,
         "updatedAt": "2026-11-18"
       },
       "tags": [],
@@ -71262,7 +71586,7 @@
         "author": "harness-hub",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:harness-hub--qwen3.8-27b-pi-adapted",
@@ -71277,9 +71601,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2831,
-        "likes": 1008,
-        "trend": 339,
+        "downloads": 3132,
+        "likes": 1043,
+        "trend": 352,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -71294,7 +71618,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:harness-hub--qwen3.8-27b-pi-adapted-gguf",
@@ -71309,9 +71633,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 7021,
-        "likes": 101,
-        "trend": 32.5,
+        "downloads": 8402,
+        "likes": 120,
+        "trend": 37,
         "updatedAt": "2026-11-20"
       },
       "tags": [],
@@ -71320,7 +71644,7 @@
         "author": "harness-hub",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:harness-hub--qwen3.8-27b-super-adapter",
@@ -71335,9 +71659,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 198,
-        "likes": 33,
-        "trend": 32,
+        "downloads": 326,
+        "likes": 55,
+        "trend": 40,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -71352,7 +71676,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:harsha001--deepseek-v4.1-flash-1017-uncensored-gsq-rco-strixhalo-gguf",
@@ -73516,9 +73840,9 @@
       "license": "CC-BY-NC-4.0",
       "metrics": {
         "downloads": 3025,
-        "likes": 913,
+        "likes": 914,
         "trend": 8,
-        "updatedAt": "2026-10-29"
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "en",
@@ -73533,7 +73857,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:hemmingwayai--hemmingway-1.5",
@@ -73548,10 +73872,10 @@
       },
       "license": "CC-BY-NC-4.0",
       "metrics": {
-        "downloads": 4239,
-        "likes": 76,
-        "trend": 10,
-        "updatedAt": "2026-11-01"
+        "downloads": 4133,
+        "likes": 77,
+        "trend": 11,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "en",
@@ -73566,7 +73890,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:henry1477--music-flamingo-gguf",
@@ -77023,9 +77347,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 232336,
-        "likes": 214,
-        "trend": 9,
+        "downloads": 209257,
+        "likes": 221,
+        "trend": 2,
         "updatedAt": "2026-10-11"
       },
       "tags": [
@@ -77040,7 +77364,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:huihui-ai--huihui-qwen3.8-flash-next-abliterated-v2-gguf",
@@ -77618,9 +77942,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 72350,
+        "downloads": 100399,
         "likes": 69,
-        "trend": 11,
+        "trend": 10,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -77635,7 +77959,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:iapp--openthai2.1-ocr-text-20261118",
@@ -80645,6 +80969,37 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:inclusionai--duo-1.0-causal-base",
+      "name": "inclusionAI/Duo-1.0-causal-base",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "A Reciprocal World Model for Full-Duplex Interaction",
+      "url": "https://huggingface.co/inclusionAI/Duo-1.0-causal-base",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 0,
+        "likes": 13,
+        "trend": 10,
+        "updatedAt": "2026-11-18"
+      },
+      "tags": [
+        "any-to-any",
+        "duo-world-model"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "inclusionAI",
+        "host": "huggingface",
+        "library": "duo-world-model",
+        "task": "any-to-any",
+        "taskLabel": "Any-to-Any"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:inclusionai--duo-1.0-distill",
       "name": "inclusionAI/Duo-1.0-distill",
       "kind": "models",
@@ -80920,6 +81275,32 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:inclusionai--ling-3.2-air",
+      "name": "inclusionAI/Ling-3.2-air",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "We introduce Ling-3.2-air, an open-weight model that shares the same native multimodal architecture as Ling-3.0-flash-VL. Compared with its predecessor, Ling-3.2-air shows stronger performance in workflow automation and reasoning over professional documents.",
+      "url": "https://huggingface.co/inclusionAI/Ling-3.2-air",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 0,
+        "likes": 114,
+        "trend": 102,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [],
+      "preview": {
+        "type": "model",
+        "author": "inclusionAI",
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:inclusionai--lingsante-3.1-air-vl",
       "name": "inclusionAI/LingSante-3.1-air-VL",
       "kind": "models",
@@ -80932,9 +81313,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 0,
-        "likes": 50,
-        "trend": 47,
+        "downloads": 206,
+        "likes": 86,
+        "trend": 67,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -80947,7 +81328,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:inclusionai--lingsante-3.1-flash",
@@ -80962,9 +81343,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 0,
-        "likes": 79,
-        "trend": 73,
+        "downloads": 397,
+        "likes": 120,
+        "trend": 98,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -80977,7 +81358,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:inclusionai--lingsante-3.1-flash-mxfp4",
@@ -80992,9 +81373,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 0,
-        "likes": 16,
-        "trend": 14,
+        "downloads": 325,
+        "likes": 18,
+        "trend": 16,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -81007,7 +81388,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:inclusionai--llada-image",
@@ -81845,6 +82226,37 @@
         "taskLabel": "Automatic Speech Recognition"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:indrasmirror--inkling-2-mini-xq-uncensored",
+      "name": "IndrasMirror/Inkling-2-Mini-XQ-Uncensored",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Thinking Machines' Inkling 2 Mini with its refusal behaviour edited out of the attention weights, using nokeep's Unbound method, then requantised with Indra's Mirror's mixed-precision XQ pipeline.",
+      "url": "https://huggingface.co/IndrasMirror/Inkling-2-Mini-XQ-Uncensored",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 10647,
+        "likes": 9,
+        "trend": 5.6,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "en",
+        "image-text-to-text"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "IndrasMirror",
+        "host": "huggingface",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ine007--waiillustrioussdxl-v160",
@@ -83359,31 +83771,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-models:internlm--sage-s2.1-flash-fp8",
-      "name": "internlm/Sage-S2.1-Flash-FP8",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Official Website · Introduction · Model Downloads · Evaluation · Deployment · License",
-      "url": "https://huggingface.co/internlm/Sage-S2.1-Flash-FP8",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 550,
-        "likes": 19,
-        "trend": 14,
-        "updatedAt": "2026-11-23"
-      },
-      "tags": [],
-      "preview": {
-        "type": "model",
-        "author": "internlm",
-        "host": "huggingface"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-models:internscience--agents-a1",
       "name": "InternScience/Agents-A1",
       "kind": "models",
@@ -83556,7 +83943,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 10782,
+        "downloads": 13102,
         "likes": 2,
         "updatedAt": "2026-11-20"
       },
@@ -83570,7 +83957,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:intfloat--e5-base",
@@ -83947,8 +84334,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 0,
-        "likes": 86,
-        "trend": 29,
+        "likes": 103,
+        "trend": 32.5,
         "updatedAt": "2026-11-14"
       },
       "tags": [
@@ -83963,7 +84350,7 @@
         "task": "voice-activity-detection",
         "taskLabel": "voice-activity-detection"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:inworld--voice-isolator",
@@ -83979,8 +84366,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 0,
-        "likes": 674,
-        "trend": 509,
+        "likes": 743,
+        "trend": 567,
         "updatedAt": "2026-11-14"
       },
       "tags": [
@@ -83995,7 +84382,7 @@
         "task": "audio-to-audio",
         "taskLabel": "Audio-to-Audio"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ipipan--silver-retriever-base-v1",
@@ -84769,7 +85156,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 4727,
+        "downloads": 8569,
         "likes": 18,
         "trend": 12.6,
         "updatedAt": "2026-11-22"
@@ -84786,7 +85173,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:isvalorum--inkling-2-mini-apex-i-miniplus-v2.1-gguf",
@@ -84801,9 +85188,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2362,
-        "likes": 17,
-        "trend": 17,
+        "downloads": 3641,
+        "likes": 20,
+        "trend": 20,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -84818,7 +85205,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:isvalorum--occamy-1.0-apex-i-miniplus-v2.1-abliterated-gguf",
@@ -85240,6 +85627,39 @@
         "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-11-15"
+    },
+    {
+      "id": "hf-models:jackjusko--swift-1.5-flash-next-heretic-reverseengineer",
+      "name": "jackjusko/Swift-1.5-Flash-Next-Heretic-ReverseEngineer",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Halogen v2 weights: https://huggingface.co/johnlockejrr/Swift-1.5-Flash-Next-Heretic-ReverseEngineer-HGN",
+      "url": "https://huggingface.co/jackjusko/Swift-1.5-Flash-Next-Heretic-ReverseEngineer",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 10149,
+        "likes": 95,
+        "trend": 6.3,
+        "updatedAt": "2026-11-04"
+      },
+      "tags": [
+        "en",
+        "gguf",
+        "image-text-to-text",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "jackjusko",
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:jackkozmo29--codeguard-jev-style-1.5b",
@@ -87616,9 +88036,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 369373,
-        "likes": 55,
-        "trend": 2.8,
+        "downloads": 355364,
+        "likes": 62,
+        "trend": 4.199999999999999,
         "updatedAt": "2026-10-01"
       },
       "tags": [
@@ -87633,7 +88053,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:jimmycarter--krea2-turbo-bbox",
@@ -90184,8 +90604,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 31292,
-        "likes": 182,
+        "downloads": 29198,
+        "likes": 185,
+        "trend": 3,
         "updatedAt": "2026-07-23"
       },
       "tags": [
@@ -90201,7 +90622,7 @@
         "task": "video-to-video",
         "taskLabel": "Video-to-Video"
       },
-      "fetchedAt": "2026-11-14"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:joyfox--qwen-image-edit-2509-upscale2k",
@@ -91202,10 +91623,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 306,
-        "likes": 18,
-        "trend": 16,
-        "updatedAt": "2026-11-19"
+        "downloads": 353,
+        "likes": 19,
+        "trend": 17,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "en",
@@ -91220,7 +91641,7 @@
         "task": "text-to-speech",
         "taskLabel": "Text-to-Speech"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:kanbara--doll-likeness-series",
@@ -91644,38 +92065,6 @@
         "library": "transformers",
         "task": "automatic-speech-recognition",
         "taskLabel": "Automatic Speech Recognition"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
-      "id": "hf-models:kblueleaf--moss-image-heal",
-      "name": "KBlueLeaf/MOSS-Image-heal",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "A full finetune of MOSS-Image-Base with a healed residual stream: the largest stream value is 3,083 (base: 58,411; fp16 max: 65,504), the stream RMS is 7.5x lower, and every weight element is within 64x its tensor's RMS (base: 349 elements above).",
-      "url": "https://huggingface.co/KBlueLeaf/MOSS-Image-heal",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 0,
-        "likes": 98,
-        "trend": 10,
-        "updatedAt": "2026-11-04"
-      },
-      "tags": [
-        "diffusers",
-        "text-to-image"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "KBlueLeaf",
-        "host": "huggingface",
-        "library": "diffusers",
-        "task": "text-to-image",
-        "taskLabel": "Text-to-Image"
       },
       "fetchedAt": "2026-11-23"
     },
@@ -92463,8 +92852,8 @@
       },
       "metrics": {
         "downloads": 0,
-        "likes": 104,
-        "trend": 23,
+        "likes": 133,
+        "trend": 11,
         "updatedAt": "2026-11-17"
       },
       "tags": [
@@ -92477,7 +92866,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:kittenml--kitten-tts-2",
@@ -92521,9 +92910,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 9599,
-        "likes": 76,
-        "trend": 17.5,
+        "downloads": 10736,
+        "likes": 78,
+        "trend": 16.5,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -92540,7 +92929,7 @@
         "task": "text-to-speech",
         "taskLabel": "Text-to-Speech"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:kittenml--kitten-tts-nano-0.1",
@@ -92613,7 +93002,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 921,
+        "downloads": 1093,
         "likes": 11,
         "trend": 10,
         "updatedAt": "2026-11-18"
@@ -92630,7 +93019,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:kkt94--llama-v-jepa-lm-qwen3-30b-a3b",
@@ -92645,7 +93034,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 76,
+        "downloads": 90,
         "likes": 15,
         "trend": 13,
         "updatedAt": "2026-11-19"
@@ -92663,7 +93052,7 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:kling-keye-official--keye-vl-1-5-8b",
@@ -93025,8 +93414,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 9947,
-        "likes": 16,
+        "downloads": 11202,
+        "likes": 17,
         "trend": 15,
         "updatedAt": "2026-11-17"
       },
@@ -93039,7 +93428,7 @@
         "host": "huggingface",
         "library": "dettato"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:koellabs--xlsr-english-01",
@@ -93383,9 +93772,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1103,
-        "likes": 271,
-        "trend": 50,
+        "downloads": 1217,
+        "likes": 277,
+        "trend": 45,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -93402,7 +93791,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:kormo-vl--kormo-web-4b",
@@ -93451,7 +93840,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 327,
+        "downloads": 378,
         "likes": 12,
         "trend": 10,
         "updatedAt": "2026-11-19"
@@ -93470,7 +93859,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:kormo-vl--kormo-web-9b",
@@ -95453,9 +95842,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 9038,
-        "likes": 199,
-        "trend": 67,
+        "downloads": 32375,
+        "likes": 228,
+        "trend": 74,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -95470,7 +95859,7 @@
         "task": "image-text-to-video",
         "taskLabel": "Image-Text-to-Video"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:lambda--sd-image-variations-diffusers",
@@ -98892,9 +99281,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 213,
-        "likes": 82,
-        "trend": 58,
+        "downloads": 336,
+        "likes": 100,
+        "trend": 32,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -98908,7 +99297,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:linoyts--qwen-image-2.1-dmd2-2steps",
@@ -99622,9 +100011,8 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 228503,
+        "downloads": 213013,
         "likes": 244,
-        "trend": 3,
         "updatedAt": "2026-09-22"
       },
       "tags": [
@@ -99639,7 +100027,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:liquidai--lfm2.5-1.2b-thinking",
@@ -101743,6 +102131,38 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:llamaindex--ocria-nano-1",
+      "name": "llamaindex/OCRia-nano-1",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "OCRia-nano-1 is an 8.1M-parameter model pipeline for document parsing on CPU from LlamaIndex. It pairs a detector–recognizer OCR stack with LayoutNet, a joint table and layout model, and it runs inside LiteParse, the open-source local document parser.",
+      "url": "https://huggingface.co/llamaindex/OCRia-nano-1",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 0,
+        "likes": 45,
+        "trend": 45,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "image-to-text",
+        "multilingual",
+        "onnx"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "llamaindex",
+        "host": "huggingface",
+        "library": "onnx",
+        "task": "image-to-text",
+        "taskLabel": "Image-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:llamaindex--vdr-2b-multi-v1",
       "name": "llamaindex/vdr-2b-multi-v1",
       "kind": "models",
@@ -103259,6 +103679,38 @@
       "fetchedAt": "2026-11-13"
     },
     {
+      "id": "hf-models:lmms-lab-encoder--llava-onevision-2.5-4b-instruct",
+      "name": "lmms-lab-encoder/LLaVA-OneVision-2.5-4B-Instruct",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "LLaVA-OneVision-2.5-4B-Instruct is a 4B vision-language model for single-image, multi-image and video input. Beyond the usual offline tasks, it is trained for streaming video: frames arrive one at a time, and at every step the model decides whether to stay silent or speak.",
+      "url": "https://huggingface.co/lmms-lab-encoder/LLaVA-OneVision-2.5-4B-Instruct",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 307,
+        "likes": 13,
+        "trend": 10,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "image-text-to-text",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "lmms-lab-encoder",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:lmqg--flan-t5-base-squad-qag",
       "name": "lmqg/flan-t5-base-squad-qag",
       "kind": "models",
@@ -104384,8 +104836,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1196265,
-        "likes": 36,
+        "downloads": 1292905,
+        "likes": 42,
+        "trend": 3,
         "updatedAt": "2026-07-23"
       },
       "tags": [
@@ -104400,7 +104853,7 @@
         "task": "any-to-any",
         "taskLabel": "Any-to-Any"
       },
-      "fetchedAt": "2026-10-31"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:lmstudio-community--gemma-4-e4b-it-mlx-5bit",
@@ -108202,31 +108655,31 @@
       "name": "local-inference-lab/Kimi-K3.1-Pro-EXL3-2bit",
       "kind": "models",
       "category": "opensource",
-      "summary": "The immutable prepared release is gb202-tp8-c4-p3072-dflash2-k7-20261108. It includes TP8/DCP8, DFlash2 K7, vision, four concurrent requests and 3072-token prefill graphs. The maximum context is 262,144 tokens per request.",
+      "summary": "The previous gb202 release (gb202-tp8-c4-p3072-dflash2-k7-20261108) enabled broad --online-mxfp8 (all scope) and DFlash2 with a 262,144-token context limit, converting sensitive DSA attention layers, all 92 shared experts, and all 92 routed latent up/down projections from BF16 to MXFP8.",
       "url": "https://huggingface.co/local-inference-lab/Kimi-K3.1-Pro-EXL3-2bit",
       "source": {
         "name": "Hugging Face",
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 71422,
+        "downloads": 73268,
         "likes": 11,
-        "trend": 2,
-        "updatedAt": "2026-11-08"
+        "trend": 3,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
-        "text-generation",
-        "trellis"
+        "flare",
+        "text-generation"
       ],
       "preview": {
         "type": "model",
         "author": "local-inference-lab",
         "host": "huggingface",
-        "library": "trellis",
+        "library": "flare",
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:local-inference-lab--qwen3.8-flash-next-nvfp4",
@@ -108619,8 +109072,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 0,
-        "likes": 22,
-        "trend": 22,
+        "likes": 27,
+        "trend": 27,
         "updatedAt": "2026-11-23"
       },
       "tags": [],
@@ -108629,7 +109082,7 @@
         "author": "loom-fun",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:lorbus--qwen3.6-27b-int4-autoround",
@@ -109084,9 +109537,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 3583,
-        "likes": 56,
-        "trend": 39,
+        "downloads": 4642,
+        "likes": 70,
+        "trend": 20,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -109101,7 +109554,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:lvwerra--distilbert-imdb",
@@ -109577,6 +110030,32 @@
         "taskLabel": "Text-to-Image"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:lyraaaa--krea2-sref-adapter",
+      "name": "lyraaaa/krea2-sref-adapter",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Style references for the Krea 2 image model. A style is a whole number. The same number gives the same style on any prompt and any seed. Pick a number, plug it in, and have fun.",
+      "url": "https://huggingface.co/lyraaaa/krea2-sref-adapter",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 0,
+        "likes": 11,
+        "trend": 11,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [],
+      "preview": {
+        "type": "model",
+        "author": "lyraaaa",
+        "host": "huggingface"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:lysandre--tiny-tapas-random-sqa",
@@ -111448,9 +111927,9 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 3639,
-        "likes": 366,
-        "trend": 117.5,
-        "updatedAt": "2026-11-14"
+        "likes": 393,
+        "trend": 111.5,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "text-generation"
@@ -111462,7 +111941,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:maya-research--maya1",
@@ -113742,6 +114221,37 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:mehdi-hf--tiny-ava",
+      "name": "mehdi-hf/tiny-ava",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "tiny-ava is a tiny 4.5M-parameter Persian (Farsi) text-to-speech model trained from scratch on top of the tiny-voca architecture. Including the built-in waveform generator, the complete model is ~18 MB (PyTorch) / ~20 MB (ONNX) and runs 38× faster than real time on 1 CPU thread (77× real time on 4…",
+      "url": "https://huggingface.co/mehdi-hf/tiny-ava",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "CC-BY-4.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 11,
+        "trend": 11,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "fa",
+        "text-to-speech"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "mehdi-hf",
+        "host": "huggingface",
+        "task": "text-to-speech",
+        "taskLabel": "Text-to-Speech"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:meina--meinamix",
       "name": "Meina/MeinaMix",
       "kind": "models",
@@ -113770,36 +114280,6 @@
         "library": "diffusers",
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
-      "id": "hf-models:meituan-longcat--longcat-2.5",
-      "name": "meituan-longcat/LongCat-2.5",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "LongCat-2.5 is a native multimodal MoE model for long-horizon agentic tasks, with 1.6 trillion total parameters and approximately 48 billion activated per token.",
-      "url": "https://huggingface.co/meituan-longcat/LongCat-2.5",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "MIT",
-      "metrics": {
-        "downloads": 3106,
-        "likes": 284,
-        "trend": 9.5,
-        "updatedAt": "2026-11-10"
-      },
-      "tags": [
-        "image-text-to-text"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "meituan-longcat",
-        "host": "huggingface",
-        "task": "image-text-to-text",
-        "taskLabel": "Image-Text-to-Text"
       },
       "fetchedAt": "2026-11-23"
     },
@@ -114011,9 +114491,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 3483,
-        "likes": 450,
-        "trend": 131.5,
+        "downloads": 4083,
+        "likes": 469,
+        "trend": 110,
         "updatedAt": "2026-11-13"
       },
       "tags": [
@@ -114027,7 +114507,7 @@
         "host": "huggingface",
         "library": "longcat-video-avatar-1.6"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:melcheikh--gemma-4-31b-it-qat-nvfp4-blackwell",
@@ -114072,8 +114552,8 @@
       "license": "MIT",
       "metrics": {
         "downloads": 32676,
-        "likes": 119,
-        "trend": 2,
+        "likes": 129,
+        "trend": 11,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -114088,7 +114568,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:memtensor--memt-1.0-nano",
@@ -114104,8 +114584,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 72559,
-        "likes": 184,
-        "trend": 2,
+        "likes": 191,
+        "trend": 11,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -114120,7 +114600,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:memtensor--memt-1.0-pro",
@@ -114134,9 +114614,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 2,
-        "likes": 21,
-        "trend": 21,
+        "downloads": 31,
+        "likes": 75,
+        "trend": 67,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -114151,7 +114631,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:menhior--wav2vec2-large-xls-r-300m-azeri-colab-main",
@@ -116717,9 +117197,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 3836,
-        "likes": 265,
-        "trend": 52.5,
+        "downloads": 4747,
+        "likes": 277,
+        "trend": 54.5,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -116735,7 +117215,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:microsoft--aion-1.0-instruct-2.3b-onnx-webgpu",
@@ -118025,39 +118505,6 @@
         "updatedAt": "2026-08-10"
       },
       "tags": [
-        "image-text-to-text",
-        "transformers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "microsoft",
-        "host": "huggingface",
-        "library": "transformers",
-        "task": "image-text-to-text",
-        "taskLabel": "Image-Text-to-Text"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
-      "id": "hf-models:microsoft--mage-vl-cowork",
-      "name": "microsoft/Mage-VL-Cowork",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Computer-use agents (CUAs) that confine themselves to pixels pay a heavy tax: a single screenshot consumes thousands of tokens, and re-deriving structured file edits through dozens of mouse clicks discards the fastest, most verifiable channel on the machine.",
-      "url": "https://huggingface.co/microsoft/Mage-VL-Cowork",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 5927,
-        "likes": 232,
-        "trend": 10,
-        "updatedAt": "2026-10-30"
-      },
-      "tags": [
-        "en",
         "image-text-to-text",
         "transformers"
       ],
@@ -120808,6 +121255,38 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:minimaxai--minimax-h3-image-pe",
+      "name": "MiniMaxAI/MiniMax-H3-Image-PE",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Use MiniMax-H3-Image directly via API.",
+      "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3-Image-PE",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 5022,
+        "likes": 116,
+        "trend": 15,
+        "updatedAt": "2026-11-10"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "transformers"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "MiniMaxAI",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:minimaxai--minimax-m1-40k",
       "name": "MiniMaxAI/MiniMax-M1-40k",
       "kind": "models",
@@ -121174,6 +121653,40 @@
         "taskLabel": "Feature Extraction"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:minishlab--blink-multilingual-64m",
+      "name": "minishlab/blink-multilingual-64M",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "blink-multilingual-64M is a fast multilingual static embedding model by Minish: a single 250,000 × 256 token embedding table (64.0M parameters, 256MB in float32) with mean pooling. It supports more than 100 languages.",
+      "url": "https://huggingface.co/minishlab/blink-multilingual-64M",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 661,
+        "likes": 11,
+        "trend": 10,
+        "updatedAt": "2026-11-18"
+      },
+      "tags": [
+        "feature-extraction",
+        "ko",
+        "model2vec",
+        "multilingual"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "minishlab",
+        "host": "huggingface",
+        "library": "model2vec",
+        "task": "feature-extraction",
+        "taskLabel": "Feature Extraction"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ministral--ministral-3b-instruct",
@@ -124164,9 +124677,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 8316,
-        "likes": 33,
-        "trend": 32,
+        "downloads": 13578,
+        "likes": 53,
+        "trend": 41,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -124181,7 +124694,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:mlx-community--inkling-2-mini-oq4e-mtp",
@@ -124196,9 +124709,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 11368,
-        "likes": 73,
-        "trend": 23.5,
+        "downloads": 21938,
+        "likes": 79,
+        "trend": 26.5,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -124213,7 +124726,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:mlx-community--kat-coder-v2.5-dev-optiq-4bit",
@@ -128503,6 +129016,37 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:mr-sus--minecraftism-4b-thinking-uncensored-gguf",
+      "name": "mr-sus/Minecraftism-4B-Thinking-Uncensored-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "This page uses a third-party view counter at 2no.co; it may receive a request when the card is viewed.",
+      "url": "https://huggingface.co/mr-sus/Minecraftism-4B-Thinking-Uncensored-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 10008,
+        "likes": 3,
+        "updatedAt": "2026-11-03"
+      },
+      "tags": [
+        "en",
+        "gguf",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "mr-sus",
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:mradermacher--capek0.5-35b-a3b-i1-gguf",
       "name": "mradermacher/Capek0.5-35B-A3B-i1-GGUF",
       "kind": "models",
@@ -128547,9 +129091,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1069617,
-        "likes": 252,
-        "trend": 34,
+        "downloads": 1126266,
+        "likes": 280,
+        "trend": 33,
         "updatedAt": "2026-11-12"
       },
       "tags": [
@@ -128567,42 +129111,7 @@
         "host": "huggingface",
         "library": "transformers"
       },
-      "fetchedAt": "2026-11-23"
-    },
-    {
-      "id": "hf-models:mradermacher--deepseek-v4-pro-qwen3.5-9b-uncensored-heretic-i1-gguf",
-      "name": "mradermacher/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic-i1-GGUF",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "weighted/imatrix quants of https://huggingface.co/xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic",
-      "url": "https://huggingface.co/mradermacher/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic-i1-GGUF",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 408283,
-        "likes": 36,
-        "trend": 11.899999999999999,
-        "updatedAt": "2026-11-12"
-      },
-      "tags": [
-        "en",
-        "es",
-        "ja",
-        "ko",
-        "ru",
-        "transformers",
-        "zh"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "mradermacher",
-        "host": "huggingface",
-        "library": "transformers"
-      },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:mradermacher--gemma-4-31b-heretic-i1-gguf",
@@ -128795,38 +129304,6 @@
       "fetchedAt": "2026-11-06"
     },
     {
-      "id": "hf-models:mradermacher--mirl-qwen3.5-4b-i1-gguf",
-      "name": "mradermacher/MiRL-Qwen3.5-4B-i1-GGUF",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "weighted/imatrix quants of https://huggingface.co/Rtian/MiRL-Qwen3.5-4B",
-      "url": "https://huggingface.co/mradermacher/MiRL-Qwen3.5-4B-i1-GGUF",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 5056,
-        "likes": 0,
-        "updatedAt": "2026-11-20"
-      },
-      "tags": [
-        "en",
-        "reinforcement-learning",
-        "transformers"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "mradermacher",
-        "host": "huggingface",
-        "library": "transformers",
-        "task": "reinforcement-learning",
-        "taskLabel": "Reinforcement Learning"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-models:mradermacher--murasaki-4b-v0.3-gguf",
       "name": "mradermacher/Murasaki-4B-v0.3-GGUF",
       "kind": "models",
@@ -128858,6 +129335,39 @@
         "taskLabel": "Translation"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:mradermacher--otc-qwen3.8-27b-cpo-grpo-i1-gguf",
+      "name": "mradermacher/OTC-Qwen3.8-27B-CPO-GRPO-i1-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "weighted/imatrix quants of https://huggingface.co/frankleaf/OTC-Qwen3.8-27B-CPO-GRPO",
+      "url": "https://huggingface.co/mradermacher/OTC-Qwen3.8-27B-CPO-GRPO-i1-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 4632,
+        "likes": 0,
+        "updatedAt": "2026-11-02"
+      },
+      "tags": [
+        "en",
+        "reinforcement-learning",
+        "transformers",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "mradermacher",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "reinforcement-learning",
+        "taskLabel": "Reinforcement Learning"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:mradermacher--qwen-3.8-27b-uncensored-gguf",
@@ -129625,32 +130135,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-models:mudler--inkling-2-mini-apex-gguf",
-      "name": "mudler/Inkling-2-Mini-APEX-GGUF",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "APEX quantizations of thinkingmachines/Inkling-2-Mini.",
-      "url": "https://huggingface.co/mudler/Inkling-2-Mini-APEX-GGUF",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 1545,
-        "likes": 11,
-        "trend": 10,
-        "updatedAt": "2026-11-22"
-      },
-      "tags": [],
-      "preview": {
-        "type": "model",
-        "author": "mudler",
-        "host": "huggingface"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-models:mudler--locate-anything.cpp-gguf",
       "name": "mudler/locate-anything.cpp-gguf",
       "kind": "models",
@@ -130387,9 +130871,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 10768,
-        "likes": 429,
-        "trend": 88,
+        "downloads": 12310,
+        "likes": 436,
+        "trend": 62.5,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -130403,7 +130887,7 @@
         "task": "text-to-speech",
         "taskLabel": "Text-to-Speech"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nace-ai--deepseek-v4.1-flash-coding-gguf",
@@ -130418,9 +130902,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 4781,
-        "likes": 18,
-        "trend": 17,
+        "downloads": 6489,
+        "likes": 19,
+        "trend": 18,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -130432,7 +130916,36 @@
         "host": "huggingface",
         "library": "gguf"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:nace-ai--hy4-flash-gguf",
+      "name": "nace-ai/Hy4-flash-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "We introduce Hy4 flash GGUF from Nace.AI: Tencent's Hy4-flash in four GGUF sizes, starting at 87.8 GB and 3.21 bits per weight.",
+      "url": "https://huggingface.co/nace-ai/Hy4-flash-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 3656,
+        "likes": 13,
+        "trend": 10,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "nace-ai",
+        "host": "huggingface",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nace-ai--qwen3.5-4b-mlx",
@@ -130669,7 +131182,6 @@
       "metrics": {
         "downloads": 25708,
         "likes": 413,
-        "trend": 4,
         "updatedAt": "2026-09-27"
       },
       "tags": [
@@ -130682,7 +131194,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:namaa-space--qari-ocr-0.2.2.1-vl-2b-instruct",
@@ -131068,6 +131580,38 @@
         "taskLabel": "Text-to-Speech"
       },
       "fetchedAt": "2026-11-14"
+    },
+    {
+      "id": "hf-models:nari-labs--qwen3.8-27b-nariq-gguf",
+      "name": "nari-labs/Qwen3.8-27B-NariQ-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "(Nov 20, 2026) We are releasing NariQ v1 GGUFs of Qwen3.8-27B at 3, 2.5 and 2 bits per weight. Run them on our llama.cpp fork (required).",
+      "url": "https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 2243,
+        "likes": 57,
+        "trend": 56,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "gguf",
+        "image-text-to-text"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "nari-labs",
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nateraw--bert-base-uncased-emotion",
@@ -132056,9 +132600,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 5434,
-        "likes": 128,
-        "trend": 34.5,
+        "downloads": 6436,
+        "likes": 149,
+        "trend": 37,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -132074,7 +132618,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nemostation--marlin-2b",
@@ -133802,6 +134346,35 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:nikolaus714--jev-vision-2b-gguf",
+      "name": "nikolaus714/Jev-Vision-2B-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "GGUF quantizations of IntelligenceLab/Jev-Vision-2B, a multimodal SystemOne Decision Model fine-tuned from Qwen3.5-2B. These files are intended for local inference with Ollama and llama.cpp.",
+      "url": "https://huggingface.co/nikolaus714/Jev-Vision-2B-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 960,
+        "likes": 0,
+        "updatedAt": "2026-11-03"
+      },
+      "tags": [
+        "en",
+        "visual-question-answering"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "nikolaus714",
+        "host": "huggingface",
+        "task": "visual-question-answering",
+        "taskLabel": "Visual Question Answering"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:nikravan--glm-4vq",
       "name": "nikravan/glm-4vq",
       "kind": "models",
@@ -134527,7 +135100,7 @@
       "name": "nokeepai/Inkling-2-Mini-Unbound",
       "kind": "models",
       "category": "opensource",
-      "summary": "nokeepai/Inkling-2-Mini-Unbound · v2.0 · Inkling 2 Mini that doesn't just stop refusing: it actually does what you ask.",
+      "summary": "nokeepai/Inkling-2-Mini-Unbound · current version v2.1 · Inkling 2 Mini that doesn't just stop refusing: it actually does what you ask.",
       "url": "https://huggingface.co/nokeepai/Inkling-2-Mini-Unbound",
       "source": {
         "name": "Hugging Face",
@@ -134535,10 +135108,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 285,
-        "likes": 47,
-        "trend": 30.099999999999998,
-        "updatedAt": "2026-11-22"
+        "downloads": 812,
+        "likes": 51,
+        "trend": 32.9,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "en",
@@ -134553,14 +135126,46 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:nokeepai--inkling-2-mini-unbound-basalt",
+      "name": "nokeepai/Inkling-2-Mini-Unbound-Basalt",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "A Basalt build of nokeepai/Inkling-2-Mini-Unbound (current version v2.1), an uncensored Inkling 2 Mini that actually does what you ask, for NVIDIA Blackwell GPUs (RTX 50-series, RTX PRO 6000, compute capability 12.0). One file: Inkling-2-Mini-Unbound-v2.1-NVFP4-q8.basalt (19.7 GB).",
+      "url": "https://huggingface.co/nokeepai/Inkling-2-Mini-Unbound-Basalt",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 19,
+        "trend": 11.899999999999999,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "basalt",
+        "image-text-to-text"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "nokeepai",
+        "host": "huggingface",
+        "library": "basalt",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nokeepai--inkling-2-mini-unbound-gguf",
       "name": "nokeepai/Inkling-2-Mini-Unbound-GGUF",
       "kind": "models",
       "category": "opensource",
-      "summary": "GGUF builds of nokeepai/Inkling-2-Mini-Unbound v2, an uncensored Inkling 2 Mini, for llama.cpp, LM Studio and Ollama. The main model card has the method, the full evaluation and the limits.",
+      "summary": "GGUF builds of nokeepai/Inkling-2-Mini-Unbound (current version v2.1), an uncensored Inkling 2 Mini that doesn't just stop refusing: it actually does what you ask. For llama.cpp, LM Studio and Ollama. The main model card has the method, the full evaluation and the limits.",
       "url": "https://huggingface.co/nokeepai/Inkling-2-Mini-Unbound-GGUF",
       "source": {
         "name": "Hugging Face",
@@ -134568,10 +135173,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 7852,
-        "likes": 52,
-        "trend": 35,
-        "updatedAt": "2026-11-22"
+        "downloads": 40819,
+        "likes": 72,
+        "trend": 38.5,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "gguf",
@@ -134585,7 +135190,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nomadoor--flux-2-klein-4b-360-erp-outpaint-lora",
@@ -140146,9 +140751,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 30834,
-        "likes": 75,
-        "trend": 8,
+        "downloads": 33001,
+        "likes": 81,
+        "trend": 1.5,
         "updatedAt": "2026-10-23"
       },
       "tags": [
@@ -140165,7 +140770,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nvidia--nvidia-nemotron-3.5-lightning-30b-a3b-bf16",
@@ -141541,9 +142146,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 1584,
-        "likes": 262,
-        "trend": 42.5,
+        "downloads": 1825,
+        "likes": 270,
+        "trend": 43,
         "updatedAt": "2026-11-17"
       },
       "tags": [
@@ -141558,7 +142163,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nvidia--qwen3.6-27b-nvfp4",
@@ -141604,9 +142209,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 3879825,
-        "likes": 675,
-        "trend": 5,
+        "downloads": 3770795,
+        "likes": 689,
+        "trend": 0.5,
         "updatedAt": "2026-08-29"
       },
       "tags": [
@@ -141621,7 +142226,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-07"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nvidia--qwen3.8-27b-nvfp4",
@@ -141667,9 +142272,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 2037,
-        "likes": 78,
-        "trend": 25,
+        "downloads": 2461,
+        "likes": 80,
+        "trend": 26,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -141684,7 +142289,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:nvidia--qwen3.8-flash-next-fp4-local",
@@ -142437,6 +143042,39 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:oddadmix--tiny-voca-arabic",
+      "name": "oddadmix/tiny-voca-arabic",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "A 4.5M-parameter Modern Standard Arabic (فصحى) text-to-speech model, trained from scratch with the tiny-voca architecture and a new Arabic phonetic front end. The waveform generator is included: text in, 24 kHz audio out, about 200× real time on two CPU threads.",
+      "url": "https://huggingface.co/oddadmix/tiny-voca-arabic",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 83,
+        "likes": 14,
+        "trend": 12,
+        "updatedAt": "2026-11-21"
+      },
+      "tags": [
+        "ar",
+        "onnxruntime",
+        "text-to-speech"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "oddadmix",
+        "host": "huggingface",
+        "library": "onnxruntime",
+        "task": "text-to-speech",
+        "taskLabel": "Text-to-Speech"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:ofa-sys--chinese-clip-vit-base-patch16",
       "name": "OFA-Sys/chinese-clip-vit-base-patch16",
       "kind": "models",
@@ -142905,6 +143543,37 @@
         "library": "minimax-h3"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:oliviarossi--minimax-h3-sulphur3-10erosmax-merge",
+      "name": "OliviaRossi/Minimax-H3-Sulphur3-10Erosmax-Merge",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Merged MiniMax-H3 checkpoint with distillation LoRAs baked in, provided in both BF16 and ComfyUI-native INT8 ConvRot (int8_tensorwise, Hadamard group size 256).",
+      "url": "https://huggingface.co/OliviaRossi/Minimax-H3-Sulphur3-10Erosmax-Merge",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 0,
+        "likes": 12,
+        "trend": 12,
+        "updatedAt": "2026-11-22"
+      },
+      "tags": [
+        "comfyui",
+        "image-to-video"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "OliviaRossi",
+        "host": "huggingface",
+        "library": "comfyui",
+        "task": "image-to-video",
+        "taskLabel": "Image-to-Video"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ollieturnbull--p-iggen",
@@ -146165,7 +146834,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 38346,
+        "downloads": 42229,
         "likes": 5,
         "updatedAt": "2026-11-02"
       },
@@ -146183,7 +146852,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:openbmb--minicpm-ocr-jev-gguf",
@@ -165279,9 +165948,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2099,
-        "likes": 259,
-        "trend": 65,
+        "downloads": 3066,
+        "likes": 281,
+        "trend": 69,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -165297,7 +165966,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:openvdn--vdn-minimax-h3",
@@ -166004,7 +166673,7 @@
       "name": "optimum-intel-internal-testing/tiny-random-flux.2-klein",
       "kind": "models",
       "category": "opensource",
-      "summary": "Image-to-Image model (diffusers) by optimum-intel-internal-testing on Hugging Face.",
+      "summary": "Text-to-Image model (diffusers) by optimum-intel-internal-testing on Hugging Face.",
       "url": "https://huggingface.co/optimum-intel-internal-testing/tiny-random-flux.2-klein",
       "source": {
         "name": "Hugging Face",
@@ -166018,17 +166687,17 @@
       },
       "tags": [
         "diffusers",
-        "image-to-image"
+        "text-to-image"
       ],
       "preview": {
         "type": "model",
         "author": "optimum-intel-internal-testing",
         "host": "huggingface",
         "library": "diffusers",
-        "task": "image-to-image",
-        "taskLabel": "Image-to-Image"
+        "task": "text-to-image",
+        "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:optimum-intel-internal-testing--tiny-random-latent-consistency",
@@ -166871,6 +167540,76 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:orcarouter--hy4-flash-abliterated-gguf",
+      "name": "orcarouter/Hy4-flash-abliterated-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Text Generation model (gguf) by orcarouter on Hugging Face.",
+      "url": "https://huggingface.co/orcarouter/Hy4-flash-abliterated-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 14924,
+        "likes": 12,
+        "trend": 6.3,
+        "updatedAt": "2026-11-21"
+      },
+      "tags": [
+        "en",
+        "gated",
+        "gguf",
+        "text-generation",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "orcarouter",
+        "gated": true,
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:orcarouter--inkling-2-mini-abliterated-gguf",
+      "name": "orcarouter/Inkling-2-Mini-abliterated-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Text Generation model (gguf) by orcarouter on Hugging Face.",
+      "url": "https://huggingface.co/orcarouter/Inkling-2-Mini-abliterated-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 0,
+        "likes": 62,
+        "trend": 40.599999999999994,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "en",
+        "gated",
+        "gguf",
+        "text-generation"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "orcarouter",
+        "gated": true,
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:orcarouter--orcacyber-nano-1.0",
       "name": "orcarouter/OrcaCyber-Nano-1.0",
       "kind": "models",
@@ -167681,7 +168420,7 @@
       "license": "MIT",
       "metrics": {
         "downloads": 551276,
-        "likes": 53,
+        "likes": 64,
         "updatedAt": "2026-10-21"
       },
       "tags": [
@@ -167696,7 +168435,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ornith-ai--ornith-1.5-122b-gguf",
@@ -167744,7 +168483,7 @@
       "license": "MIT",
       "metrics": {
         "downloads": 123099,
-        "likes": 55,
+        "likes": 63,
         "updatedAt": "2026-10-24"
       },
       "tags": [
@@ -167759,7 +168498,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ornith-ai--ornith-1.5-122b-mlx-4bit",
@@ -168028,7 +168767,7 @@
       },
       "metrics": {
         "downloads": 248215,
-        "likes": 45,
+        "likes": 56,
         "updatedAt": "2026-08-20"
       },
       "tags": [
@@ -168044,7 +168783,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ornith-ai--ornith-1.5-35b-a3b-mlx-8bit",
@@ -168059,7 +168798,7 @@
       },
       "metrics": {
         "downloads": 275656,
-        "likes": 50,
+        "likes": 58,
         "updatedAt": "2026-08-20"
       },
       "tags": [
@@ -168075,7 +168814,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ornith-ai--ornith-1.5-35b-a3b-nvfp4",
@@ -168153,7 +168892,7 @@
       "license": "MIT",
       "metrics": {
         "downloads": 427748,
-        "likes": 65,
+        "likes": 72,
         "updatedAt": "2026-08-24"
       },
       "tags": [
@@ -168168,7 +168907,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ornith-ai--ornith-1.5-397b-gguf",
@@ -168215,7 +168954,7 @@
       "license": "MIT",
       "metrics": {
         "downloads": 527788,
-        "likes": 69,
+        "likes": 76,
         "updatedAt": "2026-10-20"
       },
       "tags": [
@@ -168230,7 +168969,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ornith-ai--ornith-1.5-9b",
@@ -168373,7 +169112,7 @@
       },
       "metrics": {
         "downloads": 298380,
-        "likes": 43,
+        "likes": 50,
         "updatedAt": "2026-08-20"
       },
       "tags": [
@@ -168389,7 +169128,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ornith-ai--ornith-1.5-9b-mlx-8bit",
@@ -168777,7 +169516,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 32771,
+        "downloads": 41288,
         "likes": 0,
         "updatedAt": "2026-11-12"
       },
@@ -168794,7 +169533,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:osllmai-community--llama-3.2-1b",
@@ -169155,7 +169894,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 12210,
+        "downloads": 14056,
         "likes": 89,
         "trend": 27.5,
         "updatedAt": "2026-11-23"
@@ -169174,7 +169913,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:owensong--inflect-micro-v2",
@@ -170817,10 +171556,10 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 44772,
-        "likes": 25,
+        "downloads": 46176,
+        "likes": 28,
         "trend": 1,
-        "updatedAt": "2026-11-07"
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "gguf",
@@ -170834,7 +171573,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:patrickbdevaney--mimo-v2.6-flash-reap50-gguf",
@@ -171158,9 +171897,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 191067,
-        "likes": 63,
-        "trend": 20.5,
+        "downloads": 233422,
+        "likes": 66,
+        "trend": 22,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -171175,7 +171914,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:peasantsmith--minimax-m3.1-flash-maya-gguf",
@@ -172247,38 +172986,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-models:perplexity-ai--pplx-decider-v1.3",
-      "name": "perplexity-ai/pplx-decider-v1.3",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "pplx-decider-v1.3 is the next version of pplx-decider-v1.2, a multimodal classification model on Qwen3.8-27B. It comes with improved performance and robustness across decision tasks, and a new extraction capability: Locate, which extracts verbatim text spans from the state with character offsets…",
-      "url": "https://huggingface.co/perplexity-ai/pplx-decider-v1.3",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 1708,
-        "likes": 91,
-        "trend": 11,
-        "updatedAt": "2026-11-10"
-      },
-      "tags": [
-        "pytorch",
-        "text-classification"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "perplexity-ai",
-        "host": "huggingface",
-        "library": "pytorch",
-        "task": "text-classification",
-        "taskLabel": "Text Classification"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-models:perplexity-ai--pplx-embed-v1-0.6b",
       "name": "perplexity-ai/pplx-embed-v1-0.6b",
       "kind": "models",
@@ -172612,9 +173319,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 368,
-        "likes": 60,
-        "trend": 20.5,
+        "downloads": 434,
+        "likes": 61,
+        "trend": 21,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -172635,7 +173342,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:phaimodellab--phai-a1-35b-1m-gguf",
@@ -172650,7 +173357,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2195,
+        "downloads": 3180,
         "likes": 16,
         "trend": 14,
         "updatedAt": "2026-11-20"
@@ -172667,7 +173374,7 @@
         "author": "PhaiModelLab",
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:phil2sat--qwen-image-edit-rapid-aio-gguf",
@@ -173091,9 +173798,9 @@
       },
       "license": "openmdw-1.1",
       "metrics": {
-        "downloads": 216,
-        "likes": 56,
-        "trend": 42,
+        "downloads": 330,
+        "likes": 69,
+        "trend": 23.5,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -173109,7 +173816,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:pixai-labs--pixai-tagger-v1.0",
@@ -173485,6 +174192,40 @@
         "taskLabel": "Text-to-Speech"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:pocis--qwen-image-2.1-pixelhead",
+      "name": "pocis/Qwen-Image-2.1-PixelHead",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "English | 简体中文 | ComfyUI Node (GitHub) | Comfy Registry",
+      "url": "https://huggingface.co/pocis/Qwen-Image-2.1-PixelHead",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "MIT",
+      "metrics": {
+        "downloads": 0,
+        "likes": 19,
+        "trend": 19,
+        "updatedAt": "2026-11-23"
+      },
+      "tags": [
+        "comfyui",
+        "en",
+        "text-to-image",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "pocis",
+        "host": "huggingface",
+        "library": "comfyui",
+        "task": "text-to-image",
+        "taskLabel": "Text-to-Image"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:ponpoke--flux2-klein-4b-uncensored-text-encoder",
@@ -177158,6 +177899,37 @@
       "fetchedAt": "2026-11-10"
     },
     {
+      "id": "hf-models:pytraveler--minimax-h3-prompt-rewriter-qwen3.8-27b-ref2va-gguf",
+      "name": "pytraveler/MiniMax-H3-Prompt-Rewriter-Qwen3.8-27B-Ref2VA-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "GGUF conversions of lightx2v/MiniMax-H3-Prompt-Rewriter-Qwen3.8-27B-Ref2VA. The model rewrites user requests into structured MiniMax-H3 video and audio prompts. These are complete model weights with a separate vision projector. Load the language file with -m and the projector with --mmproj.",
+      "url": "https://huggingface.co/pytraveler/MiniMax-H3-Prompt-Rewriter-Qwen3.8-27B-Ref2VA-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 10399,
+        "likes": 1,
+        "updatedAt": "2026-11-12"
+      },
+      "tags": [
+        "en",
+        "gguf",
+        "image-text-to-text"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "pytraveler",
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:q-future--one-align",
       "name": "q-future/one-align",
       "kind": "models",
@@ -179437,9 +180209,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 281528,
-        "likes": 3661,
-        "trend": 57,
+        "downloads": 287796,
+        "likes": 3717,
+        "trend": 17,
         "updatedAt": "2026-09-30"
       },
       "tags": [
@@ -179454,7 +180226,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:qwen--qwen-image-2.1-turbo",
@@ -184823,9 +185595,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2276299,
-        "likes": 849,
-        "trend": 8,
+        "downloads": 2154237,
+        "likes": 865,
+        "trend": 1,
         "updatedAt": "2025-07-07"
       },
       "tags": [
@@ -184840,7 +185612,7 @@
         "task": "feature-extraction",
         "taskLabel": "Feature Extraction"
       },
-      "fetchedAt": "2026-11-05"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:qwen--qwen3-forcedaligner-0.6b",
@@ -187084,7 +187856,7 @@
       "name": "Qwen/Qwen3.8-Flash-Next",
       "kind": "models",
       "category": "opensource",
-      "summary": "As the frontier of foundation models pushes toward ever-larger parameter counts and ever-longer context windows, the question is no longer just how much we can scale, but how efficiently we can do so.",
+      "summary": "Image-Text-to-Text model (transformers) by Qwen on Hugging Face.",
       "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next",
       "source": {
         "name": "Hugging Face",
@@ -187092,30 +187864,32 @@
       },
       "metrics": {
         "downloads": 2147378,
-        "likes": 7462,
-        "trend": 48,
+        "likes": 7478,
+        "trend": 45.5,
         "updatedAt": "2026-11-07"
       },
       "tags": [
+        "gated",
         "image-text-to-text",
         "transformers"
       ],
       "preview": {
         "type": "model",
         "author": "Qwen",
+        "gated": true,
         "host": "huggingface",
         "library": "transformers",
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:qwen--qwen3.8-flash-next-fp8",
       "name": "Qwen/Qwen3.8-Flash-Next-FP8",
       "kind": "models",
       "category": "opensource",
-      "summary": "As the frontier of foundation models pushes toward ever-larger parameter counts and ever-longer context windows, the question is no longer just how much we can scale, but how efficiently we can do so.",
+      "summary": "Image-Text-to-Text model (transformers) by Qwen on Hugging Face.",
       "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next-FP8",
       "source": {
         "name": "Hugging Face",
@@ -187123,23 +187897,25 @@
       },
       "metrics": {
         "downloads": 355138,
-        "likes": 322,
-        "trend": 7,
+        "likes": 323,
+        "trend": 6,
         "updatedAt": "2026-11-07"
       },
       "tags": [
+        "gated",
         "image-text-to-text",
         "transformers"
       ],
       "preview": {
         "type": "model",
         "author": "Qwen",
+        "gated": true,
         "host": "huggingface",
         "library": "transformers",
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:qwen--qwen3guard-gen-0.6b",
@@ -187558,9 +188334,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1815,
-        "likes": 322,
-        "trend": 105,
+        "downloads": 2130,
+        "likes": 346,
+        "trend": 111,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -187575,7 +188351,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:radixark--daisyrose-27b-gguf",
@@ -187590,9 +188366,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 26475,
-        "likes": 15,
-        "trend": 13,
+        "downloads": 30100,
+        "likes": 18,
+        "trend": 15,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -187607,7 +188383,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:radixark--daisyrose-27b-nvfp4",
@@ -187622,9 +188398,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 915,
-        "likes": 15,
-        "trend": 14,
+        "downloads": 1050,
+        "likes": 16,
+        "trend": 15,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -187639,7 +188415,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:radixark--glm-5.3-flash-nvfp4",
@@ -189768,9 +190544,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 204,
-        "likes": 29,
-        "trend": 26,
+        "downloads": 246,
+        "likes": 30,
+        "trend": 22,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -189787,7 +190563,7 @@
         "task": "text-to-video",
         "taskLabel": "Text-to-Video"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:reducto--rolmocr",
@@ -189982,7 +190758,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 7384,
+        "downloads": 10551,
         "likes": 17,
         "trend": 14,
         "updatedAt": "2026-11-18"
@@ -190001,7 +190777,7 @@
         "task": "image-to-text",
         "taskLabel": "Image-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:renedffd--gemma-4-12b-constraintkit-gguf",
@@ -190573,6 +191349,39 @@
         "taskLabel": "text-to-audio"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:rihal-om--rawa-omani-transcribe",
+      "name": "Rihal-om/rawa-omani-transcribe",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "A 66 MB LoRA adapter that adapts CohereLabs/cohere-transcribe-arabic-07-2026 to Omani conversational Arabic. Its training labels use colloquial as-spoken spelling, keep English words in Latin script, and include Omani place names; these properties are not evaluated separately.",
+      "url": "https://huggingface.co/Rihal-om/rawa-omani-transcribe",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 123,
+        "likes": 12,
+        "trend": 10,
+        "updatedAt": "2026-11-22"
+      },
+      "tags": [
+        "ar",
+        "automatic-speech-recognition",
+        "peft"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "Rihal-om",
+        "host": "huggingface",
+        "library": "peft",
+        "task": "automatic-speech-recognition",
+        "taskLabel": "Automatic Speech Recognition"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:riksarkivet--trocr-base-handwritten-hist-swe-2",
@@ -193642,9 +194451,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 311,
-        "likes": 21,
-        "trend": 20,
+        "downloads": 384,
+        "likes": 25,
+        "trend": 24,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -193659,7 +194468,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:sarvamai--sarvam-105b-1711-bf16",
@@ -193674,9 +194483,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 472,
-        "likes": 14,
-        "trend": 13,
+        "downloads": 543,
+        "likes": 15,
+        "trend": 14,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -193691,7 +194500,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:sarvamai--sarvam-m",
@@ -193758,6 +194567,38 @@
         "taskLabel": "Translation"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:satellitedown--sensenova-loop-9b-abliterated-gguf",
+      "name": "satellitedown/SenseNova-Loop-9B-abliterated-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "GGUF builds of satellitedown/SenseNova-Loop-9B-abliterated: SenseNova-Loop-9B with its refusals removed, chosen by whether it carries out harmful requests rather than by whether it refuses them. Text only; the vision tower is not included.",
+      "url": "https://huggingface.co/satellitedown/SenseNova-Loop-9B-abliterated-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 10974,
+        "likes": 10,
+        "trend": 7,
+        "updatedAt": "2026-11-21"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "satellitedown",
+        "host": "huggingface",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:satgeze--ornith-1.0-35b-1m-gguf",
@@ -194009,6 +194850,39 @@
         "taskLabel": "Text Generation"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-models:sc117--inkling-2-mini-abliterated-strata",
+      "name": "SC117/Inkling-2-Mini-abliterated-Strata",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Image-Text-to-Text model by SC117 on Hugging Face.",
+      "url": "https://huggingface.co/SC117/Inkling-2-Mini-abliterated-Strata",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 177,
+        "likes": 18,
+        "trend": 11.899999999999999,
+        "updatedAt": "2026-11-22"
+      },
+      "tags": [
+        "en",
+        "image-text-to-text",
+        "multilingual",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "SC117",
+        "host": "huggingface",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:sc117--laguna-s-2.1-uncensored-apex-gguf",
@@ -195522,9 +196396,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 735,
-        "likes": 20,
-        "trend": 10,
+        "downloads": 886,
+        "likes": 23,
+        "trend": 11.5,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -195539,7 +196413,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:sensenova--sensenova-loop-9b-gguf",
@@ -195554,9 +196428,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 80865,
-        "likes": 203,
-        "trend": 46,
+        "downloads": 94837,
+        "likes": 224,
+        "trend": 51,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -195573,7 +196447,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:sensenova--sensenova-loop-9b-preview",
@@ -198539,16 +199413,15 @@
       "name": "shinmegamiboson/Inkling-2-Mini-LookAtMyQuant-5.4GB",
       "kind": "models",
       "category": "opensource",
-      "summary": "thinkingmachines/Inkling-2-Mini (26.4B physical / 5.4B active 3x-looped MoE, 18.89 GB native text weights) compressed 3.5x to 5.38 GB (5.01 GiB, 1.65 bits per text parameter) by the LookAtMyQuant compiler and SQYFR v4 long-context DAgger + pre-RHT column-scale polish, packed for the Apple Silicon…",
+      "summary": "thinkingmachines/Inkling-2-Mini (26.4B physical / 5.4B active 3x-looped MoE, 18.89 GB native text weights) compressed 3.5x to 5.38 GB (5.01 GiB, 1.65 bits per text parameter) by the LookAtMyQuant compiler, SQYFR v4 long-context DAgger QAT, and SQYFR v5 6-class chat-templated pre-RHT column-scale +…",
       "url": "https://huggingface.co/shinmegamiboson/Inkling-2-Mini-LookAtMyQuant-5.4GB",
       "source": {
         "name": "Hugging Face",
         "url": "https://huggingface.co/models"
       },
-      "license": "Apache-2.0",
       "metrics": {
-        "downloads": 187,
-        "likes": 14,
+        "downloads": 478,
+        "likes": 15,
         "trend": 11,
         "updatedAt": "2026-11-23"
       },
@@ -198565,24 +199438,23 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:shinmegamiboson--inkling-2-mini-lookatmyquant-8.9gb",
       "name": "shinmegamiboson/Inkling-2-Mini-LookAtMyQuant-8.9GB",
       "kind": "models",
       "category": "opensource",
-      "summary": "thinkingmachines/Inkling-2-Mini (26.4B physical / 5.4B active 3x-looped MoE, 18.89 GB native text weights) compressed to 8.87 GB (2.72 bits per text parameter) by the LookAtMyQuant compiler and Tier-3 SQYFR proximal QAT across all 24 MoE layers, packed for the Apple Silicon MLX runtime.",
+      "summary": "thinkingmachines/Inkling-2-Mini (26.4B physical / 5.4B active 3x-looped MoE, 18.89 GB native text weights) compressed 2.1x to 8.85 GB of packed text weights (8.88 GB total repository including tokenizer) (2.72 bits per text parameter) by the LookAtMyQuant compiler — combining exact native 4.50 bpp…",
       "url": "https://huggingface.co/shinmegamiboson/Inkling-2-Mini-LookAtMyQuant-8.9GB",
       "source": {
         "name": "Hugging Face",
         "url": "https://huggingface.co/models"
       },
-      "license": "Apache-2.0",
       "metrics": {
-        "downloads": 218,
-        "likes": 15,
-        "trend": 12,
+        "downloads": 557,
+        "likes": 18,
+        "trend": 15,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -198599,7 +199471,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:shitao--omnigen-v1",
@@ -198765,8 +199637,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 92189,
-        "likes": 11,
+        "downloads": 85803,
+        "likes": 16,
+        "trend": 1,
         "updatedAt": "2026-09-28"
       },
       "tags": [
@@ -198781,7 +199654,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-07"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:silveroxides--chroma-gguf",
@@ -200163,9 +201036,9 @@
       "license": "CC-BY-NC-4.0",
       "metrics": {
         "downloads": 1607,
-        "likes": 152,
-        "trend": 42,
-        "updatedAt": "2026-11-21"
+        "likes": 168,
+        "trend": 42.5,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "multilingual",
@@ -200180,7 +201053,7 @@
         "task": "text-to-speech",
         "taskLabel": "Text-to-Speech"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:software-mansion--supertonic-executorch",
@@ -204343,8 +205216,8 @@
       },
       "metrics": {
         "downloads": 0,
-        "likes": 67,
-        "trend": 50,
+        "likes": 84,
+        "trend": 28.5,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -204357,7 +205230,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:strata-engine--inkling-2-mini-strata",
@@ -204372,9 +205245,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 0,
-        "likes": 55,
-        "trend": 51,
+        "downloads": 1064,
+        "likes": 96,
+        "trend": 80,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -204387,7 +205260,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:studioludens--birefnet-lite-512",
@@ -204419,6 +205292,38 @@
         "taskLabel": "Image Segmentation"
       },
       "fetchedAt": "2026-11-03"
+    },
+    {
+      "id": "hf-models:studioyebisu-ship-it--drama-3-japanese-speech-cpp-gguf",
+      "name": "StudioYebisu-ship-it/Drama-3-Japanese-speech-cpp-gguf",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Stratified Japanese imatrix-calibrated GGUF quantizations of Aratako/Drama-3-Japanese (based on fishaudio/s2-pro), ready for local zero-shot voice cloning and expressive Japanese TTS in speech.cpp and audio.cpp.",
+      "url": "https://huggingface.co/StudioYebisu-ship-it/Drama-3-Japanese-speech-cpp-gguf",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "metrics": {
+        "downloads": 0,
+        "likes": 15,
+        "trend": 13,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "ja",
+        "speech.cpp",
+        "text-to-speech"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "StudioYebisu-ship-it",
+        "host": "huggingface",
+        "library": "speech.cpp",
+        "task": "text-to-speech",
+        "taskLabel": "Text-to-Speech"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:styledistance--styledistance",
@@ -204684,9 +205589,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 78931,
-        "likes": 815,
-        "trend": 187,
+        "downloads": 133732,
+        "likes": 858,
+        "trend": 213,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -204698,7 +205603,7 @@
         "host": "huggingface",
         "library": "minimax-h3"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:sumedh--wav2vec2-large-xlsr-marathi",
@@ -205203,9 +206108,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2180,
-        "likes": 35,
-        "trend": 33,
+        "downloads": 2868,
+        "likes": 36,
+        "trend": 24,
         "updatedAt": "2026-11-16"
       },
       "tags": [
@@ -205221,7 +206126,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:surogate--surogate3.7-35b-a3b",
@@ -205237,8 +206142,8 @@
       "license": "Apache-2.0",
       "metrics": {
         "downloads": 230,
-        "likes": 49,
-        "trend": 42,
+        "likes": 70,
+        "trend": 57,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -205253,7 +206158,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:sweepai--sweep-next-edit-1.5b",
@@ -205854,9 +206759,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 1660044,
-        "likes": 714,
-        "trend": 5,
+        "downloads": 1725570,
+        "likes": 722,
+        "trend": 0.5,
         "updatedAt": "2023-11-23"
       },
       "tags": [
@@ -205873,7 +206778,7 @@
         "task": "automatic-speech-recognition",
         "taskLabel": "Automatic Speech Recognition"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:systran--faster-whisper-medium",
@@ -206263,39 +207168,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-models:t8star--minimax-h3-image-exp-comfy",
-      "name": "t8star/Minimax-H3-Image-Exp-Comfy",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "完整未裁剪 BF16/FP32 发布主干 + 多步材质近似修正实验 / ComfyUI。",
-      "url": "https://huggingface.co/t8star/Minimax-H3-Image-Exp-Comfy",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 4074,
-        "likes": 13,
-        "trend": 10,
-        "updatedAt": "2026-11-21"
-      },
-      "tags": [
-        "en",
-        "minimax-h3",
-        "text-to-image",
-        "zh"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "t8star",
-        "host": "huggingface",
-        "library": "minimax-h3",
-        "task": "text-to-image",
-        "taskLabel": "Text-to-Image"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-models:t8star--vdn-minimax-h3-comfy",
       "name": "t8star/Vdn-Minimax-H3-Comfy",
       "kind": "models",
@@ -206649,7 +207521,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 26415,
+        "downloads": 44835,
         "likes": 0,
         "updatedAt": "2026-11-21"
       },
@@ -206663,7 +207535,7 @@
         "task": "any-to-any",
         "taskLabel": "Any-to-Any"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:taronaeo--granite-4.0-3b-vision-be-gguf",
@@ -208469,9 +209341,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 1355,
-        "likes": 266,
-        "trend": 61,
+        "downloads": 1815,
+        "likes": 286,
+        "trend": 65,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -208486,7 +209358,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--hy4-base",
@@ -208500,9 +209372,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 609,
-        "likes": 11,
-        "trend": 10,
+        "downloads": 726,
+        "likes": 12,
+        "trend": 11,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -208517,7 +209389,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--hy4-flash",
@@ -208531,9 +209403,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 6617,
-        "likes": 632,
-        "trend": 431,
+        "downloads": 7696,
+        "likes": 652,
+        "trend": 222,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -208548,7 +209420,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--hy4-flash-base",
@@ -208593,9 +209465,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 1742,
-        "likes": 27,
-        "trend": 26,
+        "downloads": 1949,
+        "likes": 28,
+        "trend": 27,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -208610,7 +209482,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--hy4-fp8",
@@ -208624,9 +209496,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 693,
-        "likes": 16,
-        "trend": 16,
+        "downloads": 787,
+        "likes": 18,
+        "trend": 18,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -208641,7 +209513,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--hy4-preview",
@@ -208814,9 +209686,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 497,
-        "likes": 17,
-        "trend": 17,
+        "downloads": 754,
+        "likes": 19,
+        "trend": 19,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -208833,7 +209705,39 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:tencent--wemm-video-2b-gguf",
+      "name": "tencent/WeMM-Video-2B-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "This repository contains the GGUF Q4_K_M bundle of WeMM-Video-2B for the WeMM native runtime. WeMM-Video is a Chinese–English bilingual family for joint audio-visual understanding and reasoning. It accepts text, images, audio, and video and generates text responses.",
+      "url": "https://huggingface.co/tencent/WeMM-Video-2B-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 3139,
+        "likes": 8,
+        "trend": 7,
+        "updatedAt": "2026-11-21"
+      },
+      "tags": [
+        "en",
+        "video-text-to-text",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "tencent",
+        "host": "huggingface",
+        "task": "video-text-to-text",
+        "taskLabel": "Video-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--wemm-video-35ba3b",
@@ -208848,9 +209752,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 359,
-        "likes": 33,
-        "trend": 31,
+        "downloads": 490,
+        "likes": 50,
+        "trend": 17.5,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -208867,7 +209771,7 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--wemm-video-35ba3b-gguf",
@@ -208882,9 +209786,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2928,
-        "likes": 4,
-        "trend": 4,
+        "downloads": 4338,
+        "likes": 5,
+        "trend": 5,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -208899,7 +209803,7 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--wemm-video-4b-gguf",
@@ -208914,9 +209818,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2138,
-        "likes": 7,
-        "trend": 6,
+        "downloads": 2953,
+        "likes": 8,
+        "trend": 7,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -208931,7 +209835,7 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--wemm-video-9b",
@@ -208946,9 +209850,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 398,
-        "likes": 14,
-        "trend": 12,
+        "downloads": 620,
+        "likes": 16,
+        "trend": 14,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -208965,7 +209869,7 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--wemm-video-9b-gguf",
@@ -208980,9 +209884,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 2652,
-        "likes": 8,
-        "trend": 2,
+        "downloads": 2969,
+        "likes": 9,
+        "trend": 2.5,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -208997,7 +209901,7 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--weviscut",
@@ -209043,7 +209947,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 60,
+        "downloads": 70,
         "likes": 22,
         "trend": 19,
         "updatedAt": "2026-11-20"
@@ -209061,7 +209965,7 @@
         "task": "video-text-to-text",
         "taskLabel": "Video-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tencent--wevisone-vl-2b",
@@ -209477,9 +210381,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 84,
-        "likes": 20,
-        "trend": 17,
+        "downloads": 326,
+        "likes": 25,
+        "trend": 22,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -209494,35 +210398,7 @@
         "task": "image-to-image",
         "taskLabel": "Image-to-Image"
       },
-      "fetchedAt": "2026-11-23"
-    },
-    {
-      "id": "hf-models:tenstrip--10eros-max-v1-dev-only",
-      "name": "TenStrip/10Eros_Max_v1_dev-only",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "Machine learning model by TenStrip on Hugging Face.",
-      "url": "https://huggingface.co/TenStrip/10Eros_Max_v1_dev-only",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "metrics": {
-        "downloads": 0,
-        "likes": 41,
-        "trend": 10,
-        "updatedAt": "2026-11-16"
-      },
-      "tags": [
-        "gated"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "TenStrip",
-        "gated": true,
-        "host": "huggingface"
-      },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tesslate--omnicoder-9b",
@@ -210623,7 +211499,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 18791,
+        "downloads": 31299,
         "likes": 0,
         "updatedAt": "2026-10-29"
       },
@@ -210639,7 +211515,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:thibaud--controlnet-openpose-sdxl-1.0",
@@ -210745,9 +211621,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 23543,
-        "likes": 5217,
-        "trend": 1017,
+        "downloads": 41888,
+        "likes": 5522,
+        "trend": 1134,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -210762,7 +211638,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:thinkingmachines--inkling-2-small",
@@ -210777,9 +211653,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 48974,
-        "likes": 1419,
-        "trend": 88.5,
+        "downloads": 55885,
+        "likes": 1446,
+        "trend": 87.5,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -210794,7 +211670,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:thinkingmachines--inkling-nvfp4",
@@ -210904,9 +211780,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1200,
-        "likes": 56,
-        "trend": 46,
+        "downloads": 1755,
+        "likes": 74,
+        "trend": 55,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -210921,7 +211797,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:thomas-sounack--bioclinical-modernbert-base",
@@ -211220,36 +212096,6 @@
         "downloads": 23010,
         "likes": 5,
         "updatedAt": "2025-10-14"
-      },
-      "tags": [
-        "en",
-        "visual-question-answering"
-      ],
-      "preview": {
-        "type": "model",
-        "author": "TIGER-Lab",
-        "host": "huggingface",
-        "task": "visual-question-answering",
-        "taskLabel": "Visual Question Answering"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
-      "id": "hf-models:tiger-lab--videoscore2-sft",
-      "name": "TIGER-Lab/VideoScore2-SFT",
-      "kind": "models",
-      "category": "opensource",
-      "summary": "This is an ablation variant of VideoScore2, please refer to main model for more details: Model (VideoScore2)",
-      "url": "https://huggingface.co/TIGER-Lab/VideoScore2-SFT",
-      "source": {
-        "name": "Hugging Face",
-        "url": "https://huggingface.co/models"
-      },
-      "license": "Apache-2.0",
-      "metrics": {
-        "downloads": 950,
-        "likes": 0,
-        "updatedAt": "2025-10-13"
       },
       "tags": [
         "en",
@@ -220352,8 +221198,8 @@
       },
       "metrics": {
         "downloads": 30,
-        "likes": 13,
-        "trend": 12,
+        "likes": 22,
+        "trend": 21,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -220365,7 +221211,7 @@
         "gated": true,
         "host": "huggingface"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:trevorjs--gemma-4-12b-it-uncensored-gguf",
@@ -222125,17 +222971,17 @@
       "name": "tuanlai001/H3-IMAGE-PE-HERETIC-NVFP4-COMFYUI",
       "kind": "models",
       "category": "opensource",
-      "summary": "This model is an uncensored (heretic) version of prompt enhancer(PE) of Minimax-H3-Image. It can be loaded by clip loader node in ComfyUI.",
+      "summary": "This model is an uncensored (heretic) version of the prompt enhancer (PE) of MiniMax-H3-Image. It is a single-file NVFP4 checkpoint and loads directly in ComfyUI.",
       "url": "https://huggingface.co/tuanlai001/H3-IMAGE-PE-HERETIC-NVFP4-COMFYUI",
       "source": {
         "name": "Hugging Face",
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 4916,
-        "likes": 38,
-        "trend": 23.099999999999998,
-        "updatedAt": "2026-11-16"
+        "downloads": 12369,
+        "likes": 40,
+        "trend": 22.4,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "diffusion-single-file",
@@ -222150,7 +222996,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:tue-mps--coco-panoptic-eomt-large-640",
@@ -223984,9 +224830,8 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 437094,
-        "likes": 56,
-        "trend": 4,
+        "downloads": 475762,
+        "likes": 55,
         "updatedAt": "2026-10-19"
       },
       "tags": [
@@ -224002,7 +224847,7 @@
         "task": "image-to-image",
         "taskLabel": "Image-to-Image"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:unsloth--flux-3-image-klein-pup-gguf",
@@ -226533,7 +227378,7 @@
       "name": "unsloth/Inkling-2-Mini-GGUF",
       "kind": "models",
       "category": "opensource",
-      "summary": "Run the model via the latest version of Unsloth Desktop. If running in llama.cpp or elsewhere, use our mainline GGUFs.",
+      "summary": "Inkling 2 Mini is a general-purpose multimodal model that accepts text and image inputs and generates text outputs. It is intended for use in English and other languages, and across multiple coding languages.",
       "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
       "source": {
         "name": "Hugging Face",
@@ -226541,9 +227386,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 805993,
-        "likes": 965,
-        "trend": 874,
+        "downloads": 1292888,
+        "likes": 1130,
+        "trend": 996,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -226556,7 +227401,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:unsloth--inkling-2-small-gguf",
@@ -226571,9 +227416,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 10673,
-        "likes": 31,
-        "trend": 15,
+        "downloads": 12216,
+        "likes": 34,
+        "trend": 14,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -226586,7 +227431,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:unsloth--inkling-gguf",
@@ -228183,9 +229028,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 228964,
+        "downloads": 261671,
         "likes": 58,
-        "trend": 27,
+        "trend": 26,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -228201,7 +229046,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:unsloth--minimax-m2.7-gguf",
@@ -229209,9 +230054,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 1629256,
-        "likes": 440,
-        "trend": 23,
+        "downloads": 1488189,
+        "likes": 484,
+        "trend": 8,
         "updatedAt": "2026-09-22"
       },
       "tags": [
@@ -229226,7 +230071,7 @@
         "task": "text-to-image",
         "taskLabel": "Text-to-Image"
       },
-      "fetchedAt": "2026-10-27"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:unsloth--qwen-image-2.1-turbo-fp8",
@@ -236541,9 +237386,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 417,
-        "likes": 67,
-        "trend": 47,
+        "downloads": 532,
+        "likes": 77,
+        "trend": 25,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -236559,7 +237404,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:vrg-prague--bboxmaskpose",
@@ -236871,10 +237716,10 @@
       },
       "license": "MIT",
       "metrics": {
-        "downloads": 91398,
-        "likes": 41,
-        "trend": 5,
-        "updatedAt": "2026-11-17"
+        "downloads": 91560,
+        "likes": 43,
+        "trend": 0.5,
+        "updatedAt": "2026-11-22"
       },
       "tags": [
         "ia",
@@ -236887,7 +237732,7 @@
         "task": "text-generation",
         "taskLabel": "Text Generation"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:vyrekai--minimax-h3-image-comfyui-workflows",
@@ -237030,7 +237875,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 3207,
+        "downloads": 2540,
         "likes": 0,
         "updatedAt": "2026-10-23"
       },
@@ -237048,7 +237893,7 @@
         "task": "visual-document-retrieval",
         "taskLabel": "Visual Document Retrieval"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:waiv--finvoc2vec",
@@ -237909,7 +238754,7 @@
         "downloads": 48701,
         "likes": 6,
         "trend": 2,
-        "updatedAt": "2026-11-16"
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "image-text-to-text",
@@ -237923,7 +238768,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:warmbloodaban--minimax-h3-singularity",
@@ -238222,10 +239067,10 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 8311,
-        "likes": 10,
-        "trend": 10,
-        "updatedAt": "2026-11-21"
+        "downloads": 16177,
+        "likes": 11,
+        "trend": 11,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "image-text-to-text",
@@ -238239,7 +239084,7 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:wavecut--qwen3.8-27b-gsq-rco-iq3-s-ninfer-v3",
@@ -239378,9 +240223,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "downloads": 1532,
-        "likes": 23,
-        "trend": 22,
+        "downloads": 2748,
+        "likes": 25,
+        "trend": 23,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -239397,7 +240242,7 @@
         "task": "image-to-video",
         "taskLabel": "Image-to-Video"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:wuli-art--minimax-h3-turbo",
@@ -241448,10 +242293,12 @@
         "name": "Hugging Face",
         "url": "https://huggingface.co/models"
       },
+      "license": "Apache-2.0",
       "metrics": {
         "downloads": 20803,
-        "likes": 9,
-        "updatedAt": "2025-06-30"
+        "likes": 10,
+        "trend": 1,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "object-detection",
@@ -241465,7 +242312,7 @@
         "task": "object-detection",
         "taskLabel": "Object Detection"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:xfuturetechx--2024-backups",
@@ -242350,6 +243197,40 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-models:xingchen-agi--xing4.1-preview",
+      "name": "XingChen-AGI/Xing4.1-Preview",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "Fully domestic stack, end to end — 8,192 domestic AI accelerators + MindSpore + an in-house training system. Workhorse capacity at a fraction of the cost — a 285B-total / 17B-active MoE model purpose-built for agentic coding and long-horizon agent workflows, with a native 1M context.",
+      "url": "https://huggingface.co/XingChen-AGI/Xing4.1-Preview",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 672,
+        "likes": 283,
+        "trend": 17.5,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "en",
+        "text-generation",
+        "transformers",
+        "zh"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "XingChen-AGI",
+        "host": "huggingface",
+        "library": "transformers",
+        "task": "text-generation",
+        "taskLabel": "Text Generation"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "hf-models:xinsir--controlnet-canny-sdxl-1.0",
       "name": "xinsir/controlnet-canny-sdxl-1.0",
       "kind": "models",
@@ -242996,9 +243877,9 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 658,
-        "likes": 37,
-        "trend": 22,
+        "downloads": 724,
+        "likes": 38,
+        "trend": 23,
         "updatedAt": "2026-11-11"
       },
       "tags": [
@@ -243014,24 +243895,24 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:xylolabs--hy4-flash-gguf",
       "name": "Xylolabs/Hy4-flash-GGUF",
       "kind": "models",
       "category": "opensource",
-      "summary": "GGUF quants of tencent/Hy4-flash (220B parameters, 12B active) for llama.cpp, on CUDA, Metal or CPU, without the DFly2 speculative-decoding drafter.",
+      "summary": "GGUF quants of tencent/Hy4-flash (220B parameters, 12B active) for llama.cpp on CUDA, Metal or CPU. The DFly2 speculative-decoding drafter is not included.",
       "url": "https://huggingface.co/Xylolabs/Hy4-flash-GGUF",
       "source": {
         "name": "Hugging Face",
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 13340,
-        "likes": 7,
-        "trend": 6,
-        "updatedAt": "2026-11-23"
+        "downloads": 23811,
+        "likes": 8,
+        "trend": 7,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "en",
@@ -243047,7 +243928,39 @@
         "task": "image-text-to-text",
         "taskLabel": "Image-Text-to-Text"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "hf-models:xylolabs--inkling-2-mini-gguf",
+      "name": "Xylolabs/Inkling-2-Mini-GGUF",
+      "kind": "models",
+      "category": "opensource",
+      "summary": "These llama.cpp GGUFs of Inkling 2 Mini include a separate vision projector and omit the MTP drafter. The five files from 15.73 GB down to 8.49 GB use Unsloth's per-tensor types at Unsloth's sizes, quantized from the NVFP4 file with our own importance matrix.",
+      "url": "https://huggingface.co/Xylolabs/Inkling-2-Mini-GGUF",
+      "source": {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/models"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "downloads": 15349,
+        "likes": 1,
+        "trend": 1,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "gguf",
+        "image-text-to-text"
+      ],
+      "preview": {
+        "type": "model",
+        "author": "Xylolabs",
+        "host": "huggingface",
+        "library": "gguf",
+        "task": "image-text-to-text",
+        "taskLabel": "Image-Text-to-Text"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:xyzailab--xyz-aquila-mini",
@@ -243222,7 +244135,7 @@
         "url": "https://huggingface.co/models"
       },
       "metrics": {
-        "downloads": 12957,
+        "downloads": 14357,
         "likes": 1,
         "updatedAt": "2026-11-19"
       },
@@ -243238,7 +244151,7 @@
         "task": "text-to-video",
         "taskLabel": "Text-to-Video"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-models:yangheng--deberta-v3-base-absa-v1.1",

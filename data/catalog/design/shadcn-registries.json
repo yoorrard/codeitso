@@ -4,10 +4,10 @@
     "name": "shadcn/ui registry directory",
     "url": "https://ui.shadcn.com/docs/directory",
     "license": "Directory data from ui.shadcn.com/r/registries.json (shadcn/ui, MIT). Each registry's components keep their own license — check the registry site.",
-    "note": "593 registries listed; 58 marked unavailable by the directory's health check were skipped. Individual components of community registries (146918 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "593 registries listed; 57 marked unavailable by the directory's health check were skipped. Individual components of community registries (147452 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-23",
-  "count": 535,
+  "fetchedAt": "2026-11-24",
+  "count": 536,
   "items": [
     {
       "id": "shadcn-registry:000h-cojeev",
@@ -1574,6 +1574,41 @@
         "docs": "https://ui.shadcn.com/docs/directory"
       },
       "fetchedAt": "2026-10-27",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
+      "id": "shadcn-registry:balick",
+      "name": "@balick",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "Blocks for shadcn/ui designed to fit together: compose a page, then install it with one command.",
+      "url": "https://ui.balick.me",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "degraded",
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://ui.balick.me",
+        "registryUrl": "https://ui.balick.me/r/{name}.json",
+        "itemCount": 137,
+        "healthScore": 64.751,
+        "rankingScore": 67.653,
+        "health": "degraded"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @balick/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-24",
       "metrics": {
         "siteRank": 500000
       }
@@ -6604,16 +6639,16 @@
         "type": "site",
         "url": "https://gooseui.pro",
         "registryUrl": "https://gooseui.pro/r/{name}.json",
-        "itemCount": 32,
-        "healthScore": 98.313,
-        "rankingScore": 89.899,
+        "itemCount": 133,
+        "healthScore": 98.322,
+        "rankingScore": 94.415,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @gooseui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-23",
+      "fetchedAt": "2026-11-24",
       "metrics": {
         "siteRank": 500000
       }
@@ -6936,7 +6971,6 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
-        "degraded",
         "react",
         "registry",
         "shadcn"
@@ -6945,14 +6979,14 @@
         "type": "site",
         "url": "https://shadcn-heatmap.pages.dev",
         "registryUrl": "https://shadcn-heatmap.pages.dev/r/{name}.json",
-        "healthScore": 82.963,
-        "health": "degraded"
+        "healthScore": 82.593,
+        "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @heatmap/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-24",
       "metrics": {
         "siteRank": 500000
       }
@@ -7379,6 +7413,7 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
+        "degraded",
         "react",
         "registry",
         "shadcn"
@@ -7388,15 +7423,15 @@
         "url": "https://iconiqui.com",
         "registryUrl": "https://iconiqui.com/r/{name}.json",
         "itemCount": 120,
-        "healthScore": 96.219,
-        "rankingScore": 92.404,
-        "health": "healthy"
+        "healthScore": 95.317,
+        "rankingScore": 91.683,
+        "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @iconiq/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-24",
       "metrics": {
         "siteRank": 500000
       }
@@ -16794,16 +16829,16 @@
         "type": "site",
         "url": "https://uniquel.io",
         "registryUrl": "https://uniquel.io/r/{name}.json",
-        "itemCount": 58,
-        "healthScore": 98.219,
-        "rankingScore": 91.693,
+        "itemCount": 65,
+        "healthScore": 98.579,
+        "rankingScore": 92.342,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @uniquel/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-24",
       "metrics": {
         "siteRank": 500000
       }

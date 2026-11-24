@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-23",
-  "count": 956,
+  "fetchedAt": "2026-11-24",
+  "count": 965,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -5288,6 +5288,29 @@
       }
     },
     {
+      "id": "marcelscruz:dataquant",
+      "name": "DataQuant",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Historical market data API for A-shares, HK, US stocks, crypto, indices and ETFs, plus macro data, in one schema",
+      "url": "https://app.dataquant.trade",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "marcelscruz:datastream",
       "name": "DataStream",
       "kind": "open-data",
@@ -5710,6 +5733,30 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-11-10"
+    },
+    {
+      "id": "marcelscruz:digest-ai",
+      "name": "Digest AI",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "AI news with every source linked: latest stories, daily briefing, categories and each story as JSON or Markdown, no key",
+      "url": "https://digestai.news",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "news"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "News"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "marcelscruz:digidates",
@@ -7443,6 +7490,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:flowfeed",
+      "name": "FlowFeed",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Real-time macro, forex and crypto news and economic calendar, over MCP",
+      "url": "https://flowfeed.cc",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-oauth",
+        "news"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "OAuth",
+        "cors": "unknown",
+        "listCategory": "News"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "marcelscruz:fluentedi",
       "name": "FluentEDI",
       "kind": "dev",
@@ -8468,6 +8538,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:govseer",
+      "name": "Govseer",
+      "kind": "business",
+      "category": "api",
+      "summary": "EU CLP hazard label elements from a safety data sheet PDF, in the 24 official EU languages",
+      "url": "https://govseer.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "marcelscruz:greynoise",
       "name": "GreyNoise",
       "kind": "auth-security",
@@ -9196,6 +9289,29 @@
         "listCategory": "Personality"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:humancalls",
+      "name": "HumanCalls",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "A trained person phones a US or Canadian business for your AI agent and returns typed answers, a summary, recording and transcript. REST API and MCP server",
+      "url": "https://humancalls.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "phone"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Phone"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "marcelscruz:humanpen",
@@ -13072,6 +13188,29 @@
       }
     },
     {
+      "id": "marcelscruz:nocthost",
+      "name": "NoctHost",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Create and manage hourly-billed cloud servers on Hetzner, Vultr, DigitalOcean, Linode and OVHcloud from one prepaid balance",
+      "url": "https://nocthost.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
       "id": "marcelscruz:noncepay",
       "name": "NoncePay",
       "kind": "finance",
@@ -15681,6 +15820,53 @@
         "listCategory": "Sports & Fitness"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "marcelscruz:pulse-verity",
+      "name": "Pulse Verity",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Signed crypto index prices, each checkable against a published public key; BTC, ETH and SOL samples need no key",
+      "url": "https://thepulse.markets/developers",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-24"
+    },
+    {
+      "id": "marcelscruz:punkprice",
+      "name": "PunkPrice",
+      "kind": "finance",
+      "category": "api",
+      "summary": "CryptoPunks floor price since 2017 replayed from the marketplace contract, daily floors per trait and a valuation per punk",
+      "url": "https://punkprice.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "marcelscruz:pusher-channels",
@@ -22051,6 +22237,30 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "marcelscruz:wimsta-formula-registry",
+      "name": "WIMSTA Formula Registry",
+      "kind": "life",
+      "category": "api",
+      "summary": "Source-verified body-composition formulas queryable by id, plus calculation endpoints returning BMI, body fat, BMR, TDEE and max heart rate as ranges",
+      "url": "https://wimsta.com/registry/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "marcelscruz:wisepim",

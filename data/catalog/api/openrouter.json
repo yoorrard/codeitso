@@ -4,9 +4,9 @@
     "name": "OpenRouter providers (AI inference companies)",
     "url": "https://openrouter.ai/docs/api-reference/providers/list-providers",
     "license": "Facts (provider names, links) from OpenRouter's public providers endpoint; one-line descriptions are each company's own homepage meta description",
-    "note": "OpenRouter lists 123 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "OpenRouter lists 124 providers; kept the 33 not already in models.dev or the hand-checked list (and not test/placeholder entries). Every one can be called through OpenRouter (preview.viaOpenRouter); many also sell their own API. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-23",
+  "fetchedAt": "2026-11-24",
   "count": 33,
   "items": [
     {
@@ -107,7 +107,7 @@
       "name": "Avian",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "Fast AI inference billed per token. DeepSeek V4.1, MiniMax M3, GLM-5.3, Kimi K3, MiMo-V2.6 and more via OpenAI-compatible API. From $0.1275/M tokens.",
+      "summary": "Fast AI inference billed per token for DeepSeek V4.1, MiniMax M3, GLM-5.3, Kimi K3, MiMo-V2.6 and more via an OpenAI-compatible API, plus dedicated NVIDIA B300 and B200 GPU nodes.",
       "url": "https://avian.io",
       "source": {
         "name": "OpenRouter providers",
@@ -130,7 +130,7 @@
         "terms": "https://avian.io/terms",
         "viaOpenRouter": "https://openrouter.ai/provider/avian"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "openrouter:cirrascale",
@@ -769,7 +769,7 @@
       "kind": "ai-llm",
       "category": "api",
       "summary": "Open model inference. Trillions of tokens a day, #1 on OpenRouter.",
-      "url": "https://www.relace.ai",
+      "url": "https://relace.ai",
       "source": {
         "name": "OpenRouter providers",
         "url": "https://openrouter.ai/api/v1/providers"
@@ -784,13 +784,13 @@
         "type": "api",
         "auth": "apiKey",
         "keyServerSide": true,
-        "privacyPolicy": "https://www.relace.ai/privacy-policy",
-        "statusPage": "https://status.relace.ai",
+        "privacyPolicy": "https://relace.ai/legal/privacy-policy",
+        "statusPage": "https://status.relace.ai/",
         "summarySource": "official page meta description",
-        "terms": "https://www.relace.ai/terms-of-use",
+        "terms": "https://relace.ai/legal/terms-of-use",
         "viaOpenRouter": "https://openrouter.ai/provider/relace"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "openrouter:respan",

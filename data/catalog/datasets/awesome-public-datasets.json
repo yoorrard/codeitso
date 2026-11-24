@@ -6,8 +6,8 @@
     "license": "Dataset list from awesomedata/apd-core (GPL-3.0 list repository; names, links and one-line descriptions). Each dataset keeps its own terms.",
     "note": "원본 저장소가 깨진 링크로 표시한 항목은 뺀다."
   },
-  "fetchedAt": "2026-11-17",
-  "count": 1122,
+  "fetchedAt": "2026-11-24",
+  "count": 1123,
   "items": [
     {
       "id": "awesome-public-datasets:agriculture-chinese-tea-dataset",
@@ -389,7 +389,7 @@
       "kind": "open-data",
       "category": "datasets",
       "summary": "Free static JSON API serving USDA NASS county-level annual yields for corn, soybeans, and wheat in the United States. Refreshed weekly from the NASS bulk file. Sharded by (state, county, crop) so a single point lookup downloads 2-22 KB instead of a multi-megabyte state shard.",
-      "url": "https://productofamerica.github.io/usda-county-yields/",
+      "url": "https://github.com/ProductOfAmerica/usda-county-yields",
       "source": {
         "name": "awesome-public-datasets",
         "url": "https://github.com/awesomedata/awesome-public-datasets"
@@ -400,9 +400,9 @@
       "preview": {
         "type": "dataset",
         "field": "Agriculture",
-        "host": "productofamerica.github.io"
+        "host": "github.com"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "awesome-public-datasets:agriculture-world-cuisine-ingredient-overlap",
@@ -2009,7 +2009,7 @@
       "kind": "open-data",
       "category": "datasets",
       "summary": "NASA Global Imagery Browse Services",
-      "url": "https://wiki.earthdata.nasa.gov/display/GIBS",
+      "url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api",
       "source": {
         "name": "awesome-public-datasets",
         "url": "https://github.com/awesomedata/awesome-public-datasets"
@@ -2020,9 +2020,9 @@
       "preview": {
         "type": "dataset",
         "field": "Climate+Weather",
-        "host": "wiki.earthdata.nasa.gov"
+        "host": "earthdata.nasa.gov"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "awesome-public-datasets:climate-weather-noaa-bering-sea-climate",
@@ -2219,28 +2219,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "awesome-public-datasets:climate-weather-us-severe-weather-warning-counts",
-      "name": "US Severe Weather Warning Counts by State, County and City",
-      "kind": "open-data",
-      "category": "datasets",
-      "summary": "Yearly counts of tornado, severe thunderstorm and flash flood warnings issued by the US National Weather Service for every state, county, DC, Puerto Rico and 3,614 cities since 2008, with tornado counts since 1950.",
-      "url": "https://github.com/kanevu93/us-severe-weather-warning-counts",
-      "source": {
-        "name": "awesome-public-datasets",
-        "url": "https://github.com/awesomedata/awesome-public-datasets"
-      },
-      "license": "CC BY 4.0",
-      "tags": [
-        "climate-weather"
-      ],
-      "preview": {
-        "type": "dataset",
-        "field": "Climate+Weather",
-        "host": "github.com"
-      },
-      "fetchedAt": "2026-11-10"
-    },
-    {
       "id": "awesome-public-datasets:climate-weather-washington-post-climate-change",
       "name": "Wahington Post Climate Change",
       "kind": "open-data",
@@ -2369,12 +2347,12 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "awesome-public-datasets:complexnetworks-dimacs-road-networks-collection",
-      "name": "DIMACS Road Networks Collection",
+      "id": "awesome-public-datasets:complexnetworks-dimacs-implementation-challenges",
+      "name": "DIMACS Implementation Challenges",
       "kind": "open-data",
       "category": "datasets",
-      "summary": "DIMACS Road Networks Collection",
-      "url": "http://www.dis.uniroma1.it/challenge9/download.shtml",
+      "summary": "The DIMACS Implementation Challenges help understand and improve the practical performance of algorithms for important problems, particularly those that are hard in the theoretical sense.",
+      "url": "https://dimacs.rutgers.edu/programs/implementation-challenges",
       "source": {
         "name": "awesome-public-datasets",
         "url": "https://github.com/awesomedata/awesome-public-datasets"
@@ -2385,9 +2363,9 @@
       "preview": {
         "type": "dataset",
         "field": "ComplexNetworks",
-        "host": "dis.uniroma1.it"
+        "host": "dimacs.rutgers.edu"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "awesome-public-datasets:complexnetworks-nber-patent-citations",
@@ -7663,6 +7641,28 @@
         "host": "eia.gov"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "awesome-public-datasets:energy-france-tempo-days-and-winter-consumption",
+      "name": "France Tempo Days and Winter Electricity Consumption",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "Daily colour of the French EDF Tempo electricity tariff (blue, white, red days chosen by the grid operator RTE) since September 2014, per-season summaries, day-of-year frequencies, and daily winter peak and average national consumption with temperature since 2011-2012. CSV files.",
+      "url": "https://huggingface.co/datasets/JourTempo/tempo-hivers-france",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "Licence Ouverte 2.0 (Etalab)",
+      "tags": [
+        "energy"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Energy",
+        "host": "huggingface.co"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "awesome-public-datasets:energy-global-power-plant-database",
@@ -17220,6 +17220,28 @@
         "host": "doi.org"
       },
       "fetchedAt": "2026-11-10"
+    },
+    {
+      "id": "awesome-public-datasets:museums-islam-museum-knowledge-graph",
+      "name": "Islam Museum Knowledge Graph",
+      "kind": "open-data",
+      "category": "datasets",
+      "summary": "A knowledge graph of Islamic history published by islam.museum. It contains 46,793 sourced entries (people, places, events, concepts and objects) with accompanying prose in Arabic, English and Urdu, stored as YAML and Markdown in a public Git repository and archived at Zenodo (DOI…",
+      "url": "https://zenodo.org/records/24273663",
+      "source": {
+        "name": "awesome-public-datasets",
+        "url": "https://github.com/awesomedata/awesome-public-datasets"
+      },
+      "license": "CC0",
+      "tags": [
+        "museums"
+      ],
+      "preview": {
+        "type": "dataset",
+        "field": "Museums",
+        "host": "zenodo.org"
+      },
+      "fetchedAt": "2026-11-24"
     },
     {
       "id": "awesome-public-datasets:museums-metropolitan-museum-of-art-collection-api",

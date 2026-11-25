@@ -7,8 +7,8 @@
     "note": "Hub에는 스페이스가 100만 개 넘게 있다. status는 받은 날의 실행 상태(running·sleeping 등)다. metrics.trend = 허브의 trendingScore(요즘 뜨는 정도, 인기순에만 쓴다).",
     "cut": "좋아요 100개 이상 + 요즘 뜨는 순 상위 300개"
   },
-  "fetchedAt": "2026-11-24",
-  "count": 1832,
+  "fetchedAt": "2026-11-25",
+  "count": 1841,
   "items": [
     {
       "id": "hf-spaces:01-ai--yi-34b-chat",
@@ -147,7 +147,7 @@
       "name": "3D Arena",
       "kind": "ai-demos",
       "category": "opensource",
-      "summary": "Paper: https://huggingface.co/papers/2506.18787",
+      "summary": "Vote on image-to-3D models, side by side, blind",
       "url": "https://huggingface.co/spaces/3d-arena/3d-arena",
       "source": {
         "name": "Hugging Face Spaces",
@@ -155,11 +155,17 @@
       },
       "license": "MIT",
       "metrics": {
-        "likes": 414,
-        "updatedAt": "2026-10-26"
+        "likes": 416,
+        "updatedAt": "2026-11-25"
       },
       "tags": [
-        "docker"
+        "3d",
+        "arena",
+        "docker",
+        "gaussian-splatting",
+        "human-evaluation",
+        "image-to-3d",
+        "leaderboard"
       ],
       "preview": {
         "type": "site",
@@ -171,7 +177,7 @@
         "space": "3d-arena/3d-arena",
         "status": "running"
       },
-      "fetchedAt": "2026-10-26"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:3daigc--lhm",
@@ -2175,8 +2181,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 15,
-        "trend": 15,
+        "likes": 22,
+        "trend": 22,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -2192,7 +2198,7 @@
         "space": "akhaliq/DepthPro2",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:akhaliq--fastframes-l",
@@ -2605,6 +2611,42 @@
         "status": "runtime_error"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:akhaliq--sensenova-u1.6-studio",
+      "name": "SenseNova U1.6 Studio",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "SenseNova U1.6 Studio (akhaliq/sensenova-u1.6-studio)",
+      "url": "https://huggingface.co/spaces/akhaliq/sensenova-u1.6-studio",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "likes": 5,
+        "trend": 5,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "gradio",
+        "ml-intern"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "red",
+        "colorTo": "yellow",
+        "emoji": "🎨",
+        "host": "huggingface-space",
+        "models": [
+          "sensenova/SenseNova-U1.6-8B-MoT"
+        ],
+        "sdk": "gradio",
+        "space": "akhaliq/sensenova-u1.6-studio",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:akhaliq--sora-2",
@@ -3336,8 +3378,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 125,
-        "trend": 9,
+        "likes": 138,
+        "trend": 5,
         "updatedAt": "2025-07-05"
       },
       "tags": [
@@ -3353,7 +3395,7 @@
         "space": "ALSv/fall",
         "status": "running"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:ameerazam08--flux.1-dev-inpainting-model-beta-gpu",
@@ -3555,8 +3597,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 126,
-        "trend": 49,
+        "likes": 149,
+        "trend": 52,
         "updatedAt": "2026-11-21"
       },
       "tags": [
@@ -3585,7 +3627,48 @@
         "space": "amisima/Qwen-2.1-Turbo-Qwen-Face-Swap-MOSS-Image-Edit-Outpaint-Qwen-Detail-Enhancer",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
+    },
+    {
+      "id": "hf-spaces:amisima--qwen3.8-27b-uncensored-demo",
+      "name": "Qwen3.8-27B-Uncensored",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Uncensored Qwen3.8-27B, text and vision chat",
+      "url": "https://huggingface.co/spaces/amisima/Qwen3.8-27B-Uncensored-Demo",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 3,
+        "trend": 2.0999999999999996,
+        "updatedAt": "2026-11-11"
+      },
+      "tags": [
+        "chatbot",
+        "gradio",
+        "image-text-to-text",
+        "qwen",
+        "text-generation",
+        "uncensored",
+        "vision"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "gray",
+        "colorTo": "purple",
+        "emoji": "🔓",
+        "host": "huggingface-space",
+        "models": [
+          "JonathanColetti/Qwen3.8-27B-Uncensored-GGUF",
+          "Qwen/Qwen3.8-27B"
+        ],
+        "sdk": "gradio",
+        "space": "amisima/Qwen3.8-27B-Uncensored-Demo",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:amisima--wan-2.2-i2v-studio",
@@ -6038,37 +6121,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-spaces:baka999--minimax-h3-image-mysticxxx-v5-fast",
-      "name": "MiniMax-H3-Image MysticXXX-V5 Fast",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Fast FP8+Triton MiniMax-H3-Image with MysticXXX-V5 LoRA",
-      "url": "https://huggingface.co/spaces/baka999/MiniMax-H3-Image-MysticXXX-V5-Fast",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 3,
-        "trend": 3,
-        "updatedAt": "2026-11-12"
-      },
-      "tags": [
-        "gradio"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "purple",
-        "colorTo": "indigo",
-        "emoji": "⚡",
-        "host": "huggingface-space",
-        "sdk": "gradio",
-        "space": "baka999/MiniMax-H3-Image-MysticXXX-V5-Fast",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-18"
-    },
-    {
       "id": "hf-spaces:baka999--minimax-h3-turbo-lora-uncensored",
       "name": "MiniMax H3 Turbo LoRA",
       "kind": "ai-demos",
@@ -6888,6 +6940,38 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "hf-spaces:blackhool--roop-face-swap",
+      "name": "Face Swap Roop",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "This is a huggingface space for roop, face swapping tool",
+      "url": "https://huggingface.co/spaces/BLACKHOOL/Roop-face-swap",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "license": "AGPL-3.0",
+      "metrics": {
+        "likes": 100,
+        "trend": 2,
+        "updatedAt": "2024-11-10"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "yellow",
+        "colorTo": "blue",
+        "emoji": "👀",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "BLACKHOOL/Roop-face-swap",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "hf-spaces:blinkdl--rwkv-gradio-1",
       "name": "RWKV-Gradio-1",
       "kind": "ai-demos",
@@ -6948,6 +7032,37 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-15"
+    },
+    {
+      "id": "hf-spaces:bobber--joy-caption-beta-one",
+      "name": "Joy Caption Beta One",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Joy Caption Beta One (bobber/joy-caption-beta-one)",
+      "url": "https://huggingface.co/spaces/bobber/joy-caption-beta-one",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 32,
+        "trend": 2,
+        "updatedAt": "2026-08-23"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "yellow",
+        "colorTo": "blue",
+        "emoji": "🖼️💬",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "bobber/joy-caption-beta-one",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:bohmian--stock-sentiment",
@@ -7147,8 +7262,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 27,
-        "trend": 22,
+        "likes": 32,
+        "trend": 19,
         "updatedAt": "2026-11-12"
       },
       "tags": [
@@ -7168,7 +7283,7 @@
         "space": "briaai/BRIA-RMBG-3.0",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:briaai--fibo-2.0-editing",
@@ -7377,6 +7492,43 @@
         "status": "running"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:byoussef--depthpro2-webgpu",
+      "name": "Depth Pro 2 WebGPU",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Depth from one photo, in your browser on WebGPU",
+      "url": "https://huggingface.co/spaces/byoussef/DepthPro2-WebGPU",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 4,
+        "trend": 4,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "depth-estimation",
+        "litert",
+        "static",
+        "webgpu"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "blue",
+        "colorTo": "red",
+        "emoji": "📷",
+        "host": "huggingface-space",
+        "models": [
+          "byoussef/DepthPro2-litert"
+        ],
+        "sdk": "static",
+        "space": "byoussef/DepthPro2-WebGPU",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:bytedance--animatediff-lightning",
@@ -8043,6 +8195,42 @@
       "fetchedAt": "2026-11-24"
     },
     {
+      "id": "hf-spaces:cfahlgren1--imagine",
+      "name": "Imagine",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Type anything and watch it paint, on your own GPU",
+      "url": "https://huggingface.co/spaces/cfahlgren1/imagine",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "license": "MIT",
+      "metrics": {
+        "likes": 5,
+        "trend": 5,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "static"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "gray",
+        "colorTo": "gray",
+        "emoji": "🎨",
+        "host": "huggingface-space",
+        "models": [
+          "lox9973/MiniT2I-B-16-MF-compact",
+          "cfahlgren1/MiniT2I-B-16-MF-compact-webgpu-int8"
+        ],
+        "sdk": "static",
+        "space": "cfahlgren1/imagine",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "hf-spaces:cfahlgren1--model-release-heatmap",
       "name": "Organization Activity Heatmap",
       "kind": "ai-demos",
@@ -8148,8 +8336,8 @@
       },
       "license": "CC-BY-NC-4.0",
       "metrics": {
-        "likes": 96,
-        "trend": 74,
+        "likes": 111,
+        "trend": 71,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -8170,7 +8358,7 @@
         "space": "cfahlgren1/slack-moji",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:cfahlgren1--webllm-playground",
@@ -10933,7 +11121,7 @@
     },
     {
       "id": "hf-spaces:drewthomasson--ebook2audiobook",
-      "name": "Ebook2audiobook v26.11.24",
+      "name": "Ebook2audiobook v26.11.25",
       "kind": "ai-demos",
       "category": "opensource",
       "summary": "Turn any ebook into audiobook, 1107+ languages supported!",
@@ -10944,9 +11132,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "likes": 329,
+        "likes": 330,
         "trend": 2,
-        "updatedAt": "2026-11-23"
+        "updatedAt": "2026-11-25"
       },
       "tags": [
         "docker"
@@ -10961,7 +11149,7 @@
         "space": "drewThomasson/ebook2audiobook",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:duoan--torchcode",
@@ -13494,9 +13682,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "likes": 50,
+        "likes": 52,
         "trend": 9,
-        "updatedAt": "2026-11-23"
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "calculator",
@@ -13517,14 +13705,14 @@
           "thinkingmachines/Inkling-2-Mini",
           "unsloth/Inkling-2-Mini-GGUF",
           "tencent/Hy4-flash",
-          "Qwen/Qwen3.8-27B",
-          "sensenova/SenseNova-Loop-9B"
+          "sensenova/SenseNova-Loop-9B",
+          "Qwen/Qwen3.8-27B"
         ],
         "sdk": "static",
         "space": "fastgpu/vram-and-gpu-cost-calculator",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:fastvideo--fasth3-omni",
@@ -13646,8 +13834,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "likes": 106,
-        "trend": 1.1,
+        "likes": 211,
+        "trend": 1.4000000000000001,
         "updatedAt": "2026-11-06"
       },
       "tags": [
@@ -13668,7 +13856,7 @@
         "space": "fendouai/free-ai-detector",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:fendouai--free-ai-humanizer",
@@ -13705,6 +13893,43 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-spaces:fendouai--whiteboard-ai-tutor",
+      "name": "Whiteboard AI Tutor",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Replay AI tutor whiteboard lessons; open-source benchmark.",
+      "url": "https://huggingface.co/spaces/fendouai/whiteboard-ai-tutor",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "license": "MIT",
+      "metrics": {
+        "likes": 105,
+        "trend": 7.5,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "ai-tutor",
+        "education",
+        "llm-benchmark",
+        "math-tutor",
+        "static",
+        "whiteboard"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "yellow",
+        "colorTo": "red",
+        "emoji": "🧑‍🏫",
+        "host": "huggingface-space",
+        "sdk": "static",
+        "space": "fendouai/whiteboard-ai-tutor",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:fffiloni--artist",
@@ -14036,9 +14261,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "fffiloni/image-to-music-v2",
-        "status": "sleeping"
+        "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:fffiloni--image-to-musicgen",
@@ -15329,43 +15554,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-spaces:final-bench--vikernel-redteam",
-      "name": "AI Model Hacking Hackathon",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Hack an AI agent's security kernel. USD 4,500 prizes",
-      "url": "https://huggingface.co/spaces/FINAL-Bench/ViKernel-RedTeam",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 42,
-        "trend": 6.3,
-        "updatedAt": "2026-11-17"
-      },
-      "tags": [
-        "ai-agents",
-        "ai-safety",
-        "docker",
-        "hackathon",
-        "llm-security",
-        "prompt-injection",
-        "red-teaming"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "indigo",
-        "colorTo": "red",
-        "emoji": "🛡️",
-        "host": "huggingface-space",
-        "sdk": "docker",
-        "space": "FINAL-Bench/ViKernel-RedTeam",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-18"
-    },
-    {
       "id": "hf-spaces:final-bench--vikernel-scanner",
       "name": "ViKernel Scanner",
       "kind": "ai-demos",
@@ -16497,6 +16685,37 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-spaces:galilai-group--prh-demo",
+      "name": "Captions Without Pairs",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Caption a photo or a video, with no image-caption pairs",
+      "url": "https://huggingface.co/spaces/galilai-group/prh_demo",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 22,
+        "trend": 3,
+        "updatedAt": "2026-11-03"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "blue",
+        "colorTo": "indigo",
+        "emoji": "🔭",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "galilai-group/prh_demo",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "hf-spaces:galileo-ai--agent-leaderboard",
       "name": "Agent Leaderboard",
       "kind": "ai-demos",
@@ -16526,6 +16745,37 @@
         "status": "running"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:gameanything--gameanything",
+      "name": "GameAnything",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "From Any Inspirations to Playable Game Worlds",
+      "url": "https://huggingface.co/spaces/GameAnything/GameAnything",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 4,
+        "trend": 4,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "static"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "indigo",
+        "colorTo": "purple",
+        "emoji": "🎮",
+        "host": "huggingface-space",
+        "sdk": "static",
+        "space": "GameAnything/GameAnything",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:ganymedenil--qwen2-vl-7b",
@@ -17774,9 +18024,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "gokaygokay/KolorsPlusPlus",
-        "status": "sleeping"
+        "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:gokaygokay--ponyrealism",
@@ -19137,8 +19387,7 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "likes": 380,
-        "trend": 3,
+        "likes": 382,
         "updatedAt": "2025-10-07"
       },
       "tags": [
@@ -19154,7 +19403,7 @@
         "space": "hesamation/primer-llm-embedding",
         "status": "running"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:hexgrad--kokoro-tts",
@@ -19219,6 +19468,37 @@
         "status": "running"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:hf-asdqqq--wan2-2-i2v-v3",
+      "name": "Wan2.2 14B Fast Preview [NEW]",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Wan2.2 14B Fast Preview [NEW] (hf-Asdqqq/wan2-2-i2v-v3)",
+      "url": "https://huggingface.co/spaces/hf-Asdqqq/wan2-2-i2v-v3",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 4,
+        "trend": 3,
+        "updatedAt": "2026-08-02"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "indigo",
+        "colorTo": "pink",
+        "emoji": "🏆",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "hf-Asdqqq/wan2-2-i2v-v3",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:hf-audio--open-asr-leaderboard",
@@ -19945,8 +20225,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 56,
-        "trend": 40,
+        "likes": 66,
+        "trend": 46,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -19965,7 +20245,7 @@
         "space": "hugging-apps/clairic",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:hugging-apps--gliformer-0-8b-v1-5",
@@ -20028,6 +20308,72 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-spaces:hugging-apps--inkling-2-mini-decision",
+      "name": "Inkling-2-Mini Decision",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Adaptive-depth typed decision model — one pass, zero tokens",
+      "url": "https://huggingface.co/spaces/hugging-apps/inkling-2-mini-decision",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 3,
+        "trend": 3,
+        "updatedAt": "2026-11-22"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "yellow",
+        "colorTo": "purple",
+        "emoji": "⚖️",
+        "host": "huggingface-space",
+        "models": [
+          "eltokh7/inkling-2-mini-decision"
+        ],
+        "sdk": "gradio",
+        "space": "hugging-apps/inkling-2-mini-decision",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
+      "id": "hf-spaces:hugging-apps--juggernaut-moss-turbo",
+      "name": "Juggernaut-Moss-Turbo-Beta",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "6-step turbo MOSS-Image text-to-image (DMD2, CFG 1)",
+      "url": "https://huggingface.co/spaces/hugging-apps/juggernaut-moss-turbo",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "likes": 3,
+        "trend": 3,
+        "updatedAt": "2026-11-22"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "yellow",
+        "colorTo": "purple",
+        "emoji": "🎬",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "hugging-apps/juggernaut-moss-turbo",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:hugging-apps--minimax-h3-character-swap-lora",
@@ -20132,37 +20478,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-spaces:hugging-apps--mirage-vision",
-      "name": "Mirage · On-device structured vision",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "22 MB vision model - description, boxes, masks, OCR, forms",
-      "url": "https://huggingface.co/spaces/hugging-apps/mirage-vision",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 39,
-        "trend": 4,
-        "updatedAt": "2026-11-06"
-      },
-      "tags": [
-        "gradio"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "yellow",
-        "colorTo": "gray",
-        "emoji": "🌵",
-        "host": "huggingface-space",
-        "sdk": "gradio",
-        "space": "hugging-apps/mirage-vision",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-spaces:hugging-apps--muscriptor-music-transcription",
       "name": "MuScriptor Music Transcription",
       "kind": "ai-demos",
@@ -20189,40 +20504,6 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "hugging-apps/muscriptor-music-transcription",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
-      "id": "hf-spaces:hugging-apps--oasis-scene-parser",
-      "name": "Oasis Scene Parser",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Photo to structured JSON scene record on CPU",
-      "url": "https://huggingface.co/spaces/hugging-apps/oasis-scene-parser",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 4,
-        "trend": 3,
-        "updatedAt": "2026-11-14"
-      },
-      "tags": [
-        "gradio"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "green",
-        "colorTo": "pink",
-        "emoji": "🏝️",
-        "host": "huggingface-space",
-        "models": [
-          "phanerozoic/oasis"
-        ],
-        "sdk": "gradio",
-        "space": "hugging-apps/oasis-scene-parser",
         "status": "running"
       },
       "fetchedAt": "2026-11-23"
@@ -20761,37 +21042,6 @@
         "status": "running"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-spaces:huggingface--paperswithcode",
-      "name": "Paperswithcode",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Mirror of paperswithcode.co served as a Hugging Face Space.",
-      "url": "https://huggingface.co/spaces/huggingface/paperswithcode",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 86,
-        "trend": 3,
-        "updatedAt": "2026-11-23"
-      },
-      "tags": [
-        "static"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "indigo",
-        "colorTo": "purple",
-        "emoji": "📚",
-        "host": "huggingface-space",
-        "sdk": "static",
-        "space": "huggingface/paperswithcode",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-23"
     },
     {
       "id": "hf-spaces:huggingface-krew--smol-training-playbook-ko",
@@ -21962,6 +22212,37 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-spaces:huggingfacem4--the-hugging-face-hack",
+      "name": "The Hugging Face Hack",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "A voice interrogation game set at Hugging Face. A rival AI cannot reach an offline drive, so it sends tailored tasks to three embodied AI agents: Ren Calder (infrastructure), Vera Vale (communications), and Orrin Pike (deliveries). Each has a body, a badge and something to hide.",
+      "url": "https://huggingface.co/spaces/HuggingFaceM4/the-hugging-face-hack",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 4,
+        "trend": 4,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "docker"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "indigo",
+        "colorTo": "gray",
+        "emoji": "🕵️",
+        "host": "huggingface-space",
+        "sdk": "docker",
+        "space": "HuggingFaceM4/the-hugging-face-hack",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "hf-spaces:huggingfaceswarms--pybot",
       "name": "PyBot",
       "kind": "ai-demos",
@@ -21973,8 +22254,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 68,
-        "trend": 16.5,
+        "likes": 78,
+        "trend": 16,
         "updatedAt": "2026-11-18"
       },
       "tags": [
@@ -21990,7 +22271,7 @@
         "space": "HuggingFaceSwarms/PyBot",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:huggingfaceswarms--pybot-msgboard",
@@ -22035,8 +22316,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 3359,
-        "trend": 12,
+        "likes": 3405,
+        "trend": 3,
         "updatedAt": "2026-07-28"
       },
       "tags": [
@@ -22056,7 +22337,7 @@
         "space": "HuggingFaceTB/smol-training-playbook",
         "status": "running"
       },
-      "fetchedAt": "2026-11-06"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:huggingfacetb--smollm-360m-instruct-webgpu",
@@ -23084,37 +23365,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-spaces:ikaco--imagetoimageedit",
-      "name": "Qwen Image 2.1 Uncensored",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Uncensored Qwen-Image-2.1 generate + edit",
-      "url": "https://huggingface.co/spaces/iKaco/ImageTOimageEdit",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 14,
-        "trend": 3,
-        "updatedAt": "2026-09-29"
-      },
-      "tags": [
-        "gradio"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "pink",
-        "colorTo": "purple",
-        "emoji": "🖼️",
-        "host": "huggingface-space",
-        "sdk": "gradio",
-        "space": "iKaco/ImageTOimageEdit",
-        "status": "runtime_error"
-      },
-      "fetchedAt": "2026-11-18"
-    },
-    {
       "id": "hf-spaces:ikechan8370--vits-uma-genshin-honkai",
       "name": "vits-uma-genshin-honkai",
       "kind": "ai-demos",
@@ -23363,6 +23613,41 @@
         "status": "running"
       },
       "fetchedAt": "2026-10-31"
+    },
+    {
+      "id": "hf-spaces:innoai--minimax-h3-flashgen-4step",
+      "name": "MiniMax-H3 4-Step FlashGen LoRA",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "4-step text-to-video+audio with MiniMax-H3 FlashGen LoRA",
+      "url": "https://huggingface.co/spaces/innoai/minimax-h3-flashgen-4step",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 13,
+        "trend": 3,
+        "updatedAt": "2026-08-26"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "blue",
+        "colorTo": "red",
+        "emoji": "⚡",
+        "host": "huggingface-space",
+        "models": [
+          "MiniMaxAI/MiniMax-H3",
+          "Beidouqixing/minimax-h3-4step-lora-flashgen"
+        ],
+        "sdk": "gradio",
+        "space": "innoai/minimax-h3-flashgen-4step",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:innova-ai--video-background-removal",
@@ -23641,6 +23926,37 @@
         "status": "runtime_error"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:ishiki-labs--audiowsp",
+      "name": "AudioWSP - Weight-Space Programming for Audio Models",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "AudioWSP - Weight-Space Programming for Audio Models (ishiki-labs/audiowsp)",
+      "url": "https://huggingface.co/spaces/ishiki-labs/audiowsp",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 3,
+        "trend": 3,
+        "updatedAt": "2026-11-19"
+      },
+      "tags": [
+        "static"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "green",
+        "colorTo": "blue",
+        "emoji": "🎙️",
+        "host": "huggingface-space",
+        "sdk": "static",
+        "space": "ishiki-labs/audiowsp",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:ishiki-labs--weight-space-programming-for-audio-models",
@@ -24195,7 +24511,7 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 8,
+        "likes": 13,
         "trend": 2.0999999999999996,
         "updatedAt": "2026-10-13"
       },
@@ -24219,7 +24535,7 @@
         "space": "JaxK49/qwen-image-2.1-uncensored-aio-loras",
         "status": "running"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:jbilcke-hf--ai-clip-factory",
@@ -24478,8 +24794,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 628,
-        "trend": 142,
+        "likes": 718,
+        "trend": 193,
         "updatedAt": "2026-08-28"
       },
       "tags": [
@@ -24495,7 +24811,7 @@
         "space": "JCisHERE/wan2-2-i2v-v3",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:jeffistyping--youtube-whisperer",
@@ -24841,36 +25157,6 @@
       "fetchedAt": "2026-11-14"
     },
     {
-      "id": "hf-spaces:johnlockejrr--qwen38-flash-next-hgn-leaderboard",
-      "name": "Qwen3.8-Flash-Next HGN Leaderboard",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Qwen3.8-Flash-Next HGN tool-calling leaderboard",
-      "url": "https://huggingface.co/spaces/johnlockejrr/qwen38-flash-next-hgn-leaderboard",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 10,
-        "trend": 3,
-        "updatedAt": "2026-11-19"
-      },
-      "tags": [
-        "static"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "blue",
-        "colorTo": "indigo",
-        "host": "huggingface-space",
-        "sdk": "static",
-        "space": "johnlockejrr/qwen38-flash-next-hgn-leaderboard",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-spaces:johnnysnowblind--wan2-2-fp8da-aoti-preview-2c-finishing",
       "name": "Wan2.2 14B Cum explosion lora",
       "kind": "ai-demos",
@@ -24882,8 +25168,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 41,
-        "trend": 31,
+        "likes": 54,
+        "trend": 39,
         "updatedAt": "2026-07-28"
       },
       "tags": [
@@ -24899,7 +25185,7 @@
         "space": "johnnysnowblind/wan2-2-fp8da-aoti-preview-2c-finishing",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:johnsmith9982--chuanhuchatgpt",
@@ -26262,8 +26548,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "likes": 152,
-        "trend": 3.5,
+        "likes": 153,
+        "trend": 4,
         "updatedAt": "2026-08-08"
       },
       "tags": [
@@ -26277,9 +26563,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "kogutt999/Pro-Realism-Edit-Studio",
-        "status": "running"
+        "status": "paused"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:kolaslab--midi-melody-generator",
@@ -26433,37 +26719,6 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-08"
-    },
-    {
-      "id": "hf-spaces:ksyja--minimax-h3-4step-dmad",
-      "name": "minimax h3 turbo + lora's",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Video generation with a synchronized soundtrack",
-      "url": "https://huggingface.co/spaces/KSYJA/Minimax-H3-4STEP-DMAD",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 4,
-        "trend": 3,
-        "updatedAt": "2026-11-17"
-      },
-      "tags": [
-        "gradio"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "purple",
-        "colorTo": "indigo",
-        "emoji": "🎬",
-        "host": "huggingface-space",
-        "sdk": "gradio",
-        "space": "KSYJA/Minimax-H3-4STEP-DMAD",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-18"
     },
     {
       "id": "hf-spaces:kulkas2pintu--kv-i2v",
@@ -26829,8 +27084,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 142,
-        "trend": 91,
+        "likes": 161,
+        "trend": 103,
         "updatedAt": "2026-11-22"
       },
       "tags": [
@@ -26846,7 +27101,7 @@
         "space": "Lakonik/pi-H3",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:lambda--image-mixer-demo",
@@ -27217,37 +27472,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-spaces:lematerial--lemat-genbench",
-      "name": "Lemat Bench",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Lemat Bench (LeMaterial/LeMat-GenBench)",
-      "url": "https://huggingface.co/spaces/LeMaterial/LeMat-GenBench",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 31,
-        "trend": 2,
-        "updatedAt": "2026-11-09"
-      },
-      "tags": [
-        "gradio"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "blue",
-        "colorTo": "yellow",
-        "emoji": "😻",
-        "host": "huggingface-space",
-        "sdk": "gradio",
-        "space": "LeMaterial/LeMat-GenBench",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-24"
-    },
-    {
       "id": "hf-spaces:lemonaddie--geowizard",
       "name": "GeoWizard",
       "kind": "ai-demos",
@@ -27307,37 +27531,6 @@
         "status": "paused"
       },
       "fetchedAt": "2026-10-20"
-    },
-    {
-      "id": "hf-spaces:lensoai--lenso.ai-reverse-image-search",
-      "name": "Lenso.ai Reverse Image Search",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Demo of lenso.ai reverse image search",
-      "url": "https://huggingface.co/spaces/LensoAI/lenso.ai-reverse-image-search",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 14,
-        "trend": 2,
-        "updatedAt": "2025-06-13"
-      },
-      "tags": [
-        "static"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "indigo",
-        "colorTo": "pink",
-        "emoji": "👁",
-        "host": "huggingface-space",
-        "sdk": "static",
-        "space": "LensoAI/lenso.ai-reverse-image-search",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-24"
     },
     {
       "id": "hf-spaces:leoxing--pia",
@@ -27945,6 +28138,37 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-spaces:linkup-platform--sparseup-embed-v2-visualization",
+      "name": "SPARSEUP-v2 visualization",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Interactive, precomputed expansions of Linkup-Platform/linkup-sparseup-embed-v2 on NanoBEIR query/document pairs and on a few other queries. Generated by images/scripts/build_sparseup_expansions_html.py in the lextok paper repo.",
+      "url": "https://huggingface.co/spaces/Linkup-Platform/sparseup-embed-v2-visualization",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 5,
+        "trend": 5,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "static"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "blue",
+        "colorTo": "gray",
+        "emoji": "🔎",
+        "host": "huggingface-space",
+        "sdk": "static",
+        "space": "Linkup-Platform/sparseup-embed-v2-visualization",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "hf-spaces:linlinlinlinsdada--jeveration",
       "name": "Jeveration",
       "kind": "ai-demos",
@@ -27957,8 +28181,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "likes": 20,
-        "trend": 20,
+        "likes": 27,
+        "trend": 24,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -27978,7 +28202,7 @@
         "space": "linlinlinlinsdada/Jeveration",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:linoyts--edit-friendly-ddpm-inversion",
@@ -28518,6 +28742,41 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-spaces:linzhouli--realdenseface",
+      "name": "RealDenseFace",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Monocular 3D face reconstruction from dense UV priors",
+      "url": "https://huggingface.co/spaces/LinzhouLi/RealDenseFace",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "license": "MIT",
+      "metrics": {
+        "likes": 4,
+        "trend": 3,
+        "updatedAt": "2026-11-03"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "blue",
+        "colorTo": "indigo",
+        "emoji": "🎭",
+        "host": "huggingface-space",
+        "models": [
+          "LinzhouLi/RealDenseFace"
+        ],
+        "sdk": "gradio",
+        "space": "LinzhouLi/RealDenseFace",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:liquidai--lfm2.5-1.2b-thinking-webgpu",
@@ -29888,47 +30147,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-spaces:malcolmmielle--sear-rgb-thermal-3d",
-      "name": "SEAR — Unpaired RGB + Thermal 3D Reconstruction",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Unpaired RGB+thermal images in, one 3D scene + poses out",
-      "url": "https://huggingface.co/spaces/MalcolmMielle/sear-rgb-thermal-3d",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 4,
-        "trend": 4,
-        "updatedAt": "2026-11-17"
-      },
-      "tags": [
-        "3d-reconstruction",
-        "camera-poses",
-        "depth-estimation",
-        "gradio",
-        "point-cloud",
-        "thermal",
-        "thermal-imaging"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "blue",
-        "colorTo": "red",
-        "emoji": "🔥",
-        "host": "huggingface-space",
-        "models": [
-          "MalcolmMielle/SEAR",
-          "facebook/VGGT-1B"
-        ],
-        "sdk": "gradio",
-        "space": "MalcolmMielle/sear-rgb-thermal-3d",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-18"
-    },
-    {
       "id": "hf-spaces:malcolmrey--browser",
       "name": "Browser",
       "kind": "ai-demos",
@@ -30302,6 +30520,37 @@
         "status": "build_error"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:markovidrih--video-face-swap",
+      "name": "Video Face Swap",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Video Face Swap (MarkoVidrih/video-face-swap)",
+      "url": "https://huggingface.co/spaces/MarkoVidrih/video-face-swap",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 100,
+        "trend": 4,
+        "updatedAt": "2024-04-01"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "blue",
+        "colorTo": "gray",
+        "emoji": "🤯",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "MarkoVidrih/video-face-swap",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:markpaulm--gemma-4-31b-it-abliterated",
@@ -30700,9 +30949,9 @@
       },
       "license": "MIT",
       "metrics": {
-        "likes": 31,
-        "trend": 24,
-        "updatedAt": "2026-11-16"
+        "likes": 36,
+        "trend": 12,
+        "updatedAt": "2026-11-21"
       },
       "tags": [
         "image-enhancement",
@@ -30723,45 +30972,7 @@
         "space": "MegaPotatoAI/AI-Image-Upscaler",
         "status": "running"
       },
-      "fetchedAt": "2026-11-17"
-    },
-    {
-      "id": "hf-spaces:megapotatoai--photo-enhancer",
-      "name": "Photo Enhancer",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Refine grainy, soft and compressed photos with AI",
-      "url": "https://huggingface.co/spaces/MegaPotatoAI/Photo-Enhancer",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "license": "MIT",
-      "metrics": {
-        "likes": 8,
-        "trend": 3,
-        "updatedAt": "2026-11-21"
-      },
-      "tags": [
-        "image-denoising",
-        "image-enhancement",
-        "image-restoration",
-        "image-to-image",
-        "photo-enhancement",
-        "static",
-        "super-resolution"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "gray",
-        "colorTo": "red",
-        "emoji": "🖼️",
-        "host": "huggingface-space",
-        "sdk": "static",
-        "space": "MegaPotatoAI/Photo-Enhancer",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:mehdi-hf--cilla-mini-demo",
@@ -30805,8 +31016,8 @@
       },
       "license": "CC-BY-4.0",
       "metrics": {
-        "likes": 8,
-        "trend": 8,
+        "likes": 15,
+        "trend": 14,
         "updatedAt": "2026-11-23"
       },
       "tags": [
@@ -30822,7 +31033,7 @@
         "space": "mehdi-hf/tiny-ava-demo",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:merle--protein-generator",
@@ -31550,8 +31761,8 @@
       },
       "license": "MIT",
       "metrics": {
-        "likes": 2244,
-        "trend": 27,
+        "likes": 2470,
+        "trend": 39,
         "updatedAt": "2026-05-20"
       },
       "tags": [
@@ -31567,7 +31778,7 @@
         "space": "microsoft/TRELLIS.2",
         "status": "running"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:microsoft--visual-chatgpt",
@@ -31711,7 +31922,7 @@
       "license": "Apache-2.0",
       "metrics": {
         "likes": 225,
-        "updatedAt": "2026-07-10"
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "streamlit"
@@ -31726,7 +31937,7 @@
         "space": "mindee/doctr",
         "status": "paused"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:miniailive--miniailive-facerecognition-webapi",
@@ -31833,8 +32044,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 292,
-        "trend": 137,
+        "likes": 326,
+        "trend": 121,
         "updatedAt": "2026-11-10"
       },
       "tags": [
@@ -31850,7 +32061,7 @@
         "space": "MiniMaxAI/minimax-h3-image",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:minimaxai--minimax-h3-turbo-lora",
@@ -33201,9 +33412,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "mrfakename/MetaVoice-1B-v0.1",
-        "status": "sleeping"
+        "status": "running"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:mrfakename--minimax-h3-ultra-fast",
@@ -33271,6 +33482,42 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "hf-spaces:mrfakename--viggle-image-swap",
+      "name": "Viggle Image Swap",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Swap people in a picture with character-sheet characters",
+      "url": "https://huggingface.co/spaces/mrfakename/viggle-image-swap",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 4,
+        "trend": 3,
+        "updatedAt": "2026-11-09"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "yellow",
+        "colorTo": "red",
+        "emoji": "🎭",
+        "host": "huggingface-space",
+        "models": [
+          "Viggle/Viggle-Image-Swap",
+          "Qwen/Qwen-Image-2.1",
+          "Qwen/Qwen-Image-2.1-Turbo"
+        ],
+        "sdk": "gradio",
+        "space": "mrfakename/viggle-image-swap",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "hf-spaces:mrfakename--voice-isolator",
       "name": "Voice Isolator",
       "kind": "ai-demos",
@@ -33283,8 +33530,8 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "likes": 19,
-        "trend": 18,
+        "likes": 30,
+        "trend": 27,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -33303,7 +33550,7 @@
         "space": "mrfakename/voice-isolator",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:mrfakename--yue2-3b",
@@ -34521,7 +34768,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 326,
+        "likes": 328,
+        "trend": 3,
         "updatedAt": "2026-09-22"
       },
       "tags": [
@@ -34537,7 +34785,7 @@
         "space": "multimodalart/minimax-h3",
         "status": "running"
       },
-      "fetchedAt": "2026-11-09"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:multimodalart--minimax-h3-reference",
@@ -35388,7 +35636,7 @@
       "license": "MIT",
       "metrics": {
         "likes": 29,
-        "trend": 4.5,
+        "trend": 4,
         "updatedAt": "2026-11-19"
       },
       "tags": [
@@ -35408,9 +35656,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "nchhaya/hyperapi-demo",
-        "status": "running"
+        "status": "paused"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:neuphonic--neutts-air",
@@ -35998,9 +36246,9 @@
         "host": "huggingface-space",
         "sdk": "docker",
         "space": "nikigoli/countgd",
-        "status": "running"
+        "status": "sleeping"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:nineninesix--kanitts",
@@ -36245,9 +36493,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "nroggendorff/epicrealismxl",
-        "status": "running"
+        "status": "sleeping"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:nupurkmr9--custom-diffusion",
@@ -36725,37 +36973,6 @@
       "fetchedAt": "2026-11-23"
     },
     {
-      "id": "hf-spaces:nvidia--rfd4-proteina-zerogpu",
-      "name": "RFD4-Proteina ZeroGPU",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Design proteins and complexes with RFD4-Proteína",
-      "url": "https://huggingface.co/spaces/nvidia/rfd4-proteina-zerogpu",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 19,
-        "trend": 4,
-        "updatedAt": "2026-11-22"
-      },
-      "tags": [
-        "gradio"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "purple",
-        "colorTo": "green",
-        "emoji": "🧬",
-        "host": "huggingface-space",
-        "sdk": "gradio",
-        "space": "nvidia/rfd4-proteina-zerogpu",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-23"
-    },
-    {
       "id": "hf-spaces:nvidia--simready-central",
       "name": "SimReady Central",
       "kind": "ai-demos",
@@ -37082,9 +37299,9 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 113,
-        "trend": 22,
-        "updatedAt": "2026-11-22"
+        "likes": 137,
+        "trend": 36,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "gradio"
@@ -37099,7 +37316,7 @@
         "space": "observantdistressed/minimax-h3-turbo",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:obsxrver--wan22-i2v-omni-lora",
@@ -42858,37 +43075,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-spaces:racineai--jevol",
-      "name": "Jevol",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "A drone flown by a small VLM in your browser",
-      "url": "https://huggingface.co/spaces/racineai/jevol",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "metrics": {
-        "likes": 4,
-        "trend": 4,
-        "updatedAt": "2026-11-16"
-      },
-      "tags": [
-        "static"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "gray",
-        "colorTo": "gray",
-        "emoji": "🛸",
-        "host": "huggingface-space",
-        "sdk": "static",
-        "space": "racineai/jevol",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-18"
-    },
-    {
       "id": "hf-spaces:radames--ai-town",
       "name": "AI Town on HuggingFace",
       "kind": "ai-demos",
@@ -43664,8 +43850,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 239,
-        "trend": 41,
+        "likes": 267,
+        "trend": 52,
         "updatedAt": "2026-10-15"
       },
       "tags": [
@@ -43681,7 +43867,7 @@
         "space": "rdata92/LTX-2.3-10Eros",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:rdata92--qwen-image-21-uncensored",
@@ -43695,8 +43881,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 19,
-        "trend": 9.799999999999999,
+        "likes": 30,
+        "trend": 16.099999999999998,
         "updatedAt": "2026-11-15"
       },
       "tags": [
@@ -43712,7 +43898,7 @@
         "space": "rdata92/qwen-image-21-uncensored",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:reach-vb--2024-ai-timeline",
@@ -43933,6 +44119,40 @@
         "status": "running"
       },
       "fetchedAt": "2026-10-27"
+    },
+    {
+      "id": "hf-spaces:resembleai--chatterbox-multilingual-tts-v3",
+      "name": "Chatterbox-Multilingual-TTS-V3",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "Chatterbox Multilingual TTS V3 (t3_mtl23ls_v3).",
+      "url": "https://huggingface.co/spaces/ResembleAI/Chatterbox-Multilingual-TTS-V3",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 52,
+        "trend": 4,
+        "updatedAt": "2026-06-12"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "indigo",
+        "colorTo": "blue",
+        "emoji": "🌐",
+        "host": "huggingface-space",
+        "models": [
+          "ResembleAI/chatterbox"
+        ],
+        "sdk": "gradio",
+        "space": "ResembleAI/Chatterbox-Multilingual-TTS-V3",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:resembleai--chatterbox-turbo-demo",
@@ -44227,9 +44447,9 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 281,
-        "trend": 13,
-        "updatedAt": "2026-11-16"
+        "likes": 310,
+        "trend": 7.5,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "gradio"
@@ -44251,7 +44471,7 @@
         "space": "RioShiina/ImageGen",
         "status": "running"
       },
-      "fetchedAt": "2026-11-17"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:ritianyu--splatanything",
@@ -44996,9 +45216,9 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 65,
-        "trend": 11,
-        "updatedAt": "2026-11-05"
+        "likes": 69,
+        "trend": 9.5,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "docker"
@@ -45012,7 +45232,7 @@
         "space": "Sandflow/sand3d-explorer",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:sanster--iopaint-lama",
@@ -45612,6 +45832,42 @@
         "status": "runtime_error"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:sensenova--sensenova-u1.6-studio",
+      "name": "SenseNova U1.6 Studio",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "SenseNova U1.6 Studio (sensenova/sensenova-u1.6-studio)",
+      "url": "https://huggingface.co/spaces/sensenova/sensenova-u1.6-studio",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "license": "Apache-2.0",
+      "metrics": {
+        "likes": 7,
+        "trend": 6,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "gradio",
+        "ml-intern"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "red",
+        "colorTo": "yellow",
+        "emoji": "🎨",
+        "host": "huggingface-space",
+        "models": [
+          "sensenova/SenseNova-U1.6-8B-MoT"
+        ],
+        "sdk": "gradio",
+        "space": "sensenova/sensenova-u1.6-studio",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:sentence-transformers--embeddings-semantic-search",
@@ -46858,9 +47114,9 @@
       },
       "license": "CC-BY-NC-4.0",
       "metrics": {
-        "likes": 27,
-        "trend": 26,
-        "updatedAt": "2026-11-20"
+        "likes": 32,
+        "trend": 31,
+        "updatedAt": "2026-11-23"
       },
       "tags": [
         "static"
@@ -46879,7 +47135,7 @@
         "space": "software-mansion/Reverb-TTS-runntime",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:someone-in-the-world--firered-experimental-turbo",
@@ -49471,9 +49727,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "TencentARC/ToonComposer",
-        "status": "running"
+        "status": "sleeping"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:terrariyum--sdxl-artists-browser",
@@ -49680,7 +49936,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 469,
+        "likes": 472,
+        "trend": 3,
         "updatedAt": "2025-08-10"
       },
       "tags": [
@@ -49696,7 +49953,7 @@
         "space": "TheStinger/UVR5_UI",
         "status": "running"
       },
-      "fetchedAt": "2026-11-13"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:thinhlpg--vixtts-demo",
@@ -49918,51 +50175,6 @@
       "fetchedAt": "2026-11-06"
     },
     {
-      "id": "hf-spaces:tiberiucristianleon--streamlittranslate",
-      "name": "Streamlit Machine Translate",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "Machine Translation with Streamlit using multiple models",
-      "url": "https://huggingface.co/spaces/TiberiuCristianLeon/StreamlitTranslate",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "license": "GPL-3.0",
-      "metrics": {
-        "likes": 16,
-        "trend": 3,
-        "updatedAt": "2026-11-13"
-      },
-      "tags": [
-        "machine-translation",
-        "mcp",
-        "multilingual",
-        "polyglot",
-        "streamlit",
-        "translate",
-        "translation"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "purple",
-        "colorTo": "green",
-        "emoji": "📚",
-        "host": "huggingface-space",
-        "models": [
-          "Helsinki-NLP",
-          "QUICKMT",
-          "Argos",
-          "Lego-MT/Lego-MT",
-          "HPLT"
-        ],
-        "sdk": "streamlit",
-        "space": "TiberiuCristianLeon/StreamlitTranslate",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-13"
-    },
-    {
       "id": "hf-spaces:tiger-lab--genai-arena",
       "name": "GenAI Arena",
       "kind": "ai-demos",
@@ -50008,8 +50220,9 @@
       },
       "license": "Apache-2.0",
       "metrics": {
-        "likes": 143,
-        "updatedAt": "2026-10-23"
+        "likes": 146,
+        "trend": 1,
+        "updatedAt": "2026-11-24"
       },
       "tags": [
         "gradio"
@@ -50024,7 +50237,7 @@
         "space": "TIGER-Lab/MMEB-Leaderboard",
         "status": "running"
       },
-      "fetchedAt": "2026-11-03"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:tiger-lab--mmlu-pro",
@@ -50235,9 +50448,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "tomg-group-umd/lm-watermarking",
-        "status": "sleeping"
+        "status": "runtime_error"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:tomg-group-umd--pez-dispenser",
@@ -50665,8 +50878,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 44,
-        "trend": 11,
+        "likes": 49,
+        "trend": 15,
         "updatedAt": "2026-08-17"
       },
       "tags": [
@@ -50682,7 +50895,7 @@
         "space": "traderharikrishna/Wan_2.2_I2V_14B_Custom_Lora",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:trellis-community--trellis",
@@ -50715,6 +50928,41 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "hf-spaces:trl-lib--async-grpo-stable",
+      "name": "AsyncGRPOTrainer is stable: async RL in TRL",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "TRL's AsyncGRPOTrainer is now stable. How to run it, what you can train with it, and how it compares with GRPOTrainer on the same GPUs. Built with the research article template.",
+      "url": "https://huggingface.co/spaces/trl-lib/async-grpo-stable",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 13,
+        "trend": 3,
+        "updatedAt": "2026-11-13"
+      },
+      "tags": [
+        "docker",
+        "grpo",
+        "reinforcement-learning",
+        "research-article-template",
+        "trl"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "pink",
+        "colorTo": "indigo",
+        "emoji": "🔁",
+        "host": "huggingface-space",
+        "sdk": "docker",
+        "space": "trl-lib/async-grpo-stable",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:trl-lib--asyncgrpo-benchmark",
@@ -51155,21 +51403,20 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-spaces:upsampler--media-upscaler",
-      "name": "GAN Upscalers - Image & Video Upscaling",
+      "id": "hf-spaces:upsampler--ltx-2-5",
+      "name": "LTX 2.5",
       "kind": "ai-demos",
       "category": "opensource",
-      "summary": "Fast 4x image and video upscaling with GAN models",
-      "url": "https://huggingface.co/spaces/Upsampler/media-upscaler",
+      "summary": "LTX-2.5 distilled two-stage video generation with audio",
+      "url": "https://huggingface.co/spaces/Upsampler/ltx-2-5",
       "source": {
         "name": "Hugging Face Spaces",
         "url": "https://huggingface.co/spaces"
       },
-      "license": "Apache-2.0",
       "metrics": {
-        "likes": 46,
+        "likes": 18,
         "trend": 3,
-        "updatedAt": "2026-10-14"
+        "updatedAt": "2026-10-13"
       },
       "tags": [
         "gradio"
@@ -51178,13 +51425,16 @@
         "type": "site",
         "colorFrom": "indigo",
         "colorTo": "purple",
-        "emoji": "🔍",
+        "emoji": "🎬",
         "host": "huggingface-space",
+        "models": [
+          "Lightricks/LTX-2.5-Diffusers"
+        ],
         "sdk": "gradio",
-        "space": "Upsampler/media-upscaler",
+        "space": "Upsampler/ltx-2-5",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:upsampler--relayvsr",
@@ -51413,6 +51663,37 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-18"
+    },
+    {
+      "id": "hf-spaces:vagosolutions--sauerkrautlm-glinerel-knowledge-graph",
+      "name": "SauerkrautLM-GLiNEREL Knowledge Graph",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "glinerels turning text into an interactive knowledge graph",
+      "url": "https://huggingface.co/spaces/VAGOsolutions/SauerkrautLM-GLiNEREL-Knowledge-Graph",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 22,
+        "trend": 4,
+        "updatedAt": "2026-11-05"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "purple",
+        "colorTo": "indigo",
+        "emoji": "🚀",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "VAGOsolutions/SauerkrautLM-GLiNEREL-Knowledge-Graph",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:vamo455--omni-videos-custom-auto-prompt-high-quality",
@@ -52130,8 +52411,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 19,
-        "trend": 18,
+        "likes": 24,
+        "trend": 12,
         "updatedAt": "2026-11-17"
       },
       "tags": [
@@ -52147,7 +52428,7 @@
         "space": "victor/LongCat-Video-Avatar-1.6",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:victor--minicpm5-2b-webgpu-pi",
@@ -52888,9 +53169,9 @@
         "host": "huggingface-space",
         "sdk": "gradio",
         "space": "Vision-CAIR-Admin/MiniGPT-v2",
-        "status": "running"
+        "status": "sleeping"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:vision-cair-admin--minigpt4",
@@ -53221,8 +53502,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 30,
-        "trend": 23,
+        "likes": 40,
+        "trend": 32,
         "updatedAt": "2026-11-20"
       },
       "tags": [
@@ -53238,7 +53519,7 @@
         "space": "waitinghere/MINIMAX-H3-Ref2VA-Revamped",
         "status": "running"
       },
-      "fetchedAt": "2026-11-24"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:wan-ai--wan2.1",
@@ -53302,6 +53583,37 @@
         "status": "running"
       },
       "fetchedAt": "2026-11-13"
+    },
+    {
+      "id": "hf-spaces:wang-xixi--vidihand2",
+      "name": "ViDiHand2",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "3D hand motion reconstruction from video",
+      "url": "https://huggingface.co/spaces/WANG-XIXI/ViDiHand2",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 3,
+        "trend": 3,
+        "updatedAt": "2026-11-24"
+      },
+      "tags": [
+        "gradio"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "indigo",
+        "colorTo": "blue",
+        "emoji": "🖐️",
+        "host": "huggingface-space",
+        "sdk": "gradio",
+        "space": "WANG-XIXI/ViDiHand2",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:wangfuyun--animatelcm",
@@ -54367,7 +54679,6 @@
       "license": "Apache-2.0",
       "metrics": {
         "likes": 127,
-        "trend": 3,
         "updatedAt": "2026-11-16"
       },
       "tags": [
@@ -54387,7 +54698,7 @@
         "space": "webml-community/Supertonic-TTS-WebGPU",
         "status": "running"
       },
-      "fetchedAt": "2026-11-18"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:webml-community--ternary-bonsai-2-webgpu-kernels",
@@ -54931,8 +55242,8 @@
         "url": "https://huggingface.co/spaces"
       },
       "metrics": {
-        "likes": 20,
-        "trend": 10.5,
+        "likes": 36,
+        "trend": 12.6,
         "updatedAt": "2026-11-08"
       },
       "tags": [
@@ -54955,7 +55266,7 @@
         "space": "X-HighVoltage-X/qwen-image-2.1-uncensored-aio-loras",
         "status": "running"
       },
-      "fetchedAt": "2026-11-23"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:xcliu--instaflow",
@@ -57523,38 +57834,6 @@
       "fetchedAt": "2026-10-20"
     },
     {
-      "id": "hf-spaces:zerovic--insightface-face-swapper-on-video",
-      "name": "InsightFace-Face Swapper-on Video",
-      "kind": "ai-demos",
-      "category": "opensource",
-      "summary": "This is a face swapper that swaps face within video.",
-      "url": "https://huggingface.co/spaces/zerovic/InsightFace-Face_Swapper-on_video",
-      "source": {
-        "name": "Hugging Face Spaces",
-        "url": "https://huggingface.co/spaces"
-      },
-      "license": "MIT",
-      "metrics": {
-        "likes": 8,
-        "trend": 2,
-        "updatedAt": "2026-06-04"
-      },
-      "tags": [
-        "streamlit"
-      ],
-      "preview": {
-        "type": "site",
-        "colorFrom": "gray",
-        "colorTo": "indigo",
-        "emoji": "😻",
-        "host": "huggingface-space",
-        "sdk": "streamlit",
-        "space": "zerovic/InsightFace-Face_Swapper-on_video",
-        "status": "running"
-      },
-      "fetchedAt": "2026-11-24"
-    },
-    {
       "id": "hf-spaces:zeyue7--audiox",
       "name": "AudioX",
       "kind": "ai-demos",
@@ -57809,6 +58088,41 @@
         "status": "build_error"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "hf-spaces:zjuscl--twinlab-bench-leaderboard",
+      "name": "TwinLab-Bench Leaderboard",
+      "kind": "ai-demos",
+      "category": "opensource",
+      "summary": "AI scientists that design their own experiments",
+      "url": "https://huggingface.co/spaces/ZJUSCL/TwinLab-Bench_Leaderboard",
+      "source": {
+        "name": "Hugging Face Spaces",
+        "url": "https://huggingface.co/spaces"
+      },
+      "metrics": {
+        "likes": 3,
+        "trend": 3,
+        "updatedAt": "2026-11-20"
+      },
+      "tags": [
+        "agent",
+        "ai-scientist",
+        "evaluation",
+        "leaderboard",
+        "static"
+      ],
+      "preview": {
+        "type": "site",
+        "colorFrom": "red",
+        "colorTo": "yellow",
+        "emoji": "⚗️",
+        "host": "huggingface-space",
+        "sdk": "static",
+        "space": "ZJUSCL/TwinLab-Bench_Leaderboard",
+        "status": "running"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "hf-spaces:zjyang--aniportrait-official",

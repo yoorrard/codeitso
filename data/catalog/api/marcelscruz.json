@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-24",
-  "count": 965,
+  "fetchedAt": "2026-11-25",
+  "count": 973,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -1566,6 +1566,30 @@
         "listCategory": "Development"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:aqx-logistics",
+      "name": "AQX Logistics",
+      "kind": "maps",
+      "category": "api",
+      "summary": "International air freight quotes, volumetric package consolidation, and corridor transit data",
+      "url": "https://aqxlogistics.com/developers",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "marcelscruz:argentinadatos",
@@ -4857,6 +4881,29 @@
         "listCategory": "Sports & Fitness"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:crowdwisdom-trading",
+      "name": "CrowdWisdom Trading",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Crowd sentiment score from -100 to +100 and the count of pro traders per ticker, daily and weekly. Free endpoints need no key; paid calls via x402 on Base",
+      "url": "https://www.crowdwisdomtrading.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "marcelscruz:crustapi",
@@ -13713,6 +13760,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:onchaincheck",
+      "name": "OnchainCheck",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Pay-per-call onchain data for agents: token rug-risk scores, wallet profiles, whale trades and new pools on six chains, Polymarket and Hyperliquid trader data; paid in USDC via x402",
+      "url": "https://onchaincheck.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "marcelscruz:onlinecompiler",
       "name": "OnlineCompiler",
       "kind": "dev",
@@ -13734,6 +13805,30 @@
         "listCategory": "Programming"
       },
       "fetchedAt": "2026-11-17"
+    },
+    {
+      "id": "marcelscruz:onomeo",
+      "name": "onomeo",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "OpenAI- and Anthropic-compatible API for Claude, GPT, Gemini and DeepSeek models on one pay-as-you-go key, with free open models for new accounts",
+      "url": "https://onomeo.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "marcelscruz:open-bank-project",
@@ -14452,6 +14547,29 @@
         "listCategory": "Security"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:paymos",
+      "name": "Paymos",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Stablecoin (USDT, USDC, USD1, DAI) and gold-backed XAUT payment gateway API across 13 networks with hosted checkout and signed webhooks",
+      "url": "https://paymos.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cryptocurrency"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "marcelscruz:payus-as-a-service-puaas",
@@ -15338,6 +15456,30 @@
       "fetchedAt": "2026-11-17"
     },
     {
+      "id": "marcelscruz:prince-george-pulse",
+      "name": "Prince George Pulse",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Local data for Prince George, BC: events, businesses, weather, transit and civic services, with source attribution",
+      "url": "https://princegeorgepulse.ca",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "open-data"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Open Data"
+      },
+      "fetchedAt": "2026-11-25"
+    },
+    {
       "id": "marcelscruz:printful",
       "name": "Printful",
       "kind": "payments",
@@ -15464,7 +15606,7 @@
       "kind": "ai-other",
       "category": "api",
       "summary": "Real-time uptime and incident status for 75+ AI services (OpenAI, Anthropic, Cursor, Gemini)",
-      "url": "https://prismix.dev/api-docs",
+      "url": "https://prismix.dev",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -15480,7 +15622,7 @@
         "cors": "yes",
         "listCategory": "AI"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "marcelscruz:privatus-analytics",
@@ -16948,7 +17090,7 @@
       "kind": "open-data",
       "category": "api",
       "summary": "Wages and employment for every US occupation by state and metro area, from Bureau of Labor Statistics survey data, with cost-of-living adjustment",
-      "url": "https://salarywiki.com/api",
+      "url": "https://salarywiki.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
         "url": "https://github.com/marcelscruz/public-apis"
@@ -16964,7 +17106,7 @@
         "cors": "yes",
         "listCategory": "Open Data"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "marcelscruz:satellite-passes",
@@ -19691,6 +19833,33 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:teamorouter",
+      "name": "TeamoRouter",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "OpenAI- and Anthropic-compatible API gateway for Claude, GPT, Gemini, DeepSeek, GLM, Kimi and Qwen on one prepaid pay-as-you-go key",
+      "url": "https://teamorouter.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-25",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "marcelscruz:techmap-s-job-postings",
       "name": "Techmap's Job Postings",
       "kind": "business",
@@ -22285,6 +22454,30 @@
         "listCategory": "Data Validation"
       },
       "fetchedAt": "2026-11-03"
+    },
+    {
+      "id": "marcelscruz:within",
+      "name": "within",
+      "kind": "payments",
+      "category": "api",
+      "summary": "Live stock at independent fashion boutiques: sizes, prices, delivered cost with duty and tax, and boutiques in 140+ cities; also an MCP server",
+      "url": "https://shopwithin.co",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-11-25"
     },
     {
       "id": "marcelscruz:wok",

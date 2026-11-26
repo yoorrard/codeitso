@@ -6,7 +6,7 @@
     "license": "Facts (names, official URLs) and the official pages' own one-line descriptions; Korean lines written by 코드잇소",
     "note": "AI APIs not in models.dev, Korean developer and public APIs not in public-apis-4Kr, and popular payment, messaging, login and map APIs. freeTierQuote is copied as-is from the official pricing page on the check date; it is not a promise. metrics.downloads = npm weekly downloads of the official SDK (preview.downloadsOf). metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-25",
+  "fetchedAt": "2026-11-26",
   "count": 225,
   "items": [
     {
@@ -384,6 +384,9 @@
         "name": "docs.apify.com",
         "url": "https://docs.apify.com/api/v2"
       },
+      "metrics": {
+        "downloads": 636276
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -392,7 +395,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "freeTierCheckedAt": "2026-11-23",
+        "downloadsOf": "npm:apify-client",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "Enjoy $500 worth of free usage to build your own Actors and AI agents along with other benefits for 6 months.",
         "keyServerSide": true,
         "pricingUrl": "https://apify.com/pricing",
@@ -403,10 +407,7 @@
         "install": "npm install apify-client",
         "docs": "https://docs.apify.com/api/v2"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 100000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:assemblyai",
@@ -1057,7 +1058,7 @@
       "name": "BytePlus ModelArk",
       "kind": "ai-inference",
       "category": "api",
-      "summary": "All-in-one AI model service platform, offering top-rated models to empower diverse scenarios",
+      "summary": "Build, deploy, and scale AI with BytePlus — cutting-edge models, tools, and infrastructure proven on global platforms.",
       "summaryKo": "ByteDance의 Seed 모델(글·이미지·영상)을 쓰는 BytePlus ModelArk",
       "written": "codeshopper",
       "url": "https://www.byteplus.com/en/product/modelark",
@@ -1131,7 +1132,7 @@
         "url": "https://docs.cartesia.ai"
       },
       "metrics": {
-        "downloads": 348596
+        "downloads": 270808
       },
       "tags": [
         "ai",
@@ -1142,7 +1143,7 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:@cartesia/cartesia-js",
-        "freeTierCheckedAt": "2026-11-23",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "Pricing: free plan, TTS, STT, and voice agents",
         "keyServerSide": true,
         "pricingUrl": "https://cartesia.ai/pricing",
@@ -5462,9 +5463,6 @@
         "name": "docs.retellai.com",
         "url": "https://docs.retellai.com"
       },
-      "metrics": {
-        "downloads": 402663
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5473,8 +5471,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:retell-sdk",
-        "freeTierCheckedAt": "2026-11-23",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "Go live in minutes with $10 in free credits.",
         "keyServerSide": true,
         "pricingUrl": "https://www.retellai.com/pricing",
@@ -5485,7 +5482,10 @@
         "install": "npm install retell-sdk",
         "docs": "https://docs.retellai.com"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:rev-ai",
@@ -5500,6 +5500,9 @@
         "name": "docs.rev.ai",
         "url": "https://docs.rev.ai"
       },
+      "metrics": {
+        "downloads": 11759
+      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5508,7 +5511,8 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "freeTierCheckedAt": "2026-11-25",
+        "downloadsOf": "npm:revai-node-sdk",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "Free credits equivalent to 5 hours of Reverb ASR (free credits can be used for all products).",
         "keyServerSide": true,
         "pricingUrl": "https://www.rev.ai/pricing",
@@ -5724,9 +5728,6 @@
         "name": "runware.ai",
         "url": "https://runware.ai/docs"
       },
-      "metrics": {
-        "downloads": 4800
-      },
       "tags": [
         "ai",
         "auth-apikey",
@@ -5735,8 +5736,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
-        "downloadsOf": "npm:@runware/sdk",
-        "freeTierCheckedAt": "2026-11-25",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "New users who sign up with a business email receive $2 in free credits to explore the platform and test various models.",
         "keyServerSide": true,
         "pricingUrl": "https://runware.ai/pricing",
@@ -5747,7 +5747,10 @@
         "install": "npm install @runware/sdk",
         "docs": "https://runware.ai/docs"
       },
-      "fetchedAt": "2026-10-14"
+      "fetchedAt": "2026-10-14",
+      "metrics": {
+        "siteRank": 500000
+      }
     },
     {
       "id": "official:runway",
@@ -6325,7 +6328,7 @@
       "name": "Stadia Maps",
       "kind": "maps",
       "category": "api",
-      "summary": "Stadia Maps: Map APIs with geocoding, routing, and search. Privacy-first, transparent pricing.",
+      "summary": "Stadia Maps: privacy-first map, geocoding, and routing APIs for developers. Transparent pricing. Try every API free for 14 days, no credit card.",
       "summaryKo": "지도 타일·길 찾기·주소 검색 API (Stadia Maps)",
       "written": "codeshopper",
       "url": "https://stadiamaps.com",
@@ -6340,7 +6343,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey / domain",
-        "freeTierCheckedAt": "2026-10-20",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "Your account will remain on our free plan after your trial unless you decide to upgrade.",
         "keyServerSide": true,
         "pricingUrl": "https://stadiamaps.com/pricing/",
@@ -6421,6 +6424,9 @@
         "name": "docs.stripe.com",
         "url": "https://docs.stripe.com/api"
       },
+      "metrics": {
+        "downloads": 35301588
+      },
       "tags": [
         "auth-apikey",
         "server-key"
@@ -6428,6 +6434,7 @@
       "preview": {
         "type": "api",
         "auth": "apiKey",
+        "downloadsOf": "npm:stripe",
         "keyServerSide": true,
         "pricingUrl": "https://stripe.com/pricing",
         "sdk": "stripe",
@@ -6437,10 +6444,7 @@
         "install": "npm install stripe",
         "docs": "https://docs.stripe.com/api"
       },
-      "fetchedAt": "2026-10-14",
-      "metrics": {
-        "siteRank": 50000
-      }
+      "fetchedAt": "2026-10-14"
     },
     {
       "id": "official:stytch",
@@ -6456,7 +6460,7 @@
         "url": "https://stytch.com/docs"
       },
       "metrics": {
-        "downloads": 478727
+        "downloads": 428237
       },
       "tags": [
         "auth-apikey",
@@ -6466,7 +6470,7 @@
         "type": "api",
         "auth": "project id / secret",
         "downloadsOf": "npm:stytch",
-        "freeTierCheckedAt": "2026-11-24",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "If you surpass the 10,000 MAUs, 5 SSO or SCIM connections, 1000 M2M tokens, or 10,000 fingerprints included in our free tier, you'll pay for only what you use at the rates outlined above.",
         "keyServerSide": true,
         "pricingUrl": "https://stytch.com/pricing",
@@ -6845,7 +6849,7 @@
       "name": "Twelve Labs API",
       "kind": "ai-vision",
       "category": "api",
-      "summary": "TwelveLabs delivers enterprise video AI powered by multimodal intelligence. Search, analyze, and understand video across vision, audio, and language.",
+      "summary": "Everything a camera sees, turned into intelligence people and machines can act on.",
       "summaryKo": "영상 속 장면을 찾고 요약하는 Twelve Labs 영상 이해 API",
       "written": "codeshopper",
       "url": "https://www.twelvelabs.io",
@@ -6854,7 +6858,7 @@
         "url": "https://docs.twelvelabs.io"
       },
       "metrics": {
-        "downloads": 22617
+        "downloads": 23986
       },
       "tags": [
         "ai",
@@ -6866,7 +6870,7 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:twelvelabs-js",
-        "freeTierCheckedAt": "2026-11-14",
+        "freeTierCheckedAt": "2026-11-26",
         "freeTierQuote": "If you don’t choose a plan, your account will move to the new Free plan automatically.",
         "keyServerSide": true,
         "pricingUrl": "https://www.twelvelabs.io/pricing",
@@ -7187,7 +7191,7 @@
         "url": "https://docs.voyageai.com"
       },
       "metrics": {
-        "downloads": 359710
+        "downloads": 336339
       },
       "tags": [
         "ai",
@@ -7198,8 +7202,8 @@
         "type": "api",
         "auth": "apiKey",
         "downloadsOf": "npm:voyageai",
-        "freeTierCheckedAt": "2026-11-23",
-        "freeTierQuote": "The first 200M text tokens and 150B pixels for voyage-multimodal-3.5 and voyage-multimodal-3 are free for every account.",
+        "freeTierCheckedAt": "2026-11-26",
+        "freeTierQuote": "The first 200 million tokens for voyage-4-large, voyage-4, voyage-4-lite, voyage-context-4, and voyage-code-4, or the first 50 million tokens for voyage-finance-2, and voyage-law-2are free for every account.",
         "keyServerSide": true,
         "pricingUrl": "https://docs.voyageai.com/docs/pricing",
         "sdk": "voyageai",

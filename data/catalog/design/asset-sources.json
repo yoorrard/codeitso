@@ -6,7 +6,7 @@
     "license": "Hand-written list of public sites (name, link, Korean one-liner by 코드잇소). summary = the site's own meta description fetched on the date above. license is filled only where the site's license page was read; otherwise follow preview.licenseUrl.",
     "note": "Sites behind bot protection answer 403/429/503 to scripts; they are kept (linkStatus shows the code). Tag link-check-failed marks links that did not answer at all. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-12",
+  "fetchedAt": "2026-11-26",
   "count": 72,
   "items": [
     {
@@ -212,13 +212,13 @@
       "preview": {
         "type": "site",
         "url": "https://burst.shopify.com",
-        "linkStatus": 429,
+        "linkStatus": 200,
         "licenseUrl": "https://burst.shopify.com/licenses/shopify-some-rights-reserved"
       },
       "use": {
         "docs": "https://burst.shopify.com/licenses/shopify-some-rights-reserved"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-26"
     },
     {
       "id": "curated:ccmixter",
@@ -342,7 +342,7 @@
       "name": "DiceBear",
       "kind": "illustrations",
       "category": "design",
-      "summary": "DiceBear is a free, open source avatar library and avatar API with 61 styles. Create deterministic SVG profile pictures and placeholder avatars for user profiles, apps, and any project. Privacy-focused and self-hostable.",
+      "summary": "DiceBear is a free, open source avatar generator with 63 styles, available as an avatar library and avatar API. Create deterministic SVG profile pictures and placeholder avatars for user profiles, apps, and any project. Privacy-focused and self-hostable.",
       "summaryKo": "이름(씨앗)으로 아바타를 만들어 주는 라이브러리·API. 코드는 MIT, 스타일마다 라이선스가 다르다.",
       "written": "codeshopper",
       "url": "https://www.dicebear.com",
@@ -365,7 +365,7 @@
       "use": {
         "docs": "https://www.dicebear.com/licenses/"
       },
-      "fetchedAt": "2026-10-20"
+      "fetchedAt": "2026-11-26"
     },
     {
       "id": "curated:drawkit",
@@ -1167,7 +1167,7 @@
       "name": "Mockuuups Studio",
       "kind": "mockups",
       "category": "design",
-      "summary": "Create iPhone, MacBook, and print mockups in seconds. Free online mockup generator with 5,200+ templates. Drag, drop, download.",
+      "summary": "Create iPhone, MacBook, and print mockups in seconds. Free online mockup generator with 5300+ templates. Drag, drop, download.",
       "summaryKo": "스크린샷을 넣어 기기·인쇄물 목업을 만드는 도구.",
       "written": "codeshopper",
       "url": "https://mockuuups.studio",
@@ -1188,7 +1188,7 @@
       "use": {
         "docs": "https://mockuuups.studio"
       },
-      "fetchedAt": "2026-11-12"
+      "fetchedAt": "2026-11-26"
     },
     {
       "id": "curated:nasa-3d",
@@ -1464,12 +1464,13 @@
         "type": "site",
         "url": "https://picjumbo.com",
         "linkStatus": 403,
-        "pricing": "freemium"
+        "pricing": "freemium",
+        "licenseUrl": "https://picjumbo.com/license/"
       },
       "use": {
-        "docs": "https://picjumbo.com"
+        "docs": "https://picjumbo.com/license/"
       },
-      "fetchedAt": "2026-10-28",
+      "fetchedAt": "2026-11-26",
       "metrics": {
         "siteRank": 500000
       }

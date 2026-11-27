@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-26",
-  "count": 935,
+  "fetchedAt": "2026-11-27",
+  "count": 943,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -55,6 +55,30 @@
         "listCategory": "Open Data"
       },
       "fetchedAt": "2026-10-23"
+    },
+    {
+      "id": "marcelscruz:12happy",
+      "name": "12happy",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Uptime monitoring and status pages: create monitors and read incidents, uptime and response times",
+      "url": "https://www.12hpy.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "development"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Development"
+      },
+      "fetchedAt": "2026-11-27"
     },
     {
       "id": "marcelscruz:1clickimpact",
@@ -2642,6 +2666,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:borbur",
+      "name": "Borbur",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Free salary and tax calculators: Spain net salary and IRPF 2026 by region, Beckham Law, pensions, UAE gratuity, 20-country tax comparison",
+      "url": "https://borbur.net/developers/",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-27"
+    },
+    {
       "id": "marcelscruz:bowmark",
       "name": "Bowmark",
       "kind": "dev",
@@ -3452,6 +3500,30 @@
       "metrics": {
         "siteRank": 1000000
       }
+    },
+    {
+      "id": "marcelscruz:checkleaked",
+      "name": "CheckLeaked",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Data breach search by email, username, phone, domain, password or hash, with the source breach named",
+      "url": "https://checkleaked.cc/developers",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-27"
     },
     {
       "id": "marcelscruz:checkthatphone",
@@ -8490,6 +8562,29 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:handles",
+      "name": "Handles",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Public profile, post and audience data from X, Instagram, TikTok, YouTube, Telegram, Bluesky, Twitch, Kick and LinkedIn with one API key",
+      "url": "https://handlesapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-27"
+    },
+    {
       "id": "marcelscruz:harnessrouter",
       "name": "HarnessRouter",
       "kind": "ai-other",
@@ -10031,7 +10126,7 @@
       "name": "Jobvetta",
       "kind": "business",
       "category": "api",
-      "summary": "Live, vetted job listings from official employer sources across India",
+      "summary": "Search 6.5M+ live jobs from 238K+ official employer career sites worldwide",
       "url": "https://jobvetta.com",
       "source": {
         "name": "Public APIs (marcelscruz)",
@@ -10048,7 +10143,7 @@
         "cors": "yes",
         "listCategory": "Jobs"
       },
-      "fetchedAt": "2026-10-26"
+      "fetchedAt": "2026-11-27"
     },
     {
       "id": "marcelscruz:jobyap",
@@ -15439,6 +15534,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:qelka",
+      "name": "Qelka",
+      "kind": "dev",
+      "category": "api",
+      "summary": "Validate phone numbers, verify emails, analyze IPs, and check IBAN, EU VAT, VIN, LEI and sanctions lists with one key",
+      "url": "https://qelka.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "data-validation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Data Validation"
+      },
+      "fetchedAt": "2026-11-27"
+    },
+    {
       "id": "marcelscruz:qovia",
       "name": "Qovia",
       "kind": "news-social",
@@ -15911,6 +16029,30 @@
         "listCategory": "Photography"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:removeac",
+      "name": "RemoveAC",
+      "kind": "media",
+      "category": "api",
+      "summary": "Automated image background removal up to 50 MP with transparent PNG, WebP, JPG and ZIP output",
+      "url": "https://remove.ac",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "photography"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Photography"
+      },
+      "fetchedAt": "2026-11-27"
     },
     {
       "id": "marcelscruz:render-api",
@@ -16489,6 +16631,29 @@
         "listCategory": "Science & Math"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:scalekit",
+      "name": "Scalekit",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "AI agent integrations platform and MCP gateway: agents call 55,000+ tools across 1,100+ apps with per-user credentials, scoped tool calls and audit logs",
+      "url": "https://www.scalekit.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-oauth"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "OAuth",
+        "cors": "no",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-27"
     },
     {
       "id": "marcelscruz:scento-perfume-api",
@@ -19336,6 +19501,29 @@
         "listCategory": "Jobs"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:the-network-tools",
+      "name": "The Network Tools",
+      "kind": "auth-security",
+      "category": "api",
+      "summary": "Domain and network diagnostics API for DNS records, SSL certs, SPF/DKIM/DMARC, WHOIS/RDAP and IP blacklists",
+      "url": "https://thenetworktools.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "security"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Security"
+      },
+      "fetchedAt": "2026-11-27"
     },
     {
       "id": "marcelscruz:the-trivia",

@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "All rows of the README tables, minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-23",
-  "count": 2462,
+  "fetchedAt": "2026-11-28",
+  "count": 2470,
   "items": [
     {
       "id": "public-apis:0x",
@@ -4380,6 +4380,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:banipool",
+      "name": "BaniPool",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Multichain DEX liquidity pools (Uniswap, Aerodrome, Orca, Raydium) with TVL, volume and fee APR",
+      "url": "https://banipool.com/docs/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "public-apis:bank-data",
       "name": "Bank Data",
       "kind": "finance",
@@ -8180,6 +8205,32 @@
         "listCategory": "Business"
       },
       "fetchedAt": "2026-11-23"
+    },
+    {
+      "id": "public-apis:census-ev",
+      "name": "Census EV",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Electric and plug-in hybrid cars for sale in the US, with price, mileage, range and price history",
+      "url": "https://censusev.com/api/v1",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "vehicle"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Vehicle"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "public-apis:census-gov",
@@ -16698,6 +16749,31 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:editpdf-tools",
+      "name": "EditPDF Tools",
+      "kind": "business",
+      "category": "api",
+      "summary": "Compress PDF files over HTTPS with 3 quality levels. Free tier: 30 files/month, up to 10 MB",
+      "url": "https://editpdf.tools/compress-pdf-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "documents-productivity",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "https": true,
+        "listCategory": "Documents & Productivity"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "public-apis:eia-open-data",
       "name": "EIA Open Data",
       "kind": "weather",
@@ -21000,6 +21076,31 @@
         "listCategory": "Music"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "public-apis:gaduin",
+      "name": "GADUIN",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Flight status, airport and rail station boards, ship traffic at 28 chokepoints, 667 port boards",
+      "url": "https://gaduin.com/docs/api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "https",
+        "transportation"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "unknown",
+        "https": true,
+        "listCategory": "Transportation"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "public-apis:galaxy-movies",
@@ -44696,6 +44797,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:prezzi-in-vista",
+      "name": "Prezzi in Vista",
+      "kind": "payments",
+      "category": "api",
+      "summary": "Offers in the weekly flyers of Italian supermarket and electronics chains, with the nearest store",
+      "url": "https://www.prezzinvista.it/developers/",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "public-apis:printsocket",
       "name": "PrintSocket",
       "kind": "business",
@@ -51634,6 +51761,32 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "public-apis:sodax",
+      "name": "SODAX",
+      "kind": "finance",
+      "category": "api",
+      "summary": "Cross-network swap quotes and intents across 20+ networks, plus token, price and intent data",
+      "url": "https://docs.sodax.com/developers/http-api",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "cryptocurrency",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Cryptocurrency"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "public-apis:softoteca",
       "name": "Softoteca",
       "kind": "business",
@@ -52034,6 +52187,32 @@
       "metrics": {
         "siteRank": 5000
       }
+    },
+    {
+      "id": "public-apis:sovereign-logos",
+      "name": "Sovereign Logos",
+      "kind": "entertainment",
+      "category": "api",
+      "summary": "Septuagint, KJV with Apocrypha, Geneva and WEB Bible text with citation links",
+      "url": "https://sovereignlogos.com/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "books",
+        "cors",
+        "https"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Books"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "public-apis:spaceflight-news",
@@ -52987,6 +53166,32 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-11-07"
+    },
+    {
+      "id": "public-apis:static-radio",
+      "name": "Static Radio",
+      "kind": "media",
+      "category": "api",
+      "summary": "Live schedule and listener counts for nine radio stations of independent podcasts",
+      "url": "https://staticradio.app/developers",
+      "source": {
+        "name": "public-apis",
+        "url": "https://github.com/public-apis/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "https",
+        "music"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "https": true,
+        "listCategory": "Music"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "public-apis:statically",

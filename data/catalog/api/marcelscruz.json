@@ -6,8 +6,8 @@
     "license": "MIT (list text); each API has its own terms",
     "note": "Only rows whose URL is not already in the lists above (public-apis first), minus products already in the hand-checked list (official.json, models-dev.json). Korean one-liners (summaryKo) come from yybmion/public-apis-4Kr (MIT), matched by URL. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-27",
-  "count": 943,
+  "fetchedAt": "2026-11-28",
+  "count": 954,
   "items": [
     {
       "id": "marcelscruz:0xarchive",
@@ -3358,30 +3358,6 @@
       }
     },
     {
-      "id": "marcelscruz:census-ev",
-      "name": "Census EV",
-      "kind": "maps",
-      "category": "api",
-      "summary": "Electric and plug-in hybrid cars for sale in the US, with price, mileage, range and price history",
-      "url": "https://censusev.com/api/v1",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "cors",
-        "vehicle"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Vehicle"
-      },
-      "fetchedAt": "2026-11-18"
-    },
-    {
       "id": "marcelscruz:change-image-background-api",
       "name": "Change Image Background API",
       "kind": "media",
@@ -4127,6 +4103,30 @@
         "listCategory": "Video"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:compsapi",
+      "name": "CompsAPI",
+      "kind": "payments",
+      "category": "api",
+      "summary": "Sold eBay listings with 3 years of price history, plus sold prices from 12 more marketplaces",
+      "url": "https://compsapi.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "shopping"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Shopping"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "marcelscruz:contashare",
@@ -6287,6 +6287,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:email-validation",
+      "name": "Email Validation",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Validate one email address or bulk lists: valid, invalid, catch-all, unknown or disposable, with a reason and a recommended action",
+      "url": "https://email-validation.org",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "marcelscruz:email59",
       "name": "email59",
       "kind": "messaging",
@@ -7947,6 +7971,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:genaya",
+      "name": "Genaya",
+      "kind": "business",
+      "category": "api",
+      "summary": "Read and write a service business's appointments, clients, invoices, estimates, leads and tasks, with webhooks for new events",
+      "url": "https://www.genaya.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "business"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Business"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "marcelscruz:generate-full-webpage-screenshot",
       "name": "Generate Full Webpage Screenshot",
       "kind": "dev",
@@ -8490,6 +8537,29 @@
         "listCategory": "Weather"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:groundsocial",
+      "name": "Groundsocial",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Public posts, comments, profiles and search from Reddit, X, TikTok, Instagram, YouTube, LinkedIn and 70+ more platforms as JSON",
+      "url": "https://groundsocial.dev",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "marcelscruz:hackernews-node",
@@ -9623,6 +9693,30 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:ipdatum",
+      "name": "IPDatum",
+      "kind": "maps",
+      "category": "api",
+      "summary": "Free IPv4/IPv6 geolocation, ASN, and 12-signal VPN/proxy/Tor/cloud/anycast/abuser lookup API with batch support (1,000/day keyless, 50,000/day free key)",
+      "url": "https://www.ipdatum.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "geocoding"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Geocoding"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "marcelscruz:ipkit",
       "name": "IPKit",
       "kind": "maps",
@@ -10554,6 +10648,30 @@
       "metrics": {
         "siteRank": 50000
       }
+    },
+    {
+      "id": "marcelscruz:kunavo",
+      "name": "Kunavo",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "Prepaid AI model API with client key groups, per-key usage reporting and CSV cost exports",
+      "url": "https://kunavo.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey",
+        "cors"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "marcelscruz:kunstlerfinanzen",
@@ -13955,6 +14073,29 @@
       "fetchedAt": "2026-11-23"
     },
     {
+      "id": "marcelscruz:pandex",
+      "name": "Pandex",
+      "kind": "open-data",
+      "category": "api",
+      "summary": "Official legislation and case law (EU, UK, DE, FR, ES, NL, AT, CH and more): every past version with dates, citations linked to the passage. REST and MCP",
+      "url": "https://www.pandex.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "government"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "no",
+        "listCategory": "Government"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "marcelscruz:paraphrase-text-api",
       "name": "Paraphrase Text API",
       "kind": "business",
@@ -14328,6 +14469,30 @@
         "listCategory": "Health"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:peptidecompare",
+      "name": "PeptideCompare",
+      "kind": "life",
+      "category": "api",
+      "summary": "Prices US online clinics charge for prescribed peptides and NAD+, each with its source page and date",
+      "url": "https://peptidecompare.co/developers",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "health"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Health"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "marcelscruz:perle-romanesti",
@@ -17094,6 +17259,30 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:sendfinery",
+      "name": "Sendfinery",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Check a domain's SPF, DKIM, DMARC and MX records, look up DNS and analyze email headers",
+      "url": "https://sendfinery.com",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "marcelscruz:sendinblue",
       "name": "Sendinblue",
       "kind": "messaging",
@@ -18362,30 +18551,6 @@
       "fetchedAt": "2026-10-28"
     },
     {
-      "id": "marcelscruz:sovereign-logos",
-      "name": "Sovereign Logos",
-      "kind": "entertainment",
-      "category": "api",
-      "summary": "Free Bible API: Septuagint, KJV, Geneva and more. No key. Citations on every passage.",
-      "url": "https://sovereignlogos.com/developers",
-      "source": {
-        "name": "Public APIs (marcelscruz)",
-        "url": "https://github.com/marcelscruz/public-apis"
-      },
-      "tags": [
-        "auth-none",
-        "books",
-        "cors"
-      ],
-      "preview": {
-        "type": "api",
-        "auth": "none",
-        "cors": "yes",
-        "listCategory": "Books"
-      },
-      "fetchedAt": "2026-11-17"
-    },
-    {
       "id": "marcelscruz:spacetradersapi",
       "name": "SpaceTradersAPI",
       "kind": "entertainment",
@@ -18910,6 +19075,29 @@
       "fetchedAt": "2026-10-20"
     },
     {
+      "id": "marcelscruz:straitly",
+      "name": "Straitly",
+      "kind": "ai-other",
+      "category": "api",
+      "summary": "OpenAI- and Anthropic-compatible AI gateway with one API key for 100+ models including Claude, GPT, Gemini, Grok and DeepSeek",
+      "url": "https://straitly.ai",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "ai",
+        "auth-apikey"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "AI"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "marcelscruz:strikerapi",
       "name": "StrikerAPI",
       "kind": "life",
@@ -19332,6 +19520,30 @@
         "listCategory": "Jobs"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:temp-mail-agency",
+      "name": "Temp Mail Agency",
+      "kind": "messaging",
+      "category": "api",
+      "summary": "Free, zero-signup disposable email REST API with automatic OTP & link extraction across .com, .org.uk & .edu.pl pools",
+      "url": "https://temp-mail.agency",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-none",
+        "cors",
+        "email"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "none",
+        "cors": "yes",
+        "listCategory": "Email"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "marcelscruz:templated",
@@ -20383,6 +20595,30 @@
       "fetchedAt": "2026-10-23"
     },
     {
+      "id": "marcelscruz:twexapi",
+      "name": "TwexAPI",
+      "kind": "news-social",
+      "category": "api",
+      "summary": "Read public X (Twitter) data: search, profiles, timelines, followers and replies, billed per result",
+      "url": "https://twexapi.io",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "cors",
+        "social"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "yes",
+        "listCategory": "Social"
+      },
+      "fetchedAt": "2026-11-28"
+    },
+    {
       "id": "marcelscruz:tyk",
       "name": "Tyk",
       "kind": "dev",
@@ -21106,6 +21342,29 @@
         "listCategory": "Anti-Malware"
       },
       "fetchedAt": "2026-10-20"
+    },
+    {
+      "id": "marcelscruz:verkanto",
+      "name": "Verkanto",
+      "kind": "finance",
+      "category": "api",
+      "summary": "EU VAT decisions (reverse charge, rate, invoice note), VIES VAT number checks and numbered invoice PDFs for cross-border EU sales",
+      "url": "https://verkanto.eu",
+      "source": {
+        "name": "Public APIs (marcelscruz)",
+        "url": "https://github.com/marcelscruz/public-apis"
+      },
+      "tags": [
+        "auth-apikey",
+        "finance"
+      ],
+      "preview": {
+        "type": "api",
+        "auth": "apiKey",
+        "cors": "no",
+        "listCategory": "Finance"
+      },
+      "fetchedAt": "2026-11-28"
     },
     {
       "id": "marcelscruz:vertopal",

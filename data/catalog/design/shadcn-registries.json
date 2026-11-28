@@ -4,9 +4,9 @@
     "name": "shadcn/ui registry directory",
     "url": "https://ui.shadcn.com/docs/directory",
     "license": "Directory data from ui.shadcn.com/r/registries.json (shadcn/ui, MIT). Each registry's components keep their own license — check the registry site.",
-    "note": "613 registries listed; 60 marked unavailable by the directory's health check were skipped. Individual components of community registries (162689 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
+    "note": "613 registries listed; 60 marked unavailable by the directory's health check were skipped. Individual components of community registries (162934 in total) are not listed one by one: the directory gives no per-component popularity, so each registry is one item with preview.itemCount. metrics.siteRank = global Chrome UX Report rank bucket of the item's site (1000, 5000, 10000, 50000, 100000, 500000, 1000000; Chrome UX Report top lists (CC BY 4.0, via github.com/zakird/crux-top-lists), 2026-11), set only when the item has no other metric. Used only for sorting."
   },
-  "fetchedAt": "2026-11-27",
+  "fetchedAt": "2026-11-28",
   "count": 553,
   "items": [
     {
@@ -882,16 +882,16 @@
         "type": "site",
         "url": "https://alexandrejoly.me",
         "registryUrl": "https://alexandrejoly.me/r/{name}.json",
-        "itemCount": 12,
-        "healthScore": 98.156,
-        "rankingScore": 86.777,
+        "itemCount": 14,
+        "healthScore": 98.235,
+        "rankingScore": 87.3,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @alexandrejoly/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-25",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -1668,15 +1668,15 @@
         "url": "https://ui.balick.me",
         "registryUrl": "https://ui.balick.me/r/{name}.json",
         "itemCount": 137,
-        "healthScore": 71.582,
-        "rankingScore": 73.118,
+        "healthScore": 79.02,
+        "rankingScore": 79.068,
         "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @balick/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-26",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -2076,16 +2076,16 @@
         "type": "site",
         "url": "https://beui.dev",
         "registryUrl": "https://beui.dev/r/{name}.json",
-        "itemCount": 202,
-        "healthScore": 98.693,
-        "rankingScore": 96.048,
+        "itemCount": 234,
+        "healthScore": 98.699,
+        "rankingScore": 96.524,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @beui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-27",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -5105,16 +5105,16 @@
         "type": "site",
         "url": "https://eased.dev",
         "registryUrl": "https://eased.dev/r/{name}.json",
-        "itemCount": 190,
-        "healthScore": 97.278,
-        "rankingScore": 94.72,
+        "itemCount": 209,
+        "healthScore": 98.715,
+        "rankingScore": 96.175,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @eased/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-23",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -5699,6 +5699,40 @@
       }
     },
     {
+      "id": "shadcn-registry:fab-ui",
+      "name": "@fab-ui",
+      "kind": "ui-registries",
+      "category": "design",
+      "summary": "A collection of beautifully designed UI components for building modern web applications.",
+      "url": "https://fab-ui.com",
+      "source": {
+        "name": "shadcn/ui registry directory",
+        "url": "https://ui.shadcn.com/docs/directory"
+      },
+      "tags": [
+        "react",
+        "registry",
+        "shadcn"
+      ],
+      "preview": {
+        "type": "site",
+        "url": "https://fab-ui.com",
+        "registryUrl": "https://fab-ui.com/r/{name}.json",
+        "itemCount": 44,
+        "healthScore": 90.578,
+        "rankingScore": 84.709,
+        "health": "healthy"
+      },
+      "use": {
+        "install": "npx shadcn@latest add @fab-ui/<component>",
+        "docs": "https://ui.shadcn.com/docs/directory"
+      },
+      "fetchedAt": "2026-11-28",
+      "metrics": {
+        "siteRank": 500000
+      }
+    },
+    {
       "id": "shadcn-registry:fable-ui",
       "name": "@fable-ui",
       "kind": "ui-registries",
@@ -6255,6 +6289,7 @@
         "url": "https://ui.shadcn.com/docs/directory"
       },
       "tags": [
+        "degraded",
         "react",
         "registry",
         "shadcn"
@@ -6264,15 +6299,15 @@
         "url": "https://formetry.dev",
         "registryUrl": "https://formetry.dev/r/{name}.json",
         "itemCount": 134,
-        "healthScore": 93.308,
-        "rankingScore": 90.428,
-        "health": "healthy"
+        "healthScore": 91.977,
+        "rankingScore": 89.363,
+        "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @formetry/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-27",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -7521,16 +7556,16 @@
         "type": "site",
         "url": "https://www.honestui.com",
         "registryUrl": "https://www.honestui.com/r/{name}.json",
-        "itemCount": 106,
-        "healthScore": 98.637,
-        "rankingScore": 93.943,
+        "itemCount": 177,
+        "healthScore": 98.645,
+        "rankingScore": 95.587,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @honestui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-27",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -8850,16 +8885,16 @@
         "type": "site",
         "url": "https://ui.knowns.dev",
         "registryUrl": "https://ui.knowns.dev/r/{name}.json",
-        "itemCount": 207,
-        "healthScore": 98.12,
-        "rankingScore": 95.668,
+        "itemCount": 237,
+        "healthScore": 98.351,
+        "rankingScore": 96.286,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @knowns-ui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-25",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -10502,41 +10537,6 @@
       }
     },
     {
-      "id": "shadcn-registry:navui",
-      "name": "@navui",
-      "kind": "ui-registries",
-      "category": "design",
-      "summary": "shadcn-compatible components, blocks, and illustrations that adapt to your existing design configuration.",
-      "url": "https://ui.navdeepsingh.dev",
-      "source": {
-        "name": "shadcn/ui registry directory",
-        "url": "https://ui.shadcn.com/docs/directory"
-      },
-      "tags": [
-        "degraded",
-        "react",
-        "registry",
-        "shadcn"
-      ],
-      "preview": {
-        "type": "site",
-        "url": "https://ui.navdeepsingh.dev",
-        "registryUrl": "https://ui.navdeepsingh.dev/r/{name}.json",
-        "itemCount": 62,
-        "healthScore": 94.166,
-        "rankingScore": 88.662,
-        "health": "degraded"
-      },
-      "use": {
-        "install": "npx shadcn@latest add @navui/<component>",
-        "docs": "https://ui.shadcn.com/docs/directory"
-      },
-      "fetchedAt": "2026-11-27",
-      "metrics": {
-        "siteRank": 500000
-      }
-    },
-    {
       "id": "shadcn-registry:ncdai",
       "name": "@ncdai",
       "kind": "ui-registries",
@@ -10931,16 +10931,16 @@
         "type": "site",
         "url": "https://niko-table.com",
         "registryUrl": "https://niko-table.com/r/{name}.json",
-        "itemCount": 34,
-        "healthScore": 98.566,
-        "rankingScore": 90.291,
+        "itemCount": 44,
+        "healthScore": 98.489,
+        "rankingScore": 91.038,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @niko-table/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -11850,16 +11850,16 @@
         "type": "site",
         "url": "https://www.paneloui.com",
         "registryUrl": "https://www.paneloui.com/r/{name}.json",
-        "itemCount": 26,
-        "healthScore": 93.684,
-        "rankingScore": 85.551,
+        "itemCount": 52,
+        "healthScore": 94.771,
+        "rankingScore": 88.59,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @panelo/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-27",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -13177,16 +13177,16 @@
         "type": "site",
         "url": "https://relic-ui.vercel.app",
         "registryUrl": "https://relic-ui.vercel.app/r/{name}.json",
-        "itemCount": 58,
-        "healthScore": 93.879,
-        "rankingScore": 88.221,
+        "itemCount": 68,
+        "healthScore": 95.094,
+        "rankingScore": 89.697,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @relic-ui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-27",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -14238,16 +14238,16 @@
         "type": "site",
         "url": "https://shadcnui-blocks.com",
         "registryUrl": "https://shadcnui-blocks.com/r/{name}.json",
-        "itemCount": 542,
-        "healthScore": 96.355,
-        "rankingScore": 97.084,
+        "itemCount": 368,
+        "healthScore": 96.279,
+        "rankingScore": 96.039,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @shadcnui-blocks/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-10-20",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -16897,15 +16897,15 @@
         "url": "https://tween-ui.staticmania.com",
         "registryUrl": "https://tween-ui.staticmania.com/r/{name}.json",
         "itemCount": 138,
-        "healthScore": 74.556,
-        "rankingScore": 75.52,
+        "healthScore": 83.702,
+        "rankingScore": 82.837,
         "health": "degraded"
       },
       "use": {
         "install": "npx shadcn@latest add @tween-ui/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-23",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
@@ -18528,16 +18528,16 @@
         "type": "site",
         "url": "https://wideset.co",
         "registryUrl": "https://wideset.co/r/{name}.json",
-        "itemCount": 65,
-        "healthScore": 97.095,
-        "rankingScore": 91.155,
+        "itemCount": 166,
+        "healthScore": 97.778,
+        "rankingScore": 94.688,
         "health": "healthy"
       },
       "use": {
         "install": "npx shadcn@latest add @wideset/<component>",
         "docs": "https://ui.shadcn.com/docs/directory"
       },
-      "fetchedAt": "2026-11-23",
+      "fetchedAt": "2026-11-28",
       "metrics": {
         "siteRank": 500000
       }
